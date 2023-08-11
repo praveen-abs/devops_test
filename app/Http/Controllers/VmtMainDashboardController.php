@@ -492,6 +492,23 @@ class VmtMainDashboardController extends Controller
         }
     }
 
+    private function currentClient()
+    {
+        if(sessionGetSelectedClientName()){
+
+            if(sessionGetSelectedClientName() == 'All'){
+                $logoSrc = sessionGetSelectedClientLogo();
+              }else{
+               $logoSrc = sessionGetSelectedClientLogo();
+              }
+
+           }else{
+
+               $logoSrc =  getClientLogo(auth()->user()->id);
+            }
+    }
+
+
     public function updateGlobalClientSelection(Request $request)
     {
 

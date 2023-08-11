@@ -1,15 +1,20 @@
 <template>
-    <div class=" bg-white h-[60px]" v-if="canShowLoading" @mousedown="isConfigurationOpen = false">
-        <div class=" grid grid-cols-12 items-center">
+    <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
+    <div class=" bg-white h-[60px]" v-if="canShowLoading">
+        <div class=" grid grid-cols-12 justify-between items-center">
             <!-- Organization List  -->
-            <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-8" @click="isOpens = !isOpens">
+            <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-4"
+                @click="useDashboard.canShowClients = !useDashboard.canShowClients">
                 <button class=" text-black rounded  focus:outline-none">
                     <p class="text-md text-gray-600 text-left">Your organization</p>
                     <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient">
                         <img :src="currentlySelectedClient.client_logo" alt="" class="h-6 w-12">
-                        <p class="font-semibold  whitespace-nowrap text-sm">{{ currentlySelectedClient.client_fullname }}
-                            ({{ currentlySelectedClient.abs_client_code }})
-                        </p>
+                        <p class="text-sm whitespace-nowrap  font-semibold px-2"
+                            v-if="currentlySelectedClient.client_fullname.length <= 13">{{
+                                currentlySelectedClient.client_fullname }}</p>
+                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-else> {{
+                            currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
+                                13) + '..' : '' }}</p>
                     </div>
                 </button>
 
@@ -17,102 +22,207 @@
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
-                    <div v-if="isOpens" class="absolute top-5 left-2 mt-12  max-w-max  bg-white shadow-lg rounded z-20">
+                    <div v-if="useDashboard.canShowClients"
+                        class="absolute top-5 left-2 mt-14 w-11/12 bg-white shadow-lg rounded z-20">
                         <!-- Dropdown content goes here -->
-                        <div class="" v-for="client in clientList">
-                            <div class="justify-between flex p-2 hover:bg-gray-200  items-center">
+                        <div class="cursor-pointer hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+                            v-for="client in clientList">
+                            <div class="justify-between flex p-2 hover:bg-gray-200  items-center" @click="submitSelectedClient">
                                 <div class="cursor-pointer flex mx-2 align-center justify-between rounded-lg p-0.5 ">
                                     <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
-                                        style="height: 40px;width:40px">
+                                        style="height: 30px;width:30px">
                                         <img :src="client.client_logo" alt="" class=" mh-100 mw-100">
-                                        <p class="font-medium whitespace-nowrap text-xs">{{ client.client_fullname }} ({{
+                                        <p class="font-semibold whitespace-nowrap text-sm ">{{ client.client_fullname }} ({{
                                             client.abs_client_code }})</p>
                                     </div>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor"
+                                        class="w-6 h-6 text-green-600 font-semibold">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                                    </svg>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </transition>
             </div>
-            <div class="relative col-span-2">
-                <input type="text" name="" id="" class="border p-2 border-gray-700 rounded-lg" v-model="query"
+            <div class="relative col-span-4">
+                <input type="text" name="" id="" class="border p-1.5 border-gray-300 rounded-lg w-2/5" v-model="query"
                     placeholder="Search....">
-
-                <!-- <form class="mt-2">
-                        <label for="search">Search</label>
-                        <input id="search" type="search" pattern=".*\S.*" required>
-                        <span class="caret"></span>
-                    </form> -->
 
                 <transition enter-active-class="transition ease-out duration-200 transform"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
                     <div v-if="query"
-                        class="z-40 absolute top-0 left-0 mt-16 w-full  bg-white shadow-lg rounded px-3 py-4  overflow-x-scroll">
+                        class="z-40 absolute top-0 left-0 mt-16 w-3/4  bg-white shadow-lg rounded px-3 py-4  overflow-x-scroll">
                         <!-- Dropdown content goes here -->
                         <div class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
-                            v-for="employee in globalSearch(query, orgList)">
-                            <div>
-                                <p class="text-gray-900 font-bold text-sm">{{ employee.name }}</p>
+                            v-for="employee in globalSearch(query, orgList ? orgList : [])"
+                            @click="openProfilePage(employee.enc_user_id)">
+                            <div class="flex">
+                                <p class="text-gray-900 font-bold text-sm">{{ employee.emp_name }} <span
+                                        class="text-gray-600 font-bold text-xs float-right">{{ employee.emp_code }}</span>
+                                </p>
                             </div>
                             <div>
-                                <p class="text-xs text-gray-600">{{ employee.designation }}</p>
+                                <p class="text-xs text-gray-600">{{ employee.emp_designation }}</p>
                             </div>
                         </div>
                     </div>
                 </transition>
             </div>
-            <div class="flex justify-evenly col-span-2">
-                <button class="rounded-lg p-2 hover:bg-gray-200 " @click="isConfigurationOpen = true">
+            <div class="flex col-span-4 justify-end">
+                <button
+                    class="rounded-full bg-gray-100  p-2 hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none  mx-2"
+                    @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="h-6 w-6">
                 </button>
                 <transition enter-active-class="transition ease-out duration-200 transform"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
-                    <div v-if="isConfigurationOpen" @click="isConfigurationOpen = !isConfigurationOpen"
+                    <div v-if="useDashboard.canShowConfiguration"
+                        @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"
                         class="absolute top-0 right-40 mt-16 w-60 bg-white shadow-lg rounded z-40 p-2 ">
                         <!-- Dropdown content goes here -->
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Master config</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Client onboarding</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Document template</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Leave setting</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Attendance setting</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Investment setting</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Loan and salary advance setting
+                        <p
+                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Master config</p>
+                        <p
+                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Client onboarding</p>
+                        <p
+                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Document template</p>
+                        <p
+                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Leave setting</p>
+                        <p
+                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Attendance setting</p>
+                        <p
+                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Investment setting</p>
+                        <p
+                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Loan and salary advance setting
                         </p>
                     </div>
                 </transition>
 
 
-                <!-- <button class="mx-6  rounded-lg hover:bg-gray-400">
+                <button
+                    class="mx-2 animate-pulse  bg-gray-100 rounded-full p-2  hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
+                    @click="visibleRight = true">
                     <img src="./assests/icons/notification.svg" alt="" class="h-6 w-6">
-                </button> -->
-                <button class=" rounded-lg p-2 hover:bg-gray-200">
+                </button>
+                <button
+                    class=" bg-gray-100 rounded-full p-2 hover:bg-gray-200 transition  duration-700 ease-in-out transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                     <img src="./assests/icons/exit.svg" alt="" class="h-6 w-6">
                 </button>
-                <div class="relative" @click="isOpen = !isOpen">
-                    <button class="py-2 px-3 flex bg-gray-200 text-white rounded focus:outline-none">
-                        <p class="rounded-full  bg-red-100 text-black">SA</p>
-                        <p class="text-sm whitespace-nowrap text-black font-semibold">Super Admin</p>
+                <div class=" mx-3 relative"
+                    @click="useDashboard.canShowCurrentEmployee = !useDashboard.canShowCurrentEmployee">
+                    <button
+                        class="py-2 px-3 flex bg-gray-100 text-white rounded-full focus:outline-none hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+
+                        <p class="rounded-full  bg-red-100 text-black font-semibold p-1 text-sm">SA</p>
+                        <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto"
+                            v-if="service.current_user_name.length <= 11">{{ service.current_user_name ?
+                                service.current_user_name : '' }}</p>
+                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-else> {{
+                            service.current_user_name ? service.current_user_name.substring(0, 11) + '..' : '' }}</p>
 
                     </button>
                     <transition enter-active-class="transition ease-out duration-200 transform"
                         enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                         leave-active-class="transition ease-in duration-100 transform"
                         leave-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
-                        <div v-if="isOpen" class="absolute top-0 right-0 mt-14 w-48 bg-white shadow-lg rounded z-30">
+                        <div v-if="useDashboard.canShowCurrentEmployee"
+                            class="absolute top-0 right-0 mt-14 w-48 bg-white shadow-lg rounded z-30">
                             <!-- Dropdown content goes here -->
-                            <a class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 block"
+                            <a class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 block transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                                 href="pages-profile-new ">View profile</a>
-                            <a @click="logout" class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 block" href="">Log
+                            <a @click="canShowLogout = true"
+                                class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 block transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Log
                                 out</a>
                         </div>
                     </transition>
                 </div>
             </div>
 
+        </div>
+    </div>
+
+
+
+
+    <Sidebar v-model:visible="visibleRight" position="right" class="w-full">
+        <template #header>
+            <p class="absolute left-0 mx-4 font-semibold fs-5 ">
+                <img src="./assests/icons/notification.svg" alt="" class="h-6 w-6 animate-pulse">
+                Notification
+            </p>
+        </template>
+        <div class="w-full px-2 rounded-lg my-2 p-2" v-for="(no, index) in 20" :class="`${getBackgroundColor(index)}`">
+            <p class="orange-median font-semibold fs-6">Attendance</p>
+            <p class="text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore accusamus laborum .</p>
+        </div>
+    </Sidebar>
+
+    <div class="relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true" v-if="canShowLogout">
+        <!--
+          Background backdrop, show/hide based on modal state.
+
+          Entering: "ease-out duration-300"
+            From: "opacity-0"
+            To: "opacity-100"
+          Leaving: "ease-in duration-200"
+            From: "opacity-100"
+            To: "opacity-0"
+        -->
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <!--
+              Modal panel, show/hide based on modal state.
+
+              Entering: "ease-out duration-300"
+                From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                To: "opacity-100 translate-y-0 sm:scale-100"
+              Leaving: "ease-in duration-200"
+                From: "opacity-100 translate-y-0 sm:scale-100"
+                To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            -->
+
+                <div
+                    class="rounded-lg bg-white p-8 shadow-2xl absolute z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <h2 class="text-lg font-bold">Are you sure you want to do that?</h2>
+
+                    <p class="mt-2 text-sm text-gray-500">
+                        Doing that could have cause some issues elsewhere, are you 100% sure it's
+                        OK?
+                    </p>
+
+                    <div class="mt-4 flex gap-2 justify-center">
+                        <button @click="logout" type="button"
+                            class="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600">
+                            Yes, I'm sure
+                        </button>
+
+                        <button @click="canShowLogout = false" type="button"
+                            class="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600">
+                            No, go back
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </template>
@@ -124,16 +234,28 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
 
+import Notification from '../dashboard/employee_dashboard/notifications/notification.vue'
+import { Service } from '../Service/Service';
 
 const useDashboard = useMainDashboardStore()
+const service = Service();
 
-const isOpen = ref(false);
-const isOpens = ref(false);
-const isConfigurationOpen = ref(false);
+
+
+const visibleRight = ref(false)
 const query = ref('');
 const orgList = ref();
 const clientList = ref()
 const canShowLoading = ref(false)
+const canShowLogout = ref(false)
+
+
+const Modules = ref([
+    {
+        id: 1, label: 'Attendance',
+        to: 'attendance-timesheet'
+    }
+])
 
 
 const currentlySelectedClient = ref()
@@ -144,40 +266,46 @@ const getClientList = () => {
         clientList.value = res.data
         currentlySelectedClient.value = res.data[0]
     }).finally(() => {
-        // canShowLoading.value = true
     })
 }
 
-
-
+const submitSelectedClient  = (client ) =>{
+    let url = '/session-update-globalClient'
+    axios.post(url,client)
+}
 
 
 function globalSearch(keyword, list) {
     // Use the filter method to find items whose name contains the keyword (case-insensitive)
     const searchResults = list.filter((item) =>
-        item.name.toLowerCase().includes(keyword.toLowerCase())
+        // console.log(item.emp_name)
+        item.emp_name.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.emp_code.toLowerCase().includes(keyword.toLowerCase())
+        // item.label.toLowerCase().includes(keyword.toLowerCase()
     );
+    console.log(searchResults);
     return searchResults;
 }
 
+const combinedArray = ref()
 
 
 const getOrgList = () => {
-    axios.get('/fetch-org-members').then(res => {
-        orgList.value = Object.values(res.data)
+    axios.get('/vmt-activeemployees-fetchall').then(res => {
+        orgList.value = res.data
+        orgList.value ? combinedArray.value = [...orgList.value, ...Modules.value] : []
     })
 
 }
+
 
 onMounted(() => {
     getOrgList()
     getClientList()
     setTimeout(() => {
         canShowLoading.value = true
-
     }, 2000);
 })
-
 
 
 // Your Vue component
@@ -197,12 +325,46 @@ async function logout() {
     }
 }
 
+async function openProfilePage(uid) {
+    console.log(uid);
+    window.location.href = "/pages-profile-new?uid=" + uid;
+}
+
+const filterNotificationLength = (value) => {
+    return value.length
+}
+
+const colors = [
+    'bg-orange-50',
+    'bg-emerald-50',
+    'bg-yellow-50',
+    'bg-rose-50',
+    'bg-cyan-50',
+    'bg-amber-50',
+    'bg-red-50',
+    'bg-blue-50',
+    'bg-pink-50',
+    'bg-green-50',
+    'bg-fuchsia-50',
+];
+
+const getBackgroundColor = (index) => {
+    console.log(index);
+    return colors[index % colors.length];
+};
+
 
 
 </script>
 
 
 <style>
+.p-sidebar-right .p-sidebar
+{
+    width: 25rem;
+    height: 100%;
+}
+
 :root
 {
     --bg: #e3e4e8;
@@ -307,7 +469,7 @@ label
     {
         --bg: #17181c;
         --fg: #e3e4e8;
-        --input: rgba(189, 189, 189, 0.316);
+        --input: rgba(221, 218, 218, 0.129);
         --primary: #5583f6;
     }
 }
