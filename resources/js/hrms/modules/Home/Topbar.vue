@@ -1,8 +1,8 @@
 <template>
     <div class=" bg-white h-[60px]" v-if="canShowLoading" @mousedown="isConfigurationOpen = false">
-        <div class=" grid grid-cols-4 items-center">
+        <div class=" grid grid-cols-12 items-center">
             <!-- Organization List  -->
-            <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2" @click="isOpens = !isOpens">
+            <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-8" @click="isOpens = !isOpens">
                 <button class=" text-black rounded  focus:outline-none">
                     <p class="text-md text-gray-600 text-left">Your organization</p>
                     <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient">
@@ -17,7 +17,7 @@
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
-                    <div v-if="isOpens" class="absolute top-5 left-2 mt-12  w-full bg-white shadow-lg rounded z-20">
+                    <div v-if="isOpens" class="absolute top-5 left-2 mt-12  max-w-max  bg-white shadow-lg rounded z-20">
                         <!-- Dropdown content goes here -->
                         <div class="" v-for="client in clientList">
                             <div class="justify-between flex p-2 hover:bg-gray-200  items-center">
@@ -34,13 +34,7 @@
                     </div>
                 </transition>
             </div>
-            <div>
-
-            </div>
-            <div class="relative ">
-
-
-
+            <div class="relative col-span-2">
                 <input type="text" name="" id="" class="border p-2 border-gray-700 rounded-lg" v-model="query"
                     placeholder="Search....">
 
@@ -69,7 +63,7 @@
                     </div>
                 </transition>
             </div>
-            <div class="flex justify-evenly ">
+            <div class="flex justify-evenly col-span-2">
                 <button class="rounded-lg p-2 hover:bg-gray-200 " @click="isConfigurationOpen = true">
                     <img src="./assests/icons/setting.svg" alt="" class="h-6 w-6">
                 </button>
@@ -99,8 +93,10 @@
                     <img src="./assests/icons/exit.svg" alt="" class="h-6 w-6">
                 </button>
                 <div class="relative" @click="isOpen = !isOpen">
-                    <button class="py-2 px-4 bg-blue-500 text-white rounded focus:outline-none">
-                        SA
+                    <button class="py-2 px-3 flex bg-gray-200 text-white rounded focus:outline-none">
+                        <p class="rounded-full  bg-red-100 text-black">SA</p>
+                        <p class="text-sm whitespace-nowrap text-black font-semibold">Super Admin</p>
+
                     </button>
                     <transition enter-active-class="transition ease-out duration-200 transform"
                         enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
