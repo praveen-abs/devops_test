@@ -456,7 +456,6 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
 
     Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');
-    Route::get('showManageEmployeePage_v2', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage_v2')->name('showManageEmployeePage_v2');
     Route::get('vmt-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllActiveEmployees')->name('vmt-activeemployees-fetchall');
     Route::get('vmt-exitemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllExitEmployees')->name('vmt-exitemployees-fetchall');
     Route::get('vmt-yet-to-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllYetToActiveEmployees')->name('vmt-yet-to-activeemployees-fetchall');
@@ -561,6 +560,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
 
     Route::get('/config-master', [App\Http\Controllers\VmtMasterConfigController::class, 'index'])->name('view-config-master');
+    Route::get('/config-mobile-settings', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('view-config-mobile-settings');
     Route::post('/vmt-config-master', [App\Http\Controllers\VmtMasterConfigController::class, 'store'])->name('store-config-master');
 
     //Onboarding pages
@@ -782,9 +782,9 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     //MasterImport
     Route::get('/updateMasterdataUploads', [App\Http\Controllers\VmtCorrectionController::class,'updateMasterdataUploads'])->name('updateMasterdataUploads');
     Route::post('/vmt_employess/Master_upload', [App\Http\Controllers\VmtCorrectionController::class,'importMasetrEmployeesExcelData'])->name('masterEmployeeOnboarding');
-    
 
-   
+
+
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
 
@@ -917,7 +917,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/inmport-loan-adv-excel-data',[App\Http\Controllers\VmtSalaryAdvanceController::class,'inmportLoanAdvExcelData']);
 
     Route::post('/employee-dashboard-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'employeeDashboardLoanAndAdvance']);
- 
+
     Route::get('/testing-karthi',[App\Http\Controllers\VmtSalaryAdvanceController::class,'testingKarthi']);
 
     Route::get('/get-pending-requested-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'getApprovedRequestedForLoanAndAdvance'])->name('getApprovedRequestedForLoanAndAdvance');

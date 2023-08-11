@@ -805,6 +805,9 @@
                                             Config</span></a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('view-config-mobile-settings') }}" class="nav-link"><span>Mobile App Settings</span></a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('vmt_clientOnboarding-route') }}" class="nav-link"><span>
                                             Client
                                             Onboarding</span></a>

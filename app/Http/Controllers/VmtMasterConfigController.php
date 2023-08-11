@@ -71,4 +71,12 @@ class VmtMasterConfigController extends Controller
 
     }
 
+    public function showMobileSettingsPage(Request $request){
+
+        return view('vmt_config_mobile_settings');
+
+    }
+
+
+
 }
