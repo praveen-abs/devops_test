@@ -92,7 +92,6 @@ class VmtEmployeePayCheckService
 
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
-
         $currentRowInExcel = 0;
         $i = array_keys($excelRowdata_row);
 
@@ -248,12 +247,6 @@ class VmtEmployeePayCheckService
             //update employee's details 'vmt_employee_details'
             $emp_details = VmtEmployee::where('userid', $user_id);
 
-
-            //update employee's ' vmt_employee_details'
-            //BANK NAME
-            //ACCOUNT NUMBER
-            //IFSC CODE
-
             //Store the data into vmt_employee_payslip table
             $empPaySlip = new VmtEmployeePaySlipV2;
             $empPaySlip->gender = $row['gender'] ?? null;
@@ -296,66 +289,68 @@ class VmtEmployeePayCheckService
             $emp_payslip_data = VmtEmployeePaySlipV2::where('emp_payroll_id', $emp_payroll_id)->first();
 
 
-            if (empty($emp_payslip_data)) {
-                $emp_payroll_id = VmtEmployeePayroll::where('user_id', $user_id)->where('payroll_id', $payroll_id)->first()->id;
-                $empPaySlip->emp_payroll_id = $emp_payroll_id;
-                $empPaySlip->basic = $row["basic"];
-                $empPaySlip->hra = $row["hra"];
-                $empPaySlip->child_edu_allowance = $row["child_edu_allowance"];
-                $empPaySlip->spl_alw = $row["spl_alw"];
-                $empPaySlip->total_fixed_gross = $row["total_fixed_gross"];
-                $empPaySlip->month_days = $row["month_days"];
-                $empPaySlip->worked_days = $row["worked_days"];
-                $empPaySlip->arrears_days = $row["arrears_days"];
-                $empPaySlip->lop = $row["lop"];
-                $empPaySlip->earned_basic = $row["earned_basic"];
-                $empPaySlip->basic_arrear = $row["basic_arrear"];
-                $empPaySlip->earned_hra = $row["earned_hra"];
-                $empPaySlip->hra_arrear = $row["hra_arrear"];
-                $empPaySlip->earned_child_edu_allowance = $row["earned_child_edu_allowance"];
-                $empPaySlip->child_edu_allowance_arrear = $row["child_edu_allowance_arrear"];
-                $empPaySlip->earned_spl_alw = $row["earned_spl_alw"];
-                $empPaySlip->spl_alw_arrear = $row["spl_alw_arrear"];
-                $empPaySlip->overtime = $row["overtime"];
-                $empPaySlip->total_earned_gross = $row["total_earned_gross"];
-                $empPaySlip->pf_wages = $row["pf_wages"];
-                $empPaySlip->pf_wages_arrear = $row["pf_wages_arrear"];
-                $empPaySlip->epfr = $row["epfr"];
-                $empPaySlip->epfr_arrear = $row["epfr_arrear"];
-                $empPaySlip->edli_charges = $row["edli_charges"];
-                $empPaySlip->edli_charges_arrears = $row["edli_charges_arrears"];
-                $empPaySlip->pf_admin_charges = $row["pf_admin_charges"];
-                $empPaySlip->pf_admin_charges_arrears = $row["pf_admin_charges_arrears"];
-                $empPaySlip->employer_esi = $row["employer_esi"];
-                $empPaySlip->employer_lwf = $row["employer_lwf"];
-                $empPaySlip->ctc = $row["ctc"];
-                $empPaySlip->epf_ee = $row["epf_ee"];
-                $empPaySlip->epf_ee_arrear = $row['epf_ee_arrear'];
-                $empPaySlip->employee_esic = $row['employee_esic'];
-                $empPaySlip->prof_tax = $row['prof_tax'];
-                $empPaySlip->income_tax = $row["income_tax"];
-                $empPaySlip->stats_bonus = $row["stats_bonus"];
-                $empPaySlip->earned_stats_bonus = $row["earned_stats_bonus"];
-                $empPaySlip->earned_stats_arrear = $row["earned_stats_arrear"];
-                $empPaySlip->sal_adv = $row['sal_adv'];
-                $empPaySlip->canteen_dedn = $row['canteen_dedn'];
-                $empPaySlip->other_deduc = $row["other_deduc"];
-                $empPaySlip->lwf = $row["lwf"];
-                $empPaySlip->total_deductions = $row["total_deductions"];
-                $empPaySlip->net_take_home = $row["net_take_home"];
-                $empPaySlip->rupees = $row["rupees"];
-                $empPaySlip->el_opn_bal = $row["el_opn_bal"];
-                $empPaySlip->availed_el = $row["availed_el"] ?? 0;
-                $empPaySlip->balance_el = $row["balance_el"] ?? 0;
-                $empPaySlip->sl_opn_bal = $row["sl_opn_bal"] ?? 0;
-                $empPaySlip->availed_sl = $row["availed_sl"] ?? 0;
-                $empPaySlip->balance_sl = $row["balance_sl"] ?? 0;
-                $empPaySlip->rename = $row['rename'] ?? 0;
-                //$empPaySlip->Email = $row['email'];
-                $empPaySlip->greetings = $row['greetings'] ?? 0;
-                $empPaySlip->travel_conveyance = $row['travel_conveyance'] ?? 0;
-                $empPaySlip->other_earnings = $row['other_earnings'] ?? 0;
-                $empPaySlip->save();
+            if(empty($emp_payslip_data)){
+            $emp_payroll_id=VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_id)->first()->id;
+            $empPaySlip->emp_payroll_id= $emp_payroll_id;
+            $empPaySlip->basic = $row["basic"];
+            $empPaySlip->hra = $row["hra"];
+            $empPaySlip->child_edu_allowance = $row["child_edu_allowance"] ?? 0;
+            $empPaySlip->spl_alw = $row["spl_alw"] ?? 0;
+            $empPaySlip->total_fixed_gross = $row["total_fixed_gross"] ?? 0;
+            $empPaySlip->month_days = $row["month_days"] ;
+            $empPaySlip->worked_days = $row["worked_days"] ;
+            $empPaySlip->arrears_days = $row["arrears_days"] ;
+            $empPaySlip->lop = $row["lop"];
+            $empPaySlip->earned_basic = $row["earned_basic"];
+            $empPaySlip->basic_arrear = $row["basic_arrear"];
+            $empPaySlip->earned_hra = $row["earned_hra"];
+            $empPaySlip->hra_arrear = $row["hra_arrear"];
+            $empPaySlip->earned_child_edu_allowance = $row["earned_child_edu_allowance"];
+            $empPaySlip->child_edu_allowance_arrear = $row["child_edu_allowance_arrear"];
+            $empPaySlip->earned_spl_alw = $row["earned_spl_alw"];
+            $empPaySlip->spl_alw_arrear = $row["spl_alw_arrear"];
+            $empPaySlip->overtime = $row["overtime"];
+            $empPaySlip->ovetime_hours = $row["ovetime_hours"] ?? 0;
+            $empPaySlip->daily_allowance = $row["daily_allowance"] ?? 0;
+            $empPaySlip->total_earned_gross = $row["total_earned_gross"] ;
+            $empPaySlip->pf_wages = $row["pf_wages"] ?? 0;
+            $empPaySlip->pf_wages_arrear = $row["pf_wages_arrear"] ?? 0;
+            $empPaySlip->epfr = $row["epfr"] ?? 0;
+            $empPaySlip->epfr_arrear  = $row["epfr_arrear"] ?? 0;
+            $empPaySlip->edli_charges = $row["edli_charges"] ?? 0;
+            $empPaySlip->edli_charges_arrears = $row["edli_charges_arrears"];
+            $empPaySlip->pf_admin_charges = $row["pf_admin_charges"];
+            $empPaySlip->pf_admin_charges_arrears = $row["pf_admin_charges_arrears"];
+            $empPaySlip->employer_esi = $row["employer_esi"];
+            $empPaySlip->employer_lwf = $row["employer_lwf"];
+            $empPaySlip->ctc = $row["ctc"];
+            $empPaySlip->epf_ee = $row["epf_ee"];
+            $empPaySlip->epf_ee_arrear = $row['epf_ee_arrear'];
+            $empPaySlip->employee_esic = $row['employee_esic'];
+            $empPaySlip->prof_tax = $row['prof_tax'];
+            $empPaySlip->income_tax = $row["income_tax"];
+            $empPaySlip->stats_bonus = $row["stats_bonus"];
+            $empPaySlip->earned_stats_bonus = $row["earned_stats_bonus"];
+            $empPaySlip->earned_stats_arrear = $row["earned_stats_arrear"];
+            $empPaySlip->sal_adv = $row['sal_adv'];
+            $empPaySlip->canteen_dedn = $row['canteen_dedn'];
+            $empPaySlip->other_deduc = $row["other_deduc"];
+            $empPaySlip->lwf = $row["lwf"] ?? 0;
+            $empPaySlip->total_deductions = $row["total_deductions"];
+            $empPaySlip->net_take_home = $row["net_take_home"];
+            $empPaySlip->rupees = $row["rupees"] ;
+            $empPaySlip->el_opn_bal = $row["el_opn_bal"] ?? 0;
+            $empPaySlip->availed_el = $row["availed_el"] ?? 0;
+            $empPaySlip->balance_el = $row["balance_el"] ??0 ;
+            $empPaySlip->sl_opn_bal = $row["sl_opn_bal"] ?? 0;
+            $empPaySlip->availed_sl = $row["availed_sl"] ?? 0;
+            $empPaySlip->balance_sl = $row["balance_sl"] ?? 0;
+            $empPaySlip->rename = $row['rename'] ?? 0;
+            //$empPaySlip->Email = $row['email'];
+            $empPaySlip->greetings = $row['greetings'] ?? 0;
+            $empPaySlip->travel_conveyance = $row['travel_conveyance'] ?? 0;
+            $empPaySlip->other_earnings = $row['other_earnings'] ?? 0;
+            $empPaySlip->save();
             }
             //]);
 
