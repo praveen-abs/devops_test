@@ -1307,7 +1307,7 @@ class VmtEmployeePayCheckService
         }
 
 
-        dd($getpersonal);
+        // dd($getpersonal);
 
         if($type =="pdf"){
 

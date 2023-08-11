@@ -284,7 +284,7 @@ class VmtPayCheckController extends Controller
         $request->user_code = "BA002";
         $request->month = "05";
         $request->year = "2023";
-        $request->type = "pdf";
+        $request->type = "mail";
 
         return $employeePaySlipService->generatePayslip($request->user_code, $request->month,$request->year,$request->type);
 

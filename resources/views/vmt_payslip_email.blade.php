@@ -8,193 +8,207 @@ $bank_names = \DB::table('vmt_banks')->get();
 
 ?>
 
+
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+  <meta charset="utf-8">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <style>
 
-    <style>
-        .txt-left {
-            text-align: left;
-        }
+  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-        .txt-right {
-            text-align: right;
-        }
+  *{
+    font-family: 'Poppins', sans-serif;
+  }
 
-        .txt-center {
-            text-align: center;
-        }
-
-        .text-strong {
-            font-weight: 600;
-        }
-
-        .padding-t_0 {
-            padding-top: 0px;
-        }
-
-        .padding-b_0 {
-            padding-bottom: 0px;
-        }
-
-        .margin-t-b_0 {
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-
-        .padding-t-b_0 {
-            padding-bottom: 0px;
-            padding-top: 0px;
-        }
-
-        .mail-button {
-            font-size: 16px;
-            text-decoration: none;
-            font-weight: 600;
-            width: 100px;
-            height: 20px;
-            padding: 6px 15px;
-            background: transparent;
-            border-radius: 100px;
-            color: #fa9530 !important;
-            border: 2px solid #fa9530;
-
-        }
-
-        .mail-button.get-touch:hover {
-            background: #fa9530;
-            color: #ffffff;
-
-        }
-    </style>
+    .hover-bg-green-700:hover {
+      background-color: #15803d !important
+    }
+    .hover-bg-red-700:hover {
+      background-color: #b91c1c !important
+    }
+    .hover-text-orange-500:hover {
+      color: #f97316 !important
+    }
+    @media (max-width: 600px) {
+      .sm-mx-3 {
+        margin-left: 12px !important;
+        margin-right: 12px !important
+      }
+      .sm-w-full {
+        width: 100% !important
+      }
+      .sm-px-0 {
+        padding-left: 0 !important;
+        padding-right: 0 !important
+      }
+      .sm-px-2 {
+        padding-left: 8px !important;
+        padding-right: 8px !important
+      }
+      .sm-px-6 {
+        padding-left: 24px !important;
+        padding-right: 24px !important
+      }
+      .sm-py-3 {
+        padding-top: 12px !important;
+        padding-bottom: 12px !important
+      }
+      .sm-text-sm {
+        font-size: 14px !important
+      }
+    }
+  </style>
 </head>
-
-
-<body>
-    <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
-        style="max-width:552px; height: auto; margin: 0 auto;   font-size: 14px !important; color: #403e3c; line-height: 24px;table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
-        <tbody>
-
-            <tr>
-                <td>
-                    <table border="0" cellpadding="24" cellspacing="0" bgcolor="#ffffff"
-                        style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;padding-top:0px;">
-                        <tbody>
-                            <tr>
-                                <td align="center" style="padding:0;">
-
-                                    <table cellpadding="20" cellspacing="0" width="100%" align="center">
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="4" align="center" class="border-less">
-                                                    <img src={{ $client_logo }} style="height:45px;width:150px;"
-                                                        title="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4" align="center" class="border-less" style="">
-
-                                                    <p style="font-size:25px;font-weight:600;color:#fa9530;"
-                                                        class="margin-t-b_0 ">Pay Slip</p>
-
-                                                    <p>Please find the attached payslip for the month of <b>{{ strtoupper($month) }} - {{$year}}.</b></p>
-                                                    <p>You can also view your payslip from the <a href="{{ $loginLink }}"
-                                                        style="text-decoration: none;color:none;"><span style="color:#fa9530;">ABSHrms Portal</span></a>
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="padding-t-b_0">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td align="center" style="">
-                                                    This e-mail was generated from ABShrms if you think this is
-                                                    SPAM,please do report to <a href="info@abshrms.com"
-                                                        style="text-decoration: none;color:none;"><span
-                                                            style="color:#fa9530;">info@abshrms.com</span></a>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-bottom: 10px;padding-top:10px;">
-                                    <table style="text-align:center; width:100%; padding:10px 0px;">
-                                        <tbody>
-                                            <tr>
-                                                <td align="right" colspan="4" style="padding: 0;">
-                                                    <a href="#" class="">
-                                                        <img src="{{ URL::asset('assets/images/apple_play_store.png') }}"
-                                                            alt="" class=""
-                                                            style="margin:0px 0px 0px 20px;">
-                                                    </a>
-
-                                                </td>
-                                                <td align="left" colspan="4" style="padding: 0;">
-                                                    <a href="#" class="">
-                                                        <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}"
-                                                            alt="" class=""
-                                                            style="margin:0px 0px 0px 20px;">
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:0 !important;">
-                                    <table align="center" style="text-align:center;width:100%" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td align="center" width="100%" style="padding-bottom:0px !important;"
-                                                    style="margin-right: 10px">
-                                                    <div class="fm-sm-container">
-                                                        <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"
-                                                            target="_blank" style="margin-right: 20px"><img
-                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png"
-                                                                alt="LinkedIn"></a>
-                                                        <a href="https://www.instagram.com/ardenshr/" target="_blank"
-                                                            style="margin-right: 20px"><img
-                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
-                                                                alt="Instagram"></a>
-                                                        <a href="https://www.facebook.com/ArdensHR" target="_blank"
-                                                            style="margin-right: 20px"><img
-                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
-                                                                alt="Facebook"></a>
-                                                        <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
-                                                            target="_blank"><img
-                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png"
-                                                                alt="Youtube"></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-                    </table>
+<body style="margin: 0; width: 100%; padding: 0; -webkit-font-smoothing: antialiased; word-break: break-word">
+  <div role="article" aria-roledescription="email" aria-label lang="en">
+    <div class="sm-px-2" style="border-radius: 8px; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; background-color: #D0DBF0">
+      <table align="center" cellpadding="0" cellspacing="0" role="none">
+        <tr>
+          <td style="width: 600px; max-width: 100%">
+            <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
+              <tr>
+                <td class="sm-py-3 sm-px-2" style="padding: 12px">
+                  <table class="sm-w-full" style="margin-left: auto; margin-right: auto; margin-top: 16px; width: 500px" cellpadding="0" cellspacing="0" role="none">
+                    <tr>
+                      <td>
+                        <img src="{{ URL::asset('/assets/images/ABSlogo/ABS hrms Mobile logo(1).png')}}" width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: left">
+                        <img src={{ $client_logo }} width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: right">
+                      </td>
+                    </tr>
+                  </table>
+                  <table class="sm-w-full" style="margin-left: auto; margin-right: auto; width: 600px" cellpadding="0" cellspacing="0" role="none">
+                    <tr>
+                      <td style="width: 25%">
+                        <p style="background-color: #1e3a8a; padding: 2px"></p>
+                      </td>
+                      <td style="width: 25%;">
+                        <p style="background-color: #ea580c; padding: 2px"></p>
+                      </td>
+                      <td style="width: 25%;">
+                        <p style="background-color: #1e3a8a; padding: 2px;"></p>
+                      </td>
+                      <td style="width: 25%;">
+                        <p style="background-color: #ea580c; padding: 2px;"></p>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
-            </tr>
-        </tbody>
-    </table>
-</body>
+              </tr>
+              <tr>
+                <td class="sm-px-0" style="width: 100%; padding:20px 16px; text-align: left">
+                  <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
+                    <tr>
+                      <td>
+                        <table style="width: 100%; border-radius: 12px; background-color: #fff; padding-left: 32px; padding-right: 32px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="none">
+                          <tr>
+                            <td style="padding-top: 12px; padding-bottom: 12px; text-align: center; ">
+                              <p style="margin: 0 0 12px; font-size: 30px; line-height: 24px; color:#F9BE00; margin-top:20px;"> <span style="margin: 0 0 12px; font-size: 30px; font-weight: 600; line-height: 24px">Pay Slip</span></p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="width: 100%;">
+                              <p class="sm-text-sm" style="margin: 0 0 16px; text-align: center; color: #334155">
+                                Please find the attached payslip for the month of <b>{{ strtoupper($month) }}</b> - <b>{{ $year }}</b>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="width: 100%;">
+                              <p class="sm-text-sm" style="margin: 0 0 16px; text-align: center; color: #334155">
+                                You can also view your payslip from the <a href="{{ $loginLink }}" style="color:#F9BE00; text-decoration:none;">ABSHrms Portal</a>
+                              </p>
+                            </td>
+                          </tr>
 
+
+                          <tr>
+                            <td>
+                              <p class="sm-text-sm" style="margin: 32px 0 4px; color: #334155; text-align:center; margin-bottom:20px;">
+                                This e-mail was generated from ABShrms if you think this is SPAM,please do report to <a href="info@abshrms.com" style="color:#F9BE00;  text-decoration:none;">info@abshrms.com</a>
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="sm-px-6" style="padding-top: 8px; padding-bottom: 8px">
+                  <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
+                    <tr>
+                      <td style="text-align: center;">
+                        <p class="sm-text-sm" style="margin: 0; font-size: 18px; color: #334155">Cheers,</p>
+                        <p class="sm-text-sm" style="margin: 0; font-size: 18px; font-weight: 600; color: #f97316">ABS_OKR Automated System</p>
+                        <table class="sm-w-full" style="margin: 0 auto; width: 600px" cellpadding="0" cellspacing="0" role="none">
+                          <tr>
+                            <td style="width: 25%;">
+                              <p style="background-color: #1e3a8a; padding: 2px;"></p>
+                            </td>
+                            <td style="width: 25%;">
+                              <p style="background-color: #ea580c; padding: 2px;"></p>
+                            </td>
+                            <td style="width: 25%;">
+                              <p style="background-color: #1e3a8a; padding: 2px;"></p>
+                            </td>
+                            <td style="width: 25%;">
+                              <p style="background-color: #ea580c; padding: 2px;"></p>
+                            </td>
+                          </tr>
+                        </table>
+                        <p class="sm-text-sm" style="color: #334155; ">This e-mail was generated from ABShrms, if
+                          think
+                          this is a spam,please do report</p>
+                        <a href class="hover-text-orange-500" style="color: #f97316; text-decoration: none;">
+                          info@abshrms.com
+                        </a>
+                      </td>
+                    </tr>
+                    <tr style="padding-left: 8px">
+                      <td style="padding-top: 8px">
+                        <table class="sm-w-full" align="center" style="margin-top: 8px; width: 200px" cellpadding="0" cellspacing="0" role="none">
+                          <tr>
+                            <td align="center" style="width: 25%;">
+                              <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/" target="_blank"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png" alt="LinkedIn" style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0;"></a>
+                            </td>
+                            <td align="center" style="width: 25%;">
+                              <a href="https://www.instagram.com/ardenshr/" target="_blank"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png" alt="Instagram" style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0;"></a>
+                            </td>
+                            <td align="center" style="width: 25%;">
+                              <a href="https://www.facebook.com/ArdensHR" target="_blank"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png" alt="Facebook" style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0;"></a>
+                            </td>
+                            <td align="center" style="width: 25%;">
+                              <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg" target="_blank"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png" alt="Youtube" style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0;"></a>
+                            </td>
+                          </tr>
+                        </table>
+                        <table align="center" cellpadding="0" cellspacing="0" role="none">
+                          <tr style="margin-bottom: 8px; margin-top: 8px">
+                            <td style="padding-top: 12px">
+                              <a class="sm-text-sm" href="https://www.abshrms.com" target="_blank" style="text-align: center; font-size: 14px; color: #334155; text-decoration: none">Copyright <span style="border-radius: 9999px;">&#169; </span>abshrms.com</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
 </html>
+
+

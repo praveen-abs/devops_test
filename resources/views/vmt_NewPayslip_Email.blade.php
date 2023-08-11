@@ -7,20 +7,8 @@
   <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
   <meta name="color-scheme" content="light dark">
   <meta name="supported-color-schemes" content="light dark">
-  <!--[if mso]>
-  <noscript>
-    <xml>
-      <o:OfficeDocumentSettings xmlns:o="urn:schemas-microsoft-com:office:office">
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-      </o:OfficeDocumentSettings>
-    </xml>
-  </noscript>
   <style>
-    td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
-  </style>
-  <![endif]-->
-  <style>
-   
+
   @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
   *{
@@ -122,7 +110,7 @@
                           <tr>
                             <td style="width: 100%;">
                               <p class="sm-text-sm" style="margin: 0 0 16px; text-align: center; color: #334155">
-                                You can also view your payslip from the <a href="" style="color:#F9BE00; text-decoration:none;">ABSHrms Portal</a> 
+                                You can also view your payslip from the <a href="" style="color:#F9BE00; text-decoration:none;">ABSHrms Portal</a>
                               </p>
                             </td>
                           </tr>
@@ -131,7 +119,7 @@
                           <tr>
                             <td>
                               <p class="sm-text-sm" style="margin: 32px 0 4px; color: #334155; text-align:center; margin-bottom:20px;">
-                                This e-mail was generated from ABShrms if you think this is SPAM,please do report to <a href="" style="color:#F9BE00;  text-decoration:none;">info@abshrms.com</a> 
+                                This e-mail was generated from ABShrms if you think this is SPAM,please do report to <a href="" style="color:#F9BE00;  text-decoration:none;">info@abshrms.com</a>
                               </p>
                             </td>
                           </tr>
