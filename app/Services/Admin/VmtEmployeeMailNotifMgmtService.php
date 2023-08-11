@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-
+use App\jobs\WelcomeMailJobs;
 use App\Models\VmtClientMaster;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -22,6 +22,7 @@ use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
 use App\Mail\ActivationMail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -46,15 +47,17 @@ class VmtEmployeeMailNotifMgmtService {
         return json_encode( $user_email);
     }
 
-    public function send_WelcomeMailNotification($user_code){
+    public function send_WelcomeMailNotification($user_code,$mail_type){
 
         //Validate
         $validator = Validator::make(
             $data = [
                 'user_code' => $user_code,
+                'mail_type' => $mail_type,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
+                "mail_type" => 'required',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -72,17 +75,31 @@ class VmtEmployeeMailNotifMgmtService {
 
 
         try{
-            $user_mail = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-            ->where('users.user_code',$user_code)
-            ->first()->email;
+
+
+            if($mail_type == 'bulk'){
+
+                $user_mail = User::whereIn('user_code',$user_code)->get(['email','user_code']);
+
+            }else if($mail_type == 'normal'){
+
+                $user_mail = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                ->where('users.user_code',$user_code)
+                ->get(['email','user_code']);
+            }
+
 
             $client_id=User::where('user_code',$user_code)->first();
             $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
+            foreach ($user_mail as $key => $single_mail) {
 
-            $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                 $isEmailSent =\Mail::to($single_mail['email'])->send(new WelcomeMail($single_mail['user_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),"", $image_view,$VmtClientMaster->abs_client_code));
+
+
+
 
             //Store the sent status in ' vmt_user_mail_status'
 
@@ -95,7 +112,7 @@ class VmtEmployeeMailNotifMgmtService {
             {
                 //update
                $query_emp_welcomemailstatus = $query_emp_welcomemailstatus->first();
-               $query_emp_welcomemailstatus->welcome_mail_status  = $isSent? '1':'0';
+               $query_emp_welcomemailstatus->welcome_mail_status  = $isEmailSent? '1':'0';
                $query_emp_welcomemailstatus->save();
 
             }
@@ -104,10 +121,10 @@ class VmtEmployeeMailNotifMgmtService {
                 //create new record
                $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
                $query_emp_welcomemailstatus->user_id=$user_id;
-               $query_emp_welcomemailstatus->welcome_mail_status =$isSent? '1':'0';
+               $query_emp_welcomemailstatus->welcome_mail_status =$isEmailSent? '1':'0';
                $query_emp_welcomemailstatus->save();
             }
-
+        }
 
             return response()->json([
                 'status' => 'success',
