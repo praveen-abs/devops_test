@@ -67,7 +67,7 @@
             </td>
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">Employee Number</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code']}}</p>
             </td>
@@ -86,7 +86,7 @@
 
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">Designation </p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation']}}</p>
             </td>
@@ -105,7 +105,7 @@
 
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">Bank Account</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_account_number']}}</p>
             </td>
@@ -139,7 +139,7 @@
             </td>
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">ACTUAL PAYABLE DAYS</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
             </td>

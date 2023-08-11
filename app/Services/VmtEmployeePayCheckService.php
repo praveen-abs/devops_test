@@ -1124,7 +1124,7 @@ class VmtEmployeePayCheckService
     public function generatePayslip($user_code, $payroll_date)
     {
 
-        $user_code = "BA002";
+        $user_code = "LAL0003";
         $payroll_date = "2023-06-01";
 
 
@@ -1307,6 +1307,7 @@ class VmtEmployeePayCheckService
         if($type =="pdf"){
 
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+            
 
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
