@@ -68,7 +68,7 @@
             </td>
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">Employee Number</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code']}}</p>
             </td>
@@ -87,7 +87,7 @@
 
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">Designation </p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation']}}</p>
             </td>
@@ -106,7 +106,7 @@
 
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">Bank Account</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_account_number']}}</p>
             </td>
@@ -140,7 +140,7 @@
             </td>
         </tr>
         <tr class="td" style="height: 30px">
-            <td class=" " style="height: 30px;width:25%;">
+            <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;">ACTUAL PAYABLE DAYS</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
             </td>
@@ -168,17 +168,17 @@
                 <table style="width: 100%; margin-top:0%;border-right: 0.4px solid rgba(128, 128, 128, 0.603); padding-right:8px;" >
                     <tr style="height: 12px">
                         <td colspan="2" style="height: 12px">
-                            <h1 style="font-size:10px; font-weight:900"><b>EARNINGS</b></h1>
+                            <h1 style="font-size:10px; "><b>EARNINGS</b></h1>
                         </td>
                     </tr>
                     @foreach ($earnings[0] as $key => $single_earnings)
                     @if ($key == "Total Earnings")
                     <tr style="height: 12px; ">
                         <td style="height: 12px;">
-                            <p style="font-size:10px;margin-top:-4px; font-weight:900 ">{{ $key }}</p>
+                            <h1 style="font-size:10px;margin-top:-4px; ">{{ $key }}</h1>
                         </td>
                         <td>
-                            <p style="font-size:10px; float: right;margin-top:-4px; font-weight:900">{{ $single_earnings }}</p>
+                            <p style="font-size:10px; float: right;margin-top:-4px; ">{{ $single_earnings }}</p>
                         </td>
                     </tr>
                         @else
@@ -206,10 +206,10 @@
                     @if ($key =="Total Contribution")
                     <tr style="height: 12px">
                         <td style="height: 12px">
-                            <p style="font-size:10px; margin-top:-4px; font-weight:900">{{ $key }}</p>
+                            <h1 style="font-size:10px; margin-top:-4px; ">{{ $key }}</h1>
                         </td>
                         <td>
-                            <p style="font-size:10px; float: right; margin-top:-4px; font-weight:900">{{ $single_contribution }}</p>
+                            <p style="font-size:10px; float: right; margin-top:-4px; ">{{ $single_contribution }}</p>
                         </td>
                     </tr>
                         @else
@@ -232,10 +232,10 @@
                     @if ( $key == "Total Deduction")
                     <tr>
                         <td>
-                            <p  style="font-size:10px; margin-top:-4px; font-weight:900">{{ $key }}</p>
+                            <h1  style="font-size:10px; margin-top:-4px; ">{{ $key }}</h1>
                         </td>
                         <td>
-                            <p style="font-size:10px; float: right; margin-top:-4px; font-weight:900">{{ $single_taxdeduction }}</p>
+                            <p style="font-size:10px; float: right; margin-top:-4px; ">{{ $single_taxdeduction }}</p>
                         </td>
                     </tr>
                         @else
@@ -265,7 +265,7 @@
                 <p style="font-size:12px font-weight:900">{{ $key }}</p>
             </td>
             <td colspan="4">
-                <p style="font-size:12px; margin-left:110px; font-weight:900">{{  $total_sumvalue }}</p>
+                <p style="font-size:12px; margin-left:110px; ">{{  $total_sumvalue }}</p>
             </td>
         </tr>
             @else
@@ -283,13 +283,20 @@
             <td colspan="2">
                 <p style="font-size: 12px;"><b>**Note :</b> All amounts displayed in this payslip are in <b>INR</b></p>
             </td>
-
         </tr>
         <tr>
             <td colspan="3">
                 <p style="font-size: 10px; margin-top:40px">*This is computer generated statement, does not require signature</p>
             </td>
         </tr>
+
+        <tr style="width: 100%">
+            <td colspan="4" style="height: 0px">
+                <p style="font-size: 12px; float:right; color:#000;">Generated by</p>
+                <p style="font-size: 12px;color: gray; float:right;">Generated by</p>
+            </td>
+        </tr>
+
     </table>
 </body>
 </html>

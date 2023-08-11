@@ -1121,11 +1121,11 @@ class VmtEmployeePayCheckService
         }
     }
 
-    public function generatePayslip($user_code, $payroll_date)
+    public function generatePayslip($user_code, $payroll_date,$month,$year)
     {
 
         $user_code = "BA002";
-        $payroll_date = "2023-06-01";
+
 
 
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
@@ -1138,7 +1138,12 @@ class VmtEmployeePayCheckService
             ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
-            ->where('payroll_date', $payroll_date);
+            ->whereYear('payroll_date',$year)
+            ->whereMonth('payroll_date',$month);
+            // ->get()->toArray();
+
+            // dd($payroll_data);
+
 
         $getpersonal['client_details'] = $payroll_data->get(
             [
@@ -1157,6 +1162,7 @@ class VmtEmployeePayCheckService
                     'vmt_employee_details.doj',
                     'vmt_department.name as department_name',
                     'vmt_employee_office_details.designation',
+                    'vmt_employee_office_details.officical_mail',
                     'vmt_employee_details.pan_number',
                     'vmt_banks.bank_name',
                     'vmt_employee_details.bank_account_number',
@@ -1295,14 +1301,12 @@ class VmtEmployeePayCheckService
         }
 
 
-        // dd($getpersonal);
-
-
-            $type = "html";
+            $type = "mail";
 
         if($type =="pdf"){
 
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+
 
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
@@ -1321,6 +1325,28 @@ class VmtEmployeePayCheckService
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_view', $getpersonal);
 
             return $html;
+
+        }else if($type =="mail"){
+
+            $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+
+            $pdf = new Dompdf($options);
+            $pdf->loadhtml($html, 'UTF-8');
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+
+            $isSent = \Mail::to($getpersonal['personal_details'][0]['officical_mail'])
+            ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
+
+            if($isSent){
+                dd('success');
+            }else{
+                dd('failure');
+            }
 
         }
 
