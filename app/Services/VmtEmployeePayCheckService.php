@@ -1138,7 +1138,11 @@ class VmtEmployeePayCheckService
             ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
-            ->where('payroll_date', $payroll_date);
+            ->where('payroll_date', $payroll_date)
+            ->get()->toArray();
+
+            dd($payroll_data);
+
 
         $getpersonal['client_details'] = $payroll_data->get(
             [
@@ -1295,7 +1299,7 @@ class VmtEmployeePayCheckService
         }
 
 
-        // dd($getpersonal);
+        dd($getpersonal);
 
 
             $type = "html";
