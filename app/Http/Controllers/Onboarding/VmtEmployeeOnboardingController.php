@@ -12,6 +12,7 @@ use App\Models\Department;
 use App\Models\VmtBloodGroup;
 use App\Models\Bank;
 use App\Models\VmtEmployee;
+use App\jobs\WelcomeMailJobs;
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Validator;
@@ -513,8 +514,10 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
+                ->delay(Carbon::now()->addSeconds(5));
 
+                 dispatch($isEmailSent);
                 if ($isEmailSent) {
                     $mail_message = 'success';
                 } else {
@@ -648,7 +651,11 @@ class VmtEmployeeOnboardingController extends Controller
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+
+                $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
+                  ->delay(Carbon::now()->addSeconds(5));
+
+                dispatch($isEmailSent);
 
                 if ($isEmailSent) {
                     $mail_message = 'success';
