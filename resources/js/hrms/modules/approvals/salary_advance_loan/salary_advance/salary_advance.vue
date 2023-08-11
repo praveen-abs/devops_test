@@ -48,8 +48,8 @@
                     </div>
                 </div>
             </div>
-            <!-- v-if="!useEmpData" -->
-            {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
+            <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
+
             <div class="table-responsive">
                 <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
                     :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -59,51 +59,42 @@
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                    <!-- <Column :expander="true" /> -->
-                    <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
-                    <Column field="id" header="Request ID" sortable></Column>
+                    <Column field="request_id" header="Request ID" sortable></Column>
                     <Column field="user_code" header="Employee ID">
                     </Column>
                     <Column field="name" header="Employee Name" :sortable="false">
                         <template #body="slotProps">
                             <button class="fw-semibold text-primary"
-                                @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">
+                                @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">
                                 {{ slotProps.data.name }} </button>
                         </template>
                     </Column>
                     <Column field="advance_amount" header="Advance Amount"></Column>
                     <Column field="dedction_date" header="Date"> </Column>
-                    <Column field="status" header="Status">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.status == 'Pending'" class="text-orange-500">
-                                {{ slotProps.data.status }}
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 'Approved'" class=" text-green-500">
-                                {{ slotProps.data.status }}
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
-                                {{ slotProps.data.status }}
-                            </h6>
-                        </template>
-                    </Column>
+
+                    <Column field="status_flow" header="Status" style="min-width: 12rem"> </Column>
+
                     <Column field="" header="Action">
                         <template #body="slotProps">
                             <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
                             </button>
-                            <OverlayPanel ref="op" style="width: 160px;margin-top:12px !important;margin-right: 20px !important;" class="p-0 m-0">
-                                <div class=" d-flex flex-column p-0 m-0" >
+                            <OverlayPanel ref="op"
+                                style="width: 160px;margin-top:12px !important;margin-right: 20px !important;"
+                                class="p-0 m-0">
+                                <div class=" d-flex flex-column p-0 m-0">
                                     <!-- bg-green-200 -->
                                     <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
                                         @click="showConfirmDialog(slotProps.data)">view</button>
-                                            <!-- bg-blue-500 -->
+                                    <!-- bg-blue-500 -->
                                     <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
-                                        @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">passed
+                                        @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">passed
                                         Transaction</button>
                                 </div>
                             </OverlayPanel>
                         </template>
                     </Column>
                 </DataTable>
+                <EmployeePayable :source="sample"/>
 
                 <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class="" dataKey="id"
                     @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
@@ -112,15 +103,17 @@
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                    <Column field="id" header="Request ID" sortable></Column>
-                    <Column field="advance_amount" header="Advance Amount">
+                    <Column field="request_id" header="Request ID" sortable></Column>
+                    <Column field="borrowed_amount" header="Advance Amount">
                     </Column>
-                    <Column field="paid_on" header="Paid On">
+                    <Column field="requested_date" header="Paid On">
                     </Column>
-                    <Column field="Expected_Return" header="Expected Return">
+                    <Column field="dedction_date" header="Expected Return">
                     </Column>
-                    <Column field="status" header="Expected Return">
+                    <Column field="sal_adv_status" header="Status">
+
                     </Column>
+                    <!-- {{ useEmpData }} -->
                 </DataTable>
 
 
@@ -128,6 +121,8 @@
             </div>
         </div>
     </div>
+
+
 
     <Dialog header="Confirmation" v-model:visible="canShowConfirmationAll"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '400px' }" :modal="true">
@@ -149,36 +144,39 @@
             <h1 class="mx-3 fs-4 text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary
                 Advance Request</h1>
         </template>
-        <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
+        <div class="flex pb-2 bg-gray-100 rounded-lg gap-3">
             <div class="w-4 p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
-                {{ currentlySelectedRowData.Advance_Amount }}
                 <input id="rentFrom_month"
                     class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="required_Amount.required_Amount">
-                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : 20,000</p>
+                    v-model="val.advance_amount" disabled>
+                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ val.eligible_amount }}</p>
             </div>
             <div class="w-5 p-4 mx-4 ">
                 <span class="font-semibold">Required Amount</span>
                 <div class="w-full">
                     <p class="my-2 text-gray-600 fs-5 text-md text-clip">The advance amount will be deducted from the next
                         month's
-                        salary <strong class="text-black fs-5">(ie, March 31, 2023)</strong> </p>
+                        salary <strong class="text-black fs-5">(ie,{{ val.dedction_date }})</strong> </p>
                 </div>
             </div>
         </div>
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-2 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Reason</span>
-            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">Lorem ipsum dolor sit.</div>
+            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{ val.reason }}</div>
         </div>
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-2 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Your Comments</span>
-            <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments" autoResize type="text"
-                rows="3" style="border:none; outline-: none;" />
+            <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments.reviewer_comments" autoResize type="text"
+                rows="3" style="border:none; outline-: none;"  :class="[v$.reviewer_comments.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+            <br>
+            <span v-if="v$.reviewer_comments.$error" class="font-semibold text-red-400 fs-6">
+                {{ v$.reviewer_comments.$errors[0].$message }}
+            </span>
         </div>
         <div class="float-right ">
-            <button class="btn bg-red-500 text-white px-5" @click="approveAndReject('Reject')">Reject</button>
-            <button class="mx-4 btn bg-green-500  text-white px-5" @click="approveAndReject('Approve')">Approve</button>
+            <button class="btn bg-red-500 text-white px-5" @click="submitForm(-1)">Reject</button>
+            <button class="mx-4 btn bg-green-500  text-white px-5" @click="submitForm(1)">Approve</button>
         </div>
     </Dialog>
 </template>
@@ -186,10 +184,14 @@
 
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import EmployeePayable from '../../../Shared/EmployeePayable.vue';
+import { onMounted, reactive, ref,computed } from 'vue';
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
-import { required } from '@vuelidate/validators';
+
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators';
+import { useNow, useDateFormat } from '@vueuse/core';
 
 const SalaryAdvanceApprovals = UseSalaryAdvanceApprovals();
 
@@ -203,13 +205,20 @@ const toggle = (event) => {
 const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
 const canShowConfirmationAll = ref(false);
-const reviewer_comments = ref();
+const reviewer_comments = reactive({
+    reviewer_comments:""
+});
 const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
-const required_Amount = reactive({
-    required_Amount: ""
-});
+
+const val = ref();
+
+
+const sample = ref([
+    {id:1,name:"simma"}
+])
+
 
 onMounted(() => {
     SalaryAdvanceApprovals.getEmpDetails();
@@ -228,18 +237,17 @@ const filters = ref({
 
 
 function showConfirmDialog(selectedRowData, status) {
-    console.log(selectedRowData);
+
     showAppoverDialog.value = true;
     currentlySelectedStatus.value = status;
     currentlySelectedRowData.value = selectedRowData;
-    required_Amount.required_Amount = selectedRowData.Advance_Amount
-    console.log(required_Amount.required_Amount);
+    val.value = selectedRowData;
+
 }
 
 async function approveAndReject(status) {
     showAppoverDialog.value = false;
-    console.log(currentlySelectedRowData.value, status);
-    await SalaryAdvanceApprovals.SAapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
+    await SalaryAdvanceApprovals.SAapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.reviewer_comments)
     currentlySelectedStatus.value = status;
 }
 
@@ -259,19 +267,34 @@ async function processBulkApproveReject(status) {
 
 
 function view_more(selectedRowData, user_code, currentName) {
-    console.log(selectedRowData);
-    // currentlySelectedStatus.value  = selectedRowData;
+
     useEmpData.value = selectedRowData;
     CurrentName.value = currentName;
     CurrentUser_code.value = user_code
-    console.log(user_code);
-    console.log(currentName);
+
 }
 
+const rules = computed(() => {
+    return {
+        reviewer_comments: { required },
+    }
+})
 
-// function emp_details()
+
+const v$ = useValidate(rules, reviewer_comments )
 
 
+const submitForm = (val) => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        approveAndReject(val);
+        SalaryAdvanceApprovals.getEmpDetails();
+    } else {
+        console.log('Form failed validation')
+    }
+}
 
 </script>
 
@@ -283,7 +306,7 @@ function view_more(selectedRowData, user_code, currentName) {
 .dropdown:hover .dropdown-content {
     display: block !important;
 }
-.p-overlaypanel .p-overlaypanel-content{
+
+.p-overlaypanel .p-overlaypanel-content {
     padding: 0;
-}
-</style>
+}</style>
