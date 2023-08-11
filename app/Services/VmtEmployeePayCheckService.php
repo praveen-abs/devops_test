@@ -1307,6 +1307,7 @@ class VmtEmployeePayCheckService
 
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
 
+
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
                 $options->set('isRemoteEnabled', true);
