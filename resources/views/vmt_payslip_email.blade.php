@@ -105,9 +105,6 @@ $bank_names = \DB::table('vmt_banks')->get();
                                                     <p>You can also view your payslip from the <a href="{{ $loginLink }}"
                                                         style="text-decoration: none;color:none;"><span style="color:#fa9530;">ABSHrms Portal</span></a>
                                                     </p>
-
-
-
                                                 </td>
 
                                             </tr>
@@ -194,15 +191,10 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                         </tbody>
                     </table>
-
                 </td>
             </tr>
-
-
-
         </tbody>
     </table>
-
 </body>
 
 </html>
