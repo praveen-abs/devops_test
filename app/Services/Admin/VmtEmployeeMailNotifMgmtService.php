@@ -79,13 +79,13 @@ class VmtEmployeeMailNotifMgmtService {
 
             if($mail_type == 'bulk'){
 
-                $user_mail = User::whereIn('user_code',$user_code)->get(['email']);
+                $user_mail = User::whereIn('user_code',$user_code)->get(['email','user_code']);
 
             }else if($mail_type == 'normal'){
 
-                $user_mail[] = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                $user_mail = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                 ->where('users.user_code',$user_code)
-                ->first()->email;
+                ->get(['email','user_code']);
             }
 
 
@@ -96,10 +96,9 @@ class VmtEmployeeMailNotifMgmtService {
 
             foreach ($user_mail as $key => $single_mail) {
 
-            $isEmailSent = (new WelcomeMailJobs($single_mail,$user_code, 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code))
-                ->delay(Carbon::now()->addSeconds(5));
+                 $isEmailSent =\Mail::to($single_mail['email'])->send(new WelcomeMail($single_mail['user_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),"", $image_view,$VmtClientMaster->abs_client_code));
 
-                dispatch($isEmailSent);
+
 
 
             //Store the sent status in ' vmt_user_mail_status'

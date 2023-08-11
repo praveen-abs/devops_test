@@ -514,10 +514,8 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
-                ->delay(Carbon::now()->addSeconds(5));
+                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-                 dispatch($isEmailSent);
                 if ($isEmailSent) {
                     $mail_message = 'success';
                 } else {
@@ -652,10 +650,12 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
-                  ->delay(Carbon::now()->addSeconds(5));
+                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-                dispatch($isEmailSent);
+                // $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
+                //   ->delay(Carbon::now()->addSeconds(5));
+
+                // dispatch($isEmailSent);
 
                 if ($isEmailSent) {
                     $mail_message = 'success';

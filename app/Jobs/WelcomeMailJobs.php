@@ -20,7 +20,7 @@ class WelcomeMailJobs implements ShouldQueue
      * @return void
      */
 
-     public $tries = 6;
+     public $tries = 20;
 
 
 
@@ -51,9 +51,17 @@ class WelcomeMailJobs implements ShouldQueue
     public function handle()
     {
         //
+        logger()->info('My Log message before Exception');
 
        $response = \Mail::to($this->Email)->send(new WelcomeMail($this->uEmail, $this->uPassowrd,$this->loginLink, $this->filename, $this->image_view, $this->client_code));
 
        return ($response);
+
+
+       throw new \Exception("Message is Logged before the Exception but the job is failed", 1);
+
+       //code below the exception won't work
+
+       logger()->info('My Log message after Exception');
     }
 }
