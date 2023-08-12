@@ -1,7 +1,7 @@
 <template>
     <div class="w-full my-4">
         <div class="flex mx-2">
-            <div class="">
+            <div class="w-9">
                 <p class="font-semibold text-gray-600 fs-6">Adhoc Components refer to salary components that are not
                     part of an employee regular monthly pay and are typically added for a specific payroll month. These
                     compenents can take various forms.such as a joining bonus,reimbursements,leave encashment at the end
@@ -11,10 +11,10 @@
                 <InputText class="w-full" placeholder="Search...." />
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
-            <div class="">
+        <div class="flex gap-8  my-4 ">
+            <div class="w-6">
                 <div class="flex justify-between  my-4">
-                    <p class="mx-1 font-semibold fs-5.5">Adhoc Allowances</p>
+                    <p class="w-4 mx-1 font-semibold fs-5.5">Adhoc Allowances</p>
                     <button class="text-blue-500" @click="dailogAdhocComponents = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add new</button>
                 </div>
                 <div id="table">
@@ -35,10 +35,10 @@
 
                 </div>
             </div>
-            <div class="">
+            <div class="w-6">
                 <div>
                     <div class="flex justify-between mx-2 my-4">
-                        <p class="font-semibold fs-5.5">Deductions</p>
+                        <p class="w-4 font-semibold fs-5.5">Deductions</p>
                         <button class="text-blue-500" @click="dailogDeduction = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add new</button>
                     </div>
                     <div id="table">

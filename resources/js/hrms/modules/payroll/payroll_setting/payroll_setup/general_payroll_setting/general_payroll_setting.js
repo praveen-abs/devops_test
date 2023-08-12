@@ -1,14 +1,13 @@
+import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../assests/tailwind.css';
-
+import '../../../.././../../../public/assets/css/tailwind.css';
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
-import Sidebar from 'primevue/sidebar';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -27,28 +26,29 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
+import InputNumber from 'primevue/inputnumber'
+import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
-import Chips from 'primevue/chips'
-import MultiSelect from 'primevue/multiselect';
-import InputNumber from 'primevue/inputnumber'
-import InputMask from 'primevue/inputmask'
-import OverlayPanel from 'primevue/overlaypanel';
-import Tag from 'primevue/tag'
-import Accordion from 'primevue/accordion';
-import AccordionTab from 'primevue/accordiontab';
-import SelectButton from 'primevue/selectbutton';
+import Chips from 'primevue/chips';
+import Steps from 'primevue/steps';
+import { router } from "./router";
 
-import ReportsModule from './ReportsModule.vue'
 
-const app = createApp(ReportsModule);
+
+import general_payroll_setting from './general_payroll_setting.vue'
+
+
+const app = createApp(general_payroll_setting);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
-app.use(pinia);
+app.use(pinia)
+app.use(router);
+
 
 
 app.directive('tooltip', Tooltip);
@@ -71,15 +71,8 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
-app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
-app.component('InputMask', InputMask)
-app.component('OverlayPanel',OverlayPanel)
-app.component('Tag',Tag)
-app.component('Sidebar',Sidebar)
-app.component('Accordion',Accordion)
-app.component('AccordionTab',AccordionTab)
-app.component('SelectButton',SelectButton)
+app.component('Steps', Steps)
 
-app.mount("#ReportsModule");
+app.mount("#general_payroll_setting");
 

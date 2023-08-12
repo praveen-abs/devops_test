@@ -1,12 +1,5 @@
 <template>
-
-    <LeaveAttendanceDailyWages v-if="route.params.module == 'leave'" />
-    <newJoineeAndExitEmployeeVue v-else-if="route.params.module == 'attendance'"  />
-    <bonusSalaryRevision v-else-if="route.params.module == 'Salary-Revisions'" />
-    <reimbursementAdhoc v-else-if="route.params.module == 'Reimbursement'"  />
-    <salaryHold v-else-if="route.params.module == 'Salaries-Hold'" />
-    <overRide v-else-if="route.params.module == 'Override'"  />
-    <div class="w-full" v-else>
+    <div class="w-full" v-if="route.params.module">
         <!--Current  Financial Year  calculation -->
         <div class="">
             <CurrentFinancialYearStatus />
@@ -32,8 +25,14 @@
             </div>
         </div>
     </div>
+    <LeaveAttendanceDailyWages v-if="route.params.module == 'leave'" />
+    <newJoineeAndExitEmployeeVue v-if="route.params.module == 'attendance'"  />
+    <bonusSalaryRevision v-if="route.params.module == 'Salary-Revisions'" />
+    <reimbursementAdhoc v-if="route.params.module == 'Reimbursement'"  />
+    <salaryHold v-if="route.params.module == 'Salaries-Hold'" />
+    <overRide v-if="route.params.module == 'Override'"  />
 
-    <!-- <managePayment /> -->
+    <managePayment />
 
 </template>
 
@@ -67,6 +66,6 @@ const usePayrun = payrunMainStore()
 
 <style>
 .page-content {
-    padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+    padding: calc(40px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 </style>

@@ -3,15 +3,10 @@
 @import "./components/card";
 @import "./components/calendar";
 // @import "./utilities/helpers";
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins&display=swap');
-
 
 
 * {
     // font-size: 1vw;
-    // font-family: ;
-    font-family: 'Lobster', cursive;
-    font-family: 'Poppins', sans-serif;
     font-weight: $font-weight-medium;
     box-sizing: border-box;
 }
@@ -25,7 +20,6 @@
 body {
     // background-color: $bg-body;
     background-color: $bg-body;
-
 }
 
 .collapse {
