@@ -36,6 +36,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
                 //Reports
+                'resources/js/hrms/modules/reports/ReportsModule.js',
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
                 //Attendance Detailed Report
@@ -163,11 +164,11 @@ export default defineConfig({
                 //approvals_salary_advance
                 'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js',
 
-                // login page
-                'resources/js/hrms/modules/login_Page/login_Page.js',
+                // salary Revision
+               'resources/js/hrms/modules/payroll/salary_Revision/salary_Revision.js',
 
-                // Employee Payables Details
-                'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js'
+            //    Exit approval
+            'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
 
 
             ],

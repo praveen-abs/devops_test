@@ -9,7 +9,7 @@
         </div> -->
         <div class="row">
             <div class="col-6 d-flex px-4">
-                <p>EPF Details</p>
+                <p class="fs-5 fw-semibold">EPF Details</p>
                 <button @click="openPosition('top')"><i class="pi pi-pencil"></i>
                 </button>
             </div>
@@ -22,55 +22,61 @@
 
             </div>
         </div>
-        <div class="flex gap-6 mx-1">
-            <div class="flex w-6 p-4 my-1 bg-gray-100 rounded-lg shadow-md border-1">
-                <div class="w-6 mr-3">
-                    <div class="my-1 ">
-                        <h5 class="my-2 text-lg font-semibold">EPF Number</h5>
-                        <div class="flex gap-8 justify-evenly ">
-                            <div class="w-full">
-                                <InputText class="w-full h-10" />
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-6  p-3 my-1 bg-gray-100 rounded-lg shadow-md border-1">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-6">
+                        <div class="my-1 ">
+                            <h5 class="my-2 fs-6 font-semibold">EPF Number</h5>
+                            <div class="flex gap-8 justify-evenly ">
+                                <div class="w-full">
+                                    <InputText class="w-full h-10" v-model="usePayroll.addNewEpf.epf_number" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-4">
+                            <h5 class="my-2 fs-6 font-semibold">
+                                Deduction Cycle
+                            </h5>
+                            <div class="flex gap-8 justify-evenly">
+                                <div class="w-full">
+                                    <InputText class="w-full h-10" v-model="usePayroll.addNewEpf.epf_deduction_cycle" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="my-4">
-                        <h5 class="my-2 text-lg font-semibold">
-                            Deduction Cycle
-                        </h5>
-                        <div class="flex gap-8 justify-evenly">
-                            <div class="w-full">
-                                <InputText class="w-full h-10" />
-                            </div>
-                        </div>
+                    <div class="col-span-6 items-center justify-center my-auto p-3">
+                        <input type="checkbox" class="mr-3 rounded-sm" style="width: 18px ; height: 20px;" name="" id=""
+                            v-model="usePayroll.addNewEpf.is_epf_num_default">
+                        <label for="" class=" text-gray-600 fs-6">Is Default</label>
+                        <p class=" text-gray-600 w-full mt-1 text-xs font-semibold ">
+                            (Note: Once employees are onboarded they will be automatically enrolled in this PF scheme. Any
+                            modifications to the enrolement can only be made before the start of payroll processing )
+                        </p>
                     </div>
-                </div>
-                <div class="w-6 pl-4 pt-6">
-                    <input type="checkbox" class="mr-3" style="width: 18px ; height: 20px;" name="" id=""
-                        >
-                    <label for="" class=" text-gray-600 fs-5">Is Default</label>
-                    <p class=" text-gray-600 w-full mt-1">
-                        (Note: Once employees are onboarded they will be automatically enrolled in this PF scheme. Any
-                        modifications to the enrolement can only be made before the start of payroll processing )
-                    </p>
                 </div>
 
             </div>
 
-            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
+            <div class=" col-span-6 p-4 my-4  rounded-lg shadow-md border-1 bg-gray-100">
                 <div class="mx-2 my-4 d-flex align-center">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;"
+                        :true-value=1 :false-value=0 v-model="usePayroll.addNewEpf.employer_contrib_in_ctc">
                     <label for="" class="fs-6  text-gray-600">Employer's Contribution is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;"
+                        :true-value=1 :false-value=0 v-model="usePayroll.addNewEpf.employer_edli_contri_in_ctc">
                     <label for="" class=" text-gray-600">Employer's EDLI Contribution is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;"
+                        :true-value=1 :false-value=0 v-model="usePayroll.addNewEpf.admin_charges_in_ctc">
                     <label for="" class=" text-gray-600">Admin Charges is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;"
+                        :true-value=1 :false-value=0 v-model="usePayroll.addNewEpf.override_pf_contrib_rate">
                     <label for="" class=" text-gray-600">Override PF Contribution rate at employee level</label>
                 </div>
             </div>
@@ -79,40 +85,42 @@
             <p class="fs-5 fw-semibold">Employee/Employeer Contribution</p>
             <p class="text-gray-600">Note: The Contribution made by both employers and employees will remain the same</p>
         </div>
-        <div class="flex gap-6 ">
-            <div class="w-6">
-                <div class="p-4 my-4 bg-gray-100 rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2">
+                <div class="p-3 my-4 bg-gray-100 rounded-lg shadow-md border-1">
                     <div class="my-4">
-                        <h5 class="my-2 text-lg font-semibold">
+                        <h5 class="my-2 text-sm font-semibold">
                             Select the Rule
                         </h5>
                         <div class="flex gap-8 justify-evenly ">
                             <div class=" w-full ">
-                                <Dropdown class=" w-20rem" />
+                                <Dropdown class="w-full" v-model="usePayroll.addNewEpf.epf_rule" />
                             </div>
                         </div>
                     </div>
                     <div class="my-4">
-                        <h5 class="my-2 text-lg font-semibold">
+                        <h5 class="my-2 text-sm font-semibold">
                             Select the Contribution Tye
                         </h5>
                         <div class="flex gap-8 justify-evenly">
                             <div class=" w-full ">
-                                <Dropdown class=" w-20rem" />
+                                <Dropdown class=" w-full" v-model="usePayroll.addNewEpf.epf_contrib_type" />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="p-4 bg-gray-100 rounded-lg shadow-md border-1">
                     <div class="my-4 d-flex align-items-center">
-                        <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
-                        <label for="" class=" text-gray-500">
+                        <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;"
+                            v-model="usePayroll.addNewEpf.pro_rated_lop_status" :true-value=1 :false-value=0>
+                        <label for="" class=" text-gray-500 text-sm">
                             Pro-rate restricted PF Wage When LOP Applied
                         </label>
                     </div>
                     <div class="my-4 d-flex align-items-center">
-                        <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
-                        <label for="" class=" text-gray-500">
+                        <input type="checkbox" name="" id="" class="mr-4" style="width: 28px ;height: 20px;"
+                            v-model="usePayroll.addNewEpf.can_consider_salcomp_pf" :true-value=1 :false-value=0>
+                        <label for="" class=" text-gray-500 text-sm">
                             Consider all applicable salary components if PF Wage is less tham 15,000 after loss of pay
                         </label>
                     </div>
@@ -120,7 +128,7 @@
 
             </div>
 
-            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
+            <div class="col-span-3 p-4 my-4  rounded-lg shadow-md border-1">
                 <h1 class="my-2 text-xl font-bold">
                     Example
                 </h1>
@@ -153,24 +161,33 @@
             </div>
         </div>
 
-        <div>
-
-            <div class=" d-flex ">
-                <i class="pi pi-user-plus fs-4 mx-2 text-primary"></i>
-                <p class=" text-primary fw-semibold fs-5 ">Assign Employees</p>
+        <div class="grid grid-cols-2">
+            <div>
+                <div>
+                    <div class=" d-flex ">
+                        <i class="pi pi-user-plus fs-4 mx-2 text-primary"></i>
+                        <p class=" text-primary font-semibold fs-6">Assign Employees</p>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-sm"><Strong class="mx-1 fs-6">40</Strong>
+                        Employees Assigned
+                        <button class=" text-primary fs-6">View/Edit</button>
+                    </p>
+                </div>
             </div>
-        </div>
-        <div>
-            <p class=" fs-5"><Strong class="mx-1 fs-5">40</Strong>
-                Employees Assigned
-                <button class=" text-primary fs-6 fs-8">View/Edit</button>
-            </p>
+            <div>
+                <button class="float-right mx-2 btn btn-orange"
+                    @click="usePayroll.saveNewEpf(usePayroll.addNewEpf)">Save</button>
+                <button class="float-right btn btn-outline-orange">cancel</button>
+            </div>
         </div>
     </div>
 
     <Dialog v-model:visible="CanShowExplanationDialog" header="Header" :style="{ width: '50vw' }" :position="position"
         :modal="true" :draggable="false">
-        <p>The attendance cut off date deadline for processing an employee's within a pay period.After this date,any absence by the employee will not affect their</p>
+        <p>The attendance cut off date deadline for processing an employee's within a pay period.After this date,any absence
+            by the employee will not affect their</p>
         <DataTable :value="products">
             <Column field="product" header="Code"></Column>
             <Column field="lastYearSale" header="Name"></Column>
@@ -189,7 +206,9 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { usePayrollMainStore } from "../../../../../stores/payrollMainStore";
 
+const usePayroll = usePayrollMainStore()
 const checked = ref();
 
 const CanShowExplanationDialog = ref(false);
@@ -225,18 +244,4 @@ const products = ref([
 
 
 </script>
-{
-    <!--
-        <template>
-    <div class="card flex justify-content-center">
-        <InputSwitch v-model="checked" />
-    </div>
-</template>
 
-<script setup>
-import { ref } from 'vue';
-
-const checked = ref(true);
-</script>
-     -->
-}

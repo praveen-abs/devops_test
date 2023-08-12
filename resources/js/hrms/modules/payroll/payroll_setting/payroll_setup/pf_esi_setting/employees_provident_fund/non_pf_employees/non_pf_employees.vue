@@ -5,7 +5,7 @@
                 <p class="fs-5 ">Non-PF Employees</p>
                 <div class="row my-3">
                     <div class="col d-flex justify-content-between align-items-center">
-                        <div class="w-9 p-2 rounded-lg " style="background-color: #FFF1F1;">
+                        <div class="p-2 rounded-lg " style="background-color: #FFF1F1;">
                             <p class="text-blue"><strong class=" text-yellow-600">Note:</strong> Once payroll processing
                                 begins employees asigned to
                                 the
@@ -13,7 +13,7 @@
                                 employee status, nut the reverse is possible
                             </p>
                         </div>
-                        <div class="mx-4 ">
+                        <div class="mx-2 col-4">
                             <button class="mx-4 btn btn-border-orange shadow-sm px-4">Cancel</button>
                             <button class="btn btn-orange shadow-sm px-4" @click="AddMore">Add More</button>
                         </div>

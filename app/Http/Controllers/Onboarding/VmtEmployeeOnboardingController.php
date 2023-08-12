@@ -12,6 +12,7 @@ use App\Models\Department;
 use App\Models\VmtBloodGroup;
 use App\Models\Bank;
 use App\Models\VmtEmployee;
+use App\jobs\WelcomeMailJobs;
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Validator;
@@ -513,7 +514,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
                 if ($isEmailSent) {
                     $mail_message = 'success';
@@ -648,7 +649,13 @@ class VmtEmployeeOnboardingController extends Controller
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+
+                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+
+                // $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
+                //   ->delay(Carbon::now()->addSeconds(5));
+
+                // dispatch($isEmailSent);
 
                 if ($isEmailSent) {
                     $mail_message = 'success';
@@ -671,7 +678,11 @@ class VmtEmployeeOnboardingController extends Controller
                 'message' => $message,
                 'Employee_Name' =>$row['employee_name']  ,
                 'mail_status' => $mail_message,
+<<<<<<< HEAD
+                'data' => $response['data'],
+=======
                 'data' => $response['data'] ,
+>>>>>>> ec7a047d5cc04c95b867335bede3f5a2403035ca
             ];
         } catch (\Exception $e) {
 

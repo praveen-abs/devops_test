@@ -108,7 +108,10 @@ import router from "./hrms/modules/Organization/router/router";
 
 
 import second from './testings/second.vue'
+<<<<<<< HEAD
 import QUickOnboarding from './hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
+=======
+>>>>>>> 99cb933385fd803ae9a00182e52604935ba57f1b
 const app = createApp(second);
 const pinia=createPinia()
 
