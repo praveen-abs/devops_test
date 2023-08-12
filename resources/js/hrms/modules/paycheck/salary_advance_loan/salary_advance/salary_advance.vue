@@ -6,7 +6,7 @@
                     <p class="text-[14px] font-['Poppins'] font-medium">The company allows employees to request a salary advance of up to <strong
                             class="text-lg"> {{useEmpStore.percent_salary_amt}}%</strong> of their monthly salary.</p>
                 </div>
-                <div class="float-right flex ">
+                <div class="flex float-right ">
                     <button class="btn btn-border-orange font-['Poppins'] w-[100px] h-[30px]"> <p class="font-['Poppins']">View Report</p></button>
                     <button @click="openPosition('top')" class="mx-2 btn btn-orange flex items-center w-[135px] h-[30px]"><i class="mx-2 fa fa-plus"
                             aria-hidden="true"></i><p class="font-['Poppins']">New Request</p></button>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="p-3 text-center bg-green-100 border-l-4 rounded-lg tw-card border-l-green-400">
                         <p class="mb-2 text-ash-medium text-[14px] "> Total Repaid Amount</p>
-                        <h6 class="mb-0 text-base  text-gray-500">
+                        <h6 class="mb-0 text-base text-gray-500">
                             {{useEmpStore.loanDashboard.total_repaid_amt }}
                         </h6>
                         <h6 class="mb-0 text-base text-gray-500" v-if="useEmpStore.loanDashboard.total_repaid_amt===null">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="p-3 text-center bg-blue-100 border-l-4 rounded-lg tw-card border-l-blue-400 ">
                         <p class="mb-2 text-ash-medium  text-[14px] ">Balance Amount</p>
-                        <h6 class="mb-0 font-semibold text-base text-gray-500">{{useEmpStore.loanDashboard.balance_amt}}</h6>
+                        <h6 class="mb-0 text-base font-semibold text-gray-500">{{useEmpStore.loanDashboard.balance_amt}}</h6>
                         <h6 class="mb-0 text-base text-gray-500"  v-if="useEmpStore.loanDashboard.balance_amt===null">
                             -</h6>
                     
@@ -83,8 +83,14 @@
             <h1 class="mx-3 fs-4 text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary
                 Advance Request</h1>
         </template>
-        <div class=" w-100 h-100" v-if="useEmpStore.sa.isEligibleEmp == 0" >
-            <div class="flex pb-2 bg-gray-100 rounded-lg gap-3 shadow-md">
+        <div class="" v-if="useEmpStore.sa.isEligibleEmp === 1" >
+            <div class="h-[100%] w-100"  >
+                <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class=" w-100 h-[400px]">
+                <p class="my-2 font-semibold text-center fs-3">You are not eligible to apply salary advance</p>
+            </div>
+        </div>
+        <div class=" w-100 h-100" v-else >
+            <div class="flex gap-3 pb-2 bg-gray-100 rounded-lg shadow-md">
                 <div class="w-5 p-4 ">
                     <span class="font-semibold">Your Monthly Income</span>
                     <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
@@ -121,12 +127,8 @@
                 <button class="mx-4 btn btn-orange" @click="submitForm">Submit</button>
             </div>
         </div>
-        <div class="" v-else>
-            <div class="h-100 w-100">
-                <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class=" w-100 h-[400px]">
-                <p class="my-2 font-semibold fs-3 text-center">You are not eligible to apply salary advance</p>
-            </div>
-        </div>
+        
+
 
     </Dialog>
 </template>
