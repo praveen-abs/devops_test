@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[96%]">
+    <div class="">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-0 card-body">
                 <ul class="nav nav-pills nav-tabs-dashed" role="tablist">

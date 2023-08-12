@@ -1,5 +1,4 @@
 <template>
-    <div class="Leave_dashboard">
         <div class="p-2 pb-0 mb-3 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
             <div class="flex justify-between">
 
@@ -62,7 +61,6 @@
             </div>
 
         </div>
-    </div>
     <Dialog header="Header" v-model:visible="useLeaveStore.canShowLoading"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">

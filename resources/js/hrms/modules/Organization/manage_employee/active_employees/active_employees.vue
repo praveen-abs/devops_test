@@ -23,13 +23,11 @@
                 <Column class="font-bold" field="emp_name" header="Employee Name"
                     style="min-width: 20rem; text-align: center:  !important;">
                     <template #body="slotProps">
-
-                        <div class="d-flex justify-content-center align-items-center">
-                            <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'" if
-                                class="p-2 w-2 h-18 text-semibold rounded-full bg-blue-900 text-white">{{
-                                    JSON.parse(slotProps.data.emp_avatar).data }} </p>
-
-                            <img v-else class="rounded-circle img-md w-2  userActive-status profile-img"
+                        <div class="flex justify-center items-center">
+                            <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'"
+                                class="p-2 w-10 text-semibold rounded-full  text-white" :class="service.getBackgroundColor(slotProps.index)">
+                                {{JSON.parse(slotProps.data.emp_avatar).data }} </p>
+                            <img v-else class="rounded-circle img-md w-10  userActive-status profile-img"
                                 style="height: 30px !important;"
                                 :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
                                 alt="" />
@@ -93,7 +91,10 @@ import { ref, onMounted } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { profilePagesStore } from '../../../profile_pages/stores/ProfilePagesStore';
 import { useManageEmployeesStore } from '../manage_service'
+import { Service } from '../../../Service/Service';
 
+
+const service = Service()
 const manageEmployeesStore = useManageEmployeesStore()
 const profilePageStore = profilePagesStore()
 

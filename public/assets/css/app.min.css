@@ -17669,9 +17669,9 @@ tr:last-child td:last-child {
         margin-left: 0px;
     }
 
-    /* .page-content {
+    .page-content {
         padding: calc(40px + 24px) 0px 60px 0px;
-    } */
+    }
 
     .settings-icon,
     .topbar-search-bar,
