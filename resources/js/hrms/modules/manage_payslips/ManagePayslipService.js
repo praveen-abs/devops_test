@@ -39,8 +39,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             year: year,
             type:"html"
         }).then((response) => {
+            console.log(response.data);
             // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
-
             paySlipHTMLView.value = response.data;
 
         }).finally(() => {
@@ -185,7 +185,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
-    async function downloadEmployeePaySlipPdf(user_code,month,year){
+    async function downloadEmployeePaySlipPdf(user_code,month,year,name){
 
         await axios.post('/generatePayslip',{
             user_code:user_code,
@@ -194,12 +194,12 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             type:"pdf"
         }).then((response)=>{
 
-            console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));
-          
-            if(response.data.data){
-                let base64String = response.data.data
-                let employeeName = response.data.emp_name
-                let payslipMonth = response.data.emp_month;
+            console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data));
+
+            if(response.data){
+                let base64String = response.data
+                let employeeName = name
+                let payslipMonth = month;
 
                 if (base64String.startsWith("JVB")) {
                     base64String = "data:application/pdf;base64," + base64String;
