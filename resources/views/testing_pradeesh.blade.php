@@ -69,7 +69,14 @@ use App\Models\VmtClientMaster;
     {{-- <div id="EmpSalaryAdvanceLoan"></div> --}}
 
     @vite('resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js')
-    <div id="EmployeePayablesDetails"></div>
+    {{-- <div id="EmployeePayablesDetails"></div> --}}
+
+    {{-- @vite('resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js')
+    <div id="vjs_manage_employee"></div> --}}
+
+    @vite( 'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js')
+    <div id="MobileSettings"></div>
+    
 </body>
 
 </html>

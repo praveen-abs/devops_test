@@ -27,9 +27,9 @@ import Calendar from "primevue/calendar";
 import Checkbox from 'primevue/checkbox';
 import { createPinia } from "pinia";
 
-import DocumentsSettings from './DocumentsSettings.vue';
+import MobileSettings from './MobileSettings.vue';
 
-const app = createApp(DocumentsSettings);
+const app = createApp(MobileSettings);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -55,5 +55,5 @@ app.component('ProgressSpinner',ProgressSpinner);
 app.component('InputText', InputText)
 app.component('Calendar', Calendar)
 
-app.mount("#DocumentsSettings");
+app.mount("#MobileSettings");
 

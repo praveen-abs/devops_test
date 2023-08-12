@@ -175,7 +175,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js',
 
                 // Employee Payables Details
-                'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js'
+                'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
+
+                // 
+                'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js'
 
 
             ],
