@@ -72,13 +72,14 @@ Travel Advance - ta
         canShowLoading.value = true
         axios.get('/showEmployeeview').then(res => {
             salaryAdvanceEmployeeData.value = res.data
-            sa.ymi = res.data.your_monthly_income
-            sa.mxe = res.data.max_eligible_amount
-            sa.storeRepDate = res.data.Repayment_date
+            sa.ymi = res.data.your_monthly_income;
+            sa.mxe = Math.round(res.data.max_eligible_amount) ;
+            sa.storeRepDate = res.data.Repayment_date;
             sa.isEligibleEmp = res.data.eligible;
             percent_salary_amt.value = res.data.percent_salary_amt;
         }).finally(() => {
-            canShowLoading.value = false
+            console.log("testings rounded off", sa.mxe );
+            canShowLoading.value = false;
         })
     }
 

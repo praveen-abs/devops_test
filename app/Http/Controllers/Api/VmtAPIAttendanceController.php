@@ -289,11 +289,28 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
+        try {
+            $record_ids = $request->record_id;
+            foreach ($record_ids as $single_record_id) {
 
-
-        //Fetch the data
-        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status, $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
+                $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($single_record_id, auth()->user()->user_code, $request->status, $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
+            }
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Leave Request ' . $request->status . ' successfully',
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ approveRejectRevokeLeaveRequest() ] " . $e->getMessage(),
+                'data' => $e->getMessage()
+            ]);
+        }
     }
+    //Fetch the data
+
 
 
     public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
@@ -386,16 +403,33 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
+      try{
+            $approver_record_id = $request->record_id;
+            foreach ($approver_record_id as $single_record_ids) {
 
         //Fetch the data
         $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
             approver_user_code: $request->approver_user_code,
-            record_id: $request->record_id,
+            record_id: $single_record_ids,
             status: $request->status,
             status_text: $request->status_text,
             serviceVmtNotificationsService: $serviceVmtNotificationsService
         );
-
+    }
+    
+    return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Leave Request ' . $request->status . ' successfully',
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ approveRejectAttendanceRegularization() ] " . $e->getMessage(),
+                'data' => $e->getMessage()
+            ]);
+        }
         return $response;
     }
 
@@ -499,7 +533,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         try {
             $response = array();
             $emp_details = $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code, $request->filter_month, $request->filter_year, $request->filter_leave_status);
-          
+
             $emp_details = json_encode($emp_details, true);
             $emp_details = json_decode($emp_details, true);
             foreach ($emp_details['original']['data'] as $single_details) {

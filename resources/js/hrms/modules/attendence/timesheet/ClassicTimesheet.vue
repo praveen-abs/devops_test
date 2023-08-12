@@ -98,12 +98,12 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Mode</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.attendance_mode_checkin }}
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin) }}
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkin)"></i> -->
-                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkin == 'Mobile'"
-                            class="fa fa-picture-o fs-6"
+                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkin == 'mobile'"
+                            class="fa fa-picture-o fs-6 cursor-pointer  animate-pulse"
                             @click="viewSelfieImage('checkin', currentlySelectedCellRecord.selfie_checkin)"
                             aria-hidden="true"></i>
                     </p>
@@ -112,7 +112,7 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ findCheckInStatus('checkin', currentlySelectedCellRecord) }}
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(findCheckInStatus('checkin', currentlySelectedCellRecord)) }}
 
                     </p>
                 </div>
@@ -134,11 +134,11 @@
                     <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkout_time }}</p>
                 </div>
                 <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Check out Mode</p>
+                    <p class="font-medium fs-6 text-gray-700">Check Out Mode</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.attendance_mode_checkout }}
-                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'Mobile'"
-                            class="fa fa-picture-o fs-6" aria-hidden="true"
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkout) }}
+                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'mobile'"
+                            class="fa fa-picture-o fs-6 cursor-pointer animate-pulse" aria-hidden="true"
                             @click="viewSelfieImage('checkout', currentlySelectedCellRecord.selfie_checkout)"></i>
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
@@ -265,22 +265,22 @@
                                 <div v-if="isFutureDate(day)"
                                     class="w-full my-3  p-2.5  rounded-sm mr-3 flex font-semibold "
                                     style="max-width: 140px;" :class="findAttendanceStatus(singleAttendanceDay)">
-                                    <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
+                                    <!-- <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
-                                    </p>
+                                    </p> -->
                                     <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i
                                             v-if="singleAttendanceDay.isMOP"
                                             :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                         <i v-else-if="singleAttendanceDay.isLC"
                                             :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                         <i v-else-if="singleAttendanceDay.isEG"
                                             :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                         <i v-else-if="singleAttendanceDay.isMIP"
                                             :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                     </p>
                                 </div>
 
@@ -710,6 +710,13 @@ const findAttendanceRegularizationStatus = (data) => {
                 }
 
 
+}
+
+
+function capitalizeFLetter(name) {
+    let result = name.charAt(0).toUpperCase() +
+        name.slice(1)
+        return result
 }
 
 const leaveShortFormat = (leave_type) => {
