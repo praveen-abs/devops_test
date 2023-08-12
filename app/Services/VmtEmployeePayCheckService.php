@@ -1222,9 +1222,11 @@ class VmtEmployeePayCheckService
                 ]
             )->toArray();
 
+
             $getpersonal['date_month'] = [
                 "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
                 "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
+                "abs_logo" => '/assets/images/ABSlogo\ABS hrms Mobile logo(1).png',
             ];
 
         // Total earnings
