@@ -23,15 +23,15 @@
                 <template #body="slotProps">
                     <div class="d-flex flex-column">
 
-                        <button class="btn z-0" style="border:1px solid navy ;" v-if="slotProps.data.is_payslip_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
+                        <button class="z-0 btn" style="border:1px solid navy ;" v-if="slotProps.data.is_payslip_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
 
-                    <button class="btn-primary rounded z-0" v-else style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                    <button class="z-0 rounded btn-primary" v-else style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
 
                      <!-- {{slotProps.data.is_payslip_released}} -->
-                     <h1 v-if="slotProps.data.is_payslip_released == 1"  class="text-success mt-2">
+                     <h1 v-if="slotProps.data.is_payslip_released == 1"  class="mt-2 text-success">
                         Released
                      </h1>
-                     <h1 v-if="slotProps.data.is_payslip_released == 0 || slotProps.data.is_payslip_released == null"  class="text-danger mt-2">
+                     <h1 v-if="slotProps.data.is_payslip_released == 0 || slotProps.data.is_payslip_released == null"  class="mt-2 text-danger">
                        Not Released
                      </h1>
                      <!-- {{is_payslip_released}} -->
@@ -46,19 +46,19 @@
                    <h1> Payslip sent</h1>
                 </div>
                 <div v-else>
-                    <button class="btn-primary rounded z-0" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
+                    <button class="z-0 rounded btn-primary" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
                 </div>
                 </template>
             </Column>
 
             <Column header="Download">
                 <template #body="slotProps">
-                    <Button class="btn-primary z-0" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
+                    <Button class="z-0 btn-primary" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
                 </template>
             </Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
-                    <Button class="btn-primary z-0" style="" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
+                    <Button class="z-0 btn-primary" style="" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
                 </template>
             </Column>
 
@@ -84,11 +84,11 @@
 
             <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check"
+                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
                     @click="sendMail(selectedUserCode)"
                     autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text py-2" autofocus />
+                <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="py-2 p-button-text" autofocus />
 
             </div>
 
@@ -106,11 +106,11 @@
 
             <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check"
+                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
                     @click="UpdateWithDrawStatus(selectedUserCode)"
                     autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_withdraw_dialogConfirmation = false" class="p-button-text py-2" autofocus />
+                <Button label="No" icon="pi pi-times" @click="show_withdraw_dialogConfirmation = false" class="py-2 p-button-text" autofocus />
 
             </div>
 
@@ -126,11 +126,11 @@
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
+                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
                     @click="updatePayslipReleaseStatus(selectedUserCode)"
                     autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false" class="p-button-text  py-2" autofocus />
+                <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false" class="py-2 p-button-text" autofocus />
 
         </div>
 
@@ -145,18 +145,18 @@
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
+                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
                     @click="downloadPayslip(selectedUserCode)"
                     autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false" class="p-button-text  py-2" autofocus />
+                <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false" class="py-2 p-button-text" autofocus />
 
         </div>
 
     </Dialog>
 
 
-    <div class="card flex justify-content-center inline-flex">
+    <div class="flex inline-flex card justify-content-center">
         <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :style="{ width: '50vw' }">
             <div v-html="managePayslipStore.paySlipHTMLView">
 

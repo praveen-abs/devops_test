@@ -2,17 +2,19 @@
     <div class="mr-4 card">
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
-                <div class=" fs-4">
-                    <p class="text-xl font-medium">You are eligible for the Interest Free Loan as per the
-                        <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy</span>
+                <div class="max-[1300px]:w-[30%px]">
+                    <p class="text-[14px] font-medium">You are eligible for the Interest Free Loan as per the
+                        <span class="text-[14px] text-primary text-decoration-underline"> Company's Loan Policy</span>
                     </p>
                 </div>
 
-                <div class="float-right">
-                    <button class="btn btn-border-orange">View Report</button>
-                    <button class="mx-4 btn btn-orange" @click="openPosition('top')">
+                <div class="float-right flex">
+                    <button class="btn btn-border-orange font-['Poppins'] w-[100px] h-[30px]"> <p class=""> View Report</p> 
+                       </button>
+                    <button class="mx-2 btn btn-orange flex items-center w-[135px] h-[30px]" @click="openPosition('top')">
                         <i class="mx-2 fa fa-plus" aria-hidden="true"></i>
-                        New Request
+                        <p> New Request</p>
+                    
                     </button>
 
                     <Dialog v-model:visible="useEmpStore.dialog_NewInterestFreeLoanRequest" header="Header"
@@ -22,138 +24,177 @@
                                 <h1 style="border-left: 3px solid var( --orange);padding-left: 5px ;" class="fs-4">New
                                     Interest Free Loan Request</h1>
                             </div>
+
                         </template>
-                        <div class="card bg-gray-100 bottom-0 mb-10" style="border:none">
-                            <div class="card-body">
-                                <div class="row mx-2">
-                                    <div class="col mx-2">
-                                        <h1 class="fs-5 my-2">Required Amount</h1>
-                                        <InputNumber v-model.number="useEmpStore.interestFreeLoan.required_amount"
-                                            placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping"
-                                            :useGrouping="false"
-                                            :class="[v$.required_amount.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-                                        <br>
-                                        <span v-if="v$.required_amount.$error" class="font-semibold text-red-400 fs-6">
-                                            {{ v$.required_amount.$errors[0].$message }}
-                                        </span>
-                                        <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : <span
-                                                class=" fw-semibold">{{ useEmpStore.interestFreeLoan.minEligibile }}</span> </p>
-                                    </div>
-                                    <div class="col mx-2">
-                                        <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                        <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.M_EMI"
-                                            placeholder="&#8377; " />
-                                    </div>
-                                    <div class="col mx-2">
-                                        <h1 class="fs-5 my-2">Term</h1>
-                                        {{ useEmpStore.interestFreeLoan.max_tenure_months.month }}
-
-                                        <!-- <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth" :options="useEmpStore.interestFreeLoan.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
-
-                                        <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth"
-                                            :options="useEmpStore.interestFreeLoan.max_tenure_months" class="w-full md:w-10rem"
-                                            optionValue="month" optionLabel="month" placeholder="Select Month"
-                                            :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-                                        <label for="" class="fs-5 ml-2">Month</label>
-                                        <br>
-                                        <span v-if="v$.Term.$error" class="font-semibold text-red-400 fs-6">
-                                            {{ v$.Term.$errors[0].$message }}
-                                        </span>
-
+                        <div v-if="useEmpStore.eligibleEmployees.data == 0">
+                  
+                            <div class="h-100 w-100">
+                                <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class=" w-100 h-[400px]">
+                                <p class="my-2 font-semibold fs-3 text-center">{{ useEmpStore.eligibleEmployees.message }}</p>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="card bg-gray-100 bottom-0 mb-1" style="border:none">
+                                <div class="card-body">
+                                    <div class="row mx-2">
+                                        <div class="col mx-2">
+                                            <h1 class="text-[14px] my-1">Required Amount</h1>
+                                            <InputNumber v-model.number="useEmpStore.interestFreeLoan.required_amount"
+                                                placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping"
+                                                :useGrouping="false"
+                                                :class="[v$.required_amount.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                                            <br>
+                                            <span v-if="v$.required_amount.$error" class="font-semibold text-red-400 fs-6">
+                                                {{ v$.required_amount.$errors[0].$message }}
+                                            </span>
+                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : <span
+                                                    class=" fw-semibold">{{ useEmpStore.interestFreeLoan.minEligibile }}</span> </p>
+                                        </div>
+                                        <div class="col mx-2">
+                                            <h1 class="text-[14px] my-1">Monthly EMI</h1>
+                                            <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.M_EMI"
+                                                placeholder="&#8377; " />
+                                        </div>
+                                        <div class="col mx-2">
+                                            <h1 class="text-[14px] my-1">Month</h1>
+                                            <!-- {{ useEmpStore.interestFreeLoan.max_tenure_months.month }} -->
+    
+                                            <!-- <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth" :options="useEmpStore.interestFreeLoan.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
+                                            <!-- {{useEmpStore.max_tenure_month}} -->
+                                            <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth"
+                                                :options="useEmpStore.max_tenure_month" class="w-full md:w-10rem"
+                                                optionValue="month" optionLabel="month" placeholder="Select Month"
+                                                :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                                            <label for="" class="fs-5 ml-2"></label>
+                                            <br>
+                                            <span v-if="v$.Term.$error" class="font-semibold text-red-400 fs-6">
+                                                {{ v$.Term.$errors[0].$message }}
+                                            </span>
+    
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
-                            <div class="card-body mx-4">
-                                <div class="row">
-                                    <!-- fw-bolder -->
-                                    <h1 class="fs-4 my-2  ">EMI Dedution</h1>
-                                    <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming
-                                        Payroll</h1>
-                                    <div class="col-4">
-                                        <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                        <!-- <Calendar v-model="useEmpStore.interestFreeLoan.EMI_Start_Month" showIcon /> -->
-                                        <!-- {{useEmpStore.interestFreeLoan.details.deduction_starting_month  }} -->
-                                        <Dropdown v-model="useEmpStore.interestFreeLoan.EMI_Start_Month" @change="calculateMonth"
-                                            :options="useEmpStore.interestFreeLoan.details.deduction_starting_month" optionLabel="date"
-                                            optionValue="date" placeholder="Select Month"
-                                            :class="[v$.EMI_Start_Month.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-                                        <br>
-                                        <span v-if="v$.EMI_Start_Month.$error" class="font-semibold text-red-400 fs-6">
-                                            {{ v$.EMI_Start_Month.$errors[0].$message }}
-                                        </span>
-                                    </div>
-
-                                    <div class="col-4 mx-2">
-                                        <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                                        <!-- <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.EMI_End_Month"  style="width: 150px !important;" /> -->
-                                        <Calendar v-model="useEmpStore.interestFreeLoan.EMI_End_Month" readonly
-                                            style="width: 150px !important;" />
-                                        <!-- showIcon -->
-                                    </div>
-                                    <div class="col-3">
-                                        <h1 class="fs-5 my-2 ml-2">Total Months</h1>
-                                        <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.Total_Months"
-                                            style="width: 150px !important;" />
+                            <div class="card bg-gray-100 bottom-0 my-1" style="border:none ">
+                                <div class="card-body mx-4">
+                                    <div class="row">
+                                        <!-- fw-bolder -->
+                                        <h1 class="text-[14px] my-2  ">EMI Dedution</h1>
+                                        <h1 class="text-[12px] text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming
+                                            Payroll</h1>
+                                        <div class="col-4">
+                                            <h1 class="text-[14px] my-2 ml-2">EMI Start Month</h1>
+                                            <!-- <Calendar v-model="useEmpStore.interestFreeLoan.EMI_Start_Month" showIcon /> -->
+                                            <!-- {{useEmpStore.interestFreeLoan.details.deduction_starting_month  }} -->
+                                            <Dropdown v-model="useEmpStore.interestFreeLoan.EMI_Start_Month" @change="calculateMonth"
+                                                :options="useEmpStore.interestFreeLoan.details.deduction_starting_month" optionLabel="date"
+                                                optionValue="date" placeholder="Select Month"
+                                                :class="[v$.EMI_Start_Month.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                                            <br>
+                                            <span v-if="v$.EMI_Start_Month.$error" class="font-semibold text-red-400 fs-6">
+                                                {{ v$.EMI_Start_Month.$errors[0].$message }}
+                                            </span>
+                                        </div>
+    
+                                        <div class="col-4 mx-2">
+                                            <h1 class="text-[14px] my-2 ml-2">EMI End Month</h1>
+                                            <!-- <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.EMI_End_Month"  style="width: 150px !important;" /> -->
+                                            <Calendar v-model="useEmpStore.interestFreeLoan.EMI_End_Month" readonly
+                                                style="width: 150px !important;" />
+                                            <!-- showIcon -->
+                                        </div>
+                                        <div class="col-3">
+                                            <h1 class="text-[14px] my-2 ml-2">Total Months</h1>
+                                            <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.Total_Months"
+                                                style="width: 150px !important;" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
-                            <span class="font-semibold ">Reason</span>
-                            <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3"
-                                v-model="useEmpStore.interestFreeLoan.Reason"
-                                :class="[v$.Reason.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-                            <br>
-                            <span v-if="v$.Reason.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.Reason.$errors[0].$message }}
-                            </span>
-                        </div>
+                            <div class="p-2 my-2 bg-gray-100 rounded-lg gap-6">
+                                <span class="font-semibold ">Reason</span>
+                                <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3"
+                                    v-model="useEmpStore.interestFreeLoan.Reason"
+                                    :class="[v$.Reason.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                                <br>
+                                <span v-if="v$.Reason.$error" class="font-semibold text-red-400 fs-6">
+                                    {{ v$.Reason.$errors[0].$message }}
+                                </span>
+                            </div>
 
-                        <template #footer>
                             <div class="float-right ">
                                 <button class="btn btn-border-orange"
                                     @click="useEmpStore.dialog_NewInterestFreeLoanRequest = false">Cancel</button>
                                 <button class="mx-4 btn btn-orange" @click="submitForm">Submit</button>
                             </div>
-                            <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
-                            <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
-                        </template>
+
+                            <!-- <template #footer> -->
+
+                                <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
+                                <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
+                            <!-- </template> -->
+                            
+                            
+                        </div>
+
+
+
+
+
+
+
                     </Dialog>
                 </div>
             </div>
 
             <div class="my-6 widget-card">
                 <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5 lg:grid-cols-5">
-                    <div class="p-3 text-center bg-red-100 border-l-4 rounded-lg tw-card border-l-red-400">
-                        <p class="mb-2 font-bold text-ash-medium f-13">Total Advance Amount</p>
-                        <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
+                    <div class="py-3 text-center bg-red-100 border-l-4 rounded-lg tw-card border-l-red-400">
+                        <p class="mb-2 text-ash-medium text-[14px]">Total Advance Amount</p>
+                        <h6 class="mb-0 text-base text-gray-500" v-if="useEmpStore.loanDashboard.total_borrowed_amt===null">
+                            -</h6>
+                        <h6 class="mb-0 text-base text-gray-500" v-else >
+                            {{useEmpStore.loanDashboard.total_borrowed_amt}}</h6>
                     </div>
-                    <div class="p-2 text-center bg-green-100 border-l-4 rounded-lg tw-card border-l-green-400">
-                        <p class="mb-2 font-bold text-ash-medium f-13 "> Total Repaid Amount</p>
-                        <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
+                    <div class="p-3 text-center bg-green-100 border-l-4 rounded-lg tw-card border-l-green-400">
+                        <p class="mb-2 text-ash-medium text-[14px] "> Total Repaid Amount</p>
+                        <h6 class="mb-0 text-base  text-gray-500">
+                            {{useEmpStore.loanDashboard.total_repaid_amt }}
+                        </h6>
+                        <h6 class="mb-0 text-base text-gray-500" v-if="useEmpStore.loanDashboard.total_repaid_amt===null">
+                            -</h6>
+                     
                     </div>
-
-                    <div class="p-2 text-center bg-blue-100 border-l-4 rounded-lg tw-card border-l-blue-400 ">
-                        <p class="mb-2 font-bold text-ash-medium f-13 ">Balance Amount</p>
-                        <h6 class="mb-0 text-base font-semibold text-gray-500">Not Submited</h6>
+                    <div class="p-3 text-center bg-blue-100 border-l-4 rounded-lg tw-card border-l-blue-400 ">
+                        <p class="mb-2 text-ash-medium  text-[14px] ">Balance Amount</p>
+                        <h6 class="mb-0 font-semibold text-base text-gray-500">{{useEmpStore.loanDashboard.balance_amt}}</h6>
+                        <h6 class="mb-0 text-base text-gray-500"  v-if="useEmpStore.loanDashboard.balance_amt===null">
+                            -</h6>
+                    
                     </div>
-                    <div class="p-2 text-center bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400">
-                        <p class="mb-2 font-bold text-ash-medium f-13 ">Pending Request</p>
-                        <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
+                    <div class="p-3 text-center bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400">
+                        <p class="mb-2 text-[14px] text-ash-medium ">Pending Request</p>
+                        <h6 class="mb-0  text-[14px]  text-gray-500">{{useEmpStore.loanDashboard.pending_request}}</h6>
+                        <h6 class="mb-0 text-base text-gray-500"  v-if="useEmpStore.loanDashboard.balance_amt===null">
+                            -</h6>
+                   
                     </div>
-                    <div class="p-2 text-center bg-yellow-100 border-l-4 rounded-lg tw-card border-l-yellow-400">
-                        <p class="mb-2 font-bold text-ash-medium f-13 ">Completed Rquests</p>
-                        <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
+                    <div class="p-3 text-center bg-yellow-100 border-l-4 rounded-lg tw-card border-l-yellow-400">
+                        <p class="mb-2 text-[14px] text-ash-medium ">Completed Rquests</p>
+                      
+                        <h6 class="mb-0 text-base text-gray-500" v-if="useEmpStore.loanDashboard.balance_amt===null">
+                            -</h6>
+                            <h6 class="mb-0 text-[14px]  text-gray-500" >{{useEmpStore.loanDashboard.compeleted_request
+                            }}</h6>
+                   
                     </div>
                 </div>
             </div>
 
             <div class="table-responsive">
-                {{ useEmpStore.isInterestFreeLoanFeature }}
+                <!-- {{ useEmpStore.isInterestFreeLoanFeature }} -->
                 <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="10" :value="useEmpStore.isInterestFreeLoanFeature"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -161,52 +202,31 @@
                     responsiveLayout="scroll">
 
                     <Column header="Request ID" field="request_id" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="borrowed_amount" header="Loan Amount" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="emi_per_month" header="Monthly EMI" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="tenure_months" header="Tenure" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
 
 
                     <Column field="deduction_starting_month" header="EMI Start Date" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="deduction_ending_month" header="EMI End Date" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
-                    <Column field="loan_crd_sts" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.loan_crd_sts == 0 " class="text-orange-500">
-                                Pending
-                            </h6>
-                            <h6 v-if="slotProps.data.loan_crd_sts == 1 " class=" text-green-500">
-                                Approved
-                            <!-- <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
-                                {{ slotProps.data.status }}-->
-                             </h6>
-                        </template>
+                    <Column field="loan_status" header="Status" style="min-width: 12rem">
+                        {{ slotProps.data.loan_status }}
                     </Column>
 
                 </DataTable>
@@ -217,17 +237,6 @@
     </div>
 
 
-
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 </template>
 
 <script setup>
@@ -241,8 +250,10 @@ import { useNow, useDateFormat } from '@vueuse/core'
 const useEmpStore = useEmpSalaryAdvanceStore();
 
 onMounted(() => {
-    useEmpStore.fetchInterestfreeLoan()
+    useEmpStore.fetchInterestfreeLoan();
     useEmpStore.getinterestfreeloan();
+    useEmpStore.getEligible_loan_and_advance('int_free_loan');
+    useEmpStore.getEmployeeTotalvalue('int_free_loan');
 })
 
 const select_date = ref();
@@ -348,7 +359,8 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        useEmpStore.saveInterestfreeLoan()
+        useEmpStore.saveInterestfreeLoan();
+        useEmpStore.fetchInterestfreeLoan();
         v$.value.$reset()
     } else {
         console.log('Form failed validation')

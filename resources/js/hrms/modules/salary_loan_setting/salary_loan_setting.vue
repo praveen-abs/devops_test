@@ -1,7 +1,15 @@
 <template>
     <div style="position: relative;">
-        <h1 class="mb-4 fs-3 d-flex align-items-center fw-bolder" style="color: #003056; "><i
-                class='mr-3 fas fa-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
+        <div class="row">
+            <div class="col-6">
+                <h1 class="mb-4 fs-4 d-flex align-items-center " style="color: #003056; "> Salary Advance & Loan Settings</h1>
+            </div>
+            <!-- <div class="col-6 px-4 ">
+                <button class=" underline fs-5 text-blue-700 float-right mx-2" @click="viewHistory(data)">History</button>
+            </div> -->
+        </div>
+
+
 
         <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -63,6 +71,20 @@
         <template #footer>
             <h5 style="text-align: center">Please wait...</h5>
         </template>
+    </Dialog>
+    <Dialog v-model:visible="useSalaryStore.canShowPopup" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '40vw' }" :modal="true"
+        :closable="true" :closeOnEscape="false">
+        <template #header>
+            .
+        </template>
+        <p class="text-center"> <i class="m-auto text-center my-2  text-green-400 pi pi-check-circle"
+                style="font-size: 5rem"></i>
+        </p>
+        <p class="font-semibold fs-4 text-center ">Submission Successfull</p>
+
+        <ul v-for="option in useSalaryStore.AssignedClients" :key="option">
+            <li class="my-2.5 text-medium ">{{ option }}</li>
+        </ul>
     </Dialog>
 </template>
 
