@@ -53,7 +53,7 @@
 
             <Column header="Download">
                 <template #body="slotProps">
-                    <Button class="z-0 btn-primary" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code,slotProps.data.payroll_date,slotProps.data.name)" />
+                    <Button class="z-0 btn-primary" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
                 </template>
             </Column>
             <Column header="View Payslip">
@@ -146,7 +146,7 @@
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
                 <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
-                    @click="downloadPayslip(selectedUserCode,selectedUsername)"
+                    @click="downloadPayslip(selectedUserCode)"
                     autofocus />
 
                 <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false" class="py-2 p-button-text" autofocus />
@@ -156,10 +156,11 @@
     </Dialog>
 
 
-
     <div class="flex inline-flex card justify-content-center">
-        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :breakpoints="{ '960px': '75vw', '640px': '90vw' }">
-            <div v-html="managePayslipStore.paySlipHTMLView" ></div>
+        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :style="{ width: '50vw' }">
+            <div v-html="managePayslipStore.paySlipHTMLView">
+
+            </div>
         </Dialog>
     </div>
     <Dialog header="Header" v-model:visible="managePayslipStore.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -190,13 +191,11 @@ const show_withdraw_dialogConfirmation = ref(false);
 const selectedPayRollDate = ref();
 
 const selectedUserCode = ref();
-const selectedUsername = ref();
-const selectedMonth = ref();
 
 
 
 onMounted( () => {
-   managePayslipStore.selectedPayRollDate = new Date()
+   managePayslipStore.selectedPayRollDate = new Date('03/03/2023')
    managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())
 
 });
@@ -224,9 +223,9 @@ function showReleasePayslipConfirmationDialog(selected_user_code) {
 
     show_releasePayslip_dialogconfirmation.value = true;
 }
-function showdownloadPayslipConfirmationDialog(selected_user_code,selected_user_name) {
+function showdownloadPayslipConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
-    selectedUsername.value = selected_user_name
+
     show_downloadPayslip_dialogconfirmation.value = true;
 }
 
@@ -252,13 +251,8 @@ async function UpdateWithDrawStatus(selectedUserCode) {
 
 }
 
-// async function downloadPayslip(selectedUserCode) {
-//     await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
-//     show_downloadPayslip_dialogconfirmation.value = false;
-
-// }
-async function downloadPayslip(selectedUserCode,selectedUsername) {
-    await managePayslipStore.downloadEmployeePaySlipPdf(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(),selectedUsername);
+async function downloadPayslip(selectedUserCode) {
+    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     show_downloadPayslip_dialogconfirmation.value = false;
 
 }
