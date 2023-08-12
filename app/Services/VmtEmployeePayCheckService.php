@@ -1128,7 +1128,6 @@ class VmtEmployeePayCheckService
         // $user_code = "BA002";
 
 
-
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
@@ -1324,9 +1323,9 @@ class VmtEmployeePayCheckService
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-                $pdf->stream("payslip.pdf");
 
-                 return redirect()->back();
+                $response = base64_encode($pdf->output(['payslip.pdf']));
+                return $response;
 
         }elseif($type =="html"){
 
