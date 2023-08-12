@@ -61,6 +61,7 @@
             "app/Services/VmtPayrollComponentsService.php",
             "app/Services/VmtSalaryAdvanceService.php",
             "app/Services/VmtClientService.php",
+            "app/Services/VmtMasterConfigService.php",
             "app/Services/VmtExcelGeneratorService.php"
 
 

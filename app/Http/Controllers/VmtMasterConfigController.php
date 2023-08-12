@@ -6,6 +6,7 @@ use App\Http\Controllers\VmtClientController;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtClientMaster;
 use App\Models\User;
+use App\Services\VmtMasterConfigService;
 use Illuminate\Http\Request;
 
 class VmtMasterConfigController extends Controller
@@ -74,6 +75,56 @@ class VmtMasterConfigController extends Controller
     public function showMobileSettingsPage(Request $request){
 
         return view('vmt_config_mobile_settings');
+
+    }
+    public function  SaveAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        $response = $serviceVmtMasterConfigService->SaveAppConfigStatus($request->is_mobile_app_active,
+        $request->is_checkin_active,
+        $request->is_checkout_active,
+        $request->is_location_capture_active,
+        $request->is_checkin_selfie_active,
+        $request->is_checkout_selfie_active,
+        $request->is_reimbursement_checkout_active,
+        $request->is_absent_regularization_active,
+        $request->is_attendance_regularization_active,
+        $request->is_leave_apply_active,
+        $request->is_salary_advance_loan_active,
+        $request->is_investments_active,
+        $request->is_pms_active,
+        $request->is_exit_apply_active);
+
+        return $response;
+
+    }
+    // public function SaveEmployeeAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+    //     $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->user_id,
+    //     $request->is_mobile_app_active,
+    //     $request->is_checkin_active,
+    //     $request->is_checkout_active,
+    //     $request->is_location_capture_active,
+    //     $request->is_checkin_selfie_active,
+    //     $request->is_checkout_selfie_active,
+    //     $request->is_reimbursement_checkout_active,
+    //     $request->is_absent_regularization_active,
+    //     $request->is_attendance_regularization_active,
+    //     $request->is_leave_apply_active,
+    //     $request->is_salary_advance_loan_active,
+    //     $request->is_investments_active,
+    //     $request->is_pms_active,
+    //     $request->is_exit_apply_active);
+
+    //     return $response;
+
+    // }
+    public function SaveEmployeeAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        dd($request->Employee_ConfigData);
+        $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->Employee_ConfigData);
+
+
+        return $response;
 
     }
 

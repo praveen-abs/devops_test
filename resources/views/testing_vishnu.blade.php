@@ -668,28 +668,11 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-        $VmtClientMaster = VmtClientMaster::first();
-         $image_view = url('/') . $VmtClientMaster->client_logo;
-
-          $email =User::pluck('email');
-        foreach ($email as $key => $single_mail) {
-
-            $jobs = (new WelcomeMailJobs($single_mail,'DM001', 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code))
-            ->delay(Carbon::now()->addSeconds(5));
-
-             dispatch($jobs);
-        }
 
 
+        $query_client = VmtClientMaster::find(session('client_id'));
 
-
-        //  }
-        if( $jobs){
-            dd('success');
-        }else{
-            dd('failure');
-        }
-
+        dd($query_client->id);
 
 
     ?>
