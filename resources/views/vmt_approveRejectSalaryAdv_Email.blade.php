@@ -282,8 +282,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                             <table style="margin-top: 32px; width: 100%"
                                                                 cellpadding="0" cellspacing="0" role="presentation">
                                                                 <tr>
-                                                                    <td> <a href
-                                                                            class="{{ $link }}/showSAapprovalView"
+                                                                    <td> <a href="{{ $link }}/showSAapprovalView"
+                                                                            {{-- class="{{ $link }}/showSAapprovalView" --}}
                                                                             style="border-radius: 9999px; background-color: #22c55e; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 fill="none" viewBox="0 0 24 24"
@@ -297,7 +297,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                                             Approve
                                                                         </a></td>
                                                                     <td>
-                                                                        <a href
+                                                                        <a href="{{ $link }}/showSAapprovalView"    
                                                                             class="{{ $link }}/showSAapprovalView"
                                                                             style="border-radius: 9999px; background-color: #ef4444; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
