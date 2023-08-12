@@ -327,15 +327,16 @@ class VmtSalaryAdvanceService
 
             $queryGetDept = Department::select('id', 'name')->get();
 
-            $queryGetDesignation = VmtEmployeeOfficeDetails::select('designation')->where('designation', '<>', 'S2 Admin')->distinct()->get();
+            $queryGetDesignation = VmtEmployeeOfficeDetails::select('designation')->where('designation', '<>', 'S2 Admin')->whereNotNull("designation")->distinct()->get();
 
-            $queryGetLocation = VmtEmployeeOfficeDetails::select('work_location')->distinct()->get();
+            $queryGetLocation = VmtEmployeeOfficeDetails::select('work_location')->whereNotNull("work_location")->distinct()->get();
 
             $queryGetstate = State::select('id', 'state_name')->distinct()->get();
 
             if ($current_client_id == 1) {
 
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
             } elseif ($current_client_id == 0) {
 
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();

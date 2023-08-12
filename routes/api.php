@@ -155,6 +155,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
 
-
+    Route::post('/SaveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveAppConfigStatus'])->name('SaveAppConfigStatus');
 
 });

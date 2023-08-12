@@ -10,6 +10,9 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmpAssignSalaryAdvSettings;
+use App\Models\Department;
+use App\Models\State;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
@@ -620,5 +623,103 @@ function num2alpha($n) {
     $n -= pow(26, $i);
     }
     return $r;
+}
+
+ function getAllDropdownFilterSetting()
+{
+
+    $current_client_id = auth()->user()->client_id;
+
+
+    try {
+
+        $queryGetDept = Department::select('id', 'name')->get();
+
+        $queryGetDesignation = VmtEmployeeOfficeDetails::select('designation')->where('designation', '<>', 'S2 Admin')->whereNotNull("designation")->distinct()->get();
+
+        $queryGetLocation = VmtEmployeeOfficeDetails::select('work_location')->whereNotNull("work_location")->distinct()->get();
+
+        $queryGetstate = State::select('id', 'state_name')->distinct()->get();
+
+        if ($current_client_id == 1) {
+
+            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
+        } elseif ($current_client_id == 0) {
+
+            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+        } elseif ($current_client_id == 2) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        } elseif ($current_client_id == 3) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        } elseif ($current_client_id == 4) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        }
+
+
+        $getsalary = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
+
+
+        return response()->json($getsalary);
+    } catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error fetching the dropdown value",
+            "data" => $e,
+        ]);
+    }
+}
+ function get_empolyees_filter_data($department_id, $designation, $work_location, $client_name)
+{
+
+    try {
+
+        $select_employee = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+            ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
+            ->where('process', '<>', 'S2 Admin')
+            ->select(
+                'users.id',
+                'users.name',
+                'users.user_code',
+                'vmt_department.name as department_name',
+                'vmt_employee_office_details.designation',
+                'vmt_employee_office_details.work_location',
+                'vmt_client_master.client_name',
+            );
+
+        if (!empty($department_id)) {
+            $select_employee = $select_employee->where('department_id', $department_id);
+        }
+        if (!empty($designation)) {
+            $select_employee = $select_employee->where('designation', $designation);
+        }
+        if (!empty($work_location)) {
+            $select_employee = $select_employee->where('work_location', $work_location);
+        }
+        if (!empty($client_name)) {
+            $select_employee = $select_employee->where('client_id', $client_name);
+        }
+        // dd($select_employee->get());
+        $assigned_emp_user_ids = VmtEmpAssignSalaryAdvSettings::pluck('user_id');
+        if (!empty($assigned_emp_user_ids)) {
+            $assigned_emp_user_codes = array();
+            foreach ($assigned_emp_user_ids as $single_id) {
+                array_push($assigned_emp_user_codes, User::where('id', $single_id)->first()->user_code);
+            }
+            return  $select_employee->whereNotIn('user_code',  $assigned_emp_user_codes)->get();
+        }
+
+        return $select_employee->get();
+    } catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error fetching the employee",
+            "data" => $e,
+        ]);
+    }
 }
 

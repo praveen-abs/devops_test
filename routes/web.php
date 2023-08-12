@@ -544,7 +544,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     //paygroup structure
     Route::get('/Paygroup/fetchPayGroupEmpComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayGroupEmpComponents'])->name('fetchPayGroupEmpComponents');
     //Route::get('/Paygroup/ShowAssignEmployeelist', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'ShowAssignEmployeelist'])->name('ShowAssignEmployeelist');
-   // Route::get('/Paygroup/getAllDropdownFilterSetting', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
+    //Route::get('/Paygroup/getAllDropdownFilterSetting', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
     Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
     Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');
@@ -785,10 +785,11 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
 
-//mobile Settings
-
-
+ //mobile Settings
        Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
+       Route::post('/SaveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveAppConfigStatus'])->name('SaveAppConfigStatus');
+       Route::post('/get_empolyees_filter_data', [App\Http\Controllers\VmtMasterConfigController::class, 'get_empolyees_filter_data'])->name('get_empolyees_filter_data');
+       Route::get('/getalldropdownfiltersetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
 
     //Configrations
     ////Attendance Settings

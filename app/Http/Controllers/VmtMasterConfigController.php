@@ -97,31 +97,26 @@ class VmtMasterConfigController extends Controller
         return $response;
 
     }
-    // public function SaveEmployeeAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-    //     $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->user_id,
-    //     $request->is_mobile_app_active,
-    //     $request->is_checkin_active,
-    //     $request->is_checkout_active,
-    //     $request->is_location_capture_active,
-    //     $request->is_checkin_selfie_active,
-    //     $request->is_checkout_selfie_active,
-    //     $request->is_reimbursement_checkout_active,
-    //     $request->is_absent_regularization_active,
-    //     $request->is_attendance_regularization_active,
-    //     $request->is_leave_apply_active,
-    //     $request->is_salary_advance_loan_active,
-    //     $request->is_investments_active,
-    //     $request->is_pms_active,
-    //     $request->is_exit_apply_active);
-
-    //     return $response;
-
-    // }
     public function SaveEmployeeAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-        dd($request->Employee_ConfigData);
         $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->Employee_ConfigData);
+
+
+        return $response;
+
+    }
+    public function getAllDropdownFilterSetting(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        $response =getAllDropdownFilterSetting();
+
+
+        return $response;
+
+    }
+    public function get_empolyees_filter_data(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        $response = get_empolyees_filter_data($request->department_id, $request->designation, $request->work_location, $request->client_name);
 
 
         return $response;
