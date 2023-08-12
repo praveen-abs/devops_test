@@ -71,6 +71,10 @@
             </Column> -->
         </DataTable>
 
+        <div v-html="managePayslipStore.paySlipHTMLView" >
+
+        </div> 
+
     </div>
 
 
@@ -157,11 +161,10 @@
 
 
     <div class="flex inline-flex card justify-content-center">
-        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :style="{ width: '50vw' }">
-            <div v-html="managePayslipStore.paySlipHTMLView">
-
-            </div>
+        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" class=" w-[100%] h-[100vh]">
+          
         </Dialog>
+
     </div>
     <Dialog header="Header" v-model:visible="managePayslipStore.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
@@ -251,8 +254,13 @@ async function UpdateWithDrawStatus(selectedUserCode) {
 
 }
 
+// async function downloadPayslip(selectedUserCode) {
+//     await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+//     show_downloadPayslip_dialogconfirmation.value = false;
+
+// }
 async function downloadPayslip(selectedUserCode) {
-    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+    await managePayslipStore.downloadEmployeePaySlipPdf(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     show_downloadPayslip_dialogconfirmation.value = false;
 
 }
