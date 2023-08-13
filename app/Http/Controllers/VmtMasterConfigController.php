@@ -122,6 +122,14 @@ class VmtMasterConfigController extends Controller
         return $response;
 
     }
+    public function GetAllEmpModuleActiveStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        $response = $serviceVmtMasterConfigService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
+
+
+        return $response;
+
+    }
 
 
 
