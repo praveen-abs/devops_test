@@ -13,11 +13,12 @@
 }
 
 .p-input-icon-left {
-    > .p-inputtext {
+    >.p-inputtext {
         width: 20rem !important;
         height: 2.5rem;
     }
 }
+
 .p-paginator {
     padding: 0.5rem 0 !important;
 }
@@ -44,10 +45,11 @@
     // }
 
     .p-datatable-thead {
-        > tr {
+        >tr {
             // box-shadow: 0px 0px 5px 0px #000000d6;
             // border-radius: 6px;
         }
+
         th {
             // background-color: var(--#{$prefix-variable}primary) !important;
             background-color: #e6e6e6 !important;
@@ -57,10 +59,12 @@
             border-width: 0 !important;
             font-weight: 700;
         }
-        .p-column-title{
+
+        .p-column-title {
             font-weight: 600;
         }
     }
+
     // .p-datatable-tbody {
     //     tr {
     //         outline: none !important;
@@ -101,19 +105,25 @@
 .p-paginator {
     color: #003056 !important;
     justify-content: left !important;
+
     .p-dropdown {
-        margin-left: 35rem !important;
+        position: absolute;
+            right: 0px;
         height: 2.5rem !important;
+
         &:hover {
             box-shadow: 0 0 0 0.2rem #00305663 !important;
             border: 1px solid #003056 !important;
+
         }
     }
+
     .p-dropdown-label {
         display: flex !important;
         align-items: center !important;
     }
 }
+
 // .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
 //     color: $white !important;
 //     background: #e6e6e6 !important;
@@ -127,33 +137,35 @@
 //     background: #e1f0f7;
 //   }
 
-.p-progressbar-value.p-progressbar-value-animate{
-width: 65%;
-display: flex;
-background-color: $primary-blue !important;
+.p-progressbar-value.p-progressbar-value-animate {
+    width: 65%;
+    display: flex;
+    background-color: $primary-blue !important;
 
-  }
-  .p-progressbar.p-component.p-progressbar-determinate{
+}
+
+.p-progressbar.p-component.p-progressbar-determinate {
     height: 14px;
     font-size: 8px;
-  }
-  .p-progressbar-determinate .p-progressbar-label {
+}
+
+.p-progressbar-determinate .p-progressbar-label {
     display: inline-flex;
     font-size: 9px;
-  }
+}
 
-  .p-datatable-scrollable .p-datatable-thead {
+.p-datatable-scrollable .p-datatable-thead {
     position: sticky;
     top: 0;
     z-index: 0;
-  }
+}
 
-  .p-toast.p-component.p-toast-top-right {
+.p-toast.p-component.p-toast-top-right {
     z-index: 100000;
-  }
+}
 
 
-  .p-datatable .p-datatable-thead>tr>th {
+.p-datatable .p-datatable-thead>tr>th {
 
     .p-column-filter {
         width: 100%;
@@ -212,14 +224,6 @@ background-color: $primary-blue !important;
     border-width: 0 0 1px 0;
     padding: 1rem 0.6rem;
 }
-
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-    width: 20%;
-}
-
-// .main-content {
-//   width: 110%;
-// }
 
 .pending {
     font-weight: 700;
@@ -318,7 +322,6 @@ background-color: $primary-blue !important;
 //     color: white;
 // }
 
-.p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
-    margin-left: 30px;
-}
-
+// .p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
+//     margin-left: 30px;
+// }

@@ -25,13 +25,14 @@
                     <template #body="slotProps">
                         <div class="flex justify-center items-center">
                             <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'"
-                                class="p-2 w-10 text-semibold rounded-full  text-white" :class="service.getBackgroundColor(slotProps.index)">
-                                {{JSON.parse(slotProps.data.emp_avatar).data }} </p>
+                                class="p-2 w-11 fs-6 font-semibold rounded-full  text-white"
+                                :class="service.getBackgroundColor(slotProps.index)">
+                                {{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
                             <img v-else class="rounded-circle img-md w-10  userActive-status profile-img"
                                 style="height: 30px !important;"
                                 :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
                                 alt="" />
-                            <p class=" text-left pl-2">{{ slotProps.data.emp_name }} </p>
+                            <p class=" text-left pl-2 font-semibold fs-6">{{ slotProps.data.emp_name }} </p>
                         </div>
                     </template>
                     <template #filter="{ filterModel, filterCallback }">
@@ -75,14 +76,15 @@
                 </Column>
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                        <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data)"
-                            class="btn btn-orange " style="height: 2em" raised />
+                        <Button icon="pi pi-eye" severity="success" raised label="View" @click="openProfilePage(slotProps.data)"
+                            style="height: 2em"  />
                     </template>
                 </Column>
             </DataTable>
 
         </div>
     </div>
+
 </template>
 <script setup>
 import dayjs from 'dayjs';
@@ -135,3 +137,30 @@ async function openProfilePage(uid) {
 }
 
 </script>
+
+<style>
+.btnt
+{
+
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    background: #000000;
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 5px 15px 10px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    transition: transform 200ms, background 200ms;
+    font-size: 13px;
+
+
+}
+
+.btnt:hover
+{
+    transform: translateY(-2px);
+}
+</style>

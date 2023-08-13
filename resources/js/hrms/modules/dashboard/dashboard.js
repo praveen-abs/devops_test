@@ -1,6 +1,6 @@
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../../../../public/assets/css/hr_dashboard.css'
+import '../../assests/tailwind.css'
 
 
 import { createApp } from "vue";

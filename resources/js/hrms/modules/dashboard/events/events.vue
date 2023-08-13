@@ -18,9 +18,9 @@
                             <div class="h-full">
                                 <div class="py-6">
                                     <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
-                                        v-if="events.name.length <= 9"> {{ events.name }}</p>
+                                        v-if="events.name.length <= 8"> {{ events.name }}</p>
                                     <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
-                                        v-tooltip="events.name" v-else> {{ events.name ? events.name.substring(0, 9) + '..' : ''
+                                        v-tooltip="events.name" v-else> {{ events.name ? events.name.substring(0, 8) + '..' : ''
                                         }}</p>
                                     <p class="font-semibold text-sm text-center text-gray-600 my-auto"> {{
                                         dayjs(events.dob).format('DD') }}th {{ dayjs(events.dob).format('MMM') }}</p>

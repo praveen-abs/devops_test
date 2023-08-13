@@ -1,4 +1,5 @@
 <template>
+
     <div class="w-full">
         <div class="mb-2 card left-line">
             <div class="py-1 card-body">
@@ -227,8 +228,10 @@ import ViewSelfieImage from './timesheet/components/ViewSelfieImage.vue'
 import LeaveApply from '../leave_module/leave_apply/LeaveApply.vue'
 
 
+
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
+import Loadingspinner from '../../components/loadingspinner.vue'
 
 const useTimesheet = useAttendanceTimesheetMainStore()
 const useCalendar = useCalendarStore()

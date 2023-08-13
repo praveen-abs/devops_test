@@ -1,6 +1,6 @@
 
 <template>
-    <div class='loading-spinner-container'>
+    <div class='loading-spinner-container' >
         <div class='loading-spinner-loader'>
             <div class='loader--dot'></div>
             <div class='loader--dot'></div>
@@ -16,8 +16,8 @@
 
 <style scoped>
 .loading-spinner-container {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     font-family: Helvetica;
 }
 

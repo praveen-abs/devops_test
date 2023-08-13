@@ -422,9 +422,3 @@ const getSeverity = (status) => {
 
 
 </script>
-
-<style>
-.page-content {
-    padding: calc(30px + 1.5rem) calc(1.5rem / 2) 60px calc(1.5rem / 2);
-}
-</style>

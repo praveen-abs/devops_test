@@ -633,16 +633,10 @@ const submitForm = () => {
         }
 
     }
-
-
     } else {
 
         console.log('Form failed validation')
     }
-
-
-
-
 }
 
 </script>
@@ -702,7 +696,6 @@ label {
     align-items: center;
     pointer-events: none;
     background: #433f3f6b;
-
 }
 
 .p-button:enabled:hover {
