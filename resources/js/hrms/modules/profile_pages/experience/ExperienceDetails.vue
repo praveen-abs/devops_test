@@ -2,8 +2,7 @@
     <div>
         <div class="mb-2 card">
             <div class="card-body">
-                <h6 class="fw-bold fs-15">Experience Information
-
+                <h6 class="font-semibold text-lg">Experience Information
                     <button type="button" class="float-right btn btn-orange"
                         @click="dialog_ExperienceInfovisible = true">
                         Add New
@@ -461,53 +460,3 @@ span {
     margin: 0;
 }
 </style>
-
-
-{
-<!--
-<template>
-    <div class="card">
-        <Message severity="success">Success Message Content</Message>
-        <Message severity="info">Info Message Content</Message>
-
-        <Message severity="error">Error Message Content</Message>
-    </div>
-</template>
-
-
-<template>
-    <div class="flex card justify-content-center">
-        <Toast />
-        <div class="flex flex-wrap gap-2">
-            <Button label="Success" severity="success" @click="showSuccess" />
-            <Button label="Info" severity="info" @click="showInfo" />
-            <Button label="Warn" severity="warning" @click="showWarn" />
-            <Button label="Error" severity="danger" @click="showError" />
-        </div>
-    </div>
-</template>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
-const showSuccess = () => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-};
-
-const showInfo = () => {
-    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
-};
-
-const showWarn = () => {
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-};
-
-const showError = () => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
-};
-</script>
-
-<script setup>
-</script> -->
-}

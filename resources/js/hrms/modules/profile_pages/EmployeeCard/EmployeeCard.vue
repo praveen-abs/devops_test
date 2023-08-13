@@ -148,7 +148,7 @@
 
 
                                 </div> -->
-                                <ProgressBar  v-if="_instance_profilePagesStore.employeeDetails.profile_completeness <=39 "
+                            <ProgressBar  v-if="_instance_profilePagesStore.employeeDetails.profile_completeness <=39 "
                                 :value="_instance_profilePagesStore.employeeDetails.profile_completeness" :class="[_instance_profilePagesStore.employeeDetails.profile_completeness <=39 ? 'progressbar' : '' ]" >
                             </ProgressBar>
                             <ProgressBar  class="progressbar_val2" v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >=40 && _instance_profilePagesStore.employeeDetails.profile_completeness <=59"
@@ -231,10 +231,10 @@
                                     .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
                                     .Current_login_user.org_role == 3  " class="edit-icon" @click="dailogReporting
                 = true"><i class="ri-pencil-fill"></i>
-                
+
                                     </a>
                                 </p>
-                            
+
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                     .get_employee_office_details.l1_manager_code
                                     " class="f-12 fw-bold">

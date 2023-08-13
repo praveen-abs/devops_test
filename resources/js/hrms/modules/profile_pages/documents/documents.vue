@@ -13,7 +13,23 @@
             <Column field="status" header="status" style="min-width: 12rem">
                 <template #body="slotProps">
 
-                    <div v-if="slotProps.data.status === 'Pending'" class=" w-100 flex justify-center">
+                    <div v-if="slotProps.data.status == 'Approved'">
+                        <span
+                            class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Approved</span>
+                    </div>
+                    <div v-else-if="slotProps.data.status === 'Pending'">
+                        <span
+                            class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                    </div>
+                    <div v-else-if="slotProps.data.status === 'Rejected'">
+                        <span
+                            class="inline-flex items-center px-3 py-1 text-sm font-semibold text-red-800 rounded-md bg-red-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                    </div>
+                    <div v-else>
+
+                    </div>
+
+                    <!-- <div v-if="slotProps.data.status === 'Pending'" class=" w-100 flex justify-center">
                         <p class="px-2 py-1 w-[80px] rounded-md bg-yellow-400 text-white font-semibold text-[12px] ">Pending</p>
                     </div>
                     <div v-if="slotProps.data.status === 'Approved'" class="flex justify-center">
@@ -24,7 +40,7 @@
                     </div>
                     <div v-if="slotProps.data.status === null">
                         <p class="text-green-600 font-semibold">-</p>
-                    </div>
+                    </div> -->
 
                 </template>
             </Column>
@@ -41,7 +57,7 @@
                     </div>
                     <div v-else>
                            <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
-                            @click="showDocument(slotProps.data)" style="height: 2em" />
+                            @click="showDocument(slotProps.data)" style="height: 1.5em" />
                     </div>
 
                     </div>

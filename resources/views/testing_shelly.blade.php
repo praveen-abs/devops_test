@@ -1,4 +1,3 @@
-
 <!-- @vite('resources/js/hrms/modules/exit/exit.js')
 <div id="Exit"></div> -->
 
@@ -11,8 +10,8 @@
 <!-- @vite('resources/js/hrms/modules/attendence/AttendanceModule.js')
 <div id="AttendanceModule"></div> -->
 
-@vite('resources/js/app.js')
-<div id="app"></div>
+<!-- @vite('resources/js/app.js')
+<div id="app"></div> -->
 
 
 <!--
@@ -23,3 +22,9 @@
 <!-- @vite( 'resources/js/hrms/modules/login_Page/login_Page.js')
     <div id="login_Page"></div> -->
 
+
+@extends('layouts.master')
+@section('content')
+@vite('resources/js/app.js')
+<div id="app"></div>
+@endsection

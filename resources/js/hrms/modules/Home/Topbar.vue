@@ -52,7 +52,7 @@
                 </transition>
             </div>
             <div class="relative col-span-4">
-                <input type="text" name="" id="" class="border p-1.5 border-gray-300 rounded-lg w-2/5" v-model="query"
+                <input type="text" name="" id="" class="border p-1.5 bg-gray-100  border-gray-300 rounded-lg w-full" v-model="query"
                     placeholder="Search....">
 
                 <transition enter-active-class="transition ease-out duration-200 transform"

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="mb-2 card left-line ">
-            <div class="pt-1 pb-0 card-body">
+        <div class="">
+            <div class="">
                 <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
                     <li class="nav-item " role="presentation">
                         <a class="nav-link active " id="" data-bs-toggle="pill" href="" data-bs-target="#finance_summary"
@@ -20,380 +20,166 @@
 
         <div class="tab-content " id="pills-tabContent">
             <div class="tab-pane fade active show" id="finance_summary" role="tabpanel" aria-labelledby="">
-                <div class="mb-2 card">
-                    <div class="card-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="mb-2  fs-15 z-0">
-                                    Payroll Summary
 
-                                </h6>
+                <div class="my-2" v-if="_instance_profilePagesStore.employeeDetails.get_employee_details">
+                    <div class="w-full bg-white rounded-lg p-2 border">
+                        <div class="flex justify-around">
+                            <p class="font-semibold text-sm">Payroll Summary</p>
+                            <div class="flex justify-end ">
+                                <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
+                Edit -->
+                                <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto"
+                                    alt="">
+
+                                <!-- </p> -->
                             </div>
-                            <ul class="personal-info">
-                                <li class="pb-1 border-bottom-liteAsh">
-                                    <div class="title">Last Processed</div>
-                                    <div class="text">
-                                        <h1 class="" v-if="_instance_profilePagesStore.employeeDetails.payroll_summary.payroll_date">
-                                            <!-- {{  dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary[0].payroll_date).format('DD-MMM-YYYY') }} -->
-                                            <!-- {{ item.payroll_date }} -->
-                                            {{ dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary.payroll_date ).format('DD-MMM-YYYY')  }}
-                                        </h1>
-                                        <h1 v-else> - </h1>
-                                    </div>
-                                </li>
-                                <li class="pb-1 border-bottom-liteAsh">
-                                    <div class="title">Total Working Days</div>
-                                    <div class="text">
+                        </div>
 
-                                        <h1 v-if="_instance_profilePagesStore.employeeDetails.payroll_summary.worked_Days">{{ _instance_profilePagesStore.employeeDetails.payroll_summary.worked_Days }}</h1>
+                        <div class="grid grid-cols-12 gap-2 h-full py-2">
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">Last Processed</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.payroll_summary.payroll_date ?
+                                        dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary.payroll_date
+                                        ).format('DD-MMM-YYYY') : '-' }}
 
-                                        <h1 v-else>
-                                            -
-                                        </h1>
-                                    </div>
-                                </li>
-                                <li class="pb-1 ">
-                                    <div class="title">Loss Of Pay(LOP)</div>
-                                    <div class="text" >
-                                        <h1 v-if="_instance_profilePagesStore.employeeDetails.payroll_summary.lop">{{  _instance_profilePagesStore.employeeDetails.payroll_summary.lop }}</h1>
-                                        <h1 v-else>
-                                            -
-                                        </h1>
-                                    </div>
-                                </li>
-                            </ul>
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">Total Working Days</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.payroll_summary.worked_Days ?
+                                        _instance_profilePagesStore.employeeDetails.payroll_summary.worked_Days : '-' }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">Loss Of Pay(LOP)</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.payroll_summary.lop ?
+                                        _instance_profilePagesStore.employeeDetails.payroll_summary.lop : '-' }}
+                                </p>
+                            </div>
 
-                        </form>
+                        </div>
 
                     </div>
-                </div>
 
-                <div class="mb-2 card">
-                    <div class="card-body">
-                        <h6 class="mb-2 fw-bold fs-15">Bank Information
-                            <span class="personal-edit">
-                                <a href="#" class="edit-icon" @click="onClick_EditButton_BankInfo"><i
-                                        class="ri-pencil-fill"></i>
-                                </a>
-                            </span>
-                        </h6>
 
-                        <Dialog v-model:visible="dialog_Bankvisible" modal header="Header"
-                            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                            <template #header>
-                                <div>
-                                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
-                                        class="fw-bold fs-5">
-                                        Bank Information</h5>
-                                </div>
-                            </template>
 
-                            <div>
-                                <div class="modal-body">
+                    <div class="w-full bg-white rounded-lg p-2 border my-3">
+                        <div class="flex justify-around">
+                            <p class="font-semibold text-sm">Bank Information</p>
+                            <div class="flex justify-end ">
+                                <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
+                    Edit -->
+                                <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto"
+                                    alt="">
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3 form-group">
-                                                <label>Bank Name</label>
-                                                <Dropdown editable @keypress="isLetter($event)" :options="bankNameList"
-                                                    optionLabel="bank_name" optionValue="id" placeholder="Select Bank Name"
-                                                    class="w-full form-controls" v-model="bank_information.bank_id" />
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3 form-group">
-                                                <label>Bank Account No</label>
-                                                <div class="cal-icon">
-                                                </div>
-                                                <InputNumber v-model="bank_information.bank_ac_no"
-                                                    class="form-controls onboard-form" inputId="withoutgrouping"
-                                                    :useGrouping="false" />
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3 form-group">
-                                                <label>IFSC Code</label>
-                                                <InputText type="text" name="bank_ifsc_" class="form-controls pl-2"
-                                                    v-model="bank_information.ifsc_code" />
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-md-6">
-                                            <div class="mb-3 form-group">
-                                                <label>PAN No</label>
-                                                <InputText type="text" name="pan_nos" class="form-controls pl-2"
-                                                    v-model="bank_information.pan_no" />
-                                            </div>
-                                        </div> -->
-
-                                        <div class="col-md-6 ">
-                                            <div class="floating d-block justify-items-start al">
-                                                <label for="" class="float-label mb-2">Bank Passbook or Cheque Leaf</label>
-                                                <div class=" flex justify-content-start">
-                                                    <Toast />
-                                                    <label
-                                                        class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
-                                                        style="width:135px ; " id="" for="uploadPassBook">
-                                                        <i class="pi pi-arrow-circle-up fs-5 mr-3"></i>
-                                                        <h1 class="text-light">Upload file</h1>
-                                                    </label>
-                                                    <div
-                                                        class="d-flex flex-column justify-content-center align-items-center border ">
-                                                        <input type="file" name="" id="uploadPassBook" hidden
-                                                            @change="updateCheckBookPhoto($event)"
-                                                            style="text-transform: uppercase" class="form-controls pl-2"
-                                                            :class="[
-                                                                r$.PassBook.$error ? 'p-invalid' : '',
-                                                            ]" />
-                                                        <span v-if="r$.PassBook.$error"
-                                                            class="text-red-400 fs-6 font-semibold text-center">
-                                                            {{ r$.PassBook.required.$message.replace("Value", "PassBook or  Cheque Leaf") }}
-                                                        </span>
-                                                    </div>
-                                                    <div v-if="bank_information.PassBook"
-                                                        class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
-                                                        {{ bank_information.PassBook.name }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="text-right">
-                                            <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
-                                                @click="submitBankForm">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- </p> -->
                             </div>
-                        </Dialog>
-                        <div>
-                            <ul class="personal-info">
-                                <li>
-                                    <div class="title">Bank Name</div>
-                                    <div class="text">
-                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name }}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">Bank Account No.</div>
-                                    <div class="text">
-
-                                        {{
-                                            _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number
-                                        }}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">IFSC Code</div>
-                                    <div class="text">
-                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code
-                                        }}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">PAN No</div>
-                                    <div class="text w-20">
-                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number }}
-
-                                        <!-- personal  -->
-
-                                        <span class="personal-edit">
-                                            <a href="#" class="edit-icon" style="color:#e63b1f;">
-                                                <i class="ri-pencil-fill" @click="dialog_PanNo_visible = true"></i>
-                                            </a>
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
+
+                        <div class="grid grid-cols-12 gap-2 h-full py-2">
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">Bank Name</p>
+                                <p class="font-semibold text-sm">
+                                    {{
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name ?
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name : '-'
+                                    }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">Bank Account No</p>
+                                <p class="font-semibold text-sm">
+                                    {{
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number ?
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number :
+                                        '-'
+                                    }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">IFSC Code</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code ?
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code : '-'
+                                    }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">PAN No</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number ?
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number : '-' }}
+                                </p>
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
 
-                <Dialog v-model:visible="dialog_PanNo_visible" modal header="Header"
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                    <template #header>
-                        <div>
-                            <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
-                                class="fw-bold fs-5">
-                                Pancard Information</h5>
-                        </div>
-                    </template>
-                    <div>
-                        <div class="modal-body">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3 form-group">
-                                        <label class="mb-2 font-semibold text-lg">PAN No</label>
-                                        <InputMask @focusout="panCardExists" id="serial" mask="aaaaa9999a"
-                                            v-model="pan_information.pan_no" placeholder="AHFCS1234F"
-                                            style="text-transform: uppercase" class="form-controls pl-2" :class="[
-                                                v$.pan_no.$error ? 'p-invalid' : '',
-                                            ]" />
-                                        <span v-if="v$.pan_no.$error" class="text-red-400 fs-6 font-semibold">
-                                            {{ v$.pan_no.required.$message.replace("Value", "Pancard number") }}
-                                        </span>
-                                    </div>
-                                </div>
+                    <div class="w-full bg-white rounded-lg p-2 border">
+                        <div class="flex justify-around">
+                            <p class="font-semibold text-sm">Statutory Information</p>
+                            <div class="flex justify-end ">
+                                <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
+                                Edit -->
+                                <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto"
+                                    alt="">
 
-                                <div class="col-md-6 d-flex flex-column ">
-                                    <!-- flex-column -->
-                                    <div class="d-flex justify-items-center  flex-column ml-10">
-                                        <label for="" class="float-label mb-2 font-semibold text-lg">Pancard</label>
-                                        <div class="d-flex  justify-items-center align-items-center">
-                                            <Toast />
-                                            <label
-                                                class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
-                                                style="width:100px ; " id="" for="uploadPassBook">
-                                                <i class="pi pi-arrow-circle-up fs-5 mr-2"></i>
-                                                <h1 class="text-light">Upload</h1>
-                                            </label>
-
-                                            <div v-if="pan_information.Pancard"
-                                                class="p-2 bg-blue-100 rounded-lg font-semibold fs-11 mx-4">{{
-                                                    pan_information.Pancard.name }}</div>
-
-                                            <input type="file" name="" id="uploadPassBook" hidden
-                                                @change="UploadPandcardPhoto($event)" :class="[
-                                                    v$.Pancard.$error ? 'p-invalid' : '',
-                                                ]" />
-                                        </div>
-                                        <span v-if="v$.Pancard.$error" class="text-red-400 fs-6 font-semibold">
-                                            {{ v$.Pancard.required.$message.replace("Value", "Pancard attachment") }}
-                                        </span>
-                                    </div>
-                                </div>
-
+                                <!-- </p> -->
                             </div>
-                            <div class="col-12">
-                                <div class="text-right">
-                                    <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
-                                        @click="submitForm">Submit</button>
-                                </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-2 h-full py-2">
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">PF Applicable</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable ?
+                                        _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable : '-' }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">EPF Number</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number ?
+                                        _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number : '-' }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">UAN Number</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number ?
+                                        _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number : '-' }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">ESIC Applicable</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable ?
+                                        _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable :
+                                        '-' }}
+                                </p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="font-semibold text-xs text-gray-500">ESIC Number</p>
+                                <p class="font-semibold text-sm">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number ?
+                                        _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number : '-' }}
+                                </p>
                             </div>
                         </div>
                     </div>
-                </Dialog>
 
 
-
-
-
-
-                <div class="mb-2 card">
-                    <div class="card-body">
-                        <h6 class="mb-2 fw-bold fs-15">Statutory Information
-                            <span class="personal-edit">
-                                <a href="#" class="edit-icon"  v-if="_instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 1 ||_instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 3  " @click="onClick_EditButton_Statutory_Info()">
-                                    <i class="ri-pencil-fill"></i>
-
-                                </a>
-                            </span>
-                        </h6>
-
-                        <Dialog v-model:visible="dialog_statutory_visible" modal header="Statutory Details"
-                            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                            <template #header>
-                                <div>
-                                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
-                                        class="fw-bold fs-5">
-                                        Statutory information</h5>
-                                </div>
-                            </template>
-
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="" class="">PF
-                                            Applicable<span class="text-danger">*</span></label>
-                                        <Dropdown v-model="statutory_information.pf_applicable"
-                                            :options="esic_applicable_option" placeholder="PF Applicable" optionLabel="name"
-                                            optionValue="value" class="w-100 " />
-                                    </div>
-                                    <div class="col">
-                                        <label class="ml-2">EPF Number</label>
-                                            <InputText @keypress="isSpecialChars($event)"   v-model="statutory_information.epf_no" class="w-100  mt-1" type="text" placeholder="EPF Number" />
-                                    </div>
-                                </div>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <label class=" ml-1">UAN Number</label>
-                                            <InputText @keypress="isSpecialChars($event)"  v-model="statutory_information.uan_no" class="w-100" type="text" placeholder="EPF Number" />
-                                    </div>
-                                    <div class="col ml-2">
-                                        <label class="ml-2">ESIC
-                                            Applicable<span class="text-danger">*</span></label>
-                                        <Dropdown v-model="statutory_information.esic_applicable"
-                                            :options="esic_applicable_option" optionLabel="name"
-                                            placeholder="ESIC Applicable" class="w-100 " optionValue="value" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6 ">
-                                        <label for="" class=" ml-2">ESIC Number</label>
-                                            <InputText @keypress="isSpecialChars($event)"   v-model="statutory_information.esic_no" class="w-100  mt-1" type="text" placeholder="EPF Number" />
-                                    </div>
-                                    <div class="col">
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="text-right">
-                                        <button id="btn_submit_statutory_info" class="btn btn-border-orange submit-btn"
-                                            @click="saveinfo_statutoryDetails">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </Dialog>
-                        <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info">
-                            <li>
-                                <div class="title">PF Applicable</div>
-                                <div class="text ">
-                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable }}
-                                </div>
-                            </li>
-                            <li>
-                                <div class="title">EPF Number</div>
-                                <div class="text">
-                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
-                                </div>
-                            </li>
-                            <li>
-                                <div class="title">UAN Number</div>
-                                <div class="text"
-                                    v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number == 'null'">
-                                    -
-                                </div>
-                                <div class="text" v-else>
-                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="title">ESIC Applicable</div>
-                                <div class="text">
-                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable }}
-                                </div>
-                            </li>
-                            <li>
-                                <div class="title">ESIC Number</div>
-                                <div class="text">
-                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number }}
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
+
+
+
+
             </div>
             <div class="tab-pane fade" id="finance_pay" role="tabpanel" aria-labelledby="">
                 <div class="mb-2 card">
@@ -403,6 +189,131 @@
                 </div>
             </div>
         </div>
+
+        <Dialog v-model:visible="dialog_PanNo_visible" modal header="Header"
+            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+            <template #header>
+                <div>
+                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                        class="fw-bold fs-5">
+                        Pancard Information</h5>
+                </div>
+            </template>
+            <div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 form-group">
+                                <label class="mb-2 font-semibold text-lg">PAN No</label>
+                                <InputMask @focusout="panCardExists" id="serial" mask="aaaaa9999a"
+                                    v-model="pan_information.pan_no" placeholder="AHFCS1234F"
+                                    style="text-transform: uppercase" class="form-controls pl-2" :class="[
+                                        v$.pan_no.$error ? 'p-invalid' : '',
+                                    ]" />
+                                <span v-if="v$.pan_no.$error" class="text-red-400 fs-6 font-semibold">
+                                    {{ v$.pan_no.required.$message.replace("Value", "Pancard number") }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 d-flex flex-column ">
+                            <!-- flex-column -->
+                            <div class="d-flex justify-items-center  flex-column ml-10">
+                                <label for="" class="float-label mb-2 font-semibold text-lg">Pancard</label>
+                                <div class="d-flex  justify-items-center align-items-center">
+                                    <Toast />
+                                    <label
+                                        class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                        style="width:100px ; " id="" for="uploadPassBook">
+                                        <i class="pi pi-arrow-circle-up fs-5 mr-2"></i>
+                                        <h1 class="text-light">Upload</h1>
+                                    </label>
+
+                                    <div v-if="pan_information.Pancard"
+                                        class="p-2 bg-blue-100 rounded-lg font-semibold fs-11 mx-4">{{
+                                            pan_information.Pancard.name }}</div>
+
+                                    <input type="file" name="" id="uploadPassBook" hidden
+                                        @change="UploadPandcardPhoto($event)" :class="[
+                                            v$.Pancard.$error ? 'p-invalid' : '',
+                                        ]" />
+                                </div>
+                                <span v-if="v$.Pancard.$error" class="text-red-400 fs-6 font-semibold">
+                                    {{ v$.Pancard.required.$message.replace("Value", "Pancard attachment") }}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        <div class="text-right">
+                            <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                                @click="submitForm">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Dialog>
+
+        <Dialog v-model:visible="dialog_statutory_visible" modal header="Statutory Details"
+            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+            <template #header>
+                <div>
+                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                        class="fw-bold fs-5">
+                        Statutory information</h5>
+                </div>
+            </template>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <label for="" class="">PF
+                            Applicable<span class="text-danger">*</span></label>
+                        <Dropdown v-model="statutory_information.pf_applicable" :options="esic_applicable_option"
+                            placeholder="PF Applicable" optionLabel="name" optionValue="value" class="w-100 " />
+                    </div>
+                    <div class="col">
+                        <label class="ml-2">EPF Number</label>
+                        <InputText @keypress="isSpecialChars($event)" v-model="statutory_information.epf_no"
+                            class="w-100  mt-1" type="text" placeholder="EPF Number" />
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col ">
+                        <label class=" ml-1">UAN Number</label>
+                        <InputText @keypress="isSpecialChars($event)" v-model="statutory_information.uan_no" class="w-100"
+                            type="text" placeholder="EPF Number" />
+                    </div>
+                    <div class="col ml-2">
+                        <label class="ml-2">ESIC
+                            Applicable<span class="text-danger">*</span></label>
+                        <Dropdown v-model="statutory_information.esic_applicable" :options="esic_applicable_option"
+                            optionLabel="name" placeholder="ESIC Applicable" class="w-100 " optionValue="value" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 ">
+                        <label for="" class=" ml-2">ESIC Number</label>
+                        <InputText @keypress="isSpecialChars($event)" v-model="statutory_information.esic_no"
+                            class="w-100  mt-1" type="text" placeholder="EPF Number" />
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="text-right">
+                        <button id="btn_submit_statutory_info" class="btn btn-border-orange submit-btn"
+                            @click="saveinfo_statutoryDetails">Save</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </Dialog>
 
 
         <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -723,13 +634,15 @@ const isSpecialChars = (e) => {
 </script>
 
 <style>
-.form-controls {
+.form-controls
+{
     width: 100%;
     height: 2.5rem;
     padding: 0;
 }
 
-Dropdown>placeholder {
+Dropdown>placeholder
+{
     margin-top: -5px;
 }
 </style>

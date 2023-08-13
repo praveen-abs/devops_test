@@ -1,12 +1,11 @@
-<?php use Carbon\Carbon; ?>
+<!-- <?php use Carbon\Carbon; ?> -->
 
 @extends('layouts.master')
-@section('title')
+<!-- @section('title')
     @lang('translation.settings')
-@endsection
+@endsection -->
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/payCheck.css') }}">
+    <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}"> -->
 @endsection
 @section('content')
     @vite('resources/js/hrms/modules/profile_pages/ProfilePageNew.js')
