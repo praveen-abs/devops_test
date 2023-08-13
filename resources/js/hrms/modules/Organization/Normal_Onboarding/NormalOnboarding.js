@@ -3,12 +3,6 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { faFamily} from '@fortawesome/free-solid-svg-icons'
-
-// library.add(faUserSecret)
-
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

@@ -28,7 +28,8 @@
                         <!-- Dropdown content goes here -->
                         <div class="cursor-pointer hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                             v-for="client in clientList">
-                            <div class="justify-between flex p-2 hover:bg-gray-200  items-center" @click="submitSelectedClient(client.id)">
+                            <div class="justify-between flex p-2 hover:bg-gray-200  items-center"
+                                @click="submitSelectedClient(client.id)">
                                 <div class="cursor-pointer flex mx-2 align-center justify-between rounded-lg p-0.5 ">
                                     <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
                                         style="height: 30px;width:30px">
@@ -90,28 +91,31 @@
                         @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"
                         class="absolute top-0 right-40 mt-16 w-60 bg-white shadow-lg rounded z-40 p-2 ">
                         <!-- Dropdown content goes here -->
-                        <p
-                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Master config</p>
-                        <p
-                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Client onboarding</p>
-                        <p
-                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Document template</p>
-                        <p
-                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Leave setting</p>
-                        <p
-                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Attendance setting</p>
-                        <p
-                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Investment setting</p>
-                        <p
-                            class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                        <a href="config-master"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Master config</a>
+                        <a href="clientOnboarding"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Client onboarding</a>
+                        <a href="document_preview"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Document template</a>
+                        <a href="documents_settings"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Document settings</a>
+                        <a href="attendance-leavesettings"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Leave setting</a>
+                        <a href="configurations/attendance_settings"
+                            class="p-2  block text-black rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Attendance setting</a>
+                        <a href="investment_settings"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Investment setting</a>
+                        <a href="showSAsettingsView"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting
-                        </p>
+                        </a>
                     </div>
                 </transition>
 
@@ -130,7 +134,8 @@
                     <button
                         class="py-2 px-3 flex bg-gray-100 text-white rounded-full focus:outline-none hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <p class="rounded-full  bg-red-100 text-black font-semibold p-1 text-sm">{{ service.current_user_name ? service.current_user_name.substring(0, 2)  : ''}}</p>
+                        <p class="rounded-full  bg-red-100 text-black font-semibold p-1 text-sm">{{
+                            service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
                         <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto"
                             v-if="service.current_user_name.length <= 11">{{ service.current_user_name ?
                                 service.current_user_name : '' }}</p>
@@ -269,17 +274,17 @@ const getClientList = () => {
     })
 }
 
-const getSessionClient = () =>{
-    axios.get('session-sessionselectedclient').then(res=>{
+const getSessionClient = () => {
+    axios.get('session-sessionselectedclient').then(res => {
         console.log(res.data);
         currentlySelectedClient.value = res.data
     })
 }
 
-const submitSelectedClient  = (client) =>{
+const submitSelectedClient = (client) => {
     let url = '/session-update-globalClient'
-    console.log({"client_id" :client});
-    axios.post(url,{"client_id" :client}).finally(()=>{
+    console.log({ "client_id": client });
+    axios.post(url, { "client_id": client }).finally(() => {
         getSessionClient()
         getOrgList()
     })
@@ -369,184 +374,8 @@ const getBackgroundColor = (index) => {
 <style>
 .p-sidebar-right .p-sidebar
 {
-    width: 25rem;
+    width: 28rem;
     height: 100%;
-}
-
-:root
-{
-    --bg: #e3e4e8;
-    --fg: #17181c;
-    --input: gray;
-    --primary: #255ff4;
-    --dur: 1s;
-}
-
-form,
-input,
-.caret
-{
-    margin: auto;
-}
-
-form
-{
-    position: relative;
-    width: 100%;
-    max-width: 17em;
-}
-
-input,
-.caret
-{
-    display: block;
-    transition: all calc(var(--dur) * 0.5) linear;
-}
-
-input
-{
-    background: transparent;
-    border-radius: 50%;
-    box-shadow: 0 0 0 0.2em inset;
-    caret-color: var(--primary);
-    width: 1.4em;
-    height: 1.4em;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-input:focus,
-input:valid
-{
-    background: var(--input);
-    border-radius: 0.25em;
-    box-shadow: none;
-    padding: 0.75em 1em;
-    transition-duration: calc(var(--dur) * 0.25);
-    transition-delay: calc(var(--dur) * 0.25);
-    width: 100%;
-    height: 2.5em;
-}
-
-input:focus
-{
-    animation: showCaret var(--dur) steps(1);
-    outline: transparent;
-}
-
-input:focus+.caret,
-input:valid+.caret
-{
-    animation: handleToCaret var(--dur) linear;
-    background: transparent;
-    width: 1px;
-    height: 1.5em;
-    transform: translate(0, -1em) rotate(-180deg) translate(7.5em, -0.25em);
-}
-
-input::-webkit-search-decoration
-{
-    -webkit-appearance: none;
-}
-
-label
-{
-    color: #17181c;
-    overflow: hidden;
-    position: absolute;
-    width: 0;
-    height: 0;
-}
-
-.caret
-{
-    background: currentColor;
-    border-radius: 0 0 0.125em 0.125em;
-    margin-bottom: -0.9em;
-    width: 0.20em;
-    height: 0.8em;
-    transform: translate(0, -1em) rotate(-45deg) translate(0, 0.875em);
-    transform-origin: 50% 0;
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark)
-{
-    :root
-    {
-        --bg: #17181c;
-        --fg: #e3e4e8;
-        --input: rgba(221, 218, 218, 0.129);
-        --primary: #5583f6;
-    }
-}
-
-/* Animations */
-@keyframes showCaret
-{
-    from
-    {
-        caret-color: transparent;
-    }
-
-    to
-    {
-        caret-color: var(--primary);
-    }
-}
-
-@keyframes handleToCaret
-{
-    from
-    {
-        background: currentColor;
-        width: 0.25em;
-        height: 1em;
-        transform: translate(0, -1em) rotate(-45deg) translate(0, 0.875em);
-    }
-
-    25%
-    {
-        background: currentColor;
-        width: 0.25em;
-        height: 1em;
-        transform: translate(0, -1em) rotate(-180deg) translate(0, 0.875em);
-    }
-
-    50%,
-    62.5%
-    {
-        background: var(--primary);
-        width: 1px;
-        height: 1.5em;
-        transform: translate(0, -1em) rotate(-180deg) translate(7.5em, 2.5em);
-    }
-
-    75%,
-    99%
-    {
-        background: var(--primary);
-        width: 1px;
-        height: 1.5em;
-        transform: translate(0, -1em) rotate(-180deg) translate(7.5em, -0.25em);
-    }
-
-    87.5%
-    {
-        background: var(--primary);
-        width: 1px;
-        height: 1.5em;
-        transform: translate(0, -1em) rotate(-180deg) translate(7.5em, 0.125em);
-    }
-
-    to
-    {
-        background: transparent;
-        width: 1px;
-        height: 1.5em;
-        transform: translate(0, -1em) rotate(-180deg) translate(7.5em, -0.25em);
-    }
 }
 </style>
 

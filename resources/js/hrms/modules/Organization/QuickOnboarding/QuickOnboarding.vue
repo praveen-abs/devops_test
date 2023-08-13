@@ -15,12 +15,13 @@
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
                     </ul>
                     <div class="grid grid-cols-12 divide-x-2 divide-gray-600 border-gray-500 rounded-lg border p-2  mr-3">
-                        <label class="col-span-3 font-semibold fs-6  cursor-pointer w-full" for="file"><i
-                                class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
+                        <div @click="openFileInput" class="col-span-3 font-semibold fs-6  cursor-pointer w-full" for="file">
+                            <i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse
+                        </div>
                         <span class="col-span-9 px-4">
                             {{ useStore.selectedFile ? useStore.selectedFile.name : '' }}</span>
                     </div>
-                    <input type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
+                    <input ref="fileInput" type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
                         accept=".xls, .xlsx">
                     <button class="btn btn-orange mt-4 float-right mx-5"
                         @click="useStore.convertExcelIntoArray('quick')">Upload</button>
@@ -99,6 +100,15 @@ import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/Normal
 
 const useStore = useOnboardingMainStore()
 const useNormalOnboardingStore = useNormalOnboardingMainStore()
+
+
+
+const fileInput = ref(null);
+
+const openFileInput = () => {
+    fileInput.value.click();
+};
+
 
 
 onMounted(() => {

@@ -14,7 +14,7 @@
     @endcomponent --}}
 
 
-    <div class="approvals_wrapper mt-30">
+    <div class="approvals_wrapper">
         <div class="card ">
             <div class="card-body ">
                 <div class="filter-content">

@@ -1,6 +1,4 @@
 <template>
-    <!-- {{ ManageWelcomeMailStatusStore.array_employees_list }} -->
-
     <DataTable :value="ManageWelcomeMailStatusStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rowsPerPageOptions="[5, 10, 25]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
@@ -28,7 +26,6 @@
                 <h1 v-if="slotProps.data.value == null || slotProps.data == 0" v-tooltip="'Normally, mail is sent when docs are reviewed'">Mail Not Sent</h1>
                 <h1 v-if="slotProps.data.value == 1">Mail Sent</h1>
             </template>
-
 
             <!-- onboard_docs_approval_mail_status -->
         </Column>
@@ -69,17 +66,7 @@ import { useManageWelcomeMailStatusStore } from './ManageWelcomeMailStatusServic
 const ManageWelcomeMailStatusStore = useManageWelcomeMailStatusStore();
 
 
-
-// const canShowPayslipHTMLView = ref(false);
-
-// const show_releasePayslip_dialogconfirmation = ref(false);
-// const show_downloadPayslip_dialogconfirmation = ref(false);
-
-// const selectedPayRollDate = ref();
-
 const selectedUserCode = ref();
-// console.log(selectedUserCode.value);
-
 
 
 onMounted(() => {
@@ -96,15 +83,9 @@ function showConfirmationDialog(selected_user_code) {
 
 
 
-
-
-
-
-
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
 
 .p-dialog-mask .p-component-overlay .p-component-overlay-enter {
     z-index: 0 !important;

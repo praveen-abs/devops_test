@@ -11,7 +11,7 @@
 @endsection
 @section('content')
 
-<div class="card mb-0 pms_approval_wrapper mt-30">
+<div class="card mb-0 pms_approval_wrapper ">
     <div class="card-body">
         <h6 class="mb-2 font-weight-bold text-lg">Manage Employee Payslips</h6>
         <div class="table-responsive">

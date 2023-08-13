@@ -14,7 +14,7 @@
                 <a v-if="open" :href="menu.to" role="button" @click="toggleMenu(index)" :class="{
                     'bg-yellow-400 text-[001820] ': isOpen(index),
                 }"
-                    class=" flex items-center rounded-l-md my-2 p-2  w-full  relative left-3 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover: duration-300 hover:bg-yellow-400">
+                    class=" flex items-center rounded-l-md my-2 p-2  w-full  relative left-3 transition ease-in-out delay-75 hover:-translate-y-1 hover:scale-110 hover: duration-300 hover:bg-yellow-400">
                     <span>
                         <svg width="14" height="14" class="mx-2" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +119,7 @@ const menuItems = ref([
     },
     {
         label: 'Approvals',
-        subItems: [{ label: 'Onboarding', to: 'approvals-documents' }, { label: 'Leaves', to: 'attendance-leave-approvals' }, { label: 'Attendance Regularization', to: 'attendance-regularization-approvals' }, { label: 'Reimbursement', to: 'approval_reimbursements' }, { label: 'Taxations ', to: '' }, { label: 'Employee Details', to: 'Employee-Details-approvals' }, { label: 'Loan And Salary Advance ', to: '' }],
+        subItems: [{ label: 'Onboarding', to: 'approvals-documents' }, { label: 'Leaves', to: 'attendance-leave-approvals' }, { label: 'Attendance Regularization', to: 'attendance-regularization-approvals' }, { label: 'Reimbursement', to: 'approval_reimbursements' }, { label: 'Taxations ', to: '' }, { label: 'Employee Details', to: 'Employee-Details-approvals' }, { label: 'Loan And Salary Advance ', to: 'showSAapprovalView' }],
         arrow_icon: 'pi pi-angle-right',
         icon: '',
         icon1: 'M8.60439 7.98128C11.0399 7.98128 13.0213 6.19106 13.0213 3.99064C13.0214 1.79015 11.0399 0 8.60439 0C6.16886 0 4.1875 1.79015 4.1875 3.99064C4.1875 6.19114 6.16895 7.98128 8.60439 7.98128Z',
@@ -140,7 +140,7 @@ const menuItems = ref([
     },
     {
         label: 'Payroll',
-        subItems: [{ label: 'Analytics', to: '' }, { label: 'Pay Run', to: '' }, { label: 'Manage Payslip', to: '' }, { label: 'Claim', to: '' }, { label: 'Reports', to: '' }],
+        subItems: [{ label: 'Analytics', to: '' }, { label: 'Pay Run', to: 'showPayRunPage' }, { label: 'Manage Payslip', to: 'showManagePayslipsPage' }, { label: 'Claim', to: 'showPayrollClaimsPage' }, { label: 'Reports', to: 'showPayrollReportsPage' }],
         arrow_icon: 'pi pi-angle-right',
         icon: 'M23.8005 14.6955C23.6703 14.471 23.5062 14.2812 23.3178 14.1371C23.1294 13.993 22.9203 13.8973 22.7026 13.8557C22.4848 13.8141 22.2628 13.8274 22.0491 13.8947C21.8354 13.962 21.6344 14.082 21.4575 14.2479L16.443 18.9178H11.3925C11.3066 18.9161 11.2218 18.8927 11.1431 18.8489C11.0644 18.8051 10.9935 18.7418 10.9345 18.6628C10.8755 18.5837 10.8296 18.4906 10.7996 18.3887C10.7695 18.2869 10.7559 18.1785 10.7595 18.0699C10.7589 17.8529 10.8242 17.6439 10.942 17.4861C11.0599 17.3283 11.2211 17.2337 11.3925 17.2221H14.67C14.9952 17.2241 15.3112 17.0855 15.5655 16.8291C15.8198 16.5728 15.9971 16.2141 16.068 15.8128C16.0992 15.5695 16.0883 15.3206 16.0362 15.0831C15.9841 14.8457 15.892 14.6253 15.7661 14.4372C15.6403 14.249 15.4837 14.0976 15.3072 13.9932C15.1307 13.8888 14.9384 13.834 14.7435 13.8325H8.00401C6.87465 13.84 5.78044 14.33 4.89901 15.2229L2.94902 17.2221L0.633019 17.1746C0.458399 17.1977 0.296834 17.3022 0.179812 17.4677C0.0627895 17.6332 -0.0013048 17.8479 2.01387e-05 18.0699V23.1533C-0.000981084 23.3705 0.064245 23.5798 0.182137 23.7377C0.300029 23.8956 0.461515 23.9899 0.633019 24.0012H15.1305C16.0602 23.9985 16.9652 23.6225 17.715 22.9276C24.189 16.9622 24.348 15.6382 23.8005 14.6955Z',
         icon1: 'M14.6145 1.20446V0H9.375V1.20446H11.043C11.3375 1.20562 11.6245 1.32202 11.8646 1.53767C12.1047 1.75333 12.2861 2.05767 12.384 2.40891H9.375V3.61337H12.384C12.2861 3.96462 12.1047 4.26896 11.8646 4.48462C11.6245 4.70027 11.3375 4.81667 11.043 4.81783H9.375V6.27266L12.036 9.63756H13.386L10.5255 6.02418H11.043C11.5918 6.02354 12.1237 5.78357 12.5489 5.34474C12.9741 4.90591 13.2665 4.29508 13.377 3.61527H14.616V2.40891H13.377C13.3041 1.97069 13.1539 1.55895 12.9375 1.20446H14.6145Z',
@@ -150,7 +150,7 @@ const menuItems = ref([
     },
     {
         label: 'Paycheck',
-        subItems: [{ label: 'Salary Details', to: 'salary_details' }, { label: 'Investment Form Mgmt ', to: '' }, { label: 'Investments', to: 'investments_details' }, { label: 'Form 16', to: '' }, { label: 'Loan And Salary Advance', to: '' }],
+        subItems: [{ label: 'Salary Details', to: 'salary_details' }, { label: 'Investment Form Mgmt', to: 'showInvestmentsFormMgmtPage' }, { label: 'Investments', to: 'vmt_investments_details' }, { label: 'Form 16', to: 'vmt_form16_details' }, { label: 'Loan And Salary Advance', to: 'showSAemployeeView' }],
         arrow_icon: 'pi pi-angle-right',
         icon: 'M21 24H3C2.33061 23.9997 1.68054 23.7756 1.15323 23.3633C0.625918 22.9509 0.251657 22.3741 0.09 21.7245L12 15.108L23.9115 21.726C23.7495 22.3755 23.3749 22.9522 22.8473 23.3643C22.3197 23.7764 21.6694 24.0002 21 24ZM24 20.0595L15.4605 15.315L24 10.3095V20.0595ZM1.50058e-08 20.0595V10.3095L8.5395 15.315L1.50058e-08 20.0565V20.0595ZM9.75 14.25L4.5 11.25V2.25C4.5 1.65326 4.73705 1.08097 5.15901 0.65901C5.58097 0.237053 6.15326 0 6.75 0L17.25 0C17.8467 0 18.419 0.237053 18.841 0.65901C19.2629 1.08097 19.5 1.65326 19.5 2.25V11.25L14.25 14.25L12 13.125L9.75 14.25ZM10.0245 7.3725V8.241L12.0315 10.248H13.05L10.8915 8.0925H11.2815C11.6953 8.09169 12.0961 7.94836 12.4166 7.68663C12.737 7.4249 12.9576 7.06076 13.041 6.6555H13.9755V5.937H13.041C12.9859 5.67562 12.8726 5.43002 12.7095 5.2185H13.9755V4.5H10.023V5.22H11.2815C11.5034 5.22138 11.7195 5.29109 11.9004 5.41965C12.0813 5.54821 12.2182 5.72937 12.2925 5.9385H10.023V6.657H12.3C12.2261 6.86637 12.0893 7.04778 11.9083 7.17639C11.7273 7.30501 11.511 7.37455 11.289 7.3755L10.0245 7.3725ZM21 10.329V4.6995L22.4115 5.4495C22.8918 5.70561 23.2934 6.08759 23.5732 6.5545C23.8531 7.02141 24.0006 7.55566 24 8.1V8.5695L21 10.329ZM3 10.329L1.50058e-08 8.5695V8.1C-5.437e-05 7.55617 0.147721 7.02255 0.427521 6.55621C0.707321 6.08988 1.10862 5.70837 1.5885 5.4525L3 4.6995V10.329Z',
         icon1: '',
