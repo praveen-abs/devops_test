@@ -132,15 +132,16 @@
                 <div class=" mx-3 relative"
                     @click="useDashboard.canShowCurrentEmployee = !useDashboard.canShowCurrentEmployee">
                     <button
-                        class="py-2 px-3 flex bg-gray-100 text-white rounded-full focus:outline-none hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                        class="py-2 px-3 flex text-white focus:outline-none hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <p class="rounded-full  bg-red-100 text-black font-semibold p-1 text-sm">{{
+                        <p class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm" >{{
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
-                        <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto"
-                            v-if="service.current_user_name.length <= 11">{{ service.current_user_name ?
+
+                        <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto mx-2"
+                            v-if="service.current_user_name.length <=10">{{ service.current_user_name ?
                                 service.current_user_name : '' }}</p>
-                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-else> {{
-                            service.current_user_name ? service.current_user_name.substring(0, 11) + '..' : '' }}</p>
+                        <p  class="font-semibold text-[12px] mx-2 whitespace-nowrap font-['Poppins']  text-center text-black my-auto" v-else> {{
+                            service.current_user_name ? service.current_user_name.substring(0, 10) + '..' : '' }}</p>
 
                     </button>
                     <transition enter-active-class="transition ease-out duration-200 transform"

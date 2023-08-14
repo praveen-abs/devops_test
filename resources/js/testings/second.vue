@@ -4,14 +4,22 @@
             v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details">
             <div class="col-span-4 h-full grid grid-cols-12 gap-6">
                 <div class="col-span-4">
-                    <div class="profile-pic">
+                    <div :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]" class=" h-full w-full rounded-full  flex justify-center items-center" v-if="!_instance_profilePagesStore.profile" >
+                        <p class="font-semibold text-4xl text-center text-white">
+                            {{ _instance_profilePagesStore.employeeDetails.user_short_name }}
+                        </p>
+                    </div>
+                    <div v-else class="profile-pic">
+                        <img v-if="_instance_profilePagesStore.profile" class="forRound"
+                            :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt=""
+                            id="output" width="200" />
                         <label class="-label" for="file">
                             <span class="glyphicon glyphicon-camera"></span>
                             <span>Change</span>
                         </label>
-                        <input id="file" type="file" />
-                        <img src="../hrms/assests/sampleAvatar.jpg" id="output" width="200" />
+                        <input id="file" type="file"   @change="updateProfilePhoto($event)"/>
                     </div>
+
                 </div>
                 <div class="col-span-8">
                     <div>
@@ -225,7 +233,7 @@ $fontColor: rgb(250, 250, 250);
         display: none;
     }
 
-    img {
+    .forRound {
         position: absolute;
         object-fit: cover;
         width: $circleSize;

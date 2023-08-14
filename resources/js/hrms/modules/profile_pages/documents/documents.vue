@@ -93,7 +93,7 @@
             </div>
 
         </Dialog>
-
+<!--
         <Dialog header="Header" v-model:visible="EmployeeDocumentManagerService.loading"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
             :closeOnEscape="false">
@@ -104,7 +104,7 @@
             <template #footer>
                 <h5 style="text-align: center">Please wait...</h5>
             </template>
-        </Dialog>
+        </Dialog> -->
 
     </div>
     </div>

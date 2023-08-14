@@ -28,11 +28,10 @@
                             <p class="font-semibold text-sm">Payroll Summary</p>
                             <div class="flex justify-end ">
                                 <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
-                Edit -->
+                                    Edit
                                 <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto"
                                     alt="">
-
-                                <!-- </p> -->
+                                 </p> -->
                             </div>
                         </div>
 
@@ -74,7 +73,7 @@
                                 <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
                     Edit -->
                                 <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto"
-                                    alt="">
+                                    @click="onClick_EditButton_BankInfo" alt="">
 
                                 <!-- </p> -->
                             </div>
@@ -128,7 +127,7 @@
                                 <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
                                 Edit -->
                                 <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto"
-                                    alt="">
+                                    @click="onClick_EditButton_Statutory_Info" alt="">
 
                                 <!-- </p> -->
                             </div>
@@ -189,6 +188,99 @@
                 </div>
             </div>
         </div>
+
+
+
+
+        <Dialog v-model:visible="dialog_Bankvisible" modal header="Header"
+            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+            <template #header>
+                <div>
+                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                        class="fw-bold fs-5">
+                        Bank Information</h5>
+                </div>
+            </template>
+
+            <div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 form-group">
+                                <label>Bank Name</label>
+                                <Dropdown editable @keypress="isLetter($event)" :options="bankNameList"
+                                    optionLabel="bank_name" optionValue="id" placeholder="Select Bank Name"
+                                    class="w-full form-controls" v-model="bank_information.bank_id" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-group">
+                                <label>Bank Account No</label>
+                                <div class="cal-icon">
+                                </div>
+                                <InputNumber v-model="bank_information.bank_ac_no" class="form-controls onboard-form"
+                                    inputId="withoutgrouping" :useGrouping="false" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-group">
+                                <label>IFSC Code</label>
+                                <InputText type="text" name="bank_ifsc_" class="form-controls pl-2"
+                                    v-model="bank_information.ifsc_code" />
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                        <div class="mb-3 form-group">
+                            <label>PAN No</label>
+                            <InputText type="text" name="pan_nos" class="form-controls pl-2"
+                                v-model="bank_information.pan_no" />
+                        </div>
+                    </div> -->
+
+                        <div class="col-md-6 ">
+                            <div class="floating d-block justify-items-start al">
+                                <label for="" class="float-label mb-2">Bank Passbook or Cheque Leaf</label>
+                                <div class=" flex justify-content-start">
+                                    <Toast />
+                                    <label
+                                        class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                        style="width:135px ; " id="" for="uploadPassBook">
+                                        <i class="pi pi-arrow-circle-up fs-5 mr-3"></i>
+                                        <h1 class="text-light">Upload file</h1>
+                                    </label>
+                                    <div class="d-flex flex-column justify-content-center align-items-center border ">
+                                        <input type="file" name="" id="uploadPassBook" hidden
+                                            @change="updateCheckBookPhoto($event)" style="text-transform: uppercase"
+                                            class="form-controls pl-2" :class="[
+                                                r$.PassBook.$error ? 'p-invalid' : '',
+                                            ]" />
+                                        <span v-if="r$.PassBook.$error" class="text-red-400 fs-6 font-semibold text-center">
+                                            {{ r$.PassBook.required.$message.replace("Value", "PassBook or Cheque Leaf") }}
+                                        </span>
+                                    </div>
+                                    <div v-if="bank_information.PassBook"
+                                        class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
+                                        {{ bank_information.PassBook.name }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        <div class="text-right">
+                            <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                                @click="submitBankForm">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Dialog>
+
+
+
 
         <Dialog v-model:visible="dialog_PanNo_visible" modal header="Header"
             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
