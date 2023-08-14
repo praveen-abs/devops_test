@@ -1117,10 +1117,12 @@ class VmtEmployeePayCheckService
         }
     }
 
-    public function generatePayslip($user_code,$month,$year,$type)
+    public function generatePayslip($user_code,$month,$year,$type,$serviceVmtAttendanceService)
     {
 
         // $user_code = "BA002";
+
+
 
 
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
@@ -1135,11 +1137,31 @@ class VmtEmployeePayCheckService
             ->where('user_code', $user_code)
             ->whereYear('payroll_date',$year)
             ->whereMonth('payroll_date',$month);
-            // ->get()->toArray();
-
-            // dd($payroll_data);
 
 
+        $user_data =User::where('user_code',$user_code)->first();
+     //get leave data
+        $start_date= Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
+        $end_date= Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
+
+       $getleavedetails =$serviceVmtAttendanceService->leavetypeAndBalanceDetails($user_data->id,$start_date,$end_date, $month);
+
+       $leave_data = array();
+
+        foreach($getleavedetails as $key =>$single_leave_type){
+
+                 if( $single_leave_type['leave_type']  <> "Sick Leave / Casual Leave" &&  $single_leave_type['leave_type'] <> "Earned Leave" ){
+
+                    if( $single_leave_type['avalied'] != 0){
+
+                      array_push($leave_data,$single_leave_type);
+                    }
+                 }else{
+                    array_push($leave_data,$single_leave_type);
+                 }
+        }
+
+        $getpersonal['leave_data'] = $leave_data;
         $getpersonal['client_details'] = $payroll_data->get(
             [
                 'vmt_client_master.client_fullname',
@@ -1303,7 +1325,6 @@ class VmtEmployeePayCheckService
         }
 
 
-        // dd($getpersonal);
 
         if($type =="pdf"){
 
