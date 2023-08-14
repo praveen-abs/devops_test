@@ -102,7 +102,6 @@
                 </p>
 
             </div>
-chnage
         </div>
         <div class="col-span-3 h-full">
             <div class="flex justify-end">
