@@ -24,7 +24,7 @@
                 <div class="col-span-2">
                     <p class="font-semibold text-xs text-gray-500">Gender</p>
                     <p class="font-semibold text-sm">
-                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.gender }}
+                        {{ fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.gender) }}
                     </p>
                 </div>
                 <div class="col-span-2">
@@ -37,7 +37,7 @@
                 <div class="col-span-2">
                     <p class="font-semibold text-xs text-gray-500">Marital Status</p>
                     <p class="font-semibold text-sm"> {{
-                        _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name }}</p>
+                        _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status }}</p>
                 </div>
                 <div class="col-span-2">
                     <p class="font-semibold text-xs text-gray-500">Blood Group</p>
@@ -47,7 +47,7 @@
                 <div class="col-span-2">
                     <p class="font-semibold text-xs text-gray-500">Physically Handicapped</p>
                     <p class="font-semibold text-sm">{{
-                        _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged }}</p>
+                        fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged) }}</p>
                 </div>
 
             </div>

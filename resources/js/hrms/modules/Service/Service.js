@@ -73,6 +73,12 @@ export const Service = defineStore("Service", () => {
 
     // Helper
 
+    function capitalizeFLetter(name) {
+        let result = name.charAt(0).toUpperCase() +
+            name.slice(1)
+            return result
+    }
+
     const colors = [
         'bg-orange-400',
         'bg-emerald-400',
@@ -111,7 +117,7 @@ export const Service = defineStore("Service", () => {
         getMaritalStatus,
         getAllEmployees,
 
-
+        capitalizeFLetter,
         getBackgroundColor
 
 
