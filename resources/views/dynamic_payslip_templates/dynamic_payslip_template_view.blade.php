@@ -136,7 +136,7 @@
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000;">{{ $personal_details[0]['pan_number']}}</p>
                             </td>
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">ESI</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">ESIC</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{"-"}}</p>
                             </td>
                             <td style="width:25%">
@@ -145,7 +145,7 @@
                             </td>
 
                             <td style="width:25%">
-                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">PF Number</p>
+                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">EPF Number</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ empty($personal_details[0]['epf_number']) ? " - " : $personal_details[0]['epf_number'] }}</p>
                             </td>
                           </tr>
