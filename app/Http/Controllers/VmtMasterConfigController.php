@@ -99,8 +99,8 @@ class VmtMasterConfigController extends Controller
     }
 
     public function SaveEmployeeAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
-
-        $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->Employee_ConfigData);
+        dd($request->all());
+        $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->all());
 
 
         return $response;
