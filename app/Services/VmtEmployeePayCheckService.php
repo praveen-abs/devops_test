@@ -12,6 +12,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use PDF;
 use Carbon\Carbon;
+use DateTime;
 
 
 use App\Models\User;
@@ -1116,11 +1117,10 @@ class VmtEmployeePayCheckService
         }
     }
 
-    public function generatePayslip($user_code, $payroll_date,$month,$year)
+    public function generatePayslip($user_code,$month,$year,$type)
     {
 
-        $user_code = "BA002";
-
+        // $user_code = "BA002";
 
 
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
@@ -1216,6 +1216,13 @@ class VmtEmployeePayCheckService
                 ]
             )->toArray();
 
+
+            $getpersonal['date_month'] = [
+                "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
+                "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
+                "abs_logo" => '/assets/images/ABSlogo\ABS hrms Mobile logo(1).png',
+            ];
+
         // Total earnings
 
         $getpersonal['earnings'] = [];
@@ -1296,7 +1303,7 @@ class VmtEmployeePayCheckService
         }
 
 
-            $type = "mail";
+        // dd($getpersonal);
 
         if($type =="pdf"){
 
@@ -1311,9 +1318,9 @@ class VmtEmployeePayCheckService
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-                $pdf->stream("payslip.pdf");
 
-                 return redirect()->back();
+                $response = base64_encode($pdf->output(['payslip.pdf']));
+                return $response;
 
         }elseif($type =="html"){
 
