@@ -281,10 +281,11 @@
                             <td style="width:20%">
                             @if (!empty($arrears[0]))
 
-                            @foreach ($compensatory_data as $key => $single_value )
-                                @if($key == $earned_key)
-                                <p style="height: 8px; color: #000; ">{{ $single_value[$earned_key] }}</p>
-                                @endif
+                            @foreach ($arrears[0] as $key => $single_value )
+
+                            @if($key == $earned_key)
+                            <p style="height: 8px; color: #000; ">{{ $single_value }}</p>
+                            @endif
 
                            @endforeach
 
@@ -300,17 +301,30 @@
                               <p style="height: 8px; color: #000;">{{$earned_key}}</p>
                             </td>
                             <td style="width:20%">
-                        @if($earned_key =="Basic" || $earned_key =="HRA" || $earned_key =="Special Allowance")
+
 
                                 @foreach ($compensatory_data as $key => $single_value )
 
+                                @if($earned_key =="Basic" || $earned_key =="HRA" || $earned_key =="Special Allowance")
+
                                   <p style="height: 8px; color: #000; font-weight:700 ">{{ $single_value[$earned_key] }}</p>
 
+                                  @endif
                                 @endforeach
-                          @endif
+
                             </td>
                             <td style="width:20%">
-                              <p style="height: 8px; color: #000;">1000</p>
+                                @if (!empty($arrears[0]))
+
+                                @foreach ($arrears[0] as $key => $single_value )
+
+                                    @if($key == $earned_key)
+                                    <p style="height: 8px; color: #000; ">{{ $single_value }}</p>
+                                    @endif
+
+                               @endforeach
+
+                                @endif
                             </td>
                             <td style="width:20%">
                               <p style="height: 8px; color: #000;">{{ $single_earnings}}</p>
