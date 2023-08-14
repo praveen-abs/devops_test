@@ -6,11 +6,10 @@
                     <strong class="">Run Payroll</strong>
                     <div class="mx-4">Finalized</div>
                     <div class="">
-                        <p class=""> last Updated</p>
+                        <p class="">last Updated</p>
                     </div>
                 </section>
                 <section class="flex">
-                    <div>.</div>
                     <button @click="canShowRunPayroll = !canShowRunPayroll">
                         <i class="pi pi-chevron-down" style="font-size: 1rem"></i>
                     </button>
@@ -18,12 +17,13 @@
             </section>
             <div id="Body" class="my-4">
                 <div v-if="canShowRunPayroll"
-                 class="grid gap-4 md:grid-cols-2 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-2 lg:grid-cols-2"
+                    class="grid gap-4 md:grid-cols-2 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-2 lg:grid-cols-2 transition duration-150 ease-in-out "
                     style="display: grid;">
-                    <router-link  class="p-3 my-2 rounded-lg shadow-md dynamic-card-without-border flex hover:bg-slate-100  " v-for="(item, index) in runPayroll" :key="index"
+                    <router-link
+                        class="p-3 my-2 rounded-lg shadow-md dynamic-card-without-border flex transition ease-in-out delay-75 hover:-translate-y-1 hover:scale-110  duration-300" v-for="(item, index) in runPayroll" :key="index"
                     :to="`/payrun/${item.shorName}`">
                     <img src="../../assests/calendar.svg" alt="" class="rounded-full h-8">
-                        <p class="fs-6 font-semibold text-center ">{{item.name}}</p>
+                        <p class="fs-6 font-semibold text-center whitespace-nowrap">{{item.name}}</p>
                     </router-link>
                 </div>
             </div>

@@ -246,7 +246,7 @@ $i=array_keys($excelRowdata_row);
 
             //update employee's details 'vmt_employee_details'
             $emp_details = VmtEmployee::where('userid', $user_id);
-          
+
             //Store the data into vmt_employee_payslip table
             $empPaySlip= new VmtEmployeePaySlipV2;
             $empPaySlip->gender = $row['gender'] ?? null;
@@ -1116,8 +1116,11 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ]);
         }
 
+    public function generatePayslip($user_code,$month,$year,$type,$serviceVmtAttendanceService)
+    {
 
         // $user_code = "BA002";
+
 
 
 
@@ -1127,17 +1130,38 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
             ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
             ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
             ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
             ->whereYear('payroll_date',$year)
             ->whereMonth('payroll_date',$month);
-            // ->get()->toArray();
-
-            // dd($payroll_data);
 
 
+        $user_data =User::where('user_code',$user_code)->first();
+     //get leave data
+        $start_date= Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
+        $end_date= Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
+
+       $getleavedetails =$serviceVmtAttendanceService->leavetypeAndBalanceDetails($user_data->id,$start_date,$end_date, $month);
+
+       $leave_data = array();
+
+        foreach($getleavedetails as $key =>$single_leave_type){
+
+                 if( $single_leave_type['leave_type']  <> "Sick Leave / Casual Leave" &&  $single_leave_type['leave_type'] <> "Earned Leave" ){
+
+                    if( $single_leave_type['avalied'] != 0){
+
+                      array_push($leave_data,$single_leave_type);
+                    }
+                 }else{
+                    array_push($leave_data,$single_leave_type);
+                 }
+        }
+
+        $getpersonal['leave_data'] = $leave_data;
         $getpersonal['client_details'] = $payroll_data->get(
             [
                 'vmt_client_master.client_fullname',
@@ -1214,6 +1238,15 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 ]
             )->toArray();
 
+        $getCompensatorydata = $payroll_data
+            ->get(
+                [
+                    'vmt_employee_compensatory_details.basic as Basic',
+                    'vmt_employee_compensatory_details.hra as HRA',
+                    'vmt_employee_compensatory_details.special_allowance  as Special Allowance',
+                ]
+            )->toArray();
+
 
             $getpersonal['date_month'] = [
                 "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
@@ -1278,6 +1311,17 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             array_push($getpersonal['Tax_Deduction'], $single_payslip);
         }
 
+        $getpersonal['compensatory_data'] = [];
+        foreach ($getCompensatorydata as $single_payslip) {
+            foreach ($single_payslip as $key => $single_details) {
+
+                if ($single_details == "0" || $single_details == null || $single_details == "") {
+                    unset($single_payslip[$key]);
+                }
+            }
+            array_push($getpersonal['compensatory_data'], $single_payslip);
+        }
+
         if (!empty($getpersonal['Tax_Deduction'])) {
 
             $total_value = 0;
@@ -1300,8 +1344,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ];
         }
 
-
-        // dd($getpersonal);
+//dd($getpersonal);
 
         if($type =="pdf"){
 

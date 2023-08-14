@@ -454,6 +454,11 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
     Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
 
+    //Payroll Settings
+    Route::post('save-genral-payroll-settings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveGenralPayrollSettings'])->name('saveGenralPayrollSettings');
+
+    //Get Attendance For run payroll
+    Route::get('/fetch-attendance-data',[App\Http\Controllers\VmtPayRunController::class,'fetch_attendance_data']);
 
 
     Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');

@@ -31,6 +31,7 @@
     use App\Models\VmtEmployeeMailStatus;
     use App\Models\VmtEmployeeStatutoryDetails;
     use App\Models\VmtPayroll;
+    use App\Models\Compensatory;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
     use App\Mail\WelcomeMail;
@@ -641,7 +642,7 @@ $employeeData =[
             if (view()->exists($viewfile_appointmentletter)) {
 
                 $html =  view($viewfile_appointmentletter, compact('data'));
-                
+
             }
        // }
 
