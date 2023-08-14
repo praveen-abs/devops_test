@@ -111,7 +111,7 @@
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000;">{{ " - " }}</p>
                             </td>
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank Name</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['bank_name']}}</p>
                             </td>
                             <td style="width:25%">
@@ -160,7 +160,7 @@
                 <td>
                   <table class="sm-w-full" style="margin-right: auto; width: 95%; margin-left: 50px" cellpadding="0" cellspacing="0" role="none">
 
-                    
+
                     <tr>
                       <td>
                         <p style="font-weight: 600; color: #000;">LEAVE DETAILS</p>
@@ -172,31 +172,39 @@
                           <tr style="width: 100%;">
                             <td style="width:25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Leave Type</p>
-                              <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000; marign-top:-10px;">Casual Leave
+                              @foreach ($leave_data as $key => $single_leave)
+                              <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000; marign-top:-10px;">{{ $single_leave['leave_type'] }}
                                </p>
+                               @endforeach
                             </td>
                             <td style="width:25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px"> Opening Balance</p>
-                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['month_days']}}</p>
+                              @foreach ($leave_data as $key => $single_leave)
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px; text-align: center;">{{ $single_leave['opening_balance']}}</p>
+                              @endforeach
                             </td>
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Availed</p>
-                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['lop']}}</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px; text-align:center;">Availed</p>
+                              @foreach ($leave_data as $key => $single_leave)
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px; background:#6b7280; text-align: center !important;">{{ $single_leave['avalied']}}</p>
+                              @endforeach
                             </td>
                             <td style="width:25%">
                               <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Closing Balance</p>
-                              <p style="display: flex; font-size:14px; color: #000;">{{ $salary_details[0]['arrears_Days']}}</p>
+                              @foreach ($leave_data as $key => $single_leave)
+                              <p style="display: flex; font-size:14px; color: #000;text-align: center;">{{ $single_leave['closing_balance']}}</p>
+                              @endforeach
                             </td>
                           </tr>
                         </table>
-                        
+
                         <table border="1" style="border-color: #f3f4f6; width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           {{-- <tr>
                           </tr> --}}
                         </table>
                       </td>
                     </tr>
-                    
+
                     <tr>
                       <td>
                         <p style="font-weight: 600; color: #000;">SALARY DETAILS</p>
@@ -224,7 +232,7 @@
                             </td>
                           </tr>
                         </table>
-                        
+
                         <table border="1" style="border-color: #f3f4f6; width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr>
                           </tr>
@@ -232,10 +240,10 @@
                       </td>
                     </tr>
 
-                    
+
                     <tr>
                       <td style="display: flex; width: 100%; justify-content: center;">
-                        <table style="width:65%;border-right: 0.4px solid rgba(128, 128, 128, 0.603); " cellpadding="0" cellspacing="0" role="none">
+                        <table style="width:65%; margin-bottom: auto;" cellpadding="0" cellspacing="0" role="none">
                           <tr>
                             <td style="width:40%">
                               <p style="height: 8px; font-weight: 600; color: #000;">EARNINGS</p>
@@ -285,7 +293,7 @@
                           @endforeach
                         </table>
 
-                        <table style="height: 20px; width: 45%;" cellpadding="0" cellspacing="0" role="none">
+                        <table style="height: 20px; width: 45%;border-left: 0.4px solid rgba(128, 128, 128, 0.603);" cellpadding="0" cellspacing="0" role="none">
                           <tr style="height: 4px">
                             <td style="padding-left: 4px;">
                               <p style="height: 8px; font-weight: 600; color: #000;">CONTRIBUTIONS</p>
