@@ -31,6 +31,7 @@
     use App\Models\VmtEmployeeMailStatus;
     use App\Models\VmtEmployeeStatutoryDetails;
     use App\Models\VmtPayroll;
+    use App\Models\Compensatory;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
     use App\Mail\WelcomeMail;
@@ -692,13 +693,15 @@
 
 
 
-// $data = VmtEmpAbryPmrpy::where('')
-$year="2023";
-$month ="02";
+$user_code ='PSC0060';
+$user_data =User::where('user_code',$user_code)->first();
 
-$date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
-$date_2 = Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
-dd($date_1,$date_2);
+    $fixed_data = Compensatory::where('user_id',$user_data->id)->first();
+    dd($fixed_data );
+
+    foreach ($fixed_data as $key => $value) {
+
+    }
 
     ?>
 
