@@ -262,7 +262,7 @@
                           @if ($key == "Total Earnings")
                           <tr>
                             <td style="width:40%">
-                              <p style="height: 8px; color: #000; font-weight:700 ">{{$key}} </p>
+                              <p style="height: 8px; color: #000; font-weight:700 ">{{$key."(A)"}} </p>
                             </td>
                             <td style="width:20%">
                               <p style="height: 8px; color: #000; font-weight:700 ">1000</p>

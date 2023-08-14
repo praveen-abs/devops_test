@@ -1131,6 +1131,7 @@ class VmtEmployeePayCheckService
             ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
             ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
             ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
             ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
@@ -1238,6 +1239,15 @@ class VmtEmployeePayCheckService
                 ]
             )->toArray();
 
+        $getCompensatorydata = $payroll_data
+            ->get(
+                [
+                    'vmt_employee_compensatory_details.basic as Basic',
+                    'vmt_employee_compensatory_details.hra as HRA',
+                    'vmt_employee_compensatory_details.special_allowance  as Special Allowance',
+                ]
+            )->toArray();
+
 
             $getpersonal['date_month'] = [
                 "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
@@ -1302,6 +1312,17 @@ class VmtEmployeePayCheckService
             array_push($getpersonal['Tax_Deduction'], $single_payslip);
         }
 
+        $getpersonal['compensatory_data'] = [];
+        foreach ($getCompensatorydata as $single_payslip) {
+            foreach ($single_payslip as $key => $single_details) {
+
+                if ($single_details == "0" || $single_details == null || $single_details == "") {
+                    unset($single_payslip[$key]);
+                }
+            }
+            array_push($getpersonal['compensatory_data'], $single_payslip);
+        }
+
         if (!empty($getpersonal['Tax_Deduction'])) {
 
             $total_value = 0;
@@ -1324,7 +1345,7 @@ class VmtEmployeePayCheckService
             ];
         }
 
-
+//dd($getpersonal);
 
         if($type =="pdf"){
 
