@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VmtPayrollStatutorySetting extends Model
+class VmtLabourWelfareFundSettings extends Model
 {
     use HasFactory;
-    protected $table = 'vmt_payroll_statutory_setting';
+    protected  $table  ="vmt_labour_welfare_fund_settings";
 }

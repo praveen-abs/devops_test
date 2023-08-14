@@ -667,32 +667,38 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-        $VmtClientMaster = VmtClientMaster::first();
-         $image_view = url('/') . $VmtClientMaster->client_logo;
+//         $VmtClientMaster = VmtClientMaster::first();
+//          $image_view = url('/') . $VmtClientMaster->client_logo;
 
-          $email =User::pluck('email');
-        foreach ($email as $key => $single_mail) {
+//           $email =User::pluck('email');
+//         foreach ($email as $key => $single_mail) {
 
-            $jobs = (new WelcomeMailJobs($single_mail,'DM001', 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code))
-            ->delay(Carbon::now()->addSeconds(5));
+//             $jobs = (new WelcomeMailJobs($single_mail,'DM001', 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code))
+//             ->delay(Carbon::now()->addSeconds(5));
 
-             dispatch($jobs);
-        }
-
-
-
-
-        //  }
-        if( $jobs){
-            dd('success');
-        }else{
-            dd('failure');
-        }
+//              dispatch($jobs);
+//         }
 
 
 
 
-$data = VmtEmpAbryPmrpy::where('')
+//         //  }
+//         if( $jobs){
+//             dd('success');
+//         }else{
+//             dd('failure');
+//         }
+
+
+
+
+// $data = VmtEmpAbryPmrpy::where('')
+$year="2023";
+$month ="02";
+
+$date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
+$date_2 = Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
+dd($date_1,$date_2);
 
     ?>
 

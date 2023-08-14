@@ -59,7 +59,7 @@
                     <tr style="display: flex; width: 100%; align-items: center; justify-content: space-between">
                       <td style="display: flex; width: 100%; flex-direction: column; justify-content: center; padding-left: 40px">
                         <p style="font-size: 35px; font-weight: 600; color: #000">PAYSLIP <span style="font-weight: 400; color: #6b7280">{{ $date_month['Month']}} {{$date_month['Year']}}</span></p>
-                        <p style="font-size: 14px; color: #000; height: 12px; margin-top:-15px">{{$client_details[0]['client_fullname']}}</p>
+                        <p style="font-size: 18px; color: #000; height: 10px; margin-top:-15px">{{$client_details[0]['client_fullname']}}</p>
                         <p style="width: 300px; font-size: 14px; color: #000; margin-bottom: 10px; height: 24px">{{ $client_details[0]['address'] }}</p>
                       </td>
                       <td>
@@ -74,7 +74,7 @@
                   <table class="sm-w-full" style="margin-left: auto; margin-right: auto; width: 100%" cellpadding="0" cellspacing="0" role="none">
                     <tr style="width: 100%;">
                       <td style="width: 100%;">
-                        <p style="position: relative; font-weight: 600; color: #000;margin-top:50px">{{ $personal_details[0]['name'] }}</p>
+                        <p style="position: relative; font-weight: 600; color: #000;margin-top:50px">Employee Name : {{ $personal_details[0]['name'] }}</p>
                         <table border="2" style="border-color: #000; width: 100%" cellpadding="0" cellspacing="0" role="none">
                           <tr>
                           </tr>
@@ -82,20 +82,20 @@
                         <table style="height: 16px; width: 100%" cellpadding="0" cellspacing="0" role="none">
                           <tr style="height: 16px; width: 100%;">
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280">Employee Number</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280">Employee Code</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['user_code']}}</p>
                             </td>
                             <td style="height: 16px;width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Date Joined</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Date Of Joining</p>
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000">{{ $personal_details[0]['doj']}}</p>
                             </td>
-                            <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Departmen</p>
-                              <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['department_name']}}</p>
-                            </td>
                             <td style="height: 16px;width:25%">
-                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280">Sub Department</p>
-                              <p style="display: flex; font-size:14px; color: #000;">{{" - "}}</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Designation</p>
+                              <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['designation']}}</p>
+                            </td>
+                            <td style="width:25%">
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Department</p>
+                              <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['department_name']}}</p>
                             </td>
                           </tr>
                         </table>
@@ -105,10 +105,7 @@
                         </table>
                         <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="width: 100%;">
-                            <td style="width:25%" >
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Designation</p>
-                              <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['designation']}}</p>
-                            </td>
+
                             <td style="width:25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Payment Mode</p>
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000;">{{ " - " }}</p>
@@ -116,6 +113,10 @@
                             <td style="width:25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['bank_name']}}</p>
+                            </td>
+                            <td style="width:25%">
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank Account</p>
+                              <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['bank_account_number']}}</p>
                             </td>
                             <td style="width:25%">
                               <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank IFSC</p>
@@ -127,20 +128,22 @@
                           <tr>
                           </tr>
                         </table>
+
                         <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="width: 100%;">
-                            <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank Account</p>
-                              <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['bank_account_number']}}</p>
-                            </td>
                             <td style="width:25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">PAN</p>
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000;">{{ $personal_details[0]['pan_number']}}</p>
                             </td>
                             <td style="width:25%">
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">ESI</p>
+                              <p style="display: flex; font-size:14px; color: #000;">{{"-"}}</p>
+                            </td>
+                            <td style="width:25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">UAN</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ $personal_details[0]['uan_number']}}</p>
                             </td>
+
                             <td style="width:25%">
                               <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">PF Number</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ empty($personal_details[0]['epf_number']) ? " - " : $personal_details[0]['epf_number'] }}</p>
@@ -152,9 +155,48 @@
                   </table>
                 </td>
               </tr>
+
               <tr>
                 <td>
                   <table class="sm-w-full" style="margin-right: auto; width: 95%; margin-left: 50px" cellpadding="0" cellspacing="0" role="none">
+
+                    
+                    <tr>
+                      <td>
+                        <p style="font-weight: 600; color: #000;">LEAVE DETAILS</p>
+                        <table border="2" style="border-color: #000; width: 100%;" cellpadding="0" cellspacing="0" role="none">
+                          <tr>
+                          </tr>
+                        </table>
+                        <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
+                          <tr style="width: 100%;">
+                            <td style="width:25%">
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Leave Type</p>
+                              <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000; marign-top:-10px;">Casual Leave
+                               </p>
+                            </td>
+                            <td style="width:25%">
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px"> Opening Balance</p>
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['month_days']}}</p>
+                            </td>
+                            <td style="width:25%">
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Availed</p>
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['lop']}}</p>
+                            </td>
+                            <td style="width:25%">
+                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Closing Balance</p>
+                              <p style="display: flex; font-size:14px; color: #000;">{{ $salary_details[0]['arrears_Days']}}</p>
+                            </td>
+                          </tr>
+                        </table>
+                        
+                        <table border="1" style="border-color: #f3f4f6; width: 100%;" cellpadding="0" cellspacing="0" role="none">
+                          {{-- <tr>
+                          </tr> --}}
+                        </table>
+                      </td>
+                    </tr>
+                    
                     <tr>
                       <td>
                         <p style="font-weight: 600; color: #000;">SALARY DETAILS</p>
@@ -165,60 +207,85 @@
                         <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="width: 100%;">
                             <td style="">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px">ACTUAL PAYABLE DAYS</p>
-                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['month_days']}}</p>
-                            </td>
-                            <td>
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">TOTAL WORKING DAYS</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;"> Total Working Days</p>
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['worked_Days']}}</p>
                             </td>
                             <td>
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">LOSS OF PAY DAYS</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px"> Actual Payable Days </p>
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['month_days']}}</p>
+                            </td>
+                            <td>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;"> Loss Of Pay Days</p>
                               <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $salary_details[0]['lop']}}</p>
                             </td>
                             <td>
-                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">DAYS PAYABLE</p>
+                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Arrears Days Payable</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ $salary_details[0]['arrears_Days']}}</p>
                             </td>
                           </tr>
                         </table>
+                        
                         <table border="1" style="border-color: #f3f4f6; width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr>
                           </tr>
                         </table>
                       </td>
                     </tr>
+
+                    
                     <tr>
                       <td style="display: flex; width: 100%; justify-content: center;">
-                        <table style="width: 50%;border-right: 0.4px solid rgba(128, 128, 128, 0.603); " cellpadding="0" cellspacing="0" role="none">
+                        <table style="width:65%;border-right: 0.4px solid rgba(128, 128, 128, 0.603); " cellpadding="0" cellspacing="0" role="none">
                           <tr>
-                            <td>
-                              <p style="height: 8px; font-weight: 600; color: #000;">EANINGS</p>
+                            <td style="width:40%">
+                              <p style="height: 8px; font-weight: 600; color: #000;">EARNINGS</p>
+                            </td>
+                            <td style="width:20%">
+                              <p style="height: 8px; font-weight: 600; color: #000; margin-left:-1px; text-align:left;">Fixed</p>
+                            </td>
+                            <td style="width:20%">
+                              <p style="height: 8px; font-weight: 600; color: #000;margin-left:-1px; text-align:left;">Arrears</p>
+                            </td>
+                            <td style="width:20%">
+                              <p style="height: 8px; font-weight: 600; color: #000;margin-left:-1px;">Earned</p>
                             </td>
                           </tr>
                           @foreach ($earnings[0] as $key => $single_earnings)
                           @if ($key == "Total Earnings")
                           <tr>
-                            <td>
-                              <p style="height: 8px; color: #000; font-weight:700 ">{{$key}}</p>
+                            <td style="width:40%">
+                              <p style="height: 8px; color: #000; font-weight:700 ">{{$key}} </p>
                             </td>
-                            <td>
-                              <p style="height: 8px; color: #000; font-weight:700">{{ $single_earnings}}</p>
+                            <td style="width:20%">
+                              <p style="height: 8px; color: #000; font-weight:700 ">1000</p>
+                            </td>
+                            <td style="width:20%">
+                              <p style="height: 8px; color: #000; font-weight:700 ">1000</p>
+                            </td>
+                            <td style="width:20%">
+                              <p style="height: 8px; color: #000; font-weight:700"> {{ $single_earnings}} </p>
                             </td>
                           </tr>
                           @else
                           <tr>
-                            <td>
+                            <td style="width:40%">
                               <p style="height: 8px; color: #000;">{{$key}}</p>
                             </td>
-                            <td>
+                            <td style="width:20%">
+                              <p style="height: 8px; color: #000;">1000</p>
+                            </td>
+                            <td style="width:20%">
+                              <p style="height: 8px; color: #000;">1000</p>
+                            </td>
+                            <td style="width:20%">
                               <p style="height: 8px; color: #000;">{{ $single_earnings}}</p>
                             </td>
                           </tr>
                           @endif
                           @endforeach
                         </table>
-                        <table style="height: 20px; width: 50%;" cellpadding="0" cellspacing="0" role="none">
+
+                        <table style="height: 20px; width: 45%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="height: 4px">
                             <td style="padding-left: 4px;">
                               <p style="height: 8px; font-weight: 600; color: #000;">CONTRIBUTIONS</p>
@@ -228,10 +295,10 @@
                           @if ($key =="Total Contribution")
                           <tr style="height: 4px;">
                             <td style="padding-left: 4px;">
-                              <p style="height: 4px; color: #000; font-weight:700 ">{{ $key }}</p>
+                              <p style="height: 4px; color: #000; font-weight:700 ;">{{ $key }}</p>
                             </td>
                             <td style="padding-left: 4px;">
-                              <p style="height: 4px; color: #000; font-weight:700">{{ $single_contribution }}</p>
+                              <p style="height: 4px; color: #000; font-weight:700; text-align:end;">{{ $single_contribution }}</p>
                             </td>
                           </tr>
                          @else
@@ -240,7 +307,7 @@
                               <p style="height: 4px; color: #000;">{{$key}}</p>
                             </td>
                             <td >
-                              <p style="height: 4px; color: #000;">{{ $single_contribution }}</p>
+                              <p style="height: 4px; color: #000; text-align:end;">{{ $single_contribution }}</p>
                             </td>
                           </tr>
                          @endif
@@ -248,7 +315,7 @@
 
                          <tr style="height: 4px;">
                             <td>
-                              <p style="height: 4px; padding-left: 4px; font-weight: 700; color: #000">TAXES & DEDUCTIONS</p>
+                              <p style="height: 4px; padding-left: 4px; font-weight: 700; color: #000;">TAXES & DEDUCTIONS</p>
                             </td>
                           </tr>
                           @foreach ($Tax_Deduction[0] as $key => $single_taxdeduction)
@@ -258,7 +325,7 @@
                               <p style="height: 4px; color: #000; font-weight:700; padding-left: 4px;">{{ $key }}</p>
                             </td>
                             <td>
-                              <p style="height: 4px; color: #000; font-weight:700
+                              <p style="height: 4px; color: #000; font-weight:700; text-align:end;
                               " >{{  $single_taxdeduction }}</p>
                             </td>
                           </tr>
@@ -268,7 +335,7 @@
                               <p style="height: 4px; color: #000; padding-left: 4px;">{{ $key }}</p>
                             </td>
                             <td>
-                              <p style="height: 4px; color: #000;">{{  $single_taxdeduction }}</p>
+                              <p style="height: 4px; color: #000; text-align:end;">{{  $single_taxdeduction }}</p>
                             </td>
                           </tr>
                           @endif
@@ -278,6 +345,7 @@
                       {{--  --}}
                       {{--  --}}
                     </tr>
+
                     <tr>
                       <td>
                         <table style="border:0.4px solid gray ; width:100%; margin-top:10px;" ></table>
