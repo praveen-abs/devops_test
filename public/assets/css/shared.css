@@ -1244,7 +1244,8 @@ button.gridjs-sort-desc {
 }
 
 .nav-tabs-dashed .nav-item .nav-link.active {
-    color: var(--color-primary_blue) !important;
+    /* color: var(--color-primary_blue) !important; */
+    color: black !important;
 }
 
 .nav-tabs-dashed .nav-item .nav-link {
@@ -1265,7 +1266,7 @@ button.gridjs-sort-desc {
     width: 100%;
     left: 0px;
     position: absolute;
-    background-color: #ee6a05;
+    background-color: #F9BE00;
     bottom: 0px;
     border-top-left-radius: 8px;
     border-top-right-radius: 5px;

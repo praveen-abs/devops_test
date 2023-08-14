@@ -11,7 +11,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const useCalendar = useCalendarStore()
     const service = Service()
 
-    const canShowLoading = ref(false)
+    const canShowLoading = ref(true)
     const isManager = ref(false)
     const isTeamOrg = ref('single')
     const switchTimesheet = ref('Classic')
@@ -47,7 +47,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
         //Returns '0' if shift is not assigned to user. Need to handle error scenario based on that value.
 
-        return axios.post(url, {
+        return await axios.post(url, {
             month: currentlySelectedMonth + 1,
             year: currentlySelectedYear,
             user_id: currentlySelectedUser,
@@ -56,22 +56,28 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
 
-    /* Get currently login employee daily attendance */
-    const getSelectedEmployeeAttendance = () => {
 
-        canShowLoading.value = true
-        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
-            console.log("Selected employee attendance : " + res.data);
-            currentEmployeeAttendance.value = Object.values(res.data)
-            currentEmployeeAttendanceLength.value = Object.values(res.data).length
-        }).finally(() => {
-            canShowLoading.value = false
-        })
+    /* Get currently login employee daily attendance */
+    const getSelectedEmployeeAttendance = async () => {
+        try {
+            canShowLoading.value = true
+            await getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+                console.log("Selected employee attendance : " + res.data);
+                currentEmployeeAttendance.value = Object.values(res.data)
+                currentEmployeeAttendanceLength.value = Object.values(res.data).length
+            }).finally(() => {
+                canShowLoading.value = false
+            })
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     /* Get currently selected team employee daily attendance */
     const getSelectedEmployeeTeamDetails = (user_id, isteam) => {
         isTeamOrg.value = isteam
+        canShowLoading.value = true
         currentlySelectedTeamMemberUserId.value = user_id
         getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
@@ -85,6 +91,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const getSelectedEmployeeOrgDetails = (user_id, isteam) => {
         isTeamOrg.value = isteam
+        canShowLoading.value = true
         currentlySelectedOrgMemberUserId.value = user_id
         getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             // console.log(Object.values(res.data));
@@ -353,13 +360,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         const [hours, minutes] = time.split(':');
         let convertedHours = parseInt(hours);
         if (period === 'PM' && convertedHours !== 12) {
-          convertedHours += 12;
+            convertedHours += 12;
         } else if (period === 'AM' && convertedHours === 12) {
-          convertedHours = 0;
+            convertedHours = 0;
         }
         let convertFormat = `${convertedHours.toString().padStart(2, '0')}:${minutes}:00`;
         return convertFormat
-      };
+    };
 
     //  Finding Difference between start date and end date
 

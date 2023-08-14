@@ -7,17 +7,22 @@
                     <div class=" my-2 d-flex justify-content-between align-items-center">
                         <div></div>
                         <div class=" d-flex ">
-                                <div class="">
-                                    <label for=" " class=" text-blue-900 mx-2" >Start Date</label>
-                                    <Calendar v-model="leaveModuleStore.selectedStartDate" dateFormat="dd-mm-yy"   class="p-l3" style=" border: 1px solid orange; border-radius: 7px; height: 38px; width: 100px;" :maxDate="new Date()"/>
-                                </div>
-                                <div class="">
-                                    <label for=" " class=" text-blue-900 mx-2 " >End Date</label>
-                                    <Calendar class="mr-3" v-model="leaveModuleStore.selectedEndDate" dateFormat="dd-mm-yy" style=" border: 1px solid orange; border-radius: 7px; height: 38px;width: 100px;" :maxDate="new Date()" />
+                            <div class="">
+                                <label for=" " class=" text-blue-900 mx-2">Start Date</label>
+                                <Calendar v-model="leaveModuleStore.selectedStartDate" dateFormat="dd-mm-yy" class="p-l3"
+                                    style=" border: 1px solid orange; border-radius: 7px; height: 38px; width: 100px;"
+                                    :maxDate="new Date()" />
+                            </div>
+                            <div class="">
+                                <label for=" " class=" text-blue-900 mx-2 ">End Date</label>
+                                <Calendar class="mr-3" v-model="leaveModuleStore.selectedEndDate" dateFormat="dd-mm-yy"
+                                    style=" border: 1px solid orange; border-radius: 7px; height: 38px;width: 100px;"
+                                    :maxDate="new Date()" />
 
-                                </div>
+                            </div>
 
-                                <button class=" btn-orange py-1  px-4 rounded" @click="leaveModuleStore.getOrgLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD') ,dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD') )">submit</button>
+                            <button class=" btn-orange py-1  px-4 rounded"
+                                @click="leaveModuleStore.getOrgLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD'), dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD'))">submit</button>
                         </div>
 
                     </div>
@@ -75,16 +80,6 @@
 
     </div>
 
-    <Dialog header="Header" v-model:visible="leaveModuleStore.canshowloadingsrceen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 
     <div class="mt-3 row">
         <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">

@@ -78,7 +78,7 @@
                 </transition>
             </div>
             <div class="flex col-span-4 justify-end">
-                <button
+                <button  v-tooltip="'Settings'"
                     class="rounded-full bg-gray-100  p-2 hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none  mx-2"
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="h-6 w-6">
@@ -120,12 +120,12 @@
                 </transition>
 
 
-                <button
+                <button  v-tooltip="'Notification'"
                     class="mx-2 animate-pulse  bg-gray-100 rounded-full p-2  hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                     @click="visibleRight = true">
                     <img src="./assests/icons/notification.svg" alt="" class="h-6 w-6">
                 </button>
-                <button
+                <button  v-tooltip="'Exit'"
                     class=" bg-gray-100 rounded-full p-2 hover:bg-gray-200 transition  duration-700 ease-in-out transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                     <img src="./assests/icons/exit.svg" alt="" class="h-6 w-6">
                 </button>
@@ -372,11 +372,11 @@ const getBackgroundColor = (index) => {
 </script>
 
 
-<style>
+<!-- <style>
 .p-sidebar-right .p-sidebar
 {
     width: 28rem;
     height: 100%;
 }
-</style>
+</style> -->
 

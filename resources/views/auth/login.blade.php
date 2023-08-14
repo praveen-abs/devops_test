@@ -21,16 +21,14 @@
     }
     //dd($logoSrc);
     ?>
-
-
-    <section class="vh-100" id="section-head">
-        <div class="container-fluid h-100">
-            <div class="row h-100">
+    <section class="h-screen" id="section-head">
+        <div class="h-full">
+            <div class="row h-full">
                 <div class="col col-xl-12">
-                    <div class="card h-100">
-                        <div class="row g-0 h-100">
+                    <div class="card h-full">
+                        <div class="row g-0 h-full">
                             <div class="col-md-6 col-xl-7 col-lg-7 d-none d-xs-none d-sm-none d-md-block left-content">
-                                <div id="features" class="carousel w-100 slide" data-bs-ride="carousel">
+                                <div id="features" class="carousel w-full slide" data-bs-ride="carousel">
                                     <ol class="carousel-indicators">
                                         <li data-target="#features" data-bs-slide-to="0" class="active"
                                             aria-current="true" aria-label="Slide 1"></li>
@@ -38,8 +36,8 @@
                                         <li data-target="#features" data-bs-slide-to="2"></li>
                                         <li data-target="#features" data-bs-slide-to="3"></li>
                                     </ol>
-                                    <div class="carousel-inner h-100">
-                                        <div class="carousel-item active h-100" data-bs-interval="2000">
+                                    <div class="carousel-inner h-full">
+                                        <div class="carousel-item active h-full" data-bs-interval="2000">
                                             <img src="{{ URL::asset('assets/images/login_img/illustrator.svg') }}"
                                                 alt="" class="">
                                             <div class="carousel-caption">
@@ -49,7 +47,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="carousel-item h-100" data-bs-interval="2000">
+                                        <div class="carousel-item h-full" data-bs-interval="2000">
                                             <img src="{{ URL::asset('assets/images/login_img/Chat support.svg') }}"
                                                 alt="" class="">
                                             <div class="carousel-caption d-none d-md-block">
@@ -57,7 +55,7 @@
                                                     your questions with <span class="text-orange">Chat Support</span></p>
                                             </div>
                                         </div>
-                                        <div class="carousel-item h-100" data-bs-interval="2000">
+                                        <div class="carousel-item h-full" data-bs-interval="2000">
                                             <img src="{{ URL::asset('assets/images/login_img/Payroll.svg') }}"
                                                 alt="" class="">
                                             <div class="carousel-caption d-none d-md-block">
@@ -66,7 +64,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="carousel-item h-100">
+                                        <div class="carousel-item h-full">
                                             <img src="{{ URL::asset('assets/images/login_img/Certified.svg') }}"
                                                 alt="" class="">
                                             <div class="carousel-caption d-none d-md-block">
