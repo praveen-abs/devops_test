@@ -145,8 +145,8 @@
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
-                    @click="downloadPayslip(selectedUserCode)"
+                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
+                    @click="downloadPayslip(selectedUserCode,selectedUsername)"
                     autofocus />
 
                 <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false" class="p-button-text  py-2" autofocus />
@@ -156,7 +156,7 @@
     </Dialog>
 
 
-    <div class="card flex justify-content-center inline-flex">
+    <div class="flex inline-flex card justify-content-center">
         <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :style="{ width: '50vw' }">
             <div v-html="managePayslipStore.paySlipHTMLView">
 
@@ -195,6 +195,7 @@ const selectedUserCode = ref();
 
 
 onMounted( () => {
+   managePayslipStore.selectedPayRollDate = new Date('03/03/2023')
    managePayslipStore.selectedPayRollDate = new Date('03/03/2023')
    managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())
 

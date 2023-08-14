@@ -1,4 +1,3 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
@@ -35,7 +34,7 @@ import InputNumber from 'primevue/inputnumber'
 
 
 import InvenstmentAndExemption from './investments_and_exemption.vue'
-  
+
 const app = createApp(InvenstmentAndExemption);
 const pinia=createPinia()
 

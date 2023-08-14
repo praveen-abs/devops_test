@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
-    <div class="mb-0 card pms_approval_wrapper mt-30">
+    <div class="mb-0 card pms_approval_wrapper ">
         <div class="card-body">
             <h6 class="my-2 text-lg font-semibold">PMS/OKR Approvals</h6>
             <div class="table-responsive">

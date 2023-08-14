@@ -76,7 +76,7 @@ use App\Models\VmtClientMaster;
 
     @vite( 'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js')
     <div id="MobileSettings"></div>
-    
+
 </body>
 
 </html>

@@ -1,143 +1,157 @@
 <template>
-    <QuickOnboarding />
-    <!-- <input type="file" name="" id="" @change="json($event)">
-    <div class="table-responsive">
+    <div class="w-full h-screen bg-gray-50 p-3">
+        <EmployeeCard />
 
-        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="employee_documents"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+        <div class="w-full my-2">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
+                <div class="mb-2">
+                    <div class="pt-1 pb-0 ">
+                        <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
+                            <li class="nav-item " role="presentation">
+                                <a class="nav-link active " id="" data-bs-toggle="pill" href=""
+                                    data-bs-target="#employee_details" role="tab" aria-controls="pills-home"
+                                    aria-selected="true">
+                                    Employee Details</a>
+                            </li>
+                            <li class="mx-4 nav-item" role="presentation">
+                                <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href=""
+                                    data-bs-target="#family_det" role="tab" aria-controls="pills-home" aria-selected="true">
+                                    Family</a>
+                            </li>
+                            <li class="nav-item " role="presentation">
+                                <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href=""
+                                    data-bs-target="#experience_det" role="tab" aria-controls="pills-home"
+                                    aria-selected="true">
+                                    Experience</a>
+                            </li>
+                            <li class="mx-4 nav-item " role="presentation">
+                                <a class="nav-link " id="" data-bs-toggle="pill" href="" data-bs-target="#finance_det"
+                                    role="tab" aria-controls="pills-home" aria-selected="true">
+                                    Paycheck</a>
+                            </li>
+                            <li class="nav-item " role="presentation">
+                                <a class="nav-link " id="" data-bs-toggle="pill" href="" data-bs-target="#document_det"
+                                    role="tab" aria-controls="pills-home" aria-selected="true">
+                                    Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-            <Column header="File Name" field="Employee code" style="min-width: 8rem">
-            </Column>
+                <div class="tab-content " id="pills-tabContent">
 
-            <Column field="Employee Name" header="Status" style="min-width: 12rem">
+                    <div class="tab-pane  fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
+                        <div>
+                            <EmployeeDetails />
+                        </div>
+                    </div>
 
-            </Column>
+                    <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
+                        <FamilyDetails />
+                    </div>
 
-            <Column field="Email" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Aadhar" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Account No" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Bank Name" header="Reason " style="min-width: 12rem"></Column> F
+                    <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
+                        <ExperienceDetails />
 
-        </DataTable>
+                    </div>
+                    <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
+                        <div>
+                            <FinanceDetails />
+                        </div>
 
-    </div> -->
+
+                    </div>
+                    <div class="tab-pane fade" id="document_det" role="tabpanel" aria-labelledby="">
+
+                        <Documents />
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
-
-
 <script setup>
+import EmployeeCard from '../hrms/modules/profile_pages/EmployeeCard/EmployeeCard.vue'
+import EmployeeDetails from '../hrms/modules/profile_pages/employee_details/EmployeeDetails.vue'
+import FamilyDetails from '../hrms/modules/profile_pages/family_details/FamilyDetails.vue'
+import FinanceDetails from '../hrms/modules/profile_pages/finance_details/FinanceDetails.vue'
+import ExperienceDetails from '../hrms/modules/profile_pages/experience/ExperienceDetails.vue'
+import Documents from '../hrms/modules/profile_pages/documents/documents.vue'
 
-import { ref } from 'vue';
+import { profilePagesStore } from '../hrms/modules/profile_pages/stores/ProfilePagesStore'
+import { ref, onMounted } from 'vue'
+import { Service } from '../hrms/modules/Service/Service'
 
-import QuickOnboarding from '../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
+const service = Service()
 
-const items = ref([
-    { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 38, first_name: 'Jami', last_name: 'Carney' }
-])
+let _instance_profilePagesStore = profilePagesStore();
 
-
-const employee_documents = ref()
-
-
-
-const parseExcel = (file) => {
-
-    // let file = e.target.files[0]
-
-    // console.log(file);
-
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-        var data = e.target.result;
-        var workbook = XLSX.read(data, {
-            type: 'binary'
-        });
-
-        workbook.SheetNames.forEach(function (sheetName) {
-            // Here is your object
-            var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-            var json_object = JSON.stringify(XL_row_object);
-            console.log(json_object);
-
-        })
-
-    };
-
-    reader.onerror = function (ex) {
-        console.log(ex);
-    };
-
-    reader.readAsBinaryString(file);
-};
-
-
-const json = (e) => {
-
-    var file = e.target.files[0];
-    // input canceled, return
-    if (!file) return;
-
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        const data = reader.result;
-        var workbook = XLSX.read(data, { type: 'binary' });
-        var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-
-        // header: 1 instructs xlsx to create an 'array of arrays'
-        var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-
-        const jsonData = workbook.SheetNames.reduce((initial, name) => {
-            const sheet = workbook.Sheets[name];
-            initial[name] = XLSX.utils.sheet_to_json(sheet);
-            return initial;
-        }, {});
-
-        console.log(jsonData);
-        employee_documents.value = jsonData.Sheet1
-
-        // data preview
-
-        // console.log(result);
-
-    };
-    reader.readAsArrayBuffer(file);
-}
-
-
-const download = () => {
-    const data = XLSX.utils.json_to_sheet(items)
-    const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, data, 'data')
-    XLSX.writeFile(wb, 'demo.xlsx')
-}
-
+onMounted(() => {
+    _instance_profilePagesStore.fetchEmployeeDetails()
+})
 </script>
 
 
-<style scoped>
-.result-table {
-    width: 50%;
-    text-align: center;
+
+<style lang="scss">
+@mixin object-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.download-btn {
-    background-color: DodgerBlue;
-    border: none;
-    color: white;
-    padding: 12px 30px;
-    margin: 12px 0;
-    cursor: pointer;
-    font-size: 20px;
-}
+$circleSize: 90px;
+$radius: 100px;
+$shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+$fontColor: rgb(250, 250, 250);
 
-/* Darker background on mouse-over */
-.download-btn:hover {
-    background-color: RoyalBlue;
+.profile-pic {
+    color: transparent;
+    transition: all .3s ease;
+    @include object-center;
+    position: relative;
+    transition: all .3s ease;
+
+    input {
+        display: none;
+    }
+
+    .forRound {
+        position: absolute;
+        object-fit: cover;
+        width: $circleSize;
+        height: $circleSize;
+        box-shadow: $shadow;
+        border-radius: $radius;
+        z-index: 0;
+    }
+
+    .-label {
+        cursor: pointer;
+        height: $circleSize;
+        width: $circleSize;
+    }
+
+    &:hover {
+        .-label {
+            @include object-center;
+            background-color: rgba(0, 0, 0, .8);
+            z-index: 10000;
+            color: $fontColor;
+            transition: background-color .2s ease-in-out;
+            border-radius: $radius;
+            margin-bottom: 0;
+        }
+    }
+
+    span {
+        display: inline-flex;
+        padding: .2em;
+        height: 2em;
+        font-size: 12px;
+    }
 }
 </style>

@@ -1,4 +1,3 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
@@ -39,7 +38,7 @@ import OverlayPanel from 'primevue/overlaypanel';
 
 
 import Resignation from './resignation_approval.vue'
-  
+
 const app = createApp(Resignation);
 const pinia=createPinia()
 

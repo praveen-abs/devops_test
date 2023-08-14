@@ -1,10 +1,3 @@
-<?php
-$general_info = \DB::table('vmt_client_master')->first();
-//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
-$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
-// dd(request()->getSchemeAndHttpHost()."".$general_info->client_logo);
-?>
-
 <!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
@@ -135,14 +128,14 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td>
                               <p class="sm-text-sm" style="margin: 0 0 16px; color: #334155; -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto">
-                                This is to provide you with an update on your recent {{$loan_type}} request, Request ID: {{ $requestID }}.
+                                This is to provide you with an update on your recent loan request, Request ID: {{ $requestID }}.
                               </p>
                             </td>
                           </tr>
                           <tr>
                             <td>
                               <p class="sm-text-sm" style="margin: 0 0 16px; color: #334155">
-                                After careful consideration, we regret to inform you that your {{$loan_type}} request has been {{ $approvalStatus }}. The decision was made based on the reason mentioned in the below. "{{ $reviewer_comments }}".
+                                After careful consideration, we regret to inform you that your loan request has been {{ $approvalStatus }}. The decision was made based on the reason mentioned in the below. "{{ $reviewer_comments }}".
                               </p>
                             </td>
                           </tr>

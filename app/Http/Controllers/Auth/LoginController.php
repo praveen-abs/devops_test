@@ -243,4 +243,9 @@ class LoginController extends Controller
 
 
     }
+    public function showLoginPage(){
+
+      return view('login_page_v3');
+
+    }
 }

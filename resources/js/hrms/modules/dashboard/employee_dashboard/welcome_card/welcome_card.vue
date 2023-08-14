@@ -1,6 +1,46 @@
 <template>
+    <div
+        class=" h-[180px] overflow-hidden rounded shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
+        <div class="mb-8 col-span-7" v-for="item in EmpDetials">
+            <p class=" font-[14px] font-['Poppins']  text-gray-500 flex items-center">
+                {{ current_session }}
+            </p>
+            <div class="text-gray-900 text-[18px] mb-2  font-['Poppins'] "> {{ service.current_user_name }}</div>
+            <div class="flex my-1 overflow-visible items-center  !z-10 ">
+                <i class="fa fa-sun-o text-warning my-auto text-[20px] " aria-hidden="true"></i>
+                <p class="text-[12px] my-auto font-semibold px-2">General Shift</p>
+            </div>
+            <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
+                <input type="checkbox" id="checkin_function" class="text-[6px] font-semibold" v-model="welcome_card.check"
+                    @change="getTime" />
+                <span class="slider-checkbox check-inw round flex items-center">
+                    <span class="slider-checkbox-text !text-[8px] font-semibold"> </span>
+                </span>
+            </label>
+            <div>
+                <p class="text-[12px] mt-[-20px] text-[#8B8B8B] font-['Poppins'] flex items-center">
+                    Time duration:<span>09:30</span>
+                </p>
+                <p v-if="item.checkin_time" class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
+                    `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}</p>
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In: --:--:--` }}
+                </p>
+                <p v-if="item.checkout_time" class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
+                    `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}</p>
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out: --:--:--` }}
+                </p>
+
+            </div>
+        </div>
+        <div class="col-span-5 h-full !z-5 ">
+            <div class=" grid justify-center items-centers my-auto h-full border-[1px]">
+                <img src="../../dashboard/femaleDashboardImage.svg" alt="" srcset="" class="w-full h-full">
+            </div>
+        </div>
+
+    </div>
     <!-- {{ EmpDetials }} -->
-    <div class="border-0 card w-100 box-shadow-md">
+    <!-- <div class="border-0 card w-100 box-shadow-md">
         <div class="card-body">
             <div class="row">
                 <div class="col-9 col-sm-9 col-md-9 col-xl-9 col-lg-9 col-xxl-9" v-for="item in EmpDetials">
@@ -65,10 +105,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '25vw' }">
-        <div class="modal-content">
+    <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '30vw' }">
+        <div class="modal-content bg-white">
             <div class="p-1 text-center modal-body">
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000" class="gliters"
@@ -79,8 +119,9 @@
                     </lord-icon>
                 </div>
                 <div class="mt-2">
-                    <h4 class="mb-2">Welcome {{ service.current_user_name }}</h4>
-                    <p class="mb-4 text-muted" v-if="checkInMessege" >{{ checkInMessege }}</p>
+                    <div class="text-gray-900 text-[18px] mb-2  font-['Poppins'] "><span>Welcome</span> {{
+                        service.current_user_name }}</div>
+                    <p class="mb-4 text-muted" v-if="checkInMessege">{{ checkInMessege }}</p>
                     <p class="mb-4 text-muted" v-else>Have a good day !</p>
                     <div class="gap-2 hstack justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium" data-bs-dismiss="modal">
@@ -94,7 +135,7 @@
         </div>
     </Dialog>
     <Dialog v-model:visible="check_out_dailog" modal :style="{ width: '25vw' }">
-        <div class="modal-content">
+        <div class="modal-content bg-white">
             <div class="p-1 text-center modal-body">
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"
@@ -125,6 +166,7 @@ import { onMounted, ref, reactive } from "vue";
 import { Service } from "../../../Service/Service";
 import { useMainDashboardStore } from "../../stores/dashboard_service";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const service = Service();
 const usedashboard = useMainDashboardStore();
@@ -168,7 +210,7 @@ async function gettime() {
 }
 
 const getTime = () => {
-    EmpDetials.value.splice(0,EmpDetials.value.length)
+    EmpDetials.value.splice(0, EmpDetials.value.length)
     if (welcome_card.check == true) {
         welcome_card.check_in = new Date().toLocaleTimeString();
         welcome_card.checked = true;
@@ -185,7 +227,7 @@ const getTime = () => {
     usedashboard
         .updateCheckin_out({
             checked: welcome_card.checked,
-        }).then((res=>{
+        }).then((res => {
             checkInMessege.value = res.data.message
         }))
         .finally(() => {
@@ -208,6 +250,8 @@ const getEmployeeDetials = async () => {
         } else {
             welcome_card.check = null;
         }
+    }).finally(()=>{
+        usedashboard.canShowTopbar = true
     });
 };
 onMounted(() => {
@@ -243,8 +287,161 @@ const resetChars = () => {
 </script>
 
 <style>
-.p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital@0;1&display=swap');
+
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:last-child
+{
     margin-right: 0;
     display: none;
 }
-</style>
+
+input:checked
+{
+    background-color: #22c55e;
+    /* bg-green-500 */
+}
+
+input:checked~span:last-child
+{
+    --tw-translate-x: 1.75rem;
+    /* translate-x-7 */
+}
+
+
+.switch-checkbox
+{
+    position: relative;
+    display: inline-block;
+    width: 115px;
+    height: 25px;
+}
+
+.switch-checkbox input
+{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-checkbox-text
+{
+    color: #000;
+    position: absolute;
+    top: 2px;
+    left: 23px;
+    font-size: 10px;
+}
+
+.slider-checkbox
+{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border: 1px solid #d9d0d0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50px;
+    background-color: white;
+    width: 75px;
+    -webkit-transition: 0.4s;
+    height: 22px;
+    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),
+        rgb(0 0 0 / 16%) 0px 1px 4px;
+    transition: 0.4s;
+}
+
+.slider-checkbox.check-out:before
+{
+    background-color: green;
+}
+
+.slider-checkbox.check-in:before
+{
+    background-color: green;
+}
+
+input:checked+.slider>.slider-text:after
+{
+    content: "Checkout";
+    color: red;
+}
+
+input+.slider>.slider-text:after
+{
+    content: "Check In";
+}
+
+.slider-checkbox:before
+{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 0px;
+    border-radius: 50%;
+    bottom: 0px;
+    color: #ffffff;
+    background-color: #008000;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    content: "\f011";
+    font-family: FontAwesome !important;
+    padding: 0px 4px 0px 3px;
+    font-size: 15px;
+}
+
+input:checked+.slider-checkbox>.slider-checkbox-text
+{
+    left: 2px;
+    color: #fff;
+}
+
+input:checked+.slider-checkbox.check-out
+{
+    background-color: #f0657070;
+    color: #ff0000;
+}
+
+input:checked+.slider-checkbox.check-in
+{
+    background-color: #f0657070;
+    color: #ff0000;
+}
+
+input:focus+.slider-checkbox
+{
+    box-shadow: 0 0 1px #7cfc00;
+}
+
+input:checked+.slider-checkbox:before
+{
+    -webkit-transform: translateX(65px);
+    -ms-transform: translateX(65px);
+    transform: translateX(65px);
+    left: -13px;
+    background-color: #f0f0f6;
+}
+
+input:checked+.slider-checkbox.check-out:before
+{
+    color: white;
+    background-color: red;
+}
+
+input:checked+.slider-checkbox.check-in:before
+{
+    color: white;
+    background-color: red;
+}
+
+input:checked+.slider-checkbox>.slider-checkbox-text:after
+{
+    content: "Checkout";
+    color: red;
+}
+
+input+.slider-checkbox>.slider-checkbox-text:after
+{
+    content: "Check In";
+}</style>

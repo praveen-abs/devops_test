@@ -1,151 +1,25 @@
 <template>
-    <div class="border-0 card w-100 box-shadow-md">
-        <Calendar :inline="true" :showWeek="true"/>
+    <div class="bg-[#FFEFE2] rounded-lg overflow-hidden p-3" style="height: 200px;">
+       <div class="flex justify-between">
+        <span class="text-primary font-semibold fs-6">Calendar</span>
+        <!-- <div class="text-gray-900 font-semibold text-md mb-2">Calendar</div> -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-900 cursor-pointer ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+          </svg>
+       </div>
+
+        <div class="py-8">
+            <p class="text-[#d1814c] font-semibold text-[30px] mb-2" style="font-family: 'Libre Baskerville', serif;">{{ dayjs(new Date()).format('MMMM D, YYYY') }}
+            </p>
+            <p class="text-gray-900 font-semibold text-md mb-2">{{ dayjs(new Date()).format('dddd') }}</p>
+        </div>
     </div>
 </template>
 
+<script setup>
+import dayjs from 'dayjs';
+</script>
+
 <style>
-label {
-    font-size: 15px;
-    font-weight: 502;
-}
-
-.leave_type {
-    font-size: 15px;
-    font-weight: 400;
-}
-
-
-.p-datepicker .p-datepicker-header {
-    padding: 0.5rem;
-    color: #061328;
-    background: #002f56;
-    font-weight: 600;
-    margin: 0;
-    border-bottom: 1px solid #dee2e6;
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    color: #fff;
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-    font-weight: 600;
-    padding: 0.5rem;
-}
-
-.p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
-    background: #002f56;
-    color: black;
-}
-
-.p-calendar-w-btn .p-datepicker-trigger {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background: #002f56;
-}
-
-.p-dialog-mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    background: #433f3f6b;
-}
-
-.p-button:enabled:hover {
-    background: #002f56;
-    color: #ffffff;
-    border-color: none;
-}
-
-.p-multiselect.p-multiselect-chip .p-multiselect-token {
-    padding: 0.2rem 0.55rem;
-    margin-right: 0.2rem;
-    background: #dee2e6;
-    color: #495057;
-    border-radius: 16px;
-}
-
-.p-checkbox .p-checkbox-box.p-highlight {
-    border-color: #3B82F6;
-    background: #103674;
-}
-
-.p-chips .p-chips-multiple-container {
-    padding: 0.375rem 0.75rem;
-}
-
-.p-chips.p-component.p-inputwrapper {
-    width: 100%;
-}
-
-.form-select:focus {
-    border-color: #002f56;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
-}
-
-.form-control:focus {
-    border-color: #002f56;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
-}
-
-.p-chips-multiple-container {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    cursor: text;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.p-datepicker , .p-datepicker-inline{
-    height: 375px;
-    width: 100%;
-}
-.p-datepicker table td {
-    padding: 0.2rem;
-  }
-
-/*.p-dialog.p-component:before {
-    content: "";
-    background: #002f56;
-    height: 8px;
-    border-radius: 50px 50px 0px;
-    position: relative;
-    top: 3px;
-}*/
-
-::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888888;
-    border-radius: 5px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1a1;
-  }
-
-
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Poppins&display=swap');
 </style>

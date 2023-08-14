@@ -1,7 +1,7 @@
 <template>
     <Toast />
     <ConfirmDialog></ConfirmDialog>
-    <div class=" mt-30 investments-wrapper">
+    <div class="">
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
                 <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -171,9 +171,7 @@ dialog>header {
     color: #e63b1f;
 }
 
-.p-dialog-header {
-    /* border-left: #e63b1f 5px solid !important; */
-}
+
 
 .form-selects ::-webkit-scrollbar {
     width: 10px !important;
@@ -205,4 +203,6 @@ Dialog {
     height: 32px;
     background: #f6f4f46e;
 }
+
 </style>
+

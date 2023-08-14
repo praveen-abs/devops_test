@@ -17,9 +17,10 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         //reset the var
         array_employees_list.value = '';
 
-        await axios.post('getAllEmployeesPayslipDetails', {
+        await axios.post('/generatePayslip', {
             month: month,
-            year: year
+            year: year,
+            type:"pdf"
         }).then((response) => {
             // console.log("Response [getAllEmployeesPayslipDetails] : " + JSON.stringify(response.data.data));
 

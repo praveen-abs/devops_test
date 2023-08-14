@@ -1,5 +1,5 @@
 <template>
-    <div class="manage_employee-wrapper mt-30">
+    <div class="">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-0 card-body">
                 <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
@@ -55,10 +55,21 @@ import ExitEmployees from './exit_employees/exit_employees.vue'
 
 </script>
 
-<style>
+<style lang="scss">
 
-.p-datatable .p-datatable-thead > tr > th >.p-column-header-content>.p-column-title:nth-child(1){
-  margin-left:30px;
+.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate  {
+    /* background-color:#fff !important; */
+    background-color: rgb(48, 218, 48) !important;
+     color: #fff !important;
 }
-
+.progressbar .p-progressbar-value.p-progressbar-value-animate {
+    /* background-color:#fff !important; */
+    background-color: red !important;
+     color: #fff !important;
+}
+.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate {
+    background-color:orange !important;
+    color: black !important;
+}
 </style>
+

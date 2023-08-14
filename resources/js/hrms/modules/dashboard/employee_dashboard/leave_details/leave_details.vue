@@ -1,60 +1,49 @@
 <template>
-    <div class="border-0 attendance-wrapper card w-100 box-shadow-md" style="height: 200px;">
-        <div class="card-body">
-          <div class="mb-2 d-flex justify-content-between align-items-center">
-            <span class="text-primary font-semibold fs-6">Current Month</span>
-            <a role="button"><span class="text-primary fs-11">View All</span></a>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-              <div class="border-0 card box-shadow-sm bg-green-lighten">
-                <div class="py-2 mx-auto text-center card-body">
-                  <img src="../../dashboard/present.svg" alt="" class="h-5">
-                  <div class="d-flex">
-                    <span class="h1">{{useDashboard.attenanceReportPerMonth.present}}</span><span class="mt-4 fs-12 ms-1">days</span>
-                  </div>
-                  <p class="text-primary">Present</p>
+    <div class="h-[180px] rounded overflow-hidden shadow-lg bg-white ">
+        <div class="px-6 py-4">
+            <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
+                Current month - <span class="font-semibold text-xl mb-2">{{dayjs(new Date()).format('MMMM')}}</span>
+            </p>
+            <div class="grid grid-cols-3 gap-4 mt-4">
+                <div class=" bg-[#F6F6F6] rounded-lg p-3">
+                    <div class="px-auto">
+                        <span class="font-bold text-3xl mb-2 text-center">
+                            {{ useDashboard.attenanceReportPerMonth.present }}
+                        </span>
+                        <span class="text-gray-700 text-base font-semibold px-1">days</span>
+                    </div>
+                    <p class="font-semibold  text-lg text-gray-500 py-2 text-center">Present</p>
                 </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-              <div class="border-0 card box-shadow-sm bg-pink-lighten">
-                <div class="py-2 mx-auto text-center card-body">
-                  <img src="../../dashboard/leave.svg"  alt="leave-icon" class="h-5">
-                  <div class="d-flex">
-                    <span class="h1">{{useDashboard.attenanceReportPerMonth.not_applied}}</span><span class="mt-4 fs-12 ms-1">days</span>
-                  </div>
-                  <p class="text-primary">Leave</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-              <div class="border-0 card box-shadow-sm bg-sky-lighten">
-                <div class="py-2 mx-auto text-center card-body">
-                   <img src="../../dashboard/absent.svg" alt="absent-icon" class="h-5">
-                  <div class="d-flex">
-                    <span class="h1">{{useDashboard.attenanceReportPerMonth.absent}}</span><span class="mt-4 fs-12 ms-1">days</span>
-                  </div>
-                  <p class="text-primary">Absent</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div class="bg-gray-100 rounded-lg p-3"><span class="font-bold text-3xl mb-2">
+                        {{ useDashboard.attenanceReportPerMonth.not_applied }}
+                    </span>
+                    <span class="text-gray-700 text-base font-semibold  px-1">days</span>
+                    <p class="font-semibold  text-lg text-gray-500 py-2 text-center">Leave</p>
 
+                </div>
+                <div class="bg-gray-100 rounded-lg p-3"><span class="font-bold text-3xl mb-2">
+                        {{ useDashboard.attenanceReportPerMonth.absent }}</span>
+                    <span class="text-gray-700 text-base font-semibold  px-1">days</span>
+                    <p class="font-semibold  text-lg text-gray-500 py-2 text-center">Absent</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </template>
 
 
 <script setup>
 
-import { onMounted, ref ,reactive } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { useMainDashboardStore } from "../../stores/dashboard_service";
+import dayjs from "dayjs";
 
 const useDashboard = useMainDashboardStore();
 
 
-onMounted(() =>{
+onMounted(() => {
 
 })
 
