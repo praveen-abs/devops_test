@@ -1,4 +1,14 @@
 <template>
+    <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
     <ul class="nav nav-pills  nav-tabs-dashed" id="pills-tab" role="tablist">
         <li class="mx-2 nav-item ember-view" role="presentation">
             <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
@@ -111,11 +121,12 @@
     </div>
 
     <div class="my-4">
-        <DataTable :value="products">
-            <Column field="product" header="Code"></Column>
-            <Column field="lastYearSale" header="Name"></Column>
-            <Column field="thisYearSale" header="Category"></Column>
-            <Column field="thisYearProfit" header="Quantity"></Column>
+        <DataTable :value="AttendanceReportSource"
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            :rowsPerPageOptions="[5, 10, 25]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+            <Column v-for="col of AttendanceReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title" style="white-space: nowrap;text-align: left; !important">
+            </Column>
         </DataTable>
     </div>
 
@@ -143,6 +154,7 @@
 </template>
 
 <script setup>
+import axios from 'axios';
 import { ref, onMounted } from 'vue';
 
 const products = ref([
@@ -166,6 +178,35 @@ const reportsType = ref([
     { name: 'Basic Report', code: '1' },
     { name: 'Detailed Report', code: '2' },
 ]);
+
+
+const AttendanceReportDynamicHeaders = ref([])
+const AttendanceReportSource = ref([])
+const canShowLoading = ref(false)
+
+const getEmployeeAttendanceReports = async () => {
+    canShowLoading.value = true
+    await axios.get('/fetch-attendance-data').then(res => {
+        console.log(res.data.rows);
+        AttendanceReportSource.value = res.data.rows
+        res.data.header.forEach(element => {
+            let format = {
+                title: element
+            }
+            AttendanceReportDynamicHeaders.value.push(format)
+            console.log(element);
+        });
+        console.log(AttendanceReportDynamicHeaders.value);
+
+    }).finally(() => {
+        canShowLoading.value = false
+    })
+
+}
+
+onMounted(() => {
+    getEmployeeAttendanceReports()
+})
 
 
 </script>
