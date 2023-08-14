@@ -8,7 +8,6 @@
                 Selfie</h5> -->
             </div>
         </template>
-              {{ useTimesheet.selfieDetails }}
         <img v-if="useTimesheet.selfieDetails" :src="`${baseUrl}/${useTimesheet.selfieDetails}`" :alt="`${baseUrl}/${useTimesheet.selfieDetails}`">
         <img v-else src="../assests/noData.svg" alt="">
     </Dialog>

@@ -403,16 +403,33 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
+      try{
+            $approver_record_id = $request->record_id;
+            foreach ($approver_record_id as $single_record_ids) {
 
         //Fetch the data
         $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
             approver_user_code: $request->approver_user_code,
-            record_id: $request->record_id,
+            record_id: $single_record_ids,
             status: $request->status,
             status_text: $request->status_text,
             serviceVmtNotificationsService: $serviceVmtNotificationsService
         );
-
+    }
+    
+    return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Leave Request ' . $request->status . ' successfully',
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ approveRejectAttendanceRegularization() ] " . $e->getMessage(),
+                'data' => $e->getMessage()
+            ]);
+        }
         return $response;
     }
 
