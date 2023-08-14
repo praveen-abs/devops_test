@@ -1,121 +1,127 @@
 <template>
     <Toast />
     <div class="bg-white border rounded-lg grid grid-cols-12 p-3 content-center"
-    v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details">
-    <div class="col-span-4 h-full grid grid-cols-12 gap-6">
-        <div class="col-span-4">
-            <div :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]" class=" h-full w-full rounded-full  flex justify-center items-center" v-if="!_instance_profilePagesStore.profile" >
+        v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details">
+        <div class="col-span-4 h-full grid grid-cols-12 gap-6">
+            <div class="col-span-4">
+                <!-- <div :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]" class=" h-full w-full rounded-full  flex justify-center items-center" v-if="!_instance_profilePagesStore.profile" >
                 <p class="font-semibold text-4xl text-center text-white">
                     {{ _instance_profilePagesStore.employeeDetails.user_short_name }}
                 </p>
-            </div>
-            <div v-else class="profile-pic">
-                <img v-if="_instance_profilePagesStore.profile" class="forRound"
-                    :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt=""
-                    id="output" width="200" />
-                <label class="-label" for="file">
-                    <span class="glyphicon glyphicon-camera"></span>
-                    <span>Change</span>
-                </label>
-                <input id="file" type="file"   @change="updateProfilePhoto($event)"/>
-            </div>
-
-        </div>
-        <div class="col-span-8">
-            <div>
-                <p class="font-semibold text-md">{{ _instance_profilePagesStore.employeeDetails ?
-                    _instance_profilePagesStore.employeeDetails.name : '-' }}</p>
-                <p class="font-semibold text-xs text-gray-500">{{ _instance_profilePagesStore.employeeDetails ?
-                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation : '-' }}</p>
-            </div>
-            <div class="py-2">
-                <p class="font-semibold text-xs">Profile completeness</p>
-
-                <div class="w-11/12 my-1">
-                    <ProgressBar v-if="_instance_profilePagesStore.employeeDetails.profile_completeness <= 39"
-                        :value="_instance_profilePagesStore.employeeDetails.profile_completeness"
-                        :class="[_instance_profilePagesStore.employeeDetails.profile_completeness <= 39 ? 'progressbar' : '']">
-                    </ProgressBar>
-                    <ProgressBar class="progressbar_val2"
-                        v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >= 40 && _instance_profilePagesStore.employeeDetails.profile_completeness <= 59"
-                        :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >= 40 && _instance_profilePagesStore.employeeDetails.profile_completeness <= 59]"
-                        :value="_instance_profilePagesStore.employeeDetails.profile_completeness">
-                    </ProgressBar>
-
-                    <ProgressBar class="progressbar_val3"
-                        v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >= 60"
-                        :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >= 60]"
-                        :value="_instance_profilePagesStore.employeeDetails.profile_completeness">
-                    </ProgressBar>
+            </div> -->
+                <div class="profile-pic">
+                    <img v-if="_instance_profilePagesStore.profile" class="forRounded"
+                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" id="output"
+                        width="200" />
+                    <p v-else class="font-semibold text-5xl text-center flex items-center justify-center text-white forRounded" :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
+                        {{ _instance_profilePagesStore.employeeDetails.user_short_name }}
+                    </p>
+                    <label class="-label" for="file">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                          </svg>
+                        <!-- <span>Change</span> -->
+                    </label>
+                    <input id="file" type="file" @change="updateProfilePhoto($event)" />
                 </div>
 
-                <p class="mb-2 text-muted f-10 text-start fw-bold">
-                    Your profile is completed
+            </div>
+            <div class="col-span-8">
+                <div>
+                    <p class="font-semibold text-md">{{ _instance_profilePagesStore.employeeDetails ?
+                        _instance_profilePagesStore.employeeDetails.name : '-' }}</p>
+                    <p class="font-semibold text-xs text-gray-500">{{ _instance_profilePagesStore.employeeDetails ?
+                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation : '-' }}</p>
+                </div>
+                <div class="py-2">
+                    <p class="font-semibold text-xs">Profile completeness</p>
+
+                    <div class="w-11/12 my-1">
+                        <ProgressBar v-if="_instance_profilePagesStore.employeeDetails.profile_completeness <= 39"
+                            :value="_instance_profilePagesStore.employeeDetails.profile_completeness"
+                            :class="[_instance_profilePagesStore.employeeDetails.profile_completeness <= 39 ? 'progressbar' : '']">
+                        </ProgressBar>
+                        <ProgressBar class="progressbar_val2"
+                            v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >= 40 && _instance_profilePagesStore.employeeDetails.profile_completeness <= 59"
+                            :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >= 40 && _instance_profilePagesStore.employeeDetails.profile_completeness <= 59]"
+                            :value="_instance_profilePagesStore.employeeDetails.profile_completeness">
+                        </ProgressBar>
+
+                        <ProgressBar class="progressbar_val3"
+                            v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >= 60"
+                            :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >= 60]"
+                            :value="_instance_profilePagesStore.employeeDetails.profile_completeness">
+                        </ProgressBar>
+                    </div>
+
+                    <p class="mb-2 text-muted f-10 text-start fw-bold">
+                        Your profile is completed
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-5 grid grid-cols-3 gap-4 h-full">
+            <div class="">
+                <p class="font-semibold text-xs text-gray-500">Employee Status</p>
+                <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="font-semibold text-sm">Active
                 </p>
+                <p v-else class="font-semibold text-sm">Not active</p>
             </div>
-        </div>
-    </div>
+            <div class="">
+                <p class="font-semibold text-xs text-gray-500">Designation</p>
+                <p class="font-semibold text-sm">{{
+                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation ?
+                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation : '-' }}</p>
+            </div>
+            <div class="">
+                <p class="font-semibold text-xs text-gray-500">Department</p>
+                <p class="font-semibold text-sm">{{
+                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name ?
+                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name : '-' }}</p>
+            </div>
+            <div class="">
+                <p class="font-semibold text-xs text-gray-500">Employee Code</p>
+                <p class="font-semibold text-sm">{{ _instance_profilePagesStore.employeeDetails ?
+                    _instance_profilePagesStore.employeeDetails.user_code : '-' }}</p>
+            </div>
+            <div class="">
+                <p class="font-semibold text-xs text-gray-500">Location</p>
+                <p class="font-semibold text-sm">{{
+                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location ?
+                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location : '-' }}</p>
+            </div>
+            <div class="">
+                <p class="font-semibold text-xs text-gray-500">Reporting to</p>
+                <p class="font-semibold text-sm whitespace-nowrap" v-if="_instance_profilePagesStore.employeeDetails">
+                    {{
+                        `${_instance_profilePagesStore.employeeDetails
+                            .get_employee_office_details.l1_manager_name}(${_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code})`
+                    }}
+                </p>
 
-    <div class="col-span-5 grid grid-cols-3 gap-4 h-full">
-        <div class="">
-            <p class="font-semibold text-xs text-gray-500">Employee Status</p>
-            <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="font-semibold text-sm">Active
-            </p>
-            <p v-else class="font-semibold text-sm">Not active</p>
+            </div>
+chnage
         </div>
-        <div class="">
-            <p class="font-semibold text-xs text-gray-500">Designation</p>
-            <p class="font-semibold text-sm">{{
-                _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation ?
-                _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation : '-' }}</p>
-        </div>
-        <div class="">
-            <p class="font-semibold text-xs text-gray-500">Department</p>
-            <p class="font-semibold text-sm">{{
-                _instance_profilePagesStore.employeeDetails ?
-                _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name : '-' }}</p>
-        </div>
-        <div class="">
-            <p class="font-semibold text-xs text-gray-500">Employee Code</p>
-            <p class="font-semibold text-sm">{{ _instance_profilePagesStore.employeeDetails ?
-                _instance_profilePagesStore.employeeDetails.user_code : '-' }}</p>
-        </div>
-        <div class="">
-            <p class="font-semibold text-xs text-gray-500">Location</p>
-            <p class="font-semibold text-sm">{{
-                _instance_profilePagesStore.employeeDetails ?
-                _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location : '-' }}</p>
-        </div>
-        <div class="">
-            <p class="font-semibold text-xs text-gray-500">Reporting to</p>
-            <p class="font-semibold text-sm whitespace-nowrap" v-if="_instance_profilePagesStore.employeeDetails">
-                {{
-                    `${_instance_profilePagesStore.employeeDetails
-                        .get_employee_office_details.l1_manager_name}(${_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code})`
-                }}
-            </p>
-
-        </div>
-
-    </div>
-    <div class="col-span-3 h-full">
-        <div class="flex justify-end">
-            <div>
-                <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
+        <div class="col-span-3 h-full">
+            <div class="flex justify-end">
+                <div>
+                    <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
             Edit -->
-                <!-- <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""> -->
-                <img src="../../../assests/icons/edit.svg" class="h-4 w-4 cursor-pointer my-auto" alt="">
+                    <!-- <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""> -->
+                    <img src="../../../assests/icons/edit.svg" class="h-4 w-4 cursor-pointer my-auto" alt="">
 
-                <!-- </p> -->
-            </div>
-            <div class="mx-2">
-                <button class="p-0 m-0 bg-transparent border-0 outline-none btn">
-                    <i class="pi pi-id-card text-success fs-4" aria-hidden="true"></i>
-                </button>
+                    <!-- </p> -->
+                </div>
+                <div class="mx-2">
+                    <button class="p-0 m-0 bg-transparent border-0 outline-none btn">
+                        <i class="pi pi-id-card text-success fs-4" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <Dialog header="Status" v-model:visible="canShowCompletionScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '350px' }" :modal="true">
@@ -565,33 +571,84 @@ const cmpBldGrp = computed(() => {
 
 </script>
 
-<style>
-.p-progressbar.p-component.p-progressbar-determinate
-{
+<style lang="scss">
+@mixin object-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+$circleSize: 90px;
+$radius: 100px;
+$shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+$fontColor: rgb(250, 250, 250);
+
+.profile-pic {
+    color: transparent;
+    transition: all .3s ease;
+    @include object-center;
+    position: relative;
+    transition: all .3s ease;
+
+    input {
+        display: none;
+    }
+
+    .forRounded {
+        position: absolute;
+        object-fit: cover;
+        width: $circleSize;
+        height: $circleSize;
+        box-shadow: $shadow;
+        border-radius: $radius;
+        z-index: 0;
+    }
+
+    .-label {
+        cursor: pointer;
+        height: $circleSize;
+        width: $circleSize;
+    }
+
+    &:hover {
+        .-label {
+            @include object-center;
+            background-color: rgba(0, 0, 0, .8);
+            z-index: 10000;
+            color: $fontColor;
+            transition: background-color .2s ease-in-out;
+            border-radius: $radius;
+            margin-bottom: 0;
+        }
+    }
+
+    span {
+        display: inline-flex;
+        padding: .2em;
+        height: 2em;
+        font-size: 12px;
+    }
+}
+
+.p-progressbar.p-component.p-progressbar-determinate {
     height: 13px;
     /* background-color: aqua; */
 }
 
 
-
-
-
-.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate
-{
+.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate {
     /* background-color:#fff !important; */
     background-color: rgb(48, 218, 48) !important;
     color: #fff !important;
 }
 
-.progressbar .p-progressbar-value.p-progressbar-value-animate
-{
+.progressbar .p-progressbar-value.p-progressbar-value-animate {
     /* background-color:#fff !important; */
     background-color: red !important;
     color: #fff !important;
 }
 
-.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate
-{
+.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate {
     background-color: orange !important;
     color: black !important;
 }
@@ -607,10 +664,8 @@ color: black !important;
 } */
 
 
-@media only screen and (max-width: 1280px)
-{
-    .Digital_Id_Card_
-    {
+@media only screen and (max-width: 1280px) {
+    .Digital_Id_Card_ {
         /* height: 7000px; */
     }
 }
