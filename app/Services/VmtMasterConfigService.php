@@ -179,4 +179,65 @@ class VmtMasterConfigService {
     }
 
 
+    public function GetAllEmpModuleActiveStatus($user_code,$module_type){
+
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'module_type' => $module_type,
+            ],
+            $rules = [
+                'user_code' => 'required',
+                'module_type' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+                     $user_data =User::where('user_code',$user_code)->first();
+
+                     $module_active_status =VmtConfigApps::where('client_id', $user_data->client_id)->where($module_type,'1')->first();
+
+                     if(!empty($module_active_status)){
+
+                        $config_user=VmtEmpConfigApps::where('user_id',$user_data->id)->where($module_type,'1')->first();
+
+                        if(!empty($config_user)){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                     }else{
+
+                        return false;
+                      }
+
+
+            }
+           catch(\Exception $e){
+
+                    return response()->json([
+
+                        "status" => "failure",
+                        "message" => "error while getData",
+                        "data" => $e->getmessage() ." line ". $e->getline(),
+
+                    ]);
+
+        }
+    }
+
+
 }
