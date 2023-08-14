@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\Models\vmtHolidays;
 use App\Models\VmtEmployeeAttendance;
 use App\Services\VmtAttendanceReportsService;
+use App\Models\VmtEmployeeLeaves;
+use App\Models\VmtLeaves;
 
 class VmtPayRunService
 {
@@ -15,7 +17,7 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function basicAttendanceReport($year, $month, $client_domain)
+    public function fetch_attendance_data($start_date, $end_date)
     {
         ini_set('max_execution_time', 300);
         $reportresponse = array();
@@ -23,10 +25,10 @@ class VmtPayRunService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($year . '-' . $month . '-' . '01')->endOfMonth())
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
             ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         // print($user);exit;
-        $holidays = vmtHolidays::whereMonth('holiday_date', '=', $month)->pluck('holiday_date');
+        $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
             $total_present = 0;
@@ -46,23 +48,9 @@ class VmtPayRunService
             $arrayReport = array($singleUser->user_code, $singleUser->name, $singleUser->designation, $singleUser->doj);
 
 
-            $requestedDate = $year . '-' . $month . '-01';
-            $currentDate = Carbon::now();
-            $monthDateObj = Carbon::parse($requestedDate);
-            //dd($monthDateObj);
-            $startOfMonth = Carbon::parse($monthDateObj)->startOfMonth(); //->format('Y-m-d');
-            $endOfMonth   =  Carbon::parse($monthDateObj)->endOfMonth(); //->format('Y-m-d');
-            // dd($endOfMonth);
-            if ($currentDate->lte($endOfMonth)) {
-                $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
-            } else {
-                $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
-            }
-            //dd($lastAttendanceDate->format('d'));
-            $totalDays  = $lastAttendanceDate->format('d');
-            $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
-            //dd($totalDays);
-            // attendance details from vmt_staff_attenndance_device table
+            $firstDateStr = $start_date;
+            $lastAttendanceDate = Carbon::parse($end_date);
+            $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($firstDateStr));
             $deviceData = [];
             for ($i = 0; $i < ($totalDays); $i++) {
                 // code...
@@ -76,7 +64,7 @@ class VmtPayRunService
 
                 if (
                     sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
                 ) {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -127,7 +115,7 @@ class VmtPayRunService
                 // where('user_id', $request->user_id)
                 where('user_id', $singleUser->id)
                 //->whereMonth('date', $request->month)
-                ->whereMonth('date', $month)
+                ->whereBetween('date', [$start_date, $end_date])
                 ->orderBy('checkin_time', 'asc')
                 ->get(['date', 'checkin_time', 'checkout_time', 'attendance_mode_checkin', 'attendance_mode_checkout']);
 
@@ -144,17 +132,10 @@ class VmtPayRunService
             //dd($totalDays );
             //For Excel Sheet Headers
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
-            for ($i = 1; $i <= $totalDays; $i++) {
-                $date = "";
+            for ($i = 0; $i <= $totalDays; $i++) {
+                $fulldate = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+                $date = Carbon::parse($firstDateStr)->addDay($i)->format('d');
 
-                if ($i < 10)
-                    $date = "0" . $i;
-                else
-                    $date = $i;
-
-                $fulldate = $year . "-" . $month . "-" . $date;
-                // dd($i.' '.substr(Carbon::parse($fulldate)->format('l'),0,1));
-                //  $date_day=$i.'  '.substr(Carbon::parse($fulldate)->format('l'),0,1);
                 $date_day = $date . ' - ' . Carbon::parse($fulldate)->format('l');
                 array_push($heading_dates, $date_day);
 
@@ -281,7 +262,7 @@ class VmtPayRunService
 
 
                 //Logic For Check week off or not
-
+            //    dd( $attendanceResponseArray);
                 if (!array_key_exists('date', $attendanceResponseArray[$key]))
                     dd("Missing for : " . $key);
 
@@ -314,8 +295,8 @@ class VmtPayRunService
                     $attendanceResponseArray[$key]['is_weekoff'] == false
                 ) {
                     $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id'])
-                        ->whereYear('end_date', $year)
-                        ->whereMonth('end_date', $month)
+                        ->whereBetween('start_date', [$start_date, $end_date])
+                        ->orWhereBetween('end_date', [$start_date, $end_date])
                         ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
                     if ($leave_Details->count() == 0) {
                         // dd( $leave_Details->count());
