@@ -171,28 +171,28 @@
                         <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="width: 100%;">
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;margin-left: 20%; ">Leave Type</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px; ">Leave Type</p>
                               @foreach ($leave_data as $key => $single_leave)
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000; marign-top:-10px;">{{ $single_leave['leave_type'] }}
                                </p>
                                @endforeach
                             </td>
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;margin-left: 14%; "> Opening Balance</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px; "> Opening Balance</p>
                               @foreach ($leave_data as $key => $single_leave)
-                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px; margin-left: 44%;">{{ $single_leave['opening_balance']}}</p>
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px; ">{{ $single_leave['opening_balance']}}</p>
                               @endforeach
                             </td>
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;margin-left: 20%;">Availed</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Availed</p>
                               @foreach ($leave_data as $key => $single_leave)
-                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;margin-left: 30%;">{{ $single_leave['avalied']}}</p>
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $single_leave['avalied']}}</p>
                               @endforeach
                             </td>
                             <td style="width:25%">
-                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280; margin-left: 10%;">Closing Balance</p>
+                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">Closing Balance</p>
                               @foreach ($leave_data as $key => $single_leave)
-                              <p style="display: flex; font-size:14px; color: #000;margin-left: 36%;">{{ $single_leave['closing_balance']}}</p>
+                              <p style="display: flex; font-size:14px; color: #000;">{{ $single_leave['closing_balance']}}</p>
                               @endforeach
                             </td>
                           </tr>
