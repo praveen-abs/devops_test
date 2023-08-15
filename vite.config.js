@@ -89,7 +89,6 @@ export default defineConfig({
 
                 // Investment Setting
 
-                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
 
                 // Paycheck
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
