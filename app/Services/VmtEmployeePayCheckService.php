@@ -1212,6 +1212,17 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                     'vmt_employee_payslip_v2.overtime as Overtime',
                 ]
             )->toArray();
+        $getarrears = $payroll_data
+            ->get(
+                [
+                    'vmt_employee_payslip_v2.basic_arrear as Basic',
+                    'vmt_employee_payslip_v2.hra_arrear as HRA',
+                    'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
+                    'vmt_employee_payslip_v2.spl_alw_arrear  as Special Allowance',
+                    'vmt_employee_payslip_v2.child_edu_allowance_arrear as Child Education Allowance',
+                ]
+            )->toArray();
+            //need  to add over_time arrears
 
 
         $getcontribution = $payroll_data
@@ -1263,6 +1274,16 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 }
             }
             array_push($getpersonal['earnings'], $single_payslip);
+        }
+        $getpersonal['arrears'] = [];
+        foreach ($getarrears as $single_payslip) {
+            foreach ($single_payslip as $key => $single_details) {
+
+                if ($single_details == "0" || $single_details == null || $single_details == "") {
+                    unset($single_payslip[$key]);
+                }
+            }
+            array_push($getpersonal['arrears'], $single_payslip);
         }
 
         if (!empty($getpersonal['earnings'])) {
@@ -1345,7 +1366,6 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 //dd($getpersonal);
 
         if($type =="pdf"){
-
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
 
 

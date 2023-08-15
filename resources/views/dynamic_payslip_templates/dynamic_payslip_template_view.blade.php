@@ -136,7 +136,7 @@
                               <p style="display: flex; border-width: 1px; border-color: #000; font-size:14px; color: #000;">{{ $personal_details[0]['pan_number']}}</p>
                             </td>
                             <td style="width:25%">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">ESI</p>
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">ESIC</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{"-"}}</p>
                             </td>
                             <td style="width:25%">
@@ -145,7 +145,7 @@
                             </td>
 
                             <td style="width:25%">
-                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">PF Number</p>
+                              <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">EPF Number</p>
                               <p style="display: flex; font-size:14px; color: #000;">{{ empty($personal_details[0]['epf_number']) ? " - " : $personal_details[0]['epf_number'] }}</p>
                             </td>
                           </tr>
@@ -251,24 +251,45 @@
                             <td style="width:20%">
                               <p style="height: 8px; font-weight: 600; color: #000; margin-left:-1px; text-align:left;">Fixed</p>
                             </td>
+
                             <td style="width:20%">
-                              <p style="height: 8px; font-weight: 600; color: #000;margin-left:-1px; text-align:left;">Arrears</p>
-                            </td>
+                                @if (!empty($arrears[0]))
+                                <p style="height: 8px; font-weight: 600; color: #000;margin-left:-1px; text-align:left;">Arrears</p>
+                                @endif
+                              </td>
+
                             <td style="width:20%">
                               <p style="height: 8px; font-weight: 600; color: #000;margin-left:-1px;">Earned</p>
                             </td>
                           </tr>
-                          @foreach ($earnings[0] as $key => $single_earnings)
-                          @if ($key == "Total Earnings")
+                          @foreach ($earnings[0] as $earned_key => $single_earnings)
+                          @if ($earned_key == "Total Earnings")
                           <tr>
                             <td style="width:40%">
-                              <p style="height: 8px; color: #000; font-weight:700 ">{{$key."(A)"}} </p>
+                              <p style="height: 8px; color: #000; font-weight:700 ">{{$earned_key."(A)"}} </p>
                             </td>
                             <td style="width:20%">
-                              <p style="height: 8px; color: #000; font-weight:700 ">1000</p>
+                         @if($earned_key =="Basic" || $earned_key =="HRA" || $earned_key =="Special Allowance")
+
+                                @foreach ($compensatory_data as $key => $single_value )
+
+                                  <p style="height: 8px; color: #000; ">{{ $single_value[$earned_key] }}</p>
+
+                                @endforeach
+                          @endif
                             </td>
                             <td style="width:20%">
-                              <p style="height: 8px; color: #000; font-weight:700 ">1000</p>
+                            @if (!empty($arrears[0]))
+
+                            @foreach ($arrears[0] as $key => $single_value )
+
+                            @if($key == $earned_key)
+                            <p style="height: 8px; color: #000; ">{{ $single_value }}</p>
+                            @endif
+
+                           @endforeach
+
+                            @endif
                             </td>
                             <td style="width:20%">
                               <p style="height: 8px; color: #000; font-weight:700"> {{ $single_earnings}} </p>
@@ -277,13 +298,33 @@
                           @else
                           <tr>
                             <td style="width:40%">
-                              <p style="height: 8px; color: #000;">{{$key}}</p>
+                              <p style="height: 8px; color: #000;">{{$earned_key}}</p>
                             </td>
                             <td style="width:20%">
-                              <p style="height: 8px; color: #000;">1000</p>
+
+
+                                @foreach ($compensatory_data as $key => $single_value )
+
+                                @if($earned_key =="Basic" || $earned_key =="HRA" || $earned_key =="Special Allowance")
+
+                                  <p style="height: 8px; color: #000; font-weight:700 ">{{ $single_value[$earned_key] }}</p>
+
+                                  @endif
+                                @endforeach
+
                             </td>
                             <td style="width:20%">
-                              <p style="height: 8px; color: #000;">1000</p>
+                                @if (!empty($arrears[0]))
+
+                                @foreach ($arrears[0] as $key => $single_value )
+
+                                    @if($key == $earned_key)
+                                    <p style="height: 8px; color: #000; ">{{ $single_value }}</p>
+                                    @endif
+
+                               @endforeach
+
+                                @endif
                             </td>
                             <td style="width:20%">
                               <p style="height: 8px; color: #000;">{{ $single_earnings}}</p>
@@ -303,7 +344,7 @@
                           @if ($key =="Total Contribution")
                           <tr style="height: 4px;">
                             <td style="padding-left: 4px;">
-                              <p style="height: 4px; color: #000; font-weight:700 ;">{{ $key }}</p>
+                              <p style="height: 4px; color: #000; font-weight:700 ;">{{ $key."(B)" }}</p>
                             </td>
                             <td style="padding-left: 4px;">
                               <p style="height: 4px; color: #000; font-weight:700; text-align:end;">{{ $single_contribution }}</p>
@@ -330,7 +371,7 @@
                           @if ( $key == "Total Deduction")
                           <tr style="height: 4px;">
                             <td>
-                              <p style="height: 4px; color: #000; font-weight:700; padding-left: 4px;">{{ $key }}</p>
+                              <p style="height: 4px; color: #000; font-weight:700; padding-left: 4px;">{{ $key."(C)" }}</p>
                             </td>
                             <td>
                               <p style="height: 4px; color: #000; font-weight:700; text-align:end;
