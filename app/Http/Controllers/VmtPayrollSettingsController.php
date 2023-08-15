@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\VmtPayrollSettingsService;
+use App\Models\VmtProfessionalTaxSettings;
+use App\Models\VmtLabourWelfareFundSettings;
 class VmtPayrollSettingsController extends Controller
 {
     public function saveGenralPayrollSettings(Request $request,VmtPayrollSettingsService $serviceVmtPayrollSettingsService)
@@ -103,6 +105,32 @@ class VmtPayrollSettingsController extends Controller
 
     }
 
+    public function fetchProfessionalTaxSettings(Request $request,VmtPayrollSettingsService $serviceVmtPayrollSettingsService)
+    {
+        try{
+            $Pf_setings_data =VmtProfessionalTaxSettings::all();
+
+            $response =([
+                'status' =>"success",
+                'message'=>"data fetch successfully",
+                'data'=> $Pf_setings_data
+            ]);
+
+            return $response ;
+
+        }catch(\Exception $e){
+
+           return $response =([
+                'status' =>"success",
+                'message'=>"error while fetching data successfully",
+                'data'=> $Pf_setings_data
+            ]);
+
+        }
+
+
+
+    }
     public function saveProfessionalTaxSettings(Request $request,VmtPayrollSettingsService $serviceVmtPayrollSettingsService)
     {
              //dd($request->all());
@@ -111,7 +139,6 @@ class VmtPayrollSettingsController extends Controller
                 $request->pt_number,
                 $request->state,
                 $request->location,
-                $request->employees,
                 $request->deduction_cycle,
                 $request->status,
             );
@@ -123,17 +150,40 @@ class VmtPayrollSettingsController extends Controller
     {
              //dd($request->all());
 
-            $response =$serviceVmtPayrollSettingsService->saveProfessionalTaxSettings(
+            $response =$serviceVmtPayrollSettingsService->updateProfessionalTaxSettings(
                 $request->record_id,
                 $request->pt_number,
                 $request->state,
                 $request->location,
-                $request->employees,
                 $request->deduction_cycle,
                 $request->status,
             );
 
             return $response;
+
+    }
+    public function fetchlwfSettingsDetails(Request $request,VmtPayrollSettingsService $serviceVmtPayrollSettingsService)
+    {
+        try{
+            $lwf_setings_data =VmtLabourWelfareFundSettings::all();
+
+            $response =([
+                'status' =>"success",
+                'message'=>"data fetch successfully",
+                'data'=>$lwf_setings_data
+            ]);
+
+            return $response ;
+
+        }catch(\Exception $e){
+
+           return $response =([
+                'status' =>"success",
+                'message'=>"error while fetching data successfully",
+                'data'=>$lwf_setings_data
+            ]);
+
+        }
 
     }
     public function savelwfSettings(Request $request,VmtPayrollSettingsService $serviceVmtPayrollSettingsService)
@@ -145,7 +195,6 @@ class VmtPayrollSettingsController extends Controller
                 $request->employees_contrib,
                 $request->emplolyer_contrib,
                 $request->deduction_cycle,
-                $request->employees,
                 $request->status,
             );
 
@@ -162,7 +211,6 @@ class VmtPayrollSettingsController extends Controller
                 $request->employees_contrib,
                 $request->emplolyer_contrib,
                 $request->deduction_cycle,
-                $request->employees,
                 $request->status,
             );
 

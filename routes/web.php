@@ -453,8 +453,22 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
     Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
 
-    //Payroll Settings
-    Route::post('save-genral-payroll-settings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveGenralPayrollSettings'])->name('saveGenralPayrollSettings');
+    //Payroll generalSettings
+    Route::post('save-genral-payroll-settings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveGenralPayrollSettings'])->name    ('saveGenralPayrollSettings');
+    Route::post('updateGenralPayrollSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updateGenralPayrollSettings'])->name('updateGenralPayrollSettings');
+
+    //payroll statutory PT settings
+    Route::post('fetchProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchProfessionalTaxSettings'])->name('fetchProfessionalTaxSettings');
+    Route::post('saveProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveProfessionalTaxSettings'])->name('saveProfessionalTaxSettings');
+    Route::post('updateProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updateProfessionalTaxSettings'])->name('updateProfessionalTaxSettings');
+
+//payroll statutory LWF settings
+    Route::post('fetchlwfSettingsDetails', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchlwfSettingsDetails'])->name('fetchlwfSettingsDetails');
+    Route::post('savelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'savelwfSettings'])->name('savelwfSettings');
+    Route::post('updatelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updatelwfSettings'])->name('updatelwfSettings');
+
+
+
 
     //Get Attendance For run payroll
     Route::get('/fetch-attendance-data',[App\Http\Controllers\VmtPayRunController::class,'fetch_attendance_data']);
@@ -571,9 +585,9 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/Paygroup/deleteEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deleteEsiEmployee'])->name('deleteEsiEmployee');
     Route::post('/Paygroup/authorizeEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeEsiEmployee'])->name('authorizeEsiEmployee');
 
-   //EmpAbryPmrpy employee
-   Route::post('/Paygroup/CreateEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreateEmpAbryPmrpy'])->name('CreateEmpAbryPmrpy');
-   Route::post('/Paygroup/removeEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'removeEmpAbryPmrpy'])->name('removeEmpAbryPmrpy');
+    //EmpAbryPmrpy employee
+    Route::post('/Paygroup/CreateEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreateEmpAbryPmrpy'])->name('CreateEmpAbryPmrpy');
+    Route::post('/Paygroup/removeEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'removeEmpAbryPmrpy'])->name('removeEmpAbryPmrpy');
 
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
