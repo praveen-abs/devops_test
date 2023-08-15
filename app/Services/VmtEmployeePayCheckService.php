@@ -1115,13 +1115,11 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 'data' => $e
             ]);
         }
-
+    }
     public function generatePayslip($user_code,$month,$year,$type,$serviceVmtAttendanceService)
     {
 
         // $user_code = "BA002";
-
-
 
 
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
