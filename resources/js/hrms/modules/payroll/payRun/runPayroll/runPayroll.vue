@@ -53,6 +53,11 @@ const findIcons = (values) =>{
 }
 
 
+onMounted(()=>{
+    usePayrun.getLeaveDetails()
+})
+
+
 
 
 const runPayroll = ref([
