@@ -6,28 +6,37 @@
                 {{ current_session }}
             </p>
             <div class="text-gray-900 text-[18px] mb-2  font-['Poppins'] "> {{ service.current_user_name }}</div>
+          <div class="flex gap-6">
             <div class="flex my-1 overflow-visible items-center  !z-10 ">
                 <i class="fa fa-sun-o text-warning my-auto text-[20px] " aria-hidden="true"></i>
                 <p class="text-[12px] my-auto font-semibold px-2">General Shift</p>
             </div>
-            <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
+            <button class="transition ease-in-out duration-300 w-12 h-6 bg-gray-200 rounded-full focus:outline-none"
+                :class="[isChecked ? 'bg-green-300' : 'bg-red-300']"  @click="getTime">
+                <div class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow"
+                    :class="{ 'transform translate-x-full ': isChecked }"></div>
+            </button>
+          </div>
+            <!-- <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
                 <input type="checkbox" id="checkin_function" class="text-[6px] font-semibold" v-model="welcome_card.check"
                     @change="getTime" />
                 <span class="slider-checkbox check-inw round flex items-center">
                     <span class="slider-checkbox-text !text-[8px] font-semibold"> </span>
                 </span>
-            </label>
-            <div>
+            </label> -->
+            <div class="pt-4">
                 <p class="text-[12px] mt-[-20px] text-[#8B8B8B] font-['Poppins'] flex items-center">
                     Time duration:<span>09:30</span>
                 </p>
                 <p v-if="item.checkin_time" class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
                     `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}</p>
-                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In: --:--:--` }}
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In:
+                    --:--:--` }}
                 </p>
                 <p v-if="item.checkout_time" class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
                     `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}</p>
-                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out: --:--:--` }}
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out:
+                    --:--:--` }}
                 </p>
 
             </div>
@@ -39,73 +48,7 @@
         </div>
 
     </div>
-    <!-- {{ EmpDetials }} -->
-    <!-- <div class="border-0 card w-100 box-shadow-md">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-9 col-sm-9 col-md-9 col-xl-9 col-lg-9 col-xxl-9" v-for="item in EmpDetials">
-                    <p class="fw-bold f-18 text-blue-900" id="greeting_text">
-                        {{ current_session }}
-                    </p>
-                    <p class="my-1 fw-bold fs-6 text-orange">
-                        {{ service.current_user_name }}
-                    </p>
-                    <div class="my-2.5 flex">
-                        <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
-                        <p class="mx-2 fs-6 my-auto">General Shift</p>
-                        <label class="switch-checkbox f-12 text-muted">
-                            <input type="checkbox" id="checkin_function" class="f-13 text-muted"
-                                v-model="welcome_card.check" @change="getTime" />
-                            <span class="slider-checkbox check-inw round">
-                                <span class="slider-checkbox-text"> </span>
-                            </span>
-                        </label>
-                    </div>
 
-                    <p v-if="item.checkin_time" class="f-12 text-muted  " style="width: 280px;" id="time_duration">
-                        Check-in time:
-                        {{ item.checkin_time }} &nbsp;Mode:<i class="text-green-800 font-semibold text-sm"
-                        :class="findAttendanceMode(item.attendance_mode_checkin)"></i>
-                    </p>
-                    <p v-else class="f-12 text-muted" id="time_duration">
-                        Check-in time:
-                        {{ "--:--:--" }} &nbsp;
-                    </p>
-
-                    <p v-if="item.checkin_date" class="f-12 text-muted" id="time_duration">
-                        Check-in date:
-                        {{ item.checkin_date }}
-                    </p>
-                    <p v-else class="f-12 text-muted" id="time_duration">
-                        Check-in date:
-                        {{ "--:--:--" }}
-                    </p>
-
-                    <p v-if="item.checkout_time" class="f-12 text-muted" id="time_duration">
-                        Check-out time:
-                        {{ item.checkout_time }} &nbsp; Mode : <i class="text-green-800 font-semibold text-sm"
-                        :class="findAttendanceMode(item.attendance_mode_checkout)"></i>
-                    </p>
-                    <p v-else class="f-12 text-muted" id="time_duration">
-                        Check-out time:
-                        {{ "--:--:--" }} &nbsp; Mode : {{ "--:--:--" }}
-                    </p>
-                    <p v-if="item.checkout_date" class="f-12 text-muted" id="time_duration">
-                        Check-out date:
-                        {{ item.checkout_date }}
-                    </p>
-                    <p v-else class="f-12 text-muted" id="time_duration">
-                        Check-out date:
-                        {{ "--:--:--" }}
-                    </p>
-
-                </div>
-                <div class="col-3 col-sm-3 col-md-3 col-xl-3 col-lg-3 col-xxl-3">
-                    <img src="../../dashboard/girl_walk.jpg" class="" alt="girl-walk" style="height: 140px; width: 140px" />
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '30vw' }">
         <div class="modal-content bg-white">
@@ -175,6 +118,8 @@ const current_session = ref();
 const current_user = ref();
 
 const EmpDetials = ref([]);
+const isChecked = ref(false);
+
 
 const check_in_dailog = ref(false);
 const check_out_dailog = ref(false);
@@ -205,28 +150,26 @@ const getSession = () => {
     }
 };
 
-async function gettime() {
 
-}
 
 const getTime = () => {
     EmpDetials.value.splice(0, EmpDetials.value.length)
-    if (welcome_card.check == true) {
+    if (welcome_card.check == isChecked) {
         welcome_card.check_in = new Date().toLocaleTimeString();
         welcome_card.checked = true;
         check_in_dailog.value = true;
-
-
 
     } else {
         welcome_card.check_out = new Date().toLocaleTimeString();
         check_out_dailog.value = true;
         welcome_card.checked = false;
+        welcome_card.checked = false;
+
     }
 
     usedashboard
         .updateCheckin_out({
-            checked: welcome_card.checked,
+            checked: isChecked.value,
         }).then((res => {
             checkInMessege.value = res.data.message
         }))
@@ -244,13 +187,17 @@ const getEmployeeDetials = async () => {
         EmpDetials.value.push(res.data);
         if (res.data.checkout_time) {
             welcome_card.check = false;
+            isChecked.value = false
+
         }
         else if (res.data.checkin_time) {
             welcome_card.check = true;
+            isChecked.value = true
+
         } else {
-            welcome_card.check = null;
+            welcome_card.check = false;
         }
-    }).finally(()=>{
+    }).finally(() => {
         usedashboard.canShowTopbar = true
     });
 };
@@ -444,4 +391,5 @@ input:checked+.slider-checkbox>.slider-checkbox-text:after
 input+.slider-checkbox>.slider-checkbox-text:after
 {
     content: "Check In";
-}</style>
+}
+</style>

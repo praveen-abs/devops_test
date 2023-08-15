@@ -1,8 +1,6 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../../.././../../public/assets/css/tailwind.css';
 import '../../../assests/tailwind.css'
 // import router from "./router";
 
