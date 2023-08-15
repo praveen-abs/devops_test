@@ -32,8 +32,8 @@
                                 :class="service.getBackgroundColor(slotProps.index)">
                                 {{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
                             <img v-else class="rounded-circle img-md w-10  userActive-status profile-img"
-                                style="height: 30px !important;"
-                                :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
+                            style="height: 30px !important; width: 30px !important;"
+                            :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
                                 alt="" />
                             <p class=" text-left pl-2 font-semibold fs-6">{{ slotProps.data.emp_name }} </p>
                         </div>
