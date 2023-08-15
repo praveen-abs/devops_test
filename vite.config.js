@@ -36,6 +36,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
                 //Reports
+                'resources/js/hrms/modules/reports/ReportsModule.js',
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
                 //Attendance Detailed Report
