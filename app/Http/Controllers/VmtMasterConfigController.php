@@ -6,6 +6,9 @@ use App\Http\Controllers\VmtClientController;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtClientMaster;
 use App\Models\User;
+use App\Models\VmtAppSubModuleslink;
+use App\Models\VmtAppModules;
+
 use App\Services\VmtMasterConfigService;
 use Illuminate\Http\Request;
 
@@ -79,31 +82,51 @@ class VmtMasterConfigController extends Controller
     }
     public function  SaveAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-        $response = $serviceVmtMasterConfigService->SaveAppConfigStatus($request->is_mobile_app_active,
-        $request->is_checkin_active,
-        $request->is_checkout_active,
-        $request->is_location_capture_active,
-        $request->is_checkin_selfie_active,
-        $request->is_checkout_selfie_active,
-        $request->is_reimbursement_checkout_active,
-        $request->is_absent_regularization_active,
-        $request->is_attendance_regularization_active,
-        $request->is_leave_apply_active,
-        $request->is_salary_advance_loan_active,
-        $request->is_investments_active,
-        $request->is_pms_active,
-        $request->is_exit_apply_active);
+        $response = $serviceVmtMasterConfigService->SaveAppConfigStatus($request->module_id,$request->status);
 
-        return $response;
+        return response()->json($response);
 
     }
 
     public function SaveEmployeeAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
-        dd($request->all());
-        $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->all());
+
+
+        $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->app_sub_modules_link_id ,$request->selected_employees_user_code);
 
 
         return $response;
+
+    }
+    public function fetchMoileModuleData(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        try{
+        $module_id =VmtAppModules::where('module_name',"Mobile App Settings")->pluck('id');
+
+        $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
+                                                    ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
+                                                    ->where("vmt_app_sub_modules_links.module_id","=",$module_id)
+                                                    ->get(["vmt_app_sub_modules_links.id",
+                                                            "vmt_app_sub_modules_links.module_id",
+                                                            "vmt_app_sub_modules_links.sub_module_id",
+                                                            "vmt_app_modules.module_name",
+                                                            "vmt_app_sub_modules.sub_module_name",]);
+
+         return response()->json([
+                "status" => "success",
+                "message" => "data fetch successfully",
+                "data" => $mobile_settings_data,
+            ]);
+
+        }catch(\Exception $e){
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "error while fetching data",
+                "data" => $e->getmessage(),
+
+            ]);
+
+        }
 
     }
     public function getAllDropdownFilterSetting(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){

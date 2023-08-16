@@ -27,10 +27,10 @@ class Seeder_VmtClientModuleSeeder extends Seeder
   foreach ($Module_id as $key => $single_value) {
 
         foreach ($client_id as $key => $single_id) {
-          
+
             DB::table('vmt_client_modules')->insert([
 
-                ['client_id'=>$single_id['id'],'module_id'=>$single_value['id'],'status'=>'0'],
+                ['client_id'=>$single_id['id'],'module_id'=>$single_value['id'],'status'=>'1'],
 
             ]);
         }
@@ -46,7 +46,7 @@ class Seeder_VmtClientModuleSeeder extends Seeder
 
             DB::table('vmt_client_sub_modules')->insert([
 
-                ['client_id'=>$single_cl_id['id'],'sub_module_id'=>$single_sub_value['id'],'status'=>'0'],
+                ['client_id'=>$single_cl_id['id'],'app_sub_module_link_id'=>$single_sub_value['id'],'status'=>'0'],
 
             ]);
         }

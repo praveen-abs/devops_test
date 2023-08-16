@@ -154,6 +154,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth'])->name('payroll/getCurrentPayrollDates');
 
     //mobile settings
+    Route::post('/fetchMoileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMoileModuleData'])->name('fetchMoileModuleData');
     Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
 
     Route::post('/SaveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveAppConfigStatus'])->name('SaveAppConfigStatus');

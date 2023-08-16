@@ -24,21 +24,22 @@ class Seeder_VmtAppModuleSeeder extends Seeder
         DB::table('vmt_app_modules')->truncate();
 
         DB::table('vmt_app_modules')->insert([
-            ['id'=>'1','module_name'=>'Mobile App'],
+            ['id'=>'1','module_name'=>'Mobile App Settings'],
         ]);
         DB::table('vmt_app_sub_modules')->truncate();
 
         DB::table('vmt_app_sub_modules')->insert([
-            ['id'=>'1','sub_module_name'=>'Check-In / Check-out'],
-            ['id'=>'2','sub_module_name'=>'Location Capture'],
-            ['id'=>'3','sub_module_name'=>'Check-In / Check-out Selfie'],
-            ['id'=>'4','sub_module_name'=>'Reimbursement while Check-out'],
-            ['id'=>'5','sub_module_name'=>'Absent/Attendance Regularization'],
-            ['id'=>'6','sub_module_name'=>'Leave Apply'],
-            ['id'=>'7','sub_module_name'=>'Salary Advance and Loan'],
-            ['id'=>'8','sub_module_name'=>'Investments'],
-            ['id'=>'9','sub_module_name'=>'PMS'],
-            ['id'=>'10','sub_module_name'=>'Exit Apply'],
+            ['id'=>'1','sub_module_name'=>'Mobile App'],
+            ['id'=>'2','sub_module_name'=>'Check-In / Check-out'],
+            ['id'=>'3','sub_module_name'=>'Location Capture'],
+            ['id'=>'4','sub_module_name'=>'Check-In / Check-out Selfie'],
+            ['id'=>'5','sub_module_name'=>'Reimbursement while Check-out'],
+            ['id'=>'6','sub_module_name'=>'Absent/Attendance Regularization'],
+            ['id'=>'7','sub_module_name'=>'Leave Apply'],
+            ['id'=>'8','sub_module_name'=>'Salary Advance and Loan'],
+            ['id'=>'9','sub_module_name'=>'Investments'],
+            ['id'=>'10','sub_module_name'=>'PMS'],
+            ['id'=>'11','sub_module_name'=>'Exit Apply'],
         ]);
 
         DB::table('vmt_app_sub_modules_links')->truncate();
@@ -56,7 +57,7 @@ class Seeder_VmtAppModuleSeeder extends Seeder
 
         ]);
 
-      
+
 
     }
 }

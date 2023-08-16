@@ -13,13 +13,17 @@
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
     use App\Models\VmtEmployeeOfficeDetails;
+    use App\Models\VmtAppSubModuleslink;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
+    use App\Models\VmtClientSubModules;
+    use App\Models\VmtAppModules;
     use App\Mail\VmtPMSMail_Assignee;
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
     use App\Models\VmtConfigApps;
+    use App\Models\VmtAppSubModules;
 
     use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
@@ -668,27 +672,45 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-        $client_id = VmtClientMaster::all("id");
-        dd($client_id);
-        $data=VmtConfigApps::get([ "is_mobile_app_active as Mobile App" ,
-                                    "is_checkin_active as Check-In / Check-out" ,
-                                    "is_checkout_active" ,
-                                    "is_location_capture_active as Location Capture" ,
-                                    "is_checkin_selfie_active as Check-In / Check-out Selfie" ,
-                                    "is_checkout_selfie_active",
-                                    "is_reimbursement_checkout_active as Reimbursement while Check-out" ,
-                                    "is_absent_regularization_active as Absent/Attendance Regularization",
-                                    "is_attendance_regularization_active" ,
-                                    "is_leave_apply_active as Leave Apply" ,
-                                    "is_salary_advance_loan_active as Salary Advance and Loan" ,
-                                    "is_investments_active as Investments" ,
-                                    "is_pms_active as PMS" ,
+        // $client_id = VmtClientMaster::all("id");
+        // dd($client_id);
+        // $data=VmtConfigApps::get([ "is_mobile_app_active as Mobile App" ,
+        //                             "is_checkin_active as Check-In / Check-out" ,
+        //                             "is_checkout_active" ,
+        //                             "is_location_capture_active as Location Capture" ,
+        //                             "is_checkin_selfie_active as Check-In / Check-out Selfie" ,
+        //                             "is_checkout_selfie_active",
+        //                             "is_reimbursement_checkout_active as Reimbursement while Check-out" ,
+        //                             "is_absent_regularization_active as Absent/Attendance Regularization",
+        //                             "is_attendance_regularization_active" ,
+        //                             "is_leave_apply_active as Leave Apply" ,
+        //                             "is_salary_advance_loan_active as Salary Advance and Loan" ,
+        //                             "is_investments_active as Investments" ,
+        //                             "is_pms_active as PMS" ,
 
-                                    "is_exit_apply_active as Exit Apply" ]);
+        //                             "is_exit_apply_active as Exit Apply" ]);
+
+         $modules = array();
+         $module_data =VmtAppModules::where('module_name',"Mobile App")->pluck('id');
+
+        $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
+                                                    ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
+                                                    ->where("vmt_app_sub_modules_links.module_id","=",$module_data)
+                                                    ->get();
+
+        $sub_module_link_data =VmtClientSubModules::join('vmt_app_sub_modules_links','vmt_app_sub_modules_links.id','=','vmt_client_sub_modules.sub_module_link_id')
+                                                    ->join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
+                                                    ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
+                                                    ->where("vmt_app_sub_modules_links.module_id","=",$module_data)
+                                                    ->get();
+                                                    dd($mobile_settings_data);
+
+         $spg = $sub_module_link_data->unique('sub_module_name');
+         $spg = array_slice($spg->values()->all(), 0, 10, true);
+         dd($spg);
 
 
-
-
+        (array_values(array_unique($data)));
     ?>
 
 
