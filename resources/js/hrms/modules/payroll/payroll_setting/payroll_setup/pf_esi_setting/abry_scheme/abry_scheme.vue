@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="flex justify-between mx-5 my-4" >
+        <div class="flex justify-between" >
            <div>
             <p>Employee Assigned to <strong>Aatmanirbhar Bharat Yojana(ABRY)</strong>Scheme</p>
-            <div class="p-2 my-3 bg-red-100 rounded-lg w-14">
+            <div class="p-2 my-3 bg-red-100 rounded-lg ">
                <p class="text-blue">click here to know more about ABRY Scheme</p>
             </div>
            </div>

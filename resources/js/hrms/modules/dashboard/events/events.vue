@@ -7,7 +7,8 @@
                 <div class=" relative  w-[180px] rounded-lg my-8 " v-for="(events, index) in useDashboard.allEventSource"
                     :key="index">
                     <div class="h-[80px] rounded-lg" :class="`${getBackgroundColor(index)}`">
-                        <p class="font-semibold  text-center text-white my-2 text-[12px] font-['Poppins'] ">Happy Birthday
+                        <p class="font-semibold  text-center text-white my-2 text-[12px] font-['Poppins'] ">
+                            {{ findEventType(events.type) }}
                         </p>
                     </div>
                     <div class="absolute top-8 w-full z-10 ">
@@ -131,6 +132,15 @@ const getBackgroundColor = (index) => {
     console.log(index);
     return colors[index % colors.length];
 };
+
+const findEventType = (type) =>{
+    if(type == 'birthday'){
+         return 'Happy birthday'
+    }else
+    if(type == 'work_anniversery'){
+        return 'Work anniversary'
+    }
+}
 
 </script>
 

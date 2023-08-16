@@ -1,8 +1,8 @@
 <template>
     <div class="w-full ">
         <section id="header" class="flex justify-between w-full my-4 ">
-            <p class="w-4 mx-1 font-semibold fs-5.5">Salary Compenents</p>
-            <div><button class="btn btn-orange" @click="dailogReimbursementComponents = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add Components</button></div>
+            <p class="mx-1 font-semibold fs-5.5">Salary Components</p>
+            <div><button class="btn btn-orange  whitespace-nowrap" @click="dailogReimbursementComponents = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add Components</button></div>
         </section>
         <DataTable :value="helper.filterSource(usePayroll.salaryComponentsSource,4)">
             <Column field="comp_name" header="Name"></Column>

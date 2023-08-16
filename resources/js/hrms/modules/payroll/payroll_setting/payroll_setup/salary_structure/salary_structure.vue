@@ -1,8 +1,8 @@
 <template>
     <div class="w-full p-3">
         <div v-if="route.params.name == undefined || route.params.name == ''">
-            <section id="header" class="flex mx-2 my-5">
-                <div class="w-10">
+            <section id="header" class="flex justify-between mx-2">
+                <div class="">
                     <p class="font-semibold text-gray-800 fs-5"> Salary Structure <span
                             class="font-semibold text-gray-600 fs-6">(Paygroup)</span></p>
                 </div>

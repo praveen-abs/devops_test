@@ -1,8 +1,8 @@
 <template>
     <div class="w-full ">
         <section id="header" class="flex justify-between w-full my-4 ">
-            <p class="w-4 mx-1 font-semibold fs-5.5">Salary Compenents</p>
-            <div><button class="btn btn-orange" @click="usePayroll.dailogNewSalaryComponents = true">Add Components</button>
+            <p class="mx-1 font-semibold text-lg">Salary Compenents</p>
+            <div><button class="btn btn-orange mx-5 whitespace-nowrap" @click="usePayroll.dailogNewSalaryComponents = true">Add Components</button>
             </div>
         </section>
         <div class="table-responsive">
