@@ -80,6 +80,13 @@ class VmtMasterConfigController extends Controller
         return view('vmt_config_mobile_settings');
 
     }
+    public function  fetchAssignedEmployee(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        $assigned_employee_data = VmtAppSubModuleslink::pluck('');
+
+        return response()->json($response);
+
+    }
     public function  SaveAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
         $response = $serviceVmtMasterConfigService->SaveAppConfigStatus($request->module_id,$request->status);
@@ -104,12 +111,14 @@ class VmtMasterConfigController extends Controller
 
         $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
                                                     ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
+                                                    ->join("vmt_client_sub_modules","vmt_client_sub_modules.app_sub_module_link_id","=","vmt_app_sub_modules_links.id")
                                                     ->where("vmt_app_sub_modules_links.module_id","=",$module_id)
                                                     ->get(["vmt_app_sub_modules_links.id",
                                                             "vmt_app_sub_modules_links.module_id",
                                                             "vmt_app_sub_modules_links.sub_module_id",
                                                             "vmt_app_modules.module_name",
-                                                            "vmt_app_sub_modules.sub_module_name",]);
+                                                            "vmt_app_sub_modules.sub_module_name",
+                                                            "vmt_client_sub_modules.status"]);
 
          return response()->json([
                 "status" => "success",
