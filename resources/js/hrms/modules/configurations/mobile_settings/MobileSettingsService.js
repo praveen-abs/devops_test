@@ -12,7 +12,7 @@ export const useMobileSettingsStore = defineStore("useMobileSettingsStore", () =
 
  async function getMobileSettings(){
         await axios.get('/fetchMoileModuleData').then((res)=>{
-            MobileSettingsDetails.value =res.data;
+            MobileSettingsDetails.value =res.data.data;
         }).finally(()=>{
           console.log(MobileSettingsDetails.value );
         })

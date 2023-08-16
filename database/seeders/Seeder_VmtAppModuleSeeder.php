@@ -54,6 +54,7 @@ class Seeder_VmtAppModuleSeeder extends Seeder
             ['id'=>'8','module_id'=>'1','sub_module_id'=>'8'],
             ['id'=>'9','module_id'=>'1','sub_module_id'=>'9'],
             ['id'=>'10','module_id'=>'1','sub_module_id'=>'10'],
+            ['id'=>'11','module_id'=>'1','sub_module_id'=>'11'],
 
         ]);
 
