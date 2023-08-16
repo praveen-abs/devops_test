@@ -52,8 +52,8 @@
                 </transition>
             </div>
             <div class="relative col-span-4">
-                <input type="text" name="" id="" class="border p-1.5 bg-gray-100  border-gray-300 rounded-lg w-full" v-model="query"
-                    placeholder="Search....">
+                <input type="text" name="" id="" class="border p-1.5 bg-gray-100  border-gray-300 rounded-lg w-full"
+                    v-model="query" placeholder="Search....">
 
                 <transition enter-active-class="transition ease-out duration-200 transform"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
@@ -78,7 +78,7 @@
                 </transition>
             </div>
             <div class="flex col-span-4 justify-end">
-                <button  v-tooltip="'Settings'"
+                <button v-tooltip="'Settings'"
                     class="rounded-full bg-gray-100  p-2 hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none  mx-2"
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="h-6 w-6">
@@ -120,12 +120,12 @@
                 </transition>
 
 
-                <button  v-tooltip="'Notification'"
+                <button v-tooltip="'Notification'"
                     class="mx-2 animate-pulse  bg-gray-100 rounded-full p-2  hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                     @click="visibleRight = true">
                     <img src="./assests/icons/notification.svg" alt="" class="h-6 w-6">
                 </button>
-                <button  v-tooltip="'Exit'"
+                <button v-tooltip="'Exit'"
                     class=" bg-gray-100 rounded-full p-2 hover:bg-gray-200 transition  duration-700 ease-in-out transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                     <img src="./assests/icons/exit.svg" alt="" class="h-6 w-6">
                 </button>
@@ -134,14 +134,15 @@
                     <button
                         class="py-2 px-3 flex text-white focus:outline-none hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <p class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm" >{{
+                        <p class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
 
                         <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto mx-2"
-                            v-if="service.current_user_name.length <=10">{{ service.current_user_name ?
+                            v-if="service.current_user_name.length <= 10">{{ service.current_user_name ?
                                 service.current_user_name : '' }}</p>
-                        <p  class="font-semibold text-[12px] mx-2 whitespace-nowrap font-['Poppins']  text-center text-black my-auto" v-else> {{
-                            service.current_user_name ? service.current_user_name.substring(0, 10) + '..' : '' }}</p>
+                        <p class="font-semibold text-[12px] mx-2 whitespace-nowrap font-['Poppins']  text-center text-black my-auto"
+                            v-else> {{
+                                service.current_user_name ? service.current_user_name.substring(0, 10) + '..' : '' }}</p>
 
                     </button>
                     <transition enter-active-class="transition ease-out duration-200 transform"
@@ -372,11 +373,11 @@ const getBackgroundColor = (index) => {
 </script>
 
 
-<!-- <style>
+<style>
 .p-sidebar-right .p-sidebar
 {
     width: 28rem;
     height: 100%;
 }
-</style> -->
+</style>
 

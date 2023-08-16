@@ -3,9 +3,9 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane show fade active" id="applications_tab" role="tabpanel"
                 aria-labelledby="pills-profile-tab">
-                <div class="flex ">
-                    <div class="w-8">
-                        <p class="text-2xl font-semibold">Our Accounting Softwares</p>
+                <div class="flex justify-between">
+                    <div class="">
+                        <p class="text-lg font-semibold">Our Accounting Softwares</p>
                         <p class="text-muted fs-6">
                             Here you can integrate with one of our accounting softwares below
                         </p>

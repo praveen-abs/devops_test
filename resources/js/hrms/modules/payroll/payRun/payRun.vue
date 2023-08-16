@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full" v-if="route.params.module">
+    <div class="w-full" v-if="route.params.module == 'null'">
         <!--Current  Financial Year  calculation -->
         <div class="">
             <CurrentFinancialYearStatus />
@@ -33,7 +33,7 @@
     <overRide v-if="route.params.module == 'Override'" />
 
 
-    <leaveApplied />
+    <!-- <leaveApplied /> -->
 </template>
 
 <script setup>
