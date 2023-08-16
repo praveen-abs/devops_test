@@ -9,15 +9,13 @@
         <div class="bg-white rounded-lg overflow-x-scroll h-full">
             <div class="px-auto">
                 <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type"
-                    class="bg-gray-200  my-2 p-2 mx-2 rounded-lg ">
-                    <div class="flex px-2">
-                        <div class="">
+                    class="bg-gray-200  my-2 p-2 mx-2 rounded-lg cursor-pointer transition duration-700 ease-in-out   hover:-translate-y-1 hover:scale-100 ">
+                    <div class="flex px-2  ">
                             <div class="">
                                 <span class="text-3xl font-semibold text-black">{{ leaveBalance.leave_balance }}</span>
                                 <span class="">/</span>
                                 <span class="">{{ leaveBalance.avalied_leaves }}</span>
                             </div>
-                        </div>
                         <div class="px-3">
                             <p class=" font-semibold text-primary text-[14px] align-bottom  py-2">{{ leaveBalance.leave_type }}</p>
                         </div>

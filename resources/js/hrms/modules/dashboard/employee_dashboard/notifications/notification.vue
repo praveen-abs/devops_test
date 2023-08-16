@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-white h-[700px] rounded-lg overflow-hidden p-2">
-        <div class="mb-3 card-title flex items-center justify-between" id="">
+    <div class="bg-white h-[700px] rounded-lg overflow-hidden">
+        <div class="mb-3 p-3 card-title flex items-center justify-between bg-gray-100" id="">
             <span class="text-primary font-semibold fs-6">Notifications</span>
             <!-- <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="pi pi-bell p-overlay-badge px-4"
                 style="font-size: 1rem" /> -->
@@ -26,14 +26,15 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { useMainDashboardStore } from "../../stores/dashboard_service";
+import { ref } from "vue";
 
 const useDashboard = useMainDashboardStore()
 
 const filterNotificationLength = (value) => {
     return value.length
 }
-
 
 
 const moduleRedirectionUrl = (url) => {

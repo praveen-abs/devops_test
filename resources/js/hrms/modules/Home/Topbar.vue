@@ -175,9 +175,27 @@
                 Notification
             </p>
         </template>
-        <div class="w-full px-2 rounded-lg my-2 p-2" v-for="(no, index) in 20" :class="`${getBackgroundColor(index)}`">
-            <p class="orange-median font-semibold fs-6">Attendance</p>
-            <p class="text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore accusamus laborum .</p>
+        <!-- notification_title -->
+        <!-- notification_body -->
+        <!-- redirect_to_module -->
+        <div class="w-full px-2 rounded-lg my-2 p-2" v-for="(notification, index) in notificationSource"
+            :class="`${getBackgroundColor(index)}`">
+            <div class="flex justify-between">
+                <div>
+                    <p class="orange-median font-semibold fs-6">{{ notification.notification_title }}</p>
+                </div>
+                <div>
+                    <button @click="readNotification(notification.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+
+                    </button>
+                </div>
+            </div>
+            <p class="text-sm">{{ notification.notification_body }}</p>
+            <!-- :class="`${getBackgroundColor(index)}`" -->
         </div>
     </Sidebar>
 
@@ -241,8 +259,6 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
-
-import Notification from '../dashboard/employee_dashboard/notifications/notification.vue'
 import { Service } from '../Service/Service';
 
 const useDashboard = useMainDashboardStore()
@@ -313,6 +329,24 @@ const getOrgList = () => {
 }
 
 
+const notificationSource = ref()
+
+const getNotifications = () => {
+    axios.get('/getNotifications').then(res => {
+        notificationSource.value = res.data.data
+    })
+}
+
+
+const readNotification = (notification_id) => {
+    axios.post('/readNotification', {
+        record_id: notification_id
+    }).finally(() => {
+        getNotifications()
+    })
+}
+
+
 onMounted(() => {
     getOrgList()
     getClientList()
@@ -320,6 +354,8 @@ onMounted(() => {
     setTimeout(() => {
         canShowLoading.value = true
     }, 2000);
+    getNotifications()
+
 })
 
 

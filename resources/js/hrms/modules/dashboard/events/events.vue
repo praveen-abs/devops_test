@@ -14,17 +14,29 @@
                     <div class="absolute top-8 w-full z-10 ">
                         <div class="grid grid-cols-2 w-11/12 bg-slate-100 mx-auto rounded-lg h-full">
                             <div class="">
-                                <img src="../../../assests/sampleAvatar.jpg" alt="" class="rounded-lg">
+                                <div v-if="JSON.parse(events.avatar).type == 'shortname'" :class="getAvatarColor(index)"
+                                    class="h-full rounded-lg">
+                                    <p class="font-semibold text-4xl py-4 text-center align-middle  text-white">{{
+                                        JSON.parse(events.avatar).data }}</p>
+                                </div>
+                                <img v-else :src="`data:image/png;base64,${JSON.parse(events.avatar).data}`" alt=""
+                                    class="rounded-lg h-full">
                             </div>
                             <div class="h-full">
                                 <div class="py-6">
                                     <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
                                         v-if="events.name.length <= 8"> {{ events.name }}</p>
                                     <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
-                                        v-tooltip="events.name" v-else> {{ events.name ? events.name.substring(0, 8) + '..' : ''
+                                        v-tooltip="events.name" v-else> {{ events.name ? events.name.substring(0, 8) + '..'
+                                            : ''
                                         }}</p>
                                     <p class="font-semibold text-sm text-center text-gray-600 my-auto"> {{
                                         dayjs(events.dob).format('DD') }}th {{ dayjs(events.dob).format('MMM') }}</p>
+                                    <p>
+                                        <i v-tooltip="'wish'"
+                                            class="text-xs absolute right-6 fa fa-commenting-o text-right cursor-pointer"
+                                            data-bs-target="#wishes_popup" data-bs-toggle="modal"></i>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +91,7 @@
     </div> -->
 
 
-    <!-- <div id="wishes_popup" class="modal fade" role="dialog">
+    <div id="wishes_popup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
             <div class="modal-content">
                 <div class="py-2 border-0 modal-header">
@@ -91,8 +103,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{-- <p for="" class="text-muted f-14 fw-bold">Commants here</p> --}} -->
-    <!-- <textarea name="" id="" cols="" placeholder="Commants here...." rows="2"
+                    <p for="" class="text-muted f-14 fw-bold">Commants here</p>
+                    <textarea name="" id="" cols="" placeholder="Commants here...." rows="2"
                         class="resize-none form-control"></textarea>
                     <div class="text-end">
                         <button class="mt-2 btn btn-border-orange" id=""><i class="fa fa-paper-plane me"
@@ -101,15 +113,17 @@
                 </div>
             </div>
         </div>
-    </div>  -->
-
-    <div class="bg-p"></div>
+    </div>
 </template>
 
 <script setup>
 import dayjs from "dayjs";
 import { ref } from "vue";
 import { useMainDashboardStore } from "../stores/dashboard_service"
+import { Service } from "../../Service/Service";
+
+
+const service = Service()
 
 const useDashboard = useMainDashboardStore()
 
@@ -119,7 +133,6 @@ const colors = [
     'bg-yellow-600',
     'bg-rose-600',
     'bg-cyan-600',
-
     'bg-amber-600',
     'bg-red-600',
     'bg-blue-600',
@@ -128,19 +141,41 @@ const colors = [
     'bg-fuchsia-600',
 ];
 
+const avatarColors = [
+    'bg-emerald-200',
+    'bg-yellow-200',
+    'bg-rose-200',
+    'bg-cyan-200',
+    'bg-amber-200',
+    'bg-red-200',
+    'bg-blue-200',
+    'bg-pink-200',
+    'bg-green-200',
+    'bg-fuchsia-200',
+];
+
 const getBackgroundColor = (index) => {
-    console.log(index);
     return colors[index % colors.length];
 };
+const getAvatarColor = (index) => {
+    return avatarColors[index % colors.length];
+};
 
-const findEventType = (type) =>{
-    if(type == 'birthday'){
-         return 'Happy birthday'
-    }else
-    if(type == 'work_anniversery'){
-        return 'Work anniversary'
-    }
+const findEventType = (type) => {
+    if (type == 'birthday') {
+        return 'Happy birthday'
+    } else
+        if (type == 'work_anniversery') {
+            return 'Work anniversary'
+        }
 }
 
 </script>
+
+
+<style>
+.modal-backdrop{
+    width: 0;
+}
+</style>
 

@@ -657,15 +657,15 @@ class VmtMainDashboardController extends Controller
     {
 
         //Fetch the data
-        $request->user_code = "BA002";
-        return $serviceVmtDashboardService->getNotifications($request->user_code);
+        $user_code =  auth()->user()->user_code;
+        return $serviceVmtDashboardService->getNotifications('MC0005');
     }
 
     public function readNotification(Request $request, VmtDashboardService $serviceVmtDashboardService)
     {
 
         //Fetch the data
-        $request->record_id = "23";
+        // $request->record_id = "23";
         return $serviceVmtDashboardService->readNotification($request->record_id);
     }
 
