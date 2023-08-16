@@ -794,7 +794,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
        Route::post('/get_empolyees_filter_data', [App\Http\Controllers\VmtMasterConfigController::class, 'get_empolyees_filter_data'])->name('get_empolyees_filter_data');
        Route::get('/getalldropdownfiltersetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
        Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
-       Route::post('/fetchMoileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMoileModuleData'])->name('fetchMoileModuleData');
+       Route::get('/fetchMoileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMoileModuleData'])->name('fetchMoileModuleData');
 
     //Configrations
     ////Attendance Settings

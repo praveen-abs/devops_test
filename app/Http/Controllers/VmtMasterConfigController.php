@@ -97,7 +97,7 @@ class VmtMasterConfigController extends Controller
         return $response;
 
     }
-    public function fetchMoileModuleData(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function fetchMoileModuleData(VmtMasterConfigService $serviceVmtMasterConfigService){
 
         try{
         $module_id =VmtAppModules::where('module_name',"Mobile App Settings")->pluck('id');

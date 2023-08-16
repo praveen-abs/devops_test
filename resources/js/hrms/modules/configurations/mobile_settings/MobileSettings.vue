@@ -25,12 +25,16 @@
     <AssignEmployee :type="selectedType"/>
 </template>
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import AssignEmployee from "./components/AssignEmployee.vue";
 import { useMobileSettingsStore } from "./MobileSettingsService";
 
 
-const useStore = useMobileSettingsStore()
+const useStore = useMobileSettingsStore();
+
+onMounted(()=>{
+    useStore.getMobileSettings();
+})
 
 const active = ref(1);
 

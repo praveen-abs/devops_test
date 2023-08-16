@@ -6,7 +6,7 @@
             <div class="w-full p-2">
                 <div class="flex justify-between">
                     <div>
-                        <p class="font-semibold text-lg">Employee Assign</p>
+                        <p class="text-lg font-semibold">Employee Assign</p>
                     </div>
                     <div>
                         <Dropdown class="w-full" placeholder="select department" />
@@ -19,14 +19,14 @@
             <div class="col-span-4">
                 <input type="text" placeholder="search employee.." class="border rounded-lg bg-gray-100 p-1.5 w-11/12">
             </div>
-            <div class="col-span-4 flex ">
+            <div class="flex col-span-4 ">
                 <p>Legal entity</p>
                 <Dropdown v-model="legalEntity" class="w-full" placeholder="legal entity"
                     @change="getFilteredSource($event.value, '')"
                     :options="dropdownValues ? dropdownValues.legalEntity : []" optionLabel="client_name"
                     optionValue="id" />
             </div>
-            <div class="col-span-4 flex">
+            <div class="flex col-span-4">
                 <p>Department</p>
                 <Dropdown v-model="department" class="w-full" placeholder="department"
                     @change="getFilteredSource('', $event.value)" :options="dropdownValues ? dropdownValues.department : []"
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="table-responsive my-3">
+        <div class="my-3 table-responsive">
             <DataTable v-model:selection="selectedEmployee" :value="filteredSource" ref="dt" dataKey="id" :paginator="true"
                 :rows="10"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -53,9 +53,9 @@
                     </template>
                 </Column>
             </DataTable>
-            <div class="mx-auto w-1/2 flex justify-center p-2">
-                <button @click="useStore.employeeAssignDialog = false">Cancel</button>
-                <button class="mx-2" @click="saveCurrentlySelectedEmployeeConfig(selectedEmployee, type)">Confirm</button>
+            <div class="flex justify-center w-1/2 p-2 mx-auto">
+                <button @click="useStore.employeeAssignDialog = false" class="mx-2 p-2 bg-black !text-[#fff] border-[2px] border-black rounded-lg">Cancel</button>
+                <button class="mx-2 bg-white !text-[#000] border-[2px] p-2 border-black rounded-lg" @click="saveCurrentlySelectedEmployeeConfig(selectedEmployee, type)">Confirm</button>
             </div>
         </div>
     </Dialog>
@@ -85,7 +85,7 @@ const selectedEmployee = ref([]);
 const dropdownValues = ref()
 const legalEntity = ref()
 const department = ref()
-const filteredSource = ref()
+const filteredSource = ref();
 
 
 const getDropdownValues = async () => {

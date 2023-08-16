@@ -6,12 +6,26 @@ import {Service} from '../../Service/Service';
 export const useMobileSettingsStore = defineStore("useMobileSettingsStore", () => {
 
 
-    const employeeAssignDialog = ref(false)
+    const employeeAssignDialog = ref(false);
 
+    const MobileSettingsDetails =ref();
+
+ async function getMobileSettings(){
+        await axios.get('/fetchMoileModuleData').then((res)=>{
+            MobileSettingsDetails.value =res.data;
+        }).finally(()=>{
+          console.log(MobileSettingsDetails.value );
+        })
+    }
 
 
 
     return {
-        employeeAssignDialog
+        employeeAssignDialog,
+        MobileSettingsDetails,
+
+        // function 
+
+        getMobileSettings
     };
 });
