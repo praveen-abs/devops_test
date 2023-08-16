@@ -199,8 +199,9 @@ class VmtDashboardService{
              foreach($dashboardEmployeeEventsData_birthday as $single_emp_birthday){
 
                  $emp_birth_datails['id']  =  $single_emp_birthday['id'];
+                 $emp_birth_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_birthday['id']);
                  $emp_birth_datails['name']  =  $single_emp_birthday['name'];
-                 $emp_birth_datails['avatar']  =  $single_emp_birthday['avatar'];
+                //  $emp_birth_datails['avatar']  =  $single_emp_birthday['avatar'];
                  $emp_birth_datails['designation']  =  $single_emp_birthday['designation'];
                  $emp_birth_datails['dob']  =  $single_emp_birthday['dob'];
                  $emp_birth_datails['doj']  =  $single_emp_birthday['doj'];
@@ -213,8 +214,9 @@ class VmtDashboardService{
              foreach($dashboardEmployeeEventsData_workanniversery as $single_emp_work){
 
                  $emp_work_datails['id']  =  $single_emp_work['id'];
+                 $emp_work_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_work['id']);
                  $emp_work_datails['name']  =  $single_emp_work['name'];
-                 $emp_work_datails['avatar']  =  $single_emp_work['avatar'];
+                //  $emp_work_datails['avatar']  =  $single_emp_work['avatar'];
                  $emp_work_datails['designation']  =  $single_emp_work['designation'];
                  $emp_work_datails['dob']  =  $single_emp_work['dob'];
                  $emp_work_datails['doj']  =  $single_emp_work['doj'];
