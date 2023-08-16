@@ -17,6 +17,7 @@ use App\Models\VmtClientMaster;
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 use App\Models\VmtOrgRoles;
+use App\Models\VmtNotifications;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
@@ -885,6 +886,7 @@ class VmtDashboardService{
             return null;
         }
     }
+
     public function getNotifications($user_code){
         //Validate
         $validator = Validator::make(
@@ -910,16 +912,12 @@ class VmtDashboardService{
 
         try{
 
+                $user_id = User::where('user_code',$user_code)->first()->id;
+
             //Get the user record and update avatar column
-            $query_notifications = User::with('array_notifications')
-                               ->where('users.user_code',$user_code)
-                               ->first(['users.id','users.name', 'users.user_code']);
-
-            //Add recipient name
-            foreach($query_notifications['array_notifications'] as $singleNotification){
-
-                $singleNotification["recipient_name"] = User::find($singleNotification["recipient_user_id"])->name;
-            }
+            $query_notifications = User::join('vmt_notifications','vmt_notifications.user_id','=','users.id')
+                                    ->where('users.id', $user_id)
+                                    ->where('vmt_notifications.is_read','0')->get();
 
             return response()->json([
                 "status" => "success",
@@ -938,6 +936,23 @@ class VmtDashboardService{
 
         }
     }
+
+    public function readNotification($record_id){
+
+        $exist_notification =  VmtNotifications::where('id', $record_id)->first();
+
+        if(!empty($exist_notification) && $exist_notification->exists())
+        {
+            $exist_notification->is_read = 1;
+            $exist_notification->save();
+
+     return response()->json([
+        "status" => "success",
+        "message" => "",
+    ]);
+
+        }
+}
 
     public function getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period)
     {
@@ -1155,7 +1170,6 @@ class VmtDashboardService{
 
         try{
             $getAllEvent = $this->getAllEventsDashboard();
-            $getAllNotification =  $this->getNotifications($user_code);
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
@@ -1165,7 +1179,6 @@ class VmtDashboardService{
             return response()->json(
                 [
                      "all_events"=>json_decode($getAllEvent->content(), true)['data'],
-                     "all_notification" => json_decode($getAllNotification->content(),true)['data'],
                      "leave_balance_per_month"=>json_decode($getEmpLeaveBalance->content(), true)['data'],
                      "attenance_report_permonth"=>json_decode($getAttenanceReportpermonth->content(), true)['data']
                 ]
