@@ -2,7 +2,8 @@
 
  $client_logo_path   = public_path($client_details[0]['client_logo']);
 
- $client_image  = base64_encode(file_get_contents($client_logo_path));
+
+ $client_image  = base64_encode($client_logo_path);
 
  $abs_public_logo  =  public_path($date_month['abs_logo']);
 
@@ -50,8 +51,8 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
 
 
 <body>
-    <table style="width: 100%;  border-collapse: collapse; background:#fff; ">
-            <tr>
+    <table style="width: 100%;  border-collapse: collapse; background:#fff;  ">
+            <tr >
                 <td colspan="3" >
                     <h3 style="color:#000; ">PAYSLIP <span style="color:gray; font-weight:500;   font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
                     <p style="color:#000;font-size:10px;">{{$client_details[0]['client_fullname']}}</p>
@@ -61,7 +62,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                     <img src="data:image/png;base64,{{ $client_image }}" style="margin-top:40px; " width="160px" height="60px"  >
                 </td>
             </tr>
-        <tr class="td"  style="height:20px; marign:0px;" >
+        <tr class="td"  style="height:10px; marign:0px;">
             <td colspan="4" class="td"  border="2" style="marign:0px;">
                 <h5 style="font-size: 12px; margin-bottom:2px ">Employee Name : {{ $personal_details[0]['name'] }}</h5>
             </td>
@@ -73,59 +74,73 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
         </tr>
         <tr class="td" style="height: 30px">
             <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:gray;">Employee Number</p>
+                <p style="font-size:10px;color:gray;margin-top:-4px">Employee Number</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Date Joined</p>
+                <p style="font-size:10px;color:gray; margin-top:-4px">Date Joined</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['doj']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Department</p>
+                <p style="font-size:10px;color:gray; margin-top:-4px">Department</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['department_name']}}</p>
             </td>
-            <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Sub Department</p>
-                <p style="font-size:11px; margin-top:-8px">{{" - "}}</p>
+            <td class="" style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray; margin-top:-4px">Designation </p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation']}}</p>
             </td>
 
         </tr>
-        <tr class="td" style="height: 30px">
-            <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:gray;">Designation </p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation']}}</p>
+        <tr>
+            <td  colspan="4" style=" ">
+                 <table style="border-bottom:0.4px solid rgb(175, 175, 175); width:100%;margin-top:-8px;"></table>
             </td>
+        </tr>
+        <tr class="td" style="height: 30px">
+
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Payment Mode</p>
+                <p style="font-size:10px;color:gray; margin-top:-4px">Payment Mode</p>
                 <p style="font-size:11px; margin-top:-8px"> {{ " - " }}</p>
             </td>
+
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Bank</p>
+                <p style="font-size:10px;color:gray; margin-top:-4px">Bank Name</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_name']}}</p>
             </td>
+            <td class="" style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray;margin-top:-4px">Bank Account</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_account_number']}}</p>
+            </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Bank IFSC</p>
+                <p style="font-size:10px;color:gray;margin-top:-4px">Bank IFSC</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_ifsc_code']}}</p>
             </td>
 
         </tr>
-        <tr class="td" style="height: 30px">
-            <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:gray;">Bank Account</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_account_number']}}</p>
+        <tr>
+            <td  colspan="4">
+                <table style="border-bottom:0.4px solid rgb(175, 175, 175); width:100%;margin-top:-6px"></table>
             </td>
+        </tr>
+        <tr class="td" style="height: 30px">
+
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">PAN</p>
+                <p style="font-size:10px;color:gray;margin-top:-4px">PAN</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['pan_number']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">UAN</p>
+                <p style="font-size:10px;color:gray;margin-top:-4px">ESIC</p>
+                <p style="font-size:11px; margin-top:-8px">{{ "-" }}</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;margin-top:-4px">UAN</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['uan_number']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">PF Number</p>
+                <p style="font-size:10px;color:gray;margin-top:-4px">EPF Number</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['epf_number']}}</p>
             </td>
+
 
         </tr>
         <tr>
@@ -133,8 +148,57 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                 <table border="0.5" style="width:100%;border-collapse: collapse; border-color:black"></table>
             </td>
         </tr>
+
         <tr class="td"  style="height:20px; marign:0px;">
-            <td colspan="4" class="td"  border="2" style="marign:0px;padding-top:20px">
+            <td colspan="4" class="td"  border="2" style="marign:0px; padding-top:10px">
+                <p style="font-size: 12px; margin-bottom:2px ">LEAVE DETAILS</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <table border="0.5" style="width:100%;border-collapse: collapse; border-color:black"></table>
+            </td>
+        </tr>
+        <tr class="td" style="height: 20px">
+            <td class="" style="height: 20px;width:25%;">
+                <p style="font-size:10px;color:gray; ">Leave Type</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Opening Balance</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Avalied</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Closing Balance</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td  colspan="4">
+                <table style="border-bottom:0.4px solid rgb(175, 175, 175); width:100%;"></table>
+            </td>
+        </tr>
+
+
+        <tr class="td"  style="height:20px; marign:0px;">
+            <td colspan="4" class="td"  border="2" style="marign:0px;">
                 <p style="font-size: 12px; margin-bottom:2px ">SALARY DETAILS</p>
             </td>
         </tr>
@@ -143,8 +207,8 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                 <table border="0.5" style="width:100%;border-collapse: collapse; border-color:black"></table>
             </td>
         </tr>
-        <tr class="td" style="height: 30px">
-            <td class="" style="height: 30px;width:25%;">
+        <tr class="td" style="height: 20px">
+            <td class="" style="height: 20px;width:25%;">
                 <p style="font-size:10px;color:gray;">ACTUAL PAYABLE DAYS</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
             </td>
@@ -168,39 +232,100 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             </td>
         </tr>
         <tr style="width: 100%;">
-            <td colspan="2" style=""  >
-                <table style="width: 100%; margin-top:0%; padding-right:8px;" >
-                    <tr style="height: 12px">
-                        <td colspan="2" style="height: 12px">
-                            <h1 style="font-size:10px; "><b>EARNINGS</b></h1>
+            <td colspan="2" style=" marign-bottom:auto;position:relative; ">
+                <table style="position:absolute; top:1px; width:100%; margin-bottom:auto !important; ; paddin-bottom:auto" cellpadding="0" cellspacing="0" role="none">
+                    <tr>
+                      <td style="width:40%">
+                        <h1 style="height: 8px;  color: #000;font-size:11px;">EARNINGS</h1>
+                      </td>
+                      <td style="width:20%">
+                        <h1 style="height: 8px; color: #000; margin-left:-1px; text-align:left;font-size:11px;">Fixed</h1>
+                      </td>
+
+                      <td style="width:20%">
+                          @if (!empty($arrears[0]))
+                          <p style="height: 8px; color: #000;margin-left:-1px; text-align:left;font-size:11px;font-size:11px;">Arrears</p>
+                          @endif
                         </td>
+
+                      <td style="width:20%">
+                        <h1 style="height: 8px; color: #000;margin-left:-1px;font-size:11px;">Earned</h1>
+                      </td>
                     </tr>
-                    @foreach ($earnings[0] as $key => $single_earnings)
-                    @if ($key == "Total Earnings")
-                    <tr style="height: 12px; ">
-                        <td style="height: 12px;">
-                            <h1 style="font-size:10px;margin-top:-4px; ">{{ $key }}</h1>
-                        </td>
-                        <td>
-                            <p style="font-size:10px; float: right;margin-top:-4px; ">{{ $single_earnings }}</p>
-                        </td>
+                    @foreach ($earnings[0] as $earned_key => $single_earnings)
+                    
+                    @if ($earned_key == "Total Earnings")
+                    <tr>
+                      <td style="width:40%">
+                        <p style="height: 8px; color: #000; font-size:11px; ">{{$earned_key."(A)"}} </p>
+                      </td>
+                      <td style="width:20%">
+                   @if($earned_key =="Basic" || $earned_key =="HRA")
+
+                          @foreach ($compensatory_data as $key => $single_value )
+
+                            <p style="height: 8px; color: #000;font-size:11px; ">{{ $single_value[$earned_key] }}</p>
+
+                          @endforeach
+                    @endif
+                      </td>
+                      <td style="width:20%">
+                      @if (!empty($arrears[0]))
+
+                      @foreach ($arrears[0] as $key => $single_value )
+                     
+                      @if($key == $earned_key)
+                      <p style="height: 8px; color: #000; font-size:11px;">{{ $single_value }}</p>
+                      @endif
+
+                     @endforeach
+
+                      @endif
+                      </td>
+                      <td style="width:20%">
+                        <p style="height: 8px; color: #000; font-size:11px;"> {{ $single_earnings}} </p>
+                      </td>
                     </tr>
-                        @else
-                        <tr style="height: 12px; ">
-                            <td style="height: 12px;">
-                                <p style="font-size:10px;margin-top:-4px; ">{{ $key }}</p>
-                            </td>
-                            <td>
-                                <p style="font-size:10px; float: right;margin-top:-4px;">{{ $single_earnings }}</p>
-                            </td>
-                        </tr>
+                    @else
+                    <tr>
+                      <td style="width:40%">
+                        <p style="height: 8px; color: #000;font-size:11px;">{{$earned_key}}</p>
+                      </td>
+                      <td style="width:20%">
+
+
+                          @foreach ($compensatory_data as $key => $single_value )
+
+                          @if($earned_key =="Basic" || $earned_key =="HRA")
+                            <p style="height: 8px; color: #000; font-size:11px; ">{{ $single_value[$earned_key] }}</p>
+
+                            @endif
+                          @endforeach
+
+                      </td>
+                      <td style="width:20%">
+                          @if (!empty($arrears[0]))
+
+                          @foreach ($arrears[0] as $key => $single_value )
+
+                              @if($key == $earned_key)
+                              <p style="height: 8px; color: #000;font-size:11px; ">{{ $single_value }}</p>
+                              @endif
+
+                         @endforeach
+
+                          @endif
+                      </td>
+                      <td style="width:20%">
+                        <p style="height: 8px; color: #000;font-size:11px;">{{ $single_earnings}}</p>
+                      </td>
+                    </tr>
                     @endif
                     @endforeach
-                </table>
-
-            </td>
-            <td colspan="2" style="padding:0px;border-left: 0.4px solid rgba(128, 128, 128, 0.603);">
-                <table style="width: 100%;" >
+                  </table>
+{{--  --}}            </td >
+   <td colspan="2" style=" marign:auto;">
+                <table style="width:100% important; border-left: 0.4px solid rgba(128, 128, 128, 0.603);" >
                     <tr style="height: 12px">
                         <td colspan="2" style="height: 12px">
                             <h1 style="font-size:10px;"><b>CONTRIBUTIONS</b></h1>
@@ -266,39 +391,38 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
         @if ($key == "Net Salary in words")
         <tr>
             <td colspan="1">
-                <p style="font-size:12px font-weight:900">{{ $key }}</p>
+                <p style="font-size:12px font-weight:900 ; margin-top:-8px">{{ $key }}</p>
             </td>
             <td colspan="4">
-                <h1 style="font-size:12px; margin-left:110px; ">{{  $total_sumvalue }}</h1>
+                <h1 style="font-size:12px; margin-left:110px;margin-top:-8px ">{{  $total_sumvalue }}</h1>
             </td>
         </tr>
             @else
             <tr>
                 <td colspan="1">
-                    <p style="font-size:12px">{{ $key }}</p>
+                    <p style="font-size:12px">{{ $key }}(A-B-C)</p>
                 </td>
                 <td colspan="4">
-                    <p style="font-size:12px; margin-left:110px;">{{  $total_sumvalue }}</p>
+                    <p style="font-size:12px; margin-left:110px;"><span > &#x20B9;</span> {{  $total_sumvalue }}</p>
                 </td>
             </tr>
         @endif
         @endforeach
         <tr>
             <td colspan="2">
-                <p style="font-size: 12px;"><b>**Note :</b> All amounts displayed in this payslip are in <b>INR</b></p>
+                <p style="font-size: 12px;  margin-top:-10px"><b>**Note :</b> All amounts displayed in this payslip are in <b>INR</b></p>
             </td>
         </tr>
         <tr>
             <td colspan="3">
-                <p style="font-size: 10px; margin-top:30px">*This is computer generated statement, does not require signature</p>
+                <p style="font-size: 10px; ">*This is computer generated statement, does not require signature</p>
             </td>
         </tr>
 
         <tr style="width: 100%">
             <td colspan="4" style="height: 0px">
-                <img src="data:image/png;base64,{{ $abs_logo }}" style="margin-top:5px; Width:100px; height:40px; float:right;">
-                <p style="font-size: 12px; float:right; color:gray;margin-right:10px;">Generated by</p>
-
+                <img src="data:image/png;base64,{{ $abs_logo }}" style=" Width:100px; height:40px; float:right; margin-top:-12px">
+                <p style="font-size: 12px; float:right; color:gray;margin-right:10px; margin-top:-6px">Generated by</p>
             </td>
         </tr>
 
