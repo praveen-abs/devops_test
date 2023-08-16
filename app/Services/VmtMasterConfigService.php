@@ -19,36 +19,12 @@ class VmtMasterConfigService {
     {
         $validator = Validator::make(
             $data = [
-                'is_mobile_app_active' => $is_mobile_app_active,
-                'is_checkin_active' => $is_checkin_active,
-                'is_checkout_active' => $is_checkout_active,
-                'is_location_capture_active' =>$is_location_capture_active,
-                'is_checkin_selfie_active' =>$is_checkin_selfie_active,
-                'is_checkout_selfie_active' => $is_checkout_selfie_active,
-                'is_reimbursement_checkout_active' => $is_reimbursement_checkout_active,
-                'is_absent_regularization_active' => $is_absent_regularization_active,
-                'is_attendance_regularization_active' => $is_attendance_regularization_active,
-                'is_leave_apply_active' => $is_leave_apply_active,
-                'is_salary_advance_loan_active' => $is_salary_advance_loan_active,
-                'is_investments_active' => $is_investments_active,
-                'is_pms_active' => $is_pms_active,
-                'is_exit_apply_active' => $is_exit_apply_active
+                'module_name' => $module_name,
+                'status' => $status,
             ],
             $rules = [
-                'is_mobile_app_active' => 'required',
-                'is_checkin_active' => 'required|numeric',
-                'is_checkout_active' => 'required',
-                'is_location_capture_active' => 'required',
-                'is_checkin_selfie_active' => 'required',
-                'is_checkout_selfie_active' => 'required',
-                'is_absent_regularization_active' => 'required|numeric',
-                'is_attendance_regularization_active' => 'required|numeric',
-                'is_leave_apply_active' => 'required',
-                'is_salary_advance_loan_active' => 'required|numeric',
-                'is_investments_active' => 'required|numeric',
-                'is_pms_active' => 'required|numeric',
-                'is_exit_apply_active' => 'required|numeric',
-                'is_reimbursement_checkout_active' => 'required|numeric',
+                'module_name' => 'required',
+                'status' => 'required',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -65,7 +41,7 @@ class VmtMasterConfigService {
         }
 
         try{
-               $client_id = sessionGetSelectedClientid();
+              $client_id = sessionGetSelectedClientid();
               $app_config_data = VmtConfigApps::where('client_id',$client_id);
               if($app_config_data->exists()){
                 $app_config_data =$app_config_data->first();
@@ -74,20 +50,7 @@ class VmtMasterConfigService {
               }
 
               $app_config_data->client_id =$client_id;
-              $app_config_data->is_mobile_app_active = $is_mobile_app_active;
-              $app_config_data->is_checkin_active =$is_checkin_active ;
-              $app_config_data->is_checkout_active =$is_checkout_active;
-              $app_config_data->is_location_capture_active=$is_location_capture_active;
-              $app_config_data->is_checkin_selfie_active=$is_checkin_selfie_active ;
-              $app_config_data->is_checkout_selfie_active = $is_checkout_selfie_active ;
-              $app_config_data->is_reimbursement_checkout_active = $is_reimbursement_checkout_active;
-              $app_config_data->is_absent_regularization_active = $is_absent_regularization_active ;
-              $app_config_data->is_attendance_regularization_active =$is_attendance_regularization_active ;
-              $app_config_data->is_leave_apply_active =$is_leave_apply_active ;
-              $app_config_data->is_salary_advance_loan_active =$is_salary_advance_loan_active ;
-              $app_config_data->is_investments_active =$is_investments_active;
-              $app_config_data->is_pms_active =$is_pms_active;
-              $app_config_data->is_exit_apply_active =$is_exit_apply_active;
+              $app_config_data->module_name = $status;
               $app_config_data->save();
 
             $response=([
@@ -112,14 +75,16 @@ class VmtMasterConfigService {
     }
     // public function SaveEmployeeAppConfigStatus($is_mobile_app_active,$is_checkin_active,$is_checkout_active,$is_location_capture_active,$is_checkin_selfie_active,$is_checkout_selfie_active,$is_reimbursement_checkout_active, $is_absent_regularization_active,
     //                                      $is_attendance_regularization_active, $is_leave_apply_active,$is_salary_advance_loan_active,$is_investments_active,$is_pms_active,$is_exit_apply_active)
-    public function SaveEmployeeAppConfigStatus($Employee_ConfigData)
+    public function SaveEmployeeAppConfigStatus($module_name,$user_code)
     {
         $validator = Validator::make(
             $data = [
-                'Employee_ConfigData' => $Employee_ConfigData,
+                'module_name' => $module_name,
+                'user_code' => $user_code,
             ],
             $rules = [
-                'Employee_ConfigData' => 'required',
+                'module_name' => 'required',
+                'user_code' => 'required',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -137,11 +102,11 @@ class VmtMasterConfigService {
 
         try{
 
-           foreach ($Employee_ConfigData[0] as $key => $single_config_data) {
 
-                    foreach ($single_config_data as $user_key => $single_user_data) {
 
-                        $user_id =User::where('user_code',$single_user_data)->first()->id;
+                    foreach ($user_code as $user_key => $single_user_code) {
+
+                        $user_id =User::where('user_code',$single_user_code)->first()->id;
                         $config_user_id=VmtEmpConfigApps::where('user_id',$user_id);
 
                         if($config_user_id->exists()){
@@ -150,11 +115,10 @@ class VmtMasterConfigService {
                             $app_config_data =new VmtEmpConfigApps;
                         }
                         $app_config_data->user_id =$user_id;
-                        $app_config_data->$key = '1' ;
+                        $app_config_data->$module_name = '1' ;
                         $app_config_data->save();
 
                     }
-           }
 
 
             $response=([
