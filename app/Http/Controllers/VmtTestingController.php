@@ -610,4 +610,41 @@ class VmtTestingController extends Controller
         return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails("MC0005",5, 2023, ["Approved","Rejected","Pending"] );
     }
 
-}
+    public function test_getAppointmentTemplates(){
+
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
+        $appoinmentPath = "";
+
+        $html = view('appointment_mail_templates.appointment_Letter_Indchem_Marketing_Agencies');
+return $html;
+                        $options = new Options();
+                        $options->set('isHtml5ParserEnabled', true);
+                        $options->set('isRemoteEnabled', true);
+                        $pdf = new Dompdf($options);
+                        $pdf->loadhtml($html, 'UTF-8');
+                        $pdf->setPaper('A4', 'portrait');
+                        $pdf->render();
+
+
+                        $VmtClientMaster = VmtClientMaster::first();
+                        $image_view = url('/') . $VmtClientMaster->client_logo;
+                        $docUploads =  $pdf->output();
+                        // dd( $docUploads);
+                         $filename = 'appoinment_letter_' . 'vishnu' . '_' . time() . '.pdf';
+                         $file_path = public_path('appoinmentLetter/');
+                         file_put_contents($file_path, $docUploads);
+                         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+
+                        $notification_user = User::where('id', auth::user()->id)->first();
+                        $message = "Employee Bulk OnBoard was Created   ";
+
+                                // $pdf->stream($client_name.'.pdf');
+                                $isSent    = \Mail::to('vvishva185@gmail.com')->send(new WelcomeMail("ABS123", 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
+                    }
+                }
+
+
+
+
+
