@@ -129,7 +129,7 @@ onMounted(() => {
 }
 .p-galleria-item-prev{
 position: absolute;
-top:52px;
+top:55px !important;
 left: 10px;
 z-index: 10000 !important;
 }
@@ -140,15 +140,18 @@ z-index: 10000 !important;
 .p-galleria-item-prev :hover{
 
 }
+.p-link:focus{
+    box-shadow: none !important;
+}
 .p-galleria-item-nav:hover{
 border:none !important;
 }
 .p-link:hover{
 border:none;
-box-shadow: none;
+box-shadow: none !important;
 }
 .p-galleria-item-next{
     position: absolute;
-    top:52px;
+    top:55px !important;
     }
 </style>
