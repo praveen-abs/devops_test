@@ -86,6 +86,6 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $start_date = '2023-07-15';
         $end_date = '2023-07-20';
-        return $attendance_report_service->fetch_attendance_data($start_date, $end_date);
+        return $attendance_report_service->fetchAbsentReportData($start_date, $end_date);
     }
 }
