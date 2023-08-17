@@ -318,3 +318,18 @@
 // .p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
 //     margin-left: 30px;
 // }
+
+
+
+.table > thead > tr > th,
+.gridjs-table > thead > tr > th {
+    background: #e6e6e6  !important;
+    color: black !important;
+}
+
+.table > tbody > tr > td,
+.gridjs-table > tbody > tr > td {
+    color: black !important;
+    font-weight: 501;
+    font-size: 12px;
+}

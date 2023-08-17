@@ -1,6 +1,7 @@
 <template>
     <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
-    <div class=" bg-white h-[60px]" v-if="canShowLoading" @mouseenter="useDashboard.canShowConfiguration = false,useDashboard.canShowClients = false">
+    <div class=" bg-white h-[60px]" v-if="canShowLoading"
+        @mouseenter="useDashboard.canShowConfiguration = false, useDashboard.canShowClients = false">
         <div class=" grid grid-cols-12 justify-between items-center">
             <!-- Organization List  -->
             <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-4"
@@ -78,7 +79,7 @@
                 </transition>
             </div>
             <div class="flex col-span-4 justify-end">
-                <button v-tooltip="'Settings'"
+                <button v-tooltip="'Settings'" v-if="service.current_user_role == 2 || service.current_user_role == 4"
                     class="rounded-full bg-gray-100  p-2 hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none  mx-2"
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="h-6 w-6">
@@ -138,7 +139,7 @@
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
 
                         <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto mx-2"
-                            v-if="service.current_user_name.length <= 10">{{ service.current_user_name ?
+                            v-if="service.current_user_name ? service.current_user_name.length <= 10 : ''">{{ service.current_user_name ?
                                 service.current_user_name : '' }}</p>
                         <p class="font-semibold text-[12px] mx-2 whitespace-nowrap font-['Poppins']  text-center text-black my-auto"
                             v-else> {{
@@ -178,7 +179,7 @@
         <!-- notification_title -->
         <!-- notification_body -->
         <!-- redirect_to_module -->
-        <div class="w-full px-2 rounded-lg my-2 p-2" v-for="(notification, index) in notificationSource"
+        <div class="w-full px-2 rounded-lg my-2 p-2" v-if="notificationSource ? notificationSource.length > 0 : false"  v-for="(notification, index) in notificationSource"
             :class="`${getBackgroundColor(index)}`">
             <div class="flex justify-between">
                 <div>
@@ -196,6 +197,9 @@
             </div>
             <p class="text-sm">{{ notification.notification_body }}</p>
             <!-- :class="`${getBackgroundColor(index)}`" -->
+        </div>
+        <div v-else class="w-full px-2 rounded-lg my-2 p-2 bg-red-50" >
+            <p>Notification empty</p>
         </div>
     </Sidebar>
 
