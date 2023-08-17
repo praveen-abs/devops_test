@@ -1,5 +1,6 @@
 <template>
-    <div class="image-slider relative h-[180px] w-full">
+
+    <!-- <div class="image-slider relative h-[180px] w-full">
         <transition name="fade" mode="out-in">
             <img :src="`data:image/jpeg;base64,${currentImage}`" :key="currentImage" alt="Holiday Image"
                 class="h-full w-full rounded-lg" />
@@ -22,7 +23,15 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <Galleria :value="holidays" :responsiveOptions="responsiveOptions" class="h-[170px]" :numVisible="5" :circular="true"
+    containerStyle="max-width: 400px"  :showItemNavigators="true" :showThumbnails="false">
+    <template #item="slotProps">
+        <img :src="`data:image/png;base64,${slotProps.item.image}`" class="mt-3 mb-2 rounded shadow-sm" style="width:450px; height:180px ; margin-bottom: 10px;position: relative; bottom :10px; display: block;"  :alt="slotProps.item.holiday_name" />
+    </template>
+</Galleria>
+
 </template>
 
 <script setup>
@@ -97,6 +106,9 @@ onMounted(() => {
 {
     transition: opacity 0.5s;
 }
+.p-galleria-item{
+    height: 190px !important;
+}
 
 .fade-enter,
 .fade-leave-to
@@ -115,4 +127,31 @@ onMounted(() => {
     border-radius: 4px;
     cursor: pointer;
 }
+.p-galleria-item-prev{
+position: absolute;
+top:55px !important;
+left: 10px;
+z-index: 10000 !important;
+}
+.p-galleria-item-container{
+    height: 180px !important;
+    margin-bottom:10px !important ;
+}
+.p-galleria-item-prev :hover{
+
+}
+.p-link:focus{
+    box-shadow: none !important;
+}
+.p-galleria-item-nav:hover{
+border:none !important;
+}
+.p-link:hover{
+border:none;
+box-shadow: none !important;
+}
+.p-galleria-item-next{
+    position: absolute;
+    top:55px !important;
+    }
 </style>

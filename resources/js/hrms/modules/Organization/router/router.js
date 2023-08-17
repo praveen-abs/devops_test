@@ -5,18 +5,14 @@ import BulkOnboarding from '../BulkOnboarding/BulkOnboarding.vue'
 
 
 const router = createRouter({
-    // history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: "/quickEmployeeOnboarding/:module",
+            path: "/import/:module",
             name: "QuickOnboarding",
             component: QuickOnboarding,
         },
-        {
-            path: "/bulkEmployeeOnboarding/:module",
-            name: "BulkOnboarding",
-            component: BulkOnboarding,
-        },
+
     ],
 });
 export default router;

@@ -1,7 +1,7 @@
 <template>
     <LoadingSpinner v-if="useTimesheet.canShowLoading" />
     <div class="w-full" >
-        <div class="mb-2 card left-line" v-if="!useTimesheet.canShowLoading"  >
+        <div class="mb-2 card " v-if="!useTimesheet.canShowLoading"  >
             <div class="py-1 card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 ">
