@@ -104,29 +104,33 @@ class VmtMasterConfigController extends Controller
         return $response;
 
     }
-    public function fetchMoileModuleData(VmtMasterConfigService $serviceVmtMasterConfigService){
+
+    public function fetchMoileModuleData( Request $request ,VmtMasterConfigService $serviceVmtMasterConfigService){
 
         try{
+        $client_id =$request->client_id;
+
         $module_id =VmtAppModules::where('module_name',"Mobile App Settings")->pluck('id');
 
         $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
                                                     ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
                                                     ->join("vmt_client_sub_modules","vmt_client_sub_modules.app_sub_module_link_id","=","vmt_app_sub_modules_links.id")
                                                     ->where("vmt_app_sub_modules_links.module_id","=",$module_id)
+                                                    ->where("vmt_client_sub_modules.client_id","=",$client_id)
                                                     ->get(["vmt_app_sub_modules_links.id",
                                                             "vmt_app_sub_modules_links.module_id",
                                                             "vmt_app_sub_modules_links.sub_module_id",
                                                             "vmt_app_modules.module_name",
                                                             "vmt_app_sub_modules.sub_module_name",
-                                                            "vmt_client_sub_modules.status"]);
-            
-              $response = $mobile_settings_data->unique('sub_module_name');
-              $response = array_slice($response->values()->all(), 0, 11, true);
-          
+                                                            "vmt_client_sub_modules.status",
+                                                            "vmt_client_sub_modules.client_id"]);
+
+   
+
          return response()->json([
                 "status" => "success",
                 "message" => "data fetch successfully",
-                "data" => $response,
+                "data" => $mobile_settings_data,
             ]);
 
         }catch(\Exception $e){

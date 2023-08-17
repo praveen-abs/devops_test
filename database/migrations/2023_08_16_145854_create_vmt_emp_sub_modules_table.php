@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('vmt_emp_sub_modules', function (Blueprint $table) {
             $table->id();
+            $table->integer('client_id');
             $table->integer('user_id');
             $table->integer('app_sub_module_link_id');
             $table->integer('status');

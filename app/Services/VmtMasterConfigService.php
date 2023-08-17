@@ -50,7 +50,6 @@ class VmtMasterConfigService {
                     if($app_config_data->exists()){
 
                             $app_config_data =$app_config_data->first();
-                            dd($app_config_data );
                             $app_config_data->status = $status;
                             $app_config_data->save();
 
@@ -113,13 +112,15 @@ class VmtMasterConfigService {
         }
 
         try{
-                    $drop_emp_app_config_data =VmtEmpSubModules::where("app_sub_module_link_id",$app_sub_modules_link_id);
+                 $client_id =sessionGetSelectedClientid();
+                    $drop_emp_app_config_data =VmtEmpSubModules::where("app_sub_module_link_id",$app_sub_modules_link_id)->where('client_id',$client_id);
                     $drop_emp_app_config_data->delete();
 
                     foreach ($selected_employees_user_code as $user_key => $single_user_code) {
 
                         $user_data = User::where('user_code',$single_user_code)->first();
                         $save_emp_app_config_data =new VmtEmpSubModules;
+                        $save_emp_app_config_data->client_id =$client_id;
                         $save_emp_app_config_data->user_id =$user_data->id;
                         $save_emp_app_config_data->app_sub_module_link_id =$app_sub_modules_link_id ;
                         $save_emp_app_config_data->save();
