@@ -2,6 +2,7 @@
     <div
         class=" h-[180px] overflow-hidden rounded shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
         <div class="mb-8 col-span-7" v-for="item in EmpDetials">
+
             <p class=" font-[14px] font-['Poppins']  text-gray-500 flex items-center">
                 {{ current_session }}
             </p>
@@ -22,11 +23,17 @@
                     Time duration:<span>09:30</span>
                 </p>
                 <p v-if="item.checkin_time" class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
-                    `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}</p>
+                    `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}
+                    <i class="text-green-800 font-semibold text-sm mx-2"
+                            :class="findAttendanceMode(item.attendance_mode_checkin)"></i>
+
+                </p>
                 <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In: --:--:--` }}
                 </p>
                 <p v-if="item.checkout_time" class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
-                    `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}</p>
+                    `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}
+                    <i class="text-green-800 font-semibold text-sm mx-2"
+                    :class="findAttendanceMode(item.attendance_mode_checkout)"></i></p>
                 <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out: --:--:--` }}
                 </p>
 
@@ -281,7 +288,9 @@ const resetChars = () => {
         (usedashboard.check_in = ""),
         (usedashboard.check_out = ""),
         (usedashboard.work_mode = "");
-};
+}
+
+
 
 
 </script>
