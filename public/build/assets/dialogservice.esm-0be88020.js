@@ -1,5 +1,1 @@
-<<<<<<<< HEAD:public/build/assets/dialogservice.esm-0be88020.js
 import{H as l,a0 as s}from"./toastservice.esm-3d6796bd.js";var u={name:"ColumnGroup",props:{type:{type:String,default:null}},render(){return null}};const c=Symbol();var t=l(),g={install:e=>{const o={open:(n,a)=>{const r={content:n&&s(n),options:a||{},data:a&&a.data,close:i=>{t.emit("close",{instance:r,params:i})}};return t.emit("open",{instance:r}),r}};e.config.unwrapInjectedRef=!0,e.config.globalProperties.$dialog=o,e.provide(c,o)}};export{g as D,t as a,u as s};
-========
-import{H as l,a0 as s}from"./toastservice.esm-134e08fe.js";var u={name:"ColumnGroup",props:{type:{type:String,default:null}},render(){return null}};const c=Symbol();var t=l(),g={install:e=>{const o={open:(n,a)=>{const r={content:n&&s(n),options:a||{},data:a&&a.data,close:i=>{t.emit("close",{instance:r,params:i})}};return t.emit("open",{instance:r}),r}};e.config.unwrapInjectedRef=!0,e.config.globalProperties.$dialog=o,e.provide(c,o)}};export{g as D,t as a,u as s};
->>>>>>>> 54df433912b8d0f919df0d72f6c80325a5f8ace6:public/build/assets/dialogservice.esm-2c10dc9f.js
