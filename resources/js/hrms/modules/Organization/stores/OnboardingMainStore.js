@@ -168,7 +168,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                             });
                         });
                         setTimeout(() => {
-                            window.location.replace('/manageEmployees')
+                            window.location.replace(window.location.origin+'/manageEmployees')
                         }, 4000);
                     }
             }).finally(() => {
