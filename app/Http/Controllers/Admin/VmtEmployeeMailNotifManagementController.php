@@ -34,7 +34,7 @@ class VmtEmployeeMailNotifManagementController extends Controller
 
     public function send_WelcomeMailNotification(Request $request, VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService)
     {
-        return $serviceVmtEmployeeMailNotifMgmtService->send_WelcomeMailNotification($request->user_code);
+        return $serviceVmtEmployeeMailNotifMgmtService->send_WelcomeMailNotification($request->user_code,$request->mail_type);
     }
     public function send_AccActivationMailNotification(Request $request, VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService)
     {

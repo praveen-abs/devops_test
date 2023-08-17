@@ -1,0 +1,140 @@
+<template>
+    <div>
+        <!-- Your HTML content goes here -->
+        <div ref="contentToConvert">
+            <div class="p-4 bg-white">
+                <div class=" grid grid-cols-2">
+                    <div>
+                        <!-- <p>Payslip <strong>{{new Date(empDetails.payroll_date).getMonth()}}</strong></p> -->
+                        <!-- <p>{{empDetails.client_fullname}}</p> -->
+                        <p>Address</p>
+                    </div>
+                    <div>
+                        <img class="h-16 float-right"
+                            src="https://thumbs.dreamstime.com/b/logo-icon-vector-logos-icons-set-social-media-flat-banner-vectors-svg-eps-jpg-jpeg-paper-texture-glossy-emblem-wallpaper-210442240.jpg"
+                            alt="">
+                    </div>
+                </div>
+                <div class="my-4  grid grid-cols-1">
+                    <p class="font-semibold">Narasimman</p>
+                    <div class="border-t-2 border-t-black w-full"></div>
+                    <div class=" grid grid-cols-4 p-2 my-2">
+                        <div class="my-2" v-for="empDetails in getpayslipdetails" :key="empDetails">
+                            <p class="text-lg font-medium text-gray-700">{{ empDetails.title }}</p>
+                            <p class="font-semibold fs-6">{{ empDetails.value }}</p>
+                        </div>
+                    </div>
+                    <div class="border-t-2 border-t-black w-full"></div>
+                </div>
+
+                <div class="my-2 grid grid-cols-1">
+                    <p class="font-medium">Salary Details</p>
+                    <div class="border-t-2 border-t-black w-full"></div>
+                    <div class=" grid grid-cols-4 p-2 line-after-four-divs">
+                        <div class="my-2">
+                            <p class="text-lg font-medium text-gray-700">Employee Code</p>
+                            <p class="font-semibold fs-6">BA002</p>
+                        </div>
+                    </div>
+                    <div class=" grid grid-cols-2 p-2">
+                        <div>
+                            <p class="font-semibold text-lg">Earnings</p>
+                            <div class="grid grid-cols-2 p-2">
+                                <p class="text-lg font-medium text-black">Employee Code</p>
+                                <p class="font-semibold fs-6">BA002</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-lg">Contributions</p>
+                            <div class="grid grid-cols-2 p-2">
+                                <p class="text-lg font-medium text-black">Employee Code</p>
+                                <p class="font-semibold fs-6">BA002</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button @click="downloadPdf">Download PDF</button>
+    </div>
+</template>
+
+<script setup>
+import axios from 'axios';
+import html2pdf from 'html2pdf.js';
+import { ref, onMounted } from 'vue';
+const contentToConvert = ref(null);
+
+const getpayslipdetails = ref();
+
+const downloadPdf = () => {
+    const element = contentToConvert.value;
+    if (!element) return;
+
+
+    const opt = {
+        margin: 10,
+        filename: 'generated_pdf.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 25 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    };
+
+    html2pdf().from(element).set(opt).save();
+};
+
+
+
+
+onMounted(() => {
+    axios.post('/generatePayslip',
+        {
+            user_code: 'BA002',
+            payroll_date: '2022-07-01',
+        }).then((response) => {
+            response.data.forEach(element => {
+                let obj = Object.entries(element).map(item => {
+                    return {
+                        title: item[0],
+                        value: item[1]
+                    };
+                });
+                getpayslipdetails.value = obj
+            });
+
+        }).finally(() => {
+
+        });
+})
+
+
+
+
+// let obj = response.data.map(item => {
+//                     return {
+//                         title: Object.keys(item),
+//                         value: Object.values(item)
+//                     };
+//                 });
+
+//                 for (let i = 0; i < obj.length; i++) {
+//                     const singleRowData = obj[i];
+
+//                     for (let j = 0; j < singleRowData.length; j++) {
+//                         const value = singleRowData[j];
+//                         const title = singleRowData[j];
+//                         let
+//                         currentDupes.value.push(value)
+//                     }
+//                 }
+
+
+</script>
+
+
+<style lang="scss">
+.line-after-four-divs div:nth-child(4n) {
+    border-bottom: 1px solid black;
+    /* Replace "black" with your desired line color */
+}
+</style>

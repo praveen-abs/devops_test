@@ -131,16 +131,10 @@
 
                         <!-- ",border:'1px solid black' -->
 
-                        <div class="justify-around row d-flex align-items-center ">
-
-                            <div class="w-0 mr-3 col-1 col-lg">
+                        <div class="flex justify-start items-center">
                                 <label for=""><input type="checkbox" name="" id="" style="height: 20px;width: 20px;"
                                         class="form-check-input"></label>
-                            </div>
-                            <div class="justify-around p-0 m-0 col col-sm-10 d-flex align-items-center">
-                                <strong :style="{ fontSize: '700', width: '80px' }" class="mx-4"> Schedule 2 </strong>
-                                <p :style="{ color: '#959595' }"> (Optional) </p>
-                            </div>
+                                <strong class=" flex w-[200px] ml-2"> Schedule <strong  class="ml-1"> 2</strong> <p :style="{ color: '#959595' }"> (Optional) </p> </strong>
                         </div>
                         <div class="row d-flex ">
                             <div class="col-8 col-md cd">
@@ -171,16 +165,10 @@
 
             <div class="p-3 mt-5 bg-gray-100 rounded-lg card">
                 <div class="card-body">
-                    <div class="justify-around row d-flex align-items-center ">
-
-                        <div class="w-0 mr-3 col-1 col-lg">
-                            <label for=""><input type="checkbox" name="" id="" style="height: 20px;width: 20px;"
-                                    class="form-check-input"></label>
-                        </div>
-                        <div class="justify-around p-0 m-0 col col-sm-10 d-flex align-items-center">
-                            <strong :style="{ fontSize: '700', width: '80px' }" class="mx-4"> Schedule 3 </strong>
-                            <p :style="{ color: '#959595' }"> (Optional) </p>
-                        </div>
+                    <div class="flex justify-start items-center">
+                        <label for=""><input type="checkbox" name="" id="" style="height: 20px;width: 20px;"
+                                class="form-check-input"></label>
+                        <strong class=" flex w-[200px] ml-2"> Schedule <strong  class="ml-1"> 3</strong> <p :style="{ color: '#959595' }"> (Optional) </p> </strong>
                     </div>
 
                     <div class="row d-flex ">
@@ -212,14 +200,11 @@
                 <div class="p-3 mt-2 bg-gray-100 rounded-lg card">
 
                     <div class="card-body" :style="{ background: '#F7F7F7' }">
-                        <div class="justify-around row d-flex align-items-center ">
-
-                            <div class="w-0 mr-3 col-1 col-lg" @click="dialog_Notifyvisible = true">
-                                <label for=""><input type="checkbox" style="height: 20px;width: 20px;"
-                                        class="form-check-input"></label>
-                            </div>
+                        <div class=" flex justify-start items-center ">
                             <div class="justify-around col col-sm-10 d-flex align-items-center ">
-                                <p>Notify the employee when the Proof of investment is released.</p>
+                                <label for=""><input type="checkbox" style="height: 20px;width: 20px;"
+                                    class="form-check-input"></label>
+                                <p class="ml-2">Notify the employee when the Proof of investment is released.</p>
                             </div>
                         </div>
 
