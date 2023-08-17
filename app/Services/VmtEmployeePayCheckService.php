@@ -1215,7 +1215,7 @@ class VmtEmployeePayCheckService
                     'vmt_employee_payslip_v2.overtime as Overtime',
                 ]
             )->toArray();
-            
+
 
         $getarrears = $payroll_data
             ->get(
@@ -1257,7 +1257,7 @@ class VmtEmployeePayCheckService
                 [
                     'vmt_employee_compensatory_details.basic as Basic',
                     'vmt_employee_compensatory_details.hra as HRA',
-                    
+
                 ]
             )->toArray();
 
@@ -1382,9 +1382,9 @@ class VmtEmployeePayCheckService
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-             $pdf->stream("payslip.pdf", array("Attachment" => true));
-                // $response = base64_encode($pdf->output(['payslip.pdf']));
-                // return $response;
+                // $pdf->stream("payslip.pdf");
+                $response = base64_encode($pdf->output(['payslip.pdf']));
+                return $response;
 
         }elseif($type =="html"){
 

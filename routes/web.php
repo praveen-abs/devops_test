@@ -997,7 +997,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
 // generate payslip
 
-Route::get('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
+Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
 
 
 
