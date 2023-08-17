@@ -719,6 +719,11 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             .post("/vmt-employee-onboard", formData)
             .then((response) => {
                 if (response.data.status == 'success') {
+                    if (isSubmitted == 1) {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    }
                     Swal.fire({
                         title: response.data.status = "success",
                         text: response.data.message,
@@ -732,11 +737,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                         }
                     });
 
-                    if (isSubmitted == 1) {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 2000);
-                    }
+
                 }
                 else {
                     Swal.fire(
