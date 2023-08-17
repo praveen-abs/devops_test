@@ -1356,7 +1356,8 @@ class VmtAttendanceReportsService
                 $attendanceResponseArray[$fulldate] = array(
                     //"user_id"=>$request->user_id,
                     "user_id" => $singleUser->id, "user_code" => $singleUser->user_code, "name" => $singleUser->name,
-                    "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false, "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null, "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day, 'work_shift_id' => null,'isMIP'=>null,'isMOP'=>null,'reged_checkin_time'=>null,'reged_checkout_time'=>null
+                    "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false, "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null, "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day, 'work_shift_id' => null,'isMIP'=>null,'isMOP'=>null,'reged_checkin_time'=>null,'reged_checkout_time'=>null,
+                    'permission_id'=>null
                 );
 
                 //echo "Date is ".$fulldate."\n";
@@ -1509,9 +1510,8 @@ class VmtAttendanceReportsService
                     $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id'])
                         ->whereBetween('start_date', [$start_date, $end_date])
                         ->orWhereBetween('end_date', [$start_date, $end_date])
-                        ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                        ->get(['id','start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
                     if ($leave_Details->count() == 0) {
-                        // dd( $leave_Details->count());
                         $attendanceResponseArray[$key]['isAbsent'] = true;
                     } else {
                         foreach ($leave_Details as $single_leave_details) {
@@ -1519,7 +1519,7 @@ class VmtAttendanceReportsService
                             $endDate = Carbon::parse($single_leave_details->end_date);
                             $currentDate =  Carbon::parse($attendanceResponseArray[$key]['date']);
                             //   dd($startDate.'-----'.$currentDate.'-----');
-                            if ($currentDate->gt($startDate) && $currentDate->lte($endDate)) {
+                            if ($currentDate->gt($startDate) || $currentDate->lte($endDate)) {
                                 if (substr($single_leave_details->total_leave_datetime, -1) == 'N') {
                                     // Logic Get FN or AN Value From total Leave date time
                                     $attendanceResponseArray[$key]['half_day_type'] = preg_replace("/([^a-zA-Z]+)/i", "",  $single_leave_details->total_leave_datetime);
@@ -1532,7 +1532,6 @@ class VmtAttendanceReportsService
                                     $attendanceResponseArray[$key]['isLeave'] = true;
                                     $leave_type = VmtLeaves::where('id', $single_leave_details->leave_type_id)
                                         ->pluck('leave_type');
-                                    //  dd( $leave_type[0]);
                                     if ($leave_type[0] == 'Sick Leave / Casual Leave') {
                                         $attendanceResponseArray[$key]['leave_type'] = 'SL/CL';
                                     } else if ($leave_type[0] == 'Casual/Sick Leave') {
@@ -1549,6 +1548,7 @@ class VmtAttendanceReportsService
                                         $attendanceResponseArray[$key]['leave_type'] = 'OD';
                                     } else if ($leave_type[0] == 'Permission') {
                                         $attendanceResponseArray[$key]['leave_type'] = "PI";
+                                        $attendanceResponseArray[$key] ['permission_id']=$single_leave_details->id;
                                     } else if ($leave_type[0] == 'Compensatory Off') {
                                         $attendanceResponseArray[$key]['leave_type'] = 'CO';
                                     } else if ($leave_type[0] == 'Casual Leave') {
@@ -1647,7 +1647,6 @@ class VmtAttendanceReportsService
                     $temp_ar['status'] = 'Absent';
                     $temp_ar['day_status'] = 'Full day Absent';
                 } else if ($value['isAbsent'] == false && $value['is_weekoff'] == false && $value['isLeave'] == false) {
-                    dd($value);
                     $temp_ar['user_code'] = $value['user_code'];
                     $temp_ar['name'] = $value['name'];
                     $temp_ar['date'] = Carbon::parse($value['date'])->format('d-M-Y');
