@@ -4,13 +4,13 @@
         <div  class="row" v-if="CreateLoanWithNew ==2">
 
 <div>
-    <div class="col-12 ">
+    <div class="col-12  ">
 
-        <div class="my-4 d-flex justify-content-between w-8 align-items-center">
+        <div class="my-4 d-flex justify-content-between align-items-center w-[600px]">
             <h1 class="text-xl  xl:text-2xl">Name of the Loan With Interest</h1>
             <div class=" position-relative ">
                 <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.lwif.name"
-                    class="w-full d-flex justify-items-center md:w-18rem" :class="[
+                    class="w-[200px] d-flex justify-items-center md:w-18rem" :class="[
                         v$.name.$error ? 'p-invalid ' : '',
                     ]" />
                 <span v-if="v$.name.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
@@ -20,12 +20,12 @@
         </div>
 
 
-        <div class="d-flex justify-content-between align-items-center mt-5 w-8" style="width: 480px;">
+        <div class=" flex justify-between items-center mt-2 w-[600px]" >
             <h1 class="text-xl  xl:text-2xl">Select organization</h1>
             <div class="d-flex flex-col position-relative">
                 <MultiSelect v-model="salaryStore.lwif.selectClientID" v-if="!salaryStore.EnableAndDisable" :options="salaryStore.ClientsName"
                     optionLabel="client_name" optionValue="id" placeholder="Select Branches"
-                    :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
+                    :maxSelectedLabels="3" class="w-[200px]  md:w-18rem" :class="[
                         v$.selectClientID.$error ? 'p-invalid' : '',
                     ]" />
                 <span v-if="v$.selectClientID.$error"
@@ -40,7 +40,7 @@
 
 
 
-        <h1 class="mt-10 fs-4 ">Eligible Amount</h1>
+        <h1 class="mt-4 fs-4 ">Eligible Amount</h1>
         <p class="my-2 fs-5 ">The employees not eligible for Interest Free Loan can also claim the Loan with
             Interest
         </p>
@@ -106,7 +106,7 @@
         </div>
 
         <div class="col-12">
-            <h1 class=" fs-4">Interest</h1>
+            <h1 class=" fs-4 mt-[20px]">Interest</h1>
             <p class="my-2 fs-5">Percentage of Interest </p>
             <div class="card border-L">
                 <div class="card-body">
@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="col">
+        <div class="col mt-[20px]">
             <h1 class="mt-2 fs-4 ">Deduction Method</h1>
             <p class="my-2 fs-5">The EMI, or Equated Monthly Installment, is the sum of the principal amount
                 borrowed
@@ -143,14 +143,14 @@
             <!--  -->
             <!--  -->
 
-            <div class="row">
-                <div class="shadow-sm card border-L rounded-top">
+            <div class="row px-2 ">
+                <div class="shadow-sm card border-L rounded-top ">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-7 d-flex justify-content-start align-items-center">
+                            <div class="col-6 d-flex justify-content-start align-items-center">
                                 <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1"
                                     name="dectmeth" :value="1" />
-                                <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin
+                                <label for="" class="mx-2 fs-5 clr-dark" style="line-height: 25px;">Begin
                                     deducting
                                     the EMI in the
                                     upcoming payroll.</label>
@@ -162,7 +162,7 @@
                             <div class="col-7 d-flex justify-content-start align-items-center">
                                 <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1"
                                     name="dectmeth" :value="'emi'" />
-                                <label for="" class="mx-3 fs-5 clr-dark">Employee can select the month when
+                                <label for="" class="mx-2 fs-5 clr-dark">Employee can select the month when
                                     they
                                     would like their EMI
                                     payments to begin
@@ -229,7 +229,7 @@
         <div class="card border-L">
             <div class="py-3 row d-flex">
                 <div class="my-3 col col-2 d-flex align-items-center" style="width: 200px;">
-                    <P class="mx-3 fs-5">Employee Request
+                    <P class="mx-2 text-[16px] w-[200px]">Employee Request
                     </P>
                     <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
                 </div>
@@ -304,7 +304,7 @@
 
 <!--Next screen  -->
 
-<div class="row">
+<div class="row mt-[12px]">
     <div class="col">
         <div class=" flex justify-center align-middle" >
                  <button class="btn btn-border-primary" v-if="!salaryStore.EnableAndDisable" @click="cancel_btn">Cancel</button>
