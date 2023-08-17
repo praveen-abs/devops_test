@@ -535,7 +535,7 @@
 // dd($users_With_anniversary);
 // $result = $date1->eq($date2);
 
-// // dd($result);
+// dd($result);
 $employeeData =[
     "employee_code" => "ENBL301",
       "employee_name" => "Virat Ganesh",
@@ -636,33 +636,26 @@ $employeeData =[
             //Fetch appointment letter based on client name
             $client_name = str_replace(' ', '', sessionGetSelectedClientName());
             //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-            //$viewfile_appointmentletter = 'vmt_appointment_templates.vmt_appointment_templates.appointmentletter_breezetech.blade.php';
+            $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_brandavatar';
 
-    //         //check if template exists
-    //         if (view()->exists($viewfile_appointmentletter)) {
+            //check if template exists
+            if (view()->exists($viewfile_appointmentletter)) {
 
-    //             $html =  view($viewfile_appointmentletter, compact('data'));
+                $html =  view($viewfile_appointmentletter, compact('data'));
 
-    //         }
-    //    // }
+            }
+       // }
 
-         $html = view('appointment_mail_templates.appointment_Letter_Priti_Sales');
-
-return $html;
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
                 $options->set('isRemoteEnabled', true);
+
                 $pdf = new Dompdf($options);
-                $pdf->loadhtml($html, 'UTF-8');
+                $pdf->loadHtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-                $pdf->stream(['breezetech.pdf']);
-
-
-
-
-//                 $docUploads =  $pdf->output();
-//                  dd( $docUploads);
+                $docUploads =  $pdf->output();
+                 dd( $docUploads);
         //         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
         //         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
         //     }
@@ -675,23 +668,6 @@ return $html;
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-
-
-
-
-        //  }
-
-
-
-$user_code ='PSC0060';
-$user_data =User::where('user_code',$user_code)->first();
-
-    $fixed_data = Compensatory::where('user_id',$user_data->id)->first();
-    dd($fixed_data );
-
-    foreach ($fixed_data as $key => $value) {
-
-    }
 
     ?>
 

@@ -1015,11 +1015,10 @@ class VmtEmployeeService
     // Generate Employee Appointment PDF after onboarding
     public function attachAppointmentLetterPDF($employeeData)
     {
-         dd($employeeData);
+        // dd($employeeData);
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
         $data = $employeeData;
-        $gross =$employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
         $data['basic_monthly'] = $employeeData['basic'];
         $data['basic_yearly'] = intval($employeeData['basic']) * 12;
         $data['hra_monthly'] = $employeeData['hra'];
@@ -1027,17 +1026,17 @@ class VmtEmployeeService
         $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
         $data['spl_allowance_yearly'] = intval($employeeData['special_allowance']) * 12;
         $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
-        $data['gross_yearly'] = intval($data['gross']) * 12;
+        $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
         $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
         $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
         $data['employer_esi_monthly'] = $employeeData['esic_employer_contribution'];
         $data['employer_esi_yearly'] = intval($employeeData['esic_employer_contribution']) * 12;
-        $data['ctc_monthly'] = $employeeData['cic'];
-        $data['ctc_yearly'] = intval($employeeData['cic']) * 12;
+        $data['ctc_monthly'] = $data['gross_monthly'];
+        $data['ctc_yearly'] = intval($data['gross_monthly']) * 12;
         $data['employee_epf_monthly'] =  $employeeData["epf_employer_contribution"];
         $data['employee_epf_yearly'] = intval($employeeData["epf_employer_contribution"]) * 12;
-        $data['employer_pt_monthly'] = $employeeData["professional_tax"]??"0";
-        $data['employer_pt_yearly'] =  intval($employeeData["professional_tax" ]??0) * 12;
+        $data['employer_pt_monthly'] = $employeeData["professional_tax"];
+        $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
