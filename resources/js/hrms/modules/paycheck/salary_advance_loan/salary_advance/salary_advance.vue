@@ -2,7 +2,7 @@
     <div class="mr-4 card" v-if="useEmpStore.sa.isEligibleEmp == 0">
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
-                <div class="w-8 fs-4">
+                <div class="fs-4">
                     <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
                             class="text-lg"> {{useEmpStore.percent_salary_amt}}%</strong> of their monthly salary.</p>
                 </div>
@@ -80,9 +80,11 @@
         </div>
     </div>
     <div class="mr-4 card pb-10" v-else>
-        <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class="w-5 p-6 m-auto">
+        <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class=" p-6 m-auto">
         <p class="my-2 font-semibold fs-3 text-center">You are not eligible to apply salary advance</p>
     </div>
+
+
 
 
 
@@ -95,12 +97,12 @@
         </template>
 
         <div class="flex pb-2 bg-gray-100 rounded-lg gap-3 shadow-md">
-            <div class="w-5 p-4 ">
+            <div class=" p-4 ">
                 <span class="font-semibold">Your Monthly Income</span>
                 <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
-                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-300 ">
+                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-200 ">
             </div>
-            <div class="w-5 p-4 mx-4">
+            <div class="p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
                 <input id="rentFrom_month" v-model="useEmpStore.sa.ra"
                     class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :class="[  v$.ra.$error ? 'border border-red-500' : '' ]" />
@@ -116,7 +118,7 @@
             <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
                 salary
                 <!-- <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong> -->
-                <Dropdown v-model="useEmpStore.sa.repdate" :options="useEmpStore.sa.storeRepDate" optionLabel="date" optionValue="date" placeholder="Select a Date" class="w-full md:w-14rem" />
+                <Dropdown v-model="useEmpStore.sa.repdate" :options="useEmpStore.sa.storeRepDate" optionLabel="date" optionValue="date" placeholder="Select a Date" class="w-[250px] md:w-14rem" />
             </p>
         </div>
 

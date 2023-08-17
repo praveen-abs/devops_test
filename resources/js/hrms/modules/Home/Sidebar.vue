@@ -182,7 +182,7 @@ onMounted(() => {
                     } : null,
                 {
                     label: 'Performance',
-                    subItems: [{ label: 'Self Appraisal', to: 'employee-appraisal' }, { label: 'Team Appraisal', to: 'team-appraisal' }, { label: 'Org Appraisal', to: 'pms' }, { label: 'PMS Config', to: 'config-pms' }, { label: 'PMS Forms Management', to: 'pms-forms-mgmt' }],
+                    subItems:res.data == 2 || res.data == 4 ? [{ label: 'Self Appraisal', to: 'employee-appraisal' }, { label: 'Team Appraisal', to: 'team-appraisal' }, { label: 'Org Appraisal', to: 'pms' }, { label: 'PMS Config', to: 'config-pms' }, { label: 'PMS Forms Management', to: 'pms-forms-mgmt' }] :  [{ label: 'Self Appraisal', to: 'employee-appraisal' }],
                     arrow_icon: 'pi pi-angle-right',
                     icon: 'M23 1L13.5 10.5L8.5 5.5L1 13',
                     icon1: '1.71429',

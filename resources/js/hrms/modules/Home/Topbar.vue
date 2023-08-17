@@ -199,7 +199,7 @@
             <!-- :class="`${getBackgroundColor(index)}`" -->
         </div>
         <div v-else class="w-full px-2 rounded-lg my-2 p-2 bg-red-50" >
-            <p>Notification empty</p>
+            <p>No notifications to display</p>
         </div>
     </Sidebar>
 
@@ -234,8 +234,7 @@
                     <h2 class="text-lg font-bold">Are you sure you want to do that?</h2>
 
                     <p class="mt-2 text-sm text-gray-500">
-                        Doing that could have cause some issues elsewhere, are you 100% sure it's
-                        OK?
+                        Do you really wish to log out? Any unsaved modifications will not be retained.
                     </p>
 
                     <div class="mt-4 flex gap-2 justify-center">

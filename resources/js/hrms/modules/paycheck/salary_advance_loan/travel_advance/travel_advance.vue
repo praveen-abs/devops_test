@@ -93,7 +93,7 @@
         </template>
         <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
 
-            <div class="w-5 p-4 mx-4">
+            <div class="p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
                 <input id="rentFrom_month" v-model="useEmpStore.ta.ra"
                 class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
