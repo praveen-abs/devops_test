@@ -422,20 +422,6 @@ class VmtDashboardService{
 
 
             //Get the time diff
-            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
-                        ->where('checkout_date', $attendance_bio_data->checkout_date)
-                        ->first();
-      if(!empty($checked->checkout_time)){
-            $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
-          }
-          if(!empty($checked->checkin_time)){
-             $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
-          }
-
-
-          if(!empty($from) && !empty($to) ){
-            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
-          }
 
 
                // dd($effective_hours);
@@ -444,7 +430,7 @@ class VmtDashboardService{
                 'status' => 'success',
                 'message' => 'You have successfully checked out!',
                 'time' => $checkout_time,
-                'effective_hours' => $effective_hours,
+                
             ]);
         }
 
