@@ -1,6 +1,6 @@
 <template>
     <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
-    <div class=" bg-white h-[60px]" v-if="canShowLoading">
+    <div class=" bg-white h-[60px]" v-if="canShowLoading" @mouseenter="useDashboard.canShowConfiguration = false,useDashboard.canShowClients = false">
         <div class=" grid grid-cols-12 justify-between items-center">
             <!-- Organization List  -->
             <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-4"
@@ -106,7 +106,7 @@
                         <a href="attendance-leavesettings"
                             class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Leave setting</a>
-                        <a href="configurations/attendance_settings"
+                        <a href="attendance_settings"
                             class="p-2  block text-black rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Attendance setting</a>
                         <a href="investment_settings"

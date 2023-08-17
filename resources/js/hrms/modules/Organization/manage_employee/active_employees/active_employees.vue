@@ -76,8 +76,7 @@
                 </Column>
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                        <Button icon="pi pi-eye" severity="success" raised label="View" @click="openProfilePage(slotProps.data)"
-                            style="height: 2em"  />
+                         <button  @click="openProfilePage(slotProps.data)" class="px-2 py-1 text-center text-white whitespace-nowrap bg-orange-700 rounded-md "><i class="pi pi-eye mx-2 py-1 h-6"></i>View</button>
                     </template>
                 </Column>
             </DataTable>

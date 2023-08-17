@@ -1,9 +1,9 @@
 <template>
-    <div class="card p-3" style="margin-top: -35px;">
+    <div class="card p-3">
 
-        <h1 class="mt-2  fs-4 fw-bold">Documents Settings</h1>
+        <h1 class="mt-2 font-semibold text-lg">Documents Settings</h1>
 
-        <div class="my-5">
+        <div class="my-3">
             <DataTable :value="DocumentSettingsStore.array_emp_documents_details" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
@@ -15,7 +15,7 @@
                 </Column>
                 <Column field="is_onboarding_doc" header="Is Onboarding Document ?">
                     <template #body="slotProps">
-                        <Checkbox @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_onboarding_doc" :binary="true" :trueValue="1" :falseValue="0" />
+                        <Checkbox  @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_onboarding_doc" :binary="true" :trueValue="1" :falseValue="0" />
                     </template>
                 </Column>
                 <Column field="is_mandatory" header="Is Mandatory Document ?">
