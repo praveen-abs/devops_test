@@ -98,7 +98,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="my-4 d-flex justify-content-between w-7 align-items-center  ">
+                    <div class="my-4 d-flex justify-content-between w-6 align-items-center  ">
                         <h1 class="fs-4">Payment Cycle</h1>
                         <div class="" style="height: 40px; position:relative;">
                             <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500"
