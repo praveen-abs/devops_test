@@ -2,14 +2,14 @@
     <div class="w-full">
         <h1 class="text-[18px] text-[#000] my-2">Mobile App Settings</h1>
         <div class="">
-            <div class="grid grid-cols-3 p-2 rounded-lg border my-2.5 h-[44px]" v-for="(val, index) in val" :key="index">
+            <div class="grid grid-cols-3 p-2 rounded-lg border my-2.5 h-[44px]" v-for="(item, index) in useStore.MobileSettingsDetails" :key="index">
                 <div class="my-auto">
-                    <h1 class="text-[#000] text-[14px]">{{ val.name }}</h1>
+                    <h1 class="text-[#000] text-[14px]">{{ item.sub_module_name }}</h1>
                 </div>
                 <div class="mx-auto">
                     <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]"
-                        :class="[val.EnableDisableBtn == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
-                        @click="val.EnableDisableBtn = 1">Enable</button>
+                        :class="[item.status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
+                        @click="val.status = 1">Enable</button>
                     <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
                         :class="[val.EnableDisableBtn == 2 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
                         @click="val.EnableDisableBtn = 2">Disable</button>
@@ -25,12 +25,16 @@
     <AssignEmployee :type="selectedType"/>
 </template>
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import AssignEmployee from "./components/AssignEmployee.vue";
 import { useMobileSettingsStore } from "./MobileSettingsService";
 
 
-const useStore = useMobileSettingsStore()
+const useStore = useMobileSettingsStore();
+
+onMounted(()=>{
+    useStore.getMobileSettings();
+})
 
 const active = ref(1);
 

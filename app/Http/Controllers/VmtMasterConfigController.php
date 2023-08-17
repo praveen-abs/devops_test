@@ -104,7 +104,7 @@ class VmtMasterConfigController extends Controller
         return $response;
 
     }
-    public function fetchMoileModuleData(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function fetchMoileModuleData(VmtMasterConfigService $serviceVmtMasterConfigService){
 
         try{
         $module_id =VmtAppModules::where('module_name',"Mobile App Settings")->pluck('id');
@@ -119,11 +119,14 @@ class VmtMasterConfigController extends Controller
                                                             "vmt_app_modules.module_name",
                                                             "vmt_app_sub_modules.sub_module_name",
                                                             "vmt_client_sub_modules.status"]);
-
+            
+              $response = $mobile_settings_data->unique('sub_module_name');
+              $response = array_slice($response->values()->all(), 0, 11, true);
+          
          return response()->json([
                 "status" => "success",
                 "message" => "data fetch successfully",
-                "data" => $mobile_settings_data,
+                "data" => $response,
             ]);
 
         }catch(\Exception $e){
