@@ -1683,4 +1683,8 @@ class VmtAttendanceReportsService
         }
         return $response;
     }
+    public function fetchLCReportData($start_date, $end_date){
+     $attendance_data = $this->fetch_attendance_data($start_date,$end_date);
+     dd($attendance_data);
+    }
 }
