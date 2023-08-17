@@ -6,11 +6,10 @@
                     <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
                             class="text-lg"> {{useEmpStore.percent_salary_amt}}%</strong> of their monthly salary.</p>
                 </div>
-
-                <div class="float-right ">
-                    <button class="btn btn-border-orange">View Report</button>
-                    <button @click="openPosition('top')" class="mx-4 btn btn-orange"><i class="mx-2 fa fa-plus"
-                            aria-hidden="true"></i>New Request</button>
+                <div class="flex float-right ">
+                    <button class="btn btn-border-orange font-['Poppins'] w-[100px] h-[30px]"> <p class="font-['Poppins']">View Report</p></button>
+                    <button @click="openPosition('top')" class="mx-2 btn btn-orange flex items-center w-[135px] h-[30px]"><i class="mx-2 fa fa-plus"
+                            aria-hidden="true"></i><p class="font-['Poppins']">New Request</p></button>
                 </div>
             </div>
 
@@ -20,14 +19,21 @@
                         <p class="mb-2 font-bold text-ash-medium f-13">Total Advance Amount</p>
                         <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
                     </div>
-                    <div class="p-2 text-center bg-green-100 border-l-4 rounded-lg tw-card border-l-green-400">
-                        <p class="mb-2 font-bold text-ash-medium f-13 "> Total Repaid Amount</p>
-                        <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
+                    <div class="p-3 text-center bg-green-100 border-l-4 rounded-lg tw-card border-l-green-400">
+                        <p class="mb-2 text-ash-medium text-[14px] "> Total Repaid Amount</p>
+                        <h6 class="mb-0 text-base text-gray-500">
+                            {{useEmpStore.loanDashboard.total_repaid_amt }}
+                        </h6>
+                        <h6 class="mb-0 text-base text-gray-500" v-if="useEmpStore.loanDashboard.total_repaid_amt===null">
+                            -</h6>
+                     
                     </div>
-
-                    <div class="p-2 text-center bg-blue-100 border-l-4 rounded-lg tw-card border-l-blue-400 ">
-                        <p class="mb-2 font-bold text-ash-medium f-13 ">Balance Amount</p>
-                        <h6 class="mb-0 text-base font-semibold text-gray-500">Not Submited</h6>
+                    <div class="p-3 text-center bg-blue-100 border-l-4 rounded-lg tw-card border-l-blue-400 ">
+                        <p class="mb-2 text-ash-medium  text-[14px] ">Balance Amount</p>
+                        <h6 class="mb-0 text-base font-semibold text-gray-500">{{useEmpStore.loanDashboard.balance_amt}}</h6>
+                        <h6 class="mb-0 text-base text-gray-500"  v-if="useEmpStore.loanDashboard.balance_amt===null">
+                            -</h6>
+                    
                     </div>
                     <div class="p-2 text-center bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400">
                         <p class="mb-2 font-bold text-ash-medium f-13 ">Pending Request</p>
@@ -93,45 +99,52 @@
             <h1 class="mx-3 fs-4 text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary
                 Advance Request</h1>
         </template>
-
-        <div class="flex pb-2 bg-gray-100 rounded-lg gap-3 shadow-md">
-            <div class="w-5 p-4 ">
-                <span class="font-semibold">Your Monthly Income</span>
-                <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
-                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-300 ">
+        <div class="" v-if="useEmpStore.sa.isEligibleEmp === 1" >
+            <div class="h-[100%] w-100"  >
+                <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class=" w-100 h-[400px]">
+                <p class="my-2 font-semibold text-center fs-3">You are not eligible to apply salary advance</p>
             </div>
-            <div class="w-5 p-4 mx-4">
-                <span class="font-semibold">Required Amount</span>
-                <input id="rentFrom_month" v-model="useEmpStore.sa.ra"
-                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :class="[  v$.ra.$error ? 'border border-red-500' : '' ]" />
-                <span v-if="v$.ra.$error" class="font-semibold text-red-400 fs-6">
-                    {{ v$.ra.$errors[0].$message }}
+        </div>
+        <div class=" w-100 h-100" v-else >
+            <div class="flex gap-3 pb-2 bg-gray-100 rounded-lg shadow-md">
+                <div class="w-5 p-4 ">
+                    <span class="font-semibold">Your Monthly Income</span>
+                    <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
+                        class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-300 ">
+                </div>
+                <div class="w-5 p-4 mx-4">
+                    <span class="font-semibold">Required Amount</span>
+                    <input id="rentFrom_month" v-model="useEmpStore.sa.ra"
+                        class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :class="[  v$.ra.$error ? 'border border-red-500' : '' ]" />
+                    <span v-if="v$.ra.$error" class="font-semibold text-red-400 fs-6">
+                        {{ v$.ra.$errors[0].$message }}
+                    </span>
+                    <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ useEmpStore.sa.mxe }} </p>
+                </div>
+            </div>
+
+            <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
+                <span class="font-semibold ">Repayment</span>
+                <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
+                    salary
+                    <!-- <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong> -->
+                    <Dropdown v-model="useEmpStore.sa.repdate" :options="useEmpStore.sa.storeRepDate" optionLabel="date" optionValue="date" placeholder="Select a Date" class="w-full md:w-14rem" />
+                </p>
+            </div>
+            <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
+                <span class="font-semibold ">Reason</span>
+                <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.sa.reason" :class="[  v$.reason.$error ? 'p-invalid' : '' ]" />
+                <span v-if="v$.reason.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.reason.$errors[0].$message }}
                 </span>
-                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ useEmpStore.sa.mxe }} </p>
+            </div>
+            <div class="float-right ">
+                <button class="btn btn-border-orange">Cancel</button>
+                <button class="mx-4 btn btn-orange" @click="submitForm">Submit</button>
             </div>
         </div>
+        
 
-        <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
-            <span class="font-semibold ">Repayment</span>
-            <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
-                salary
-                <!-- <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong> -->
-                <Dropdown v-model="useEmpStore.sa.repdate" :options="useEmpStore.sa.storeRepDate" optionLabel="date" optionValue="date" placeholder="Select a Date" class="w-full md:w-14rem" />
-            </p>
-        </div>
-
-        <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
-            <span class="font-semibold ">Reason</span>
-            <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.sa.reason" :class="[  v$.reason.$error ? 'p-invalid' : '' ]" />
-            <span v-if="v$.reason.$error" class="font-semibold text-red-400 fs-6">
-                {{ v$.reason.$errors[0].$message }}
-            </span>
-        </div>
-
-        <div class="float-right ">
-            <button class="btn btn-border-orange">Cancel</button>
-            <button class="mx-4 btn btn-orange" @click="submitForm">Submit</button>
-        </div>
 
     </Dialog>
 </template>

@@ -972,6 +972,7 @@ Route::get('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::clas
     Route::get('/testinginvestment', [App\Http\Controllers\VmtTestingController::class, 'investmenttesting']);
     Route::post('/paycheck/employee_payslip/downloadPayslip', [App\Http\Controllers\VmtTestingController::class, 'downloadPaySlip_pdfView'])->name('downloadPaySlip_pdfView');
     Route::get('users/export', [App\Http\Controllers\VmtTestingController::class, 'exportattenance']);
+    Route::get('test_getAppointmentTemplates', [App\Http\Controllers\VmtTestingController::class, 'test_getAppointmentTemplates']);
 
     Route::view('/testing_simma','testing_narasimman');
 
