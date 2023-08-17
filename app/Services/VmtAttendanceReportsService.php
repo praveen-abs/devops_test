@@ -50,9 +50,9 @@ class VmtAttendanceReportsService
         if ($regularize_record->exists()) {
             $reg_sts['sts'] = $regularize_record->first()->status;
             $reg_sts['time'] = $regularize_record->first()->regularize_time;
-            return $reg_sts ;
+            return $reg_sts;
         } else {
-            return  $reg_sts ;
+            return  $reg_sts;
         }
     }
 
@@ -1356,8 +1356,8 @@ class VmtAttendanceReportsService
                 $attendanceResponseArray[$fulldate] = array(
                     //"user_id"=>$request->user_id,
                     "user_id" => $singleUser->id, "user_code" => $singleUser->user_code, "name" => $singleUser->name,
-                    "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false, "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null, "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day, 'work_shift_id' => null,'isMIP'=>null,'isMOP'=>null,'reged_checkin_time'=>null,'reged_checkout_time'=>null,
-                    'permission_id'=>null
+                    "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false, "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null, "checkin_time" => 0, "checkout_time" => 0, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day, 'work_shift_id' => null, 'isMIP' => null, 'isMOP' => null, 'reged_checkin_time' => 0,
+                    'reged_checkout_time' => 0, 'permission_id' => null
                 );
 
                 //echo "Date is ".$fulldate."\n";
@@ -1510,7 +1510,7 @@ class VmtAttendanceReportsService
                     $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id'])
                         ->whereBetween('start_date', [$start_date, $end_date])
                         ->orWhereBetween('end_date', [$start_date, $end_date])
-                        ->get(['id','start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                        ->get(['id', 'start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
                     if ($leave_Details->count() == 0) {
                         $attendanceResponseArray[$key]['isAbsent'] = true;
                     } else {
@@ -1548,7 +1548,7 @@ class VmtAttendanceReportsService
                                         $attendanceResponseArray[$key]['leave_type'] = 'OD';
                                     } else if ($leave_type[0] == 'Permission') {
                                         $attendanceResponseArray[$key]['leave_type'] = "PI";
-                                        $attendanceResponseArray[$key] ['permission_id']=$single_leave_details->id;
+                                        $attendanceResponseArray[$key]['permission_id'] = $single_leave_details->id;
                                     } else if ($leave_type[0] == 'Compensatory Off') {
                                         $attendanceResponseArray[$key]['leave_type'] = 'CO';
                                     } else if ($leave_type[0] == 'Casual Leave') {
@@ -1592,7 +1592,7 @@ class VmtAttendanceReportsService
                         $attendanceResponseArray[$key]["isLC"] = $regularization_status['sts'];
                         $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
                     }
-                }else if(empty($checkin_time)&&!empty($checkout_time)){
+                } else if (empty($checkin_time) && !empty($checkout_time)) {
                     $user_id = $attendanceResponseArray[$key]['user_id'];
                     $date = $attendanceResponseArray[$key]['date'];
                     $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'MIP');
@@ -1611,14 +1611,13 @@ class VmtAttendanceReportsService
                         $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'EG');
                         $attendanceResponseArray[$key]["isEG"] = $regularization_status['sts'];
                         $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
-                    } else if(!empty($checkin_time)&&empty($checkout_time)){
+                    } else if (!empty($checkin_time) && empty($checkout_time)) {
                         $user_id = $attendanceResponseArray[$key]['user_id'];
                         $date = $attendanceResponseArray[$key]['date'];
                         $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'MOP');
                         $attendanceResponseArray[$key]["isMOP"] = $regularization_status['sts'];
                         $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
-                    }
-                    else {
+                    } else {
                         //employee left late....
                     }
                 }
@@ -1646,18 +1645,42 @@ class VmtAttendanceReportsService
                     $temp_ar['out_punch'] = $value['checkout_time'];
                     $temp_ar['status'] = 'Absent';
                     $temp_ar['day_status'] = 'Full day Absent';
+                    array_push($response, $temp_ar);
+                    unset($temp_ar);
                 } else if ($value['isAbsent'] == false && $value['is_weekoff'] == false && $value['isLeave'] == false) {
-                    $temp_ar['user_code'] = $value['user_code'];
-                    $temp_ar['name'] = $value['name'];
-                    $temp_ar['date'] = Carbon::parse($value['date'])->format('d-M-Y');
                     $current_shift =  VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                    $temp_ar['shift_name'] = $current_shift->shift_name;
-                    $temp_ar['in_punch'] = $value['checkin_time'];
-                    $temp_ar['out_punch'] = $value['checkout_time'];
-                    $temp_ar['status'] = 'Half Day';
-                    $temp_ar['day_status'] = 'Full day Absent';
+                    if ($value['isLC'] == 'Approved' ||  $value['isMIP'] == 'Approved') {
+                        $temp_ar['in_punch'] = $value['reged_checkin_time'];
+                    } else {
+                        $value['checkin_time'] = $value['checkin_time'];
+                    }
+
+                    if ($value['isEG'] == 'Approved' ||  $value['isMOP'] == 'Approved') {
+                        $temp_ar['out_punch'] = $value['reged_checkout_time'];
+                    } else {
+                        $value['checkout_time'] = $value['checkout_time'];
+                    }
+                    if (Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) < $current_shift->fullday_min_workhrs) {
+                        $temp_ar['user_code'] = $value['user_code'];
+                        $temp_ar['name'] = $value['name'];
+                        $temp_ar['date'] = Carbon::parse($value['date'])->format('d-M-Y');
+                        $temp_ar['shift_name'] = $current_shift->shift_name;
+                        $temp_ar['in_punch'] = $value['checkin_time'];
+                        $temp_ar['out_punch'] = $value['checkout_time'];
+                        if (Carbon::parse($temp_ar['in_punch'])->diffInMinutes(Carbon::parse($temp_ar['out_punch'])) < $current_shift->halfday_min_workhrs) {
+                            $temp_ar['status'] = 'Absent';
+                            $temp_ar['day_status'] = 'Full day Absent';
+                        } else {
+                            $temp_ar['status'] = 'Half Day';
+                            $temp_ar['day_status'] = 'Half Day';
+                        }
+                        array_push($response, $temp_ar);
+                        unset($temp_ar);
+                    }
                 }
+                // dd($response);
             }
         }
+        return $response;
     }
 }

@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
+use App\Exports\AbsentReportExport;
 use App\Exports\EmployeeAttendanceExport;
 use App\Exports\BasicAttendanceExport;
 use App\Exports\DetailedAttendanceExport;
@@ -86,6 +87,7 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $start_date = '2023-07-15';
         $end_date = '2023-07-20';
-        return $attendance_report_service->fetchAbsentReportData($start_date, $end_date);
+      // dd($attendance_report_service->fetchAbsentReportData($start_date, $end_date));
+        return Excel::download(new AbsentReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date)), 'Absent Report.xlsx');
     }
 }
