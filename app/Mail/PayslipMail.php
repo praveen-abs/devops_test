@@ -21,9 +21,9 @@ class PayslipMail extends Mailable
     protected $fileObject;
     protected $month;
     protected $year;
-    protected $image_view;
 
-    public function __construct( $loginLink, $fileObject , $month, $year, $image_view )
+
+    public function __construct( $loginLink, $fileObject , $month, $year)
     {
         //
 
@@ -31,7 +31,7 @@ class PayslipMail extends Mailable
         $this->fileObject   = $fileObject;
         $this->month   = $month;
         $this->year   = $year;
-        $this->image_view   = $image_view;
+
     }
 
     /**
@@ -47,8 +47,8 @@ class PayslipMail extends Mailable
                     ->subject('ABShrms - Payslip released for the month of '.$month_text." - ".$this->year)
                     ->with('loginLink', $this->loginLink)
                     ->with('month', $month_text)
-                    ->with('year', $this->year)
-                    ->with('image_view', $this->image_view);
+                    ->with('year', $this->year);
+
 
         //Only for Employee Onboarding
         if(!empty($this->fileObject))

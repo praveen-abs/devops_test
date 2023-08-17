@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import axios from "axios";
+import dayjs from 'dayjs';
 
 export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
@@ -32,13 +33,14 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     async function getEmployeePayslipDetailsAsHTML(user_code, month, year) {
         loading.value = true
 
-        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML', {
+        await axios.post('/generatePayslip', {
             user_code: user_code,
             month: month,
-            year: year
+            year: year,
+            type:"html"
         }).then((response) => {
+            console.log(response.data);
             // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
-
             paySlipHTMLView.value = response.data;
 
         }).finally(() => {
@@ -50,10 +52,11 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     async function getEmployeePayslipDetailsAsPDF(user_code, month, year) {
         loading.value = true
 
-        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF', {
+        await axios.post('/generatePayslip', {
             user_code: user_code,
             month: month,
-            year: year
+            year: year,
+            type:"pdf"
         }).then((response) => {
             // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
 
@@ -72,10 +75,11 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         // show_dialogconfirmation.value= false;
 
-        axios.post('/payroll/paycheck/sendMail_employeePayslip', {
+        axios.post('/generatePayslip', {
             user_code: user_code,
             month: month,
             year: year,
+            type:"mail"
         }).then((response) => {
             console.log(" Response [sendMail_employeePayslip] : " + response.data.data);
         })
@@ -146,9 +150,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         console.log("Downloading payslip PDF.....");
 
-
-        let month_payroll = parseInt(dayjs(payroll_month).month()) + 1;
-        let year_payroll = dayjs(payroll_month).year();
+        let month_payroll =dayjs(month).month() + 1;
+        let year_payroll = dayjs(year).year();
 
         //split the payroll_month into month and year
 
@@ -182,6 +185,35 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
+    async function downloadEmployeePaySlipPdf(user_code,month,year,name){
+
+        await axios.post('/generatePayslip',{
+            user_code:user_code,
+            month:month,
+            year:year,
+            type:"pdf"
+        }).then((response)=>{
+
+            console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data));
+
+            if(response.data){
+                let base64String = response.data
+                let employeeName = name
+                let payslipMonth = month;
+
+                if (base64String.startsWith("JVB")) {
+                    base64String = "data:application/pdf;base64," + base64String;
+                    downloadFileObject(base64String,employeeName,payslipMonth);
+                } else if (base64String.startsWith("data:application/pdf;base64")) {
+                    downloadFileObject(base64String);
+                }
+            }else{
+                console.log("Response Url Not Found");
+            }
+
+        })
+    }
+
 
 
     return {
@@ -191,7 +223,9 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         array_employees_list, paySlipHTMLView, selectedPayRollDate, loading,
 
         // Functions
-        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip, updatePayslipReleaseStatus,downloadPayslip,UpdateWithDrawStatus,getEmployeePayslipDetailsAsPDF
+        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip, updatePayslipReleaseStatus,downloadPayslip,UpdateWithDrawStatus,getEmployeePayslipDetailsAsPDF,
+
+        downloadEmployeePaySlipPdf
 
     };
 });

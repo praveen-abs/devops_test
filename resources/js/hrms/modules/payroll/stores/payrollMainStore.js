@@ -26,6 +26,11 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         1) general payroll Setup
 
         2)Pf & Esi Setting
+            1)Employee provident fund - epf
+            2)Employee state insurance -esi
+            3)Aatmanirbhar Bharat Yojana(ABRY)Scheme - abry
+            4)Pradhan Matri Rojgar Protsahan Yojana(PMRPY)Scheme - pmrpy
+
 
         3)Salary components
             1)Earnings
@@ -39,6 +44,35 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         6)Statutory Filling
 
      */
+
+
+    // PF ESI Setting
+
+    //  - Employee provident fund
+
+    // Add new rule for Employee provident fund
+
+    const addNewEpf = ref({})
+
+    const saveNewEpf = (data) => {
+        console.log(data);
+        axios.post('/Paygroup/CreatePayrollEpf', data)
+    }
+
+
+    // Employee's State Insurance
+
+    const addNewEsi = ref({})
+
+    const saveNewEsi = (data) => {
+        console.log(data);
+        axios.post('/Paygroup/CreatePayrollEsi', data)
+
+    }
+
+
+
+
 
 
     // Salary Components - Earnings
@@ -260,11 +294,11 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     const saveAccountingCode = (data) => {
         console.log(data);
-        axios.post('/Paygroup/addPayrollAppIntegrations',data)
+        axios.post('/Paygroup/addPayrollAppIntegrations', data)
     }
 
-    const enableAccountingSoftware = (data,checked) =>{
-        console.log(data,checked);
+    const enableAccountingSoftware = (data, checked) => {
+        console.log(data, checked);
     }
 
 
@@ -331,12 +365,21 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         // Varaible Declaration
         canShowLoading,
 
+        // Pf & ESI Setting - EPF
+
+        addNewEpf, saveNewEpf,
+
+        // Pf & ESI Setting - ESI
+
+        addNewEsi, saveNewEsi,
+
+
         // Salary Components - Earnings
         dailogNewSalaryComponents, salaryComponents, salaryComponentsSource, getSalaryComponents, saveNewSalaryComponent, editNewSalaryComponent, deleteSalaryComponent,
         // Salary Components - Adhoc Components and Deduction and Reimbursement Components
         adhocComponents, deductionComponents, reimbursementComponents, editAdhocSalaryComponents,
         // Salary Components - Accounting Code
-        getAccountingSoftware, saveAccountingCode,accountingCode,accountingCodeSource,enableAccountingSoftware,
+        getAccountingSoftware, saveAccountingCode, accountingCode, accountingCodeSource, enableAccountingSoftware,
 
 
         // Salary Structure - Paygroup

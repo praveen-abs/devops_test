@@ -22,6 +22,7 @@ use App\Models\VmtInterestFreeLoanSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
 use App\Models\VmtEmpInterestLoanDetails;
 use App\Models\VmtSalaryAdvanceMasterModel;
+use App\Models\VmtSalAdvTransactionRecord;
 use App\Models\VmtPayroll;
 use App\Models\Department;
 use App\Models\State;
@@ -118,6 +119,7 @@ class VmtSalaryAdvanceService
                 }
             }
 
+            
 
             $approveRejectLoanAndSaladvMail   = \Mail::to($approver_details->officical_mail)
                 ->send(new ApproveRejectLoanAndSaladvMail(
@@ -2187,6 +2189,7 @@ class VmtSalaryAdvanceService
             $pending_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->where('loan_crd_sts', 0)->count();
             $compeleted_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
         } else if ($loan_type == 'sal_adv') {
+            // $loan_amt_query = VmtSalAdvTransactionRecord::Join('');
         } else {
             return response()->json([
                 'status' => 'failure',

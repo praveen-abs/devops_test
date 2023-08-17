@@ -23,7 +23,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
         }
 
         @page {
-            size: A4 landscape;
+            size: A4 portrait;
         }
 
 
@@ -103,7 +103,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                 <td colspan="12" class="" style="border-top:.1em solid #4b48fb;">
                     <p class="text-bolder " style="margin: 0;padding:.7em 0;font-size:1.2em;">
                         Payslip For the Month of :
-                        {{ strtoupper(date('F-Y', strtotime($emp_payroll_month->payroll_date))) }}
+                        26-09-2001
                     </p>
                 </td>
             </tr>
@@ -123,7 +123,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600"> Employee Name</p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p> {{ $employee_name }}</p>
+                                    <p> simma</p>
                                 </td>
                                 <td colspan="1" class="" style="padding:.4em .2em">
                                 </td>
@@ -131,7 +131,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600">Employee No</p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p> {{ $employee_code }}</p>
+                                    <p>  Abs1019 </p>
                                 </td>
                             </tr>
                             <tr>
@@ -139,7 +139,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600">Designation </p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p> {{ $employee_office_details->designation }}</p>
+                                    <p> Backend Developer</p>
                                 </td>
                                 <td colspan="1" class="" style="padding:.4em .2em">
                                 </td>
@@ -147,7 +147,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600">UAN Number </p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p>{{ $employee_statutory_details->uan_number }}</p>
+                                    <p> 3261857816586585 </p>
                                 </td>
                             </tr>
                             <tr>
@@ -155,7 +155,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600"> Date of Joining</p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p> {{ date('d-M-Y', strtotime($employee_details->doj)) }}</p>
+                                    <p> 13-02-2023</p>
                                 </td>
                                 <td colspan="1" class="" style="padding:.4em .2em">
                                 </td>
@@ -163,7 +163,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600">ESIC Number No</p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p>{{ $employee_statutory_details->esic_number ?? '-' }}</p>
+                                    <p> 4449488339849834984</p>
                                 </td>
                             </tr>
                             <tr>
@@ -171,7 +171,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600">PF A/C Number</p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p>{{ $employee_statutory_details->epf_number }}</p>
+                                    <p> 2939393945443939</p>
                                 </td>
                                 <td colspan="1" class="" style="padding:.4em .2em">
                                 </td>
@@ -179,7 +179,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p class="" style="font-weight:600">Bank Account No </p>
                                 </td>
                                 <td colspan="2" class="" style="padding:.4em .2em">
-                                    <p>{{ $employee_details->bank_account_number }}</p>
+                                    <p>32903492454942940</p>
                                 </td>
                             </tr>
                         </tbody>
@@ -264,7 +264,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->basic), 2) }}</p>
+                                    <p class="text-right">ehfuhieufhief</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
@@ -388,8 +388,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <div
                                         style="padding:1.3em 2em;border:.1em dashed #015e1c;border-radius:1em;text-align:center;">
                                         Total Net Payable <b style="font-size:1.3em;color:#015e1c;">₹
-                                            {{ number_format(round($employee_payslip->net_take_home), 2) }}</b>
-                                        ({{ $employee_payslip->rupees }}) </br>
+                                            200222</b>
+                                        20202 </br>
                                         **Total Net Payable = Gross Earnings - Total Deductions
                                     </div>
                                 </td>

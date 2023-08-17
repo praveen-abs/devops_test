@@ -1062,7 +1062,7 @@ button.gridjs-sort-desc {
 }
 .nav-tabs-dashed .nav-item .nav-link.active::after {
     content: "";
-    height: 4px;
+    height: 2px;
     width: 100%;
     left: 0px;
     position: absolute;

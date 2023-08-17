@@ -31,7 +31,6 @@
             </div>
         </div>
         <div v-if="type == 'LC'">
-
             <div class="col-12">
                 <div class="row">
                     <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
