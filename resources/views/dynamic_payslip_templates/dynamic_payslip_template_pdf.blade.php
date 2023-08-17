@@ -2,8 +2,7 @@
 
  $client_logo_path   = public_path($client_details[0]['client_logo']);
 
-
- $client_image  = base64_encode($client_logo_path);
+ $client_image  = base64_encode(file_get_contents($client_logo_path));
 
  $abs_public_logo  =  public_path($date_month['abs_logo']);
 
@@ -40,7 +39,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             float: left
         }
         .td{
-            height: 20px !important;
+            height: 10px !important;
         }
 
         .marign-top1{
@@ -52,11 +51,14 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
 
 <body>
     <table style="width: 100%;  border-collapse: collapse; background:#fff;  ">
-            <tr >
-                <td colspan="3" >
+            <tr>
+                <td colspan="3" style="margin-top:-10px" >
                     <h3 style="color:#000; ">PAYSLIP <span style="color:gray; font-weight:500;   font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
-                    <p style="color:#000;font-size:10px;">{{$client_details[0]['client_fullname']}}</p>
-                    <p style="color:#000; font-size:9px;width:220px;line-height:16px ">{{ $client_details[0]['address'] }}</p>
+                    <p style="color:#000;font-size:10px; margin-top:-10px;">{{$client_details[0]['client_fullname']}}</p>
+                    <div style=" text-align: justify; width:200px;">
+                        <p style="color:#000; font-size:9px;  text-align:left; margin-top:-10px;">{{ $client_details[0]['address'] }}</p>
+                    </div>
+
                 </td>
                 <td colspan="1" style="">
                     <img src="data:image/png;base64,{{ $client_image }}" style="margin-top:40px; " width="160px" height="60px"  >
@@ -64,7 +66,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             </tr>
         <tr class="td"  style="height:10px; marign:0px;">
             <td colspan="4" class="td"  border="2" style="marign:0px;">
-                <h5 style="font-size: 12px; margin-bottom:2px ">Employee Name : {{ $personal_details[0]['name'] }}</h5>
+                <h5 style="font-size: 12px; margin-bottom:2px ;margin-top:-4px;">Employee Name : {{ $personal_details[0]['name'] }}</h5>
             </td>
         </tr>
         <tr>
@@ -160,34 +162,32 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             </td>
         </tr>
         <tr class="td" style="height: 20px">
+
             <td class="" style="height: 20px;width:25%;">
                 <p style="font-size:10px;color:gray; ">Leave Type</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
+                @for ($i=0; $i<count($leave_data); $i++)
+                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['leave_type']}}</p>
+                @endfor
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;">Opening Balance</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
+                @for ($i=0; $i<count($leave_data); $i++)
+                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['opening_balance'] }}</p>
+                @endfor
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;">Avalied</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
+                @for ($i=0; $i<count($leave_data); $i++)
+                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['avalied'] }}</p>
+                @endfor
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;">Closing Balance</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
+                @for ($i=0; $i<count($leave_data); $i++)
+                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['closing_balance'] }}</p>
+                @endfor
             </td>
+
         </tr>
 
         <tr>
@@ -253,7 +253,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                       </td>
                     </tr>
                     @foreach ($earnings[0] as $earned_key => $single_earnings)
-                    
+
                     @if ($earned_key == "Total Earnings")
                     <tr>
                       <td style="width:40%">
@@ -273,7 +273,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                       @if (!empty($arrears[0]))
 
                       @foreach ($arrears[0] as $key => $single_value )
-                     
+
                       @if($key == $earned_key)
                       <p style="height: 8px; color: #000; font-size:11px;">{{ $single_value }}</p>
                       @endif
@@ -421,8 +421,8 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
 
         <tr style="width: 100%">
             <td colspan="4" style="height: 0px">
-                <img src="data:image/png;base64,{{ $abs_logo }}" style=" Width:100px; height:40px; float:right; margin-top:-12px">
-                <p style="font-size: 12px; float:right; color:gray;margin-right:10px; margin-top:-6px">Generated by</p>
+                <img src="data:image/png;base64,{{ $abs_logo }}" style=" Width:100px; height:40px; float:right; margin-top:-20px">
+                <p style="font-size: 12px; float:right; color:gray;margin-right:10px; margin-top:-10px">Generated by</p>
             </td>
         </tr>
 
