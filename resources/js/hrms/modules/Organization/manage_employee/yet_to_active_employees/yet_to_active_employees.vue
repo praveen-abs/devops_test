@@ -29,12 +29,12 @@
             <DataTable :value="manageEmployeesStore.yet_to_active_employees_data" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu" :loading="loading2"
+                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu"
                 :globalFilterFields="['emp_name', 'emp_code', 'status']">
                 <template #empty> No customers found. </template>
                 <template #loading> Loading customers data. Please wait. </template>
 
-                <Column class="font-bold" field="emp_name" header="Employee Name" style="min-width: 20rem;">
+                <Column class="font-bold" field="emp_name" header="Employee Name" style="min-width: 5rem;">
                     <template #body="slotProps">
                         <div class="flex justify-center items-center">
                             <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'"
@@ -53,7 +53,7 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_code" header="Employee Code">
+                <Column field="emp_code" header="Employee Code" style="min-width: 2rem !important;">
                     <template #body="slotProps">
                         {{ slotProps.data.emp_code }}
                     </template>

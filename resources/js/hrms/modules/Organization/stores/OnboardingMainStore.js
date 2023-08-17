@@ -53,11 +53,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             setTimeout(() => {
                 if (onboardingType == 'quick') {
                     type.value = 'quick'
-                    router.push({ path: `/quickEmployeeOnboarding/${'quickOnboarding'}` })
+                    router.push({ path: `/import/${'quickOnboarding'}` })
                 } else
                     if (onboardingType == 'bulk') {
                         type.value = 'bulk'
-                        router.push({ path: `/bulkEmployeeOnboarding/${'bulkOnboarding'}` })
+                        router.push({ path: `/import/${'bulkOnboarding'}` })
                     } else {
                         type.value = ''
 
@@ -168,7 +168,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                             });
                         });
                         setTimeout(() => {
-                            window.location.replace('/manageEmployees')
+                            window.location.replace(window.location.origin+'/manageEmployees')
                         }, 4000);
                     }
             }).finally(() => {

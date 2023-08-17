@@ -17526,13 +17526,15 @@ tr:last-child td:last-child {
 
 .table > thead > tr > th,
 .gridjs-table > thead > tr > th {
-    background: #002f56 ;
-    color: #fff !important;
+    background: #e6e6e6  !important;
+    color: black !important;
 }
 
 .table > tbody > tr > td,
 .gridjs-table > tbody > tr > td {
-    color: #707274 !important;
+    color: black !important;
+    font-weight: 501;
+    font-size: 12px;
 }
 
 .table > tbody > tr > td,

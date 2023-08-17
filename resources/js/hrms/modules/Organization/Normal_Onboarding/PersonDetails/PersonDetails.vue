@@ -1,5 +1,5 @@
 <template>
-    <div class="p-2 shadow card profile-box card-top-border">
+    <div class="p-2 shadow card profile-box ">
         <div class="card-body justify-content-center align-items-center">
             <div class=" header-card-text">
                 <h6 class="my-2"><i class="fa fa-user" aria-hidden="true"></i> Personal Details</h6>
