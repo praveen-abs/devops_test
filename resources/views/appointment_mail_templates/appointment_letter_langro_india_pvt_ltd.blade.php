@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
+
     <style>
         .main-page {
             width: 210mm;
@@ -174,6 +175,8 @@
        }
 
     </style>
+
+
 </head>
 <body>
 
@@ -186,15 +189,19 @@
                             <table class="table-one">
                                 <tbody>
                                     <tr>
-                                        <td colspan="12" class="pb-30" align="right">
-                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 35px;width:200px;">
+                                        <td colspan="12" class="" align="right">
+
+                                            <div style="height: 80px;width:200px">
+                                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                    class="" alt=""
+                                                    style="height:100%;width:100%;">
+                                            </div>
                                         </td>
+
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="right">
-                                            <p class="fw-600 txt-right " style="">
+                                            <p class="fw-600 txt-right margin-right:100px" style="margin-right:100px">
                                                 Date:
                                             </p>
 
@@ -212,13 +219,13 @@
                                     <tr>
                                         <td colspan="12" style=" " align="left">
                                             <p class="fw-600 txt-left " style="">
-                                                Dear Xyz,
+                                                Dear {{ $employee_name }},
                                             </p>
                                             <p class="pt-pb-5">We are glad to appoint you as
-                                                &nbsp;<span class="fw-600 txt-left">" Xyz
+                                                &nbsp;<span class="fw-600 txt-left">" {{ $designation }}
                                                     "</span>&nbsp; in our company,
-                                                &nbsp;<span class="fw-600 txt-left">Priti
-                                                    Sales Corporation
+                                                &nbsp;<span class="fw-600 txt-left">LANGRO INDIA
+                                                    PRIVATE LIMITED
                                                 </span>&nbsp;.</p>
 
                                         </td>
@@ -232,10 +239,9 @@
                                             <p class="pt-pb-5">
                                                 Your total remuneration package per annum
                                                 will
-                                                consist of &nbsp;<span
-                                                    class="fw-600 txt-left">
-                                                    CTC Rs Xyz- per annum
-                                                    (xyz)</span>&nbsp;.
+                                                consist of &nbsp;<span class="fw-600 txt-left">
+                                                    CTC Rs {{ $cic }}- per annum
+                                                    {{ $ctc_in_words }}</span>&nbsp;.
                                                 The
                                                 breakup of your compensation package shall
                                                 be as detailed in Annexure A.
@@ -252,14 +258,13 @@
                                             </p>
                                             <p class="pt-pb-5">
                                                 Your employment with the company &nbsp;<span
-                                                    class="fw-600 txt-left"> PRITI SALES
-                                                    CORPORATION
+                                                    class="fw-600 txt-left"> LANGRO INDIA
+                                                    PRIVATE LIMITED
                                                 </span>&nbsp will
                                                 be with effect from &nbsp;<span
-                                                    class="fw-600 txt-left"> DD-MM-
-                                                    YYYY</span>&nbsp;. You shall
+                                                    class="fw-600 txt-left"> {{ $doj }}</span>&nbsp;. You shall
                                                 initially be placed in &nbsp;<span
-                                                    class="fw-600 txt-left"> YYY
+                                                    class="fw-600 txt-left"> {{ $work_location }}
                                                 </span>&nbsp;. You may however
                                                 be required to travel and maybe positioned
                                                 or
@@ -332,37 +337,46 @@
 
                                     <tr>
                                         <td colspan="12" style=" " align="left">
-                                            <p class="fw-600 pt-30  txt-left "
-                                                style="">
+                                            <p class="fw-600 pt-30  txt-left " style="">
                                                 Yours faithfully,
                                             </p>
-                                            <p class=" pb-30 fw-600">
-                                                For PRITI SALES CORPORATION
+                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/vasa_sign.jpg') }}"class="" alt="" style="height: 40px;width:150px;">
 
+                                            <p class="fw-600 pt-10 txt-left " style=" ">
+                                                (Authorized Signatory)
                                             </p>
-                                            <p class="fw-600 pt-10 txt-left "
-                                                style=" ">
-                                                Founder and CEO of Priti Sales Corporation
+                                            <p class="fw-600 pt-10 txt-left " style=" ">
+                                                Founder and CEO of LANGRO INDIA PRIVATE LIMITED
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="left">
                                             <p class=" pt-10 txt-left " style="">
-                                                I M Xyz, have read &nbsp;<span
+                                                I M <span class="fw-600 ">{{ $employee_name }}</span>, have read &nbsp;<span
                                                     class="fw-600 txt-left">ANNEXURE A &
                                                     B,</span>&nbsp; understood, and accept
                                                 the
                                                 appointment upon the terms and conditions as
                                                 outlined in this appointment letter for my
                                                 position at &nbsp;<span
-                                                    class="fw-600 txt-left">PRITI SALES
-                                                    CORPORATION
+                                                    class="fw-600 txt-left">LANGRO INDIA
+                                                    PRIVATE LIMITED
                                                 </span>&nbsp;.
 
                                             </p>
 
 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="12"
+                                            style="padding-bottom:5px;
+                                        "
+                                            class="pt-pb-5 border-bottom-line " align="">
+                                            <p class="fw-600  " style="">
+                                                LANGRO INDIA PRIVATE LIMITED
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -376,7 +390,7 @@
                                         </td>
                                         <td colspan="6" class="pt-30" style=" "
                                             align="right">
-                                            <p class="fw-600 txt-right " style="">
+                                            <p class="fw-600 txt-right " style="margin-right:100px">
                                                 Date:
                                             </p>
 
@@ -385,51 +399,49 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12"
-                                            style="padding-bottom: 30px;
+                                            style="padding-bottom: 65px;
                                         "
                                             class="pt-pb-5 border-bottom-line "
                                             align="">
                                             <p class="fw-600  " style="">
-                                                PRITI SALES CORPORATION
+                                                LANGRO INDIA PRIVATE LIMITED
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" class="" align="">
                                             <p class=" "
-                                                style="text-align:initial;width:263px;">
-                                                <span class="fw-600 txt-left"> HeadOffice:
-                                                </span>&nbsp;#34/123,Dugar
-                                                Towers 2nd Floor
-                                                MarshallsRoad,
-                                                Egmore,Chennai-600008
-                                                E-mail:admin@pritisales.in
-                                                /info@pritisales.in
-                                                Ph:044-42661403I45558608I8609
-
-
+                                                style="text-align:initial;width:225px">
+                                                <span class="fw-600 txt-left">Registered
+                                                    Office:</span>&nbsp;#34/123,
+                                                Dugar Towers 2ndFloor
+                                                MarshallsRoad,Chennai-600008
+                                                Ph:044-42661403I/45558608I/8609
                                             </p>
                                         </td>
 
-                                        <td colspan="8" class="" align="">
-                                            <p class=" "
-                                                style="text-align:initial;width:326px;">
+                                        <td colspan="4" class="" align="">
+                                            <p class=" " style="text-align:initial;">
                                                 <span class="fw-600 txt-left">
-                                                    WareHouse:</span>&nbsp;
-                                                No:63,SidcoIndustrialEstate,
-                                                Sipcot,
-                                                Ranipet-632403.
-                                                Ph:246168
-                                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                                LabbaiMankuppam Village ThuthipetAmbur
-                                                635811
-                                                No.3/1,JalalRoadExtension,
-                                                MalligaiThoppu,Ambur-635802.
-                                                Ph:04174240330
+                                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                                KamarajarNagar,Kaspa-'A',Ambur,
+                                                VelloreDistrict-635802.
+                                                Tel:+9l-04174-245366
+                                                Mob:+91-9962517613
 
                                             </p>
                                         </td>
-
+                                        <td colspan="4" style=" " class=""
+                                            align="">
+                                            <p class=" " style="text-align:initial;">
+                                                <span class="fw-600 txt-left"> Corporate
+                                                    Identity No:</span>&nbsp;
+                                                <span
+                                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                                Email:info@langroindia.com
+                                                Internet:www.langroindia.com
+                                            </p>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -441,18 +453,20 @@
             </table>
         </div>
     </div>
-    
 
     <div class="main-page appointment-letter">
-        <div class="sub-page" style="text-align: justify;">
+        <div class="sub-page" style="text-align: justify;font-size: 15px;">
             <table class="letter-format " style="padding:0;">
                 <tbody>
                     <tr>
-                        <td colspan="12" class="pb" align="right">
+                        <td colspan="12" class="" align="right">
 
-                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                class="" alt=""
-                                style="height: 35px;width:200px;">
+
+                            <div style="height: 80px;width:200px;max-height:100%;">
+                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                    class="" alt=""
+                                    style="height: 100%;width:100%;">
+                            </div>
 
                         </td>
 
@@ -487,7 +501,7 @@
                                         <td colspan="6" style=" "class="bg-ash "
                                             align="left">
                                             <p class="fw-600  txt-left" style="">
-                                                Name:
+                                                Name: {{ $employee_name }}
                                             </p>
 
                                         </td>
@@ -504,7 +518,7 @@
                                         <td colspan="4" style=" "class="bg-ash "
                                             align="center">
                                             <p class="fw-600  " style="">
-                                                Designation
+                                                Designation: {{ $designation }}
                                             </p>
 
                                         </td>
@@ -515,8 +529,7 @@
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash ">
-                                            <p class="fw-600   txt-center   "
-                                                style="">
+                                            <p class="fw-600   txt-center   " style="">
                                                 Per Annum
                                             </p>
 
@@ -531,13 +544,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="  txt-right" style="">
-
+                                                {{ $basic_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{  $basic_yearly }}
                                             </p>
 
                                         </td>
@@ -551,13 +564,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $hra_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{ $hra_yearly }}
                                             </p>
 
                                         </td>
@@ -571,13 +584,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $spl_allowance_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{ $spl_allowance_yearly }}
                                             </p>
 
                                         </td>
@@ -592,15 +605,14 @@
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
-                                            <p class="fw-600   txt-center" style="">
-
+                                            <p class="fw-600   txt-right" style="">
+                                                {{ $gross_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
-                                            <p class="fw-600   txt-center   "
-                                                style="">
-
+                                            <p class="fw-600   txt-right   " style="">
+                                                {{ $gross_yearly }}
                                             </p>
 
                                         </td>
@@ -613,14 +625,14 @@
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="  txt-center" style="">
-
+                                            <p class="  txt-right" style="">
+                                                {{ $employer_epf_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="   txt-center   " style="">
-
+                                            <p class="   txt-right   " style="">
+                                                {{ $employer_epf_yearly }}
                                             </p>
 
                                         </td>
@@ -634,13 +646,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $employer_esi_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="  txt-right   " style="">
-
+                                                {{ $employer_esi_yearly }}
                                             </p>
 
                                         </td>
@@ -655,14 +667,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
                                             <p class="fw-600  txt-right" style="">
-
+                                                {{ $ctc_monthly}}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
-                                            <p class="fw-600   txt-right   "
-                                                style="">
-
+                                            <p class="fw-600   txt-right   " style="">
+                                                {{ $ctc_yearly }}
                                             </p>
 
                                         </td>
@@ -676,13 +687,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employee_epf_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right   " style="">
+                                                {{ $employee_epf_yearly }}
                                             </p>
 
                                         </td>
@@ -696,13 +707,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employee_esi_monthly}}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right   " style="">
-
+                                                {{ $employee_esi_yearly }}
                                             </p>
 
                                         </td>
@@ -717,34 +728,33 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employer_pt_monthly ?? "0" }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right   " style="">
+                                                {{ $employer_pt_yearly ?? "0" }}
                                             </p>
 
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4"
-                                            style=" "class="  bg-ash">
+                                        <td colspan="4" style=" "class="  bg-ash">
                                             <p class="txt-left " style="">
                                                 Net Income
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class=" bg-ash">
-                                            <p class="txt-right" style="">
-
+                                            <p class="txt-right fw-600" style="">
+                                                {{ $net_take_home_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class=" bg-ash">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right  fw-600" style="">
+                                                {{ $net_take_home_yearly }}
                                             </p>
 
                                         </td>
@@ -801,6 +811,29 @@
                                 Max) – Subject to conditions </p>
 
                             </p>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" style=" " align="left">
+                            <p class=" txt-left " style="">
+                                I {{  $employee_name }}, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE A
+                                    &
+                                    B,</span>&nbsp; understood, and accept the
+                                appointment upon the terms and conditions as
+                                outlined in this appointment letter for my
+                                position at &nbsp;<span class="fw-600 txt-left">LANGRO INDIA
+                                    PRIVATE LIMITED
+                                </span>&nbsp;.
+
+                            </p>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" style=" "class="" align="center">
                             <p class=" txt-left pt-pb-5 " style="">
                                 <span class="fw-600">IncomeTax – </span>
                                 Income tax will be deducted as per the slab
@@ -813,38 +846,20 @@
                                 working
                                 day
                             </p>
-
-
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12" style=" " align="left">
-                            <p class=" txt-left " style="">
-                                I Xyz, have read &nbsp;<span
-                                    class="fw-600 txt-left">ANNEXURE A
-                                    &
-                                    B,</span>&nbsp; understood, and accept the
-                                appointment upon the terms and conditions as
-                                outlined in this appointment letter for my
-                                position at &nbsp;<span class="fw-600 txt-left">PRITI SALES
-                                    CORPORATION
-                                </span>&nbsp;.
-
-                            </p>
-
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" class=" pt-10" style="" align="left">
+                        <td colspan="6" class=" pt-30" style="padding-top: 9px;"
+                            align="left">
                             <p class="fw-600 txt-left " style="">
                                 Sign:
                             </p>
 
 
                         </td>
-                        <td colspan="6" class="pt-10" style="" align="right">
-                            <p class="fw-600 txt-right " style="">
+                        <td colspan="6" class="pt-30" style="padding-top: 9px;"
+                            align="right">
+                            <p class="fw-600 txt-right margin-right:100px" style="margin-right:100px">
                                 Date:
                             </p>
 
@@ -853,48 +868,46 @@
                     </tr>
                     <tr>
                         <td colspan="12"
-                            style="padding-bottom:px;
+                            style="padding-bottom:5px;
                         "
                             class="pt-pb-5 border-bottom-line " align="">
                             <p class="fw-600  " style="">
-                                PRITI SALES CORPORATION
+                                LANGRO INDIA PRIVATE LIMITED
                             </p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4" class="" align="">
-                            <p class=" " style="text-align:initial;width:263px;">
-                                <span class="fw-600 txt-left"> HeadOffice:
-                                </span>&nbsp;#34/123,Dugar
-                                Towers 2nd Floor
-                                MarshallsRoad,
-                                Egmore,Chennai-600008
-                                E-mail:admin@pritisales.in
-                                /info@pritisales.in
-                                Ph:044-42661403I45558608I8609
-
-
+                            <p class=" " style="text-align:initial;width:225px">
+                                <span class="fw-600 txt-left">Registered
+                                    Office:</span>&nbsp;#34/123,
+                                Dugar Towers 2ndFloor
+                                MarshallsRoad,Chennai-600008
+                                Ph:044-42661403I/45558608I/8609
                             </p>
                         </td>
 
-                        <td colspan="8" class="" align="">
-                            <p class=" " style="text-align:initial;width:326px;">
+                        <td colspan="4" class="" align="">
+                            <p class=" " style="text-align:initial;">
                                 <span class="fw-600 txt-left">
-                                    WareHouse:</span>&nbsp;
-                                No:63,SidcoIndustrialEstate,
-                                Sipcot,
-                                Ranipet-632403.
-                                Ph:246168
-                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                LabbaiMankuppam Village ThuthipetAmbur
-                                635811
-                                No.3/1,JalalRoadExtension,
-                                MalligaiThoppu,Ambur-635802.
-                                Ph:04174240330
+                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                KamarajarNagar,Kaspa-'A',Ambur,
+                                VelloreDistrict-635802.
+                                Tel:+9l-04174-245366
+                                Mob:+91-9962517613
 
                             </p>
                         </td>
-
+                        <td colspan="4" style=" " class="" align="">
+                            <p class=" " style="text-align:initial;">
+                                <span class="fw-600 txt-left"> Corporate Identity
+                                    No:</span>&nbsp;
+                                <span
+                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                Email:info@langroindia.com
+                                Internet:www.langroindia.com
+                            </p>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -906,15 +919,18 @@
             <table class="letter-format " style="padding:0;">
                 <tbody>
                     <tr>
-                        <td colspan="12" class="pb-30" align="right">
+                        <td colspan="12" class="pb-15" align="right">
+                            <div style="height: 80px;width:200px;max-height:100%;">
+                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                    class="" alt=""
+                                    style="height: 100%;width:100%;">
+                            </div>
 
-                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                class="" alt=""
-                                style="height: 35px;width:200px;">
 
                         </td>
 
                     </tr>
+
 
                     <tr>
                         <td colspan="12" style=" "class="pt-30" align="center">
@@ -981,7 +997,7 @@
 
                             </p>
                             <p class="12 " style="">
-                                PRITI SALES CORPORATION works for &nbsp;<span
+                                LANGRO INDIA PRIVATE LIMITED works for &nbsp;<span
                                     class="fw-600 txt-left">8
                                     hours</span>&nbsp; (Including Break) a day 5 days a
                                 week and Saturday &nbsp;<span class="fw-600 txt-left">9.45
@@ -1069,8 +1085,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12" style="padding-bottom:75px;"
-                            class="border-bottom-line ">
+                        <td colspan="12">
                             <p class="" style="">
                                 The Company will compensate you for all expenses that are
                                 reasonably incurred and that are directly related to the
@@ -1087,42 +1102,65 @@
 
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="12" style=" "class="pt-10">
+                            <p class=" fw-600" style="">
+                                PROVIDENT FUND SCHEME AND ESIC
+
+                            </p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" style="padding-bottom:76px;"
+                            class="border-bottom-line ">
+                            <p class=" " style="">
+                                Employer contributions will be submitted to the Indian
+                                Government-approved Provident Fund Scheme on your behalf
+                                with
+                                your equal monthly contribution as detailed in &nbsp;<span
+                                    class="fw-600 txt-left"> Annexure A .</span>&nbsp;
+
+                            </p>
+
+                        </td>
+                    </tr>
+
+
 
 
                     <tr>
                         <td colspan="4" class="" align="">
-                            <p class=" " style="text-align:initial;width:263px;">
-                                <span class="fw-600 txt-left"> HeadOffice:
-                                </span>&nbsp;#34/123,Dugar
-                                Towers 2nd Floor
-                                MarshallsRoad,
-                                Egmore,Chennai-600008
-                                E-mail:admin@pritisales.in
-                                /info@pritisales.in
-                                Ph:044-42661403I45558608I8609
-
-
+                            <p class=" " style="text-align:initial;width:225px">
+                                <span class="fw-600 txt-left">Registered
+                                    Office:</span>&nbsp;#34/123,
+                                Dugar Towers 2ndFloor
+                                MarshallsRoad,Chennai-600008
+                                Ph:044-42661403I/45558608I/8609
                             </p>
                         </td>
 
-                        <td colspan="8" class="" align="">
-                            <p class=" " style="text-align:initial;width:326px;">
+                        <td colspan="4" class="" align="">
+                            <p class=" " style="text-align:initial;">
                                 <span class="fw-600 txt-left">
-                                    WareHouse:</span>&nbsp;
-                                No:63,SidcoIndustrialEstate,
-                                Sipcot,
-                                Ranipet-632403.
-                                Ph:246168
-                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                LabbaiMankuppam Village ThuthipetAmbur
-                                635811
-                                No.3/1,JalalRoadExtension,
-                                MalligaiThoppu,Ambur-635802.
-                                Ph:04174240330
+                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                KamarajarNagar,Kaspa-'A',Ambur,
+                                VelloreDistrict-635802.
+                                Tel:+9l-04174-245366
+                                Mob:+91-9962517613
 
                             </p>
                         </td>
-
+                        <td colspan="4" style=" " class="" align="">
+                            <p class=" " style="text-align:initial;">
+                                <span class="fw-600 txt-left"> Corporate Identity
+                                    No:</span>&nbsp;
+                                <span
+                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                Email:info@langroindia.com
+                                Internet:www.langroindia.com
+                            </p>
+                        </td>
                     </tr>
 
 
@@ -1138,36 +1176,16 @@
                     <tr>
                         <td colspan="12" class="pb-30" align="right">
 
-                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                class="" alt=""
-                                style="height: 35px;width:200px;">
+                            <div style="height: 80px;width:200px;max-height:100%;">
+                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                    class="" alt=""
+                                    style="height: 100%;width:100%;">
+                            </div>
 
 
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <td colspan="12" style=" "class="pt-10">
-                            <p class=" fw-600" style="">
-                                PROVIDENT FUND SCHEME AND ESIC
-
-                            </p>
 
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="12" style=" "class="">
-                            <p class=" " style="">
-                                Employer contributions will be submitted to the Indian
-                                Government-approved Provident Fund Scheme on your behalf
-                                with
-                                your equal monthly contribution as detailed in &nbsp;<span
-                                    class="fw-600 txt-left"> Annexure A .</span>&nbsp;
 
-                            </p>
-
-                        </td>
                     </tr>
 
                     <tr>
@@ -1291,7 +1309,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12" style="padding-bottom:28px;"
+                        <td colspan="12" style="padding-bottom:103px;"
                             class=" border-bottom-line ">
                             <p class="  " style="">
                                 Your employment may be terminated at any time by yourself,
@@ -1319,39 +1337,38 @@
 
                     <tr>
                         <td colspan="4" class="" align="">
-                            <p class=" " style="text-align:initial;width:263px;">
-                                <span class="fw-600 txt-left"> HeadOffice:
-                                </span>&nbsp;#34/123,Dugar
-                                Towers 2nd Floor
-                                MarshallsRoad,
-                                Egmore,Chennai-600008
-                                E-mail:admin@pritisales.in
-                                /info@pritisales.in
-                                Ph:044-42661403I45558608I8609
-
-
+                            <p class=" " style="text-align:initial;width:225px">
+                                <span class="fw-600 txt-left">Registered
+                                    Office:</span>&nbsp;#34/123,
+                                Dugar Towers 2ndFloor
+                                MarshallsRoad,Chennai-600008
+                                Ph:044-42661403I/45558608I/8609
                             </p>
                         </td>
 
-                        <td colspan="8" class="" align="">
-                            <p class=" " style="text-align:initial;width:326px;">
+                        <td colspan="4" class="" align="">
+                            <p class=" " style="text-align:initial;">
                                 <span class="fw-600 txt-left">
-                                    WareHouse:</span>&nbsp;
-                                No:63,SidcoIndustrialEstate,
-                                Sipcot,
-                                Ranipet-632403.
-                                Ph:246168
-                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                LabbaiMankuppam Village ThuthipetAmbur
-                                635811
-                                No.3/1,JalalRoadExtension,
-                                MalligaiThoppu,Ambur-635802.
-                                Ph:04174240330
+                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                KamarajarNagar,Kaspa-'A',Ambur,
+                                VelloreDistrict-635802.
+                                Tel:+9l-04174-245366
+                                Mob:+91-9962517613
 
                             </p>
                         </td>
-
+                        <td colspan="4" style=" " class="" align="">
+                            <p class=" " style="text-align:initial;">
+                                <span class="fw-600 txt-left"> Corporate Identity
+                                    No:</span>&nbsp;
+                                <span
+                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                Email:info@langroindia.com
+                                Internet:www.langroindia.com
+                            </p>
+                        </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
@@ -1363,11 +1380,11 @@
                 <tbody>
                     <tr>
                         <td colspan="12" class="pb-30" align="right">
-
-                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                class="" alt=""
-                                style="height: 35px;width:200px;">
-
+                            <div style="height: 80px;width:200px;max-height:100%;">
+                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                    class="" alt=""
+                                    style="height: 100%;width:100%;">
+                            </div>
 
                         </td>
 
@@ -1383,7 +1400,7 @@
                                 identified for replacing you, to the satisfaction of your
                                 manager. If you are not able to serve the notice period one
                                 (1)
-                                month of your CTC to be payable to PRITI SALES CORPORATION
+                                month of your CTC to be payable to LANGRO INDIA PRIVATE LIMITED
 
                             </p>
                             <p class="pt-pb-5 " style="">
@@ -1469,27 +1486,31 @@
                             <p class="fw-600 pt-30  txt-left " style="">
                                 Yours faithfully,
                             </p>
-                            <p class="pt-pb-5 pb-30 fw-600">
-                                For PRITI SALES CORPORATION
 
+                            <p class="pt-pb-5 pb-30 fw-600">
+                                For LANGRO INDIA PRIVATE LIMITED
+
+                            </p>
+                            <img src="{{ URL::asset('assets/images/client_logos/vasa/vasa_sign.jpg') }}"class="" alt="" style="height: 40px;width:150px;">
+                            <p class="fw-600 pt-10 txt-left " style=" ">
+                                (Authorized Signatory)
                             </p>
 
                             <p class="fw-600 pt-10 txt-left " style="">
-                                Founder and CEO of Priti Sales Corporation
+                                Founder and CEO of LANGRO INDIA PRIVATE LIMITED
                             </p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="12" style=" " align="left">
                             <p class=" pt-10 txt-left " style="">
-                                I M Xyz, have read &nbsp;<span
-                                    class="fw-600 txt-left">ANNEXURE
+                                I M {{  $employee_name }}, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE
                                     A &
                                     B,</span>&nbsp; understood, and accept the
                                 appointment upon the terms and conditions as
                                 outlined in this appointment letter for my
-                                position at &nbsp;<span class="fw-600 txt-left">PRITI SALES
-                                    CORPORATION
+                                position at &nbsp;<span class="fw-600 txt-left">LANGRO INDIA
+                                    PRIVATE LIMITED
                                 </span>&nbsp;.
 
                             </p>
@@ -1505,8 +1526,8 @@
 
 
                         </td>
-                        <td colspan="6" class="pt-30" style="" align="right">
-                            <p class="fw-600 txt-right " style="">
+                        <td colspan="6" style="pt-30" align="right">
+                            <p class="fw-600 txt-right margin-right:100px" style="margin-right:100px">
                                 Date:
                             </p>
 
@@ -1514,48 +1535,45 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12"
-                            style="text-align:initial;padding-bottom:183px;"
+                        <td colspan="12" style="text-align:initial;padding-bottom:165px;"
                             class="pt-pb-5 border-bottom-line " align="">
                             <p class="fw-600  " style="">
-                                PRITI SALES CORPORATION
+                                LANGRO INDIA PRIVATE LIMITED
                             </p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4" class="" align="">
-                            <p class=" " style="text-align:initial;width:263px;">
-                                <span class="fw-600 txt-left"> HeadOffice:
-                                </span>&nbsp;#34/123,Dugar
-                                Towers 2nd Floor
-                                MarshallsRoad,
-                                Egmore,Chennai-600008
-                                E-mail:admin@pritisales.in
-                                /info@pritisales.in
-                                Ph:044-42661403I45558608I8609
-
-
+                            <p class=" " style="text-align:initial;width:225px">
+                                <span class="fw-600 txt-left">Registered
+                                    Office:</span>&nbsp;#34/123,
+                                Dugar Towers 2ndFloor
+                                MarshallsRoad,Chennai-600008
+                                Ph:044-42661403I/45558608I/8609
                             </p>
                         </td>
 
-                        <td colspan="8" class="" align="">
-                            <p class=" " style="text-align:initial;width:326px;">
+                        <td colspan="4" class="" align="">
+                            <p class=" " style="text-align:initial;">
                                 <span class="fw-600 txt-left">
-                                    WareHouse:</span>&nbsp;
-                                No:63,SidcoIndustrialEstate,
-                                Sipcot,
-                                Ranipet-632403.
-                                Ph:246168
-                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                LabbaiMankuppam Village ThuthipetAmbur
-                                635811
-                                No.3/1,JalalRoadExtension,
-                                MalligaiThoppu,Ambur-635802.
-                                Ph:04174240330
+                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                KamarajarNagar,Kaspa-'A',Ambur,
+                                VelloreDistrict-635802.
+                                Tel:+9l-04174-245366
+                                Mob:+91-9962517613
 
                             </p>
                         </td>
-
+                        <td colspan="4" style=" " class="" align="">
+                            <p class=" " style="text-align:initial;">
+                                <span class="fw-600 txt-left"> Corporate Identity
+                                    No:</span>&nbsp;
+                                <span
+                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                Email:info@langroindia.com
+                                Internet:www.langroindia.com
+                            </p>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -1572,10 +1590,13 @@
                             <table class="table-one">
                                 <tbody>
                                     <tr>
-                                        <td colspan="12" class="pb-30" align="right">
-                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 35px;width:200px;">
+                                        <td colspan="12" class="" align="right">
+                                            <div style="height: 80px;width:200px">
+                                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                    class="" alt=""
+                                                    style="height:100%;width:100%;">
+                                            </div>
+
                                         </td>
 
                                     </tr>
@@ -1591,25 +1612,25 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="3" style=" " align="">
+                                        <td colspan="4" style=" " align="">
                                             <p class="fw-600 txt-left " style="">
                                                 Name<span class="">:</span>
                                             </p>
 
                                         </td>
-                                        <td colspan="3" style=" " align="">
+                                        <td colspan="4" style=" " align="">
                                             <p class="txt-left " style="">
 
                                             </p>
 
                                         </td>
-                                        <td colspan="3" style=" " align="">
-                                            <p class="fw-600 txt-left " style="">
+                                        <td colspan="4" style=" " align="">
+                                            <p class="fw-600 txt-left margin-right:100px" style="margin-right:100px">
                                                 Date <span class="">:</span>
                                             </p>
 
                                         </td>
-                                        <td colspan="3" style=" " align="">
+                                        <td colspan="4" style=" " align="">
                                             <p class=" txt-left " style="">
 
                                             </p>
@@ -1617,16 +1638,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="6" style=" " align="">
-                                            <p class="fw-600 txt-left pt-20 "
-                                                style="">
+                                        <td colspan="4" style=" " align="">
+                                            <p class="fw-600 txt-left pt-20 " style="">
                                                 No <span class="">:</span>
                                             </p>
 
                                         </td>
-                                        <td colspan="6" style=" " align="">
+                                        <td colspan="4" style=" " align="">
                                             <p class="txt-left pt-20 " style="">
-                                                {{-- <span class="">:</span> --}}
+
                                             </p>
 
                                         </td>
@@ -1634,8 +1654,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="">
-                                            <p class=" pb-30 txt-left pt-20 "
-                                                style="">
+                                            <p class=" pb-30 txt-left pt-20 " style="">
                                                 I have read and agree to comply with the terms
                                                 of the attached NDA. I have signed and
                                                 handed over the original copy of the NDA to HR.
@@ -1657,15 +1676,14 @@
 
                                                 use of “Computer network and Internet access” of
                                                 <span class="fw-600  " style="">
-                                                     PRITI MARKETING AGENCIES </span>. I
+                                                    LANGRO INDIA PRIVATE LIMITED </span>. I
                                             </p>
                                             <p class=" txt-left pt-20 " style="">
                                                 understand that violation of this policy may
                                                 result in disciplinary action, including
 
                                             </p>
-                                            <p class=" txt-left pt-20 pb-30 "
-                                                style="">
+                                            <p class=" txt-left pt-20 pb-30 " style="">
                                                 possible termination. Also I have received a
                                                 copy of the above policies.
 
@@ -1674,7 +1692,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="12">
+                                        <td>
                                             <p class=" txt-left pt-20 " style="">
 
                                                 Signature of the Employee
@@ -1688,45 +1706,50 @@
 
                                     <tr>
                                         <td class="" colspan="12"
-                                            style="padding-top: 432px">
+                                            style="padding-top: 459px">
                                             <table style="border-top: 1px solid #000">
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="4" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:;">
-                                                                <span class="fw-600 txt-left"> HeadOffice:
-                                                                </span>&nbsp;#34/123,Dugar
-                                                                Towers 2nd Floor
-                                                                MarshallsRoad,
-                                                                Egmore,Chennai-600008
-                                                                E-mail:admin@pritisales.in
-                                                                /info@pritisales.in
-                                                                Ph:044-42661403I45558608I8609
-
-
+                                                                style="text-align:initial;width:225px">
+                                                                <span
+                                                                    class="fw-600 txt-left">Registered
+                                                                    Office:</span>&nbsp;#34/123,
+                                                                Dugar Towers 2ndFloor
+                                                                MarshallsRoad,Chennai-600008
+                                                                Ph:044-42661403I/45558608I/8609
                                                             </p>
                                                         </td>
 
-                                                        <td colspan="8" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:326px;">
+                                                                style="text-align:initial;">
                                                                 <span class="fw-600 txt-left">
-                                                                    WareHouse:</span>&nbsp;
-                                                                No:63,SidcoIndustrialEstate,
-                                                                Sipcot,
-                                                                Ranipet-632403.
-                                                                Ph:246168
-                                                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                                                LabbaiMankuppam Village ThuthipetAmbur
-                                                                635811
-                                                                No.3/1,JalalRoadExtension,
-                                                                MalligaiThoppu,Ambur-635802.
-                                                                Ph:04174240330
+                                                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                                                KamarajarNagar,Kaspa-'A',Ambur,
+                                                                VelloreDistrict-635802.
+                                                                Tel:+9l-04174-245366
+                                                                Mob:+91-9962517613
 
                                                             </p>
                                                         </td>
+                                                        <td colspan="4" class=""
+                                                            align="">
 
+                                                            <p class=" "
+                                                                style="text-align:initial;">
+                                                                <span class="fw-600 txt-left">
+                                                                    Corporate
+                                                                    Identity No:</span>&nbsp;
+                                                                <span
+                                                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                                                Email:info@langroindia.com
+                                                                Internet:www.langroindia.com
+                                                            </p>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -1752,11 +1775,15 @@
                             <table class="table-one">
                                 <tbody>
                                     <tr>
-                                        <td colspan="12" class="pb-30" align="right">
-                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 35px;width:200px;">
+                                        <td colspan="12" class="" align="right">
+
+                                            <div style="height: 80px;width:200px">
+                                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                    class="" alt=""
+                                                    style="height:100%;width:100%;">
+                                            </div>
                                         </td>
+
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="center">
@@ -1775,8 +1802,8 @@
                                                 </span>
                                                 is made at Chennai
                                                 on this September 1st, day
-                                                of 2021 by and between   Priti Sales Corporation
-                                                and Associate of Vasa Group
+                                                of 2021 by and between Langro India Private
+                                                Limited and Associate of Vasa Group
                                                 of Companies, India hereinafter referred to as
                                                 “Langro” (which expression unless
                                                 repugnant to the context shall mean and include
@@ -1791,15 +1818,15 @@
                                             </p>
                                             <p class=" txt-left pt-20" style="">
                                                 Whereas it is anticipated that, it may be
-                                                necessary for Indchemto disclose certain
+                                                necessary for Langro to disclose certain
                                                 confidential and proprietary information in
                                                 written, oral, visual and/or
                                                 physical/sample form to the Recipient or the
                                                 Recipient may otherwise come into
                                                 control or possession of certain information,
                                                 including those of the customers of
-                                                Indchemwhich is considered as confidential by
-                                                Indchem(collectively “Confidential
+                                                Langro which is considered as confidential by
+                                                Langro (collectively “Confidential
                                                 Information” and as defined herein).
                                             </p>
 
@@ -1818,7 +1845,7 @@
                                                             Information:</span>
                                                         Confidential Information shall mean and
                                                         include
-                                                        any information disclosed by  Priti to
+                                                        any information disclosed by Langro to
                                                         the Recipient, either directly or
                                                         indirectly, either orally or in writing,
                                                         by inspection of tangible objects
@@ -1846,22 +1873,22 @@
                                                         information, material or date relating
                                                         to
                                                         the current and/or future business and
-                                                        operations of  Priti and analysis,
+                                                        operations of Langro and analysis,
                                                         compilations, studies, summaries,
                                                         extracts or other documentation
                                                         prepared by the Recipient based on
-                                                        information disclosed by  Priti and any
+                                                        information disclosed by Langro and any
                                                         other information considered as
                                                         confidential information by Langro.
                                                         Confidential Information shall also
                                                         include information disclosed to the
                                                         Recipient by third parties on behalf of
-                                                         Priti or that may otherwise come
+                                                        Langro or that may otherwise come
                                                         into the possession and / or control of
                                                         the Recipient. The term Confidential
                                                         Information shall also include any
                                                         derivatives made out of any Confidential
-                                                        Information of  Priti and also any
+                                                        Information of Langro and also any
                                                         information gathered by the use or
                                                         inspection of the Confidential
                                                         Information of Langro.
@@ -1874,7 +1901,7 @@
                                                     <p class=" txt-left  pt-10 "
                                                         style="">
                                                         <span class="fw-600">Scope:</span>
-                                                         Priti retains the sole and exclusive
+                                                        Langro retains the sole and exclusive
                                                         ownership
                                                         and intellectual
                                                         property rights in the Confidential
@@ -1886,7 +1913,7 @@
                                                         agreement between the parties, unless
                                                         expressly
                                                         agreed to the contrary by
-                                                         Priti in writing prior to such
+                                                        Langro in writing prior to such
                                                         disclosure.
                                                     </p>
                                                 </li>
@@ -1895,45 +1922,50 @@
                                     </tr>
                                     <tr>
                                         <td class="" colspan="12"
-                                            style="padding-top: 20px">
+                                            style="padding-top: 48px">
                                             <table style="border-top: 1px solid #000">
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="4" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:;">
-                                                                <span class="fw-600 txt-left"> HeadOffice:
-                                                                </span>&nbsp;#34/123,Dugar
-                                                                Towers 2nd Floor
-                                                                MarshallsRoad,
-                                                                Egmore,Chennai-600008
-                                                                E-mail:admin@pritisales.in
-                                                                /info@pritisales.in
-                                                                Ph:044-42661403I45558608I8609
-
-
+                                                                style="text-align:initial;width:225px">
+                                                                <span
+                                                                    class="fw-600 txt-left">Registered
+                                                                    Office:</span>&nbsp;#34/123,
+                                                                Dugar Towers 2ndFloor
+                                                                MarshallsRoad,Chennai-600008
+                                                                Ph:044-42661403I/45558608I/8609
                                                             </p>
                                                         </td>
 
-                                                        <td colspan="8" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:326px;">
+                                                                style="text-align:initial;">
                                                                 <span class="fw-600 txt-left">
-                                                                    WareHouse:</span>&nbsp;
-                                                                No:63,SidcoIndustrialEstate,
-                                                                Sipcot,
-                                                                Ranipet-632403.
-                                                                Ph:246168
-                                                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                                                LabbaiMankuppam Village ThuthipetAmbur
-                                                                635811
-                                                                No.3/1,JalalRoadExtension,
-                                                                MalligaiThoppu,Ambur-635802.
-                                                                Ph:04174240330
+                                                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                                                KamarajarNagar,Kaspa-'A',Ambur,
+                                                                VelloreDistrict-635802.
+                                                                Tel:+9l-04174-245366
+                                                                Mob:+91-9962517613
 
                                                             </p>
                                                         </td>
+                                                        <td colspan="4" class=""
+                                                            align="">
 
+                                                            <p class=" "
+                                                                style="text-align:initial;">
+                                                                <span class="fw-600 txt-left">
+                                                                    Corporate
+                                                                    Identity No:</span>&nbsp;
+                                                                <span
+                                                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                                                Email:info@langroindia.com
+                                                                Internet:www.langroindia.com
+                                                            </p>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -1959,10 +1991,13 @@
                             <table class="table-one">
                                 <tbody>
                                     <tr>
-                                        <td colspan="12" class="pb-30" align="right">
-                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 35px;width:200px;">
+                                        <td colspan="12" class="" align="right">
+                                            <div style="height: 80px;width:200px">
+                                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                    class="" alt=""
+                                                    style="height:100%;width:100%;">
+                                            </div>
+
                                         </td>
 
                                     </tr>
@@ -1993,7 +2028,7 @@
                                                 Information. Any copies
                                                 that cannot be so returned shall be immediately
                                                 destroyed under certificate
-                                                to  Priti in such a manner that they can never
+                                                to Langro in such a manner that they can never
                                                 be
                                                 retrieved by whatsoever
                                                 method and in whatsoever form subsequent to such
@@ -2033,7 +2068,7 @@
                                                 encumbrance of whatsoever nature on the
                                                 Confidential Information. These
                                                 shall be in addition to any other restrictions
-                                                that  Priti may stipulate from
+                                                that Langro may stipulate from
                                                 time to time, which shall be binding upon the
                                                 Recipient. These restrictions
                                                 also apply to any media containing the
@@ -2046,8 +2081,7 @@
                                         <td colspan="12" class="" align="right">
                                             <p class=" txt-left  pt-10 " style="">5.
                                                 <span class="fw-600"> No Obligation:</span>
-                                                Nothing herein shall obligate  Priti to
-                                                disclose
+                                                Nothing herein shall obligate Langro to disclose
                                                 any
 
                                                 information under this Agreement or to proceed
@@ -2066,7 +2100,7 @@
                                                 The Recipient also agrees that all the
                                                 provisions of this
                                                 Agreement shall be specifically enforceable by
-                                                 Priti against the Recipient
+                                                Langro against the Recipient
                                                 and its agents, employees and/or representatives
                                                 by injunctive and other
                                                 relief, including equitable relief. All the
@@ -2098,45 +2132,50 @@
 
                                     <tr>
                                         <td class="" colspan="12"
-                                            style="padding-top:119px ">
+                                            style="padding-top:146px ">
                                             <table style="border-top: 1px solid #000">
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="4" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:;">
-                                                                <span class="fw-600 txt-left"> HeadOffice:
-                                                                </span>&nbsp;#34/123,Dugar
-                                                                Towers 2nd Floor
-                                                                MarshallsRoad,
-                                                                Egmore,Chennai-600008
-                                                                E-mail:admin@pritisales.in
-                                                                /info@pritisales.in
-                                                                Ph:044-42661403I45558608I8609
-
-
+                                                                style="text-align:initial;width:225px">
+                                                                <span
+                                                                    class="fw-600 txt-left">Registered
+                                                                    Office:</span>&nbsp;#34/123,
+                                                                Dugar Towers 2ndFloor
+                                                                MarshallsRoad,Chennai-600008
+                                                                Ph:044-42661403I/45558608I/8609
                                                             </p>
                                                         </td>
 
-                                                        <td colspan="8" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:326px;">
+                                                                style="text-align:initial;">
                                                                 <span class="fw-600 txt-left">
-                                                                    WareHouse:</span>&nbsp;
-                                                                No:63,SidcoIndustrialEstate,
-                                                                Sipcot,
-                                                                Ranipet-632403.
-                                                                Ph:246168
-                                                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                                                LabbaiMankuppam Village ThuthipetAmbur
-                                                                635811
-                                                                No.3/1,JalalRoadExtension,
-                                                                MalligaiThoppu,Ambur-635802.
-                                                                Ph:04174240330
+                                                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                                                KamarajarNagar,Kaspa-'A',Ambur,
+                                                                VelloreDistrict-635802.
+                                                                Tel:+9l-04174-245366
+                                                                Mob:+91-9962517613
 
                                                             </p>
                                                         </td>
+                                                        <td colspan="4" class=""
+                                                            align="">
 
+                                                            <p class=" "
+                                                                style="text-align:initial;">
+                                                                <span class="fw-600 txt-left">
+                                                                    Corporate
+                                                                    Identity No:</span>&nbsp;
+                                                                <span
+                                                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                                                Email:info@langroindia.com
+                                                                Internet:www.langroindia.com
+                                                            </p>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -2162,10 +2201,14 @@
                             <table class="table-one">
                                 <tbody>
                                     <tr>
-                                        <td colspan="12" class="pb-30" align="right">
-                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 35px;width:200px;">
+                                        <td colspan="12" class="" align="right">
+
+                                            <div
+                                                style="height: 80px;width:200px;max-height:100%;">
+                                                <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                    class="" alt=""
+                                                    style="height:100%;width:100%;">
+                                            </div>
                                         </td>
 
                                     </tr>
@@ -2177,14 +2220,13 @@
                                                 <span class="fw-600">Compensation:</span>
                                                 The Recipient agrees that monetary damages would
                                                 be
-                                                inadequate compensation to  Priti in the event
+                                                inadequate compensation to Langro in the event
                                                 the Recipient breaches any
                                                 provisions of this Agreement. Therefore the
                                                 parties agree that in the event
                                                 of a breach or threatened breach of
                                                 confidentiality or any term of this
-                                                Agreement,  Priti shall be, without prejudice
-                                                to
+                                                Agreement, Langro shall be, without prejudice to
                                                 any other remedies that it
                                                 may have in this regard, and notwithstanding the
                                                 arbitration provision
@@ -2300,45 +2342,50 @@
 
                                     <tr>
                                         <td class="" colspan="12"
-                                            style="padding-top:217px">
+                                            style="padding-top:266px">
                                             <table style="border-top: 1px solid #000">
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="4" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:;">
-                                                                <span class="fw-600 txt-left"> HeadOffice:
-                                                                </span>&nbsp;#34/123,Dugar
-                                                                Towers 2nd Floor
-                                                                MarshallsRoad,
-                                                                Egmore,Chennai-600008
-                                                                E-mail:admin@pritisales.in
-                                                                /info@pritisales.in
-                                                                Ph:044-42661403I45558608I8609
-
-
+                                                                style="text-align:initial;width:225px">
+                                                                <span
+                                                                    class="fw-600 txt-left">Registered
+                                                                    Office:</span>&nbsp;#34/123,
+                                                                Dugar Towers 2ndFloor
+                                                                MarshallsRoad,Chennai-600008
+                                                                Ph:044-42661403I/45558608I/8609
                                                             </p>
                                                         </td>
 
-                                                        <td colspan="8" class="" align="">
+                                                        <td colspan="4" class=""
+                                                            align="">
                                                             <p class=" "
-                                                                style="text-align:initial;width:326px;">
+                                                                style="text-align:initial;">
                                                                 <span class="fw-600 txt-left">
-                                                                    WareHouse:</span>&nbsp;
-                                                                No:63,SidcoIndustrialEstate,
-                                                                Sipcot,
-                                                                Ranipet-632403.
-                                                                Ph:246168
-                                                                No:114/1,BhangiShoptoVenkatasamuthiramRoad,
-                                                                LabbaiMankuppam Village ThuthipetAmbur
-                                                                635811
-                                                                No.3/1,JalalRoadExtension,
-                                                                MalligaiThoppu,Ambur-635802.
-                                                                Ph:04174240330
+                                                                    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                                                KamarajarNagar,Kaspa-'A',Ambur,
+                                                                VelloreDistrict-635802.
+                                                                Tel:+9l-04174-245366
+                                                                Mob:+91-9962517613
 
                                                             </p>
                                                         </td>
+                                                        <td colspan="4" class=""
+                                                            align="">
 
+                                                            <p class=" "
+                                                                style="text-align:initial;">
+                                                                <span class="fw-600 txt-left">
+                                                                    Corporate
+                                                                    Identity No:</span>&nbsp;
+                                                                <span
+                                                                    class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
+                                                                Email:info@langroindia.com
+                                                                Internet:www.langroindia.com
+                                                            </p>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -2354,7 +2401,6 @@
             </table>
         </div>
     </div>
-
 
 
 </body>
