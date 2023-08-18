@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
+use App\Exports\AbsentReportExport;
 use App\Exports\EmployeeAttendanceExport;
 use App\Exports\BasicAttendanceExport;
 use App\Exports\DetailedAttendanceExport;
@@ -26,61 +27,81 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class VmtEmployeeAttendanceController extends Controller
 {
-    public function generateDetailedAttendanceReports(Request $request,VmtAttendanceReportsService $attendance_report_service)
+    public function generateDetailedAttendanceReports(Request $request, VmtAttendanceReportsService $attendance_report_service)
     {
-      
+
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         // $start_date ='2023-06-26';
         // $end_date ='2023-07-26';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date,$end_date)), 'Attendance.xlsx');
-
+        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date)), 'Attendance.xlsx');
     }
 
-    public function showBasicAttendanceReport(Request $request){
-        $attendance_year=VmtEmployeeAttendance::groupBy(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
+    public function showBasicAttendanceReport(Request $request)
+    {
+        $attendance_year = VmtEmployeeAttendance::groupBy(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
         $attendance_year_device = VmtStaffAttendanceDevice::groupBY(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
-        $attendance_year = array_merge( $attendance_year, $attendance_year_device);
-        for($i=0; $i < count($attendance_year); $i++)
-        {
-            $attendance_year[$i] = date("Y",strtotime($attendance_year[$i]));
+        $attendance_year = array_merge($attendance_year, $attendance_year_device);
+        for ($i = 0; $i < count($attendance_year); $i++) {
+            $attendance_year[$i] = date("Y", strtotime($attendance_year[$i]));
         }
 
         $attendance_available_years = array_unique($attendance_year);
-        return view('reports.vmt_basic_attendance_reports',compact('attendance_available_years'));
+        return view('reports.vmt_basic_attendance_reports', compact('attendance_available_years'));
     }
 
-    public function showDetailedAttendanceReport(Request $request){
+    public function showDetailedAttendanceReport(Request $request)
+    {
         return view('reports.vmt_detailed_attendance_reports');
     }
 
-    public function fetchAttendanceMonthForGivenYear(Request $request){
-        $attendance_month=VmtEmployeeAttendance::whereYear('date',$request->attendance_year)
-                                              ->groupBy(\DB::raw("MONTH(date)"))->pluck('date')->toArray();
-        $attendance_month_device = VmtStaffAttendanceDevice::whereyear('date',$request->attendance_year)
-                                              ->groupBY(\DB::raw("MONTH(date)"))->pluck('date')->toArray();
-        $attendance_month = array_merge( $attendance_month, $attendance_month_device);
-        for($i=0; $i < count($attendance_month); $i++)
-        {
-            $attendance_month[$i] = date("m",strtotime($attendance_month[$i]));
+    public function fetchAttendanceMonthForGivenYear(Request $request)
+    {
+        $attendance_month = VmtEmployeeAttendance::whereYear('date', $request->attendance_year)
+            ->groupBy(\DB::raw("MONTH(date)"))->pluck('date')->toArray();
+        $attendance_month_device = VmtStaffAttendanceDevice::whereyear('date', $request->attendance_year)
+            ->groupBY(\DB::raw("MONTH(date)"))->pluck('date')->toArray();
+        $attendance_month = array_merge($attendance_month, $attendance_month_device);
+        for ($i = 0; $i < count($attendance_month); $i++) {
+            $attendance_month[$i] = date("m", strtotime($attendance_month[$i]));
         }
 
         $attendance_available_months = array_unique($attendance_month);
 
-       return  $attendance_available_months;
+        return  $attendance_available_months;
     }
 
-    public function basicAttendanceReport(Request $request,VmtAttendanceReportsService $attendance_report_service){
+    public function basicAttendanceReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
 
         $client_domain = $request->getHttpHost();
         //$client_domain = 'brandavatar.abshrms.com';
-        $year=$request->year;
-        $month=$request->month;
-         // dd($attendance_report_service->basicAttendanceReport($year)[0]);
-          //return $attendance_report_service->basicAttendanceReport($year);
-         return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year,$month,$client_domain)), 'Test.xlsx');
-        }
-
-
+        $year = $request->year;
+        $month = $request->month;
+        // dd($attendance_report_service->basicAttendanceReport($year)[0]);
+        //return $attendance_report_service->basicAttendanceReport($year);
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year, $month, $client_domain)), 'Test.xlsx');
     }
 
+    public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = '2023-07-15';
+        $end_date = '2023-07-20';
+        return $attendance_report_service->fetchAbsentReportData($start_date, $end_date);
+    }
+
+    public function downloadAbsentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = '2023-07-15';
+        $end_date = '2023-07-20';
+        return Excel::download(new AbsentReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date)), 'Absent Report.xlsx');
+    }
+
+    public function fetchLCReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = '2023-07-15';
+        $end_date = '2023-07-20';
+        $response = $attendance_report_service->fetchLCReportData($start_date, $end_date);
+        return $response;
+    }
+}

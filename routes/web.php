@@ -454,8 +454,22 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
     Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
 
-    //Payroll Settings
-    Route::post('save-genral-payroll-settings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveGenralPayrollSettings'])->name('saveGenralPayrollSettings');
+    //Payroll generalSettings
+    Route::post('save-genral-payroll-settings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveGenralPayrollSettings'])->name    ('saveGenralPayrollSettings');
+    Route::post('updateGenralPayrollSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updateGenralPayrollSettings'])->name('updateGenralPayrollSettings');
+
+    //payroll statutory PT settings
+    Route::post('fetchProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchProfessionalTaxSettings'])->name('fetchProfessionalTaxSettings');
+    Route::post('saveProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveProfessionalTaxSettings'])->name('saveProfessionalTaxSettings');
+    Route::post('updateProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updateProfessionalTaxSettings'])->name('updateProfessionalTaxSettings');
+
+//payroll statutory LWF settings
+    Route::post('fetchlwfSettingsDetails', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchlwfSettingsDetails'])->name('fetchlwfSettingsDetails');
+    Route::post('savelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'savelwfSettings'])->name('savelwfSettings');
+    Route::post('updatelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updatelwfSettings'])->name('updatelwfSettings');
+
+
+
 
     //Get Attendance For run payroll
     Route::get('/fetch-attendance-data',[App\Http\Controllers\VmtPayRunController::class,'fetch_attendance_data']);
@@ -555,6 +569,23 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
     Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
     Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');
+
+
+    //Epf employee
+    Route::post('/Paygroup/CreatePayrollEpf', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayrollEpf'])->name('CreatePayrollEpf');
+    Route::post('/Paygroup/updatePayrollEpf', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePayrollEpf'])->name('updatePayrollEpf');
+    Route::post('/Paygroup/deleteEpfEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deleteEpfEmployee'])->name('deleteEpfEmployee');
+    Route::post('/Paygroup/authorizeEpfEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeEpfEmployee'])->name('authorizeEpfEmployee');
+
+    //Esi employee
+    Route::post('/Paygroup/CreatePayrollEsi', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayrollEsi'])->name('CreatePayrollEsi');
+    Route::post('/Paygroup/updatePayrollEsi', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePayrollEsi'])->name('updatePayrollEsi');
+    Route::post('/Paygroup/deleteEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deleteEsiEmployee'])->name('deleteEsiEmployee');
+    Route::post('/Paygroup/authorizeEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeEsiEmployee'])->name('authorizeEsiEmployee');
+
+    //EmpAbryPmrpy employee
+    Route::post('/Paygroup/CreateEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreateEmpAbryPmrpy'])->name('CreateEmpAbryPmrpy');
+    Route::post('/Paygroup/removeEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'removeEmpAbryPmrpy'])->name('removeEmpAbryPmrpy');
 
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
@@ -753,6 +784,11 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::get('/reports/basic-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showDetailedAttendanceReport'])->name('showDetailedAttendanceReport');
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
+
+    Route::get('/fetch-absent-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchAbsentReportData']);
+    Route::get('/report/download-absent-report',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'downloadAbsentReport']);
+    Route::get('fetch-LC-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,
+    'fetchLCReportData']);
 
     //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');

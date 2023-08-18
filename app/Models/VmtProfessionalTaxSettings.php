@@ -9,5 +9,5 @@ class VmtProfessionalTaxSettings extends Model
 {
     use HasFactory;
 
-   protected $table = 'vmt_labour_welfare_fund_settings';
+   protected $table = 'vmt_professional_tax_settings';
 }

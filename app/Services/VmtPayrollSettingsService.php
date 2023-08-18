@@ -587,14 +587,13 @@ class VmtPayrollSettingsService{
     //     }
     // }
 
-    public function saveProfessionalTaxSettings($pt_number,$state,$location,$employees,$deduction_cycle,$status)
+    public function saveProfessionalTaxSettings($pt_number,$state,$location,$deduction_cycle,$status)
     {
         $validator = Validator::make(
             $data = [
                 'pt_number' => $pt_number,
                 'state' => $state,
                 'location' => $location,
-                'employees' =>$employees,
                 'deduction_cycle' =>$deduction_cycle,
                 'status' => $status,
             ],
@@ -602,7 +601,6 @@ class VmtPayrollSettingsService{
                 'pt_number' => 'required',
                 'state' => 'required',
                 'location' => 'required',
-                'employees' => 'employees',
                 'deduction_cycle' => 'required',
                 'status' => 'required',
             ],
@@ -620,32 +618,36 @@ class VmtPayrollSettingsService{
         }
 
         try{
-            $client_id =sessionGetSelectedClientid();
+             $client_id =sessionGetSelectedClientid();
+            
 
-            $save_pt_settings =VmtProfessionalTaxSettings::where($client_id,$client_id);
+            $save_pt_settings =VmtProfessionalTaxSettings::where("location",$location)->where('client_id',$client_id);
 
                 if($save_pt_settings->exists()){
 
-                    $save_pt_settings =$save_pt_settings->first();
+                 $status ="failure";
+                 $message ="professional tax settings already saved";
 
                 }else{
 
                     $save_pt_settings =new VmtProfessionalTaxSettings;
-                }
 
-            $save_pt_settings->client_id = $client_id;
-            $save_pt_settings->pt_number = $pt_number;
-            $save_pt_settings->state = $state;
-            $save_pt_settings->location =$location ;
-            $save_pt_settings->employees =$employees ;
-            $save_pt_settings->deduction_cycle = $deduction_cycle;
-            $save_pt_settings->status =$status ;
-            $save_pt_settings->save();
+                    $save_pt_settings->client_id = $client_id;
+                    $save_pt_settings->pt_number = $pt_number;
+                    $save_pt_settings->state = $state;
+                    $save_pt_settings->location =$location ;
+                    $save_pt_settings->deduction_cycle = $deduction_cycle;
+                    $save_pt_settings->status =$status ;
+                    $save_pt_settings->save();
+
+                    $status ="success";
+                    $message ="professional tax settings saved successfully";
+             }
 
             return $response=([
-                "status" => "success",
-                "message" => "professional tax settings saved successfully",
-                "data" => "",
+                "status" =>$status ,
+                "message" =>$message ,
+                "data" => $save_pt_settings,
             ]);
 
          }catch(\Exception $e){
@@ -656,7 +658,7 @@ class VmtPayrollSettingsService{
             ]);
         }
     }
-    public function updateProfessionalTaxSettings($record_id,$pt_number,$state,$location,$employees,$deduction_cycle,$status)
+    public function updateProfessionalTaxSettings($record_id,$pt_number,$state,$location,$deduction_cycle,$status)
     {
         $validator = Validator::make(
             $data = [
@@ -664,7 +666,6 @@ class VmtPayrollSettingsService{
                 'pt_number' => $pt_number,
                 'state' => $state,
                 'location' => $location,
-                'employees' =>$employees,
                 'deduction_cycle' =>$deduction_cycle,
                 'status' => $status,
             ],
@@ -673,7 +674,6 @@ class VmtPayrollSettingsService{
                 'pt_number' => 'required',
                 'state' => 'required',
                 'location' => 'required',
-                'employees' => 'employees',
                 'deduction_cycle' => 'required',
                 'status' => 'required',
             ],
@@ -703,15 +703,14 @@ class VmtPayrollSettingsService{
             $update_pt_settings->pt_number = $pt_number;
             $update_pt_settings->state = $state;
             $update_pt_settings->location =$location ;
-            $update_pt_settings->employees =$employees ;
             $update_pt_settings->deduction_cycle = $deduction_cycle;
             $update_pt_settings->status =$status ;
             $update_pt_settings->save();
 
             return $response=([
                 "status" => "success",
-                "message" => "professional tax settings saved successfully",
-                "data" => "",
+                "message" => "professional tax settings updated successfully",
+                "data" =>$update_pt_settings,
             ]);
         }else{
 
@@ -727,12 +726,12 @@ class VmtPayrollSettingsService{
          }catch(\Exception $e){
             return response()->json([
                 "status" => "failure",
-                "message" => "error while save professional tax settings",
+                "message" => "error while updating professional tax settings",
                 "data" => $e->getmessage(),
             ]);
         }
     }
-    public function savelwfSettings($state,$employees_contrib,$employer_contrib,$employees,$deduction_cycle,$status)
+    public function savelwfSettings($state,$employees_contrib,$employer_contrib,$deduction_cycle,$status)
     {
         $validator = Validator::make(
             $data = [
@@ -740,12 +739,10 @@ class VmtPayrollSettingsService{
                 'employees_contrib' => $employees_contrib,
                 'employers_contrib' => $employer_contrib,
                 'deduction_cycle' =>$deduction_cycle,
-                'employees' =>$employees,
                 'status' => $status,
             ],
             $rules = [
                 'state' => 'required',
-                'employees_contrib' => 'required',
                 'employer_contrib' => 'required',
                 'deduction_cycle' => 'required',
                 'employees' => 'employees',
@@ -782,7 +779,6 @@ class VmtPayrollSettingsService{
             $save_lwf_settings->employees_contrib = $employees_contrib;
             $save_lwf_settings->state = $state;
             $save_lwf_settings->employer_contrib =$employer_contrib ;
-            $save_lwf_settings->employees =$employees ;
             $save_lwf_settings->deduction_cycle = $deduction_cycle;
             $save_lwf_settings->status =$status ;
             $save_lwf_settings->save();
@@ -802,23 +798,22 @@ class VmtPayrollSettingsService{
         }
     }
 
-        public function updatelwfSettings($record_id,$state,$employees_contrib,$employer_contrib,$employees,$deduction_cycle,$status)
+        public function updatelwfSettings($record_id,$state,$employees_contrib,$employer_contrib,$deduction_cycle,$status)
         {
             $validator = Validator::make(
                 $data = [
                     'record_id' => $record_id,
                     'state' => $state,
                     'employees_contrib' => $employees_contrib,
-                    'emplolyers_contrib' => $emplolyers_contrib,
+                    'employer_contrib' => $employer_contrib,
                     'deduction_cycle' =>$deduction_cycle,
-                    'employees' =>$employees,
                     'status' => $status,
                 ],
                 $rules = [
                     'record_id' => 'required',
                     'state' => 'required',
                     'employees_contrib' => 'required',
-                    'emplolyers_contrib' => 'required',
+                    'employers_contrib' => 'required',
                     'deduction_cycle' => 'required',
                     'employees' => 'employees',
                     'status' => 'required',
