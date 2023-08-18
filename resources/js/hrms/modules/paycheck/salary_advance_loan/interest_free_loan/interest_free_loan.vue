@@ -54,7 +54,7 @@
                                             :options="useEmpStore.max_tenure_month" class="w-full md:w-10rem"
                                             optionValue="month" optionLabel="month" placeholder="Select Month"
                                             :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-                                        <p class="text-sm">Month</p>
+                                        <label for="" class="fs-5 ml-2">Month</label>
                                         <br>
                                         <span v-if="v$.Term.$error" class="font-semibold text-red-400 fs-6">
                                             {{ v$.Term.$errors[0].$message }}

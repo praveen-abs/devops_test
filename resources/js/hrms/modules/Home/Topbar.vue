@@ -236,7 +236,8 @@
                     <h2 class="text-lg font-bold">Are you sure you want to do that?</h2>
 
                     <p class="mt-2 text-sm text-gray-500">
-                        Do you really wish to log out? Any unsaved modifications will not be retained.
+                        Doing that could have cause some issues elsewhere, are you 100% sure it's
+                        OK?
                     </p>
 
                     <div class="mt-4 flex gap-2 justify-center">
