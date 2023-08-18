@@ -56,7 +56,7 @@ const getHolidays = () => {
                 }
             }
         });
-        currentImage.value = holidays.value[currentIndex.value].image
+        // currentImage.value = holidays.value[currentIndex.value].image
     })
 }
 

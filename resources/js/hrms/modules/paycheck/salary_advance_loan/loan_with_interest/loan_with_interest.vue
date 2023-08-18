@@ -118,7 +118,7 @@
                                     optionLabel="month" optionValue="month" placeholder="select month"
                                     class="w-full md:w-10rem"
                                     :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-                                <label for="" class="fs-6 ml-1" style="color:var(--navy) ; ">Month</label>
+                                <label for="" class="fs-5 ml-1" style="color:var(--navy) ; ">Month</label>
                                 <br>
 
                                 <span v-if="v$.Term.$error" class="font-semibold text-red-400 fs-6">
