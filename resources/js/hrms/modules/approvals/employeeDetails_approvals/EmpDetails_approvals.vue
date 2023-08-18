@@ -1,18 +1,7 @@
 <template>
-    <div>
-        <h1 class=" fw-semibold fs-4 mb-5">Employee Details </h1>
-
-        <Dialog header="Header" v-model:visible="EmpDetailStore.canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-            <template #header>
-                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
-            </template>
-            <template #footer>
-                <h5 style="text-align: center">Please wait...</h5>
-            </template>
-        </Dialog>
-
+    <LoadingSpinner v-if="EmpDetailStore.canShowLoadingScreen" class="absolute z-50 bg-white" />
+    <div class="w-full p-2">
+        <h1 class=" font-semibold text-lg mb-2">Employee Details </h1>
         <Dialog header="Confirmation" v-model:visible="canShowConfirmationAll"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '580px' }" :modal="true">
             <div class="confirmation-content">
@@ -38,6 +27,7 @@
                 <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
             </template>
         </Dialog>
+
 
 
 
@@ -125,6 +115,8 @@ import { UseEmpDetailApprovalsStore } from "./EmpDetails_approvals_service";
 import axios from "axios";
 import map from 'lodash/map';
 import {Service}  from "../../Service/Service";
+import LoadingSpinner from "../../../components/LoadingSpinner.vue";
+LoadingSpinner
 
 const current_user_id = Service();
 
