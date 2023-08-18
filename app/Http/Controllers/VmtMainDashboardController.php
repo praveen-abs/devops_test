@@ -739,7 +739,32 @@ class VmtMainDashboardController extends Controller
         $request->user_code = auth()->user()->user_code;
 
 
-        return $serviceVmtDashboardService->fetchEmpLastAttendanceStatus( $request->user_code);
+        $response = $serviceVmtDashboardService->fetchEmpLastAttendanceStatus( $request->user_code);
+
+       if(!empty($response->checkout_date)){
+           $to ="";
+           $from ="";
+
+
+             if(!empty($response->checkout_time)){
+                $to = Carbon::createFromFormat('H:i:s', $response->checkout_time);
+              }
+
+              if(!empty($response->checkin_time)){
+                 $from = Carbon::createFromFormat('H:i:s', $response->checkin_time);
+              }
+
+            if(!empty($from) && !empty($to) ){
+                $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+            }
+            $response['effective_hours'] =$effective_hours;
+        }
+        if(!empty($response->checkin_date))
+        {
+            $response['effective_hours'] =null;
+        }
+
+            return $response;
         //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
 
