@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/attendance.css') }}">
 @endsection
 @section('content')
-    <div class="cotainer-fluid mt-30">
+    <div class="cotainer-fluid">
         <div class="card mb-2">
             <div class="py-1 card-body">
                 <div class="col-8 d-flex align-items-center">

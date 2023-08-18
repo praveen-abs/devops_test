@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    <div class="parollReports-wrapper mt-30 ">
+    <div class="parollReports-wrapper">
         <div class="card">
             <div class="card-body">
                 <div class="row mb-3">
