@@ -1,20 +1,20 @@
 <template>
     <div class="bg-white h-[700px] rounded-lg overflow-hidden">
-        <div class="mb-3 p-3 card-title flex items-center justify-between bg-gray-100" id="">
-            <span class="text-primary font-semibold fs-6">Notifications</span>
-            <!-- <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="pi pi-bell p-overlay-badge px-4"
+        <div class="flex items-center justify-between p-3 mb-3 bg-gray-100 card-title" id="">
+            <span class="font-semibold text-[18px] text-[#000] font-['Poppins]">Activity Log</span>
+            <!-- <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="px-4 pi pi-bell p-overlay-badge"
                 style="font-size: 1rem" /> -->
         </div>
-        <div class="overflow-x-scroll h-full" >
-            <div class="p-1 my-1 rounded-lg shadow-md  hover:bg-slate-100 "
+        <div class="h-full overflow-x-scroll" >
+            <div class="p-1 my-1 rounded-lg shadow-md hover:bg-slate-100 "
                 v-for="notification in useDashboard.allNotificationSource" :key="notification.id">
                 <div class="p-2">
-                    <a class="notify-content text-black">
-                        <p class="mb-1 orange-median items-center flex justify-between">
-                            <span class="orange-median font-semibold text-sm ">{{ notification.notification_title }}</span>
+                    <a class="text-black notify-content">
+                        <p class="flex items-center justify-between mb-1 orange-median">
+                            <span class="text-sm font-semibold orange-median ">{{ notification.notification_title }}</span>
                         </p>
                         <div class="notify-message">
-                            <p class="text-xs text-gray-600 font-medium">
+                            <p class="text-xs font-medium text-gray-600">
                                 {{ notification.notification_body }}
                             </p>
                         </div>
@@ -50,4 +50,8 @@ const moduleRedirectionUrl = (url) => {
 }
 
 </script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Petrona&family=Poppins&display=swap');
+</style>
 

@@ -65,10 +65,10 @@
         </div> -->
     <!-- </div> -->
     <loadingSpinner v-if="useDashboard.canShowLoading" />
-    <transition  v-else enter-active-class="transition ease-out duration-600 transform"
-    enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
-    leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
-    leave-to-class="opacity-0 translate-y-2">
+    <transition  v-else enter-active-class="transition ease-out transform duration-600"
+    enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
+    leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
+    leave-to-class="translate-y-2 opacity-0">
     <employee_dashboard   />
 </transition>
 </template>

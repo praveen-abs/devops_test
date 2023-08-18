@@ -3,9 +3,9 @@
     <!-- <div class="image-slider relative h-[180px] w-full">
         <transition name="fade" mode="out-in">
             <img :src="`data:image/jpeg;base64,${currentImage}`" :key="currentImage" alt="Holiday Image"
-                class="h-full w-full rounded-lg" />
+                class="w-full h-full rounded-lg" />
         </transition>
-        <div class="controls absolute top-16 w-full px-3">
+        <div class="absolute w-full px-3 controls top-16">
             <div class="flex justify-between">
                 <button class="sliderButton" @click="prevImage">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -25,10 +25,10 @@
         </div>
     </div> -->
 
-    <Galleria :value="holidays" :responsiveOptions="responsiveOptions" class="h-[170px]" :numVisible="5" :circular="true"
-    containerStyle="max-width: 400px"  :showItemNavigators="true" :showThumbnails="false">
+    <Galleria :value="holidays" :responsiveOptions="responsiveOptions"  :numVisible="5" :circular="true"
+    containerStyle=""  class="!h-[180px] !rounded-[20px] overflow-hidden" :showItemNavigators="true" :showThumbnails="false">
     <template #item="slotProps">
-        <img :src="`data:image/png;base64,${slotProps.item.image}`" class="mt-3 mb-2 rounded shadow-sm" style="width:450px; height:180px ; margin-bottom: 10px;position: relative; bottom :10px; display: block;"  :alt="slotProps.item.holiday_name" />
+        <img :src="`data:image/png;base64,${slotProps.item.image}`" class="mt-3 mb-2 !rounded-[20px] shadow-sm !h-[180px]" style="width:100%;  margin-bottom: 10px;position: relative;  bottom :10px; display: block;"  :alt="slotProps.item.holiday_name" />
     </template>
 </Galleria>
 
@@ -107,7 +107,13 @@ onMounted(() => {
     transition: opacity 0.5s;
 }
 .p-galleria-item{
-    height: 190px !important;
+    height: 110% !important;
+    border-radius: 20px !important;
+    
+}
+.p-galleria-item-wrapper{
+    height: 180px !important;
+    border-radius: 20px !important;
 }
 
 .fade-enter,
@@ -134,11 +140,15 @@ left: 10px;
 z-index: 10000 !important;
 }
 .p-galleria-item-container{
-    height: 180px !important;
+    height: 170px !important;
+    border-radius: 20px !important;
     margin-bottom:10px !important ;
 }
 .p-galleria-item-prev :hover{
 
+}
+.p-galleria-content{
+    border-radius: 30px !important;
 }
 .p-link:focus{
     box-shadow: none !important;
