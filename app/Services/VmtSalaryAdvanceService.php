@@ -2070,7 +2070,7 @@ class VmtSalaryAdvanceService
         return $response;
     }
 
-    public function isEligibleForLoanAndAdvance($loan_type)
+    public function isEligibleForLoanAndAdvance($loan_type,$user_id)
     {
         try {
             if ($loan_type == "int_free_loan") {
@@ -2093,7 +2093,6 @@ class VmtSalaryAdvanceService
                     'message' =>  $loan_type_name . ' Feature is not enabled for your organization'
                 ]);
             } else if ($enable_status == 1) {
-                $user_id = auth()->user()->id;
                 $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
                 if ($loan_type == 'loan_with_int') {
                     $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())

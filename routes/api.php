@@ -152,7 +152,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Payroll
 
     Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth'])->name('payroll/getCurrentPayrollDates');
-
+    //loanandsalaryadvance
+    Route::post('/loanandsalaryadvance/empLoanAndSalaryAdvance',[App\Http\Controllers\VmtAPILoanAndSalaryAdvanceController::class,'empLoanAndSalaryAdvance']);
 
 
 

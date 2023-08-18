@@ -550,8 +550,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 'message' => $validator->errors()->all()
             ]);
         }
-
-        $response =  $serviceVmtAttendanceService->getCountForAttRegularization($request->user_code);
+        $loan_type = "int_free_loan";
+        $response =  $serviceVmtAttendanceService->getCountForAttRegularization($loan_type,144);
 
         return $response;
     }
