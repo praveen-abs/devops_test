@@ -330,7 +330,8 @@ class VmtEmployeeOnboardingController extends Controller
                             $image_view = url('/') . $VmtClientMaster->client_logo;
                             $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-                            //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
+                            $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
+
                             $message = "Employee onboarded successfully";
                         } else {
                             $message = "Employee details updated in draft";
@@ -671,7 +672,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'message' => $message,
                 'Employee_Name' =>$row['employee_name']  ,
                 'mail_status' => $mail_message,
-                'data' => $response['data'] ,
+                'data' => $response['data'],
             ];
         } catch (\Exception $e) {
 
