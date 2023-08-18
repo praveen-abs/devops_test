@@ -165,6 +165,7 @@ export default defineConfig({
 
                 // login page
                 'resources/js/hrms/modules/login_Page/login_Page.js',
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
 
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js'

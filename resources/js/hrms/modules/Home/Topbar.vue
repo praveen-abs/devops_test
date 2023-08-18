@@ -14,13 +14,14 @@
                         <p class="text-sm whitespace-nowrap  font-semibold px-2"
                             v-if="currentlySelectedClient.client_fullname.length <= 13">{{
                                 currentlySelectedClient.client_fullname }}</p>
-                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-else> {{
+                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-tooltip="currentlySelectedClient.client_fullname "  v-else> {{
                             currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
                                 13) + '..' : '' }}</p>
                     </div>
                 </button>
 
                 <transition enter-active-class="transition ease-out duration-200 transform"
+                    v-if="service.current_user_role == 2 || service.current_user_role == 4"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
@@ -139,7 +140,8 @@
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
 
                         <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto mx-2"
-                            v-if="service.current_user_name ? service.current_user_name.length <= 10 : ''">{{ service.current_user_name ?
+                            v-if="service.current_user_name ? service.current_user_name.length <= 10 : ''">{{
+                                service.current_user_name ?
                                 service.current_user_name : '' }}</p>
                         <p class="font-semibold text-[12px] mx-2 whitespace-nowrap font-['Poppins']  text-center text-black my-auto"
                             v-else> {{
@@ -179,8 +181,8 @@
         <!-- notification_title -->
         <!-- notification_body -->
         <!-- redirect_to_module -->
-        <div class="w-full px-2 rounded-lg my-2 p-2" v-if="notificationSource ? notificationSource.length > 0 : false"  v-for="(notification, index) in notificationSource"
-            :class="`${getBackgroundColor(index)}`">
+        <div class="w-full px-2 rounded-lg my-2 p-2" v-if="notificationSource ? notificationSource.length > 0 : false"
+            v-for="(notification, index) in notificationSource" :class="`${getBackgroundColor(index)}`">
             <div class="flex justify-between">
                 <div>
                     <p class="orange-median font-semibold fs-6">{{ notification.notification_title }}</p>
@@ -198,7 +200,7 @@
             <p class="text-sm">{{ notification.notification_body }}</p>
             <!-- :class="`${getBackgroundColor(index)}`" -->
         </div>
-        <div v-else class="w-full px-2 rounded-lg my-2 p-2 bg-red-50" >
+        <div v-else class="w-full px-2 rounded-lg my-2 p-2 bg-red-50">
             <p>No notifications to display</p>
         </div>
     </Sidebar>

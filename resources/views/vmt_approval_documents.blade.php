@@ -11,13 +11,8 @@
 @slot('li_1') @endslot
 @endcomponent --}}
 
-
-<div class=" approval_documents-wrapper card ">
-    <div class="card-body">
-               @vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')
-               <div id="ReviewDocuments"></div>
-    </div>
-</div>
+@vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')
+<div id="ReviewDocuments"></div>
 
 @endsection
 @section('script')

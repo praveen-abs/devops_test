@@ -1,4 +1,5 @@
 <template>
+    <h6 class="mb-2 font-semibold text-lg">Manage Employee Payslips</h6>
     <div class="d-flex justify-content-end">
         <label for="" class="my-2 text-lg font-semibold">Select Month</label>
         <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="managePayslipStore.selectedPayRollDate"

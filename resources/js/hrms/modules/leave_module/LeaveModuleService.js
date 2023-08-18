@@ -8,7 +8,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     const service = Service()
 
-    const canShowLoading = ref(false)
+    const canShowLoading = ref(true)
 
     //Leave history vars
     const array_employeeLeaveBalance = ref()
@@ -30,10 +30,10 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     const setLeaveDetails = ref({})
 
-    const getLeaveDetails = (leaveDetails) =>{
+    const getLeaveDetails = (leaveDetails) => {
         canShowLeaveDetails.value = true
         console.log(leaveDetails);
-        setLeaveDetails.value = {...leaveDetails}
+        setLeaveDetails.value = { ...leaveDetails }
         setLeaveDetails.emp_name = leaveDetails.name
 
     }
@@ -45,13 +45,14 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
             console.log(res.data);
             array_employeeLeaveBalance.value = res.data
             array_employeeAvailedLeaveBalance.value = res.data["Avalied Leaves"]
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false
         })
     }
     async function getEmployeeLeaveHistory(filter_month, filter_year, filter_leave_status) {
 
         let user_code = 0;
+        // canShowLoading.value = true
 
         await axios.get(window.location.origin + "/currentUserCode ").then((response) => {
             user_code = response.data;
@@ -67,6 +68,8 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         }).then((response) => {
             array_employeeLeaveHistory.value = response.data.data;
             console.log("getEmployeeLeaveHistory() : " + response.data);
+        }).finally(() => {
+            canShowLoading.value = false
         });
 
     }
@@ -91,6 +94,8 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         }).then((response) => {
             array_teamLeaveHistory.value = response.data.data;
             console.log("getTeamLeaveHistory() : " + response.data);
+        }).finally(() => {
+            canShowLoading.value = false
         });
 
     }
@@ -103,6 +108,8 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         }).then((response) => {
             array_orgLeaveHistory.value = response.data.data;
             console.log("getOrgLeaveHistory() : " + response.data.data);
+        }).finally(() => {
+            canShowLoading.value = false
         });
 
     }
@@ -111,50 +118,54 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         Get the leave details of a particular leave record_id
     */
     async function getLeaveInformation(record_id) {
+        // canShowLoading.value = true
         axios.post('/attendance/getLeaveInformation', {
             record_id: record_id
 
         }).then((response) => {
             selected_LeaveInformation.value = response.data.data;
             console.log("getLeaveInformation() : " + response.data);
+        }).finally(() => {
+            canShowLoading.value = false
         });
+
     }
 
     // Get Org Leave Balance details
 
-     async function getOrgLeaveBalance(start_date,end_date){
-        canshowloadingsrceen.value = true;
+    async function getOrgLeaveBalance(start_date, end_date) {
+        // canShowLoading.value = true;
 
-        await axios.post('/fetch-org-leaves-balance',{
-            start_date:start_date,
-            end_date:end_date
-        }).then((res)=>{
+        await axios.post('/fetch-org-leaves-balance', {
+            start_date: start_date,
+            end_date: end_date
+        }).then((res) => {
             array_orgLeaveBalance.value = res.data;
-        }).finally(()=>{
-            canshowloadingsrceen.value = false;
+        }).finally(() => {
+            canShowLoading.value = false;
         });
-     }
+    }
 
-     async function getTermLeaveBalance(start_date,end_date){
-        canshowloadingsrceen.value = true;
-        console.log(start_date,end_date);
-        axios.post('/fetch-team-leave-balance',{
-            start_date:start_date,
-            end_date:end_date
-        }).then((res)=>{
+    async function getTermLeaveBalance(start_date, end_date) {
+        // canShowLoading.value = true;
+        console.log(start_date, end_date);
+        axios.post('/fetch-team-leave-balance', {
+            start_date: start_date,
+            end_date: end_date
+        }).then((res) => {
             arrayTermLeaveBalance.value = res.data;
 
-        }).finally(()=>{
-            canshowloadingsrceen.value = false;
+        }).finally(() => {
+            canShowLoading.value = false;
         })
-     }
+    }
 
     return {
 
-        canShowLoading,canShowLeaveDetails,setLeaveDetails,getLeaveDetails,
+        canShowLoading, canShowLeaveDetails, setLeaveDetails, getLeaveDetails,
 
-        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAvailedLeaveBalance,array_orgLeaveBalance,
-        selectedStartDate,selectedEndDate,
+        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAvailedLeaveBalance, array_orgLeaveBalance,
+        selectedStartDate, selectedEndDate,
         canshowloadingsrceen,
 
         arrayTermLeaveBalance,
