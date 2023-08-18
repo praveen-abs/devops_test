@@ -10,13 +10,8 @@
 @endsection
 @section('content')
 
-<div class="card mb-0 pms_approval_wrapper ">
-    <div class="card-body">
-
-        @vite('resources/js/hrms/modules/manage_payslips/ManagePayslips.js')
-        <div id="vjs_manage_payslips"></div>
-    </div>
-</div>
+@vite('resources/js/hrms/modules/manage_payslips/ManagePayslips.js')
+<div id="vjs_manage_payslips"></div>
 
 @endsection
 @section('script')
