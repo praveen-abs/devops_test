@@ -1,8 +1,8 @@
 <template>
-    <div class="mr-4 card" v-if="useEmpStore.sa.isEligibleEmp == 0">
+    <div class="mr-4 card" v-if="useEmpStore.sa.isEligibleEmp == 1">
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
-                <div class="w-8 fs-4">
+                <div class=" fs-4">
                     <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
                             class="text-lg"> {{useEmpStore.percent_salary_amt}}%</strong> of their monthly salary.</p>
                 </div>
@@ -79,9 +79,9 @@
 
         </div>
     </div>
-    <div class="mr-4 card pb-10" v-else>
+    <div class="pb-10 mr-4 card" v-else>
         <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class="w-5 p-6 m-auto">
-        <p class="my-2 font-semibold fs-3 text-center">You are not eligible to apply salary advance</p>
+        <p class="my-2 font-semibold text-center fs-3">You are not eligible to apply salary advance</p>
     </div>
 
 
@@ -94,7 +94,7 @@
                 Advance Request</h1>
         </template>
 
-        <div class="flex pb-2 bg-gray-100 rounded-lg gap-3 shadow-md">
+        <div class="flex gap-3 pb-2 bg-gray-100 rounded-lg shadow-md">
             <div class="w-5 p-4 ">
                 <span class="font-semibold">Your Monthly Income</span>
                 <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
