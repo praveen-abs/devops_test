@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/payRoll.css') }}">
 @endsection
 @section('content')
-    <div class="cotainer-fluid mt-30 payroll_wrapper">
+    <div class="cotainer-fluid  payroll_wrapper">
 
         <div class="card left-line  mb-2">
             <div class="pt-1 pb-0 card-body">

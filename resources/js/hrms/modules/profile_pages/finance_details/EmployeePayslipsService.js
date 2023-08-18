@@ -16,6 +16,7 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
     const canShowPayslipView = ref(false);
 
     const urlParams = new URLSearchParams(window.location.search);
+    const loading = ref(false)
 
     function getURLParams_UID() {
         if (urlParams.has('uid'))
@@ -27,12 +28,16 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
     // Events
     async function getEmployeeAllPayslipList() {
 
+        loading.value = true
+
         axios.post('/payroll/paycheck/getEmployeeAllPayslipList', {
             uid: getURLParams_UID()
         }).then((response) => {
             //console.log("Response [getEmployeeAllPayslipList] : " + JSON.stringify(response.data.data));
 
             array_employeePayslips_list.value = response.data.data;
+        }).finally(()=>{
+            loading.value = false
         });
     }
 
@@ -116,7 +121,7 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
         // Varaible Declartion
 
-        array_employeePayslips_list, paySlipHTMLView, canShowPayslipView,
+        array_employeePayslips_list, paySlipHTMLView, canShowPayslipView,loading,
 
         // Functions
 

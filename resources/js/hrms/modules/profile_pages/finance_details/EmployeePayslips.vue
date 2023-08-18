@@ -1,5 +1,7 @@
 <template>
-    <div class="my-4">
+    <LoadingSpinner v-if="employeePayslipStore.loading" class="absolute z-50 bg-white" />
+        <div class="w-full">
+            <h2 class="font-semibold text-lg my-2">Salary Details</h2>
         <DataTable :value="employeePayslipStore.array_employeePayslips_list" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]" sortField="PAYROLL_MONTH" :sortOrder="-1"
@@ -39,7 +41,7 @@
 
             </column>
         </DataTable>
-    </div>
+        </div>
     <!-- <div class="d-flex justify-content-end">
         <Button class="mb-2 btn btn-primary" label="Submit" />
     </div> -->
@@ -47,7 +49,6 @@
     <div class="card flex justify-content-center inline-flex">
         <Dialog v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Payslip" :style="{ width: '58vw' }">
             <div v-html="employeePayslipStore.paySlipHTMLView">
-
             </div>
         </Dialog>
     </div>
@@ -60,6 +61,7 @@ import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
 import { FilterMatchMode } from 'primevue/api';
 import { useEmployeePayslipStore } from './EmployeePayslipsService';
+import loadingSpinner from '../../../components/LoadingSpinner.vue'
 
 
 

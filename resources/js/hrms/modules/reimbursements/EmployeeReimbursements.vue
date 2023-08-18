@@ -1,5 +1,7 @@
 <template>
     <Toast />
+    <LoadingSpinner v-if="employee_service.loading_spinner" class="absolute z-50 bg-white" />
+
     <div class="reimbursement-wrapper">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-1 card-body">
@@ -89,7 +91,7 @@
 
     </div>
 
-    <Dialog header="Header" v-model:visible="employee_service.loading_spinner"
+    <!-- <Dialog header="Header" v-model:visible="employee_service.loading_spinner"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
         <template #header>
@@ -99,7 +101,7 @@
         <template #footer>
             <h5 style="text-align: center" class="font-bold">Please wait...</h5>
         </template>
-    </Dialog>
+    </Dialog> -->
 </template>
 
 <script setup>
@@ -109,6 +111,7 @@ import moment from 'moment'
 
 import Reimbursements from "./reimbursements/Reimbursements.vue";
 import LocalConveyance from "./localConveyance/LocalConveyance.vue";
+import LoadingSpinner from "../../components/LoadingSpinner.vue";
 
 const employee_service = employee_reimbursment_service();
 
