@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    
+
     <style>
         .main-page {
             width: 210mm;
@@ -201,7 +201,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="right">
-                                            <p class="fw-600 txt-right " style="">
+                                            <p class="fw-600 txt-right margin-right:100px" style="margin-right:100px">
                                                 Date:
                                             </p>
 
@@ -219,10 +219,10 @@
                                     <tr>
                                         <td colspan="12" style=" " align="left">
                                             <p class="fw-600 txt-left " style="">
-                                                Dear Xyz,
+                                                Dear {{ $employee_name }},
                                             </p>
                                             <p class="pt-pb-5">We are glad to appoint you as
-                                                &nbsp;<span class="fw-600 txt-left">" Xyz
+                                                &nbsp;<span class="fw-600 txt-left">" {{ $designation }}
                                                     "</span>&nbsp; in our company,
                                                 &nbsp;<span class="fw-600 txt-left">LANGRO INDIA
                                                     PRIVATE LIMITED
@@ -240,7 +240,7 @@
                                                 Your total remuneration package per annum
                                                 will
                                                 consist of &nbsp;<span class="fw-600 txt-left">
-                                                    CTC Rs Xyz- per annum
+                                                    CTC Rs {{ $cic }}- per annum
                                                     (xyz)</span>&nbsp;.
                                                 The
                                                 breakup of your compensation package shall
@@ -262,10 +262,9 @@
                                                     PRIVATE LIMITED
                                                 </span>&nbsp will
                                                 be with effect from &nbsp;<span
-                                                    class="fw-600 txt-left"> DD-MM-
-                                                    YYYY</span>&nbsp;. You shall
+                                                    class="fw-600 txt-left"> {{ $doj }}</span>&nbsp;. You shall
                                                 initially be placed in &nbsp;<span
-                                                    class="fw-600 txt-left"> YYY
+                                                    class="fw-600 txt-left"> {{ $work_location }}
                                                 </span>&nbsp;. You may however
                                                 be required to travel and maybe positioned
                                                 or
@@ -353,7 +352,7 @@
                                     <tr>
                                         <td colspan="12" style=" " align="left">
                                             <p class=" pt-10 txt-left " style="">
-                                                I M Xyz, have read &nbsp;<span
+                                                I M <span class="fw-600 ">{{ $employee_name }}</span>, have read &nbsp;<span
                                                     class="fw-600 txt-left">ANNEXURE A &
                                                     B,</span>&nbsp; understood, and accept
                                                 the
@@ -380,7 +379,7 @@
                                         </td>
                                         <td colspan="6" class="pt-30" style=" "
                                             align="right">
-                                            <p class="fw-600 txt-right " style="">
+                                            <p class="fw-600 txt-right " style="margin-right:100px">
                                                 Date:
                                             </p>
 
@@ -491,7 +490,7 @@
                                         <td colspan="6" style=" "class="bg-ash "
                                             align="left">
                                             <p class="fw-600  txt-left" style="">
-                                                Name:
+                                                Name: {{ $employee_name }}
                                             </p>
 
                                         </td>
@@ -508,7 +507,7 @@
                                         <td colspan="4" style=" "class="bg-ash "
                                             align="center">
                                             <p class="fw-600  " style="">
-                                                Designation
+                                                Designation: {{ $designation }}
                                             </p>
 
                                         </td>
@@ -534,13 +533,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="  txt-right" style="">
-
+                                                {{ $basic_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{  $basic_yearly }}
                                             </p>
 
                                         </td>
@@ -554,13 +553,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $hra_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{ $hra_yearly }}
                                             </p>
 
                                         </td>
@@ -574,13 +573,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $spl_allowance_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{ $spl_allowance_yearly }}
                                             </p>
 
                                         </td>
@@ -595,14 +594,14 @@
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
-                                            <p class="fw-600   txt-center" style="">
-
+                                            <p class="fw-600   txt-right" style="">
+                                                {{ $gross_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
-                                            <p class="fw-600   txt-center   " style="">
-
+                                            <p class="fw-600   txt-right   " style="">
+                                                {{ $gross_yearly }}
                                             </p>
 
                                         </td>
@@ -615,14 +614,14 @@
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="  txt-center" style="">
-
+                                            <p class="  txt-right" style="">
+                                                {{ $employer_epf_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="   txt-center   " style="">
-
+                                            <p class="   txt-right   " style="">
+                                                {{ $employer_epf_yearly }}
                                             </p>
 
                                         </td>
@@ -636,13 +635,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $employer_esi_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="  txt-right   " style="">
-
+                                                {{ $employer_esi_yearly }}
                                             </p>
 
                                         </td>
@@ -657,13 +656,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
                                             <p class="fw-600  txt-right" style="">
-
+                                                {{ $ctc_monthly}}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
                                             <p class="fw-600   txt-right   " style="">
-
+                                                {{ $ctc_yearly }}
                                             </p>
 
                                         </td>
@@ -677,13 +676,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employee_epf_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right   " style="">
+                                                {{ $employee_epf_yearly }}
                                             </p>
 
                                         </td>
@@ -697,13 +696,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employee_esi_monthly}}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right   " style="">
-
+                                                {{ $employee_esi_yearly }}
                                             </p>
 
                                         </td>
@@ -718,13 +717,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employer_pt_monthly ?? "0" }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right   " style="">
+                                                {{ $employer_pt_yearly ?? "0" }}
                                             </p>
 
                                         </td>
@@ -737,14 +736,14 @@
 
                                         </td>
                                         <td colspan="4" style=" "class=" bg-ash">
-                                            <p class="txt-right" style="">
-
+                                            <p class="txt-right fw-600" style="">
+                                                {{ $net_take_home_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class=" bg-ash">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right  fw-600" style="">
+                                                {{ $net_take_home_yearly }}
                                             </p>
 
                                         </td>
@@ -808,7 +807,7 @@
                     <tr>
                         <td colspan="12" style=" " align="left">
                             <p class=" txt-left " style="">
-                                I Xyz, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE A
+                                I {{  $employee_name }}, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE A
                                     &
                                     B,</span>&nbsp; understood, and accept the
                                 appointment upon the terms and conditions as
@@ -849,7 +848,7 @@
                         </td>
                         <td colspan="6" class="pt-30" style="padding-top: 9px;"
                             align="right">
-                            <p class="fw-600 txt-right " style="">
+                            <p class="fw-600 txt-right margin-right:100px" style="margin-right:100px">
                                 Date:
                             </p>
 
@@ -1489,7 +1488,7 @@
                     <tr>
                         <td colspan="12" style=" " align="left">
                             <p class=" pt-10 txt-left " style="">
-                                I M Xyz, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE
+                                I M {{  $employee_name }}, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE
                                     A &
                                     B,</span>&nbsp; understood, and accept the
                                 appointment upon the terms and conditions as
@@ -1512,7 +1511,7 @@
 
                         </td>
                         <td colspan="6" style="pt-30" align="right">
-                            <p class="fw-600 txt-right " style="">
+                            <p class="fw-600 txt-right margin-right:100px" style="margin-right:100px">
                                 Date:
                             </p>
 
@@ -1610,7 +1609,7 @@
 
                                         </td>
                                         <td colspan="4" style=" " align="">
-                                            <p class="fw-600 txt-left " style="">
+                                            <p class="fw-600 txt-left margin-right:100px" style="margin-right:100px">
                                                 Date <span class="">:</span>
                                             </p>
 
@@ -1966,7 +1965,7 @@
             </table>
         </div>
     </div>
-    
+
     <div class="main-page appointment-letter">
         <div class="sub-page" style="text-align: justify;font-size: 15px;">
             <table class="letter-format" style="padding:0;">
