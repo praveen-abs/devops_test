@@ -756,7 +756,7 @@ class VmtEmployeeService
 
             //store employee_familyDetails details
 
-            VmtEmployeeFamilyDetails::where('user_id', $user_id)->delete();
+            VmtEmployeeFamilyDetails::where('user_id', $user_id)->appdelete();
 
             if (!empty($data['father_name'])) {
 
@@ -1058,7 +1058,7 @@ class VmtEmployeeService
        if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
         //$client_name = str_replace(' ', '_', sessionGetSelectedClientName());
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
-        $viewfile_appointmentletter = 'appointment_mail_templates.appointment_Letter_'.strtolower($client_name);
+        $viewfile_appointmentletter = 'appointment_mail_templates.appointment_Letter_client';
         if (view()->exists($viewfile_appointmentletter)) {
 
         $html = view($viewfile_appointmentletter,$data);

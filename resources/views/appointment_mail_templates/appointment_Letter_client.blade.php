@@ -148,6 +148,16 @@
             margin: 0px !important;
             text-align: justify;
         }
+        .main-page{
+            width:800px !important;
+        }
+        body{
+            width:100%;
+            display:flex;
+            justify-content:center;
+            flex-direction: column;
+            align-items:center;
+        }
     </style>
 </head>
 
@@ -440,7 +450,7 @@
                                         <td colspan="12" align="" class=" ">
 
                                             <p class="txt-justify ">
-                                                We are glad to appoint you as “ <b>:{{ $designation }}</b> ” in
+                                                We are glad to appoint you as “ <b>{{ $designation }}</b> ” in
                                                 our company, Ardens
                                                 Business Solutions Private Limited.
                                             </p>
