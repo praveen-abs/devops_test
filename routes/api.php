@@ -145,7 +145,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class,'saveNotification']);
     Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class,'updateNotificationReadStatus']);
 
-
     //Onboarding
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
 
