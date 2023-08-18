@@ -22,6 +22,7 @@ use App\Models\Bank;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtMasterConfig;
 
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
