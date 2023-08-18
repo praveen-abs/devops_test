@@ -371,7 +371,7 @@ class VmtMainDashboardController extends Controller
         // }
         else
             if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
-                return view('vmt_employee_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
+                return view('vmt_hr_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
             }
         else{
             return "No Roles assigned for this user. Kindly contact the admin";
@@ -658,7 +658,7 @@ class VmtMainDashboardController extends Controller
 
         //Fetch the data
         $user_code =  auth()->user()->user_code;
-        return $serviceVmtDashboardService->getNotifications('MC0005');
+        return $serviceVmtDashboardService->getNotifications($user_code );
     }
 
     public function readNotification(Request $request, VmtDashboardService $serviceVmtDashboardService)

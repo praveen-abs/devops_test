@@ -1,5 +1,5 @@
 <template>
-    <div class="p-3 overflow-auto h-screen">
+    <div class="p-3 overflow-auto h-screen" @mousemove="useDashboard.canShowConfiguration = false">
         <div class="grid grid-cols-12 gap-4" >
             <div class="col-span-5">
                 <WelcomeCard   />

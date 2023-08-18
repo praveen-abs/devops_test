@@ -222,6 +222,10 @@ const Sampledata = () => {
     height: 2.9em;
 }
 
+label{
+    font-weight: 501;
+}
+
 .form-control:focus {
     color: #212529;
     background-color: #fff;

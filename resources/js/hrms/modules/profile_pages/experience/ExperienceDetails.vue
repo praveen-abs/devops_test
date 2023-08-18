@@ -3,8 +3,7 @@
         <div class="mb-2 card">
             <div class="card-body">
                 <h6 class="font-semibold text-lg">Experience Information
-                    <button type="button" class="float-right btn btn-orange"
-                        @click="dialog_ExperienceInfovisible = true">
+                    <button type="button" class="float-right btn btn-orange" @click="dialog_ExperienceInfovisible = true">
                         Add New
 
                     </button>
@@ -18,47 +17,44 @@
                             </div>
                         </template>
 
-                        <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
 
-                            <div class="row">
-                                <div class="col" style="margin-right: 20px; !important">
-                                    <span>Company Name <span class="text-danger">*</span></span>
-                                    <InputText type="text" v-model="ExperienceInfo.company_name"
-                                        name="ExperienceDetails_company_name[]" class="" required />
-                                </div>
-                                <div class="col mr-2">
-                                    <span> Location<span class="text-danger">*</span></span>
-                                    <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
-                                        required />
-                                </div>
-                                <div class="row w-100  ml-1  p-0">
-                                    <div class="col mr-4">
-                                        <span>Job Position <span class="text-danger">*</span></span>
-                                    <InputText type="text" @keypress="isLetter($event)" v-model="ExperienceInfo.job_position"
-                                        name="experienceDet_job_position[]" required />
+                        <div class="grid grid-cols-2">
+                            <div class="" style="margin-right: 20px; !important">
+                                <span>Company Name <span class="text-danger">*</span></span>
+                                <InputText type="text" v-model="ExperienceInfo.company_name"
+                                    name="ExperienceDetails_company_name[]" required class=" !w-[100%]" />
+                            </div>
+                            <div class="mr-2">
+                                <span> Location<span class="text-danger">*</span></span>
+                                <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
+                                    required class=" w-[100%]" />
+                            </div>
 
-                                    </div>
-                                    <div class="col mr-5 ml-1 mt-2 p-0 ">
-                                        <span :style="{ paddingLeft: '6px' }">Period From<span
-                                            class="text-danger">*</span></span>
-                                    <Calendar class=" w-100"  v-model="ExperienceInfo.period_from"
-                                        />
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mr-3">
-                                    <span :style="{ paddingLeft: '6px' }">Period To <span
-                                            class="text-danger">*</span></span>
-                                    <Calendar class="w-100 mr-5"  v-model="ExperienceInfo.period_to"
-                                        name="experienceDet_period_to[]" />
-                                </div>
-                                <div class="col-6"></div>
-                                </div>
+                            <div class="">
+                                <span>Job Position <span class="text-danger">*</span></span>
+                                <InputText type="text" @keypress="isLetter($event)" v-model="ExperienceInfo.job_position"
+                                    name="experienceDet_job_position[]" class=" !w-[95%]" required />
 
                             </div>
 
+                            <div class="">
+                                <span :style="{ paddingLeft: '6px' }">Period From<span class="text-danger">*</span></span>
+                                <Calendar class="!w-[98%] !mr-[15px] relative right-2" v-model="ExperienceInfo.period_from" />
+
+                            </div>
                         </div>
+
+                        <div class="grid grid-cols-2">
+                            <div class=" mr-2">
+                                <span :style="{ paddingLeft: '6px' }">Period To <span class="text-danger">*</span></span>
+                                <Calendar  v-model="ExperienceInfo.period_to" name="experienceDet_period_to[]" class="!w-[96%] relative right-2" />
+                            </div>
+                            <div class=""></div>
+                        </div>
+
+
+
+
 
 
 
@@ -105,10 +101,23 @@
                         <Column :exportable="false" header="Action" style="min-width:12rem">
                             <template #body="slotProps">
 
-                                <button class="mr-3 btn btn-success"
-                                    @click="editExperienceDetails(slotProps.data)">Edit</button>
-                                <button class="btn btn-danger"
-                                    @click="diolog_Delete_Exp_Details(slotProps.data)">Delete</button>
+                                <button class=" p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
+                                    @click="editExperienceDetails(slotProps.data)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+
+                                    </svg>
+                                </button>
+                                <button class="  p-2 bg-red-200 border-red-500 rounded-xl"
+                                    @click="diolog_Delete_Exp_Details(slotProps.data)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5 font-bold">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
 
                                 <template>
 
@@ -124,37 +133,40 @@
 
                                         <div style=" padding: 0.5rem;">
                                             <div>
-                                                <div class="row ">
-                                                    <div class="col-6 ">
+                                                <div class="grid grid-cols-2 ">
+                                                    <div class="mr-2">
                                                         <span>Company Name <span class="text-danger">*</span></span>
-                                                    <InputText type="text" v-model="ExperienceInfo.company_name"
-                                                        required class="w-100" />
+                                                        <InputText type="text" v-model="ExperienceInfo.company_name"
+                                                            required class="!w-[98%] " />
                                                     </div>
-                                                    <div class="col-6">
+                                                    <div class="ml-2">
                                                         <span> Location<span class="text-danger">*</span></span>
-                                                    <InputText type="text" v-model="ExperienceInfo.location"
-                                                        name="experienceDet_location[]" required />
+                                                        <InputText type="text" v-model="ExperienceInfo.location"
+                                                            name="experienceDet_location[]" class="!w-[100%] " required />
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-6">
+                                                <div class="grid grid-cols-2">
+                                                    <div class="mr-2">
                                                         <span>Job Position <span class="text-danger">*</span></span>
-                                                    <InputText type="text" v-model="ExperienceInfo.job_position"
-                                                         required @keypress="isLetter($event)" class="w-100" />
+                                                        <InputText type="text" v-model="ExperienceInfo.job_position"
+                                                            required @keypress="isLetter($event)" class="!w-[98%]" />
                                                     </div>
-                                                    <div class="col-6 position-relative ">
+                                                    <div class="ml-2 ">
                                                         <span :style="{ paddingLeft: '6px' }">Period From<span
-                                                            class="text-danger">*</span></span>
-                                                    <Calendar :style="{ paddingRight: '15px' }"  v-model="ExperienceInfo.period_from" class=" position-absolute left-0 bottom-2 m" style="width: 100%;"   />
+                                                                class="text-danger">*</span></span>
+                                                        <Calendar 
+                                                            v-model="ExperienceInfo.period_from"
+                                                            class="w-[100%] relative right-2"
+                                                           />
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col mr-2  pr-4">
+                                                <div class="grid grid-cols-2">
+                                                    <div class="">
                                                         <span :style="{ paddingLeft: '6px' }">Period To <span
-                                                            class="text-danger">*</span></span>
-                                                    <Calendar   v-model="ExperienceInfo.period_to" class="w-100 mr-4" />
+                                                                class="text-danger">*</span></span>
+                                                        <Calendar v-model="ExperienceInfo.period_to" class="w-[95%] relative right-2" />
                                                     </div>
-                                                    <div class="col-6 "></div>
+                                                    <div class=""></div>
                                                 </div>
 
                                             </div>
@@ -229,8 +241,8 @@ const saveExperienceDetails = () => {
         company_name: ExperienceInfo.company_name,
         experience_location: ExperienceInfo.location,
         job_position: ExperienceInfo.job_position,
-        period_from:  dayjs( ExperienceInfo.period_from ).format('YYYY-MM-DD'),
-        period_to: dayjs(  ExperienceInfo.period_to  ).format('YYYY-MM-DD'),
+        period_from: dayjs(ExperienceInfo.period_from).format('YYYY-MM-DD'),
+        period_to: dayjs(ExperienceInfo.period_to).format('YYYY-MM-DD'),
     })
         .then((res) => {
 
@@ -273,7 +285,7 @@ const editExperienceDetails = (get_experience_details) => {
     ExperienceInfo.location = get_experience_details.location
     ExperienceInfo.job_position = get_experience_details.job_position
     ExperienceInfo.period_from = get_experience_details.period_from,
-    ExperienceInfo.period_to = get_experience_details.period_to
+        ExperienceInfo.period_to = get_experience_details.period_to
 
 };
 
@@ -290,8 +302,8 @@ const sumbit_Edit_Exp_details = (get_experience_details) => {
         company_name: ExperienceInfo.company_name,
         experience_location: ExperienceInfo.location,
         job_position: ExperienceInfo.job_position,
-        period_from:   dayjs( ExperienceInfo.period_from ).format('YYYY-MM-DD'),
-        period_to:  dayjs(  ExperienceInfo.period_to ).format('YYYY-MM-DD'),
+        period_from: dayjs(ExperienceInfo.period_from).format('YYYY-MM-DD'),
+        period_to: dayjs(ExperienceInfo.period_to).format('YYYY-MM-DD'),
     })
         .then((res) => {
 

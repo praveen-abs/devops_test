@@ -89,7 +89,7 @@
     //     }
     // }
     td {
-        text-align: center !important;
+        text-align: left !important;
         // font-weight: var(--font-regular);
         padding: 0.4rem 1rem !important;
         font-weight: 501;
@@ -171,7 +171,7 @@
 .p-datatable .p-datatable-thead>tr>th {
 
     .p-column-filter {
-        width: 100%;
+        // width: 100%;
     }
 
     #pv_id_2 {
@@ -318,3 +318,18 @@
 // .p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
 //     margin-left: 30px;
 // }
+
+
+
+.table > thead > tr > th,
+.gridjs-table > thead > tr > th {
+    background: #e6e6e6  !important;
+    color: black !important;
+}
+
+.table > tbody > tr > td,
+.gridjs-table > tbody > tr > td {
+    color: black !important;
+    font-weight: 501;
+    font-size: 12px;
+}

@@ -28,8 +28,8 @@
 @section('content')
 <!-- @vite('resources/js/hrms/modules/reports/ReportsModule.js')
 <div id="ReportsModule"></div> -->
-<!-- @vite('resources/js/app.js')
-<div id="app"></div> -->
-@vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
-<div id="PayRun"></div>
+@vite('resources/js/app.js')
+<div id="app"></div>
+<!-- @vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
+<div id="PayRun"></div> -->
 @endsection

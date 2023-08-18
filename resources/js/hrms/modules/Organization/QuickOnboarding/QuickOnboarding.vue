@@ -1,9 +1,7 @@
 <template>
     <Toast />
-    <div class="" v-if="route.params.module == 'quickOnboarding'">
-        <ImportQuickOnboarding />
-    </div>
-    <Transition name="fade" v-else>
+
+    <Transition name="fade" v-if="route.params.module == null">
         <div class="h-screen w-full">
             <div class="grid grid-cols-12">
                 <div class="px-2 col-span-5">
@@ -73,6 +71,9 @@
             </DataTable>
         </div>
     </Transition>
+    <div class="" v-else>
+        <ImportQuickOnboarding />
+    </div>
     <Transition name="fade" mode="out-in">
         <Dialog header="Header" v-model:visible="useStore.canShowloading"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
@@ -114,7 +115,13 @@ const openFileInput = () => {
 onMounted(() => {
     useStore.getExistingOnboardingDocuments()
     useNormalOnboardingStore.getBasicDeps()
+    // change().prevent()
 })
+
+
+const change = () => {
+    window.location.replace(window.location.origin + '/quickEmployeeOnboarding')
+}
 
 onUpdated(() => {
     if (useStore.initialUpdate) {
