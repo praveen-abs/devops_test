@@ -1,9 +1,10 @@
 <template>
+ 
     <div class="px-1">
         <div class="row d-flex justify-content-start align-items-center">
             <div class="d-flex " v-if="salaryStore.create_new_from == '1'">
-                <div class="col-3  text-center d-flex align-items-center justify-content-start"  style="">
-                    <h1 class="text-xl  xl:text-2xl ">Salary Advance Feature</h1>
+                <div class="text-center col-3 d-flex align-items-center justify-content-start"  style="">
+                    <h1 class="text-xl xl:text-2xl ">Salary Advance Feature</h1>
                 </div>
                 <div class="col">
                     <button class="orange_btn"
@@ -15,8 +16,8 @@
                 </div>
                 <div class="col">
                     <button @click="salaryStore.create_new_from = 2" v-if="salaryStore.create_new_from == '1'"
-                        class=" rounded-md text-white bg-blue-800 px-4 py-2 float-right">
-                        <i class="pi pi-plus mx-1"></i> Create New From
+                        class="float-right px-4 py-2 text-white bg-blue-800 rounded-md ">
+                        <i class="mx-1 pi pi-plus"></i> Create New From
                     </button>
                 </div>
             </div>
@@ -49,10 +50,10 @@
                             @change="selectClientId('sal_adv')" />
                     </div>
                 </div>
-                <div class="row ml-1 mr-3 mt-2 ">
-                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
+                <div class="mt-2 ml-1 mr-3 row ">
+                    <div class="p-3 mb-2 rounded-md shadow-sm col-12 border-1 h-28 d-flex flex-column align-items-center justify-content-between even-card blink"
                         v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
-                        <div class="row w-full">
+                        <div class="w-full row">
                             <div class="col">
                                 <h1 class="text-[15px]">{{ item.settings.settings_name }}</h1>
                             </div>
@@ -60,10 +61,10 @@
 
                             </div>
                             <div class="col-4 ">
-                                <button class=" underline text-blue-400 fs-5 float-right" @click="viewDetails(item)">View Details</button>
+                                <button class="float-right text-blue-400 underline fs-5" @click="viewDetails(item)">View Details</button>
                             </div>
                         </div>
-                        <div class="row w-full">
+                        <div class="w-full row">
                             <div class="col">
                                 <h1 class="  text-[15px]" v-if="item.settings.deduction_period_of_months === 1">Deduct the amount in
                                     the Upcomming Payroll</h1>
@@ -87,13 +88,13 @@
             <div v-if="salaryStore.create_new_from == '2'" class="grid grid-cols-1">
                 <div class="">
                     <div class="my-4 flex justify-between items-center  w-[600px] ">
-                        <h1 class="text-xl  xl:text-2xl ">Name of the Salary Advance</h1>
-                        <div class=" ">
+                        <h1 class="text-xl xl:text-2xl ">Name of the Salary Advance</h1>
+                        <div class="">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA"
                                 class=" d-flex justify-items-center md:w-20rem" :class="[
                                     v$.SA.$error ? 'p-invalid ' : '',
                                 ]" />
-                            <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                            <span v-if="v$.SA.$error" class="font-semibold text-red-400 fs-6 position-absolute top-12">
                                 {{ v$.SA.required.$message.replace("Value", "Client Name") }}
                             </span>
                         </div>
@@ -217,7 +218,7 @@
                             <Column  header="Action">
                             <template #body="slotProps" >
                                 <div>
-                                    <button class="border border-blue-600 text-blue-600 px-2 rounded-md" @click="Remove(slotProps.data)">remove </button>
+                                    <button class="px-2 text-blue-600 border border-blue-600 rounded-md" @click="Remove(slotProps.data)">remove </button>
                                 </div>
                             </template>
                             </Column>
@@ -337,7 +338,7 @@
 
                     <div class="card border-L">
                         <div class="py-3 row">
-                            <div class="col-3 my-3 mx-1 d-flex align-items-center" style="width: 220px;">
+                            <div class="mx-1 my-3 col-3 d-flex align-items-center" style="width: 220px;">
                                 <P class="mx-3 fs-5">Employee Request
                                 </P>
                                 <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
@@ -369,7 +370,7 @@
                             </div>
 
 
-                            <div class="col  d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
+                            <div class="col d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
                                 <div class="w-10 p-2 ml-2 rounded bg-slate-200 d-flex align-items-center col-8"
                                     style="width: 225px !important;">
                                     <Dropdown v-model="salaryStore.selectedOption2" editable
@@ -427,9 +428,9 @@
             <div class="col">
                 <div class=" d-flex justify-content-center" v-if="salaryStore.create_new_from == '2'" >
                     <button class="btn btn-border-primary" @click="back_btn" v-if="!view_details"  >Cancel</button>
-                    <button class="btn btn-border-primary mr-5" @click="back_btn" v-if="view_details" >Back</button>
-                    <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable === 0 && view_details " @click="EnableDisable(1)">Enable</button>
-                    <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 1 && view_details" @click="EnableDisable(0)">Disable</button>
+                    <button class="mr-5 btn btn-border-primary" @click="back_btn" v-if="view_details" >Back</button>
+                    <button class="btn btn-primary" v-if="salaryStore.EnableAndDisable === 0 && view_details " @click="EnableDisable(1)">Enable</button>
+                    <button class="btn btn-primary" v-if="salaryStore.EnableAndDisable == 1 && view_details" @click="EnableDisable(0)">Disable</button>
                     <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save </button>
                     <button class="mx-4 btn btn-primary" @click="savechanges" v-if="view_details">Save changes</button>
                 </div>
