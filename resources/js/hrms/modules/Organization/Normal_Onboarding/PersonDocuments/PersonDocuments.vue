@@ -102,8 +102,8 @@
 
             <div class="row">
                 <div class="text-right col-12">
-                    <!-- <input type="button" value="sample" @click="service.Sampledata"
-                        class="mr-4 text-center btn btn-orange processOnboardForm" /> -->
+                    <input type="button" value="sample" @click="service.Sampledata"
+                        class="mr-4 text-center btn btn-orange processOnboardForm" />
 
                     <!-- <input class="btn btn-orange" type="button" value="check" @click="service.compensatoryCalWhileQuick"> -->
 

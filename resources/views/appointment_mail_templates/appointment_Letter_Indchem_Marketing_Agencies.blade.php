@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -169,12 +170,13 @@
         .border-bottom-line {
             border-bottom: 1px solid;
         }
-        @page {
-        size: 4in 6in;
-       }
 
+        @page {
+            size: 4in 6in;
+        }
     </style>
 </head>
+
 <body>
     <div class="main-page appointment-letter">
         <div class="sub-page" style="text-align: justify;">
@@ -188,8 +190,7 @@
                                         <td colspan="12" class="pb-30" align="right">
 
                                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 50px;width:200px;">
+                                                class="" alt="" style="height: 50px;width:200px;">
 
                                         </td>
 
@@ -214,10 +215,11 @@
                                     <tr>
                                         <td colspan="12" style=" " align="left">
                                             <p class="fw-600 txt-left " style="">
-                                                Dear Xyz,
+                                                Dear <span class="fw-600 txt-left">{{ $employee_name }}
+                                                </span>&nbsp;,
                                             </p>
                                             <p class="pt-pb-5">We are glad to appoint you as
-                                                &nbsp;<span class="fw-600 txt-left">" Xyz
+                                                &nbsp;<span class="fw-600 txt-left">" {{ $designation }}
                                                     "</span>&nbsp; in our company,
                                                 &nbsp;<span class="fw-600 txt-left">Indchem
                                                     Marketing Agencies
@@ -235,8 +237,8 @@
                                                 Your total remuneration package per annum
                                                 will
                                                 consist of &nbsp;<span class="fw-600 txt-left">
-                                                    CTC Rs Xyz- per annum
-                                                    (xyz)</span>&nbsp;.
+                                                    CTC Rs {{ $cic }}- per annum
+                                                    ({{ $ctc_in_words }})</span>&nbsp;.
                                                 The
                                                 breakup of your compensation package shall
                                                 be as detailed in Annexure A.
@@ -252,15 +254,15 @@
 
                                             </p>
                                             <p class="pt-pb-5">
-                                                Your employment with the company &nbsp;<span
-                                                    class="fw-600 txt-left"> INDCHEM MARKETING
+                                                Your employment with the company &nbsp;<span class="fw-600 txt-left">
+                                                    INDCHEM MARKETING
                                                     AGENCIES
                                                 </span>&nbsp will
-                                                be with effect from &nbsp;<span
-                                                    class="fw-600 txt-left"> DD-MM-
-                                                    YYYY</span>&nbsp;. You shall
-                                                initially be placed in &nbsp;<span
-                                                    class="fw-600 txt-left"> YYY
+                                                be with effect from &nbsp;<span class="fw-600 txt-left">
+                                                    {{ $doj }}
+                                                </span>&nbsp;. You shall
+                                                initially be placed in &nbsp;<span class="fw-600 txt-left">
+                                                    {{ $work_location }}
                                                 </span>&nbsp;. You may however
                                                 be required to travel and maybe positioned
                                                 or
@@ -280,8 +282,7 @@
                                             </p>
                                             <p class="pt-pb-5">
                                                 You shall be governed by the policies of the
-                                                company as specified in &nbsp;<span
-                                                    class="fw-600 txt-left">Annexure
+                                                company as specified in &nbsp;<span class="fw-600 txt-left">Annexure
                                                     B</span>&nbsp;. You shall
                                                 serve the Company and shall carry out such
                                                 duties which will be explained and defined
@@ -332,14 +333,19 @@
 
 
                                     <tr>
-                                        <td colspan="12" style=" "
-                                            class="border-bottom-line" align="left">
+                                        <td colspan="12" style=" " class="border-bottom-line" align="left">
                                             <p class="fw-600 pt-30  txt-left " style="">
                                                 Yours faithfully,
                                             </p>
                                             <p class=" pb-30 fw-600">
-                                                For
+                                                For<span class="fw-600 txt-left"> Indchem
+                                                    Marketing Agencies
+                                                </span>&nbsp;
+                                            </p>
+                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/vasa_sign.jpg') }}"class="" alt="" style="height: 40px;width:150px;">
 
+                                            <p class="fw-600 pt-10 txt-left " style=" ">
+                                                (Authorized Signatory)
                                             </p>
                                             <p class="fw-600 pt-10 txt-left " style=" ">
                                                 Founder and CEO of Indchem Marketing Agencies
@@ -349,14 +355,13 @@
                                     <tr>
                                         <td colspan="12" style=" " align="left">
                                             <p class=" pt-10 txt-left " style="">
-                                                I M Xyz, have read &nbsp;<span
-                                                    class="fw-600 txt-left">ANNEXURE A &
+                                                I M <span class="fw-600 txt-left">{{ $employee_name }},</span>&nbsp;
+                                                have read &nbsp;<span class="fw-600 txt-left">ANNEXURE A &
                                                     B,</span>&nbsp; understood, and accept
                                                 the
                                                 appointment upon the terms and conditions as
                                                 outlined in this appointment letter for my
-                                                position at &nbsp;<span
-                                                    class="fw-600 txt-left">INDCHEM MARKETING
+                                                position at &nbsp;<span class="fw-600 txt-left">INDCHEM MARKETING
                                                     AGENCIES
                                                 </span>&nbsp;.
 
@@ -376,7 +381,7 @@
                                         </td>
                                         <td colspan="6" class="pt-30 border-bottom-line"
                                             style="    padding-bottom: 62px;">
-                                            <p class="fw-600 txt-right " style="">
+                                            <p class="fw-600 txt-right " style=" margin-right:100px">
                                                 Date:
                                             </p>
 
@@ -388,10 +393,8 @@
                                         <td colspan="6" class="" align="">
                                             <p class="" style="padding-top: 2px">
                                             </p>
-                                            <p class=" "
-                                                style="text-align:initial;width:347px">
-                                                &nbsp;<span
-                                                    class="fw-600 txt-left">HeadOffice:</span>&nbsp;
+                                            <p class=" " style="text-align:initial;width:347px">
+                                                &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
                                                 63,SidcoIndustrialEstate,Sipco!Ranipet-632403
                                                 M:9994370451 Ph:04172-246168I245336
@@ -434,8 +437,7 @@
                         <td colspan="12" class="" align="right">
 
                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                class="" alt=""
-                                style="height: 50px;width:200px;">
+                                class="" alt="" style="height: 50px;width:200px;">
 
                         </td>
 
@@ -445,8 +447,7 @@
                             <table class="salary-table" style="width: 100%">
                                 <tbody>
                                     <tr>
-                                        <td colspan="12" style=" "class=""
-                                            align="center">
+                                        <td colspan="12" style=" "class="" align="center">
                                             <p class="fw-600 txt-center " style="">
                                                 ANNEXURE A
                                             </p>
@@ -455,8 +456,7 @@
 
                                     </tr>
                                     <tr>
-                                        <td colspan="12" style=" "class=""
-                                            align="center">
+                                        <td colspan="12" style=" "class="" align="center">
                                             <p class="fw-600 txt-center " style="">
                                                 SALARY STRUCTURE
                                             </p>
@@ -467,10 +467,9 @@
 
                                     <tr>
 
-                                        <td colspan="6" style=" "class="bg-ash "
-                                            align="left">
+                                        <td colspan="6" style=" "class="bg-ash " align="left">
                                             <p class="fw-600  txt-left" style="">
-                                                Name:
+                                                Name : {{ $employee_name }}
                                             </p>
 
                                         </td>
@@ -484,10 +483,9 @@
 
                                     </tr>
                                     <tr>
-                                        <td colspan="4" style=" "class="bg-ash "
-                                            align="center">
+                                        <td colspan="4" style=" "class="bg-ash " align="center">
                                             <p class="fw-600  " style="">
-                                                Designation
+                                                Designation :{{ $designation }}
                                             </p>
 
                                         </td>
@@ -513,13 +511,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="  txt-right" style="">
-
+                                                {{ $basic_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{ $basic_yearly }}
                                             </p>
 
                                         </td>
@@ -533,13 +531,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $hra_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{ $hra_yearly }}
                                             </p>
 
                                         </td>
@@ -553,35 +551,34 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $spl_allowance_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="   txt-right   " style="">
-
+                                                {{ $spl_allowance_yearly }}
                                             </p>
 
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="4" style=" "class="bg-ash "
-                                            align="center">
+                                        <td colspan="4" style=" "class="bg-ash " align="center">
                                             <p class="  fw-600" style="">
                                                 Gross
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
-                                            <p class="fw-600   txt-center" style="">
-
+                                            <p class="fw-600   txt-right" style="">
+                                                {{ $gross_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
-                                            <p class="fw-600   txt-center   " style="">
-
+                                            <p class="fw-600   txt-right   " style="">
+                                                {{ $gross_yearly }}
                                             </p>
 
                                         </td>
@@ -594,14 +591,14 @@
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="  txt-center" style="">
-
+                                            <p class="  txt-right" style="">
+                                                {{ $employer_epf_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="   txt-center   " style="">
-
+                                            <p class="   txt-right   " style="">
+                                                {{ $employer_epf_yearly }}
                                             </p>
 
                                         </td>
@@ -615,13 +612,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class=" txt-right" style="">
-
+                                                {{ $employer_esi_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="  txt-right   " style="">
-
+                                                {{ $employer_esi_yearly }}
                                             </p>
 
                                         </td>
@@ -636,13 +633,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
                                             <p class="fw-600  txt-right" style="">
-
+                                                {{ $ctc_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="bg-ash">
                                             <p class="fw-600   txt-right   " style="">
-
+                                                {{ $ctc_yearly }}
                                             </p>
 
                                         </td>
@@ -656,13 +653,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employee_epf_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right  " style="">
+                                                {{ $employee_epf_yearly }}
                                             </p>
 
                                         </td>
@@ -676,13 +673,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employee_esi_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right   " style="">
-
+                                                {{ $employee_esi_yearly }}
                                             </p>
 
                                         </td>
@@ -697,13 +694,13 @@
                                         </td>
                                         <td colspan="4" style=" "class="">
                                             <p class="txt-right" style="">
-
+                                                {{ $employer_pt_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class="">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right   " style="">
+                                                {{ $employer_pt_yearly }}
                                             </p>
 
                                         </td>
@@ -716,14 +713,14 @@
 
                                         </td>
                                         <td colspan="4" style=" "class=" bg-ash">
-                                            <p class="txt-right" style="">
-
+                                            <p class="txt-right fw-600" style="">
+                                                {{ $net_take_home_monthly }}
                                             </p>
 
                                         </td>
                                         <td colspan="4" style=" "class=" bg-ash">
-                                            <p class="ttxt-right   " style="">
-
+                                            <p class="txt-right fw-600  " style="">
+                                                {{ $net_take_home_yearly }}
                                             </p>
 
                                         </td>
@@ -800,7 +797,8 @@
                     <tr>
                         <td colspan="12" style=" " align="left">
                             <p class=" txt-left " style="">
-                                I Xyz, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE A
+                                I <span class="fw-600 txt-left">{{ $employee_name }}
+                                    ,</span>&nbsp; have read &nbsp;<span class="fw-600 txt-left">ANNEXURE A
                                     &
                                     B,</span>&nbsp; understood, and accept the
                                 appointment upon the terms and conditions as
@@ -823,7 +821,7 @@
 
                         </td>
                         <td colspan="6" class="pt-30" style="" align="right">
-                            <p class="fw-600 txt-right " style="">
+                            <p class="fw-600 txt-right " style="margin-right:100px">
                                 Date:
                             </p>
 
@@ -831,8 +829,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12"
-                            style="padding-bottom:15px;
+                        <td colspan="12" style="padding-bottom:15px;
                         "
                             class="pt-pb-5 border-bottom-line " align="">
                             <p class="fw-600  " style="">
@@ -879,8 +876,7 @@
                         <td colspan="12" class="pb-30" align="right">
 
                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                class="" alt=""
-                                style="height: 50px;width:200px;">
+                                class="" alt="" style="height: 50px;width:200px;">
 
                         </td>
 
@@ -939,8 +935,8 @@
                     <tr>
                         <td colspan="12" style=" "class="" align="">
                             <p class=" " style="">
-                                Your actual working hours &nbsp;<span
-                                    class="fw-600 txt-left">9.45 AM to 6 PM </span>&nbsp;
+                                Your actual working hours &nbsp;<span class="fw-600 txt-left">9.45 AM to 6 PM
+                                </span>&nbsp;
                                 including working in
                                 Shifts and working days (including working on weekly offs
                                 and
@@ -950,8 +946,7 @@
 
                             </p>
                             <p class="12 " style="">
-                                INDCHEM MARKETING AGENCIES works for &nbsp;<span
-                                    class="fw-600 txt-left">8
+                                INDCHEM MARKETING AGENCIES works for &nbsp;<span class="fw-600 txt-left">8
                                     hours</span>&nbsp; (Including Break) a day 5 days a
                                 week and Saturday &nbsp;<span class="fw-600 txt-left">9.45
                                     AM
@@ -1038,8 +1033,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12" style="padding-bottom:75px;"
-                            class="border-bottom-line ">
+                        <td colspan="12" style="padding-bottom:75px;" class="border-bottom-line ">
                             <p class="" style="">
                                 The Company will compensate you for all expenses that are
                                 reasonably incurred and that are directly related to the
@@ -1090,6 +1084,7 @@
             </table>
         </div>
     </div>
+    {{--  --}}
 
     <div class="main-page appointment-letter">
         <div class="sub-page" style="text-align: justify;">
@@ -1099,8 +1094,7 @@
                         <td colspan="12" class="pb-30" align="right">
 
                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                class="" alt=""
-                                style="height: 50px;width:200px;max-height:100%;">
+                                class="" alt="" style="height: 50px;width:200px;max-height:100%;">
 
                         </td>
 
@@ -1121,8 +1115,8 @@
                                 Employer contributions will be submitted to the Indian
                                 Government-approved Provident Fund Scheme on your behalf
                                 with
-                                your equal monthly contribution as detailed in &nbsp;<span
-                                    class="fw-600 txt-left"> Annexure A .</span>&nbsp;
+                                your equal monthly contribution as detailed in &nbsp;<span class="fw-600 txt-left">
+                                    Annexure A .</span>&nbsp;
 
                             </p>
 
@@ -1250,8 +1244,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12" style="padding-bottom:28px;"
-                            class=" border-bottom-line ">
+                        <td colspan="12" style="padding-bottom:28px;" class=" border-bottom-line ">
                             <p class="  " style="">
                                 Your employment may be terminated at any time by yourself,
                                 or by
@@ -1278,29 +1271,43 @@
 
 
                     <tr>
-                        <td colspan="6" class="" align="">
-                            <p class=" " style="text-align:initial;">
-                                &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
+                        <td class="" colspan="12" style="padding-top:150px">
+                            <table style="border-top: 1px solid #000">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="6" class="" align="">
+                                            <p class="" style="padding-top: 2px">
+                                            </p>
+                                            <p class=" " style="text-align:initial;width:347px">
+                                                &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
-                                63,SidcoIndustrialEstate,Sipco!Ranipet-632403
-                                M:9994370451 Ph:04172-246168I245336
-                                E:indchemrpt@yahoo.co.in
+                                                63,SidcoIndustrialEstate,Sipco!Ranipet-632403
+                                                M:9994370451
+                                                Ph:04172-246168I245336
+                                                E:indchemrpt@yahoo.co.in
 
-                            </p>
+                                            </p>
+                                        </td>
+
+                                        <td colspan="6" class="" align="">
+                                            <p class="" style="padding-top: 2px">
+                                            </p>
+                                            <p class=" " style="text-align:initial;">
+                                                <span class="fw-600 txt-left">
+                                                    AdminOffice:</span>&nbsp;
+                                                #34/123,
+                                                DugarTowers,2ndFloorMarshallsRoad,
+                                                Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
+                                                E:info@imavasa.in
+
+
+                                            </p>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
                         </td>
-
-                        <td colspan="6" class="" align="">
-                            <p class=" " style="text-align:initial;">
-                                &nbsp;<span class="fw-600 txt-left">
-                                    AdminOffice:</span>&nbsp;
-                                #34/123, DugarTowers,2ndFloorMarshallsRoad,
-                                Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
-                                E:info@imavasa.in
-
-
-                            </p>
-                        </td>
-
                     </tr>
                 </tbody>
             </table>
@@ -1315,8 +1322,7 @@
                         <td colspan="12" class="pb-30" align="right">
 
                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                class="" alt=""
-                                style="height: 50px;width:200px;max-height:100%;">
+                                class="" alt="" style="height: 50px;width:200px;max-height:100%;">
 
                         </td>
 
@@ -1414,8 +1420,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="12" class="border-bottom-line" style=" "
-                            align="">
+                        <td colspan="12" class="border-bottom-line" style=" " align="">
                             <p class="fw-600 pt-30  txt-left " style="">
                                 Yours faithfully,
                             </p>
@@ -1423,6 +1428,11 @@
                                 For INDCHEM MARKETING AGENCIES
 
                             </p>
+                        <img src="{{ URL::asset('assets/images/client_logos/vasa/vasa_sign.jpg') }}"class="" alt="" style="height: 40px;width:150px;">
+
+                        <p class="fw-600 pt-10 txt-left " style=" ">
+                            (Authorized Signatory)
+                        </p>
 
                             <p class="fw-600 pt-10 txt-left " style="">
                                 Founder and CEO of Indchem Marketing Agencies
@@ -1432,7 +1442,8 @@
                     <tr>
                         <td colspan="12" style=" " align="left">
                             <p class=" pt-10 txt-left " style="">
-                                I M Xyz, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE
+                                I M <span class="fw-600 txt-left">{{ $employee_name }}</span>&nbsp; ,have read
+                                &nbsp;<span class="fw-600 txt-left">ANNEXURE
                                     A &
                                     B,</span>&nbsp; understood, and accept the
                                 appointment upon the terms and conditions as
@@ -1455,7 +1466,7 @@
 
                         </td>
                         <td colspan="6" class="pt-30" style="" align="right">
-                            <p class="fw-600 txt-right " style="">
+                            <p class="fw-600 txt-right " style="margin-right:140px">
                                 Date:
                             </p>
 
@@ -1472,29 +1483,43 @@
                     </tr> --}}
 
                     <tr>
-                        <td colspan="6" class="" align="">
-                            <p class=" " style="text-align:initial;">
-                                &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
+                        <td class="" colspan="12" style="padding-top:100px">
+                            <table style="border-top: 1px solid #000">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="6" class="" align="">
+                                            <p class="" style="padding-top: 2px">
+                                            </p>
+                                            <p class=" " style="text-align:initial;width:347px">
+                                                &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
-                                63,SidcoIndustrialEstate,Sipco!Ranipet-632403
-                                M:9994370451 Ph:04172-246168I245336
-                                E:indchemrpt@yahoo.co.in
+                                                63,SidcoIndustrialEstate,Sipco!Ranipet-632403
+                                                M:9994370451
+                                                Ph:04172-246168I245336
+                                                E:indchemrpt@yahoo.co.in
 
-                            </p>
+                                            </p>
+                                        </td>
+
+                                        <td colspan="6" class="" align="">
+                                            <p class="" style="padding-top: 2px">
+                                            </p>
+                                            <p class=" " style="text-align:initial;">
+                                                <span class="fw-600 txt-left">
+                                                    AdminOffice:</span>&nbsp;
+                                                #34/123,
+                                                DugarTowers,2ndFloorMarshallsRoad,
+                                                Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
+                                                E:info@imavasa.in
+
+
+                                            </p>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
                         </td>
-
-                        <td colspan="6" class="" align="">
-                            <p class=" " style="text-align:initial;">
-                                &nbsp;<span class="fw-600 txt-left">
-                                    AdminOffice:</span>&nbsp;
-                                #34/123, DugarTowers,2ndFloorMarshallsRoad,
-                                Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
-                                E:info@imavasa.in
-
-
-                            </p>
-                        </td>
-
                     </tr>
                 </tbody>
             </table>
@@ -1514,15 +1539,13 @@
                                         <td colspan="12" class="pb-30" align="right">
 
                                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 50px;width:200px;">
+                                                class="" alt="" style="height: 50px;width:200px;">
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="center">
-                                            <p class="fw-600 txt-center pb-30 "
-                                                style="">
+                                            <p class="fw-600 txt-center pb-30 " style="">
                                                 NON – DISCLOSURE AGREEMENT
                                             </p>
 
@@ -1574,8 +1597,7 @@
                                             </p>
                                             <ol type="1">
                                                 <li>
-                                                    <p class=" txt-left  pt-20 "
-                                                        style="">
+                                                    <p class=" txt-left  pt-20 " style="">
                                                         <span class="fw-600">Confidential
                                                             Information:</span>
                                                         Confidential Information shall mean and
@@ -1633,8 +1655,7 @@
 
                                                 </li>
                                                 <li>
-                                                    <p class=" txt-left  pt-10 "
-                                                        style="">
+                                                    <p class=" txt-left  pt-10 " style="">
                                                         <span class="fw-600">Scope:</span>
                                                         Indchem retains the sole and exclusive
                                                         ownership
@@ -1656,18 +1677,14 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="" colspan="12"
-                                            style="padding-top: 48px">
+                                        <td class="" colspan="12" style="padding-top:150px">
                                             <table style="border-top: 1px solid #000">
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="6" class=""
-                                                            align="">
-                                                            <p class=""
-                                                                style="padding-top: 2px">
+                                                        <td colspan="6" class="" align="">
+                                                            <p class="" style="padding-top: 2px">
                                                             </p>
-                                                            <p class=" "
-                                                                style="text-align:initial;width:347px">
+                                                            <p class=" " style="text-align:initial;width:347px">
                                                                 &nbsp;<span
                                                                     class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
@@ -1679,13 +1696,10 @@
                                                             </p>
                                                         </td>
 
-                                                        <td colspan="6" class=""
-                                                            align="">
-                                                            <p class=""
-                                                                style="padding-top: 2px">
+                                                        <td colspan="6" class="" align="">
+                                                            <p class="" style="padding-top: 2px">
                                                             </p>
-                                                            <p class=" "
-                                                                style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;">
                                                                 <span class="fw-600 txt-left">
                                                                     AdminOffice:</span>&nbsp;
                                                                 #34/123,
@@ -1725,8 +1739,7 @@
                                         <td colspan="12" class="pb-30" align="right">
 
                                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 50px;width:200px;">
+                                                class="" alt="" style="height: 50px;width:200px;">
 
                                         </td>
 
@@ -1862,18 +1875,14 @@
 
 
                                     <tr>
-                                        <td class="" colspan="12"
-                                            style="padding-top:146px ">
+                                        <td class="" colspan="12" style="padding-top:146px ">
                                             <table style="border-top: 1px solid #000">
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="6" class=""
-                                                            align="">
-                                                            <p class=""
-                                                                style="padding-top: 2px">
+                                                        <td colspan="6" class="" align="">
+                                                            <p class="" style="padding-top: 2px">
                                                             </p>
-                                                            <p class=" "
-                                                                style="text-align:initial;width:347px">
+                                                            <p class=" " style="text-align:initial;width:347px">
                                                                 &nbsp;<span
                                                                     class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
@@ -1885,13 +1894,10 @@
                                                             </p>
                                                         </td>
 
-                                                        <td colspan="6" class=""
-                                                            align="">
-                                                            <p class=""
-                                                                style="padding-top: 2px">
+                                                        <td colspan="6" class="" align="">
+                                                            <p class="" style="padding-top: 2px">
                                                             </p>
-                                                            <p class=" "
-                                                                style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;">
                                                                 <span class="fw-600 txt-left">
                                                                     AdminOffice:</span>&nbsp;
                                                                 #34/123,
@@ -1931,8 +1937,7 @@
                                         <td colspan="12" class="pb-30" align="right">
 
                                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 50px;width:200px;">
+                                                class="" alt="" style="height: 50px;width:200px;">
 
                                         </td>
 
@@ -2066,18 +2071,14 @@
 
 
                                     <tr>
-                                        <td class="" colspan="12"
-                                            style="padding-top:266px">
+                                        <td class="" colspan="12" style="padding-top:266px">
                                             <table style="border-top: 1px solid #000">
                                                 <tbody>
                                                     <tr>
-                                                        <td colspan="6" class=""
-                                                            align="">
-                                                            <p class=""
-                                                                style="padding-top: 2px">
+                                                        <td colspan="6" class="" align="">
+                                                            <p class="" style="padding-top: 2px">
                                                             </p>
-                                                            <p class=" "
-                                                                style="text-align:initial;width:347px">
+                                                            <p class=" " style="text-align:initial;width:347px">
                                                                 &nbsp;<span
                                                                     class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
@@ -2089,13 +2090,10 @@
                                                             </p>
                                                         </td>
 
-                                                        <td colspan="6" class=""
-                                                            align="">
-                                                            <p class=""
-                                                                style="padding-top: 2px">
+                                                        <td colspan="6" class="" align="">
+                                                            <p class="" style="padding-top: 2px">
                                                             </p>
-                                                            <p class=" "
-                                                                style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;">
                                                                 <span class="fw-600 txt-left">
                                                                     AdminOffice:</span>&nbsp;
                                                                 #34/123,
@@ -2124,6 +2122,7 @@
     </div>
 
 
-    
+
 </body>
+
 </html>
