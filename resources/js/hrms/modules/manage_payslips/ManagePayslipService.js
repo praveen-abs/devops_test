@@ -23,7 +23,6 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             type:"pdf"
         }).then((response) => {
             // console.log("Response [getAllEmployeesPayslipDetails] : " + JSON.stringify(response.data.data));
-
             array_employees_list.value = response.data.data;
         }).finally(() => {
             loading.value = false
