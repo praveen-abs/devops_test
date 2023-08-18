@@ -38,14 +38,14 @@
 
                     <div class="justify-around w-full mt-5 row d-flex md ">
                         <div class="mt-3 col-md col-8 cd">
-                            <h1 class="w-full ">
+                            <h1 class="">
                                 How would you like the House Rent Allowance (HRA) to be taken into account for tax exemption
                                 purposes?
                             </h1>
                         </div>
-                        <div class="mt-2 col-md">
+                        <div class="mt-2 col-md w-[200px] ">
                             <Dropdown v-model="selectedCity" :options="cities" optionLabel="name"
-                                placeholder=" Month on Month or Annual" class="w-full h-2.2rem"
+                                placeholder=" Month on Month or Annual" class=" w-[280px] h-2.2rem"
                                 :style="{ background: '#FFFFFF;' }" />
                         </div>
                     </div>
@@ -84,8 +84,8 @@
 
 
         <div class="w-full">
-            <div class="mt-5">
-                <h1 class="mt-5 font-semibold">Approval of Financial Changes</h1>
+            <div class="mt-2">
+                <h1 class="mt-2 font-semibold">Approval of Financial Changes</h1>
 
                 <div class="p-3 mt-5 bg-gray-100 rounded-lg card">
                     <div class="card-body">
@@ -93,12 +93,18 @@
                             <!-- <div class="col-1 col-lg ">
                             </div> -->
                             <div class="col-12">
-                                <input type="checkbox" name="" id="" style="height: 20px;width: 20px;"
-                                    class="form-check-input"><span>
-                                    <span class="mx-6 font-semibold fs-5" :style="{ color: '#002f56' }"> Grant authorization to employees for reviewing
+                                <div class=" flex justify-between items-center">
+                                    <input type="checkbox" name="" id="" style="height: 20px;width: 20px;"
+                                    class="form-check-input">
+                                    <span class="mx-6 font-semibold fs-5 text-left max-[1061px]:!text-[16px] " :style="{ color: '#002f56' }">
+                                        Grant authorization to employees for reviewing
                                         and approving changes to the
                                         following
                                         financial information</span>
+
+                                </div>
+                             <span>
+                                
                                 </span>
 
                             </div>
@@ -147,7 +153,7 @@
                                 </div>
                                 <div class="items-center justify-around ml-4">
                                     <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25"
-                                        class="w-full md:w-7rem" />
+                                        class=" md:w-7rem" />
                                 </div>
                             </div>
 
@@ -157,7 +163,7 @@
                             <div class="mt-4 col-md col-10 cd">
                                 <h1>For New Joinee, opting in or out to be done within
                                     <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25"
-                                        class="w-full mx-4 md:w-7rem" /> days from the date of joining.
+                                        class="w-[200px] mx-4 md:w-7rem" /> days from the date of joining.
                                 </h1>
                             </div>
                         </div>
@@ -181,7 +187,7 @@
                                 <h1>Employees can update their Investments Declarations anytime during a month prior to
                                     month the
                                     <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25"
-                                        class="w-full mx-4 md:w-7rem" />
+                                        class="w-[100px] mx-4 md:w-7rem" />
                                     month and before the cut-off period in the financial year, as defined below.
                                 </h1>
                             </div>
@@ -201,7 +207,7 @@
                                 </div>
                                 <div class="items-center justify-around ml-4">
                                     <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25"
-                                        class="w-full md:w-7rem" />
+                                        class=" md:w-7rem" />
                                 </div>
                             </div>
 
@@ -212,7 +218,7 @@
                             <div class="col-md col-10 cd">
                                 <h1>For New Joinee, opting in or out to be done within
                                     <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25"
-                                        class="w-full mx-4 md:w-7rem" /> days from the date of joining.
+                                        class="w-[100px] mx-4 md:w-7rem" /> days from the date of joining.
                                 </h1>
                             </div>
                         </div>
@@ -246,15 +252,12 @@
 
                 <div class="p-3 my-5 mt-2 bg-gray-100 rounded-lg card card-md-w-100">
                     <div class="card-body">
-                        <div class="justify-around row d-flex align-items-center ">
-
-                            <div class="w-0 mr-3 col-1 col-lg">
+                        <div class=" flex justify-start items-center ">
+                    
                                 <label for=""><input type="checkbox" name="" id="" style="height: 20px;width: 20px;"
-                                        class="form-check-input"></label>
-                            </div>
-                            <div class="col col-sm-10 ">
+                                    class="form-check-input mr-2"></label>
                                 <h1>Notify the employee when the investment Delaration is released. </h1>
-                            </div>
+                
                         </div>
 
                         <div class="justify-around w-full my-4 row d-flex md">
@@ -283,7 +286,7 @@
                             </div>
                             <div class="col col-lg">
                                 <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="Oncee a Week"
-                                    class="w-full md:w-14rem" />
+                                    class="w-[200px] md:w-14rem" />
                             </div>
                         </div>
                     </div>

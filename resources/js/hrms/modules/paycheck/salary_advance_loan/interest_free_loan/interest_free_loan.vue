@@ -276,7 +276,7 @@ const openPosition = (pos) => {
 
 function selectMonth() {
 
-    useEmpStore.interestFreeLoan.M_EMI = useEmpStore.interestFreeLoan.required_amount / useEmpStore.interestFreeLoan.Term;
+    useEmpStore.interestFreeLoan.M_EMI =  Math.round(useEmpStore.interestFreeLoan.required_amount / useEmpStore.interestFreeLoan.Term) ;
     useEmpStore.interestFreeLoan.Total_Months = useEmpStore.interestFreeLoan.Term;
 
     //

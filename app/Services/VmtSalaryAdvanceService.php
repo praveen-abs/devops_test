@@ -22,6 +22,7 @@ use App\Models\VmtInterestFreeLoanSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
 use App\Models\VmtEmpInterestLoanDetails;
 use App\Models\VmtSalaryAdvanceMasterModel;
+use App\Models\VmtSalAdvTransactionRecord;
 use App\Models\VmtPayroll;
 use App\Models\Department;
 use App\Models\State;
@@ -435,7 +436,13 @@ class VmtSalaryAdvanceService
                 $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
                     ->where('vmt_emp_assign_salary_adv_setting.user_id', $current_user_id)->first();
 
-                $get_salary_emp = VmtEmpSalAdvDetails::where('requested_date', date("Y-m-d"))->get();
+                // $get_salary_emp = VmtEmpSalAdvDetails::where('requested_date', date("Y-m-d"))->get();
+                $current_date = Carbon::now();
+                $get_salary_emp = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
+                    ->whereYear('vmt_emp_sal_adv_details.requested_date', $current_date->format('Y'))
+                    ->whereMonth('vmt_emp_sal_adv_details.requested_date',   $current_date->format('m'))
+                    ->whereIn('vmt_emp_sal_adv_details.sal_adv_crd_sts', [0, 1])
+                    ->where('vmt_emp_assign_salary_adv_setting.user_id', $current_user_id)->get();
 
                 $sal_borrowed = 0;
                 foreach ($get_salary_emp as $single_salary_emmp) {
@@ -2179,8 +2186,9 @@ class VmtSalaryAdvanceService
                     'vmt_int_free_loan_transaction_record.paid_emi as paid_emi',
                 ]);
             $pending_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->where('loan_crd_sts', 0)->count();
-            $compeleted_request_query =VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
+            $compeleted_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
         } else if ($loan_type == 'sal_adv') {
+            // $loan_amt_query = VmtSalAdvTransactionRecord::Join('');
         } else {
             return response()->json([
                 'status' => 'failure',
