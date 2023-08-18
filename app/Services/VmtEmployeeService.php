@@ -248,8 +248,8 @@ class VmtEmployeeService
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
             if($onboard_type == 'normal'){
-                $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
-                $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+                $client_data =VmtMasterConfig::where("config_name","client_id")->first('config_value');
+                $newUser->client_id = $client_data['config_value'];
             }else{
                 $emp_client_code = trim($data['legal_entity']);
                 $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
@@ -588,7 +588,11 @@ class VmtEmployeeService
             $empOffice->probation_period  = $data['probation_period'] ?? '';
             $empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb($confirmation_period, $user_id) : '';
             $empOffice->holiday_location  = $data["holiday_location"] ?? '';
-            $empOffice->l1_manager_code  = $data["l1_manager_code_id"] ?? '';
+            $empOffice->l1_manager_code  = $data["l1_manager_code"] ?? '';
+            $l1_manager_name =User::where("user_code",$data["l1_manager_code"])->first();
+            if( !empty($l1_manager_name)){
+                $empOffice->l1_manager_name  =$l1_manager_name->name;  // => "k"
+            }
             $empOffice->work_location  = $data["work_location"] ?? '';
             $empOffice->officical_mail  = $data["officical_mail"] ?? '';
             $empOffice->official_mobile  = $data["official_mobile"] ?? '';
@@ -720,6 +724,10 @@ class VmtEmployeeService
             $empOffice->confirmation_period  = $data['confirmation_period'] ?? '';
             $empOffice->holiday_location  = $data["holiday_location"] ?? ''; // => "k"
             $empOffice->l1_manager_code  = $data["l1_manager_code"] ?? ''; // => "k"
+            $l1_manager_name =User::where("user_code",$data["l1_manager_code"])->first();
+            if( !empty($l1_manager_name)){
+                $empOffice->l1_manager_name  =$l1_manager_name->name;  // => "k"
+            }
             $empOffice->officical_mail  = $data["official_mail"] ?? ''; // => "k@k.in"
             $empOffice->work_location  = $data["work_location"] ?? ''; // => "k"
             $empOffice->official_mobile  = $data["official_mobile"] ?? ''; // => "1234567890"
@@ -833,7 +841,7 @@ class VmtEmployeeService
             $compensatory->lta = $data["lta"] ?? '';
             $compensatory->special_allowance = $data["special_allowance"] ?? '';
             $compensatory->other_allowance = $data["other_allowance"] ?? '';
-            $compensatory->gross = $data["fixed_gross"] ?? '';
+            $compensatory->gross = $data["gross"] ?? '';
             $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '';
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
@@ -1047,7 +1055,7 @@ class VmtEmployeeService
         $data["ctc_in_words"] = numberToWord(intval($employeeData['cic']) * 12);
         $data["ctc_in_words"]=str_replace("  "," ",$data["ctc_in_words"]);
 
-       // if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
+       if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
         //$client_name = str_replace(' ', '_', sessionGetSelectedClientName());
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
         $viewfile_appointmentletter = 'appointment_mail_templates.appointment_Letter_'.strtolower($client_name);
@@ -1080,7 +1088,7 @@ class VmtEmployeeService
 
                     $isSent = \Mail::to($data['email'])->send(new WelcomeMail("ABS123", 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$VmtClientMaster->client_code));
         return $isSent;
-     //}
+     }
     }
 
 

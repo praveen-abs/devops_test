@@ -13,6 +13,7 @@
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
+    use App\Models\VmtMasterConfig;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
@@ -659,8 +660,8 @@
 //                 $pdf->stream(['breezetech.pdf']);
 
 
-$data =numberToWord("123");
-dd(str_replace(" ","",$data));
+// $data =numberToWord("123");
+// dd(str_replace(" ","",$data));
 //                 $docUploads =  $pdf->output();
 //                  dd( $docUploads);
         //         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
@@ -683,15 +684,8 @@ dd(str_replace(" ","",$data));
 
 
 
-$user_code ='PSC0060';
-$user_data =User::where('user_code',$user_code)->first();
-
-    $fixed_data = Compensatory::where('user_id',$user_data->id)->first();
-    dd($fixed_data );
-
-    foreach ($fixed_data as $key => $value) {
-
-    }
+        $client_data =VmtMasterConfig::where("config_name","client_id")->first('config_value');
+        dd($client_data['config_value']);
 
     ?>
 
