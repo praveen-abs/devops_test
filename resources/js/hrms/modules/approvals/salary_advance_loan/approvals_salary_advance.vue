@@ -1,6 +1,7 @@
 <template>
+        <LoadingSpinner v-if="SalaryAdvanceApprovals.canShowLoadingScreen"  class="absolute z-50 bg-white w-[100%] h-[100%]"/>
     <div class="mt-30">
-        <h1 class="fs-5 fw-semibold mb-3">Salary Advance & Loan - Team Management</h1>
+        <h1 class="mb-3 fs-5 fw-semibold">Salary Advance & Loan - Team Management</h1>
 
         <div class="p-4 pt-1 pb-0 mb-3 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -50,17 +51,7 @@
         </div>
     </div>
 
-    <Dialog header="Header" v-model:visible="SalaryAdvanceApprovals.canShowLoadingScreen"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
-        :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
+
 </template>
 
 
@@ -72,6 +63,7 @@ import InterestFreeLoan from './interest_free_loan/interest_free_loan.vue'
 import TravelAdvance from './travel_advance/travel_advance.vue'
 import LoanWithInterest from './loan_with_interest/loan_with_interest.vue'
 import { UseSalaryAdvanceApprovals } from './store/loanAdvanceMainStore';
+import LoadingSpinner from '../../../components/LoadingSpinner.vue';
 
 const SalaryAdvanceApprovals = UseSalaryAdvanceApprovals();
 
