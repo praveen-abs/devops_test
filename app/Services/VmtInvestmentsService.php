@@ -417,50 +417,17 @@ class VmtInvestmentsService
       "vechicle_model" => "Hyundai IONIQ 5"
       "section" => "80EEB"
     */
-    public function saveSection80($user_code, $fs_id, $loan_sanction_date, $lender_type, $property_value, $loan_amount, $interest_amount_paid, $section)
+    public function saveSection80($allrequest)
     {
-
-        $validator = Validator::make(
-            $data = [
-                'user_code' => $user_code,
-                'fs_id' => $fs_id,
-                'loan_sanction_date' => $loan_sanction_date,
-                'lender_type' => $lender_type,
-                'property_value' => $property_value,
-                'loan_amount' => $loan_amount,
-                'interest_amount_paid' => $interest_amount_paid,
-                'section' => $section,
-
-            ],
-            $rules = [
-                "user_code" => 'required|exists:users,user_code',
-                "fs_id" => "required",
-                "loan_sanction_date" => 'required',
-                "interest_amount_paid" => 'required',
-                "section" => 'required',
-
-            ],
-            $messages = [
-                "required" => "Field :attribute is missing",
-                "exists" => "Field :attribute is invalid"
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
 
         try {
 
-            $json_decodeHra = json_encode($data);
+            $json_decodeHra = json_encode($allrequest);
             $current_date = date("Y-m-d");
 
             $form_id = "1";
 
-            $user_id = User::where('user_code', $user_code)->first()->id;
+            $user_id = User::where('user_code', $allrequest['user_code'])->first()->id;
 
             $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
 
@@ -479,22 +446,22 @@ class VmtInvestmentsService
 
             $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-            $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $fs_id)->first();
+            $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $allrequest['fs_id'])->first();
 
             if (empty($emp_formdata)) {
 
                 $Hra_save = new VmtInvEmpFormdata;
                 $Hra_save->f_emp_id = $query_assign->id;
-                $Hra_save->fs_id = $fs_id;
-                $Hra_save->dec_amount = $interest_amount_paid;
+                $Hra_save->fs_id = $allrequest['fs_id'];
+                $Hra_save->dec_amount = $allrequest['interest_amount_paid'];
                 $Hra_save->json_popups_value = $json_decodeHra;
                 $Hra_save->selected_section_options = '0';
                 $Hra_save->save();
 
             } else {
                 $emp_formdata->f_emp_id = $query_assign->id;
-                $emp_formdata->fs_id = $fs_id;
-                $emp_formdata->dec_amount = $interest_amount_paid;
+                $emp_formdata->fs_id = $allrequest['fs_id'];
+                $emp_formdata->dec_amount =  $allrequest['interest_amount_paid'];
                 $emp_formdata->json_popups_value = $json_decodeHra;
                 $emp_formdata->selected_section_options = '0';
                 $emp_formdata->save();
@@ -580,7 +547,7 @@ class VmtInvestmentsService
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
-                "message" => "Error while fetching investments form template",
+                "message" => "Error while fetch Emp Rental Details",
                 "data" => $e,
             ]);
         }
@@ -644,7 +611,7 @@ class VmtInvestmentsService
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
-                "message" => "Error while fetching investments form template",
+                "message" => "Error while fetch House Property Details",
                 "data" => $e,
             ]);
         }

@@ -31,7 +31,7 @@ class VmtAPIInvestmentsController extends Controller
     public function saveSection80(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
        // dd($request->all());
 
-        return $serviceVmtInvestmentsService->saveSection80($request->user_code, $request->fs_id, $request->loan_sanction_date, $request->lender_type, $request->property_value, $request->loan_amount, $request->interest_amount_paid,  $request->section );
+        return $serviceVmtInvestmentsService->saveSection80($request->all());
     }
 
 
