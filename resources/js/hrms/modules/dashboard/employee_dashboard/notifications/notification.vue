@@ -6,20 +6,20 @@
                 style="font-size: 1rem" /> -->
         </div>
         <div class="h-full overflow-x-scroll" >
-            <div class="p-1 my-1 rounded-lg shadow-md hover:bg-slate-100 "
-                v-for="notification in useDashboard.allNotificationSource" :key="notification.id">
-                <div class="p-2">
+            <div class=" hover:bg-slate-100 divide-y-2 divide-gray-400  ">
+                <p class="font-medium text-sm text-center">No activity log to display</p>
+                <!-- <div class="p-2">
                     <a class="text-black notify-content">
                         <p class="flex items-center justify-between mb-1 orange-median">
-                            <span class="text-sm font-semibold orange-median ">{{ notification.notification_title }}</span>
+                            <span class="text-sm font-semibold orange-median ">898</span>
                         </p>
                         <div class="notify-message">
                             <p class="text-xs font-medium text-gray-600">
-                                {{ notification.notification_body }}
+                               090
                             </p>
                         </div>
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
