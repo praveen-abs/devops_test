@@ -791,8 +791,9 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::get('/report/download-absent-report',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'downloadAbsentReport']);
     Route::get('fetch-LC-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,
     'fetchLCReportData']);
+    Route::get('/report/download-late-coming-report',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'downloadLCReport']);
 
-    //Pay Check Reports
+    //Pay Check Reports   
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
     //Reimbursements Reports
     Route::get('/reports/generate-manager-reimbursements-reports', [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name(' generateManagerReimbursementsReports');
