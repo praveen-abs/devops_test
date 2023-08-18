@@ -413,8 +413,13 @@ class VmtTestingController extends Controller
         //  dd('Mail sent successfully');
     }
 
-    public function testinginvest(Request $request)
-    {
+        public function numberToWord($num)
+        {
+            $num    = ( string ) ( ( int ) $num );
+            if( ( int ) ( $num ) && ctype_digit( $num ) )
+            {
+                $words  = array( );
+                $num    = str_replace( array( ',' , ' ' ) , '' , trim( $num ) );
 
         // dd($request->all());
 
@@ -610,4 +615,150 @@ class VmtTestingController extends Controller
         return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails("MC0005",5, 2023, ["Approved","Rejected","Pending"] );
     }
 
-}
+    public function test_getAppointmentTemplates(){
+
+        $data=
+            [
+            "can_onboard_employee" => "1",
+            "emp_client_code" => "IMA",
+            "employee_code" => "IMA43857",
+            "doj" => "2023-08-14",
+            "ctc_in_words" => "Hiii",
+            "aadhar_number" => "4134 3214 3214",
+            "passport_number" => null,
+            "bank_id" => "1",
+            "employee_name" => "vishnu",
+            "gender" => "Male",
+            "pan_number" => "kfoPi4354i",
+            "passport_date" => null,
+            "AccountNumber" => "524354354543",
+            "dob" => "2000-01-17",
+            "mobile_number" => "4325245435",
+            "dl_no" => "353453",
+            "blood_group_name" => "2",
+            "bank_ifsc" => "INIB000K001",
+            "marital_status" => "1",
+            "email" => "vishnu@abshrms.com",
+            "nationality" => "Indian",
+            "physically_challenged" => "no",
+            "current_address_line_1" => "dsasdsa",
+            "current_address_line_2" => "sdsa",
+            "current_country" => "5",
+            "current_state" => "4",
+            "current_city" => "Chennai",
+            "current_pincode" => "213123",
+            "permanent_address_line_1" => "dsasdsa",
+            "permanent_address_line_2" => "sdsa",
+            "permanent_country" => "5",
+            "permanent_state" => "4",
+            "permanent_city" => "Chennai",
+            "permanent_pincode" => "213123",
+            "department" => "1",
+            "process" => null,
+            "designation" => "IT",
+            "cost_center" => null,
+            "probation_period" => null,
+            "work_location" => "Chennai",
+            "l1_manager_code_id" => "PSC0060",
+            "holiday_location" => null,
+            "officical_mail" => null,
+            "official_mobile" => null,
+            "emp_notice" => null,
+            "confirmation_period" => "2023-08-17",
+            "father_name" => "Appa",
+            "dob_father" => "1990-01-09",
+            "father_gender" => "Male",
+            "father_age" => "33",
+            "mother_name" => "Amma",
+            "dob_mother" => "1992-05-26",
+            "mother_gender" => "Female",
+            "mother_age" => "31",
+            "spouse_name" => null,
+            "wedding_date" => null,
+            "spouse_gender" => "Female",
+            "dob_spouse" => null,
+            "no_of_children" => null,
+            "basic" => "2547192",
+            "hra" => "1273596",
+            "statutory_bonus" => "32432",
+            "child_education_allowance" => "34",
+            "food_coupon" => "324",
+            "lta" => "324",
+            "special_allowance" => "1240158",
+            "other_allowance" => "324",
+            "gross" => "5094384",
+            "epf_employer_contribution" => "1800",
+            "graduity" => "324",
+            "insurance" => "323.75",
+            "cic" => "5096831",
+            "epf_employee" => "1800",
+            "esic_employee" => "0",
+            "esic_employer_contribution" => "0",
+            "professional_tax" => null,
+            "labour_welfare_fund" => null,
+            "net_income" => "5092584",
+            "releivingDoc" => null,
+            "voterId" => null,
+            "passport" => null,
+            "dlDoc" => null,
+            "basic_monthly" => 13143,
+        "basic_yearly" => 10,
+        "hra_monthly" => 253255,
+        "hra_yearly" => 9683968,
+        "spl_allowance_monthly" => 336363,
+        "spl_allowance_yearly" => 53366,
+        "gross_monthly" => 2664666,
+        "gross_yearly" => 43666,
+        "employer_epf_monthly" => 251515,
+        "employer_epf_yearly" => 25355,
+        "employer_esi_monthly" => 2555,
+        "employer_esi_yearly" => 5232525,
+        "ctc_monthly"=> 25255,
+        "ctc_yearly" => 2525255,
+        "employee_epf_monthly" =>  2353436,
+        "employee_epf_yearly" => 35255,
+        "employee_esi_monthly" => 2555,
+        "employee_esi_yearly" => 5232525,
+        "employer_pt_monthly" => 35255525252,
+        "employer_pt_yearly" =>  532525525,
+        "net_take_home_monthly" => 352535,
+        "net_take_home_yearly" => 52235,
+            ];
+
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
+        $appoinmentPath = "";
+        $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
+//dd($client_name);
+        $html = view('appointment_mail_templates.appointment_Letter_' . $client_name,$data);
+
+                        $options = new Options();
+                        $options->set('isHtml5ParserEnabled', true);
+                        $options->set('isRemoteEnabled', true);
+
+                        $pdf = new Dompdf($options);
+                        $pdf->loadhtml($html, 'UTF-8');
+                        $pdf->setPaper('A4', 'portrait');
+                        $pdf->render();
+
+                        $docUploads =  $pdf->output();
+                        $client_id =sessionGetSelectedClientid();
+
+                        $VmtClientMaster = VmtClientMaster::where("id",$client_id)->first();
+                        $image_view = url('/') . $VmtClientMaster->client_logo;
+
+                        // dd( $docUploads);
+                         $filename = 'appoinment_letter_' . $data['employee_name'] . '_' . time() . '.pdf';
+                         $file_path = public_path('appoinmentLetter/'.$filename);
+                         file_put_contents($file_path, $docUploads);
+                         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+                    $isSent = \Mail::to('vishnu@abshrms.com')->send(new WelcomeMail("ABS123", 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$VmtClientMaster->client_code));
+
+                    }
+
+                }
+
+
+
+
+

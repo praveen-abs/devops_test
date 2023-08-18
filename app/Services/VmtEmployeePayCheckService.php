@@ -12,6 +12,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use PDF;
 use Carbon\Carbon;
+use DateTime;
 
 
 use App\Models\User;
@@ -1385,7 +1386,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_view', $getpersonal);
 
-            return $html;
+            return  base64_encode( $html);
 
         }else if($type =="mail"){
 
