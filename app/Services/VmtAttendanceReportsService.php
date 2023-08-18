@@ -40,6 +40,21 @@ class VmtAttendanceReportsService
         }
     }
 
+    public function findMIPOrMOP($time, $shiftStartTime, $shiftEndTime)
+    {
+        $response = array();
+        $chkin_or_chkout_time = Carbon::parse($time);
+        $first_half_end_time =  $shiftStartTime->addHours(4);
+        if ($chkin_or_chkout_time->between($shiftStartTime,  $first_half_end_time, true)) {
+            $response['checkin_time'] = $time;
+            $response['checkout_time'] = null;
+        } else {
+            $response['checkin_time'] = null;
+            $response['checkout_time'] = $time;
+        }
+        return $response;
+    }
+
     public function RegularizationRequestStatus($user_id, $date, $regularizeType)
     {
         $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $date)
@@ -1356,8 +1371,8 @@ class VmtAttendanceReportsService
                 $attendanceResponseArray[$fulldate] = array(
                     //"user_id"=>$request->user_id,
                     "user_id" => $singleUser->id, "user_code" => $singleUser->user_code, "name" => $singleUser->name,
-                    "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false, "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null, "checkin_time" => 0, "checkout_time" => 0, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day, 'work_shift_id' => null, 'isMIP' => null, 'isMOP' => null, 'reged_checkin_time' => 0,
-                    'reged_checkout_time' => 0, 'permission_id' => null
+                    "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false, "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null, "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day, 'work_shift_id' => null, 'isMIP' => null, 'isMOP' => null, 'reged_checkin_time' => null,
+                    'reged_checkout_time' => null, 'permission_id' => null
                 );
 
                 //echo "Date is ".$fulldate."\n";
@@ -1469,7 +1484,11 @@ class VmtAttendanceReportsService
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                 $weekOffDays =  $shift_settings->week_off_days;
                 $attendanceResponseArray[$key]['work_shift_id'] =  $shift_settings->id;
-
+                if ($attendanceResponseArray[$key]['checkin_time'] != 0 && $attendanceResponseArray[$key]['checkout_time'] != 0 && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
+                    $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
+                    $attendanceResponseArray[$key]['checkin_time']=$attendance_time['checkin_time'];
+                    $attendanceResponseArray[$key]['checkout_time']=$attendance_time['checkout_time'];
+                }
 
 
 
@@ -1683,8 +1702,9 @@ class VmtAttendanceReportsService
         }
         return $response;
     }
-    public function fetchLCReportData($start_date, $end_date){
-     $attendance_data = $this->fetch_attendance_data($start_date,$end_date);
-     dd($attendance_data);
+    public function fetchLCReportData($start_date, $end_date)
+    {
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        dd($attendance_data);
     }
 }
