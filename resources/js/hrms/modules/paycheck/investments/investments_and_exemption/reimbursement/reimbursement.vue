@@ -1,4 +1,5 @@
 <template>
+        <LoadingSpinner v-if="ManageWelcomeMailStatusStore.loading"  class="absolute z-50 bg-white w-[100%] h-[100%]"/>
     <div>
         <div class="table-responsive">
             <DataTable ref="dt" dataKey="fs_id" :paginator="true" :rows="25" :value="investmentStore.reimbursmentSource"
@@ -104,6 +105,7 @@
 <script setup>
 import { ref } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
+import LoadingSpinner from "../../../components/LoadingSpinner.vue";
 
 const investmentStore = investmentMainStore()
 
