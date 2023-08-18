@@ -5,7 +5,7 @@
 
 
     <div class="p-2 overflow-hidden bg-white rounded-lg" style="height: 200px;">
-        <span class="font-semibold text-[18px] text-[#000] font-['Poppins]">Leave Balance</span>
+        <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Leave Balance</span>
         <div class="h-full overflow-x-scroll bg-white rounded-lg">
             <div class="px-auto">
                 <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type"

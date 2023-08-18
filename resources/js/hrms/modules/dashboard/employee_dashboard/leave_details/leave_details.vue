@@ -1,5 +1,5 @@
 <template>
-    <div class="!h-[180px] min-w-[400px]  rounded-[20px] shadow-sm bg-white ">
+    <div class="!h-[180px]  rounded-[20px] shadow-sm bg-white ">
         <div class="px-6 py-4">
             <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
                 Current month - <span class="mb-2 text-xl font-semibold">{{dayjs(new Date()).format('MMMM')}}</span>

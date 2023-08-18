@@ -1,5 +1,4 @@
 <template>
-
     <!-- <div class="image-slider relative h-[180px] w-full">
         <transition name="fade" mode="out-in">
             <img :src="`data:image/jpeg;base64,${currentImage}`" :key="currentImage" alt="Holiday Image"
@@ -25,13 +24,15 @@
         </div>
     </div> -->
 
-    <Galleria :value="holidays" :responsiveOptions="responsiveOptions"  :numVisible="5" :circular="true"
-    containerStyle=""  class="!h-[180px] !rounded-[20px] overflow-hidden" :showItemNavigators="true" :showThumbnails="false">
-    <template #item="slotProps">
-        <img :src="`data:image/png;base64,${slotProps.item.image}`" class="mt-3 mb-2 !rounded-[20px] shadow-sm !h-[180px]" style="width:100%;  margin-bottom: 10px;position: relative;  bottom :10px; display: block;"  :alt="slotProps.item.holiday_name" />
-    </template>
-</Galleria>
-
+    <Galleria :value="holidays" :responsiveOptions="responsiveOptions" :numVisible="5" :circular="true" containerStyle=""
+        class="!h-[180px] !rounded-[20px] overflow-hidden " :showItemNavigators="true" :showThumbnails="false">
+        <template #item="slotProps">
+            <img :src="`data:image/png;base64,${slotProps.item.image}`"
+                class="mt-3 mb-2 !rounded-[20px] shadow-sm !h-[180px]"
+                style="margin-bottom: 10px;position: relative;right: 0;  bottom :10px; display: block;"
+                :alt="slotProps.item.holiday_name" />
+        </template>
+    </Galleria>
 </template>
 
 <script setup>
@@ -51,12 +52,12 @@ const getHolidays = () => {
         res.data.forEach((element, i) => {
             if (conditionPass) {
                 if (new Date(element.holiday_date) >= new Date()) {
-                    currentIndex.value  = i
+                    currentIndex.value = i
                     conditionPass = false
                 }
             }
         });
-        // currentImage.value = holidays.value[currentIndex.value].image
+        currentImage.value = holidays.value[0].image
     })
 }
 
@@ -106,12 +107,16 @@ onMounted(() => {
 {
     transition: opacity 0.5s;
 }
-.p-galleria-item{
+
+.p-galleria-item
+{
     height: 110% !important;
     border-radius: 20px !important;
-    
+
 }
-.p-galleria-item-wrapper{
+
+.p-galleria-item-wrapper
+{
     height: 180px !important;
     border-radius: 20px !important;
 }
@@ -133,35 +138,49 @@ onMounted(() => {
     border-radius: 4px;
     cursor: pointer;
 }
-.p-galleria-item-prev{
-position: absolute;
-top:55px !important;
-left: 10px;
-z-index: 10000 !important;
+
+.p-galleria-item-prev
+{
+    position: absolute;
+    top: 55px !important;
+    left: 10px;
+    z-index: 10000 !important;
 }
-.p-galleria-item-container{
+
+.p-galleria-item-container
+{
     height: 170px !important;
     border-radius: 20px !important;
-    margin-bottom:10px !important ;
+    margin-bottom: 10px !important;
 }
-.p-galleria-item-prev :hover{
 
-}
-.p-galleria-content{
+.p-galleria-item-prev :hover
+{}
+
+.p-galleria-content
+{
     border-radius: 30px !important;
 }
-.p-link:focus{
+
+.p-link:focus
+{
     box-shadow: none !important;
 }
-.p-galleria-item-nav:hover{
-border:none !important;
+
+.p-galleria-item-nav:hover
+{
+    border: none !important;
 }
-.p-link:hover{
-border:none;
-box-shadow: none !important;
+
+.p-link:hover
+{
+    border: none;
+    box-shadow: none !important;
 }
-.p-galleria-item-next{
+
+.p-galleria-item-next
+{
     position: absolute;
-    top:55px !important;
-    }
+    top: 55px !important;
+}
 </style>

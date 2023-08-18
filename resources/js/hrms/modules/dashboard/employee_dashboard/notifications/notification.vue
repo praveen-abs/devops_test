@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white h-[700px] rounded-lg overflow-hidden">
         <div class="flex items-center justify-between p-3 mb-3 bg-gray-100 card-title" id="">
-            <span class="font-semibold text-[18px] text-[#000] font-['Poppins]">Activity Log</span>
+            <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Activity Log</span>
             <!-- <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="px-4 pi pi-bell p-overlay-badge"
                 style="font-size: 1rem" /> -->
         </div>
