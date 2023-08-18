@@ -169,11 +169,13 @@
     </Dialog>
 
 
-    <div class="flex inline-flex card justify-content-center">
+    <div class="flex card justify-content-center">
         <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :style="{ width: '50vw' }">
-            <div v-html="managePayslipStore.paySlipHTMLView">
+            <!-- <div v-html="managePayslipStore.paySlipHTMLView">
+            </div> -->
+            <!-- <img :src="managePayslipStore.paySlipHTMLView" class="" alt="File not found" /> -->
 
-            </div>
+            <embed :src="managePayslipStore.paySlipHTMLView" type="application/pdf" width="100%" height="800px">
         </Dialog>
     </div>
     <!-- <Dialog header="Header" v-model:visible="managePayslipStore.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -205,6 +207,7 @@ const show_withdraw_dialogConfirmation = ref(false);
 const selectedPayRollDate = ref();
 
 const selectedUserCode = ref();
+const selectedUsername = ref();
 
 
 
