@@ -29,7 +29,7 @@
         <template #item="slotProps">
             <img :src="`data:image/png;base64,${slotProps.item.image}`"
                 class="mt-3 mb-2 !rounded-[20px] shadow-sm !h-[180px]"
-                style="margin-bottom: 10px;position: relative;right: 0;  bottom :10px; display: block;"
+                style="width: 100%; margin-bottom: 10px;position: relative;right: 0;  bottom :10px; display: block;"
                 :alt="slotProps.item.holiday_name" />
         </template>
     </Galleria>
