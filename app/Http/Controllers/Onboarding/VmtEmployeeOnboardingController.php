@@ -871,6 +871,12 @@ class VmtEmployeeOnboardingController extends Controller
             });
             $data['official_mail'] = array_values($official_mail);
 
+            $client_data = VmtClientMaster::all('client_fullname')->toarray();
+            $client_data = array_filter($client_data, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['client_details'] = $client_data;
+
 
             $response = ([
                 'status' => 'success',
