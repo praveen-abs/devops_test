@@ -1,4 +1,5 @@
 <template>
+    <LoadingSpinner v-if="ManageWelcomeMailStatusStore.loading"  class="absolute z-50 bg-white w-[100%] h-[100%]"/>
     <DataTable :value="ManageWelcomeMailStatusStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rowsPerPageOptions="[5, 10, 25]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
@@ -17,7 +18,7 @@
                     <br/>
 
                     <h4 v-if="slotProps.data.welcome_mail_status == null">Mail Not Sent</h4>
-                    <h4 v-else class=" text-green-500"> Sent</h4>
+                    <h4 v-else class="text-green-500 "> Sent</h4>
                 </div>
             </template>
         </Column>
@@ -49,10 +50,10 @@
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-            <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
+            <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
                 @click="ManageWelcomeMailStatusStore.send_WelcomeMail(selectedUserCode)" autofocus />
             <Button label="No" icon="pi pi-times" @click="ManageWelcomeMailStatusStore.sendWelcomeMail_Status_diaconfirmation = false"
-                class="p-button-text  py-2" autofocus />
+                class="py-2 p-button-text" autofocus />
 
         </div>
 
@@ -62,6 +63,7 @@
 <script setup>
 import { ref, onMounted, reactive, computed } from "vue";
 import { useManageWelcomeMailStatusStore } from './ManageWelcomeMailStatusService';
+import LoadingSpinner from "../../../components/LoadingSpinner.vue";
 
 const ManageWelcomeMailStatusStore = useManageWelcomeMailStatusStore();
 

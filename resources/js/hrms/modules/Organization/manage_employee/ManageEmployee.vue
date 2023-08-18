@@ -1,4 +1,5 @@
 <template>
+         <LoadingSpinner v-if="useManageEmployees.canShowLoadingScreen"  class="absolute z-50 bg-white w-[100%] h-[100%]"/>
     <div class="">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-0 card-body">
@@ -49,9 +50,11 @@
 <script setup>
 import ActiveEmployees from './active_employees/active_employees.vue'
 import YetToActiveEmployees from './yet_to_active_employees/yet_to_active_employees.vue'
-import ExitEmployees from './exit_employees/exit_employees.vue'
+import ExitEmployees from './exit_employees/exit_employees.vue';
+import { useManageEmployeesStore } from './manage_service';
+import LoadingSpinner from '../../../components/LoadingSpinner.vue';
 
-
+const useManageEmployees = useManageEmployeesStore();
 
 </script>
 
