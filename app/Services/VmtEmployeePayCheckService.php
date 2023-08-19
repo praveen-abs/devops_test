@@ -1161,7 +1161,6 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
         }
 
         $getpersonal['leave_data'] = $leave_data;
-
         $getpersonal['client_details'] = $payroll_data->get(
             [
                 'vmt_client_master.client_fullname',
