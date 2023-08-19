@@ -2,54 +2,57 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="font-semibold text-lg">Family Information
-                <button type="button" class="float-right btn btn-orange"
-                    @click="DialogFamilyinfovisible = true" >
+                <button type="button" class="float-right btn btn-orange" @click="DialogFamilyinfovisible = true">
                     Add New
                 </button>
 
-                <Dialog v-model:visible="DialogFamilyinfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
+                <Dialog v-model:visible="DialogFamilyinfovisible" modal
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                     <template #header>
                         <div>
-                            <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }" class="fw-bold fs-15">
+                            <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                class="fw-bold fs-15">
                                 Family Information</h5>
                         </div>
                     </template>
 
-                    <div class="space-between">
-                        <div class="flex-col input_text">
+                    <div class="grid grid-cols-2">
+                        <div class=" mr-[10px] ml-[8px]">
                             <span>Name <span class="text-danger">*</span></span>
-                            <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name"
-                                required  v-model="familydetails.name">
+                            <!-- <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name"
+                                required > -->
+                            <InputText type="text" v-model="familydetails.name" class="w-[94%] h-10" />
                         </div>
-                        <div class="flex-col input_text">
+                        <div class=" ">
                             <span>Relationship<span class="text-danger">*</span></span>
-                            <input type="text" name="familyDetails_Relationship[]" v-model="familydetails.relationship"
-                                id="familyDetails_Relationship" pattern-data="alpha" required>
+                            <!-- <input type="text" name="familyDetails_Relationship[]" v-model="familydetails.relationship"
+                                id="familyDetails_Relationship" pattern-data="alpha" required> -->
+                                <InputText type="text" v-model="familydetails.relationship" class="w-[90%] h-10" />
                         </div>
                     </div>
-                    <div class="space-between M-T mr-4">
-                        <div class="flex-col input_text">
+                    <div class="grid grid-cols-2 ">
+                        <div class="mr-2">
                             <span>Date of birth <span class="text-danger">*</span></span>
-                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob"  class="h-10 w-full" :minDate="minDate" :maxDate="maxDate" />
+                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob" class="h-10 w-[98%]"
+                                :minDate="minDate" :maxDate="maxDate" />
                             <!-- <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" > -->
                         </div>
 
-                        <div class="flex-col input_text">
+                        <div class="ml-1">
                             <span>phone<span class="text-danger">*</span></span>
-                                <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
-                                        v-model="familydetails.phone_number">
+                            
+                                <InputMask id="basic" mask="9999999999" placeholder="9999999999" class="h-10"  v-model="familydetails.phone_number" />
                         </div>
                     </div>
 
 
 
                     <template #footer>
-                        <Toast/>
-                      <div>
-                        <button type="button" class="submit_btn warning success" id="submit_button_family_details"
-                            @click="saveFamilyDetails">submit</button>
-                      </div>
+                        <Toast />
+                        <div>
+                            <button type="button" class="submit_btn warning success" id="submit_button_family_details"
+                                @click="saveFamilyDetails">submit</button>
+                        </div>
 
                     </template>
 
@@ -63,7 +66,8 @@
             </h6>
             <!-- {{ _instance_profilePagesStore.employeeDetails.get_family_details }} -->
             <div class="my-6 table-responsive">
-                <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_family_details"
+                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
+                    :value="_instance_profilePagesStore.employeeDetails.get_family_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
@@ -76,14 +80,14 @@
                     </Column>
 
                     <Column field="dob" header="Date of Birth " style="min-width: 12rem">
-                            <template #body="slotProps">
+                        <template #body="slotProps">
                             <div v-if="slotProps.data.dob == 'Invalid Date'">
-                            -
+                                -
                             </div>
                             <div v-else>
-                            {{ dayjs(slotProps.data.dob).format('DD-MMM-YYYY') }}
+                                {{ dayjs(slotProps.data.dob).format('DD-MMM-YYYY') }}
                             </div>
-                            </template>
+                        </template>
                     </Column>
                     <Column field="phone_number" header="Phone" style="min-width: 12rem">
                     </Column>
@@ -107,17 +111,17 @@
                                         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
                             </button>
-<!--
+                            <!--
                             <button class="mr-3 btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
                             <button class="btn btn-danger"  @click="diolog_DeleteFamilyDetails(slotProps.data)">Delete</button> -->
 
 
-                        <template>
-                        </template>
-                        <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                            <template>
+                            </template>
+                            <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
                         <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
-                    </template>
-                </Column>
+                        </template>
+                    </Column>
 
 
                 </DataTable>
@@ -129,7 +133,7 @@
 
 
 
-    <Dialog v-model:visible="DialogEditInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+    <Dialog v-model:visible="DialogEditInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
             <div>
                 <h5
@@ -138,47 +142,45 @@
             </div>
         </template>
 
-        <div class="space-between">
-            <div class="flex-col input_text">
+        <div class=" grid grid-cols-2">
+            <div class="">
                 <span>Name <span class="text-danger">*</span></span>
-                <input type="text" name="familyDetails_Name[]" pattern-data="name" v-model="Editfamilydetails.name"
-                    required >
+                <InputText type="text" v-model="Editfamilydetails.name" class="h-10 w-[90%]" />
             </div>
-            <div class="flex-col input_text">
+            <div class="">
                 <span>Relationship<span class="text-danger">*</span></span>
-                <input type="text" name="familyDetails_Relationship[]"
-                     pattern-data="alpha" v-model="Editfamilydetails.relationship" required>
+                <!-- <input type="text" name="familyDetails_Relationship[]" pattern-data="alpha"
+                    v-model="Editfamilydetails.relationship" required> -->
+                    <InputText type="text" v-model="Editfamilydetails.relationship" class="h-10 w-[90%] ml-2"  />
             </div>
         </div>
-        <div class="space-between M-T">
-            <div class="flex-col input_text">
+        <div class=" grid grid-cols-2">
+            <div class="mr-2">
                 <span>Date of birth <span class="text-danger">*</span></span>
-                <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02"
-                 v-model="Editfamilydetails.dob" >
+                <Calendar v-model="Editfamilydetails.dob" min="2000-01-02" class="w-[100%] h-10 " />
+                <!-- <input type="date" id="datemin" name="familyDetails_dob[]"  v-model="Editfamilydetails.dob"> -->
             </div>
 
-            <div class="flex-col input_text">
+            <div class="ml-2">
                 <span>phone<span class="text-danger">*</span></span>
                 <!-- <input type="number"  size=20 maxlength=10  id="familyDetails_phoneNumber"
                     name="familyDetails_phoneNumber[]"  > -->
-                    <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
-            v-model="Editfamilydetails.phone_number">
-                    <!-- <InputNumber  inputId="minmax" :min="0" :max="10"  v-model="Editfamilydetails.phone_number" /> -->
+                    <InputMask id="basic" v-model="Editfamilydetails.phone_number" mask="9999999999" placeholder="999999999" class="h-10 m"  />
+                <!-- <InputNumber  inputId="minmax" :min="0" :max="10"  v-model="Editfamilydetails.phone_number" /> -->
             </div>
         </div>
 
         <template #footer>
-            <Toast/>
-        <div>
-            <button type="button" class="submit_btn warning success" id="submit_button_family_details"
-                @click="EditFamilyDetails">submit</button>
-        </div>
+            <Toast />
+            <div>
+                <button type="button" class="submit_btn warning success" id="submit_button_family_details"
+                    @click="EditFamilyDetails">submit</button>
+            </div>
 
         </template>
 
 
-</Dialog>
-
+    </Dialog>
 </template>
 <script setup>
 import dayjs from 'dayjs';
@@ -219,25 +221,25 @@ const current_table_id = ref()
 const saveFamilyDetails = () => {
     _instance_profilePagesStore.loading_screen = true
 
-//    if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
-//     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-//    }else{
+    //    if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
+    //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+    //    }else{
     let id = fetch_data.current_user_id
     let url = `/add-family-info/${id}`;
 
     axios.post(url, {
-            user_code: _instance_profilePagesStore.employeeDetails.user_code,
-            name: familydetails.name,
-            relationship: familydetails.relationship,
-            dob: dayjs( familydetails.dob ).format('YYYY-MM-DD'),
-            phone_number: familydetails.phone_number
-        })
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        name: familydetails.name,
+        relationship: familydetails.relationship,
+        dob: dayjs(familydetails.dob).format('YYYY-MM-DD'),
+        phone_number: familydetails.phone_number
+    })
         .then((res) => {
 
             if (res.data.status == "success") {
 
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Family information updated', life: 3000 });
-                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob, 'YYYY-MM-DD');
 
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
 
@@ -252,13 +254,13 @@ const saveFamilyDetails = () => {
         })
         .catch((err) => {
             console.log(err);
-        }).finally(()=>{
+        }).finally(() => {
             _instance_profilePagesStore.fetchEmployeeDetails();
             _instance_profilePagesStore.loading_screen = false
-            });
-        // window.location.reload();
-        DialogFamilyinfovisible.value = false;
-    }
+        });
+    // window.location.reload();
+    DialogFamilyinfovisible.value = false;
+}
 
 
 // }
@@ -267,12 +269,12 @@ const diolog_EditFamilyDetails = (family) => {
 
     DialogEditInfovisible.value = true;
 
-    current_table_id.value= family.id;
+    current_table_id.value = family.id;
 
-   Editfamilydetails.name = family.name
-   Editfamilydetails.relationship = family.relationship
-   Editfamilydetails.dob = family.dob
-   Editfamilydetails.phone_number = family.phone_number
+    Editfamilydetails.name = family.name
+    Editfamilydetails.relationship = family.relationship
+    Editfamilydetails.dob = family.dob
+    Editfamilydetails.phone_number = family.phone_number
 
 
 };
@@ -288,13 +290,13 @@ const diolog_DeleteFamilyDetails = (family) => {
 
     axios.post(url, {
         current_table_id: current_table_id.value,
-        })
+    })
         .then((res) => {
 
             if (res.data.status == "success") {
                 //  window.location.reload();
                 toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
-                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob, 'YYYY-MM-DD');
 
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
 
@@ -309,7 +311,7 @@ const diolog_DeleteFamilyDetails = (family) => {
         })
         .catch((err) => {
             console.log(err);
-        }).finally(()=>{
+        }).finally(() => {
             _instance_profilePagesStore.loading_screen = false;
             _instance_profilePagesStore.fetchEmployeeDetails();
         })
@@ -317,25 +319,25 @@ const diolog_DeleteFamilyDetails = (family) => {
 
 }
 
- const EditFamilyDetails = (user)=>{
+const EditFamilyDetails = (user) => {
     _instance_profilePagesStore.loading_screen = true
-            // console.log(id);
-            let id = fetch_data.current_user_id
-    let url =`/update-family-info/${id}`;
+    // console.log(id);
+    let id = fetch_data.current_user_id
+    let url = `/update-family-info/${id}`;
     axios.post(url, {
-            user_code: _instance_profilePagesStore.employeeDetails.user_code,
-            current_table_id: current_table_id.value,
-            name: Editfamilydetails.name,
-            relationship: Editfamilydetails.relationship,
-            dob:  dayjs( Editfamilydetails.dob ).format('YYYY-MM-DD'),
-            phone_number: Editfamilydetails.phone_number
-        })
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        current_table_id: current_table_id.value,
+        name: Editfamilydetails.name,
+        relationship: Editfamilydetails.relationship,
+        dob: dayjs(Editfamilydetails.dob).format('YYYY-MM-DD'),
+        phone_number: Editfamilydetails.phone_number
+    })
         .then((res) => {
 
             if (res.data.status == "success") {
 
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
-                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(Editfamilydetails.dob,'YYYY-MM-DD' );
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(Editfamilydetails.dob, 'YYYY-MM-DD');
 
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
 
@@ -350,13 +352,13 @@ const diolog_DeleteFamilyDetails = (family) => {
         })
         .catch((err) => {
             console.log(err);
-        }).finally(()=>{
+        }).finally(() => {
             _instance_profilePagesStore.fetchEmployeeDetails();
             _instance_profilePagesStore.loading_screen = false
         })
-        // window.location.reload();
-        DialogEditInfovisible.value = false;
-    }
+    // window.location.reload();
+    DialogEditInfovisible.value = false;
+}
 
 
 
@@ -370,8 +372,6 @@ onMounted(() => {
 
 
 <style lang="scss">
-
-
 #file_upload {
     display: inline-block;
     background-color: #003056;

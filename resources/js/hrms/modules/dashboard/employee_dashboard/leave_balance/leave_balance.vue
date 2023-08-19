@@ -4,20 +4,18 @@
     </div> -->
 
 
-    <div class="bg-white rounded-lg overflow-hidden p-2" style="height: 200px;">
-        <span class="text-primary font-semibold fs-6">Leave Balance</span>
-        <div class="bg-white rounded-lg overflow-x-scroll h-full">
+    <div class="p-2 overflow-hidden bg-white rounded-lg" style="height: 200px;">
+        <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Leave Balance</span>
+        <div class="h-full overflow-x-scroll bg-white rounded-lg">
             <div class="px-auto">
                 <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type"
-                    class="bg-gray-200  my-2 p-2 mx-2 rounded-lg ">
-                    <div class="flex px-2">
-                        <div class="">
+                    class="p-2 mx-2 my-2 transition duration-700 ease-in-out bg-[#E4ECFF] rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100 ">
+                    <div class="flex px-2 ">
                             <div class="">
                                 <span class="text-3xl font-semibold text-black">{{ leaveBalance.leave_balance }}</span>
                                 <span class="">/</span>
                                 <span class="">{{ leaveBalance.avalied_leaves }}</span>
                             </div>
-                        </div>
                         <div class="px-3">
                             <p class=" font-semibold text-primary text-[14px] align-bottom  py-2">{{ leaveBalance.leave_type }}</p>
                         </div>

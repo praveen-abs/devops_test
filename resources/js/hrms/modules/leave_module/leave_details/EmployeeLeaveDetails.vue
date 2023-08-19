@@ -4,28 +4,27 @@
         <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
             <div class="mb-0 card leave-history">
                 <div class="card-body">
-                    <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">
-                        Leave history
-                    </h6>
-                    <div class="d-flex justify-content-end mb-2">
-                        <label for="" class="my-2 text-lg font-semibold">Select Month</label>
-                        <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
-                            style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
-                        <Button class="h-10 mb-2 btn btn-orange" label="Submit"
-                            @click="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses)" />
+                    <div class="flex justify-between">
+                        <div>
+                            <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">
+                                Leave history
+                            </h6>
+                        </div>
+                        <div class="d-flex justify-content-end mb-2">
+                            <label for="" class="my-2 text-lg font-semibold">Select Month</label>
+                            <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
+                                style=" border-radius: 7px; height: 30px;"  @date-select="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses),leaveModuleStore.canShowLoading = true" />
+                        </div>
                     </div>
-
-
                     <div class="table-responsive">
-                        <DataTable :value="leaveModuleStore.array_employeeLeaveHistory" :loading=isLoading :paginator="true"
+                        <DataTable :value="leaveModuleStore.array_employeeLeaveHistory" :paginator="true"
                             :rows="5" dataKey="id" :rowsPerPageOptions="[5, 10, 25]"
                             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                             responsiveLayout="scroll"
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                             v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
                             <template #empty> No Employee data..... </template>
-                            <template #loading> Loading customers data. Please wait. </template>
-                            <Column field="leave_type" header="Leave Type" style="min-width: 8rem"></Column>
+                            <Column field="leave_type" header="Leave Type" style="min-width: 14rem"></Column>
                             <Column field="start_date" header="Start Date" style="min-width: 8rem">
                                 <template #body="slotProps">
                                     {{ dayjs(slotProps.data.start_date).format('DD-MMM-YYYY') }}
@@ -79,9 +78,10 @@
 
                             <Column field="" header="Action" style="min-width: 15rem">
                                 <template #body="slotProps">
-                                    <Button type="button" icon="" class=" text-white Button py-2.5"
-                                        label="View" @click="leaveModuleStore.getLeaveDetails(slotProps.data)"
-                                        style="height: 2em" />
+                                    <div class="flex justify-center">
+                                        <Button type="button" icon="" class=" text-white Button py-2.5 mx-auto" label="View"
+                                        @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="height: 2em" />
+                                    </div>
                                 </template>
                             </Column>
                         </DataTable>
@@ -98,23 +98,23 @@
         <template #header>
             <div class="w-full ">
                 <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
-                    class="fs-5 fw-bold">
+                    class="text-xl font-semibold">
                     Leave Details Request</h5>
             </div>
         </template>
         <div class="w-full">
 
-            <div class="border w-full mt-5">
+            <div class="border w-full rounded-lg">
                 <div class="p-3 pl-5 d-flex align-items-center border">
                     <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center bg-yellow-100"
                         style="width:80px ; height: 80px;">
-                        <h1 class="fs-5 fw-bold">{{leaveModuleStore.setLeaveDetails.user_short_name }}</h1>
+                        <h1 class="text-3xl font-semibold ">{{ leaveModuleStore.setLeaveDetails.user_short_name }}</h1>
                     </div>
                     <div class="ml-5">
-                        <h1 class="fs-5 fw-bold mb-2">{{ leaveModuleStore.setLeaveDetails.name }}</h1>
+                        <h1 class="text-lg font-semibold ">{{ leaveModuleStore.setLeaveDetails.name }}</h1>
 
                         <div>
-                            <p class="fs-6 text-neutral-400 " >Requested on
+                            <p class="fs-6 text-neutral-400 ">Requested on
                                 {{ leaveModuleStore.setLeaveDetails.leaverequest_date }}</p>
 
                         </div>
@@ -131,45 +131,61 @@
                             dayjs(leaveModuleStore.setLeaveDetails.end_date).format('dddd') }}</h1>
                     </div>
                     <div class="py-3">
-                        <h1 class="fs- font-semibold text-primary-800">{{ leaveModuleStore.setLeaveDetails.total_leave_datetime }} Day of {{
-                            leaveModuleStore.setLeaveDetails.leave_type }} <span class="font-semibold fs-6 ">({{leaveModuleStore.setLeaveDetails.leave_reason }})</span></h1>
+                        <h1 class="text-lg font-semibold text-primary-800">
+                            {{
+                                leaveModuleStore.setLeaveDetails.total_leave_datetime }}
+                            Day of
+                            {{
+                                leaveModuleStore.setLeaveDetails.leave_type }}
+                            <span class="font-semibold text-xs">
+                                ({{
+                                    leaveModuleStore.setLeaveDetails.leave_reason }})
+                            </span>
+                        </h1>
 
                     </div>
                 </div>
                 <div class="border w-full py-4 px-4">
-                    <h1 class="fs-5 fw-bold">Notified To:</h1>
+                    <h1 class="text-lg font-semibold">Notified To:</h1>
                     <div class="card px-3 py-2 d-flex mt-3" style="min-width: 250px; max-width: 300px; display: flex;">
                         <div class="d-flex p-2 align-items-center">
                             <div class="rounded-circle bg-blue-100 d-flex justify-content-center align-items-center"
-                                style="width:40px ; height: 40px;">{{leaveModuleStore.setLeaveDetails.reviewer_short_name}}</div>
+                                style="width:40px ; height: 40px;">{{ leaveModuleStore.setLeaveDetails.reviewer_short_name
+                                }}
+                            </div>
                             <div class="flex-column px-3">
                                 <h1 class="fs-6 fw-bold ">{{ leaveModuleStore.setLeaveDetails.reviewer_name }}</h1>
-                                <h1 class="py-2 text-neutral-400">{{  leaveModuleStore.setLeaveDetails.reviewer_designation}}</h1>
+                                <h1 class="py-2 text-neutral-400">{{ leaveModuleStore.setLeaveDetails.reviewer_designation
+                                }}
+                                </h1>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="border w-full  py-4 px-4 ">
-                    <h1 class="fs-5 fw-bold">Approved by</h1>
+                    <h1 class="text-lg font-semibold">Approved by</h1>
                     <div class="card px-3 py-2 d-flex mt-3" style="min-width: 180px; max-width: 300px; display: flex;">
                         <div class="d-flex p-2 align-items-center">
                             <div class="rounded-circle bg-green-400 d-flex justify-content-center align-items-center"
                                 style="width:40px ; height: 40px;"><i class="pi pi-check text-light"></i></div>
                             <div class="flex-column px-3">
                                 <h1 class="fs-6 fw-bold ">{{ leaveModuleStore.setLeaveDetails.reviewer_name }}</h1>
-                                <h1 class="py-2 text-neutral-400"> on {{ dayjs(leaveModuleStore.setLeaveDetails.leaverequest_date).format('DD-MMM-YYYY hh:mm:ss A') }} </h1>
+                                <h1 class="py-2 text-neutral-400">
+                                    on
+                                    {{ dayjs(leaveModuleStore.setLeaveDetails.leaverequest_date).format('DD-MMM-YYYY hh: mm:ss A') }}
+                                </h1>
                             </div>
                         </div>
 
                     </div>
                 </div>
                 <div class="my-4 mx-3">
-                    <Textarea name="" id="" cols="90" rows="5" autoResize placeholder="Add Comment"  />
+                    <Textarea name="" id="" cols="70" rows="3" autoResize placeholder="Add Comment" />
                 </div>
             </div>
         </div>
         <div class="text-end mx-4 my-4">
-            <button class="btn btn-orange px-5 "  @click="Leavehistory_Addcomment_btn">Post</button>
+            <button class="btn btn-orange px-5 " @click="Leavehistory_Addcomment_btn">Post</button>
         </div>
         <!-- {{ leaveModuleStore.setLeaveDetails }} -->
         <!-- {{ dayjs(slotProps.data.end_date).format('DD-MMM-YYYY') }} -->
@@ -216,7 +232,6 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 onMounted(async () => {
     // console.log( "Fetching leave details for current user : " +   leaveModuleStore.baseService.current_user_code );
-    console.log(selectedLeaveDate.v);
     await leaveModuleStore.getEmployeeLeaveHistory(dayjs().month() + 1, dayjs().year(), ["Approved", "Pending", "Rejected"]);
     isLoading.value = false;
 });
@@ -228,8 +243,8 @@ async function showLeaveDetails(leave_record_id) {
 
     await leaveModuleStore.getLeaveInformation(leave_record_id);
 }
- function Leavehistory_Addcomment_btn(){
+function Leavehistory_Addcomment_btn() {
     leaveModuleStore.canShowLeaveDetails = false;
- }
+}
 
 </script>

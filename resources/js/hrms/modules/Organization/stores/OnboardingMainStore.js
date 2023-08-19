@@ -53,11 +53,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             setTimeout(() => {
                 if (onboardingType == 'quick') {
                     type.value = 'quick'
-                    router.push({ path: `/quickEmployeeOnboarding/${'quickOnboarding'}` })
+                    router.push({ path: `/import/${'quickOnboarding'}` })
                 } else
                     if (onboardingType == 'bulk') {
                         type.value = 'bulk'
-                        router.push({ path: `/bulkEmployeeOnboarding/${'bulkOnboarding'}` })
+                        router.push({ path: `/import/${'bulkOnboarding'}` })
                     } else {
                         type.value = ''
 
@@ -168,7 +168,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                             });
                         });
                         setTimeout(() => {
-                            window.location.replace('/manageEmployees')
+                            window.location.replace(window.location.origin + '/manageEmployees')
                         }, 4000);
                     }
             }).finally(() => {
@@ -241,6 +241,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const existingOfficialEmails = ref()
     const existingBloodgroups = ref()
     const existingMartialStatus = ref()
+    const legalEntityDropdown = ref()
+    const existingLegalEntity = ref([])
 
     const getExistingOnboardingDocuments = () => {
 
@@ -259,6 +261,10 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 existingOfficialEmails.value = element.official_mail
                 existingBloodgroups.value = element.employees_blood_group
                 existingMartialStatus.value = element.employees_marital_status
+                legalEntityDropdown.value = element.client_details
+                legalEntityDropdown.value ? legalEntityDropdown.value.forEach(ele => {
+                    existingLegalEntity.value.push(ele.client_fullname);
+                }) : null
 
             });
         })
@@ -420,11 +426,15 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isExistsOrNot = (array, e) => {
-        if (array.includes(e)) {
+        if (e) {
+            if (array.includes(e)) {
+                return false
+            }
+            else {
+                return true
+            }
+        } else {
             return false
-        }
-        else {
-            return true
         }
     }
 
@@ -447,13 +457,22 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isBankExists = (e) => {
-        let value = e.toUpperCase()
-        let bankName = value.trim()
-        return existingBankNames.value.includes(bankName) ? true : false
+        if (e) {
+            let value = ''
+            e ? e.toUpperCase() : ''
+            let bankName = value.trim()
+            return existingBankNames.value.includes(bankName) ? true : false
+        } else {
+            return true
+        }
     }
 
     const isDepartmentExists = (e) => {
-        return existingDepartments.value.includes(e) ? true : false
+        if (e) {
+            return existingDepartments.value.includes(e) ? true : false
+        } else {
+            return true
+        }
     }
 
     const isOfficialMailExists = (e) => {
@@ -494,49 +513,53 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                     errorRecordsCount.value.push('invalid')
                 }
                 else
-                    if (findDuplicates(currentlyImportedTableEmailValues.value).includes(data['Email']) || isEmail(data['Email'])) {
+                    if (isExistsOrNot(existingLegalEntity.value, data["Legal Entity"])) {
                         errorRecordsCount.value.push('invalid')
                     }
                     else
-                        if (isValidDate(data['DOJ'])) {
+                        if (findDuplicates(currentlyImportedTableEmailValues.value).includes(data['Email']) || isEmail(data['Email'])) {
                             errorRecordsCount.value.push('invalid')
                         }
                         else
-                            if (isValidDate(data['DOB'])) {
+                            if (isValidDate(data['DOJ'])) {
                                 errorRecordsCount.value.push('invalid')
                             }
                             else
-                                if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan No']) || !isValidPancard(data['Pan No'])) {
+                                if (isValidDate(data['DOB'])) {
                                     errorRecordsCount.value.push('invalid')
-
                                 }
                                 else
-                                    if (findDuplicates(currentlyImportedTableAadharValues.value).includes(data['Aadhar']) || isValidAadhar(data['Aadhar'])) {
-                                        console.log(isValidAadhar(data['Aadhar']));
+                                    if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan No']) || !isValidPancard(data['Pan No'])) {
                                         errorRecordsCount.value.push('invalid')
-                                    }
 
+                                    }
                                     else
-                                        if (findDuplicates(currentlyImportedTableMobileNumberValues.value).includes(data['Mobile Number']) || isValidMobileNumber(data['Mobile Number'])) {
+                                        if (findDuplicates(currentlyImportedTableAadharValues.value).includes(data['Aadhar']) || isValidAadhar(data['Aadhar'])) {
+                                            console.log(isValidAadhar(data['Aadhar']));
                                             errorRecordsCount.value.push('invalid')
                                         }
+
                                         else
-                                            if (!isBankExists(data['Bank Name'])) {
+                                            if (findDuplicates(currentlyImportedTableMobileNumberValues.value).includes(data['Mobile Number']) || isValidMobileNumber(data['Mobile Number'])) {
                                                 errorRecordsCount.value.push('invalid')
                                             }
                                             else
-                                                if (isValidBankIfsc(data['Bank ifsc'])) {
+                                                if (!isBankExists(data['Bank Name'])) {
                                                     errorRecordsCount.value.push('invalid')
                                                 }
-
                                                 else
-                                                    if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
+                                                    if (isValidBankIfsc(data['Bank ifsc'])) {
                                                         errorRecordsCount.value.push('invalid')
                                                     }
+
                                                     else
-                                                        if (!isDepartmentExists(data['Department'])) {
+                                                        if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
                                                             errorRecordsCount.value.push('invalid')
                                                         }
+                                                        else
+                                                            if (!isDepartmentExists(data['Department'])) {
+                                                                errorRecordsCount.value.push('invalid')
+                                                            }
             }
             else {
                 console.log("No more error record found!");
@@ -553,7 +576,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         // TODO:: Separate
 
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers, initialUpdate, isValueUpdated,
-        existingMartialStatus, existingBloodgroups, existingClientCode,
+        existingMartialStatus, existingBloodgroups, existingClientCode, existingLegalEntity, legalEntityDropdown,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,

@@ -118,7 +118,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :maxDate="new Date()" :class="[
+                            :showIcon="true" style="width: 350px;"  :class="[
                                 f$.full_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
                         <span v-if="f$.full_day_leave_date.$error" class="font-semibold text-red-400 fs-6">
@@ -138,7 +138,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :maxDate="new Date()" :class="[
+                            :showIcon="true" style="width: 350px;" :class="[
                                 h$.half_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
                         <span v-if="h$.half_day_leave_date.$error" class="font-semibold text-red-400 fs-6">

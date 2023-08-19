@@ -1,23 +1,23 @@
 <template>
     <div class="w-full">
-        <div class="flex w-4 pt-4 mx-6">
-            <p class="w-10">Payroll and attendance end date settings</p>
+        <div class="flex justify-between pt-4 mx-6">
+            <p class="">Payroll and attendance end date settings</p>
             <div>
                 <i class="pi pi-pencil" style="font-size: 1rem" @click="active_Btn"></i>
             </div>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-12 gap-6 mx-6">
+            <div class="col-span-5 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-1">
-                    <h5 class="my-2 text-lg font-semibold">Pay Frequency</h5>
+                    <h5 class="my-2 text-sm font-semibold">Pay Frequency</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <InputText class="w-full h-11" placeholder="Monthly" />
+                            <InputText class="w-full h-4" placeholder="Monthly" />
                         </div>
                     </div>
                 </div>
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">
+                    <h5 class="my-2 text-sm font-semibold">
                         When would you like to start using the ABShrms payroll?
                     </h5>
                     <div class="flex gap-8 justify-evenly">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">
+                    <h5 class="my-2 text-sm font-semibold">
                         On which date did the pay peroid end in november ?
                     </h5>
                     <div class="flex gap-8 justify-evenly">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">
+                    <h5 class="my-2 text-sm font-semibold">
                         The payment date for the peroid of nov 1st to nov 30th is
                     </h5>
                     <div class="flex gap-8 justify-evenly">
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="w-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-7 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="p-2 bg-orange-100 rounded mt-2" v-if="active == 2">
                     This change is of most importance and has a widespread impact on the salaries of all employees. We strongly advise you to reach out to the support team for further clarification.
                 </div>
@@ -72,8 +72,8 @@
                 </div>
             </div>
         </div>
-        <div class="mx-6 my-4">
-            <div class="flex w-4 pt-4">
+        <div class="mx-6 my-2">
+            <div class="flex justify-between pt-4">
             <p>Attendance cut-off cycle</p>
             <div>
                 <i class="pi pi-pencil mr-3" style="font-size: 1rem" @click='active_Btn2' ></i>
@@ -81,10 +81,10 @@
         </div>
         </div>
 
-        <div class="flex grid-cols-2 gap-6 mx-6 my-4">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-12 gap-6 mx-6">
+            <div class="col-span-5 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-4">
-                    <h6 class="my-2 text-lg font-semibold">
+                    <h6 class="my-2 text-sm font-semibold">
                         Select the attendance cut-off peroid in a month
                     </h6>
                     <div class="flex gap-8 justify-evenly">
@@ -96,32 +96,32 @@
 
                 <div class="my-4">
                     <div class="flex gap-3 justify-evenly ">
-                        <h5 class="my-2 fs-6 font-semibold" style="line-height: 22px;">
+                        <h5 class="my-2 text-sm font-semibold" style="line-height: 22px;">
                             Do you want to consider new joinee post attendance cut off date ?
                         </h5>
-                        <div class="flex w-4 my-4  mr-3">
+                        <div class="flex my-4 ">
                             <div class="mx-4 d-flex ">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">Yes</label>
+                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">Yes</label>
                             </div>
                             <div class="d-flex ">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">No</label>
+                                <label class="ml-2 font-semibold text-sm  form-check-label leave_type" for="">No</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="my-4">
-                    <div class=" d-flex justify-self-center align-items-center">
+                    <div class=" flex justify-center items-center">
                         <div class="">
                             <input type="checkbox" name="" class="form-check-input mr-3" id=""
-                                style="width: 20px; height: 20px;">
+                                style="width: 16px; height: 20px;">
                             <Checkbox class="mx-2" :binary="true" />
                         </div>
-                        <div class="fs-6">
+                        <div class="text-sm">
                             The employee's attendance cut-off date differs from their pay peroid end
                             date
                             <span class="text-blue-400 underline">what is Attendance cut-off date?</span>
@@ -130,7 +130,7 @@
                 </div>
             </div>
 
-            <div class="w-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-7 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="bg-orange-100 p-2 rounded " v-if="active2 == 2 " >
                     <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true" ></i>
                     The edit option has been disabled. Please contact the ABShrms Support Team for assistance.
@@ -151,10 +151,10 @@
         <div class="mx-6">
             <p>Pay Peroid Calculation</p>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6 my-4">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-12 gap-6 mx-6 my-4">
+            <div class="col-span-5 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">Pay days in month</h5>
+                    <h5 class="my-2 text-sm font-semibold">Pay days in month</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
                             <InputText class="w-full h-11" placeholder="Actual days in a month " />
@@ -162,45 +162,45 @@
                     </div>
                 </div>
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">Pay days in month</h5>
-                    <div class="flex gap-8 my-3 justify-evenly">
-                        <div class="w-6 my-2">
+                    <h5 class="my-2 text-sm font-semibold">Pay days in month</h5>
+                    <div class="flex gap-8 my-3 justify-between">
+                        <div class="my-2">
                             <p>Include Week Off's</p>
                         </div>
-                        <div class="flex w-6 ">
+                        <div class="flex">
                             <div class="mx-4">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">Yes</label>
+                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">Yes</label>
                             </div>
                             <div>
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">No</label>
+                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">No</label>
                             </div>
                         </div>
                     </div>
-                    <div class="flex gap-8 justify-evenly">
-                        <div class="w-6">
+                    <div class="flex gap-8 justify-between">
+                        <div class="">
                             <p>Include Holiday's</p>
                         </div>
-                        <div class="flex w-6">
+                        <div class="flex">
                             <div class="mx-4">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">Yes</label>
+                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">Yes</label>
                             </div>
                             <div>
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">No</label>
+                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">No</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="w-6 p-4 my-4 leading-8 ">
+            <div class="col-span-7 p-4 my-4 leading-8 ">
                 <div class="my-6">
                     <p style="line-height: 25px;">
                         <strong class="mr-2">NOTE :</strong>
@@ -225,10 +225,10 @@
         <div class="mx-6">
             <p>Currency and Compensation</p>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6 my-4">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-12 gap-6 mx-6 ">
+            <div class="col-span-5  p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">Currency</h5>
+                    <h5 class="my-2 text-sm font-semibold">Currency</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
                             <InputText class="w-full h-11" placeholder="Indian Rupee (&#8377;)" />
@@ -236,23 +236,23 @@
                     </div>
                 </div>
                 <div class="d-flex flex-column justify-evenly">
-                    <h5 class="text-lg font-semibold w-7">Description</h5>
-                    <div class="flex flex-column w-6 my-3">
-                        <div class="d-flex  ">
+                    <h5 class="text-sm font-semibold w-7">Description</h5>
+                    <div class="flex gap-6  my-3">
+                        <div class="flex  ">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                 value="" />
-                            <label class="ml-2 text-lg font-semibold from-check-label leave_type" for="">Monthly</label>
+                            <label class="ml-2 text-sm font-semibold from-check-label leave_type" for="">Monthly</label>
                         </div>
-                        <div class="my-3">
+                        <div class="">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                 value="" />
-                            <label class="ml-2 text-lg font-semibold form-check-label leave_type" for="">Daliy</label>
+                            <label class="ml-2 text-sm font-semibold form-check-label leave_type" for="">Daliy</label>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="w-6 p-4 my-4 ">
+            <div class="col-span-7 p-4 my-4 ">
                 <div class="my-2">
                     <strong>EXPLANATION :</strong>
                     <p class="my-3">

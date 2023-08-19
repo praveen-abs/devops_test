@@ -174,7 +174,7 @@
                                         <td colspan="12" align="right">
                                             <p class="txt-right">
                                                 <b>
-                                                    Date:{{ $data['doj'] }}
+                                                    Date:{{ $doj }}
                                                 </b>
                                             </p>
 
@@ -194,7 +194,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="left">
-                                            <p>Dear <span class="fw-600"> {{ $data['employee_name'] }}</span>
+                                            <p>Dear <span class="fw-600"> {{ $employee_name }}</span>
                                             </p>
                                             <p class="pt-20">
                                                 Congratulations and welcome to ABS Family! We
@@ -414,7 +414,7 @@
                                     <tr>
                                         <td colspan="12" align="right" class="pt-pb-20">
                                             <p class="fw-600 txt-right">
-                                                Date: {{ $data['doj'] }}
+                                                Date: {{ $doj }}
                                             </p>
 
                                         </td>
@@ -429,7 +429,7 @@
                                         <td colspan="12" align="" class="pt-pb-20">
 
                                             <p class=" txt-left">
-                                                Dear <b>{{ $data['employee_name'] }},</b>
+                                                Dear <b>{{ $employee_name }},</b>
                                             </p>
 
 
@@ -440,15 +440,15 @@
                                         <td colspan="12" align="" class=" ">
 
                                             <p class="txt-justify ">
-                                                We are glad to appoint you as “ <b>:{{ $data['designation'] }}</b> ” in
+                                                We are glad to appoint you as “ <b>:{{ $designation }}</b> ” in
                                                 our company, Ardens
                                                 Business Solutions Private Limited.
                                             </p>
                                             <p class="pt-pb-20 txt-justify ">
                                                 <b> Remuneration:</b>
                                                 Your total remuneration package (CTC) per annum
-                                                is Rs. {{ $data['ctc_yearly'] }}/- per annum (Rupees
-                                                {{ $data['ctc_yearly_words'] }} Only). The
+                                                is Rs. {{ $cic }}/- per annum (Rupees
+                                                 {{ $ctc_in_words }} Only). The
                                                 break-up of your compensation package shall be
                                                 as
                                                 detailed in Annexure A
@@ -457,7 +457,7 @@
                                             <p class=" txt-justify ">
                                                 <b> Commencement:</b>
                                                 Your employment with the company Ardens Business Solutions Private
-                                                Limited will be with effect from {{ $data['doj'] }}. You shall
+                                                Limited will be with effect from {{ $doj }}. You shall
                                                 initially be
                                                 placed in Chennai. You may however be required to travel and may be
                                                 positioned or deputed outside within India or abroad.
@@ -581,7 +581,7 @@
                                 </tr>
                                 <tr class="bg-ash">
                                     <td colspan="1" align="left"><b>Employee
-                                            Name:{{ $data['employee_name'] }}</b>
+                                            Name:{{ $employee_name }}</b>
                                     </td>
                                     <td colspan="2" style="" align="center">
                                         <b>
@@ -591,7 +591,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td colspan="1" align="left"><b>Designation:{{ $data['designation'] }}</b>
+                                    <td colspan="1" align="left"><b>Designation:{{ $designation }}</b>
                                     </td>
                                     <td colspan="1" style="" align="center">
                                         <b>
@@ -611,21 +611,20 @@
                                     <td colspan="1">Basic</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">{{ $data['basic_monthly'] }}
-                                    </td>
+                                            alt="" style="padding-right:0px;">{{ $basic_monthly }}
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">{{ $data['basic_yearly'] }}
+                                            alt="" style="padding-right:0px;">{{$basic_yearly  }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">HRA</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">{{ $data['hra_monthly'] }}</td>
+                                            alt="" style="padding-right:0px;"> {{ $hra_monthly }}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">{{ $data['hra_yearly'] }}</td>
+                                            alt="" style="padding-right:0px;">{{ $hra_yearly }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Child Education Allowance</td>
@@ -660,21 +659,21 @@
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['spl_allowance_monthly'] }}</td>
+                                            style="padding-right:0px;">{{ $spl_allowance_monthly }}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['spl_allowance_yearly'] }}</td>
+                                            style="padding-right:0px;"> {{ $spl_allowance_yearly }}</td>
                                 </tr>
                                 <tr class="bg-ash">
                                     <td colspan="1" class="fw-600">Gross Salary</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">{{ $data['gross_monthly'] }}
+                                            alt="" style="padding-right:0px;">{{ $gross_monthly }}
                                     </td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">{{ $data['gross_yearly'] }}
+                                            alt="" style="padding-right:0px;">  {{ $gross_yearly }}
                                     </td>
                                 </tr>
 
@@ -683,33 +682,33 @@
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employer_epf_monthly'] }}</td>
+                                            style="padding-right:0px;"> {{ $employer_epf_monthly }}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employer_epf_yearly'] }}</td>
+                                            style="padding-right:0px;">{{ $employer_epf_yearly }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">ESI (Employer Contribution)</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employer_esi_monthly'] }}</td>
+                                            style="padding-right:0px;">{{ $employer_esi_monthly}} </td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employer_esi_yearly'] }}</td>
+                                            style="padding-right:0px;">{{ $employer_esi_yearly }}</td>
                                 </tr>
                                 <tr class="bg-ash">
                                     <td colspan="1" class=" "><b>Cost to Company</b></td>
                                     <td colspan="1" class="" align="right"><img height="8.5"
                                             width="12" src="{{ URL::asset('assets/images/inr_png.png') }}"
                                             class="txt-right" alt=""
-                                            style="padding-right:0px;">{{ $data['ctc_monthly'] }}</td>
+                                            style="padding-right:0px;">{{ $ctc_monthly }}</td>
                                     <td colspan="1" class="" align="right"><img height="8.5"
                                             width="12" src="{{ URL::asset('assets/images/inr_png.png') }}"
                                             class="txt-right" alt=""
-                                            style="padding-right:0px;">{{ $data['ctc_yearly'] }}</td>
+                                            style="padding-right:0px;">{{ $ctc_yearly }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">
@@ -718,41 +717,43 @@
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employee_epf_monthly'] }}</td>
-                                    <td colspan="1" align="right">{{ $data['employee_epf_yearly'] }}</td>
+                                            style="padding-right:0px;">{{ $employee_epf_monthly }}</td>
+                                    <td colspan="1" align="right">{{ $employee_epf_yearly }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">ESI (Employee Contribution)</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employee_esi_monthly'] }}</td>
+                                            style="padding-right:0px;">{{ $employee_esi_monthly }}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employee_esi_yearly'] }}</td>
+                                            style="padding-right:0px;"> {{ $employee_esi_yearly }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Prof. Tax</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employer_pt_monthly'] }}</td>
+                                            style="padding-right:0px;"> {{ $employer_pt_monthly  }}
+                                            </td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
                                             alt=""
-                                            style="padding-right:0px;">{{ $data['employer_pt_yearly'] }}</td>
+                                            style="padding-right:0px;">{{ $employer_pt_yearly  }}</td>
                                 </tr>
                                 <tr class="bg-ash">
                                     <td colspan="1" class=""><b>Net home</b></td>
                                     <td colspan="1" class="a" align="right"><img height="8.5"
                                             width="12" src="{{ URL::asset('assets/images/inr_png.png') }}"
                                             class="txt-right" alt=""
-                                            style="padding-right:0px;">{{ $data['net_take_home_monthly'] }}</td>
+                                            style="padding-right:0px;">{{ $net_take_home_monthly }}
+                                            </td>
                                     <td colspan="1" class="a" align="right"><img height="8.5"
                                             width="12" src="{{ URL::asset('assets/images/inr_png.png') }}"
                                             class="txt-right" alt=""
-                                            style="padding-right:0px;">{{ $data['net_take_home_yearly'] }}</td>
+                                            style="padding-right:0px;">{{ $net_take_home_yearly }}</td>
                                 </tr>
                                 <tr class="">
                                     <td colspan="3" align="center">Income Tax as applicable will be deducted</td>
@@ -767,7 +768,7 @@
                                     <tr>
                                         <td colspan="3">
                                             <p>
-                                                I <b>{{ $data['employee_name'] }}</b>, have read ANNEXURE A & B,
+                                                I <b>{{ $employee_name }}</b>, have read ANNEXURE A & B,
                                                 understood and accept the
                                                 appointment upon the terms and conditions as outlined in this
                                                 appointment letter for my position at Ardens Business Solutions Privat
@@ -1146,7 +1147,7 @@
                                     <tr>
                                         <td colspan="12" style="padding-top: 0cm;" align="left">
                                             <p>
-                                                I <b> {{ $data['employee_name'] }}</b>, have understood and
+                                                I <b> {{ $employee_name }}</b>, have understood and
                                                 accepted the appointment upon the terms and
                                                 conditions as outlined in this appointment
                                                 letter for my position at Ardens Business
@@ -1553,7 +1554,7 @@
                                     <tr>
                                         <td colspan="12">
                                             <p>
-                                                I <b>{{ $data['employee_name'] }}</b>, have read ANNEXURE A & B,
+                                                I <b>{{ $employee_name }}</b>, have read ANNEXURE A & B,
                                                 understood and accept the
                                                 appointment upon the terms and conditions as outlined in this
                                                 appointment letter for my position at Ardens Business Solutions Privat

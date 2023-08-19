@@ -13,14 +13,19 @@
                     <img v-if="_instance_profilePagesStore.profile" class="forRounded"
                         :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" id="output"
                         width="200" />
-                    <p v-else class="font-semibold text-5xl text-center flex items-center justify-center text-white forRounded" :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
+                    <p v-else
+                        class="font-semibold text-5xl text-center flex items-center justify-center text-white forRounded"
+                        :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
                         {{ _instance_profilePagesStore.employeeDetails.user_short_name }}
                     </p>
                     <label class="-label" for="file">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-                          </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                        </svg>
                         <!-- <span>Change</span> -->
                     </label>
                     <input id="file" type="file" @change="updateProfilePhoto($event)" />
@@ -28,11 +33,16 @@
 
             </div>
             <div class="col-span-8">
-                <div>
-                    <p class="font-semibold text-md">{{ _instance_profilePagesStore.employeeDetails ?
-                        _instance_profilePagesStore.employeeDetails.name : '-' }}</p>
-                    <p class="font-semibold text-xs text-gray-500">{{ _instance_profilePagesStore.employeeDetails ?
-                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation : '-' }}</p>
+                <div class=" flex  justify-between pr-4">
+                    <div>
+                        <p class="font-semibold text-md">{{ _instance_profilePagesStore.employeeDetails ?
+                            _instance_profilePagesStore.employeeDetails.name : '-' }}</p>
+                        <p class="font-semibold text-xs text-gray-500">{{ _instance_profilePagesStore.employeeDetails ?
+                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation : '-' }}</p>
+                    </div>
+                    <img src="../../../assests/icons/edit.svg" class="h-4 w-4 cursor-pointer my-auto" alt=""
+                        @click="dialog_emp_name_visible = true">
+
                 </div>
                 <div class="py-2">
                     <p class="font-semibold text-xs">Profile completeness</p>
@@ -75,11 +85,19 @@
                     _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation ?
                     _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation : '-' }}</p>
             </div>
-            <div class="">
-                <p class="font-semibold text-xs text-gray-500">Department</p>
-                <p class="font-semibold text-sm">{{
-                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name ?
-                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name : '-' }}</p>
+            <div class=" flex justify-between items-center">
+                <div>
+                    <p class="font-semibold text-xs text-gray-500">Department</p>
+                    <p class="font-semibold text-sm">{{
+                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name ?
+                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name : '-' }}</p>
+
+                </div>
+                <img src="../../../assests/icons/edit.svg" class="h-4 w-4 cursor-pointer my-auto" v-if="_instance_profilePagesStore.employeeDetails
+                    .Current_login_user.org_role == 1 || _instance_profilePagesStore.employeeDetails
+                        .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
+                            .Current_login_user.org_role == 3" @click="dailogDepartment = true" alt="">
+
             </div>
             <div class="">
                 <p class="font-semibold text-xs text-gray-500">Employee Code</p>
@@ -92,14 +110,22 @@
                     _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location ?
                     _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location : '-' }}</p>
             </div>
-            <div class="">
-                <p class="font-semibold text-xs text-gray-500">Reporting to</p>
-                <p class="font-semibold text-sm whitespace-nowrap" v-if="_instance_profilePagesStore.employeeDetails">
-                    {{
-                        `${_instance_profilePagesStore.employeeDetails
-                            .get_employee_office_details.l1_manager_name}(${_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code})`
-                    }}
-                </p>
+            <div class="flex justify-between items-center">
+                <div class="">
+                    <p class="font-semibold text-xs text-gray-500">Reporting to</p>
+                    <p class="font-semibold text-sm whitespace-nowrap" v-if="_instance_profilePagesStore.employeeDetails">
+                        {{
+                            `${_instance_profilePagesStore.employeeDetails
+                                .get_employee_office_details.l1_manager_name}(${_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code})`
+                        }}
+                    </p>
+                </div>
+
+                <img src="../../../assests/icons/edit.svg" v-if="_instance_profilePagesStore.employeeDetails
+                            .Current_login_user.org_role == 1 || _instance_profilePagesStore.employeeDetails
+                                .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
+                                    .Current_login_user.org_role == 3" @click="dailogReporting
+                        = true" class="h-4 w-4 cursor-pointer my-auto" alt="">
 
             </div>
         </div>
@@ -109,13 +135,13 @@
                     <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
             Edit -->
                     <!-- <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""> -->
-                    <img src="../../../assests/icons/edit.svg" class="h-4 w-4 cursor-pointer my-auto" alt="">
+                    <!-- <img src="../../../assests/icons/edit.svg" class="h-4 w-4 cursor-pointer my-auto" alt=""> -->
 
                     <!-- </p> -->
                 </div>
                 <div class="mx-2">
                     <button class="p-0 m-0 bg-transparent border-0 outline-none btn">
-                        <i class="pi pi-id-card text-success fs-4" aria-hidden="true"></i>
+                        <i class="pi pi-id-card text-success fs-4" aria-hidden="true" @click="dialogIdCard = true"></i>
                     </button>
                 </div>
             </div>
@@ -224,7 +250,7 @@
                 style="width: 260px;  height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
                 <div class=" w-100 d-flex justify-content-center align-items-center flex-column ">
                     <h1 class=" text-orange-500 fs-14 subpixel-antialiased font-semibold  fw-600">EMPLOYEE DETAILS</h1>
-                    <div class="row  w-100 mt-2">
+                    <div class="row  w-100 mt-3">
                         <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
                             Blood Group <span class=" position-absolute  " style="position: absolute; left:90px ;">:</span>
                         </div>
@@ -232,7 +258,7 @@
                             <h1 class=" text-left pt-1">{{ cmpBldGrp }}</h1>
                         </div>
                     </div>
-                    <div class="row  w-100">
+                    <div class="row  w-100 mt-3">
                         <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
                             Phone <span class=" position-absolute " style="position: absolute; left:90px ;">:</span>
                         </div>
@@ -242,7 +268,7 @@
 
                         </div>
                     </div>
-                    <div class="row w-100 ">
+                    <div class="row w-100 mt-3">
                         <div
                             class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900 position-relative">
                             Email Id <span class=" position-absolute " style="position: absolute; left:90px ;">:</span>
@@ -254,7 +280,7 @@
                             </h1>
                         </div>
                     </div>
-                    <div class="row  w-100 ">
+                    <div class="row  w-100 mt-3">
                         <div class="col fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
                             <h1 class=" text-orange-500 fs-12 ">Residential Address :</h1>
                             <div class=" ml-2 ">
@@ -272,21 +298,21 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <h1 class=" text-center font-semibold text-orange-500 fs-14 subpixel-antialiased mt-0 :lg:mt-2"
+                            <h1 class=" text-center font-semibold text-orange-500 fs-14 subpixel-antialiased mt-2 :lg:mt-2"
                                 v-if="_instance_profilePagesStore.employeeDetails.client_details.client_name"> {{
                                     _instance_profilePagesStore.employeeDetails.client_details.client_name }}</h1>
                         </div>
                         <div class="col-12 ">
-                            <h1 class=" fs-11 text-center font-semibold text-blue-900">{{
+                            <h1 class=" fs-11 text-center font-semibold text-blue-900 mt-2">{{
                                 _instance_profilePagesStore.employeeDetails.client_details.address }}</h1>
                         </div>
                         <div class="col-12">
-                            <h1 class="fs-12 text-center font-semibold  text-blue-900">{{
+                            <h1 class="fs-12 text-center font-semibold  text-blue-900 mt-2">{{
                                 _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_email
                             }}</h1>
                         </div>
                         <div class="col-12">
-                            <h1 class="fs-11 text-center font-semibold lining-nums ... text-blue-900">
+                            <h1 class="fs-11 text-center font-semibold lining-nums ... text-blue-900 mt-2">
                                 {{
                                     _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_number
                                 }}</h1>
@@ -319,8 +345,90 @@
         </template>
     </Dialog>
 
-    <!-- <Dropdown :options="departmentOption" optionLabel="name" v-model="dep"
-            placeholder="Select Department" class="w-full form-selects" optionValue="id" /> -->
+    <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
+        :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        <template #header>
+            <div>
+                <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                    class="fw-bold fs-5">
+                    Edit Employee Name</h5>
+            </div>
+        </template>
+        <div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 form-group">
+                            <label class="mb-2 font-semibold text-lg">Employee Name</label>
+                            <!-- <InputMask @focusout="panCardExists" id="serial" mask="aaaaa9999a"
+                                                    v-model="employee_info.emp_name" placeholder=""
+                                                    style="text-transform: uppercase" class="form-controls pl-2" :class="[
+                                                        v$.emp_name.$error ? 'p-invalid' : '',
+                                                    ]" /> -->
+                            <InputText type="text" v-model="employee_info.emp_name" style="text-transform: uppercase"
+                                class="form-controls pl-2" :class="[
+                                    v$.emp_name.$error ? 'p-invalid' : '',
+                                ]" />
+                            <span v-if="v$.emp_name.$error" class="text-red-400 fs-6 font-semibold">
+                                {{ v$.emp_name.required.$message.replace("Value", "Employee Name")
+                                }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class=" form-group">
+                            <label for="" class="mb-1 mb-1 font-semibold text-lg">Documents</label>
+                            <Dropdown v-model="employee_info.emp_doc_name" :options="doc_name" optionLabel="name"
+                                placeholder="Select a document " class="form-controls pl-2 w-full h-12" :class="[
+                                    v$.emp_doc_name.$error ? 'p-invalid' : '',
+                                ]" />
+                            <span v-if="v$.emp_doc_name.$error" class="text-red-400 fs-6 font-semibold">
+                                {{ v$.emp_doc_name.required.$message.replace("Value", "Documents")
+                                }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 d-flex flex-column ">
+                        <div class="d-flex justify-items-center  flex-column ">
+                            <label for="" class="float-label mb-2 font-semibold text-lg">Upload
+                                Documents</label>
+                            <div class="d-flex  justify-items-center align-items-center">
+                                <Toast />
+                                <label class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                    style="width:100px ; " id="" for="uploadPassBook">
+                                    <i class="pi pi-arrow-circle-up fs-5 mr-2"></i>
+                                    <h1 class="text-light">Upload</h1>
+                                </label>
+
+                                <div v-if="employee_info.emp_upload_doc"
+                                    class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
+                                    {{ employee_info.emp_upload_doc.name }}</div>
+
+                                <input type="file" name="" id="uploadPassBook" hidden @change="UploadEmpDocsPhoto($event)"
+                                    :class="[
+                                        v$.emp_upload_doc.$error ? 'p-invalid' : '',
+                                    ]" />
+                            </div>
+                            <span v-if="v$.emp_upload_doc.$error" class="text-red-400 fs-6 font-semibold">
+                                {{ v$.emp_upload_doc.required.$message.replace("Value", "document")
+                                }}
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12">
+                    <div class="text-right">
+                        <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                            @click="submitForm">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Dialog>
 </template>
 
 <script setup>

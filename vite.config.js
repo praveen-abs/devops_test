@@ -36,6 +36,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
                 //Reports
+                'resources/js/hrms/modules/reports/ReportsModule.js',
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
                 //Attendance Detailed Report
@@ -88,7 +89,6 @@ export default defineConfig({
 
                 // Investment Setting
 
-                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
 
                 // Paycheck
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
@@ -165,6 +165,8 @@ export default defineConfig({
 
                 // login page
                 'resources/js/hrms/modules/login_Page/login_Page.js',
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',

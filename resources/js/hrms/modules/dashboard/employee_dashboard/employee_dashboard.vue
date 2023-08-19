@@ -1,23 +1,23 @@
 <template>
-    <div class="p-3 overflow-auto h-screen">
+    <div class="h-screen p-3 overflow-auto" @mousemove="useDashboard.canShowConfiguration = false">
         <div class="grid grid-cols-12 gap-4" >
-            <div class="col-span-5">
+            <div class="col-span-5 w-[100%] !rounded-[20px] overflow-hidden ">
                 <WelcomeCard   />
             </div>
-            <div class="col-span-4">
+            <div class="col-span-4 w-[100%]  !rounded-[20px] ">
                 <LeaveDetials />
             </div>
-            <div class="bg-white rounded-lg col-span-3">
+            <div class="col-span-3 w-[100%]  !rounded-[20px]  ">
                 <HolidayWidget />
             </div>
         </div>
         <div class="grid grid-cols-12 gap-4 pb-7">
-            <div class="col-span-8">
+            <div class="col-span-8 !rounded-[20px]">
                 <div class="grid grid-cols-2 gap-4 my-2">
-                    <div>
+                    <div class="!rounded-[20px] overflow-hidden">
                         <LeaveBalance />
                     </div>
-                    <div>
+                    <div class="!rounded-[20px] overflow-hidden">
                         <Calender />
                     </div>
                 </div>

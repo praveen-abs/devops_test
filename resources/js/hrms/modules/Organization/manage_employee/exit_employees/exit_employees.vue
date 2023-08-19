@@ -20,22 +20,21 @@
             <DataTable :value="manageEmployeesStore.exit_employees_data" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu"
-                :loading="canShowLoadingScreen" :globalFilterFields="['emp_name', 'emp_code', 'status']">
+                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['emp_name', 'emp_code', 'status']">
                 <template #empty> No customers found.</template>
                 <template #loading> Loading customers data. Please wait. </template>
-                <Column class="font-bold" field="emp_name" header="Employee Name" style="min-width: 20rem;">
+                <Column class="font-bold" field="emp_name" header="Employee Name" style="min-width: 5rem; !important">
                     <template #body="slotProps">
-                        <div class="flex justify-center items-center">
+                        <div class="flex items-center justify-center">
                             <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'"
-                                class="p-2 w-11 fs-6 font-semibold rounded-full  text-white"
+                                class="p-2 font-semibold text-white rounded-full w-11 fs-6"
                                 :class="service.getBackgroundColor(slotProps.index)">
                                 {{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
-                            <img v-else class="rounded-circle img-md w-10  userActive-status profile-img"
-                                style="height: 30px !important;"
-                                :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
+                            <img v-else class="w-10 rounded-circle img-md userActive-status profile-img"
+                            style="height: 30px !important; width: 30px !important;"
+                            :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
                                 alt="" />
-                            <p class=" text-left pl-2 font-semibold fs-6">{{ slotProps.data.emp_name }} </p>
+                            <p class="pl-2 font-semibold text-left fs-6">{{ slotProps.data.emp_name }} </p>
                         </div>
                     </template>
                     <template #filter="{ filterModel, filterCallback }">
@@ -43,7 +42,7 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_code" header="Employee Code" style="min-width: 15rem;">
+                <Column field="emp_code" header="Employee Code" style="min-width: 2rem; !important">
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
                             class="p-column-filter" :showClear="true" />
@@ -77,9 +76,8 @@
                 </Column>
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                        <Button icon="pi pi-eye" severity="success" label="View"
-                            @click="openProfilePage(slotProps.data.enc_user_id)" style="height: 2em"
-                            raised />
+                        <button  @click="openProfilePage(slotProps.data.enc_user_id)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</button>
+
                     </template>
                 </Column>
             </DataTable>

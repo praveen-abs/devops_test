@@ -10,7 +10,7 @@
 {{-- @component('components.attendance_breadcrumb')
 @slot('li_1')@endslot
 @endcomponent --}}
-<div class="leavePolicy_config mt-30">
+<div class="leavePolicy_config ">
     <div class="card ">
         <div class="card-body">
             <div class="row mb-3">

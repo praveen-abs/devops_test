@@ -18,8 +18,9 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     // Loading Screen
 
-    const canShowLoading = ref(false)
+    const canShowLoading = ref(false);
     const swal = inject("$swal");
+   
 
 
     /*
@@ -41,6 +42,8 @@ Travel Advance - ta
 
     const salaryAdvanceEmployeeData = ref()
     const percent_salary_amt =ref();
+    const eligibleEmployees = ref();
+    const loanDashboard = ref([]);
 
     const sa = reactive({
         ymi: '',
@@ -415,6 +418,28 @@ Travel Advance - ta
         InterestWithLoan.max_tenure_months= ''
         InterestWithLoan.details= ''
         InterestWithLoan.loan_type= ''
+    };
+
+    // /is-eligible-for-loan-and-advance
+    async function getEligible_loan_and_advance(Eligible){
+        let eligible = Eligible;
+        await axios.post("is-eligible-for-loan-and-advance",{
+            eligible: eligible,
+        }).then(res=>{
+            eligibleEmployees.value = res.data;
+            console.log(eligibleEmployees.value);
+        });
+
+    }
+
+    async function getEmployeeTotalvalue(Loan_type){
+        let loan_type = Loan_type;
+        await axios.post('/employee-dashboard-loan-and-advance',{
+            loan_type:loan_type
+        }).then(res=>{
+            loanDashboard.value = res.data.data;
+            
+        })
     }
 
 
@@ -447,11 +472,21 @@ Travel Advance - ta
 
         // Loan With interest Feature
         isLoanWithInterestFeature, InterestWithLoan, dialogInterestwithLoan, saveInterestWithLoan, InterestWithLoanData, fetchInterstWithLoan,
-        calculateLoanDetails, getLoanDetails
+        calculateLoanDetails, getLoanDetails,
+
+        getEligible_loan_and_advance,
+
+        // eligible Employees 
+        eligibleEmployees,
+
+        getEmployeeTotalvalue,
+        loanDashboard
+
 
 
     };
 });
+
 
 
 

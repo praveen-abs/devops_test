@@ -12,6 +12,7 @@ use App\Models\VmtEmployeePayslipStatus;
 use App\Models\User;
 use App\Imports\VmtPaySlip;
 use App\Services\VmtEmployeePayCheckService;
+use App\Services\VmtAttendanceService;
 
 
 /*
@@ -278,15 +279,18 @@ class VmtPayCheckController extends Controller
      }
 
 
-     public function generatePayslip(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
+     public function generatePayslip(Request $request, VmtEmployeePayCheckService $employeePaySlipService, VmtAttendanceService $serviceVmtAttendanceService){
 
 
-        $request->user_code = "BA002";
-        $request->month = "05";
-        $request->year = "2023";
-        $request->type = "pdf";
+        // $request->user_code = "PSC0060";
+        // $request->month = "05";
+        // $request->year = "2023";
+        // $request->type = "pdf";
 
-        return $employeePaySlipService->generatePayslip($request->user_code, $request->month,$request->year,$request->type);
+        return $employeePaySlipService->generatePayslip($request->user_code,
+            $request->month,
+             $request->year,
+             $request->type,$serviceVmtAttendanceService);
 
 
      }

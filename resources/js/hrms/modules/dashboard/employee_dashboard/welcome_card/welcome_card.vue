@@ -1,7 +1,8 @@
 <template>
     <div
-        class=" h-[180px] overflow-hidden rounded shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
-        <div class="mb-8 col-span-7" v-for="item in EmpDetials">
+        class=" !h-[180px] w-[100%]  overflow-hidden rounded-xl shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
+        <div class="col-span-7 mb-8" v-for="item in EmpDetials" :key="item" >
+
             <p class=" font-[14px] font-['Poppins']  text-gray-500 flex items-center">
                 {{ current_session }}
             </p>
@@ -13,20 +14,30 @@
             <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
                 <input type="checkbox" id="checkin_function" class="text-[6px] font-semibold" v-model="welcome_card.check"
                     @change="getTime" />
-                <span class="slider-checkbox check-inw round flex items-center">
+                <span class="flex items-center slider-checkbox check-inw round">
                     <span class="slider-checkbox-text !text-[8px] font-semibold"> </span>
                 </span>
             </label>
             <div>
                 <p class="text-[12px] mt-[-20px] text-[#8B8B8B] font-['Poppins'] flex items-center">
+<<<<<<< HEAD
                     Time duration:<span>{{item.effective_hours ?? '00:00:00'}}</span>
+=======
+                    Time duration:<span>{{ item.effective_hours ? item.effective_hours : 0 }}</span>
+>>>>>>> 09ee9d57a0ae6e21c1dc0bca1ffa342a2a21eaf6
                 </p>
                 <p v-if="item.checkin_time" class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
-                    `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}</p>
+                    `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}
+                    <i class="mx-2 text-sm font-semibold text-green-800"
+                            :class="findAttendanceMode(item.attendance_mode_checkin)"></i>
+
+                </p>
                 <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In: --:--:--` }}
                 </p>
                 <p v-if="item.checkout_time" class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
-                    `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}</p>
+                    `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}
+                    <i class="mx-2 text-sm font-semibold text-green-800"
+                    :class="findAttendanceMode(item.attendance_mode_checkout)"></i></p>
                 <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out: --:--:--` }}
                 </p>
 
@@ -44,15 +55,15 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-9 col-sm-9 col-md-9 col-xl-9 col-lg-9 col-xxl-9" v-for="item in EmpDetials">
-                    <p class="fw-bold f-18 text-blue-900" id="greeting_text">
+                    <p class="text-blue-900 fw-bold f-18" id="greeting_text">
                         {{ current_session }}
                     </p>
                     <p class="my-1 fw-bold fs-6 text-orange">
                         {{ service.current_user_name }}
                     </p>
                     <div class="my-2.5 flex">
-                        <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
-                        <p class="mx-2 fs-6 my-auto">General Shift</p>
+                        <i class="my-auto fa fa-sun-o text-warning" aria-hidden="true"></i>
+                        <p class="mx-2 my-auto fs-6">General Shift</p>
                         <label class="switch-checkbox f-12 text-muted">
                             <input type="checkbox" id="checkin_function" class="f-13 text-muted"
                                 v-model="welcome_card.check" @change="getTime" />
@@ -62,9 +73,9 @@
                         </label>
                     </div>
 
-                    <p v-if="item.checkin_time" class="f-12 text-muted  " style="width: 280px;" id="time_duration">
+                    <p v-if="item.checkin_time" class="f-12 text-muted " style="width: 280px;" id="time_duration">
                         Check-in time:
-                        {{ item.checkin_time }} &nbsp;Mode:<i class="text-green-800 font-semibold text-sm"
+                        {{ item.checkin_time }} &nbsp;Mode:<i class="text-sm font-semibold text-green-800"
                         :class="findAttendanceMode(item.attendance_mode_checkin)"></i>
                     </p>
                     <p v-else class="f-12 text-muted" id="time_duration">
@@ -83,7 +94,7 @@
 
                     <p v-if="item.checkout_time" class="f-12 text-muted" id="time_duration">
                         Check-out time:
-                        {{ item.checkout_time }} &nbsp; Mode : <i class="text-green-800 font-semibold text-sm"
+                        {{ item.checkout_time }} &nbsp; Mode : <i class="text-sm font-semibold text-green-800"
                         :class="findAttendanceMode(item.attendance_mode_checkout)"></i>
                     </p>
                     <p v-else class="f-12 text-muted" id="time_duration">
@@ -108,7 +119,7 @@
     </div> -->
 
     <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '30vw' }">
-        <div class="modal-content bg-white">
+        <div class="bg-white modal-content">
             <div class="p-1 text-center modal-body">
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000" class="gliters"
@@ -135,7 +146,7 @@
         </div>
     </Dialog>
     <Dialog v-model:visible="check_out_dailog" modal :style="{ width: '25vw' }">
-        <div class="modal-content bg-white">
+        <div class="bg-white modal-content">
             <div class="p-1 text-center modal-body">
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"
@@ -281,7 +292,9 @@ const resetChars = () => {
         (usedashboard.check_in = ""),
         (usedashboard.check_out = ""),
         (usedashboard.work_mode = "");
-};
+}
+
+
 
 
 </script>

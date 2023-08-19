@@ -1,17 +1,5 @@
 <template>
-    <div>
-        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-            <template #header>
-                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
-            </template>
-            <template #footer>
-                <h5 style="text-align: center">Please wait...</h5>
-            </template>
-        </Dialog>
-
-
+    <div class="w-full">
         <div>
             <DataTable :value="manageEmployeesStore.array_active_employees" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -21,18 +9,18 @@
                 <template #empty> No customers found.</template>
                 <template #loading> Loading customers data. Please wait. </template>
                 <Column class="font-bold" field="emp_name" header="Employee Name"
-                    style="min-width: 20rem; text-align: center:  !important;">
+                    style="min-width: 5rem !important; text-align: center:  !important;">
                     <template #body="slotProps">
-                        <div class="flex justify-center items-center">
+                        <div class="flex items-center justify-center">
                             <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'"
-                                class="p-2 w-11 fs-6 font-semibold rounded-full  text-white"
+                                class="p-2 font-semibold text-white rounded-full w-11 fs-6"
                                 :class="service.getBackgroundColor(slotProps.index)">
                                 {{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
-                            <img v-else class="rounded-circle img-md w-10  userActive-status profile-img"
-                                style="height: 30px !important;"
+                            <img v-else class="rounded-circle userActive-status profile-img"
+                                style="height: 30px !important; width: 30px !important;"
                                 :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
                                 alt="" />
-                            <p class=" text-left pl-2 font-semibold fs-6">{{ slotProps.data.emp_name }} </p>
+                            <p class="pl-2 font-semibold text-left fs-6">{{ slotProps.data.emp_name }} </p>
                         </div>
                     </template>
                     <template #filter="{ filterModel, filterCallback }">
@@ -40,7 +28,7 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_code" header="Employee Code" class="" style="min-width: 5rem !important;">
+                <Column field="emp_code" header="Employee Code" class="" style="min-width: 2rem !important;">
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
                             class="p-column-filter" :showClear="true" />
@@ -76,8 +64,7 @@
                 </Column>
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                        <Button icon="pi pi-eye" severity="success" raised label="View" @click="openProfilePage(slotProps.data)"
-                            style="height: 2em"  />
+                         <button  @click="openProfilePage(slotProps.data)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</button>
                     </template>
                 </Column>
             </DataTable>
@@ -94,13 +81,15 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { profilePagesStore } from '../../../profile_pages/stores/ProfilePagesStore';
 import { useManageEmployeesStore } from '../manage_service'
 import { Service } from '../../../Service/Service';
+// import loadingSpinner from '../../components/LoadingSpinner.vue';
+import LoadingSpinner from '../../../../components/LoadingSpinner.vue';
 
 
 const service = Service()
 const manageEmployeesStore = useManageEmployeesStore()
 const profilePageStore = profilePagesStore()
 
-let canShowLoadingScreen = ref(true);
+
 
 const enc_user_id = ref();
 
@@ -125,7 +114,7 @@ const filters = ref({
 
 onMounted(async () => {
     await manageEmployeesStore.getActiveEmployees();
-    canShowLoadingScreen.value = false;
+    manageEmployeesStore.canShowLoadingScreen = false;
 
 });
 

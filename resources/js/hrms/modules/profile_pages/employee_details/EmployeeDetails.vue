@@ -142,28 +142,28 @@
             </div>
         </template>
 
-        <div class="row">
-            <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                <div class="mb-3 form-group">
-                    <label :style="{ marginLeft: '10px' }">Birth Date<span class="text-danger">*</span>
+        <div class="grid grid-cols-2">
+            <div class=" ">
+                <div class="mb-1 form-group">
+                    <label class="ml-[5px]">Birth Date<span class="text-danger">*</span>
                     </label>
                     <div class="cal-icon">
                         <!-- <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
                                         placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" /> -->
-                        <Calendar class="mb-3 form-selects" v-model="dialog_general_information.dob"
+                        <Calendar class="mb-3 form-selects w-[94%] " v-model="dialog_general_information.dob"
                             placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+            <div class="">
                 <div class="mb-1 form-group">
                     <label>Gender<span class="text-danger">*</span></label>
                     <Dropdown v-model="dialog_general_information.gender" :options="options_gender" optionLabel="name"
-                        optionValue="value" placeholder="Choose Gender" class="form-selects" />
+                        optionValue="value" placeholder="Choose Gender" class="form-selects  w-[94%]" />
                 </div>
             </div>
 
-            <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+            <div class="">
                 <div class="mb-1 form-group">
                     <!-- <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
                                         class="text-danger">*</span></label>
@@ -175,18 +175,18 @@
                     <label :style="{ marginLeft: '10px', marginRight: '10px' }">Marital status <span
                             class="text-danger">*</span></label>
                     <Dropdown v-model="dialog_general_information.marital_status_id" :options="option_maritals_status"
-                        optionLabel="name" optionValue="id" placeholder="Select Marital Status" class="form-selects"
+                        optionLabel="name" optionValue="id" placeholder="Select Marital Status" class="form-selects w-[94%]"
                         :style="{ marginLeft: '10px', marginRight: '10px' }" />
 
                 </div>
             </div>
 
-            <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
+            <div class="">
                 <div class="mb-2 form-group">
                     <label>Blood Group<span class="text-danger">*</span></label>
                     <div class="cal-icon">
                         <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
-                            optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects" />
+                            optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects w-[94%]" />
                     </div>
                     <!-- {{dialog_general_information.blood_group_id  }} -->
 
@@ -194,14 +194,14 @@
             </div>
 
 
-            <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
+            <div class=" ">
                 <div class=" form-group w-full" :style="{ marginLeft: '10px' }">
                     <label class="my-1">Physically Handicapped</label>
                     <Dropdown v-model="dialog_general_information.physically_challenged" :options="options_phy_challenged"
-                        optionLabel="name" optionValue="value" placeholder="Select" class="form-selects" />
+                        optionLabel="name" optionValue="value" placeholder="Select" class="form-selects w-[94%]" />
                 </div>
             </div>
-            <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+            <div class="">
                 <div class="mb-3 form-group">
                     <!-- <label>Physically Handicapped</label>
                                 <Dropdown v-model="dialog_general_information.physically_challenged"

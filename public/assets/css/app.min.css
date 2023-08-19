@@ -7414,7 +7414,7 @@ button {
 }
 
 .nav-primary.nav-tabs-custom .nav-link.active:after {
-    background-color: #405189;
+    background-color: #F9BE00;
 }
 
 .nav-primary.arrow-navtabs .nav-link.active:before {
@@ -7460,7 +7460,7 @@ button {
 }
 
 .nav-success.nav-tabs-custom .nav-link.active:after {
-    background-color: #0ab39c;
+    background-color: #F9BE00;
 }
 
 .nav-success.arrow-navtabs .nav-link.active:before {
@@ -7506,7 +7506,7 @@ button {
 }
 
 .nav-warning.nav-tabs-custom .nav-link.active:after {
-    background-color: #f7b84b;
+    background-color: #F9BE00;
 }
 
 .nav-warning.arrow-navtabs .nav-link.active:before {
@@ -7529,7 +7529,7 @@ button {
 }
 
 .nav-danger.nav-tabs-custom .nav-link.active:after {
-    background-color: #f06548;
+    background-color: #F9BE00;
 }
 
 .nav-danger.arrow-navtabs .nav-link.active:before {
@@ -7552,7 +7552,7 @@ button {
 }
 
 .nav-light.nav-tabs-custom .nav-link.active:after {
-    background-color: #f3f6f9;
+    background-color: #F9BE00;
 }
 
 .nav-light.arrow-navtabs .nav-link.active:before {
@@ -7575,7 +7575,7 @@ button {
 }
 
 .nav-dark.nav-tabs-custom .nav-link.active:after {
-    background-color: #212529;
+    background-color: #F9BE00;
 }
 
 .nav-dark.arrow-navtabs .nav-link.active:before {
@@ -17524,16 +17524,6 @@ tr:last-child td:last-child {
     border-bottom-right-radius: 6px;
 }
 
-.table > thead > tr > th,
-.gridjs-table > thead > tr > th {
-    background: #002f56 ;
-    color: #fff !important;
-}
-
-.table > tbody > tr > td,
-.gridjs-table > tbody > tr > td {
-    color: #707274 !important;
-}
 
 .table > tbody > tr > td,
 .table > tbody > tr > th,

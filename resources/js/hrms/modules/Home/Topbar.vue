@@ -1,6 +1,7 @@
 <template>
     <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
-    <div class=" bg-white h-[60px]" v-if="canShowLoading">
+    <div class=" bg-white h-[60px]" v-if="canShowLoading"
+        @mouseenter="useDashboard.canShowConfiguration = false, useDashboard.canShowClients = false">
         <div class=" grid grid-cols-12 justify-between items-center">
             <!-- Organization List  -->
             <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-4"
@@ -13,13 +14,14 @@
                         <p class="text-sm whitespace-nowrap  font-semibold px-2"
                             v-if="currentlySelectedClient.client_fullname.length <= 13">{{
                                 currentlySelectedClient.client_fullname }}</p>
-                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-else> {{
+                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-tooltip="currentlySelectedClient.client_fullname "  v-else> {{
                             currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
                                 13) + '..' : '' }}</p>
                     </div>
                 </button>
 
                 <transition enter-active-class="transition ease-out duration-200 transform"
+                    v-if="service.current_user_role == 2 || service.current_user_role == 4"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
@@ -52,8 +54,8 @@
                 </transition>
             </div>
             <div class="relative col-span-4">
-                <input type="text" name="" id="" class="border p-1.5 bg-gray-100  border-gray-300 rounded-lg w-full" v-model="query"
-                    placeholder="Search....">
+                <input type="text" name="" id="" class="border p-1.5 bg-gray-100  border-gray-300 rounded-lg w-full"
+                    v-model="query" placeholder="Search....">
 
                 <transition enter-active-class="transition ease-out duration-200 transform"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
@@ -78,7 +80,7 @@
                 </transition>
             </div>
             <div class="flex col-span-4 justify-end">
-                <button
+                <button v-tooltip="'Settings'" v-if="service.current_user_role == 2 || service.current_user_role == 4"
                     class="rounded-full bg-gray-100  p-2 hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none  mx-2"
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="h-6 w-6">
@@ -106,7 +108,7 @@
                         <a href="attendance-leavesettings"
                             class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Leave setting</a>
-                        <a href="configurations/attendance_settings"
+                        <a href="attendance_settings"
                             class="p-2  block text-black rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Attendance setting</a>
                         <a href="investment_settings"
@@ -120,12 +122,12 @@
                 </transition>
 
 
-                <button
+                <button v-tooltip="'Notification'"
                     class="mx-2 animate-pulse  bg-gray-100 rounded-full p-2  hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                     @click="visibleRight = true">
                     <img src="./assests/icons/notification.svg" alt="" class="h-6 w-6">
                 </button>
-                <button
+                <button v-tooltip="'Exit'"
                     class=" bg-gray-100 rounded-full p-2 hover:bg-gray-200 transition  duration-700 ease-in-out transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                     <img src="./assests/icons/exit.svg" alt="" class="h-6 w-6">
                 </button>
@@ -134,14 +136,16 @@
                     <button
                         class="py-2 px-3 flex text-white focus:outline-none hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <p class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm" >{{
+                        <p class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
 
                         <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto mx-2"
-                            v-if="service.current_user_name.length <=10">{{ service.current_user_name ?
+                            v-if="service.current_user_name ? service.current_user_name.length <= 10 : ''">{{
+                                service.current_user_name ?
                                 service.current_user_name : '' }}</p>
-                        <p  class="font-semibold text-[12px] mx-2 whitespace-nowrap font-['Poppins']  text-center text-black my-auto" v-else> {{
-                            service.current_user_name ? service.current_user_name.substring(0, 10) + '..' : '' }}</p>
+                        <p class="font-semibold text-[12px] mx-2 whitespace-nowrap font-['Poppins']  text-center text-black my-auto"
+                            v-else> {{
+                                service.current_user_name ? service.current_user_name.substring(0, 10) + '..' : '' }}</p>
 
                     </button>
                     <transition enter-active-class="transition ease-out duration-200 transform"
@@ -174,9 +178,30 @@
                 Notification
             </p>
         </template>
-        <div class="w-full px-2 rounded-lg my-2 p-2" v-for="(no, index) in 20" :class="`${getBackgroundColor(index)}`">
-            <p class="orange-median font-semibold fs-6">Attendance</p>
-            <p class="text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore accusamus laborum .</p>
+        <!-- notification_title -->
+        <!-- notification_body -->
+        <!-- redirect_to_module -->
+        <div class="w-full px-2 rounded-lg my-2 p-2" v-if="notificationSource ? notificationSource.length > 0 : false"
+            v-for="(notification, index) in notificationSource" :class="`${getBackgroundColor(index)}`">
+            <div class="flex justify-between">
+                <div>
+                    <p class="orange-median font-semibold fs-6">{{ notification.notification_title }}</p>
+                </div>
+                <div>
+                    <button @click="readNotification(notification.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+
+                    </button>
+                </div>
+            </div>
+            <p class="text-sm">{{ notification.notification_body }}</p>
+            <!-- :class="`${getBackgroundColor(index)}`" -->
+        </div>
+        <div v-else class="w-full px-2 rounded-lg my-2 p-2 bg-red-50">
+            <p>No notifications to display</p>
         </div>
     </Sidebar>
 
@@ -240,8 +265,6 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
-
-import Notification from '../dashboard/employee_dashboard/notifications/notification.vue'
 import { Service } from '../Service/Service';
 
 const useDashboard = useMainDashboardStore()
@@ -312,6 +335,24 @@ const getOrgList = () => {
 }
 
 
+const notificationSource = ref()
+
+const getNotifications = () => {
+    axios.get('/getNotifications').then(res => {
+        notificationSource.value = res.data.data
+    })
+}
+
+
+const readNotification = (notification_id) => {
+    axios.post('/readNotification', {
+        record_id: notification_id
+    }).finally(() => {
+        getNotifications()
+    })
+}
+
+
 onMounted(() => {
     getOrgList()
     getClientList()
@@ -319,6 +360,8 @@ onMounted(() => {
     setTimeout(() => {
         canShowLoading.value = true
     }, 2000);
+    getNotifications()
+
 })
 
 

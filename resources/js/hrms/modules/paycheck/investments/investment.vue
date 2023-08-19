@@ -1,4 +1,6 @@
 <template>
+    <LoadingSpinner v-if="investmentStore.canShowLoading" class="absolute z-50 bg-white" />
+
     <Toast />
     <ConfirmDialog></ConfirmDialog>
     <div class="">
@@ -63,7 +65,7 @@
 
 
 
-    <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
+    <!-- <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
         <template #header>
@@ -73,7 +75,7 @@
         <template #footer>
             <h5 style="text-align: center">Please wait...</h5>
         </template>
-    </Dialog>
+    </Dialog> -->
 </template>
 
 
@@ -82,6 +84,7 @@ import { onMounted } from 'vue'
 import Declaration from './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
 import ImvestmentComputation from './income_tax_computation/incomeTaxComputation.vue'
+import LoadingSpinner from '../../../components/LoadingSpinner.vue'
 
 
 import { investmentMainStore } from '../stores/investmentMainStore'
