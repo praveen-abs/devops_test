@@ -1024,9 +1024,8 @@ class VmtEmployeeService
 
 
     // Generate Employee Appointment PDF after onboarding
-    public function attachAppointmentLetterPDF($employeeData)
+    public function attachAppointmentLetterPDF($employeeData,$onboard_type)
     {
-
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
         $data = $employeeData;
@@ -1043,8 +1042,19 @@ class VmtEmployeeService
         $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
         $data['employer_esi_monthly'] = $employeeData['esic_employer_contribution'];
         $data['employer_esi_yearly'] = intval($employeeData['esic_employer_contribution']) * 12;
-        $data['ctc_monthly'] = $employeeData['cic'];
-        $data['ctc_yearly'] = intval($employeeData['cic']) * 12;
+        $data['CEA_monthly'] = $employeeData["child_education_allowance"]??"0" ;
+        $data['CEA_yearly'] = intval($employeeData["child_education_allowance"]??"0") * 12;
+        $data['food_coupon_monthly'] = $employeeData['food_coupon']??"0";
+        $data['food_coupon_yearly'] = intval($employeeData['lta']??"0") * 12;
+        $data['lta_monthly'] = $employeeData['lta']??"0";tval($employeeData['food_coupon']??'0') * 12;
+        $data['lta_yearly'] = intval($employeeData['lta']??"0") * 12;
+        if($onboard_type='normal'){
+            $data['ctc_monthly'] = $employeeData['cic'];
+            $data['ctc_yearly'] = intval($employeeData['cic']) * 12;
+        }else{
+        $data['ctc_monthly'] = $employeeData['ctc'];
+        $data['ctc_yearly'] = intval($employeeData['ctc']) * 12;
+        }
         $data['employee_epf_monthly'] =  $employeeData["epf_employee"];
         $data['employee_epf_yearly'] = intval($employeeData["epf_employee"]) * 12;
         $data['employee_esi_monthly'] =  $employeeData["esic_employee"];
@@ -1053,43 +1063,48 @@ class VmtEmployeeService
         $data['employer_pt_yearly'] =  $employeeData["professional_tax" ] ? intval($employeeData["professional_tax" ])* 12 :"0";
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
+        if($onboard_type='normal'){
         $data["ctc_in_words"] = numberToWord(intval($employeeData['cic']) * 12);
+       
+        }else{
+            $data["ctc_in_words"] = numberToWord(intval($employeeData['ctc']) * 12);
+        }
         $data["ctc_in_words"]=str_replace("  "," ",$data["ctc_in_words"]);
 
-       if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
-        //$client_name = str_replace(' ', '_', sessionGetSelectedClientName());
-        $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
-        $viewfile_appointmentletter = 'appointment_mail_templates.appointment_Letter_client';
-        if (view()->exists($viewfile_appointmentletter)) {
+        $fetchMasterConfigValue = VmtMasterConfig::where("config_name","can_send_appointmentletter_after_onboarding")->first();
 
-        $html = view($viewfile_appointmentletter,$data);
-
-
-                        $options = new Options();
-                        $options->set('isHtml5ParserEnabled', true);
-                        $options->set('isRemoteEnabled', true);
-
-                        $pdf = new Dompdf($options);
-                        $pdf->loadhtml($html, 'UTF-8');
-                        $pdf->setPaper('A4', 'portrait');
-                        $pdf->render();
-
-                        $docUploads =  $pdf->output();
-                        $client_id =sessionGetSelectedClientid();
-
-                        $VmtClientMaster = VmtClientMaster::where("id",$client_id)->first();
-                        $image_view = url('/') . $VmtClientMaster->client_logo;
-
-                        // dd( $docUploads);
-                         $filename = 'appoinment_letter_' . $data['employee_name'] . '_' . time() . '.pdf';
-                         $file_path = public_path('appoinmentLetter/'.$filename);
-                         file_put_contents($file_path, $docUploads);
-                         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
-        }
-
-                    $isSent = \Mail::to($data['email'])->send(new WelcomeMail("ABS123", 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$VmtClientMaster->client_code));
-        return $isSent;
-     }
+        if ($fetchMasterConfigValue['config_value'] == "true") {
+            //$client_name = str_replace(' ', '_', sessionGetSelectedClientName());
+            $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
+        
+    
+                $html = view('appointment_mail_templates.appointment_Letter_client',$data);
+    
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
+    
+                $pdf = new Dompdf($options);
+                $pdf->loadhtml($html, 'UTF-8');
+                $pdf->setPaper('A4', 'portrait');
+                $pdf->render();
+    
+                $docUploads =  $pdf->output();
+                $client_id =sessionGetSelectedClientid();
+    
+                $VmtClientMaster = VmtClientMaster::where("id",$client_id)->first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
+    
+                // dd( $docUploads);
+                 $filename = 'appoinment_letter_' . $data['employee_name'] . '_' . time() . '.pdf';
+                 $file_path = public_path('appoinmentLetter/'.$filename);
+                 file_put_contents($file_path, $docUploads);
+                 $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+            
+    
+             $isSent = \Mail::to($data['email'])->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),$appoinmentPath , $image_view,$VmtClientMaster->client_code));
+            return $isSent;
+         }
     }
 
 
