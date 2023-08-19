@@ -170,7 +170,7 @@
 
 
     <div class="flex card justify-content-center">
-        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :style="{ width: '50vw' }">
+        <Dialog v-model:visible="canShowPayslipHTMLView" maximizable modal header="Payslip" :style="{ width: '50vw' }">
             <!-- <div v-html="managePayslipStore.paySlipHTMLView">
             </div> -->
             <!-- <img :src="managePayslipStore.paySlipHTMLView" class="" alt="File not found" /> -->

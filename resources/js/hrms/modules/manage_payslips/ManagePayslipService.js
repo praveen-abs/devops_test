@@ -73,7 +73,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         // show_dialogconfirmation.value= false;
 
-        axios.post('/payroll/paycheck/sendMail_employeePayslip', {
+        axios.post('/generatePayslip', {
             user_code: user_code,
             month: month,
             year: year,
