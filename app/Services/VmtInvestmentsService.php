@@ -590,7 +590,7 @@ class VmtInvestmentsService
 
             $form_assigned_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-            $res = array();
+            $res = array("data"=>[]);
             foreach ($fs_id as $single_fs_id) {
                 $query_rentalDetails = VmtInvEmpFormdata::where('fs_id', $single_fs_id)->where('f_emp_id', $form_assigned_id);
 
@@ -601,7 +601,7 @@ class VmtInvestmentsService
                     $rentalDetail['fs_id'] = $rentalDetails->fs_id;
                     $rentalDetail['dec_amount'] = $rentalDetails->dec_amount;
                     $rentalDetail['json_popups_value'] = (json_decode($rentalDetails->json_popups_value, true));
-                    array_push($res, $rentalDetail);
+                    array_push($res['data'], $rentalDetail);
                 }
 
             }
