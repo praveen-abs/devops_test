@@ -6,9 +6,9 @@
                     <!-- v-if="!useEmpData" -->
                     <p class="text-xl font-medium" v-if="useEmpData == ''">The company allows employees to request a salary
                         advance of up to <strong class="text-lg"> 100%</strong> of their monthly salary.</p>
-                    <p v-if="useEmpData != ''" class=" fs-4 fw-semibold text-blue-900 font-sans">Employee ID : <span
-                            class=" fs-4 fw-semibold font-sans mr-5">{{ CurrentUser_code }} </span> <span
-                            class="ml-5 pl-14 fs-4 fw-semibold text-blue-900 font-sans"
+                    <p v-if="useEmpData != ''" class="font-sans text-blue-900 fs-4 fw-semibold">Employee ID : <span
+                            class="mr-5 font-sans fs-4 fw-semibold">{{ CurrentUser_code }} </span> <span
+                            class="ml-5 font-sans text-blue-900 pl-14 fs-4 fw-semibold"
                             style="border-left: 2px solid black;">Employee Name : {{ CurrentName }}</span></p>
                     <!-- {{ useEmpData.user_code }}
                     {{ useEmpData.name }} -->
@@ -81,12 +81,12 @@
                             <OverlayPanel ref="op"
                                 style="width: 160px;margin-top:12px !important;margin-right: 20px !important;"
                                 class="p-0 m-0">
-                                <div class=" d-flex flex-column p-0 m-0">
+                                <div class="p-0 m-0 d-flex flex-column">
                                     <!-- bg-green-200 -->
-                                    <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
+                                    <button class="p-2 text-black fw-semibold hover:bg-gray-200 border-bottom-1"
                                         @click="showConfirmDialog(slotProps.data)">view</button>
                                     <!-- bg-blue-500 -->
-                                    <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
+                                    <button class="p-2 text-black fw-semibold hover:bg-gray-200"
                                         @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">passed
                                         Transaction</button>
                                 </div>
@@ -144,7 +144,7 @@
             <h1 class="mx-3 fs-4 text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary
                 Advance Request</h1>
         </template>
-        <div class="flex pb-2 bg-gray-100 rounded-lg gap-3">
+        <div class="flex gap-3 pb-2 bg-gray-100 rounded-lg">
             <div class="w-4 p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
                 <input id="rentFrom_month"
@@ -163,7 +163,7 @@
         </div>
         <div class="gap-6 p-4 my-2 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Reason</span>
-            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{ val.reason }}</div>
+            <div class="w-full p-2 border rounded h-28 bg-slate-50 ">{{ val.reason }}</div>
         </div>
         <div class="gap-6 p-4 my-2 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Your Comments</span>
@@ -175,8 +175,8 @@
             </span>
         </div>
         <div class="float-right ">
-            <button class="btn bg-red-500 text-white px-5" @click="submitForm(-1)">Reject</button>
-            <button class="mx-4 btn bg-green-500  text-white px-5" @click="submitForm(1)">Approve</button>
+            <button class="px-5 text-white bg-red-500 btn" @click="submitForm(-1)">Reject</button>
+            <button class="px-5 mx-4 text-white bg-green-500 btn" @click="submitForm(1)">Approve</button>
         </div>
     </Dialog>
 </template>

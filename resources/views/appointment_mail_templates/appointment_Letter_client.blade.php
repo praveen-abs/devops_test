@@ -148,6 +148,16 @@
             margin: 0px !important;
             text-align: justify;
         }
+        .main-page{
+            width:800px !important;
+        }
+        body{
+            width:100%;
+            display:flex;
+            justify-content:center;
+            flex-direction: column;
+            align-items:center;
+        }
     </style>
 </head>
 
@@ -440,7 +450,7 @@
                                         <td colspan="12" align="" class=" ">
 
                                             <p class="txt-justify ">
-                                                We are glad to appoint you as “ <b>:{{ $designation }}</b> ” in
+                                                We are glad to appoint you as “ <b>{{ $designation }}</b> ” in
                                                 our company, Ardens
                                                 Business Solutions Private Limited.
                                             </p>
@@ -630,29 +640,29 @@
                                     <td colspan="1">Child Education Allowance</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$CEA_monthly}}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-
+                                            alt="" style="padding-right:0px;">{{$CEA_yearly}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Leave Travel Allowance</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$food_coupon_monthly}}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$food_coupon_yearly}}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Food Allowance</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$lta_monthly}}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$lta_yearly}}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Special Allowance</td>

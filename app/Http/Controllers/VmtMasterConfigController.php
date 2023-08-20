@@ -50,6 +50,8 @@ class VmtMasterConfigController extends Controller
             else
             {
                 $temp = VmtMasterConfig::where('config_name',$key)->update(['config_value' => $value]);
+                $client_id =sessionGetSelectedClientid();
+                $client_data =VmtMasterConfig::where("config_name","client_id")->update(['config_value' =>$client_id]);
             }
 
         }
