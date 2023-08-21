@@ -38,6 +38,37 @@ class VmtEmployeeAttendanceController extends Controller
         return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date)), 'Attendance.xlsx');
     }
 
+    public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = '2023-07-26';
+        $end_date = '2023-07-30';
+        $attendance_data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date);
+        $first_row_array =  $attendance_data[0];
+        $secound_row_ar =  $attendance_data[1];
+        $response = array();
+        $first_row = array();
+        for ($i = 0; $i < count($first_row_array); $i++) {
+            $temp_ar = array();
+            $temp_ar['label'] = $first_row_array[$i];
+            if ($i < 3) {
+                $temp_ar['col_span'] = 1;
+                $temp_ar['row_span'] = 2;
+            } else if ($first_row_array[$i] == 'Total Calculation') {
+                $temp_ar['col_span'] = 15;
+                $temp_ar['row_span'] = 1;
+            } else {
+                $temp_ar['col_span'] = 5;
+                $temp_ar['row_span'] = 1;
+            }
+            array_push($first_row,  $temp_ar);
+            unset($temp_ar);
+        }
+        $response['first_row'] = $first_row;
+
+        return $first_row;
+        return $attendance_report_service->detailedAttendanceReport($start_date, $end_date);
+    }
+
     public function showBasicAttendanceReport(Request $request)
     {
         $attendance_year = VmtEmployeeAttendance::groupBy(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
