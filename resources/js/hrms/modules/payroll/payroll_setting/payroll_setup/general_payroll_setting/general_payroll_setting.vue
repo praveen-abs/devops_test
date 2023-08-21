@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="grid grid-cols-12 gap-6 mx-6">
-            <div class="col-span-5 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-1">
                     <h5 class="my-2 text-sm font-semibold">Pay Frequency</h5>
                     <div class="flex gap-8 justify-evenly">
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div class="col-span-7 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="p-2 bg-orange-100 rounded mt-2" v-if="active == 2">
                     This change is of most importance and has a widespread impact on the salaries of all employees. We strongly advise you to reach out to the support team for further clarification.
                 </div>
@@ -87,7 +87,7 @@
         </div>
 
         <div class="grid grid-cols-12 gap-6 mx-6">
-            <div class="col-span-5 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-4">
                     <h6 class="my-2 text-sm font-semibold">
                         Select the attendance cut-off peroid in a month
@@ -138,7 +138,7 @@
                 </div>
             </div>
 
-            <div class="col-span-7 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="bg-orange-100 p-2 rounded " v-if="active2 == 2 " >
                     <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true" ></i>
                     The edit option has been disabled. Please contact the ABShrms Support Team for assistance.
@@ -160,7 +160,7 @@
             <p>Pay Peroid Calculation</p>
         </div>
         <div class="grid grid-cols-12 gap-6 mx-6 my-4">
-            <div class="col-span-5 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-4">
                     <h5 class="my-2 text-sm font-semibold">Pay days in month</h5>
                     <div class="flex gap-8 justify-evenly">
@@ -209,7 +209,7 @@
                 </div>
             </div>
 
-            <div class="col-span-7 p-4 my-4 leading-8 ">
+            <div class="col-span-8 p-4 my-4 leading-8 ">
                 <div class="my-6">
                     <p style="line-height: 25px;">
                         <strong class="mr-2">NOTE :</strong>
@@ -235,7 +235,7 @@
             <p>Currency and Compensation</p>
         </div>
         <div class="grid grid-cols-12 gap-6 mx-6 ">
-            <div class="col-span-5  p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-4  p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-4">
                     <h5 class="my-2 text-sm font-semibold">Currency</h5>
                     <div class="flex gap-8 justify-evenly">
@@ -262,7 +262,7 @@
                 </div>
             </div>
 
-            <div class="col-span-7 p-4 my-4 ">
+            <div class="col-span-8 p-4 my-4 ">
                 <div class="my-2">
                     <strong>EXPLANATION :</strong>
                     <p class="my-2 text-gray-600">
