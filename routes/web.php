@@ -793,7 +793,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     'fetchLCReportData']);
     Route::get('/report/download-late-coming-report',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'downloadLCReport']);
 
-    //Pay Check Reports   
+    //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
     //Reimbursements Reports
     Route::get('/reports/generate-manager-reimbursements-reports', [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name(' generateManagerReimbursementsReports');
@@ -1001,7 +1001,11 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
 // generate payslip
 
-Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
+    Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
+
+    //salary revision
+
+    Route::get('/empList', [App\Http\Controllers\VmtSalaryRevisionController::class, 'empList'])->name('empList');
 
 
 
