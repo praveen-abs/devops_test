@@ -20,6 +20,7 @@ use App\Models\VmtAttendanceCycle;
 use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtInvestmentsDeclarationSettings;
+use App\Models\VmtAttendanceCutoffPeriod;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -194,6 +195,58 @@ class VmtPayrollSettingsService{
                 "data" => $e->getmessage(),
             ]);
         }
+    }
+
+    public function saveAttendanceCutoffData($start_date,$end_date)
+    {
+        $validator = Validator::make(
+            $data = [
+                'start_date' =>$start_date,
+                'end_date' => $end_date,
+            ],
+            $rules = [
+                'start_date' => 'required',
+                'end_date' => 'required',
+
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            $save_AttendanceCutoffData = new VmtAttendanceCutoffPeriod;
+            $save_AttendanceCutoffData->start_date = $start_date;
+            $save_AttendanceCutoffData->end_date = $end_date;
+            $save_AttendanceCutoffData->save();
+
+
+        return $response=([
+                "status" => "success",
+                "message" => "Attendance CutOff Data saved successfully",
+                "data" => $save_AttendanceCutoffData,
+            ]);
+
+         }catch(\Exception $e){
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while upadeting payroll settings",
+                "data" => $e->getmessage(),
+            ]);
+        }
+
+
+
     }
     public function savePayrollFinanceSettings( $consider_default_rent_hra,$allow_emp_to_review_fin_info,$salary_payment_mode,$bank_information,$pf_esi_info,$pan_info,   $aadhar_info, $deadline_date_for_OTR,$newjoine_inv_inout_deadline,$inv_dec_cutoff_date,$newjoinee_dec_deadline,$modify_fy_cutoff_date,$inv_decl_approval_date,
     $is_inv_decl_approval_needed,$can_notify_emp_inv_dec_release,$can_sendemail_emp_inv_dec,$notify_frequency,$can_release_inv_dec)
@@ -619,7 +672,7 @@ class VmtPayrollSettingsService{
 
         try{
              $client_id =sessionGetSelectedClientid();
-            
+
 
             $save_pt_settings =VmtProfessionalTaxSettings::where("location",$location)->where('client_id',$client_id);
 
@@ -798,78 +851,78 @@ class VmtPayrollSettingsService{
         }
     }
 
-        public function updatelwfSettings($record_id,$state,$employees_contrib,$employer_contrib,$deduction_cycle,$status)
-        {
-            $validator = Validator::make(
-                $data = [
-                    'record_id' => $record_id,
-                    'state' => $state,
-                    'employees_contrib' => $employees_contrib,
-                    'employer_contrib' => $employer_contrib,
-                    'deduction_cycle' =>$deduction_cycle,
-                    'status' => $status,
-                ],
-                $rules = [
-                    'record_id' => 'required',
-                    'state' => 'required',
-                    'employees_contrib' => 'required',
-                    'employers_contrib' => 'required',
-                    'deduction_cycle' => 'required',
-                    'employees' => 'employees',
-                    'status' => 'required',
-                ],
-                $messages = [
-                    'required' => 'Field :attribute is missing',
-                    'numeric' => 'Field <b>:attribute</b> is invalid',
-                ]
-            );
+    public function updatelwfSettings($record_id,$state,$employees_contrib,$employer_contrib,$deduction_cycle,$status)
+    {
+        $validator = Validator::make(
+            $data = [
+                'record_id' => $record_id,
+                'state' => $state,
+                'employees_contrib' => $employees_contrib,
+                'employer_contrib' => $employer_contrib,
+                'deduction_cycle' =>$deduction_cycle,
+                'status' => $status,
+            ],
+            $rules = [
+                'record_id' => 'required',
+                'state' => 'required',
+                'employees_contrib' => 'required',
+                'employers_contrib' => 'required',
+                'deduction_cycle' => 'required',
+                'employees' => 'employees',
+                'status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
+        );
 
-            if($validator->fails()){
-                return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
-                ]);
-            }
-
-            try{
-
-
-                $client_id =sessionGetSelectedClientid();
-
-               $update_lwf_settings =VmtLabourWelfareFundSettings::where('id',$record_id)->where('client_id',$client_id );
-
-            if($update_lwf_settings->exists()){
-                $update_lwf_settings =$update_lwf_settings->first();
-                $update_lwf_settings->client_id = $client_id;
-                $update_lwf_settings->employees_contrib = $employees_contrib;
-                $update_lwf_settings->state = $state;
-                $update_lwf_settings->employer_contrib =$employer_contrib ;
-                $update_lwf_settings->deduction_cycle = $deduction_cycle;
-                $update_lwf_settings->status =$status ;
-                $update_lwf_settings->save();
-
-                return $response=([
-                    "status" => "success",
-                    "message" => "LWF settings updated successfully",
-                    "data" => "",
-                ]);
-            }else{
-
-                return $response=([
-                    "status" => "failure",
-                    "message" => "data not found",
-                    "data" => "",
-                ]);
-
-            }
-
-
-             }catch(\Exception $e){
-                return response()->json([
-                    "status" => "failure",
-                    "message" => "error while update LWF settings",
-                    "data" => $e->getmessage(),
-                ]);
-            }
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
         }
+
+        try{
+
+
+            $client_id =sessionGetSelectedClientid();
+
+            $update_lwf_settings =VmtLabourWelfareFundSettings::where('id',$record_id)->where('client_id',$client_id );
+
+        if($update_lwf_settings->exists()){
+            $update_lwf_settings =$update_lwf_settings->first();
+            $update_lwf_settings->client_id = $client_id;
+            $update_lwf_settings->employees_contrib = $employees_contrib;
+            $update_lwf_settings->state = $state;
+            $update_lwf_settings->employer_contrib =$employer_contrib ;
+            $update_lwf_settings->deduction_cycle = $deduction_cycle;
+            $update_lwf_settings->status =$status ;
+            $update_lwf_settings->save();
+
+            return $response=([
+                "status" => "success",
+                "message" => "LWF settings updated successfully",
+                "data" => "",
+            ]);
+        }else{
+
+            return $response=([
+                "status" => "failure",
+                "message" => "data not found",
+                "data" => "",
+            ]);
+
+        }
+
+
+            }catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "error while update LWF settings",
+                "data" => $e->getmessage(),
+            ]);
+        }
+    }
     }

@@ -451,24 +451,33 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
     //upload Financial components
     Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
+    Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
     Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
 
     //Payroll generalSettings
     Route::post('save-genral-payroll-settings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveGenralPayrollSettings'])->name    ('saveGenralPayrollSettings');
     Route::post('updateGenralPayrollSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updateGenralPayrollSettings'])->name('updateGenralPayrollSettings');
+    Route::post('saveAttendanceCutoffData', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveAttendanceCutoffData'])->name('saveAttendanceCutoffData');
+    Route::get('getAttendanceDatadropdown', [App\Http\Controllers\VmtPayrollSettingsController::class, 'getAttendanceDatadropdown'])->name('getAttendanceDatadropdown');
+
+    //payroll investments declaration && proof  settings
+    Route::post('savePayrollFinanceSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'savePayrollFinanceSettings'])->name('savePayrollFinanceSettings');
+    Route::post('savePayrollFinanceSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'savePayrollFinanceSettings'])->name('savePayrollFinanceSettings');
+    Route::get('getFinDropdownListDetails', [App\Http\Controllers\VmtPayrollSettingsController::class, 'getFinDropdownListDetails'])->name('getFinDropdownListDetails');
 
     //payroll statutory PT settings
     Route::post('fetchProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchProfessionalTaxSettings'])->name('fetchProfessionalTaxSettings');
     Route::post('saveProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveProfessionalTaxSettings'])->name('saveProfessionalTaxSettings');
     Route::post('updateProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updateProfessionalTaxSettings'])->name('updateProfessionalTaxSettings');
 
-//payroll statutory LWF settings
+   //payroll statutory LWF settings
     Route::post('fetchlwfSettingsDetails', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchlwfSettingsDetails'])->name('fetchlwfSettingsDetails');
     Route::post('savelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'savelwfSettings'])->name('savelwfSettings');
     Route::post('updatelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updatelwfSettings'])->name('updatelwfSettings');
 
+   //get payroll dropdown data
 
-
+   Route::get('getDropdownListDetails', [App\Http\Controllers\VmtPayrollSettingsController::class, 'getDropdownListDetails'])->name('getDropdownListDetails');
 
     //Get Attendance For run payroll
     Route::get('/fetch-attendance-data',[App\Http\Controllers\VmtPayRunController::class,'fetch_attendance_data']);
@@ -793,7 +802,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     'fetchLCReportData']);
     Route::get('/report/download-late-coming-report',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'downloadLCReport']);
 
-    //Pay Check Reports   
+    //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
     //Reimbursements Reports
     Route::get('/reports/generate-manager-reimbursements-reports', [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name(' generateManagerReimbursementsReports');
