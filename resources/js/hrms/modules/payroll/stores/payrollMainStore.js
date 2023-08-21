@@ -21,6 +21,10 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     // loading Spinner
     const canShowLoading = ref(false);
 
+    // Currently Active Tab
+
+    const activeTab = ref(1);
+
     /*  Payroll Setup Structure
 
         1) general payroll Setup
@@ -44,6 +48,20 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         6)Statutory Filling
 
      */
+
+
+    // General Payroll Settings
+
+    const generalPayrollSettings = ref({})
+
+    const getCurrentGeneralPayrollSettings = () => {
+
+    }
+
+    const saveGeneralPayrollSettings = (data) => {
+          console.log(data);
+          axios.post('/save-genral-payroll-settings',data)
+    }
 
 
     // PF ESI Setting
@@ -363,7 +381,11 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     }
     return {
         // Varaible Declaration
-        canShowLoading,
+        canShowLoading,activeTab,
+
+        // General Payroll Settings
+
+        generalPayrollSettings,getCurrentGeneralPayrollSettings,saveGeneralPayrollSettings,
 
         // Pf & ESI Setting - EPF
 

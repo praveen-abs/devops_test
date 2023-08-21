@@ -619,7 +619,7 @@ class VmtPayrollSettingsService{
 
         try{
              $client_id =sessionGetSelectedClientid();
-            
+
 
             $save_pt_settings =VmtProfessionalTaxSettings::where("location",$location)->where('client_id',$client_id);
 
