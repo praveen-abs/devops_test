@@ -329,10 +329,10 @@ class VmtEmployeeOnboardingController extends Controller
 
                             $VmtClientMaster = VmtClientMaster::first();
                             $image_view = url('/') . $VmtClientMaster->client_logo;
-                            //$isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                            $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-                            $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
-                           
+                           // $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data,"normal");
+
                             $message = "Employee onboarded successfully";
                         } else {
                             $message = "Employee details updated in draft";
@@ -516,6 +516,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
                 $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+               // $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"quick");
 
                 if ($isEmailSent) {
                     $mail_message = 'success';
@@ -652,7 +653,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
                 $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
-
+                //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"bulk");
                 // $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
                 //   ->delay(Carbon::now()->addSeconds(5));
 
