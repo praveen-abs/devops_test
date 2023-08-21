@@ -88,7 +88,7 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-        return $attendance_report_service->fetchAbsentReportData($start_date, $end_date);
+        return $attendance_report_service->fetchAbsentReportData($start_date, $end_date)['rows'];
     }
 
     public function downloadAbsentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
