@@ -23,7 +23,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
         }
 
         @page {
-            size: A4 landscape;
+            size: A4 portrait;
         }
 
 
