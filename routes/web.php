@@ -787,7 +787,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::get('/reports/detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showDetailedAttendanceReport'])->name('showDetailedAttendanceReport');
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
-    Route::get('/fetch-absent-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchAbsentReportData']);
+    Route::post('/fetch-absent-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchAbsentReportData']);
     Route::get('/report/download-absent-report',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'downloadAbsentReport']);
     Route::get('fetch-LC-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,
     'fetchLCReportData']);
