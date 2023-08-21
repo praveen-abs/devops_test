@@ -158,7 +158,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p>LOCATION</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->location }}</p>
+                        <p>{{ $employee_office_details->work_location  }}</p>
                     </td>
 
                 </tr>

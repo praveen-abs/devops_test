@@ -1123,6 +1123,8 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
         // $user_code = "BA002";
 
 
+
+        $user_data =User::where('user_code',$user_code)->first();
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
@@ -1138,7 +1140,8 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ->whereMonth('payroll_date',$month);
 
 
-        $user_data =User::where('user_code',$user_code)->first();
+
+
      //get leave data
         $start_date= Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
         $end_date= Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
@@ -1161,11 +1164,11 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
         }
 
         $getpersonal['leave_data'] = $leave_data;
-        $getpersonal['client_details'] = $payroll_data->get(
+        $getpersonal['client_details'] = VmtClientMaster::where('id',sessionGetSelectedClientid())->get(
             [
-                'vmt_client_master.client_fullname',
-                'vmt_client_master.client_logo',
-                'vmt_client_master.address',
+                'client_fullname',
+                'client_logo',
+                'address',
             ]
         )->toArray();
 

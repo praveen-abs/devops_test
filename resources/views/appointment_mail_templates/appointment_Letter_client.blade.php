@@ -640,29 +640,29 @@
                                     <td colspan="1">Child Education Allowance</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$CEA_monthly}}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-
+                                            alt="" style="padding-right:0px;">{{$CEA_yearly}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Leave Travel Allowance</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$food_coupon_monthly}}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$food_coupon_yearly}}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Food Allowance</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$lta_monthly}}</td>
                                     <td colspan="1" align="right"><img height="8.5" width="12"
                                             src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
-                                            alt="" style="padding-right:0px;">-</td>
+                                            alt="" style="padding-right:0px;">{{$lta_yearly}}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="1">Special Allowance</td>

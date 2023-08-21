@@ -623,7 +623,7 @@ class VmtTestingController extends Controller
             "emp_client_code" => "IMA",
             "employee_code" => "IMA43857",
             "doj" => "2023-08-14",
-            "ctc_in_words" => "Hiii",
+            "ctc_in_words" => "one lakh forty-seven thousand four hundred sixty-three",
             "aadhar_number" => "4134 3214 3214",
             "passport_number" => null,
             "bank_id" => "1",
@@ -700,7 +700,13 @@ class VmtTestingController extends Controller
             "releivingDoc" => null,
             "voterId" => null,
             "passport" => null,
-            "dlDoc" => null,
+            "dlDoc" => null, 
+            'food_coupon_monthly'=> 0,
+            'food_coupon_yearly' =>0,
+            'lta_monthly' => 0,
+            'lta_yearly' => 0,
+            'CEA_yearly' => 0,
+            'CEA_monthly' => 0,
             "basic_monthly" => 13143,
         "basic_yearly" => 10,
         "hra_monthly" => 253255,
@@ -731,7 +737,7 @@ class VmtTestingController extends Controller
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 //dd($client_name);
         $html = view('appointment_mail_templates.appointment_Letter_client',$data);
-return $html;
+
                         $options = new Options();
                         $options->set('isHtml5ParserEnabled', true);
                         $options->set('isRemoteEnabled', true);
@@ -755,7 +761,6 @@ return $html;
                     $isSent = \Mail::to('vishnu@abshrms.com')->send(new WelcomeMail("ABS123", 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$VmtClientMaster->client_code));
 
                     }
-
                 }
 
 

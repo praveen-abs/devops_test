@@ -684,8 +684,8 @@
 
 
 
-        $client_data =VmtMasterConfig::where("config_name","client_id")->first('config_value');
-        dd($client_data['config_value']);
+        $fetchMasterConfigValue = VmtMasterConfig::where("config_name","can_send_appointmentletter_after_onboarding")->first();
+        dd($fetchMasterConfigValue['config_value']);
 
     ?>
 
