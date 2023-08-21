@@ -93,15 +93,15 @@ class VmtEmployeeAttendanceController extends Controller
 
     public function downloadAbsentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
     {
-        $start_date = '2023-07-15';
-        $end_date = '2023-07-20';
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
         return Excel::download(new AbsentReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date)), 'Absent Report.xlsx');
     }
 
     public function fetchLCReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
     {
-        $start_date = '2023-07-15';
-        $end_date = '2023-07-20';
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
         $response = $attendance_report_service->fetchLCReportData($start_date, $end_date);
         return $response;
     }

@@ -1714,21 +1714,22 @@ class VmtAttendanceReportsService
     public function fetchLCReportData($start_date, $end_date)
     {
         $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $lcData = array();
         $response = array();
         $temp_ar = array();
         foreach ($attendance_data as $single_data) {
             foreach ($single_data as $key => $value) {
                 if ($value['isMIP'] != null || $value['isLC'] != null) {
-                    $temp_ar['user_code'] = $value['user_code'];
-                    $temp_ar['name'] = $value['name'];
-                    $temp_ar['date'] = $value['date_day'];
+                    $temp_ar['Employee Code'] = $value['user_code'];
+                    $temp_ar['Employee Name'] = $value['name'];
+                    $temp_ar['Date'] = $value['date_day'];
                     $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                    $temp_ar['shift_name'] =   $current_shift->shift_name;
+                    $temp_ar['Shift Name'] =   $current_shift->shift_name;
                     $regularized_sts = 'No';
-                    $reason = "";
-                    $approved_by = "";
-                    $approved_on = "";
-                    $approved_cmts = "";
+                    $reason = "-";
+                    $approved_by = "-";
+                    $approved_on = "-";
+                    $approved_cmts = "-";
                     if ($value['checkinRegId'] != null) {
                         $in_punch = $value['reged_checkin_time'];
                     } else {
@@ -1738,7 +1739,7 @@ class VmtAttendanceReportsService
                     if ($in_punch  != null) {
                         $LCDuration = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
                     } else {
-                        $LCDuration  = '';
+                        $LCDuration  = '-';
                     }
                     if (Carbon::parse($in_punch)->diffInMinutes(Carbon::parse($out_punch)) <  $current_shift->fullday_min_workhrs) {
                         $day_sts = 'Half Day';
@@ -1755,7 +1756,7 @@ class VmtAttendanceReportsService
                                 $reason =  $regularized_record->reason_type;
                             }
                         } else {
-                            $reason = '';
+                            $reason = '-';
                         }
 
                         $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
@@ -1766,20 +1767,25 @@ class VmtAttendanceReportsService
                             $approved_cmts =  $regularized_record->reviewer_comments;
                         }
                     }
-                    $temp_ar['in_punch'] =  $in_punch;
-                    $temp_ar['out_punch'] = $out_punch;
-                    $temp_ar['lc_duration'] = $LCDuration;
-                    $temp_ar['day_sts'] = $day_sts;
-                    $temp_ar['regularized_sts'] = $regularized_sts;
-                    $temp_ar['reason'] = $reason;
-                    $temp_ar['approved_by'] = $approved_by;
-                    $temp_ar['approved_on'] = $approved_on;
-                    $temp_ar['approved_cmds'] = $approved_cmts;
-                    array_push($response,$temp_ar);
+                    $temp_ar['In Punch'] =  $in_punch;
+                    $temp_ar['Out Punch'] = $out_punch;
+                    $temp_ar['Late Coming Duration'] = $LCDuration;
+                    $temp_ar['Day Status'] = $day_sts;
+                    $temp_ar['Regularise Status'] = $regularized_sts;
+                    $temp_ar['Employee Reason For Late Coming'] = $reason;
+                    $temp_ar['Approved By'] = $approved_by;
+                    $temp_ar['Approved On'] = $approved_on;
+                    $temp_ar['Approver Comments'] = $approved_cmts;
+                    array_push($lcData,$temp_ar);
                     unset($temp_ar);
                 }
             }
         }
+        $response['headers'] = array(
+            'Employee Code','Employee Name','Date','Shift Name','In Punch','Out Punch','Late Coming Duration',
+            'Employee Reason For Late Coming','Approved By','Approved On','Approver Comments'
+        );
+        $response['rows'] = $lcData;
         return $response;
     }
 }
