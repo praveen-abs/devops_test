@@ -20,11 +20,7 @@
             </label>
             <div>
                 <p class="text-[12px] mt-[-20px] text-[#8B8B8B] font-['Poppins'] flex items-center">
-<<<<<<< HEAD
-                    Time duration:<span>{{item.effective_hours ?? '00:00:00'}}</span>
-=======
                     Time duration:<span>{{ item.effective_hours ? item.effective_hours : 0 }}</span>
->>>>>>> 09ee9d57a0ae6e21c1dc0bca1ffa342a2a21eaf6
                 </p>
                 <p v-if="item.checkin_time" class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
                     `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}

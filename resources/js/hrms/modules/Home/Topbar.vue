@@ -14,9 +14,10 @@
                         <p class="text-sm whitespace-nowrap  font-semibold px-2"
                             v-if="currentlySelectedClient.client_fullname.length <= 13">{{
                                 currentlySelectedClient.client_fullname }}</p>
-                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-tooltip="currentlySelectedClient.client_fullname "  v-else> {{
-                            currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
-                                13) + '..' : '' }}</p>
+                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
+                            v-tooltip="currentlySelectedClient.client_fullname" v-else> {{
+                                currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
+                                    13) + '..' : '' }}</p>
                     </div>
                 </button>
 
@@ -263,12 +264,15 @@
 <script setup>
 
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
 import { Service } from '../Service/Service';
+import { useMobileSettingsStore } from '../configurations/mobile_settings/MobileSettingsService';
 
 const useDashboard = useMainDashboardStore()
 const service = Service();
+
+const useMobileStore = useMobileSettingsStore();
 
 
 
@@ -300,18 +304,24 @@ const getClientList = () => {
 
 const getSessionClient = () => {
     axios.get('session-sessionselectedclient').then(res => {
-        console.log(res.data);
-        currentlySelectedClient.value = res.data
+        currentlySelectedClient.value = res.data;
     })
 }
 
 const submitSelectedClient = (client) => {
+    useMobileStore.arrayMobileSetDetails ? useMobileStore.arrayMobileSetDetails.splice(0, useMobileStore.arrayMobileSetDetails.length) : []
     let url = '/session-update-globalClient'
     console.log({ "client_id": client });
-    axios.post(url, { "client_id": client }).finally(() => {
-        getSessionClient()
+    axios.post(url, { "client_id": client }).then((res) => {
+        useMobileStore.getMobileSettings(res.id);
+    }).finally(() => {
+        getSessionClient();
+        useMobileStore.getMobileSettings();
+        useMobileStore.getSessionClient();
         getOrgList()
     })
+
+
 }
 
 
@@ -356,7 +366,9 @@ const readNotification = (notification_id) => {
 onMounted(() => {
     getOrgList()
     getClientList()
-    getSessionClient()
+    getSessionClient();
+    useMobileStore.getSessionClient();
+    // useMobileStore.getMobileSettings();
     setTimeout(() => {
         canShowLoading.value = true
     }, 2000);

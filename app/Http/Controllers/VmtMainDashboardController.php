@@ -775,7 +775,8 @@ class VmtMainDashboardController extends Controller
             return $response;
         //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
-
+    }
+}
 
              
 
@@ -793,4 +794,4 @@ class VmtMainDashboardController extends Controller
 
 
 
-}
+
