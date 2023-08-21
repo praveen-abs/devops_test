@@ -12,7 +12,8 @@
                     <h5 class="my-2 text-sm font-semibold">Pay Frequency</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <InputText class="w-full h-4" placeholder="Monthly" />
+                            <InputText class="w-full h-11" placeholder="Monthly"
+                                v-model="uesPayroll.generalPayrollSettings.pay_frequency" />
                         </div>
                     </div>
                 </div>
@@ -22,7 +23,8 @@
                     </h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <InputText class="w-full h-11" placeholder="November 2023" />
+                            <InputText class="w-full h-11" placeholder="November 2023"
+                                v-model="uesPayroll.generalPayrollSettings.payperiod_start_month" />
                         </div>
                     </div>
                 </div>
@@ -32,7 +34,8 @@
                     </h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <InputText class="w-full h-11" placeholder="Text Placeholder" />
+                            <InputText class="w-full h-11" placeholder="Text Placeholder"
+                                v-model="uesPayroll.generalPayrollSettings.payperiod_end_date" />
                         </div>
                     </div>
                 </div>
@@ -42,7 +45,8 @@
                     </h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <InputText class="w-full h-11" placeholder="December 01" />
+                            <InputText class="w-full h-11" placeholder="December 01"
+                                v-model="uesPayroll.generalPayrollSettings.payment_date" />
                         </div>
                     </div>
                 </div>
@@ -72,13 +76,14 @@
                 </div>
             </div>
         </div>
-        <div class="mx-6 my-2">
-            <div class="flex justify-between pt-4">
-            <p>Attendance cut-off cycle</p>
-            <div>
-                <i class="pi pi-pencil mr-3" style="font-size: 1rem" @click='active_Btn2' ></i>
+        <div class="mx-6 ">
+            <div class="flex pt-4">
+                <p class="fs-14 text-gray-600">Attendance cut-off cycle</p>
+                <div>
+                    <i class="pi pi-pencil mr-3 cursor-pointer" style="font-size: 1rem"
+                        @click='active_Btn2 = !active_Btn2'></i>
+                </div>
             </div>
-        </div>
         </div>
 
         <div class="grid grid-cols-12 gap-6 mx-6">
@@ -89,26 +94,29 @@
                     </h6>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <Dropdown class="w-full h-11 " placeholder="select" />
+                            <Dropdown class="w-full h-11 " placeholder="select"
+                                v-model="uesPayroll.generalPayrollSettings.att_cutoff_period_id" />
                         </div>
                     </div>
                 </div>
 
-                <div class="my-4">
-                    <div class="flex gap-3 justify-evenly ">
-                        <h5 class="my-2 text-sm font-semibold" style="line-height: 22px;">
-                            Do you want to consider new joinee post attendance cut off date ?
-                        </h5>
-                        <div class="flex my-4 ">
-                            <div class="mx-4 d-flex ">
-                                <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                    value="" />
-                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">Yes</label>
+                <div class="my-4 ">
+                    <div class="flex gap-3 w-100 d-flex justify-content-between align-items-center">
+                        <div class="w-70">
+                            <h5 class="my-2 fs-13 font-semibold" style="line-height: 16px;">
+                                Do you want to consider new joinee post attendance cut off date ?
+                            </h5>
+                        </div>
+                        <div class=" w-30 d-flex justify-content-center align-items-center">
+                            <div class="mx-2 d-flex justify-content-between align-items-center ">
+                                <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name="" id=""
+                                    value="" v-model="uesPayroll.generalPayrollSettings.post_attendance_cutoff_date" />
+                                <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">Yes</label>
                             </div>
-                            <div class="d-flex ">
-                                <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                    value="" />
-                                <label class="ml-2 font-semibold text-sm  form-check-label leave_type" for="">No</label>
+                            <div class="d-flex justify-content-between align-items-center ">
+                                <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name="" id=""
+                                    value="" v-model="uesPayroll.generalPayrollSettings.post_attendance_cutoff_date" />
+                                <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">No</label>
                             </div>
                         </div>
                     </div>
@@ -157,7 +165,8 @@
                     <h5 class="my-2 text-sm font-semibold">Pay days in month</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <InputText class="w-full h-11" placeholder="Actual days in a month " />
+                            <InputText class="w-full h-11" placeholder="Actual days in a month "
+                                v-model="uesPayroll.generalPayrollSettings.paydays_in_month" />
                         </div>
                     </div>
                 </div>
@@ -170,13 +179,13 @@
                         <div class="flex">
                             <div class="mx-4">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                    value="" />
-                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">Yes</label>
+                                    value="1" v-model="uesPayroll.generalPayrollSettings.include_weekoffs" />
+                                <label class="ml-2 font-bold form-check-label leave_type mx-2" for="">Yes</label>
                             </div>
                             <div>
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                    value="" />
-                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">No</label>
+                                    value="0" v-model="uesPayroll.generalPayrollSettings.include_weekoffs" />
+                                <label class="ml-2 font-bold form-check-label leave_type" for="">No</label>
                             </div>
                         </div>
                     </div>
@@ -187,13 +196,13 @@
                         <div class="flex">
                             <div class="mx-4">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                    value="" />
-                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">Yes</label>
+                                    value="" v-model="uesPayroll.generalPayrollSettings.include_holidays" />
+                                <label class="ml-2 font-bold form-check-label leave_type" for="">Yes</label>
                             </div>
                             <div>
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                    value="" />
-                                <label class="ml-2 font-semibold text-sm form-check-label leave_type" for="">No</label>
+                                    value="" v-model="uesPayroll.generalPayrollSettings.include_holidays" />
+                                <label class="ml-2 font-bold form-check-label leave_type" for="">No</label>
                             </div>
                         </div>
                     </div>
@@ -231,7 +240,8 @@
                     <h5 class="my-2 text-sm font-semibold">Currency</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
-                            <InputText class="w-full h-11" placeholder="Indian Rupee (&#8377;)" />
+                            <InputText class="w-full h-11" placeholder="Indian Rupee (&#8377;)"
+                                v-model="uesPayroll.generalPayrollSettings.currency_type" />
                         </div>
                     </div>
                 </div>
@@ -240,13 +250,13 @@
                     <div class="flex gap-6  my-3">
                         <div class="flex  ">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                value="" />
-                            <label class="ml-2 text-sm font-semibold from-check-label leave_type" for="">Monthly</label>
+                                value="1" v-model="uesPayroll.generalPayrollSettings.remuneration_type" />
+                            <label class="ml-2 text-lg font-semibold from-check-label leave_type" for="">Monthly</label>
                         </div>
                         <div class="">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
-                                value="" />
-                            <label class="ml-2 text-sm font-semibold form-check-label leave_type" for="">Daliy</label>
+                                value="0" v-model="uesPayroll.generalPayrollSettings.remuneration_type" />
+                            <label class="ml-2 text-lg font-semibold form-check-label leave_type" for="">Daliy</label>
                         </div>
                     </div>
                 </div>
@@ -255,15 +265,17 @@
             <div class="col-span-7 p-4 my-4 ">
                 <div class="my-2">
                     <strong>EXPLANATION :</strong>
-                    <p class="my-3">
-                        <strong class="mr-2">Monthly :</strong>Monthly remuneration refers to the compensation paid to an
+                    <p class="my-2 text-gray-600">
+                        <strong class="mr-2 text-black-70">Monthly :</strong>Monthly remuneration refers to the compensation
+                        paid to an
                         employee
                         in exchange for their services, which is calculated and defined on a monthly
                         basis. This compensation serves as a form of payment for the employee's work
                         performed throughout the month.
                     </p>
-                    <p class="my-3">
-                        <strong class="mr-2">Daily :</strong>Daily remuneration refers to the compensation paid to an
+                    <p class="my-3 text-gray-600">
+                        <strong class="mr-2 text-black-70">Daily :</strong>Daily remuneration refers to the compensation
+                        paid to an
                         employee for
                         their services, which is calculated on a per-day basis. It is the amount that
                         an employee is entitled to receive for each day of work performed as per the
@@ -272,11 +284,42 @@
                 </div>
             </div>
         </div>
+        <div class="my-3 text-end">
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
+                @click="uesPayroll.activeTab--">Previous</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="uesPayroll.saveGeneralPayrollSettings(uesPayroll.generalPayrollSettings)">Save</button>
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
+                @click="uesPayroll.activeTab++">Next</button>
+        </div>
+
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { usePayrollMainStore } from "../../../stores/payrollMainStore";
+
+
+const uesPayroll = usePayrollMainStore()
+
+const active = ref(1);
+const active2 = ref(1);
+
+const active_Btn = ref(false);
+const active_Btn2 = ref(false);
+
+// function active_Btn() {
+//     active.value = 2;
+//     console.log(active.value);
+// }
+// function active_Btn2() {
+//     active2.value = 2;
+//     console.log(active2);
+// }
+
+
+
 
 const products = ref([
     {
@@ -302,20 +345,25 @@ const products = ref([
     },
 ]);
 
-const active = ref(1);
-const active2 =ref(1);
-
-function active_Btn(){
-    active.value = 2;
-    console.log(active.value);
-}
-function active_Btn2(){
-    active2.value = 2 ;
-    console.log(active2);
-}
-
-
-
 
 
 </script>
+
+<style>
+.fs-13
+{
+    font-size: 13.2px !important;
+}
+
+.v-enter-active,
+.v-leave-active
+{
+    transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to
+{
+    opacity: 0;
+}
+</style>

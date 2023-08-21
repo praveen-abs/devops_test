@@ -62,9 +62,11 @@ class VmtAttendanceReportsService
         $reg_sts = array();
         $reg_sts['sts'] = 'Not Applied';
         $reg_sts['time'] = null;
+        $reg_sts['id'] = null;
         if ($regularize_record->exists()) {
             $reg_sts['sts'] = $regularize_record->first()->status;
             $reg_sts['time'] = $regularize_record->first()->regularize_time;
+            $reg_sts['id'] = $regularize_record->first()->id;
             return $reg_sts;
         } else {
             return  $reg_sts;
@@ -1372,7 +1374,7 @@ class VmtAttendanceReportsService
                     //"user_id"=>$request->user_id,
                     "user_id" => $singleUser->id, "user_code" => $singleUser->user_code, "name" => $singleUser->name,
                     "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false, "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null, "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day, 'work_shift_id' => null, 'isMIP' => null, 'isMOP' => null, 'reged_checkin_time' => null,
-                    'reged_checkout_time' => null, 'permission_id' => null
+                    'reged_checkout_time' => null, 'permission_id' => null, 'checkinRegId' => null, 'checkoutRegId' => null,
                 );
 
                 //echo "Date is ".$fulldate."\n";
@@ -1486,8 +1488,8 @@ class VmtAttendanceReportsService
                 $attendanceResponseArray[$key]['work_shift_id'] =  $shift_settings->id;
                 if ($attendanceResponseArray[$key]['checkin_time'] != 0 && $attendanceResponseArray[$key]['checkout_time'] != 0 && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
                     $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
-                    $attendanceResponseArray[$key]['checkin_time']=$attendance_time['checkin_time'];
-                    $attendanceResponseArray[$key]['checkout_time']=$attendance_time['checkout_time'];
+                    $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
+                    $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
                 }
 
 
@@ -1609,6 +1611,7 @@ class VmtAttendanceReportsService
                         $date = $attendanceResponseArray[$key]['date'];
                         $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'LC');
                         $attendanceResponseArray[$key]["isLC"] = $regularization_status['sts'];
+                        $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
                         $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
                     }
                 } else if (empty($checkin_time) && !empty($checkout_time)) {
@@ -1616,6 +1619,7 @@ class VmtAttendanceReportsService
                     $date = $attendanceResponseArray[$key]['date'];
                     $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'MIP');
                     $attendanceResponseArray[$key]["isMIP"] = $regularization_status['sts'];
+                    $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
                     $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
                 }
                 //Code For Check EG
@@ -1629,12 +1633,14 @@ class VmtAttendanceReportsService
                         $date = $attendanceResponseArray[$key]['date'];
                         $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'EG');
                         $attendanceResponseArray[$key]["isEG"] = $regularization_status['sts'];
+                        $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
                         $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
                     } else if (!empty($checkin_time) && empty($checkout_time)) {
                         $user_id = $attendanceResponseArray[$key]['user_id'];
                         $date = $attendanceResponseArray[$key]['date'];
                         $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'MOP');
                         $attendanceResponseArray[$key]["isMOP"] = $regularization_status['sts'];
+                        $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
                         $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
                     } else {
                         //employee left late....
@@ -1705,6 +1711,72 @@ class VmtAttendanceReportsService
     public function fetchLCReportData($start_date, $end_date)
     {
         $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
-        dd($attendance_data);
+        $response = array();
+        $temp_ar = array();
+        foreach ($attendance_data as $single_data) {
+            foreach ($single_data as $key => $value) {
+                if ($value['isMIP'] != null || $value['isLC'] != null) {
+                    $temp_ar['user_code'] = $value['user_code'];
+                    $temp_ar['name'] = $value['name'];
+                    $temp_ar['date'] = $value['date_day'];
+                    $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
+                    $temp_ar['shift_name'] =   $current_shift->shift_name;
+                    $regularized_sts = 'No';
+                    $reason = "";
+                    $approved_by = "";
+                    $approved_on = "";
+                    $approved_cmts = "";
+                    if ($value['checkinRegId'] != null) {
+                        $in_punch = $value['reged_checkin_time'];
+                    } else {
+                        $in_punch = $value['checkin_time'];
+                    }
+                    $out_punch = $value['checkout_time'];
+                    if ($in_punch  != null) {
+                        $LCDuration = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
+                    } else {
+                        $LCDuration  = '';
+                    }
+                    if (Carbon::parse($in_punch)->diffInMinutes(Carbon::parse($out_punch)) <  $current_shift->fullday_min_workhrs) {
+                        $day_sts = 'Half Day';
+                    } else {
+                        $day_sts = 'Full Day';
+                    }
+                    if (($value['isMIP'] != 'Not Applied' && $value['isMIP'] != null) || ($value['isLC'] != 'Not Applied' && $value['isLC'] != null)) {
+                        $regularized_record = VmtEmployeeAttendanceRegularization::where('id', $value['checkinRegId'])->first();
+                        $regularized_sts = 'Yes';
+                        if ($regularized_record->reason_type != null) {
+                            if ($regularized_record->reason_type == 'Others') {
+                                $reason = $regularized_record->custom_reason;
+                            } else {
+                                $reason =  $regularized_record->reason_type;
+                            }
+                        } else {
+                            $reason = '';
+                        }
+
+                        $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
+                        if ($regularized_record->reviewer_reviewed_date != null) {
+                            $approved_on = Carbon::parse($regularized_record->reviewer_reviewed_date)->format('d-M-Y');
+                        }
+                        if ($regularized_record->reviewer_comments != null) {
+                            $approved_cmts =  $regularized_record->reviewer_comments;
+                        }
+                    }
+                    $temp_ar['in_punch'] =  $in_punch;
+                    $temp_ar['out_punch'] = $out_punch;
+                    $temp_ar['lc_duration'] = $LCDuration;
+                    $temp_ar['day_sts'] = $day_sts;
+                    $temp_ar['regularized_sts'] = $regularized_sts;
+                    $temp_ar['reason'] = $reason;
+                    $temp_ar['approved_by'] = $approved_by;
+                    $temp_ar['approved_on'] = $approved_on;
+                    $temp_ar['approved_cmds'] = $approved_cmts;
+                    array_push($response,$temp_ar);
+                    unset($temp_ar);
+                }
+            }
+        }
+        return $response;
     }
 }

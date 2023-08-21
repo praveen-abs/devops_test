@@ -19,6 +19,7 @@ use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
 use App\Exports\AbsentReportExport;
+use App\Exports\LateComingReportExport;
 use App\Exports\EmployeeAttendanceExport;
 use App\Exports\BasicAttendanceExport;
 use App\Exports\DetailedAttendanceExport;
@@ -103,5 +104,11 @@ class VmtEmployeeAttendanceController extends Controller
         $end_date = '2023-07-20';
         $response = $attendance_report_service->fetchLCReportData($start_date, $end_date);
         return $response;
+    }
+    public function downloadLCReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = '2023-07-15';
+        $end_date = '2023-07-20';
+        return Excel::download(new LateComingReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date)), 'Late Coming Report.xlsx');
     }
 }
