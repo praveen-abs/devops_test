@@ -67,6 +67,11 @@ class VmtInvestmentsService
 
             $query_doj = VmtEmployee::where('userid', $user_id)->first();
 
+            $org_timeperiod = VmtOrgTimePeriod::where('status','1')->first();
+
+            $start_date = Carbon::parse($org_timeperiod->start_date);
+
+            $doj = Carbon::parse($query_doj->doj);
 
             // $query_fempAssigned_table = VmtInvFEmpAssigned::where('user_id', $user_id)
             // ->where('year', $year)
@@ -163,7 +168,12 @@ class VmtInvestmentsService
                 $count++;
 
             }
-            //  dd($query_inv_form_template);
+
+            if($doj->lte($start_date)){
+                unset($query_inv_form_template['Previous Employer Income']);
+            }else{
+                $query_inv_form_template;
+            }
 
 
             $response["form_name"] = $query_form_details->form_name;
@@ -181,7 +191,7 @@ class VmtInvestmentsService
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching investments form template",
-                "data" => $e,
+                "data" => $e->getMessage(),
             ]);
         }
 
