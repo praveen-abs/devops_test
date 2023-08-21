@@ -1707,7 +1707,7 @@ class VmtAttendanceReportsService
                 // dd($response);
             }
         }
-        $response['headers'] = array('Employee Code','Employee Name','Date','Shift Name','In Punch','Out Punch');
+        $response['headers'] = array('Employee Code','Employee Name','Date','Shift Name','In Punch','Out Punch','Status','Day Status');
         $response['rows'] = $absent_data;
         return $response;
     }
