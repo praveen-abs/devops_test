@@ -119,6 +119,7 @@ class VmtSalaryAdvanceService
                 }
             }
 
+            
 
             $approveRejectLoanAndSaladvMail   = \Mail::to($approver_details->officical_mail)
                 ->send(new ApproveRejectLoanAndSaladvMail(

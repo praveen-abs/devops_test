@@ -13,6 +13,7 @@
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
+    use App\Models\VmtMasterConfig;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
@@ -636,24 +637,31 @@
 //             //Fetch appointment letter based on client name
 //             $client_name = str_replace(' ', '', sessionGetSelectedClientName());
 //             //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-//             $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_brandavatar';
+//             //$viewfile_appointmentletter = 'vmt_appointment_templates.vmt_appointment_templates.appointmentletter_breezetech.blade.php';
 
-//             //check if template exists
-//             if (view()->exists($viewfile_appointmentletter)) {
+//     //         //check if template exists
+//     //         if (view()->exists($viewfile_appointmentletter)) {
 
-//                 $html =  view($viewfile_appointmentletter, compact('data'));
+//     //             $html =  view($viewfile_appointmentletter, compact('data'));
 
-//             }
-//        // }
+//     //         }
+//     //    // }
 
+//          $html = view('appointment_mail_templates.appointment_Letter_Priti_Sales');
+
+// return $html;
 //                 $options = new Options();
 //                 $options->set('isHtml5ParserEnabled', true);
 //                 $options->set('isRemoteEnabled', true);
-
 //                 $pdf = new Dompdf($options);
-//                 $pdf->loadHtml($html, 'UTF-8');
+//                 $pdf->loadhtml($html, 'UTF-8');
 //                 $pdf->setPaper('A4', 'portrait');
 //                 $pdf->render();
+//                 $pdf->stream(['breezetech.pdf']);
+
+
+// $data =numberToWord("123");
+// dd(str_replace(" ","",$data));
 //                 $docUploads =  $pdf->output();
 //                  dd( $docUploads);
         //         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
@@ -668,40 +676,16 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-//         $VmtClientMaster = VmtClientMaster::first();
-//          $image_view = url('/') . $VmtClientMaster->client_logo;
-
-//           $email =User::pluck('email');
-//         foreach ($email as $key => $single_mail) {
-
-//             $jobs = (new WelcomeMailJobs($single_mail,'DM001', 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code))
-//             ->delay(Carbon::now()->addSeconds(5));
-
-//              dispatch($jobs);
-//         }
 
 
 
 
-//         //  }
-//         if( $jobs){
-//             dd('success');
-//         }else{
-//             dd('failure');
-//         }
+        //  }
 
 
 
-
-$user_code ='PSC0060';
-$user_data =User::where('user_code',$user_code)->first();
-
-    $fixed_data = Compensatory::where('user_id',$user_data->id)->first();
-    dd($fixed_data );
-
-    foreach ($fixed_data as $key => $value) {
-
-    }
+        $fetchMasterConfigValue = VmtMasterConfig::where("config_name","can_send_appointmentletter_after_onboarding")->first();
+        dd($fetchMasterConfigValue['config_value']);
 
     ?>
 
