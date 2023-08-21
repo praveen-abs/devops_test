@@ -37,17 +37,36 @@ class VmtAPILoanAndSalaryAdvanceController extends Controller
         }
         $users_detail = User::where('user_code', $request->user_code)->first();
         $response = $vmtsalaryAdvanceService->isEligibleForLoanAndAdvance($request->loan_type, $users_detail->id, $users_detail->client_id);
-        $response = json_encode($response);
+        $response = json_encode($response, true);
         $response = json_decode($response, true);
+        $employeedashboard = $vmtsalaryAdvanceService->EmployeeLoanHistory($request->loan_type, $users_detail->id);
+        $borrowamount = $vmtsalaryAdvanceService->SalAdvShowEmployeeView($request->loan_type, $users_detail->id); 
+        $borrowamount = json_encode($borrowamount, true);
+        $borrowamount = json_decode($borrowamount, true);
         $response = array();
-        if($response['original']['data']==0){
-           
+        dd($borrowamount);
+        if ($request->loan_type == 'int_free_loan') {
+            $employee_loan_history = $vmtsalaryAdvanceService->EmployeeLoanHistory($users_detail->id, 'InterestFreeLoan');
+        } else if ($request->loan_type == 'loan_with_int') {
+            $employee_loan_history = $vmtsalaryAdvanceService->EmployeeLoanHistory($users_detail->id, 'Interest With Loan');
         }
-         dd($response['original']);
+        // dd($employee_loan_history);
+        // To Do 
+        // else if(){
+
+        // }
+        if ($response['original']['data'] == 0) {
+            return [
+                "status" => "0",
+                "message" => "not eligible",
+                "loan history" => [],
+                "employee dashboard" => [],
+                "eligible borrow amount" => []
+            ];
+        }
         if ($response['original']['data'] == 1) {
             $emp_salary_advnce = $vmtsalaryAdvanceService->employeeDashboardLoanAndAdvance($request->loan_type, $users_detail->id);
             $emp_loan_history = $vmtsalaryAdvanceService->EmployeeLoanHistory($users_detail->id, $request->loan_type);
-            dd($emp_loan_history);
         }
         return $response;
     }
