@@ -90,7 +90,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/getEmployeeLeaveBalance', [VmtAPIAttendanceController::class, 'getEmployeeLeaveBalance']);
     Route::post('/attendance/getEmployeeLeaveDetails', [VmtAPIAttendanceController::class, 'getEmployeeLeaveDetails']);
     Route::post('/attendance/getAllEmployeesLeaveDetails', [VmtAPIAttendanceController::class, 'getAllEmployeesLeaveDetails']);
-    Route::post('/attendance/getTeamEmployeesLeaveDetails', [VmtAPIAttendanceController::class,'getTeamEmployeesLeaveDetails']);
+    Route::post('/attendance/getTeamEmployeesLeaveDetails', [VmtAPIAttendanceController::class, 'getTeamEmployeesLeaveDetails']);
 
     //Attendance Reports
     Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);
@@ -103,8 +103,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/getData-att-regularization', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationData']);
     Route::post('/attendance/getAttendanceRegularizationStatus', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationStatus']);
     Route::post('/attendance/applyRequestAbsentRegularization', [VmtAPIAttendanceController::class, 'applyRequestAbsentRegularization']);
-    Route::post('/attendance/countOfAttendanceRegularization',[VmtAPIAttendanceController::class,'getCountForAttRegularization']);
-    Route::post('/attendance/fetchAttendadnceRegularization',[VmtAPIAttendanceController::class,'getfetchAttendadnceRegularization']);
+    Route::post('/attendance/countOfAttendanceRegularization', [VmtAPIAttendanceController::class, 'getCountForAttRegularization']);
+    Route::post('/attendance/fetchAttendadnceRegularization', [VmtAPIAttendanceController::class, 'getfetchAttendadnceRegularization']);
 
 
     //Payslip API
@@ -125,25 +125,25 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/updateEmployeeBankDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeBankDetails']);
     Route::post('/profile-pages/addEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'addEmployeeFamilyDetails']);
     Route::post('/profile-pages/updateEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeFamilyDetails']);
-    Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeFamilyDetails']);
-    Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'addEmployeeExperianceDetails']);
-    Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'updateEmployeeExperianceDetails']);
-    Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeExperianceDetails']);
+    Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'deleteEmployeeFamilyDetails']);
+    Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'addEmployeeExperianceDetails']);
+    Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeExperianceDetails']);
+    Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'deleteEmployeeExperianceDetails']);
 
 
     //Investments
-     Route::post('/investments/saveSection80', [VmtAPIInvestmentsController::class,'saveSection80']);
-     Route::post('/investments/saveSectionPopups', [VmtAPIInvestmentsController::class,'saveSectionPopups']);
-     Route::post('/investments/SaveInvDetails', [VmtAPIInvestmentsController::class,'SaveInvDetails']);
-     Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetailsTemplate']);
-     Route::post('/investments/fetchHousePropertyDetails', [VmtAPIInvestmentsController::class,'fetchHousePropertyDetails']);
-     Route::post('/investments/fetchEmpRentalDetails', [VmtAPIInvestmentsController::class,'fetchEmpRentalDetails']);
-     Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class,'deleteHousePropertyDetails']);
+    Route::post('/investments/saveSection80', [VmtAPIInvestmentsController::class, 'saveSection80']);
+    Route::post('/investments/saveSectionPopups', [VmtAPIInvestmentsController::class, 'saveSectionPopups']);
+    Route::post('/investments/SaveInvDetails', [VmtAPIInvestmentsController::class, 'SaveInvDetails']);
+    Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class, 'getInvestmentsFormDetailsTemplate']);
+    Route::post('/investments/fetchHousePropertyDetails', [VmtAPIInvestmentsController::class, 'fetchHousePropertyDetails']);
+    Route::post('/investments/fetchEmpRentalDetails', [VmtAPIInvestmentsController::class, 'fetchEmpRentalDetails']);
+    Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class, 'deleteHousePropertyDetails']);
 
     //Notifications
-    Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);
-    Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class,'saveNotification']);
-    Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class,'updateNotificationReadStatus']);
+    Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class, 'getNotifications']);
+    Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class, 'saveNotification']);
+    Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class, 'updateNotificationReadStatus']);
 
     //Onboarding
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
@@ -151,9 +151,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Payroll
 
     Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth'])->name('payroll/getCurrentPayrollDates');
-
-
-
-
-
+    //loanandadvance
+    Route::post('/loanandsalaryadvance/empLoanAndSalaryAdvance', [App\Http\controllers\VmtAPILoanAndSalaryAdvanceController::class, 'empLoanAndSalaryAdvance']);
 });

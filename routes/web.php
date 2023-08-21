@@ -272,8 +272,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile-page/pdfview/{emp_code?}/{selectedPaySlipMonth?}', [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_PDFView'])->name('vmt_employee_payslip_pdf');
     Route::post('/profile-page/uploadEmployeeDocs', [App\Http\Controllers\VmtProfilePagesController::class, 'uploadEmployeeDocument'])->name('uploadEmployeeDocument');
 
-    //save profile page documents
-    Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
+//save profile page documents
+   Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
 
 
 
@@ -453,11 +453,6 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
     Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
 
-    //Payroll Settings
-    Route::post('save-genral-payroll-settings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveGenralPayrollSettings'])->name('saveGenralPayrollSettings');
-
-    //Get Attendance For run payroll
-    Route::get('/fetch-attendance-data',[App\Http\Controllers\VmtPayRunController::class,'fetch_attendance_data']);
 
 
     Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');
@@ -468,12 +463,6 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
     Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
     Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@updateUserAccountStatus')->name('updateUserAccountStatus');
-
-    //payrolltax calculation
-
-    Route::get('get_comp_value', [App\Http\Controllers\VmtPayrollTaxController::class,'getEmpCompValues']);
-
-
 
     //Asset Inventory
     Route::get('assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('assetinventory-index');
@@ -535,9 +524,9 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     //Paygroup module
     Route::get('/Paygroup/fetchPayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayRollComponents'])->name('fetchPayRollComponents');
     Route::post('/Paygroup/CreatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayRollComponents'])->name('CreatePayRollComponents');
-    Route::post('/Paygroup/UpdatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollComponents'])->name('UpdatePayRollComponents');
+    Route::post('/Paygroup/UpdatePayRollEarningsComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollEarningsComponents'])->name('UpdatePayRollEarningsComponents');
     Route::post('/Paygroup/DeletePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'DeletePayRollComponents'])->name('DeletePayRollComponents');
-    Route::post('/Paygroup/authorizeComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeComponents'])->name('authorizeComponents');
+    Route::post('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
 
     // Salary Adhoc Components
     Route::post('/Paygroup/AddAdhocAllowDetectComp', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddAdhocAllowanceDetectionComp'])->name('AddAdhocAllowanceDetectionComp');
@@ -547,33 +536,19 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/Paygroup/AddReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddReimbursementComponents'])->name('AddReimbursementComponents');
     Route::post('/Paygroup/UpdateReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateReimbursementComponents'])->name('UpdateReimbursementComponents');
 
-    //salary App Integration
-    Route::post('/Paygroup/fetchPayrollAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayrollAppIntegration'])->name('fetchPayrollAppIntegration');
+  // Salary software integration
+    Route::get('/Paygroup/fetchPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayrollAppIntegration'])->name('fetchPayrollAppIntegration');
     Route::post('/Paygroup/addPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPayrollAppIntegrations'])->name('addPayrollAppIntegrations');
-    Route::post('/Paygroup/authorizeAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeAppIntegration'])->name('authorizeAppIntegration');
+    Route::post('/Paygroup/EnableDisableAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableAppIntegration'])->name('EnableDisableAppIntegration');
+
 
     //paygroup structure
-    Route::post('/Paygroup/fetchPayGroupEmpComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayGroupEmpComponents'])->name('fetchPayGroupEmpComponents');
+    Route::get('/Paygroup/fetchPayGroupEmpComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayGroupEmpComponents'])->name('fetchPayGroupEmpComponents');
+    //Route::get('/Paygroup/ShowAssignEmployeelist', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'ShowAssignEmployeelist'])->name('ShowAssignEmployeelist');
+   // Route::get('/Paygroup/getAllDropdownFilterSetting', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
     Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
     Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');
-
-
-    //Epf employee
-    Route::post('/Paygroup/CreatePayrollEpf', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayrollEpf'])->name('CreatePayrollEpf');
-    Route::post('/Paygroup/updatePayrollEpf', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePayrollEpf'])->name('updatePayrollEpf');
-    Route::post('/Paygroup/deleteEpfEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deleteEpfEmployee'])->name('deleteEpfEmployee');
-    Route::post('/Paygroup/authorizeEpfEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeEpfEmployee'])->name('authorizeEpfEmployee');
-
-    //Esi employee
-    Route::post('/Paygroup/CreatePayrollEsi', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayrollEsi'])->name('CreatePayrollEsi');
-    Route::post('/Paygroup/updatePayrollEsi', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePayrollEsi'])->name('updatePayrollEsi');
-    Route::post('/Paygroup/deleteEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deleteEsiEmployee'])->name('deleteEsiEmployee');
-    Route::post('/Paygroup/authorizeEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeEsiEmployee'])->name('authorizeEsiEmployee');
-
-   //EmpAbryPmrpy employee
-   Route::post('/Paygroup/CreateEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreateEmpAbryPmrpy'])->name('CreateEmpAbryPmrpy');
-   Route::post('/Paygroup/removeEmpAbryPmrpy', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'removeEmpAbryPmrpy'])->name('removeEmpAbryPmrpy');
 
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
@@ -599,7 +574,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
     Route::get('/documents', [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
     // Route::get('/employee-documents',  [App\Http\Controllers\VmtEmployeeController::class, 'fetchDocsForUser'])->name('vmt-documents-routes');
-    Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
+     Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
 
     Route::post('/onboarding/updateEmployeeActive', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'updateEmployeeActiveStatus'])->name('updateEmployeeActiveStatus');
 
@@ -771,7 +746,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
     Route::get('/reports/basic-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showDetailedAttendanceReport'])->name('showDetailedAttendanceReport');
-    Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
+    Route::get('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
     //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
@@ -807,9 +782,9 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     //MasterImport
     Route::get('/updateMasterdataUploads', [App\Http\Controllers\VmtCorrectionController::class,'updateMasterdataUploads'])->name('updateMasterdataUploads');
     Route::post('/vmt_employess/Master_upload', [App\Http\Controllers\VmtCorrectionController::class,'importMasetrEmployeesExcelData'])->name('masterEmployeeOnboarding');
+    
 
-
-
+   
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
 
@@ -919,9 +894,9 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
     Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
 
-    Route::get('/can-edit-profile-page', [\App\Http\Controllers\VmtProfilePagesController::class, 'canEditProfilePage'])->name('canEditProfilePage');
+   Route::get('/can-edit-profile-page',[\App\Http\Controllers\VmtProfilePagesController::class,'canEditProfilePage'])->name('canEditProfilePage');
     //Testing Excel Download
-    Route::get('/download-quick-onbaord-excel', [App\Http\Controllers\VmtExcelGeneratorController::class, 'downloadQuickOnbaordExcel'])->name('downloadQuickOnbaordExcel');
+    Route::get('/download-quick-onbaord-excel',[App\Http\Controllers\VmtExcelGeneratorController::class,'downloadQuickOnbaordExcel'])->name('downloadQuickOnbaordExcel');
     Route::get('/download-bulk-onbaord-excel', [App\Http\Controllers\VmtExcelGeneratorController::class, 'downloadBulkOnbaordExcel'])->name('downloadBulkOnbaordExcel');
     //interest free loan
     Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
@@ -941,8 +916,8 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::get('/upload-previous-loan-data',[App\Http\Controllers\VmtSalaryAdvanceController::class,'empLoanAndAdvUploads']);
     Route::post('/inmport-loan-adv-excel-data',[App\Http\Controllers\VmtSalaryAdvanceController::class,'inmportLoanAdvExcelData']);
 
-    Route::post('/employee-dashboard-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'employeeDashboardLoanAndAdvance']);
-
+    Route::get('/employee-dashboard-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'employeeDashboardLoanAndAdvance']);
+ 
     Route::get('/testing-karthi',[App\Http\Controllers\VmtSalaryAdvanceController::class,'testingKarthi']);
 
     Route::get('/get-pending-requested-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'getApprovedRequestedForLoanAndAdvance'])->name('getApprovedRequestedForLoanAndAdvance');
@@ -979,9 +954,6 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
 
 
 
-// generate payslip
-
-Route::get('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
 
 
 
@@ -994,12 +966,12 @@ Route::get('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::clas
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
 
-    Route::get('/numberToWord', [App\Http\Controllers\VmtTestingController::class, 'numberToWord']);
+    Route::get('/testinginvestment', [App\Http\Controllers\VmtTestingController::class, 'investmenttesting']);
     Route::post('/paycheck/employee_payslip/downloadPayslip', [App\Http\Controllers\VmtTestingController::class, 'downloadPaySlip_pdfView'])->name('downloadPaySlip_pdfView');
     Route::get('users/export', [App\Http\Controllers\VmtTestingController::class, 'exportattenance']);
     Route::get('test_getAppointmentTemplates', [App\Http\Controllers\VmtTestingController::class, 'test_getAppointmentTemplates']);
 
-    Route::view('/testing_simma', 'testing_narasimman');
+    Route::view('/testing_simma','testing_narasimman');
 
 
     Route::get('/testing_shelly', function () {
