@@ -13,6 +13,32 @@ export const usePayrollHelper = defineStore('usePayrollHelper', () => {
     *Only Access for Payroll Module
     */
 
+    const payFrequencyDropdown = ref([
+        { id: '1', name: 'Monthly' },
+        { id: '2', name: 'Weekly' },
+        { id: '3', name: 'Daily' },
+    ])
+
+    const getLastDayOfMonth = (month, year) => {
+        console.log(year, month + 1);
+        // Create a Date object for the next month's first day
+        const nextMonth = new Date(year, month + 1, 1);
+
+        // Subtract one day from the next month's first day to get the last day of the desired month
+        const lastDay = new Date(nextMonth.getTime() - 24 * 60 * 60 * 1000);
+        console.log(lastDay.getDate());
+
+        return lastDay.getDate();
+    }
+
+    // Example usage
+    //   const year = 2023;
+    //   const month = 7; // August (0-based index, so January is 0, February is 1, and so on)
+
+    //   const lastDay = getLastDayOfMonth(year, month);
+    //   console.log(`The last day of ${month + 1}/${year} is ${lastDay}.`);
+
+
     const componentTypes = ref([
         { id: 1, name: "Fixed", value: 1 },
         { id: 2, name: "Variable", value: 2 },
@@ -117,6 +143,8 @@ export const usePayrollHelper = defineStore('usePayrollHelper', () => {
     }
 
     return {
+        payFrequencyDropdown,
+        getLastDayOfMonth,
         componentTypes,
         calculationTypes,
         componentCategories,
