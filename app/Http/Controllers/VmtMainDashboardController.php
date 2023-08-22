@@ -371,7 +371,7 @@ class VmtMainDashboardController extends Controller
         // }
         else
             if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
-                return view('vmt_employee_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
+                return view('vmt_hr_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
             }
         else{
             return "No Roles assigned for this user. Kindly contact the admin";
@@ -657,9 +657,19 @@ class VmtMainDashboardController extends Controller
     {
 
         //Fetch the data
-        // $request->user_code = "LAL0013";
-        return $serviceVmtDashboardService->getNotifications($request->user_code);
+        $user_code =  auth()->user()->user_code;
+        return $serviceVmtDashboardService->getNotifications($user_code );
     }
+
+    public function readNotification(Request $request, VmtDashboardService $serviceVmtDashboardService)
+    {
+
+        //Fetch the data
+        // $request->record_id = "23";
+        return $serviceVmtDashboardService->readNotification($request->record_id);
+    }
+
+
     public function performAttendanceCheckIn(Request $request, VmtDashboardService $serviceVmtDashboardService)
     {
         //  dd($request->all());
@@ -737,6 +747,11 @@ class VmtMainDashboardController extends Controller
        if(!empty($response->checkout_date)){
            $to ="";
            $from ="";
+        $response = $serviceVmtDashboardService->fetchEmpLastAttendanceStatus( $request->user_code);
+
+       if(!empty($response->checkout_date)){
+           $to ="";
+           $from ="";
 
 
              if(!empty($response->checkout_time)){
@@ -752,11 +767,31 @@ class VmtMainDashboardController extends Controller
             }
             $response['effective_hours'] =$effective_hours;
         }
+        if(!empty($response->checkin_date))
+        {
+            $response['effective_hours'] =null;
+        }
 
             return $response;
-            //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
-       }
-
-
+        //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
+    }
+}
+
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

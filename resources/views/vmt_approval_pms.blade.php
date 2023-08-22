@@ -13,7 +13,7 @@
         <div class="card-body">
             <h6 class="my-2 text-lg font-semibold">PMS/OKR Approvals</h6>
             <div class="table-responsive">
-                <div id="vjs_pmsApproval_Table"></div>
+            <div id="vjs_pmsApproval_Table"></div>
             </div>
         </div>
     </div>

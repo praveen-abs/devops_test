@@ -2,7 +2,7 @@
     <div class="mr-4 card">
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
-                <div class="w-8 fs-4">
+                <div class=" fs-4">
                     <!-- v-if="!useEmpData" -->
                     <p class="text-xl font-medium" v-if="useEmpData == ''">The company allows employees to request a salary
                         advance of up to <strong class="text-lg"> 100%</strong> of their monthly salary.</p>

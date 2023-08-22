@@ -1,6 +1,6 @@
 <template>
-    <button @click="useStore.employeeAssignDialog = true">click</button>
-    <Dialog v-model:visible="useStore.employeeAssignDialog" modal header="Holiday " :style="{ width: '60vw' }"
+    <!-- <button @click="useStore.employeeAssignDialog = true">click</button> -->
+    <Dialog v-model:visible="useStore.employeeAssignDialog" modal header="Holiday " :style="{ width: '70vw' }"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" style="border-top:5px solid #002f56" class="popup_card">
         <template #header>
             <div class="w-full p-2">
@@ -9,24 +9,31 @@
                         <p class="text-lg font-semibold">Employee Assign</p>
                     </div>
                     <div>
-                        <Dropdown class="w-full" placeholder="select department" />
+                        <!-- <Dropdown class="w-full" placeholder="select department" /> -->
                     </div>
                 </div>
             </div>
         </template>
-        {{ type }}
-        <div class="grid grid-cols-12 gap-5 mt-3">
-            <div class="col-span-4">
-                <input type="text" placeholder="search employee.." class="border rounded-lg bg-gray-100 p-1.5 w-11/12">
+        <!-- {{ type }} -->
+        <div class="flex w-[100%]">
+            <div class="">
+                <button class="text-[12px] w-[100px] rounded-l-[8px] h-[26px] bg-[rgba(0,0,0,0.95)] hover:bg-[#000] text-[#fff]" @click="EnableAllAndDisableAll(selectedEmployee)">Enable All</button>
+                <button class="text-[12px] w-[100px] rounded-r-[8px] h-[26px] border-[2px] border-[#000] text-[#000]" @click="EnableAllAndDisableAll(selectedEmployee.values= '')">Disable All</button>
             </div>
-            <div class="flex col-span-4 ">
+        </div>
+        <div class="grid grid-cols-12 gap-2 mt-3">
+            <div class="col-span-4 flex items-center">
+                <input type="text" v-model="filters['global'].value" placeholder="search employee.." class="border rounded-lg bg-gray-100 p-1.5 w-11/12" >
+                <!-- <InputText  placeholder="Keyword Search" /> -->
+            </div>
+            <div class="flex col-span-5 items-center">
                 <p>Legal entity</p>
-                <Dropdown v-model="legalEntity" class="w-full" placeholder="legal entity"
+                <Dropdown v-model="legalEntity" class="w-full min-[280px]:" placeholder="legal entity"
                     @change="getFilteredSource($event.value, '')"
                     :options="dropdownValues ? dropdownValues.legalEntity : []" optionLabel="client_name"
                     optionValue="id" />
             </div>
-            <div class="flex col-span-4">
+            <div class="flex col-span-3 items-center">
                 <p>Department</p>
                 <Dropdown v-model="department" class="w-full" placeholder="department"
                     @change="getFilteredSource('', $event.value)" :options="dropdownValues ? dropdownValues.department : []"
@@ -39,23 +46,31 @@
             <DataTable v-model:selection="selectedEmployee" :value="filteredSource" ref="dt" dataKey="id" :paginator="true"
                 :rows="10"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-                <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                <Column field="name" header="Name" style="min-width: 12rem"></Column>
-                <Column header="Department" field="department_name" style="min-width: 8rem"></Column>
+                :rowsPerPageOptions="[5, 10, 25]"  :filters="filters" 
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                :globalFilterFields="['name', 'department_name']" responsiveLayout="scroll">
+                <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
+                <Column field="name" filterField="name" header="Name" style="min-width: 12rem"></Column>
+                <Column header="Department" filterField="department_name" field="department_name" style="min-width: 8rem"></Column>
                 <Column field="" header="Action" style="min-width: 12rem">
-                    <template #body>
+                    <template #body="slotProps">
                         <div class="mx-auto">
-                            <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]">Enable</button>
-                            <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]">Disable</button>
+                            <button
+                                class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]  bg-[#000000d7] hover:bg-[#000] text-[#fff]" 
+                                @click="EnableDisable(slotProps.data.id, 1)">Enable</button>
+                            <button
+                                class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px] border-[2px] border-[#000] text-[#000]"
+                                @click="EnableDisable(slotProps.data.id, 0)">Disable</button>
                         </div>
                     </template>
                 </Column>
             </DataTable>
             <div class="flex justify-center w-1/2 p-2 mx-auto">
-                <button @click="useStore.employeeAssignDialog = false" class="mx-2 p-2 bg-black !text-[#fff] border-[2px] border-black rounded-lg">Cancel</button>
-                <button class="mx-2 bg-white !text-[#000] border-[2px] p-2 border-black rounded-lg" @click="saveCurrentlySelectedEmployeeConfig(selectedEmployee, type)">Confirm</button>
+                <button @click="useStore.employeeAssignDialog = false"
+                    class="mx-2 p-2 bg-black !text-[#fff] border-[2px] border-black rounded-lg">Cancel</button>
+                <!-- <button class="mx-2 bg-white !text-[#000] border-[2px] p-2 border-black rounded-lg" @click="saveCurrentlySelectedEmployeeConfig(selectedEmployee, type)">Confirm</button> -->
+                <button class="mx-2 bg-white !text-[#000] border-[2px] p-2 border-black rounded-lg"
+                    @click="saveCurrentlySelectedEmployeeConfig(selectedEmployee, type)">Confirm</button>
             </div>
         </div>
     </Dialog>
@@ -66,6 +81,7 @@
 import axios from 'axios';
 import { onMounted, onUpdated, reactive, ref } from 'vue';
 import { useMobileSettingsStore } from '../MobileSettingsService';
+import { FilterMatchMode } from 'primevue/api';
 
 
 const useStore = useMobileSettingsStore()
@@ -78,6 +94,11 @@ const props = defineProps({
     },
 })
 
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    department_name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+});
 
 const visible = ref(false)
 
@@ -87,6 +108,12 @@ const legalEntity = ref()
 const department = ref()
 const filteredSource = ref();
 
+let format = {
+        id: "",
+        isEnabled: ""
+    }
+
+const btn = ref(1);
 
 const getDropdownValues = async () => {
     await axios.get('/getalldropdownfiltersetting').then(res => {
@@ -101,35 +128,71 @@ const getFilteredSource = (legalEntity, department) => {
         client_name: legalEntity
     }).then(res => {
         console.log(res.data);
-        filteredSource.value = res.data
-
+        filteredSource.value = res.data;
     })
 }
+
+
+const selectedUserId = reactive([])
+
+// Enable Disable function 
+
+function EnableDisable(userId, EnableOrDisable) {
+    console.log("isEnabled:" + EnableOrDisable);
+    format.id = userId;
+    format.isEnabled = EnableOrDisable;
+    selectedUserId.push(format)
+    console.log(selectedUserId);
+}
+
+function EnableAllAndDisableAll(){
+    filteredSource.value.forEach(element=> selectedUserId.push(element.user_code));
+}
+
 
 // const Employee_ConfigData = reactive([])
 
 const saveCurrentlySelectedEmployeeConfig = (data, type) => {
-    // console.log(data);
-    let format = {
-        "is_mobile_app_active": [],
-        "is_check_active": [],
-    }
-    data.forEach(element => {
-        if (type == 1) {
-            format.is_mobile_app_active.push(element.user_code)
-        } else
-            if (type == 2) {
-                format.is_check_active.push(element.user_code)
-            }
-    });
-    console.log(format);
-
+    useStore.canshowloading = true;
     axios.post('/SaveEmployeeAppConfigStatus', {
-        is_mobile_app_active: format.is_mobile_app_active ? format.is_mobile_app_active : [],
-        is_check_active: format.is_check_active ? format.is_check_active : []
-
+        "app_sub_modules_link_id": type,
+        "selected_employees_user_code": selectedUserId
     }
-    )
+    ).then((res) => {
+        console.log(res);
+    }).finally(()=>{
+        selectedUserId.values="";
+        filteredSource.value="";
+        useStore.employeeAssignDialog = false;
+        useStore.getMobileSettings();
+         useStore.canshowloading = false;
+    })
+
+    // console.log(data);
+    // let format = {
+    //     "is_mobile_app_active": [],
+    //     "is_check_active": [],
+    // }
+    // data.forEach(element => {
+    //     if (type == 1) {
+    //         format.is_mobile_app_active.push(element.user_code)
+    //     } else
+    //         if (type == 2) {
+    //             format.is_check_active.push(element.user_code)
+    //         }
+    // });
+    // console.log(format);
+
+    // axios.post('/SaveEmployeeAppConfigStatus', {
+    //     is_mobile_app_active: format.is_mobile_app_active ? format.is_mobile_app_active : [],
+    //     is_check_active: format.is_check_active ? format.is_check_active : []
+
+    // }
+    // )
+
+
+
+
 }
 
 
@@ -141,7 +204,7 @@ onMounted(() => {
 })
 
 
-onUpdated(()=>{
+onUpdated(() => {
     selectedEmployee.value = null
 
 })

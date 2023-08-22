@@ -7,10 +7,10 @@
                 </div>
                 <div class="col">
                     <button class="orange_btn "
-                        :class="[salaryStore.isLoanWithInterestFeature === 1 ? 'bg-white text-black border-1 border-black' : 'text-white']"
+                        :class="[salaryStore.isLoanWithInterestFeature === 1 ? 'bg-white text-black border-[1px] border-black' : 'text-white']"
                         @click="salaryStore.isLoanWithInterestFeature = 0">Disabled</button>
                     <button class="Enable_btn"
-                        :class="[salaryStore.isLoanWithInterestFeature === 1 ? 'bg-green-700 text-white' : '']"
+                        :class="[salaryStore.isLoanWithInterestFeature === 1 ? 'bg-green-700 text-white border-[1px] border-black' : '']"
                         @click="salaryStore.isLoanWithInterestFeature = 1">Enable</button>
                 </div>
                 <!-- {{loanStores.CreateLoanWithNewFrom  }} -->
@@ -43,7 +43,7 @@
 
                         <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
                             optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
-                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem"
+                            placeholder="Select Branches" :maxSelectedLabels="3" class="  md:w-30rem"
                             @change="selectClientId('loan_with_int')" />
                     </div>
                 </div>

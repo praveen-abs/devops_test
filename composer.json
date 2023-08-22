@@ -61,8 +61,14 @@
             "app/Services/VmtPayrollComponentsService.php",
             "app/Services/VmtSalaryAdvanceService.php",
             "app/Services/VmtClientService.php",
+<<<<<<< HEAD
             "app/Services/VmtMasterConfigService.php",
             "app/Services/VmtExcelGeneratorService.php"
+=======
+            "app/Services/VmtExcelGeneratorService.php",
+            "app/Services/VmtPayrollSettingsService.php",
+            "app/Services/VmtPayRunService.php"
+>>>>>>> 09ee9d57a0ae6e21c1dc0bca1ffa342a2a21eaf6
 
 
         ]

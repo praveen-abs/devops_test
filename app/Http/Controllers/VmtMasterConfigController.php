@@ -55,6 +55,8 @@ class VmtMasterConfigController extends Controller
             else
             {
                 $temp = VmtMasterConfig::where('config_name',$key)->update(['config_value' => $value]);
+                $client_id =sessionGetSelectedClientid();
+                $client_data =VmtMasterConfig::where("config_name","client_id")->update(['config_value' =>$client_id]);
             }
 
         }
@@ -103,6 +105,7 @@ class VmtMasterConfigController extends Controller
     public function fetchMoileModuleData( Request $request ,VmtMasterConfigService $serviceVmtMasterConfigService){
 
         try{
+            
         $client_id =$request->client_id ;
 
         $module_id =VmtAppModules::where('module_name',"Mobile App Settings")->pluck('id');
@@ -120,7 +123,7 @@ class VmtMasterConfigController extends Controller
                                                                     "vmt_client_sub_modules.status",
                                                                     "vmt_client_sub_modules.client_id"]);
 
-
+      $mobile_settings_data =$mobile_settings_data->toarray();
         foreach ($mobile_settings_data as $key => $single_value) {
 
              $emp_data =VmtEmpSubModules::where("client_id",$single_value['client_id'])->where("app_sub_module_link_id",$single_value['id'])->pluck('user_id');

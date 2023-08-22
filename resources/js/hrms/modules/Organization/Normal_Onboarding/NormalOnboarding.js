@@ -69,24 +69,17 @@ app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('ConfirmPopup', ConfirmPopup);
-app.component('ContextMenu', ContextMenu);
-app.component('DataTable', DataTable);
 app.component('Dialog', Dialog);
 app.component('Dropdown', Dropdown);
 app.component('DynamicDialog', DynamicDialog);
-app.component('Fieldset', Fieldset);
-app.component('FileUpload', FileUpload);
 app.component('InputMask', InputMask);
 app.component('InputNumber', InputNumber);
 app.component('InputSwitch', InputSwitch);
 app.component('InputText', InputText);
-app.component('Knob', Knob);
-app.component('Listbox', Listbox);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('RadioButton', RadioButton);
 app.component('Toast', Toast)
 app.component('Textarea', Textarea)
-app.component('OrganizationChart', OrganizationChart)
 
 // app.component('FontAwesomeIcon',FontAwesomeIcon)
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="p-2 shadow card profile-box card-top-border">
+    <div class="p-2 shadow card profile-box ">
         <div class="card-body justify-content-center align-items-center">
             <div class=" header-card-text">
                 <h6 class="my-2"><i class="fa fa-user" aria-hidden="true"></i> Personal Details</h6>
@@ -95,7 +95,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Date of Joining<span class="text-danger">*</span></label>
-                            <Calendar inputId="icon" dropzone="true" :manualInput="true" :maxDate="new Date()"
+                            <Calendar inputId="icon" dropzone="true" :manualInput="true"
                                 v-model="service.employee_onboarding.doj" editable dateFormat="dd-mm-yy"
                                 placeholder="Date of Joining" style="width: 350px;"
                                 :readonly="service.readonly.is_doj_quick" showIcon :class="[{

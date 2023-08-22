@@ -1,7 +1,7 @@
 <template>
-
-    <div class="w-full">
-        <div class="mb-2 card left-line">
+    <LoadingSpinner v-if="useTimesheet.canShowLoading"  class="absolute z-50 bg-white" />
+    <div class="w-full" >
+        <div class="mb-2 card "  >
             <div class="py-1 card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 ">
@@ -159,7 +159,8 @@
                         <div class="overflow-x-auto">
                             <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                 :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
-                            <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" :sidebar="useTimesheet.classicTimesheetSidebar" />
+                            <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance"
+                                :sidebar="useTimesheet.classicTimesheetSidebar" />
                         </div>
                     </div>
 
@@ -172,7 +173,8 @@
                                 <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                     :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
                                 <ClassicTimesheet v-else
-                                    :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" :sidebar="useTimesheet.classicTimesheetSidebar" />
+                                    :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance"
+                                    :sidebar="useTimesheet.classicTimesheetSidebar" />
                             </div>
                         </div>
                         <div class="mr-4 card pb-10" v-else>
@@ -189,7 +191,8 @@
                                 <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                     :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
                                 <ClassicTimesheet v-else
-                                    :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance"  :sidebar="useTimesheet.classicTimesheetSidebar"/>
+                                    :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance"
+                                    :sidebar="useTimesheet.classicTimesheetSidebar" />
                             </div>
                         </div>
                         <div class="mr-4 card pb-10" v-else>
@@ -231,7 +234,8 @@ import LeaveApply from '../leave_module/leave_apply/LeaveApply.vue'
 
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
-import Loadingspinner from '../../components/loadingspinner.vue'
+import LoadingSpinner from '../../components/LoadingSpinner.vue'
+// LoadingSpinnerVue
 
 const useTimesheet = useAttendanceTimesheetMainStore()
 const useCalendar = useCalendarStore()
@@ -242,15 +246,21 @@ const service = Service()
 const teamListLength = ref(0);
 const orgListLength = ref(0);
 
-onMounted(() => {
+onMounted(async() => {
     Service()
 
-    setTimeout(() => {
-        useTimesheet.getTeamList(service.current_user_code).then(res => {
-            teamList.value = Object.values(res.data)
-            teamListLength.value = res.data.length
-        })
-    }, 3000);
+    await useTimesheet.getTeamList(service.current_user_code).then(res => {
+        teamList.value = Object.values(res.data)
+        teamListLength.value = res.data.length
+    })
+    await useTimesheet.getSelectedEmployeeAttendance()
+
+    // setTimeout(() => {
+    //     useTimesheet.getTeamList(service.current_user_code).then(res => {
+    //         teamList.value = Object.values(res.data)
+    //         teamListLength.value = res.data.length
+    //     })
+    // }, 3000);
 
     useTimesheet.getOrgList().then(res => {
         orgList.value = Object.values(res.data)
@@ -258,9 +268,9 @@ onMounted(() => {
 
     })
 
-    setTimeout(() => {
-        useTimesheet.getSelectedEmployeeAttendance()
-    }, 600);
+    // setTimeout(() => {
+    //     useTimesheet.getSelectedEmployeeAttendance()
+    // }, 600);
 
 
 })
@@ -279,22 +289,26 @@ const emp = ref([
 
 
 <style>
-.textColor {
+.textColor
+{
     color: #003056;
 }
 
 /* we will explain what these classes do next! */
 .v-enter-active,
-.v-leave-active {
+.v-leave-active
+{
     transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
-.v-leave-to {
+.v-leave-to
+{
     opacity: 0;
 }
 
-.page-content {
+.page-content
+{
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 </style>

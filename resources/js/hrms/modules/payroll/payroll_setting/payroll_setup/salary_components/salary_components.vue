@@ -1,7 +1,6 @@
 <template>
-    <div class="mb-1 left-line">
-        <div class="card ">
-            <div class="card-body">
+        <div class=" w-full">
+            <div class="p-3">
                 <ul class="my-4 nav nav-pills nav-tabs-dashed " role="tablist">
                     <li class="nav-item text-muted" role="presentation">
                         <button class="pb-2 nav-link active" id="pills-offer-pending-tab" data-bs-toggle="pill"
@@ -68,7 +67,6 @@
 
             </div>
         </div>
-    </div>
 </template>
 
 

@@ -1,40 +1,63 @@
 <template>
-    <div class="w-full">
+    <!-- {{ MobileSettingsStore.arrayMobileSetDetails ? MobileSettingsStore.arrayMobileSetDetails : [] }} -->
+      <LoadingSpinner  v-if="MobileSettingsStore.canshowloading"  class="absolute z-50 bg-white w-[100%] h-[100%]"/>
+    <div class="w-full" v-if="!MobileSettingsStore.canshowloading">
         <h1 class="text-[18px] text-[#000] my-2">Mobile App Settings</h1>
+        <!-- {{ MobileSettingsStore.arrayMobileSetDetails }} -->
+        <!-- {{ items }} -->
         <div class="">
-            <div class="grid grid-cols-3 p-2 rounded-lg border my-2.5 h-[44px]" v-for="(item, index) in useStore.MobileSettingsDetails" :key="index">
+            <div class="grid grid-cols-3 p-2 rounded-lg border my-2.5 h-[44px]"
+                v-for="(item, index) in MobileSettingsStore.arrayMobileSetDetails" :key="index">
                 <div class="my-auto">
                     <h1 class="text-[#000] text-[14px]">{{ item.sub_module_name }}</h1>
                 </div>
                 <div class="mx-auto">
                     <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]"
                         :class="[item.status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
-                        @click="val.status = 1">Enable</button>
+                        @click="MobileSettingsStore.saveEnableDisableSetting(item.id,1)">Enable</button>
                     <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
-                        :class="[val.EnableDisableBtn == 2 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
-                        @click="val.EnableDisableBtn = 2">Disable</button>
+                        :class="[item.status == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
+                        @click="MobileSettingsStore.saveEnableDisableSetting(item.id,0)">Disable</button>
                 </div>
                 <div class="my-auto">
                     <!-- {{ val.Type }} -->
-                    <p @click="selectedType = val.Type,useStore.employeeAssignDialog = true" class="text-right cursor-pointer"><span class="text-[#000]"> <i class="pi pi-users"></i>-</span> <span>Assign
-                            Employee</span></p>
+                    <div class="flex float-right cursor-pointer w-[170px] items-center"
+                        @click="selectedType = item.id, MobileSettingsStore.employeeAssignDialog = true">
+                        <i class="pi pi-users"></i>
+                        <span class="text-[#000] mx-2" > 
+                            {{ item.Emloyee_count }}</span> 
+                            <span class=" underline">Assign
+                            Employee</span>
+                    </div>
+                    <!-- <p 
+                        class="text-right cursor-pointer"><span class="text-[#000]"
+                            v-if="useMobileSettingsStore.Emloyee_count"> <i class="pi pi-users"></i>{{
+                                useMobileSettingsStore.Emloyee_count }} </span>-
+                         <span class="text-[#000]" > <i class="pi pi-users"></i> </span>- <span>Assign
+                            Employee</span> 
+                    </p> -->
                 </div>
             </div>
         </div>
     </div>
-    <AssignEmployee :type="selectedType"/>
+    <AssignEmployee :type="selectedType" />
 </template>
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onUpdated } from "vue";
 import AssignEmployee from "./components/AssignEmployee.vue";
 import { useMobileSettingsStore } from "./MobileSettingsService";
+import LoadingSpinner from "../../../components/LoadingSpinner.vue";
 
 
-const useStore = useMobileSettingsStore();
+const MobileSettingsStore = useMobileSettingsStore();
 
-onMounted(()=>{
-    useStore.getMobileSettings();
+onMounted(() => {
+    MobileSettingsStore.getMobileSettings();
+    MobileSettingsStore.getSessionClient();
 })
+
+
+
 
 const active = ref(1);
 
@@ -66,4 +89,5 @@ const val = ref([
 *
 {
     font-family: 'Poppins', sans-serif;
-}</style>
+}
+</style>

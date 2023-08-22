@@ -235,7 +235,7 @@ img {
 }
 
 th.gridjs-th-sort:hover {
-    background-color: #003056 !important;
+    background-color: #e6e6e6 !important;
 }
 
 .img-sm {
@@ -747,7 +747,7 @@ button.gridjs-sort-asc::before {
     font-family: "Font Awesome 5 Free";
     font-size: 9px;
     font-weight: 900;
-    color: #ffffff;
+    color: black;
 }
 
 button.gridjs-sort-neutral::after,
@@ -945,12 +945,12 @@ th.gridjs-th,
 .gridjs-table>tbody>tr>th,
 .gridjs-table>tfoot>tr>td,
 .gridjs-table {
-    padding: 0.75rem 0.6rem;
+    padding: 0.4rem 1rem !important;;
     white-space: nowrap;
     /* width: 100%; */
     text-align: center;
     vertical-align: middle;
-    border: 1px solid #e9e8e8;
+    border-bottom: 1px solid #e9e8e8;
 }
 
 table.gridjs-table {
@@ -1244,7 +1244,8 @@ button.gridjs-sort-desc {
 }
 
 .nav-tabs-dashed .nav-item .nav-link.active {
-    color: var(--color-primary_blue) !important;
+    /* color: var(--color-primary_blue) !important; */
+    color: black !important;
 }
 
 .nav-tabs-dashed .nav-item .nav-link {
@@ -1265,7 +1266,7 @@ button.gridjs-sort-desc {
     width: 100%;
     left: 0px;
     position: absolute;
-    background-color: #ee6a05;
+    background-color: #F9BE00;
     bottom: 0px;
     border-top-left-radius: 8px;
     border-top-right-radius: 5px;
@@ -2024,6 +2025,15 @@ table.dataTable td {
     box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
 }
 
+table.dataTable thead th, table.dataTable thead td {
+    font-weight: 700;
+    padding: 0.6rem 1rem !important;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  table.dataTable tbody th, table.dataTable tbody td {
+    padding: 0.4rem 1rem !important;
+}
 /* modal */
 .custom-modal,
 .popUp-close {

@@ -22,11 +22,11 @@
 
             </div>
         </div>
-        <div class="flex gap-6 mx-1">
-            <div class="flex w-6 p-4 my-1 bg-gray-100 rounded-lg shadow-md border-1">
-                <div class="w-6 mr-3">
+        <div class="grid grid-cols-12 gap-6 mx-1">
+            <div class="col-span-5 grid grid-cols-12 gap-4 p-4 my-1 bg-gray-100 rounded-lg shadow-md border-1">
+                <div class="col-span-6">
                     <div class="my-1 ">
-                        <h5 class="my-2 text-lg font-semibold">EPF Number</h5>
+                        <h5 class="my-2 text-sm font-semibold">EPF Number</h5>
                         <div class="flex gap-8 justify-evenly ">
                             <div class="w-full">
                                 <InputText class="w-full h-10" />
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="my-4">
-                        <h5 class="my-2 text-lg font-semibold">
+                        <h5 class="my-2 text-sm font-semibold">
                             Deduction Cycle
                         </h5>
                         <div class="flex gap-8 justify-evenly">
@@ -44,11 +44,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-6 pl-4 pt-6">
-                    <input type="checkbox" class="mr-3" style="width: 18px ; height: 20px;" name="" id=""
-                        >
-                    <label for="" class=" text-gray-600 fs-5">Is Default</label>
-                    <p class=" text-gray-600 w-full mt-1">
+                <div class="col-span-6">
+                    <input type="checkbox" class="m" style="width: 18px ; height: 20px;" name="" id="">
+                    <label for="" class=" text-gray-600 fs-6">Is Default</label>
+                    <p class=" text-gray-600 w-full mt-1 text-xs">
                         (Note: Once employees are onboarded they will be automatically enrolled in this PF scheme. Any
                         modifications to the enrolement can only be made before the start of payroll processing )
                     </p>
@@ -56,7 +55,7 @@
 
             </div>
 
-            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
+            <div class="col-span-7 p-4 my-4  rounded-lg shadow-md border-1">
                 <div class="mx-2 my-4 d-flex align-center">
                     <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
                     <label for="" class="fs-6  text-gray-600">Employer's Contribution is included in the CTC.</label>
@@ -79,8 +78,8 @@
             <p class="fs-5 fw-semibold">Employee/Employeer Contribution</p>
             <p class="text-gray-600">Note: The Contribution made by both employers and employees will remain the same</p>
         </div>
-        <div class="flex gap-6 ">
-            <div class="w-6">
+        <div class="grid grid-cols-12 gap-6 ">
+            <div class="col-span-5">
                 <div class="p-4 my-4 bg-gray-100 rounded-lg shadow-md border-1">
                     <div class="my-4">
                         <h5 class="my-2 text-lg font-semibold">
@@ -120,7 +119,7 @@
 
             </div>
 
-            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
+            <div class="col-span-7 p-4 my-4  rounded-lg shadow-md border-1">
                 <h1 class="my-2 text-xl font-bold">
                     Example
                 </h1>
@@ -170,7 +169,8 @@
 
     <Dialog v-model:visible="CanShowExplanationDialog" header="Header" :style="{ width: '50vw' }" :position="position"
         :modal="true" :draggable="false">
-        <p>The attendance cut off date deadline for processing an employee's within a pay period.After this date,any absence by the employee will not affect their</p>
+        <p>The attendance cut off date deadline for processing an employee's within a pay period.After this date,any absence
+            by the employee will not affect their</p>
         <DataTable :value="products">
             <Column field="product" header="Code"></Column>
             <Column field="lastYearSale" header="Name"></Column>

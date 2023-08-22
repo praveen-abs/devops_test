@@ -1,4 +1,6 @@
 <template>
+    <LoadingSpinner v-if="useLeaveStore.canShowLoading" class="absolute z-50 bg-white" />
+   <div class="w-full" >
     <div class="p-2 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
         <div class="flex justify-between">
             <ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
@@ -28,12 +30,12 @@
 
             <div class="flex items-center">
                 <div class="mr-3 ">
-                    <div class="input-group me-2">
+                    <!-- <div class="input-group me-2">
                         <label class="input-group-text" for="inputGroupSelect01"><i class="fa fa-calendar text-primary "
                                 aria-hidden="true"></i></label>
                         <select class="form-select btn-line-primary" id="inputGroupSelect01">
                         </select>
-                    </div>
+                    </div> -->
 
                 </div>
                 <a href="/attendance-leave-policydocument" id=""
@@ -59,7 +61,8 @@
             <OrgLeaveDetails />
         </div>
     </div>
-    <Dialog header="Header" v-model:visible="useLeaveStore.canShowLoading"
+   </div>
+    <!-- <Dialog header="Header" v-model:visible="useLeaveStore.canShowLoading"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
         <template #header>
@@ -69,7 +72,7 @@
         <template #footer>
             <h5 style="text-align: center">Please wait...</h5>
         </template>
-    </Dialog>
+    </Dialog> -->
 
 
 
@@ -90,7 +93,7 @@ import TeamLeaveDetails from './leave_details/TeamLeaveDetails.vue';
 import { useLeaveModuleStore } from './LeaveModuleService'
 import { onMounted, ref } from 'vue';
 import leaveapply2 from './leave_apply_v2/leave_apply_v2.vue'
-
+import LoadingSpinner from '../../components/LoadingSpinner.vue'
 
 const useLeaveStore = useLeaveModuleStore()
 const service = Service()

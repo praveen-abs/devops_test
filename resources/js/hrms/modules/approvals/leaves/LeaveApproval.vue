@@ -1,8 +1,12 @@
 <template>
-    <div>
+    <LoadingSpinner v-if="canShowLoadingScreen" class="absolute z-50 bg-white" />
+    <div class="w-full bg-white p-2 rounded-lg">
+        <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+            <h6 class="my-2 text-lg font-semibold">Leave Approvals</h6>
+        </div>
         <!-- <ConfirmDialog></ConfirmDialog> -->
         <Toast />
-        <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        <!-- <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
                 <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -11,8 +15,8 @@
             <template #footer>
                 <h5 style="text-align: center">Please wait...</h5>
             </template>
-        </Dialog>
-        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        </Dialog> -->
+        <!-- <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
                 <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -21,7 +25,7 @@
             <template #footer>
                 <h5 style="text-align: center">Please wait...</h5>
             </template>
-        </Dialog>
+        </Dialog> -->
 
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '450px' }" :modal="true">
@@ -50,7 +54,7 @@
                 <Button label="Ok" icon="pi pi-check" autofocus />
             </template>
         </Dialog>
-        <div>
+        <div class="mt-3">
             <DataTable :value="att_leaves" :paginator="true" :rows="10" dataKey="id" :rowsPerPageOptions="[5, 10, 25]"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
@@ -173,6 +177,8 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { Service } from '../../Service/Service';
+import LoadingSpinner from "../../../components/LoadingSpinner.vue";
+
 
 
 const service = Service()
@@ -217,12 +223,12 @@ onMounted(() => {
 });
 
 function ajax_GetLeaveData() {
-    loading.value = true
+    canShowLoadingScreen.value = true;
     let url = window.location.origin + "/fetch-leaverequests-based-on-currentrole";
     axios.get(url).then((response) => {
         att_leaves.value = response.data.data;
     }).finally(() => {
-        loading.value = false;
+        canShowLoadingScreen.value = false;
     });
 }
 

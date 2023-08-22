@@ -12,6 +12,7 @@
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
+    use App\Models\VmtMasterConfig;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtAppSubModuleslink;
     use App\Models\VmtClientMaster;
@@ -36,6 +37,7 @@
     use App\Models\VmtEmployeeMailStatus;
     use App\Models\VmtEmployeeStatutoryDetails;
     use App\Models\VmtPayroll;
+    use App\Models\Compensatory;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
     use App\Mail\WelcomeMail;
@@ -539,7 +541,7 @@
 // dd($users_With_anniversary);
 // $result = $date1->eq($date2);
 
-// dd($result);
+// // dd($result);
 // $employeeData =[
 //     "employee_code" => "ENBL301",
 //       "employee_name" => "Virat Ganesh",
@@ -555,7 +557,7 @@
 //       "mobile_number" => 8056099319.0,
 //       "bank_name" => "Axis bank",
 //       "bank_ifsc" => "UTIB0000006",
-//       "account_no" 2234567932178.0,
+//       "account_no" => 12234567932178.0,
 //       "current_address" => "Tambaram Chennai-600045",
 //       "permanent_address" => "Tambaram Chennai-600045",
 //       "father_name" => "Singh Kumar",
@@ -581,19 +583,19 @@
 //       "official_mail" => "dondebijeff@gmail.com",
 //       "official_mobile" => 8056099319.0,
 //       "emp_notice" => 30,
-//       "basic" 2330,
-//       "hra" 2788,
+//       "basic" => 12330,
+//       "hra" => 12788,
 //       "statutory_bonus" => 0.0,
 //       "child_education_allowance" => 0.0,
 //       "food_coupon" => 0.0,
 //       "lta" => 0.0,
-//       "special_allowance" 2342,
+//       "special_allowance" => 12342,
 //       "other_allowance" => 0.0,
-//       "epf_employer_contribution" 800,
+//       "epf_employer_contribution" => 1800,
 //       "esic_employer_contribution" => 0.0,
 //       "insurance" => 0.0,
 //       "graduity" => 0.0,
-//       "epf_employee" 800,
+//       "epf_employee" => 1800,
 //       "esic_employee" => 0.0,
 //       "professional_tax" => 0.0,
 //       "labour_welfare_fund" => 0.0,
@@ -640,26 +642,33 @@
 //             //Fetch appointment letter based on client name
 //             $client_name = str_replace(' ', '', sessionGetSelectedClientName());
 //             //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-//             $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_brandavatar';
+//             //$viewfile_appointmentletter = 'vmt_appointment_templates.vmt_appointment_templates.appointmentletter_breezetech.blade.php';
 
-//             //check if template exists
-//             if (view()->exists($viewfile_appointmentletter)) {
+//     //         //check if template exists
+//     //         if (view()->exists($viewfile_appointmentletter)) {
 
-//                 $html =  view($viewfile_appointmentletter, compact('data'));
+//     //             $html =  view($viewfile_appointmentletter, compact('data'));
 
-//             }
-       // }
+//     //         }
+//     //    // }
 
-                // $options = new Options();
-                // $options->set('isHtml5ParserEnabled', true);
-                // $options->set('isRemoteEnabled', true);
+//          $html = view('appointment_mail_templates.appointment_Letter_Priti_Sales');
 
-                // $pdf = new Dompdf($options);
-                // $pdf->loadHtml($html, 'UTF-8');
-                // $pdf->setPaper('A4', 'portrait');
-                // $pdf->render();
-                // $docUploads =  $pdf->output();
-                //  dd( $docUploads);
+// return $html;
+//                 $options = new Options();
+//                 $options->set('isHtml5ParserEnabled', true);
+//                 $options->set('isRemoteEnabled', true);
+//                 $pdf = new Dompdf($options);
+//                 $pdf->loadhtml($html, 'UTF-8');
+//                 $pdf->setPaper('A4', 'portrait');
+//                 $pdf->render();
+//                 $pdf->stream(['breezetech.pdf']);
+
+
+// $data =numberToWord("123");
+// dd(str_replace(" ","",$data));
+//                 $docUploads =  $pdf->output();
+//                  dd( $docUploads);
         //         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
         //         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
         //     }
@@ -710,7 +719,16 @@
          dd($spg);
 
 
-        (array_values(array_unique($data)));
+
+
+
+        //  }
+
+
+
+        $client_data =VmtMasterConfig::where("config_name","client_id")->first('config_value');
+        dd($client_data['config_value']);
+
     ?>
 
 

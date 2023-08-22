@@ -16,11 +16,12 @@
                     </ul>
                     <div class="grid grid-cols-12 divide-x-2 divide-gray-600 border-gray-500 rounded-lg border p-2  mr-3">
                         <div @click="openFileInput" class="col-span-3 font-semibold fs-6  cursor-pointer w-full" for="file">
-                            <i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</div>
+                            <i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse
+                        </div>
                         <span class="col-span-9 px-4">
                             {{ useStore.selectedFile ? useStore.selectedFile.name : '' }}</span>
                     </div>
-                    <input  ref="fileInput" type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
+                    <input ref="fileInput" type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
                         accept=".xls, .xlsx">
                     <button class="btn btn-orange mt-6 float-right mx-5"
                         @click="useStore.convertExcelIntoArray('bulk')">Upload</button>
