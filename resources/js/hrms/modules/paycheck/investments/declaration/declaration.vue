@@ -116,11 +116,11 @@
                     </p>
                 </template>
                 <template #body="slotProps">
-                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
+                    <!-- <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
                         {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.old_regime
                             , 'old', slotProps.data.age)) }}
-                    </p>
-                    <p v-else style="font-weight: 501;">
+                    </p> -->
+                    <p style="font-weight: 501;">
                         {{ investmentStore.formatCurrency(slotProps.data.old_regime) }}
                     </p>
                 </template>
@@ -132,10 +132,10 @@
                     </p>
                 </template>
                 <template #body="slotProps">
-                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
+                    <!-- <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
                         {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.new_regime, 'new', slotProps.data.age)) }}
-                    </p>
-                    <p v-else style="font-weight: 501;">
+                    </p> -->
+                    <p style="font-weight: 501;">
                         {{ investmentStore.formatCurrency(slotProps.data.new_regime) }}
                     </p>
                 </template>

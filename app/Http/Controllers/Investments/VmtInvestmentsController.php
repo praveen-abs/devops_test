@@ -631,7 +631,7 @@ class VmtInvestmentsController extends Controller
                                 $heath_and_education = ($total_amount + $subcharge) * 4 / 100;
                                 $final_value = $total_amount + $subcharge + $heath_and_education;
 
-                                return $final_value;
+                                return floor($final_value);
                             } else {
                                 $taxable_amount = 0;
                                 return $taxable_amount;
