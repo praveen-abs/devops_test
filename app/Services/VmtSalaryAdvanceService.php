@@ -119,7 +119,7 @@ class VmtSalaryAdvanceService
                 }
             }
 
-            
+
 
             $approveRejectLoanAndSaladvMail   = \Mail::to($approver_details->officical_mail)
                 ->send(new ApproveRejectLoanAndSaladvMail(
@@ -424,7 +424,7 @@ class VmtSalaryAdvanceService
         try {
 
             $current_user_id = auth()->user()->id;
-        
+
 
             $employee_user_id = VmtEmpAssignSalaryAdvSettings::where('user_id', $current_user_id)->first();
 
@@ -475,7 +475,7 @@ class VmtSalaryAdvanceService
 
                 return response()->json($salary_adv);
             } else {
-                
+
                 $salary_adv['eligible'] = "1";
                 return response()->json($salary_adv);
             }
@@ -1145,8 +1145,9 @@ class VmtSalaryAdvanceService
 
 
 
-    public function showEligibleInterestFreeLoanDetails($loan_type)
+    public function showEligibleInterestFreeLoanDetails($loan_type,$user_id,$client_id)
     {
+       
         $validator = Validator::make(
             $data = [
                 "loan_type" => $loan_type,
@@ -1166,7 +1167,7 @@ class VmtSalaryAdvanceService
                 'message' => $validator->errors()->all()
             ]);
         }
-        $user_id = auth()->user()->id;
+      
         //dd($user_id);
         $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
         $last_payroll_month = VmtEmployeePayroll::join('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
@@ -1183,12 +1184,12 @@ class VmtSalaryAdvanceService
             $last_payroll_month = $last_payroll_month->payroll_date;
         }
         if ($loan_type == 'InterestWithLoan') {
-            $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())
+            $avaliable_int_loans = VmtLoanInterestSettings::where('client_id',$client_id)
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
         } else if ($loan_type == 'InterestFreeLoan') {
-            $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
+            $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id',$client_id)
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
-            //  dd($avaliable_int_loans );
+          
         } else {
             return response()->json([
                 'status' => 'failure',
@@ -1687,7 +1688,6 @@ class VmtSalaryAdvanceService
             } else if ($loan_type == 'InterestWithLoan') {
                 $loan_history = VmtEmpInterestLoanDetails::where('user_id', $user_id)->get();
             }
-
             return $loan_history;
         } catch (Exception $e) {
             return response()->json([
@@ -2077,7 +2077,7 @@ class VmtSalaryAdvanceService
         return $response;
     }
 
-    public function isEligibleForLoanAndAdvance($loan_type,$user_id, $client_id )
+    public function isEligibleForLoanAndAdvance($loan_type, $user_id, $client_id)
     {
         try {
             if ($loan_type == "int_free_loan") {
@@ -2103,12 +2103,11 @@ class VmtSalaryAdvanceService
                 $user_id = auth()->user()->id;
                 $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
                 if ($loan_type == 'loan_with_int') {
-                    $avaliable_int_loans = VmtLoanInterestSettings::where('client_id',$client_id)
+                    $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', $client_id)
                         ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
                 } else if ($loan_type == 'int_free_loan') {
                     $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', $client_id)
                         ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
-                        
                 } else if ($loan_type = "sal_adv") {
                     $assigned_sal_adv = VmtEmpAssignSalaryAdvSettings::where('user_id', $user_id)->first();
                     if (isset($assigned_sal_adv)) {
@@ -2153,6 +2152,7 @@ class VmtSalaryAdvanceService
 
     public function employeeDashboardLoanAndAdvance($loan_type, $user_id)
     {
+
         $total_borrowed_amt = 0;
         $total_repaid_amt = 0;
         $balance_amt = 0;
@@ -2191,9 +2191,12 @@ class VmtSalaryAdvanceService
             $compeleted_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
         } else if ($loan_type == 'sal_adv') {
 
-            $loan_amt_query = VmtSalAdvTransactionRecord::join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.id','=',
+            $loan_amt_query = VmtSalAdvTransactionRecord::join(
+                'vmt_emp_sal_adv_details',
+                'vmt_emp_sal_adv_details.id',
+                '=',
                 'vmt_sal_adv_transaction_record.sal_adv_details_id'
-            )->join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.id','=','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
+            )->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
 
                 ->where('vmt_emp_sal_adv_details.sal_adv_crd_sts', 1)->where('vmt_emp_assign_salary_adv_setting.user_id', $user_id)
                 ->get([
@@ -2202,11 +2205,8 @@ class VmtSalaryAdvanceService
                     'vmt_sal_adv_transaction_record.paid_amt as paid_emi',
                 ]);
 
-             $pending_request_query = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.id','=','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')->
-             where('user_id', $user_id)->where('sal_adv_crd_sts', 0)->count();
-            $compeleted_request_query = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.id','=','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')->
-            where('user_id', $user_id)->whereIn('sal_adv_crd_sts', [1, -1])->count();
-
+            $pending_request_query = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')->where('user_id', $user_id)->where('sal_adv_crd_sts', 0)->count();
+            $compeleted_request_query = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')->where('user_id', $user_id)->whereIn('sal_adv_crd_sts', [1, -1])->count();
         } else {
             return response()->json([
                 'status' => 'failure',
