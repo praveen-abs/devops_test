@@ -800,10 +800,12 @@
                                         </span>
                                     </a>
                                 </li> --}}
+                        
                                 <li class="nav-item">
                                     <a href="{{ route('view-config-master') }}" class="nav-link"><span>Master
                                             Config</span></a>
                                 </li>
+                                
                                 <li class="nav-item">
                                     <a href="{{ route('vmt_clientOnboarding-route') }}" class="nav-link"><span>
                                             Client
@@ -831,6 +833,8 @@
                                             Settings
                                         </span></a>
                                 </li>
+                                
+
                                 <li class="nav-item">
                                     <a href="{{ route('showAttendanceSettingsPage') }}"
                                         class="py-1 nav-link sidebar">
@@ -844,10 +848,15 @@
                                     <a href="{{ route('showSAsettingsView') }}" id=""
                                         class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                         aria-expanded="false">
-                                        {{-- <span>
-                                            Taxations<span
-                                                class="text-white badge bg-danger rounded-circle">4</span>
-                                        </span> --}}
+                                        <span>
+                                            Loan And Salary Advance
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('showSAsettingsView') }}" id=""
+                                        class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
+                                        aria-expanded="false">
                                         <span>
                                             Loan And Salary Advance
                                         </span>
