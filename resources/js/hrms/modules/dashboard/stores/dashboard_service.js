@@ -33,7 +33,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     async function getMainDashboardData(month, year) {
 
         await axios.get('/getAllNewDashboardDetails').then((response) => {
-            allEventSource.value = response.data.all_events.birthday;
+            allEventSource.value = response.data.all_events;
             allNotificationSource.value = response.data.all_notification.array_notifications;
             leaveBalancePerMonthSource.value = response.data.leave_balance_per_month;
             attenanceReportPerMonth.value = response.data.attenance_report_permonth;

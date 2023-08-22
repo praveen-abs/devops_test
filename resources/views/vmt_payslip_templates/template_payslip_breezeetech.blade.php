@@ -23,7 +23,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
         }
 
         @page {
-            size: A4 landscape;
+            size: A4 portrait;
         }
 
 
@@ -332,7 +332,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">-</p>
+                                    <p class="text-right"></p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
@@ -351,15 +351,58 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
 
                             <tr>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
-                                    <p>-</p>
+                                    <p></p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">-</p>
+                                    <p class="text-right"></p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">-</p>
+                                    <p class="text-right"></p>
+                                </td>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>Salary Advance</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->sal_adv), 2) }}</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p></p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right"></p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right"></p>
+                                </td>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>Canteen Deduction</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->canteen_dedn), 2) }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p></p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right"></p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right"></p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>Other Deduction</p>
