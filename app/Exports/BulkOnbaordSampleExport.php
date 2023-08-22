@@ -4,7 +4,6 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -33,7 +32,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithCalculatedFormulas ,WithTitle ,WithMultipleSheets
+class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping , WithCalculatedFormulas,WithMultipleSheets
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -77,19 +76,7 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
     //     return 'Sheet1';
     // }
 
-    // public function title(): string
-    // {
-    //     return 'Sheet1';
-    // }
 
-
-    public function sheets(): array
-    {
-        return [
-            'Sheet 1' => $this,
-            //'DropdownList' => new DropdownListSheet(),
-        ];
-    }
 
     public function headings(): array
     {
@@ -154,6 +141,73 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
             'Permanent Address',
         ];
     }
+
+    public function title(): string
+    {
+        return 'Main Sheet';
+    }
+    public function sheets(): array
+    {
+        $sheets = [];
+
+        // Create new sheet instances and add them to the $sheets array
+        $sheets[] = new sheet();
+        $sheets[] = new sheet1();
+
+        return $sheets;
+    }
+
+
+    public function map($row): array
+    {
+        return [
+            [
+            'ABS0001',
+            'Name',
+            'abs@gmail.com',
+            '0912345678',
+            'Male',
+            '28-06-2000',
+            '14-11-2022',
+            '',
+            'It',
+            '',
+            'Chennai',
+            'ABSM001',
+            '0912345678',
+            'test@gmail.com',
+            'Single',
+            '',
+            'Father Name',
+            'Mother Name',
+            'Spouse Name',
+            'B Positive',
+            'No',
+            'ABCTY1234D',
+            '0000 1111 2222',
+            'Axis Bank',
+            'AXIB0028901',
+            '24898240942',
+            'UAN0945049',
+            'Yes',
+            '942904',
+            'Current Address',
+            'Permanent Address',
+            'CTC - Monthly',
+            '18000',
+            '=(AG2*50)/100',
+            '=(AH2*50)/100',
+            '',
+            '',
+            '',
+            '',
+            '=AH2-AI2',
+
+        ],
+            ['','=AG2*10']
+        ];
+    }
+
 
     // public function map($row): array
     // {
@@ -582,8 +636,6 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
                 $row_count = 10;
                 $column_count = 0;
 
-
-             // set dropdown options
 
              // set dropdown options
                 $gender_options = [

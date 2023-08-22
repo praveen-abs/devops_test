@@ -230,7 +230,7 @@ const helper = usePayrollHelper()
 </script>
 
 
-<style >
+<style>
 .p-dropdown-label.p-inputtext {
     height: 34px;
 }
@@ -243,4 +243,5 @@ const helper = usePayrollHelper()
 .p-datatable-table .p-datatable-thead>tr {
     box-shadow: 0px 0px 0px 0px !important;
     border-radius: 6px;
-}</style>
+}
+</style>
