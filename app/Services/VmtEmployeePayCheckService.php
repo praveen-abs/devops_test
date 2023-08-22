@@ -1210,12 +1210,14 @@ class VmtEmployeePayCheckService
                     'vmt_employee_payslip_v2.hra as HRA',
                     'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
                     'vmt_employee_payslip_v2.other_earnings as Other Earnings',
-                    'vmt_employee_payslip_v2.earned_spl_alw  as Special Allowance',
+                    'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                     'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                     'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
                     'vmt_employee_payslip_v2.overtime as Overtime',
                 ]
             )->toArray();
+
+
         $getarrears = $payroll_data
             ->get(
                 [
@@ -1256,7 +1258,7 @@ class VmtEmployeePayCheckService
                 [
                     'vmt_employee_compensatory_details.basic as Basic',
                     'vmt_employee_compensatory_details.hra as HRA',
-                    'vmt_employee_compensatory_details.special_allowance  as Special Allowance',
+
                 ]
             )->toArray();
 
@@ -1367,7 +1369,7 @@ class VmtEmployeePayCheckService
             ];
         }
 
-//dd($getpersonal);
+// dd($getpersonal);
 
         if($type =="pdf"){
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
@@ -1381,7 +1383,7 @@ class VmtEmployeePayCheckService
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-
+                // $pdf->stream("payslip.pdf");
                 $response = base64_encode($pdf->output(['payslip.pdf']));
                 return $response;
 

@@ -40,6 +40,14 @@
 
             </div>
         </div>
+        <!-- <div class="my-3 text-end">
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
+                @click="uesPayroll.activeTab--">Previous</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="uesPayroll.saveGeneralPayrollSettings(uesPayroll.generalPayrollSettings)">Save</button>
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
+                @click="uesPayroll.activeTab++">Next</button>
+        </div> -->
     </div>
     <router-view></router-view>
 </template>
@@ -54,12 +62,14 @@ import proof_of_investments from './proof_of_investments/proof_of_investments.vu
 
 
 <style>
-*{
+*
+{
     font-size: 14px;
     font-weight: 501;
 }
-label{
+
+label
+{
     font-size: 14px;
     font-weight: 501;
-}
-</style>
+}</style>

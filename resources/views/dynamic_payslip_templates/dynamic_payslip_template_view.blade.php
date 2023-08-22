@@ -263,13 +263,14 @@
                             </td>
                           </tr>
                           @foreach ($earnings[0] as $earned_key => $single_earnings)
+                          
                           @if ($earned_key == "Total Earnings")
                           <tr>
                             <td style="width:40%">
                               <p style="height: 8px; color: #000; font-weight:700 ">{{$earned_key."(A)"}} </p>
                             </td>
                             <td style="width:20%">
-                         @if($earned_key =="Basic" || $earned_key =="HRA" || $earned_key =="Special Allowance")
+                         @if($earned_key =="Basic" || $earned_key =="HRA")
 
                                 @foreach ($compensatory_data as $key => $single_value )
 
@@ -282,7 +283,7 @@
                             @if (!empty($arrears[0]))
 
                             @foreach ($arrears[0] as $key => $single_value )
-
+                           
                             @if($key == $earned_key)
                             <p style="height: 8px; color: #000; ">{{ $single_value }}</p>
                             @endif
@@ -305,8 +306,7 @@
 
                                 @foreach ($compensatory_data as $key => $single_value )
 
-                                @if($earned_key =="Basic" || $earned_key =="HRA" || $earned_key =="Special Allowance")
-
+                                @if($earned_key =="Basic" || $earned_key =="HRA")
                                   <p style="height: 8px; color: #000; font-weight:700 ">{{ $single_value[$earned_key] }}</p>
 
                                   @endif
@@ -422,7 +422,7 @@
                           <p style="height: 16px; color: #000">{{ $key }} (A-B-C)</p>
                         </td>
                         <td style="width: 70%">
-                          <p style="height: 16px; color: #000;">&#x20B9; {{ $total_sumvalue }}</p>
+                          <p style="height: 16px; color: #000;"> <span style="font-family: sans-serif;"> &#8377;</span>  {{ $total_sumvalue }}</p>
                         </td>
                       </tr>
                       @endif

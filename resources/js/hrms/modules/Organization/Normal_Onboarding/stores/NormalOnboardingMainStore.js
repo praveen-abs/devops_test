@@ -553,7 +553,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             AadharCardBack: { required: helpers.withMessage('Aadhar back is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
             PanCardDoc: { required: helpers.withMessage('Pancard is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
             DrivingLicenseDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            EductionDoc: { required: helpers.withMessage('Education document is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            EductionDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
             VoterIdDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
             RelievingLetterDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
             PassportDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },

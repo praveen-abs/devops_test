@@ -9,6 +9,7 @@ use App\Models\VmtPaygroup;
 use App\Models\VmtAppIntegration;
 use App\Models\VmtEmpPaygroup;
 use App\Models\User;
+use App\Models\VmtAttendanceCutoffPeriod;
 use App\Models\VmtPaygroupComps;
 use App\Services\VmtPayrollComponentsService;
 
@@ -77,7 +78,7 @@ class VmtPayrollComponentsController extends Controller
 
     public function authorizeComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->EnableDisableComponents($request->comp_id,$request->status);
+        $response =$serviceVmtPayrollComponentsService->authorizeComponents($request->comp_id,$request->status);
 
         return $response;
     }
@@ -154,7 +155,7 @@ class VmtPayrollComponentsController extends Controller
     }
     public function authorizeAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->EnableDisableAppIntegration(
+        $response =$serviceVmtPayrollComponentsService->authorizeAppIntegration(
             $request->app_id,
             $request->status);
 
@@ -227,7 +228,7 @@ class VmtPayrollComponentsController extends Controller
     }
     public function CreatePayrollEpf(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        dd($request->all());
+       // dd($request->all());
             $response = $serviceVmtPayrollComponentsService->CreatePayrollEpf(
             $request->epf_number,
             $request->epf_deduction_cycle,
