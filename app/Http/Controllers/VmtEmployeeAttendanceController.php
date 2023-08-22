@@ -71,15 +71,7 @@ class VmtEmployeeAttendanceController extends Controller
 
     public function showBasicAttendanceReport(Request $request)
     {
-        $attendance_year = VmtEmployeeAttendance::groupBy(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
-        $attendance_year_device = VmtStaffAttendanceDevice::groupBY(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
-        $attendance_year = array_merge($attendance_year, $attendance_year_device);
-        for ($i = 0; $i < count($attendance_year); $i++) {
-            $attendance_year[$i] = date("Y", strtotime($attendance_year[$i]));
-        }
-
-        $attendance_available_years = array_unique($attendance_year);
-        return view('reports.vmt_basic_attendance_reports', compact('attendance_available_years'));
+        return view('reports.vmt_basic_attendance_reports');
     }
 
     public function showDetailedAttendanceReport(Request $request)

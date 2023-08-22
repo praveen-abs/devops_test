@@ -72,6 +72,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, onMounted, reactive } from 'vue';
+import dayjs from 'dayjs'
 
 const variable = reactive({
     start_date: '',
@@ -89,7 +90,10 @@ const getEmployeeAttendanceReports = async () => {
     // Attendance Basic Reports
     let url = '/fetch-attendance-data'
     canShowLoading.value = true
-    await axios.get(url).then(res => {
+    await axios.post(url, {
+        start_date: variable.start_date,
+        end_date: variable.end_date,
+    }).then(res => {
         console.log(res.data.rows);
         AttendanceReportSource.value = res.data.rows
         res.data.header.forEach(element => {
@@ -106,6 +110,24 @@ const getEmployeeAttendanceReports = async () => {
     })
 
 }
+
+const downloadAbsentReports = () => {
+    let url = '/reports/generate-basic-attendance'
+    canShowLoading.value = true
+    axios.post(url, {
+        start_date: variable.start_date,
+        end_date: variable.end_date,
+    }, { responseType: 'blob' }).then((response) => {
+        console.log(response.data);
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(response.data);
+        link.download = ` Basic Report_${dayjs(variable.start_date).format('DD-MM-YYYY')}_${dayjs(variable.end_date).format('DD-MM-YYYY')}.xlsx`;
+        link.click();
+    }).finally(() => {
+        canShowLoading.value = false
+    })
+}
+
 
 
 onMounted(() => {
@@ -132,6 +154,9 @@ onMounted(() => {
     border: 0 none;
     margin-top: -11px;
 }
+.page-content {
+    padding: calc(30px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+  }
 </style>
 
 

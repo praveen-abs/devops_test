@@ -199,6 +199,9 @@ onMounted(() => {
     border: 0 none;
     margin-top: -11px;
 }
+.page-content {
+    padding: calc(30px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+  }
 </style>
 
 

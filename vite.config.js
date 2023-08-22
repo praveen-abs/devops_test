@@ -39,7 +39,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js',
 
                 //Attendance Detailed Report
-                'resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
