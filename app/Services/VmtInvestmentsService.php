@@ -61,19 +61,12 @@ class VmtInvestmentsService
         try {
             //get the current active form id
             $query_form_details = VmtInvForm::where('form_name', $form_name)->first();
-
             $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
-
             $query_is_sumbitted = VmtInvFEmpAssigned::where('user_id', $user_id)->first();
-
             $query_doj = VmtEmployee::where('userid', $user_id)->first();
-
             $org_timeperiod = VmtOrgTimePeriod::where('status','1')->first();
-
             $start_date = Carbon::parse($org_timeperiod->start_date);
-
             $doj = Carbon::parse($query_doj->doj);
-
             $emp_comp = Compensatory::where('user_id',$user_id)->first();
 
             //Get the form template
@@ -97,18 +90,6 @@ class VmtInvestmentsService
                     ]
                 )->toArray();
 
-                // dd($query_inv_form_template[]);
-
-                        $max_amount = 0;
-
-                        // $com_aloows = $emp_comp->communication_allowance ? "" : 0;
-                        // $driv_reimberment = $emp_comp->driver_reimbursement ? "" : 0;
-                        // $vehicle_reimberment = $emp_comp->vehicle_reimbursement ? "" : 0;
-                        // $lta = $emp_comp->lta;
-                        // dd((int)$emp_comp->communication_allowance);
-                        // dd($lta);
-
-                        $res = [];
                     for($i=0; $i <count($query_inv_form_template); $i++){
                         if($query_inv_form_template[$i]['particular'] == "Communications Allowance ( Telephone)"){
                             if($emp_comp->communication_allowance == "" || (int)$emp_comp->communication_allowance == 0){
@@ -152,7 +133,6 @@ class VmtInvestmentsService
                         }
                     }
 
-                    // dd($query_inv_form_template);
 
             // employee declaration amount
             $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
@@ -175,10 +155,7 @@ class VmtInvestmentsService
                 $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
                 array_push($popdecode, $rentalDetail);
 
-            }
-            ;
-
-
+            };
 
             $arr = array();
             foreach ($query_inv_form_template as $single_template) {

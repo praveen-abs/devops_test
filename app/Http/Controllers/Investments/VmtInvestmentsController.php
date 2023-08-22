@@ -10,6 +10,7 @@ use App\Models\VmtInvEmpFormdata;
 use App\Models\VmtInvFEmpAssigned;
 use App\Http\Controllers\Controller;
 use App\Models\VmtOrgTimePeriod;
+use App\Models\VmtPayroll;
 use App\Services\VmtInvestmentsService;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -640,7 +641,7 @@ class VmtInvestmentsController extends Controller
     }
 
 
-    public function taxDeclaration(Request $request)
+    public function taxDeclaration()
     {
 
         $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
@@ -967,18 +968,79 @@ class VmtInvestmentsController extends Controller
         return "Saved";
     }
 
-    public function taxDeducationCalculate(Request $request)
+    public function monthTaxDashboard(Request $request)
     {
-        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-        $table = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
-            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
+            $time_period = VmtOrgTimePeriod::where('status','1')->first();
+            $start_date =  Carbon::parse($time_period->start_date)->subMonth();
+            $diff_months =  $start_date->diffInMonths(Carbon::now());
 
-        $sumOfDeclarationAmount = 0;
-        foreach ($table as $dec_amt) {
-            $sumOfDeclarationAmount += $dec_amt['dec_amount'];
-        }
-        dd($sumOfDeclarationAmount);
+            $res =[];
+            for($i=1; $i<$diff_months; $i++){
+               $sima  = $start_date->addMonths()->format('Y-m-d');
+               array_push($res,$sima);
+            }
+
+            $payroll_details  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
+            ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
+            ->where('user_id','174')->whereIn('payroll_date',$res)
+            ->get()->toArray();
+
+            $single = 0;
+             foreach($payroll_details as $single_details){
+                  $single += $single_details['income_tax'];
+             }
+
+             $tax_deduction =  $this->taxDeclaration();
+
+             $taxcalculation['Tax Paid Till Now'] = $single;
+             $taxcalculation['Total Tax Payable'] = $tax_deduction[9]['old_regime'];
+             $taxcalculation['Remaining Tax Amount'] = $tax_deduction[9]['old_regime'] - $single;
+
+            //  return ($taxcalculation);
+
+
+             $time_period = VmtOrgTimePeriod::where('status', '1')->first();
+             $start_date = Carbon::parse($time_period->start_date);
+             $end_date = Carbon::parse($time_period->end_date);
+             $current_date = Carbon::now();
+
+             $month_cal = 0;
+             $res1 = array();
+             while ($start_date->lte($end_date)) {
+                 $start_date = Carbon::parse($start_date)->addMonth();
+
+                 $simm['dates'] = $start_date;
+
+                 if ($start_date->lte($current_date)) {
+
+                    $payroll_details  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
+                    ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
+                    ->where('user_id','174')->whereIn('payroll_date',$res)
+                    ->get()->toArray();
+
+                    foreach($payroll_details as $single_payroll_details){
+                        $simm['monthy_tax'] = (int)$single_payroll_details['income_tax'];
+                        $month_cal += $simm['monthy_tax'];
+                    }
+
+                 } else {
+
+                  $remainder_months  = ($current_date)->diffInMonths($end_date);
+                    $add_months_remainders =  $remainder_months + 1 ;
+                     $simm['monthy_tax'] = $taxcalculation['Total Tax Payable'] / $add_months_remainders;
+                     $month_cal += $simm['monthy_tax'];
+                 }
+
+                 array_push($res1, $simm);
+             }
+
+             $mos['date'] = $res1;
+             $mos['total'] = $month_cal;
+             $mos['taxcalculation'] = $taxcalculation;
+
+             return $mos;
+
     }
 
 
