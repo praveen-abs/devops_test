@@ -375,8 +375,4 @@ const downloadDetailReports = () => {
     content: "\e9a2";
     color: white;
 }
-
-.page-content {
-    padding: calc(30px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
-  }
 </style>

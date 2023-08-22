@@ -9,7 +9,9 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog>
-
+    <div>
+        <p class="font-semibold text-lg">Attendance Late Coming Reports</p>
+    </div>
 
     <div class="bg-white p-2 my-2 rounded-lg grid grid-cols-12">
         <div class="grid grid-cols-12 gap-6 col-span-6">
