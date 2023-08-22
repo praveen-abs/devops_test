@@ -24,7 +24,7 @@
                                         position: absolute;
                                         opacity: 0.4;
                                         right: 4px;
-                                        top: 3px;" class="fa text-orange fa-birthday-cake"></i>
+                                        top: 3px;" :class="findCurrentEvent(events.type)" class="fa text-orange fa-birthday-cake"></i>
                                 <i style="font-size: 20px;
                                         position: absolute;
                                         top: 20px;
@@ -74,4 +74,13 @@ import { useMainDashboardStore } from "../stores/dashboard_service"
 const useDashboard = useMainDashboardStore()
 
 const width = ref('h-10')
+
+const findCurrentEvent = (data) =>{
+    if(data == 'holiday'){
+        return 'fa text-orange fa-birthday-cake'  
+      }else
+    if(data == 'work_anniversery'){
+        return 'fa text-green fa-briefcase'
+    }
+}
 </script>
