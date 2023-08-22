@@ -1743,7 +1743,13 @@ class VmtAttendanceReportsService
                             $reason = '-';
                         }
 
-                        $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
+                       
+                        if(empty( User::where('id',  $regularized_record->reviewer_id)->first())){
+                            $approved_by='-';
+                        }else{
+                            $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
+                        }
+
                         if ($regularized_record->reviewer_reviewed_date != null) {
                             $approved_on = Carbon::parse($regularized_record->reviewer_reviewed_date)->format('d-M-Y');
                         }
