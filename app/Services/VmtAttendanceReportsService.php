@@ -406,7 +406,12 @@ class VmtAttendanceReportsService
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                 $weekOffDays =  $shift_settings->week_off_days;
 
+                if ($attendanceResponseArray[$key]['checkin_time'] != null && $attendanceResponseArray[$key]['checkout_time'] != null && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
+                    $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
 
+                    $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
+                    $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
+                }
 
 
 
@@ -935,6 +940,12 @@ class VmtAttendanceReportsService
                 $weekOffDays =  $shift_settings->week_off_days;
                 $attendanceResponseArray[$key]['shift_start_time'] = $shiftStartTime;
                 $attendanceResponseArray[$key]['shift_end_time'] = $shiftEndTime;
+                if ($attendanceResponseArray[$key]['checkin_time'] != null && $attendanceResponseArray[$key]['checkout_time'] != null && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
+                    $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
+
+                    $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
+                    $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
+                }
                 // if(  $singleUser->id=='192'&&$key='2023-06-13'){
                 //     dd( $shift_settings);
                 // }
@@ -1743,10 +1754,10 @@ class VmtAttendanceReportsService
                             $reason = '-';
                         }
 
-                       
-                        if(empty( User::where('id',  $regularized_record->reviewer_id)->first())){
-                            $approved_by='-';
-                        }else{
+
+                        if (empty(User::where('id',  $regularized_record->reviewer_id)->first())) {
+                            $approved_by = '-';
+                        } else {
                             $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
                         }
 
