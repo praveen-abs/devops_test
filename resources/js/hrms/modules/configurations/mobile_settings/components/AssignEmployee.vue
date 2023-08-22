@@ -1,5 +1,5 @@
 <template>
-    <button @click="useStore.employeeAssignDialog = true">click</button>
+    <!-- <button @click="useStore.employeeAssignDialog = true">click</button> -->
     <Dialog v-model:visible="useStore.employeeAssignDialog" modal header="Holiday " :style="{ width: '70vw' }"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" style="border-top:5px solid #002f56" class="popup_card">
         <template #header>
@@ -17,14 +17,14 @@
         <!-- {{ type }} -->
         <div class="flex w-[100%]">
             <div class="">
-                <button class="text-[12px] w-[100px] rounded-l-[8px] h-[26px] bg-[#000000f1] hover:bg-[#000] text-[#fff]" @click="EnableAllAndDisableAll(selectedEmployee)">Enable All</button>
-                <button class="text-[12px] w-[100px] rounded-r-[8px] h-[26px] border-[2px] border-[#000] text-[#000]">Disable All</button>
+                <button class="text-[12px] w-[100px] rounded-l-[8px] h-[26px] bg-[rgba(0,0,0,0.95)] hover:bg-[#000] text-[#fff]" @click="EnableAllAndDisableAll(selectedEmployee)">Enable All</button>
+                <button class="text-[12px] w-[100px] rounded-r-[8px] h-[26px] border-[2px] border-[#000] text-[#000]" @click="EnableAllAndDisableAll(selectedEmployee.values= '')">Disable All</button>
             </div>
         </div>
-        {{ selectedEmployee }}
         <div class="grid grid-cols-12 gap-2 mt-3">
             <div class="col-span-4 flex items-center">
-                <input type="text" placeholder="search employee.." class="border rounded-lg bg-gray-100 p-1.5 w-11/12">
+                <input type="text" v-model="filters['global'].value" placeholder="search employee.." class="border rounded-lg bg-gray-100 p-1.5 w-11/12" >
+                <!-- <InputText  placeholder="Keyword Search" /> -->
             </div>
             <div class="flex col-span-5 items-center">
                 <p>Legal entity</p>
@@ -46,16 +46,17 @@
             <DataTable v-model:selection="selectedEmployee" :value="filteredSource" ref="dt" dataKey="id" :paginator="true"
                 :rows="10"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+                :rowsPerPageOptions="[5, 10, 25]"  :filters="filters" 
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                :globalFilterFields="['name', 'department_name']" responsiveLayout="scroll">
                 <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
-                <Column field="name" header="Name" style="min-width: 12rem"></Column>
-                <Column header="Department" field="department_name" style="min-width: 8rem"></Column>
+                <Column field="name" filterField="name" header="Name" style="min-width: 12rem"></Column>
+                <Column header="Department" filterField="department_name" field="department_name" style="min-width: 8rem"></Column>
                 <Column field="" header="Action" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div class="mx-auto">
                             <button
-                                class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]  bg-[#000000f1] hover:bg-[#000] text-[#fff]" 
+                                class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]  bg-[#000000d7] hover:bg-[#000] text-[#fff]" 
                                 @click="EnableDisable(slotProps.data.id, 1)">Enable</button>
                             <button
                                 class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px] border-[2px] border-[#000] text-[#000]"
@@ -80,6 +81,7 @@
 import axios from 'axios';
 import { onMounted, onUpdated, reactive, ref } from 'vue';
 import { useMobileSettingsStore } from '../MobileSettingsService';
+import { FilterMatchMode } from 'primevue/api';
 
 
 const useStore = useMobileSettingsStore()
@@ -92,6 +94,11 @@ const props = defineProps({
     },
 })
 
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    department_name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+});
 
 const visible = ref(false)
 
@@ -146,13 +153,19 @@ function EnableAllAndDisableAll(){
 // const Employee_ConfigData = reactive([])
 
 const saveCurrentlySelectedEmployeeConfig = (data, type) => {
-
+    useStore.canshowloading = true;
     axios.post('/SaveEmployeeAppConfigStatus', {
         "app_sub_modules_link_id": type,
         "selected_employees_user_code": selectedUserId
     }
     ).then((res) => {
         console.log(res);
+    }).finally(()=>{
+        selectedUserId.values="";
+        filteredSource.value="";
+        useStore.employeeAssignDialog = false;
+        useStore.getMobileSettings();
+         useStore.canshowloading = false;
     })
 
     // console.log(data);
