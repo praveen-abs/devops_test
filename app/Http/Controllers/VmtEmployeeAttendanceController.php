@@ -107,12 +107,21 @@ class VmtEmployeeAttendanceController extends Controller
     {
 
         $client_domain = $request->getHttpHost();
-        //$client_domain = 'brandavatar.abshrms.com';
-        $year = $request->year;
-        $month = $request->month;
+        if ($request->start_date == null || $request->end_date == null) {
+            $current_date = Carbon::now();
+            // $last_month = $current_date->format('M')-1;
+            // $start_date =  $current_date->format('Y').
+            dd( $current_date->format('m')-1);
+            dd($current_date);
+            $start_date = '2023-07-25';
+            $end_date = '2023-07-28';
+        } else {
+            $start_date = $request->start_date;
+            $end_date =  $request->end_date;
+        }
         // dd($attendance_report_service->basicAttendanceReport($year)[0]);
         //return $attendance_report_service->basicAttendanceReport($year);
-        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year, $month, $client_domain)), 'Test.xlsx');
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($start_date,  $end_date, $client_domain)), 'Test.xlsx');
     }
 
     public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
@@ -141,5 +150,15 @@ class VmtEmployeeAttendanceController extends Controller
         $start_date = '2023-07-15';
         $end_date = '2023-07-20';
         return Excel::download(new LateComingReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date)), 'Late Coming Report.xlsx');
+    }
+
+    public function fetchEGReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        // $start_date = '2023-07-25';
+        // $end_date = '2023-07-28';
+        $response = $attendance_report_service->fetchEGReportData($start_date, $end_date);
+        return $response;
     }
 }

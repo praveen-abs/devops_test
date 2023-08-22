@@ -790,6 +790,7 @@ Route::middleware(['auth'])->group(function () {
         App\Http\Controllers\VmtEmployeeAttendanceController::class,
         'fetchDetailedAttendancedata'
     ]);
+    Route::post('/fetch-EG-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchEGReportData']);
     Route::post('/fetch-absent-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAbsentReportData']);
     Route::post('/report/download-absent-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadAbsentReport']);
     Route::post('/fetch-LC-report-data', [
