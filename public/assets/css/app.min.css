@@ -682,11 +682,11 @@ select,button,.accordion-button {
     margin-top: 70px;
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .main-content {
         margin-left: 250px;
     }
-}
+} */
 
 .main-content {
     transition: all 0.1s ease-out;
@@ -17664,9 +17664,9 @@ tr:last-child td:last-child {
         left: 0px;
     }
 
-    .main-content {
+    /* .main-content {
         margin-left: 0px;
-    }
+    } */
 
     /* .page-content {
         padding: calc(40px + 24px) 0px 60px 0px;
