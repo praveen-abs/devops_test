@@ -157,7 +157,7 @@ const getEmployeeAbsentReports = () => {
     })
 }
 
-const downloadAbsentReports = () => {
+const downloadEarlygoingAttendanceReports = () => {
     let url = '/report/download-absent-report'
     canShowLoading.value = true
     axios.post(url, {

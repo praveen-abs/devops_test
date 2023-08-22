@@ -171,4 +171,8 @@ class VmtEmployeeAttendanceController extends Controller
     {
         return view('reports.attendance_earlygoing_reports');
     }
+    public function showAbsentReport(Request $request)
+    {
+        return view('reports.attendance_absent_reports');
+    }
 }

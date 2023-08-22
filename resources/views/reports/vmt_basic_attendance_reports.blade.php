@@ -1,4 +1,24 @@
 @extends('layouts.master')
+
+@section('title')
+@lang('translation.dashboards')
+@endsection
+@section('content')
+{{-- @component('components.attendance_breadcrumb')
+        @slot('li_1')
+        @endslot
+    @endcomponent --}}
+
+@vite('resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js')
+<div id="AttendanceBasicReports"></div>
+
+@endsection
+
+
+
+
+
+<!-- @extends('layouts.master')
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 
@@ -204,4 +224,4 @@
             });
            });
     </script>
-@endsection
+@endsection -->
