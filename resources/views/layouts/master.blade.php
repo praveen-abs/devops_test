@@ -166,10 +166,6 @@ clearstatcache();
 
             }
         }
-
-        #loading~#layout-wrapper .main-content {
-            display: none;
-        }
     </style>
 </head>
 
