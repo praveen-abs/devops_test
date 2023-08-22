@@ -35,7 +35,7 @@ class VmtEmployeeAttendanceController extends Controller
         $end_date = $request->end_date;
         // $start_date ='2023-06-26';
         // $end_date ='2023-07-26';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date)), 'Attendance.xlsx');
+        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date)), 'Detailed Attendance Report.xlsx');
     }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service)
@@ -117,7 +117,7 @@ class VmtEmployeeAttendanceController extends Controller
         }
         // dd($attendance_report_service->basicAttendanceReport($year)[0]);
         //return $attendance_report_service->basicAttendanceReport($year);
-        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($start_date,  $end_date, $client_domain)), 'Basic Attendance Report.xlsx');
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($start_date,  $end_date, $client_domain)), 'Basic Attendance Report c  .xlsx');
     }
 
     public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
