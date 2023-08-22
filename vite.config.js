@@ -33,6 +33,10 @@ export default defineConfig({
                 //Reports
                 'resources/js/hrms/modules/reports/ReportsModule.js',
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js',
 
                 //Attendance Detailed Report
                 'resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js',

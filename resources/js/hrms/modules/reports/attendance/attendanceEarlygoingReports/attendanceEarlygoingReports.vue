@@ -9,119 +9,33 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog>
-    <ul class="nav nav-pills  nav-tabs-dashed" id="pills-tab" role="tablist">
-        <li class="mx-2 nav-item ember-view" role="presentation">
-            <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
-                data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
-                <p class="text-md">PAYROLL</p>
-            </a>
-        </li>
-        <li class=" nav-item ember-view" role="presentation">
-            <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
-                <p class="text-md">STATUTORY REPORTS</p>
-            </a>
-        </li>
-        <li class=" nav-item ember-view" role="presentation">
-            <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                data-bs-target="#investmentComputation" role="tab" aria-controls="pills-home" aria-selected="true">
-                <p class="text-md">Attendance</p>
-            </a>
-        </li>
-        <li class="nav-item ember-view" role="presentation">
-            <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
-                <p class="text-md">LEAVES</p>
-            </a>
-        </li>
-        <li class="nav-item ember-view" role="presentation">
-            <a class="mx-2 nav-link ember-view" id="" data-bs-toggle="pill" href="" data-bs-target="#tax_filling" role="tab"
-                aria-controls="pills-home" aria-selected="true">
-                <p class="text-md">PMS/OKR</p>
-            </a>
-        </li>
 
-    </ul>
-
-
-
-    <div class="grid grid-cols-12">
-        <div class="col-span-4">
-            <ul class="nav nav-pills  nav-tabs-dashed" id="pills-tab" role="tablist">
-                <li class="mx-2 nav-item ember-view" role="presentation">
-                    <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
-                        data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
-                        <p class="text-sm">Detailed Report</p>
-                    </a>
-                </li>
-                <li class=" nav-item ember-view" role="presentation">
-                    <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                        data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
-                        <p class="text-sm">Muster Roll</p>
-                    </a>
-                </li>
-                <li class=" nav-item ember-view" role="presentation">
-                    <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                        data-bs-target="#investmentComputation" role="tab" aria-controls="pills-home" aria-selected="true">
-                        <p class="text-sm"> Consolidate</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-span-8 flex justify-end gap-4">
-            <div class="flex gap-3">
-                <div>
-                    <p class="text-sm">Report type:</p>
-                </div>
-                <div>
-                    <Dropdown v-model="selectedCity" :options="reportsType" optionLabel="name" class="w-full md:w-14rem" />
-                </div>
-            </div>
-            <div class="flex gap-3">
-                <div>
-                    <p class="text-sm">Date:</p>
-                </div>
-                <div>
-                    <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" class="w-full md:w-14rem" />
-                </div>
-            </div>
-            <div class="flex gap-3">
-                <div>
-                    <p class="text-sm">Legal Entity :
-                    </p>
-                </div>
-                <div>
-                    <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" class="w-full md:w-14rem" />
-                </div>
-            </div>
-            <div class="flex gap-3">
-                <div>
-                    <p class="text-sm">Department:</p>
-                </div>
-                <div>
-                    <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" class="w-full md:w-14rem" />
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="bg-white p-2 my-2 rounded-lg grid grid-cols-12">
-        <div class="col-span-6">
-            <input type="text" placeholder="Search employee..." name="" class="border p-1.5 text-sm bg-gray-50 rounded-lg"
-                id="">
-            <input type="date" name="" id="" v-model="variable.start_date">
-            <input type="date" name="" id="" v-model="variable.end_date">
-            <button @click="getEmployeeAbsentReports" class="btn btn-orange">Generate</button>
+        <div class="grid grid-cols-12 gap-6 col-span-6">
+            <div class="col-span-4">
+                <p>Start date</p>
+                <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10"
+                    v-model="variable.start_date" />
+            </div>
+            <div class="col-span-4">
+                <p>End date</p>
+                <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10" v-model="variable.end_date" />
+            </div>
+            <div class=" d-flex justify-content-center align-items-end col-span-4 ">
+                <button @click="getEarlygoingAttendanceReports" class="btn btn-orange">Generate</button>
+
+            </div>
         </div>
         <div class="col-span-6 flex justify-end gap-4">
-            <button><img src="../../assests/icons/printer.svg" alt="" srcset=""
+            <button><img src="../../assests/printer.svg" alt="" srcset=""
                     class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
-            <button><img src="../../assests/icons/download.svg" alt="" srcset="" @click="downloadAbsentReports"
+            <button><img src="../../assests/download.svg" alt="" srcset="" @click="downloadAbsentReports"
                     class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
-            <button class="bg-gray-100 rounded-full p-2 text-sm flex">
+            <!-- <button class="bg-gray-100 rounded-full p-2 text-sm flex">
                 <p class="bg-orange-400 p-1 h-6 w-6 rounded-full text-xs">A</p>
                 <p class="text-sm my-auto">Abbrevation</p>
-            </button>
+            </button> -->
         </div>
     </div>
 
@@ -243,7 +157,7 @@ const getEmployeeAbsentReports = () => {
     })
 }
 
-const downloadAbsentReports = () => {
+const downloadEarlygoingAttendanceReports = () => {
     let url = '/report/download-absent-report'
     canShowLoading.value = true
     axios.post(url, {
@@ -255,6 +169,28 @@ const downloadAbsentReports = () => {
         link.href = window.URL.createObjectURL(response.data);
         link.download = ` Absent Report_${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}.xlsx`;
         link.click();
+    }).finally(() => {
+        canShowLoading.value = false
+    })
+}
+
+
+const getEarlygoingAttendanceReports = () =>{
+    let url = '/fetch-EG-report-data'
+    canShowLoading.value = true
+    axios.post(url, {
+        start_date: variable.start_date,
+        end_date: variable.end_date,
+    }).then(res => {
+        console.log(res.data.rows);
+        AttendanceReportSource.value = res.data.rows
+        res.data.headers.forEach(element => {
+            let format = {
+                title: element
+            }
+            AttendanceReportDynamicHeaders.value.push(format)
+        });
+
     }).finally(() => {
         canShowLoading.value = false
     })

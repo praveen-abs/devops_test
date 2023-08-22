@@ -27,9 +27,8 @@ import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
 
-import AttendanceReport_Detailed from './AttendanceReport_Detailed.vue'
-
-const app = createApp(AttendanceReport_Detailed);
+import AttendanceAbsentReports from './attendanceAbsentReports.vue'
+const app = createApp(AttendanceAbsentReports);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -56,5 +55,5 @@ app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 
-app.mount("#vjs_AttendanceReport_Detailed");
+app.mount("#AttendanceAbsentReports");
 
