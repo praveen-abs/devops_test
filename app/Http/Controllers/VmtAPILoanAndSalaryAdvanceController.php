@@ -40,21 +40,21 @@ class VmtAPILoanAndSalaryAdvanceController extends Controller
         $response = json_encode($response, true);
         $response = json_decode($response, true);
         $employeedashboard = $vmtsalaryAdvanceService->EmployeeLoanHistory($request->loan_type, $users_detail->id);
-        $borrowamount = $vmtsalaryAdvanceService->SalAdvShowEmployeeView($request->loan_type, $users_detail->id); 
-        $borrowamount = json_encode($borrowamount, true);
-        $borrowamount = json_decode($borrowamount, true);
+        $eligible_loan_amount = $vmtsalaryAdvanceService->SalAdvShowEmployeeView($request->loan_type, $users_detail->id);
+        $eligible_loan_amount = json_encode($eligible_loan_amount, true);
+        $eligible_loan_amount = json_decode($eligible_loan_amount, true);
         $response = array();
-        dd($borrowamount);
         if ($request->loan_type == 'int_free_loan') {
             $employee_loan_history = $vmtsalaryAdvanceService->EmployeeLoanHistory($users_detail->id, 'InterestFreeLoan');
         } else if ($request->loan_type == 'loan_with_int') {
             $employee_loan_history = $vmtsalaryAdvanceService->EmployeeLoanHistory($users_detail->id, 'Interest With Loan');
         }
-        // dd($employee_loan_history);
-        // To Do 
-        // else if(){
-
-        // }
+        else if ($request->loan_type == 'sal_adv') {
+            $emp_sal_adv = $vmtsalaryAdvanceService->SalAdvShowEmployeeView($users_detail->id, 'Salary Advance');
+        }
+        $emp_dash = $vmtsalaryAdvanceService->employeeDashboardLoanAndAdvance($users_detail->id, 'Employee Dash Board');
+        
+        // dd( $emp_dash );
         if ($response['original']['data'] == 0) {
             return [
                 "status" => "0",
