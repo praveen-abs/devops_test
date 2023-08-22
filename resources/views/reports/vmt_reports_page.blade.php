@@ -140,6 +140,8 @@
                                 <ul class=' list-style-circle px-4'>
                                     <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic Report</a></li>
                                     <li class=""><a href="{{ route('showDetailedAttendanceReport') }}">Detailed Report</a></li>
+                                    <li class=""><a href="{{ route('showLateComingReport') }}">Late Coming Report</a></li>
+                                    <li class=""><a href="{{ route('showEarlygoingReport') }}">Late Coming Report</a></li>
                                 </ul>
                             </div>
                         </div>

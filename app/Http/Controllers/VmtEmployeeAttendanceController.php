@@ -111,4 +111,14 @@ class VmtEmployeeAttendanceController extends Controller
         $end_date = '2023-07-20';
         return Excel::download(new LateComingReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date)), 'Late Coming Report.xlsx');
     }
+
+
+    public function showLateComingReport(Request $request)
+    {
+        return view('reports.attendance_latecoming_reports');
+    }
+    public function showEarlygoingReport(Request $request)
+    {
+        return view('reports.attendance_earlygoing_reports');
+    }
 }
