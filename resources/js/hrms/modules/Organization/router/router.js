@@ -8,12 +8,12 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: "/quickEmployeeOnboarding/:module",
+            path: "/import/:module",
             name: "QuickOnboarding",
             component: QuickOnboarding,
         },
         {
-            path: "/bulkEmployeeOnboarding/:module",
+            path: "/import/:module",
             name: "BulkOnboarding",
             component: BulkOnboarding,
         },
