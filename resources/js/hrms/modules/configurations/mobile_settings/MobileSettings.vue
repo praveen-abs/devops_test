@@ -36,7 +36,7 @@
                         @click="selectedType = item.id, MobileSettingsStore.employeeAssignDialog = true">
                         <i class="pi pi-users"></i>
                         <span class="text-[#000] mx-2" >
-                            {{ item.Emloyee_count }}</span>
+                            {{ item.employee_count }}</span>
                             <span class=" underline">Assign
                             Employee</span>
                     </div>
