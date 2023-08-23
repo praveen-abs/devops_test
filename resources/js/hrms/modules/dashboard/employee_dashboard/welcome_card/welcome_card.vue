@@ -1,40 +1,54 @@
 <template>
     <div
         class=" !h-[180px] w-[100%]  overflow-hidden rounded-xl shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
-        <div class="col-span-7 mb-8" v-for="item in EmpDetials" :key="item" >
+        <div class="col-span-7 mb-8" v-for="item in EmpDetials" :key="item">
 
             <p class=" font-[14px] font-['Poppins']  text-gray-500 flex items-center">
                 {{ current_session }}
             </p>
             <div class="text-gray-900 text-[18px] mb-2  font-['Poppins'] "> {{ service.current_user_name }}</div>
-            <div class="flex my-1 overflow-visible items-center  !z-10 ">
-                <i class="fa fa-sun-o text-warning my-auto text-[20px] " aria-hidden="true"></i>
-                <p class="text-[12px] my-auto font-semibold px-2">General Shift</p>
+            <div class="flex gap-4 items-center">
+                <div class="flex my-1 overflow-visible items-center  !z-10 ">
+                    <i class="fa fa-sun-o text-warning my-auto text-[20px] " aria-hidden="true"></i>
+                    <p class="text-[12px] my-auto font-semibold px-2">General Shift</p>
+                </div>
+                <div class="btn-status">
+                    <input type="checkbox" name="checkbox" id="checkbox" class="hidden" v-model="welcome_card.check"
+                        @change="getTime" />
+                    <label for="checkbox" class="relative inline-block w-12 h-5 rounded-lg  transition duration-300 cursor-pointer"
+                        :class="[welcome_card.check ? ' bg-green-100' : 'bg-red-100']">
+                        <span class="absolute inset-0 inline-block w-5 h-5 rounded-full shadow transform transition-transform cursor-pointer"
+                            :class="[welcome_card.check ? 'translate-x-6 bg-green-400' : 'bg-red-400']"></span>
+                    </label>
+                </div>
             </div>
-            <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
+            <!-- <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
                 <input type="checkbox" id="checkin_function" class="text-[6px] font-semibold" v-model="welcome_card.check"
                     @change="getTime" />
                 <span class="flex items-center slider-checkbox check-inw round">
                     <span class="slider-checkbox-text !text-[8px] font-semibold"> </span>
                 </span>
-            </label>
+            </label> -->
             <div>
-                <p class="text-[12px] mt-[-20px] text-[#8B8B8B] font-['Poppins'] flex items-center">
+                <p class="text-[12px] text-[#8B8B8B] font-['Poppins'] flex items-center">
                     Time duration:<span>{{ item.effective_hours ? item.effective_hours : 0 }}</span>
                 </p>
                 <p v-if="item.checkin_time" class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
                     `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}
                     <i class="mx-2 text-sm font-semibold text-green-800"
-                            :class="findAttendanceMode(item.attendance_mode_checkin)"></i>
+                        :class="findAttendanceMode(item.attendance_mode_checkin)"></i>
 
                 </p>
-                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In: --:--:--` }}
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In:
+                    --:--:--` }}
                 </p>
                 <p v-if="item.checkout_time" class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
                     `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}
                     <i class="mx-2 text-sm font-semibold text-green-800"
-                    :class="findAttendanceMode(item.attendance_mode_checkout)"></i></p>
-                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out: --:--:--` }}
+                        :class="findAttendanceMode(item.attendance_mode_checkout)"></i>
+                </p>
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out:
+                    --:--:--` }}
                 </p>
 
             </div>
@@ -257,7 +271,7 @@ const getEmployeeDetials = async () => {
         } else {
             welcome_card.check = null;
         }
-    }).finally(()=>{
+    }).finally(() => {
         usedashboard.canShowTopbar = true
     });
 };
@@ -453,4 +467,5 @@ input:checked+.slider-checkbox>.slider-checkbox-text:after
 input+.slider-checkbox>.slider-checkbox-text:after
 {
     content: "Check In";
-}</style>
+}
+</style>

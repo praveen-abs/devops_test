@@ -1,19 +1,11 @@
 <!-- @vite('resources/js/hrms/modules/exit/exit.js')
 <div id="Exit"></div> -->
 
-<<<<<<< HEAD
 <!-- @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
 <div id="vjs_attendance_master"></div> -->
 
 <!-- @vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
 <div id="PayRun"></div> -->
-=======
-<!-- @vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
-<div id="PayRun"></div> -->
-
-@vite('resources/js/hrms/modules/reports/ReportsModule.js')
-<div id="ReportsModule"></div>
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
 
 <!-- @vite('resources/js/hrms/modules/attendence/AttendanceModule.js')
 <div id="AttendanceModule"></div> -->

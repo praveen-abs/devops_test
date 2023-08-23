@@ -763,32 +763,15 @@ class VmtMainDashboardController extends Controller
             }
             $response['effective_hours'] =$effective_hours;
         }
-        if(!empty($response->checkin_date))
-        {
-            $response['effective_hours'] =null;
-        }
-
+        // if(!empty($response->checkin_date))
+        // {
+        //     $response['effective_hours'] =null;
+        // }
             return $response;
         //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
 
-
-
-
     //HR New Main Dashboard
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

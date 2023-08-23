@@ -1,7 +1,7 @@
 <template>
     <div class="card h-screen overflow-x-auto">
         <div class="card-body">
-            <input type="text" name="" id="" v-model="query" class="border border-gray-300 p-1 w-full rounded-lg first-letter py-4"
+            <input type="text" name="" id="" v-model="query" class="border border-gray-300 p-1 w-full rounded-lg first-letter my-2"
                 placeholder="Search Employees..">
             <button class="list_employee_attendance  p-3 px-1 flex hover:bg-gray-300 rounded-lg w-full focus:bg-gray-300"
                 v-for="(employee, index) in globalSearch(query, source)"
