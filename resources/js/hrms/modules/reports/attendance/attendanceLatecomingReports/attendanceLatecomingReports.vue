@@ -160,7 +160,7 @@ const getEmployeeAbsentReports = () => {
 }
 
 const downloadLatecomingReports = () => {
-    let url = '/report/download-absent-report'
+    let url = '/report/download-late-coming-report'
     canShowLoading.value = true
     axios.post(url, {
         start_date: variable.start_date,
