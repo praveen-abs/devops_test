@@ -983,8 +983,10 @@ class VmtInvestmentsController extends Controller
 
             $payroll_details  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
             ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
-            ->where('user_id','174')->whereIn('payroll_date',$res)
+            ->where('user_id',auth()->user()->id)->whereIn('payroll_date',$res)
+            // ->toSql();
             ->get()->toArray();
+            // dd($payroll_details);
 
             $single = 0;
              foreach($payroll_details as $single_details){
@@ -995,7 +997,7 @@ class VmtInvestmentsController extends Controller
             $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
             $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
 
-           $emp_assign = VmtInvFEmpAssigned::where('user_id','194')->first();
+           $emp_assign = VmtInvFEmpAssigned::where('user_id',auth()->user()->id)->first();
 
             if($emp_assign){
 
@@ -1028,37 +1030,37 @@ class VmtInvestmentsController extends Controller
              while ($start_date->lte($end_date)) {
                  $start_date = Carbon::parse($start_date)->addMonth();
 
-                 $simm['dates'] = $start_date;
+                 $dates = Carbon::parse($start_date)->submonth()->format('M Y');
 
                  if ($start_date->lte($current_date)) {
 
                     $payroll_details  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
                     ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
-                    ->where('user_id','174')->whereIn('payroll_date',$res)
+                    ->where('user_id', auth()->user()->id)->whereIn('payroll_date',$res)
                     ->get()->toArray();
 
                     foreach($payroll_details as $single_payroll_details){
-                        $simm['monthy_tax'] = (int)$single_payroll_details['income_tax'];
-                        $month_cal_previous += $simm['monthy_tax'];
-
+                        $monthy_tax = (int)$single_payroll_details['income_tax'];
+                        $simm[$dates] = $monthy_tax;
+                        $month_cal_previous += $monthy_tax;
                     }
 
                  } else {
 
                   $remainder_months  = ($current_date)->diffInMonths($end_date);
                     $add_months_remainders =  $remainder_months + 1 ;
-                     $simm['monthy_tax'] = $taxcalculation['Remaining Tax Amount'] / $add_months_remainders;
-                     $month_cal_next += $simm['monthy_tax'];
+                     $monthy_tax = $taxcalculation['Remaining Tax Amount'] / $add_months_remainders;
+                     $simm[$dates] = $monthy_tax;
+                     $month_cal_next += $monthy_tax;
                      $month_cal = $month_cal_next - $month_cal_previous;
-
                  }
 
                  array_push($res1, $simm);
              }
 
-             $mos['date'] = $res1;
-             $mos['total'] = $month_cal;
-             $mos['taxcalculation'] = $taxcalculation;
+            $res1[11]['Total'] = $month_cal;
+            $mos['date'] = $res1[11];
+            $mos['taxcalculation'] = $taxcalculation;
 
              return $mos;
 
