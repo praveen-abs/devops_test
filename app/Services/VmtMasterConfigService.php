@@ -122,7 +122,7 @@ class VmtMasterConfigService {
 
                         $user_data = User::where('user_code',$single_user_code)->first();
                         $save_emp_app_config_data =new VmtEmpSubModules;
-                        $save_emp_app_config_data->client_id =$client_id;
+                        $save_emp_app_config_data->client_id =$single_user_code['client_id'];
                         $save_emp_app_config_data->user_id =$single_user_code['id'];
                         $save_emp_app_config_data->status =$single_user_code['isEnabled'];
                         $save_emp_app_config_data->app_sub_module_link_id =$app_sub_modules_link_id ;
@@ -155,7 +155,7 @@ class VmtMasterConfigService {
     public function getEmployeesMobileSettingsData($user_code){
 
         $user_date = User::where('user_code',$user_code)->first();
-   
+
         $sub_module_data =VmtAppSubModuleslink::get();
 
         $moile_settings_data = array();
@@ -175,11 +175,11 @@ class VmtMasterConfigService {
                     $moile_settings_data[$i]['employee_status'] =0;
                 }
             }
-      $i++; 
-               
+      $i++;
+
         }
-       
-        
+
+
         return $moile_settings_data;
 
     }

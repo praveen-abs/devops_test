@@ -184,8 +184,8 @@ export default defineConfig({
 
             //    Exit approval
             'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
-
-            'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js'
+         //Mobile Settings
+             'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
 
 
             ],

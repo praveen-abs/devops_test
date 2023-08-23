@@ -800,12 +800,12 @@
                                         </span>
                                     </a>
                                 </li> --}}
-                        
+
                                 <li class="nav-item">
                                     <a href="{{ route('view-config-master') }}" class="nav-link"><span>Master
                                             Config</span></a>
                                 </li>
-                                
+
                                 <li class="nav-item">
                                     <a href="{{ route('vmt_clientOnboarding-route') }}" class="nav-link"><span>
                                             Client
@@ -833,7 +833,7 @@
                                             Settings
                                         </span></a>
                                 </li>
-                                
+
 
                                 <li class="nav-item">
                                     <a href="{{ route('showAttendanceSettingsPage') }}"
@@ -845,13 +845,8 @@
                                         <span> Investment Settings</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('showSAsettingsView') }}" id=""
-                                        class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
-                                        aria-expanded="false">
-                                        <span>
-                                            Loan And Salary Advance
-                                        </span>
-                                    </a>
+                                    <a href="{{ route('showMobileSettingsPage') }}" class="py-1 nav-link sidebar">
+                                        <span> Mobile Settings</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('showSAsettingsView') }}" id=""
