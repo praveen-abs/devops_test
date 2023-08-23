@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
 
 class VmtMasterConfigService {
 
-    public function SaveAppConfigStatus($module_id,$status)
+    public function saveAppConfigStatus($module_id,$status)
     {
         $validator = Validator::make(
             $data = [

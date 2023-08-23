@@ -60,7 +60,7 @@
                 <Column field="status" header="Action" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div class="mx-auto">
-                            <button 
+                            <button
                                  class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px] "
                                 @click="EnableDisable(slotProps.data.id, 1,slotProps.data.status = 1,slotProps.data.client_id )"  :class="[slotProps.data.status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']">Enable</button>
                             <button
@@ -132,7 +132,7 @@ const getFilteredSource = (legalEntity, department, type) => {
     console.log(legalEntity, department);
     console.log("sub_module_id", type);
     let sub_module_id = type;
-    axios.post('/get_empolyees_filter_data', {
+    axios.post('/get_employees_filter_data', {
         department_id: department,
         client_name: legalEntity,
         sub_module_id: sub_module_id
@@ -147,7 +147,7 @@ const getFilteredSource = (legalEntity, department, type) => {
 
 const selectedUserId = reactive([])
 
-// Enable Disable function 
+// Enable Disable function
 
 function EnableDisable(user, EnableOrDisable,data,client_id) {
     console.log("isEnabled:" + EnableOrDisable, user);

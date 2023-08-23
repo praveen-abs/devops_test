@@ -86,9 +86,9 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function  SaveAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function  saveAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-        $response = $serviceVmtMasterConfigService->SaveAppConfigStatus($request->module_id,$request->status);
+        $response = $serviceVmtMasterConfigService->saveAppConfigStatus($request->module_id,$request->status);
 
         return response()->json($response);
 
@@ -104,7 +104,7 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function fetchMoileModuleData( Request $request ,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function fetchMobileModuleData( Request $request ,VmtMasterConfigService $serviceVmtMasterConfigService){
 
         try{
         $client_id =$request->client_id ;
@@ -136,7 +136,7 @@ class VmtMasterConfigController extends Controller
              }else{
                 $emp_count=0;
              }
-            $mobile_settings_data[$key]['Emloyee_count'] =  $emp_count;
+            $mobile_settings_data[$key]['employee_count'] =  $emp_count;
         }
 
 
@@ -144,7 +144,7 @@ class VmtMasterConfigController extends Controller
 
          return response()->json([
                 "status" => "success",
-                "message" => "data fetch successfully",
+                "message" => "Data fetch successfully",
                 "data" => $mobile_settings_data,
             ]);
 
@@ -160,17 +160,17 @@ class VmtMasterConfigController extends Controller
         }
 
     }
-  
+
     public function getAllDropdownFilterSetting(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
         $response = getAllDropdownFilterSetting();
         return $response;
 
     }
-    public function get_empolyees_filter_data(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function get_employees_filter_data(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-        $filtered_data = $this->empolyees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);
-        
+        $filtered_data = $this->employees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);
+
         foreach ($filtered_data as $key => $single_value) {
              $emp_module_status =VmtEmpSubModules::where('client_id',sessionGetSelectedClientid())->where('app_sub_module_link_id',$request->sub_module_id)->where('user_id', $single_value['id']);
              if($emp_module_status->exists()){
@@ -184,11 +184,11 @@ class VmtMasterConfigController extends Controller
         return $filtered_data;
 
     }
-   public function empolyees_filter_data($department_id, $designation, $work_location, $client_name)
+   public function employees_filter_data($department_id, $designation, $work_location, $client_name)
     {
-    
+
         try {
-    
+
             $select_employee = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
                 ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
@@ -203,7 +203,7 @@ class VmtMasterConfigController extends Controller
                     'vmt_client_master.client_name',
                     'vmt_client_master.id as client_id',
                 );
-    
+
             if (!empty($department_id)) {
                 $select_employee = $select_employee->where('department_id', $department_id);
             }
@@ -226,10 +226,10 @@ class VmtMasterConfigController extends Controller
                 return  $select_employee->whereNotIn('user_code',  $assigned_emp_user_codes)->get();
             }
             $employee_data = $select_employee->get();
-    
-    
+
+
              return $employee_data->toarray();
-    
+
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",

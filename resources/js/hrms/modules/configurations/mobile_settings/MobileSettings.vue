@@ -35,17 +35,17 @@
                     <div class="flex float-right cursor-pointer w-[170px] items-center"
                         @click="selectedType = item.id, MobileSettingsStore.employeeAssignDialog = true">
                         <i class="pi pi-users"></i>
-                        <span class="text-[#000] mx-2" > 
-                            {{ item.Emloyee_count }}</span> 
+                        <span class="text-[#000] mx-2" >
+                            {{ item.Emloyee_count }}</span>
                             <span class=" underline">Assign
                             Employee</span>
                     </div>
-                    <!-- <p 
+                    <!-- <p
                         class="text-right cursor-pointer"><span class="text-[#000]"
                             v-if="useMobileSettingsStore.Emloyee_count"> <i class="pi pi-users"></i>{{
                                 useMobileSettingsStore.Emloyee_count }} </span>-
                          <span class="text-[#000]" > <i class="pi pi-users"></i> </span>- <span>Assign
-                            Employee</span> 
+                            Employee</span>
                     </p> -->
                 </div>
             </div>
@@ -62,9 +62,10 @@ import { useMobileSettingsStore } from "./MobileSettingsService";
 
 const MobileSettingsStore = useMobileSettingsStore();
 
-onMounted(() => {
-    MobileSettingsStore.getMobileSettings();
-    MobileSettingsStore.getSessionClient();
+onMounted(async () => {
+    await MobileSettingsStore.getSessionClient();
+    await MobileSettingsStore.getMobileSettings();
+
 })
 
 
@@ -77,20 +78,20 @@ const dialogValue = ref(false)
 
 
 
-const val = ref([
-    { name: "Mobile App", Type: 1, EnableDisableBtn: 1, },
-    { name: "Check-In / Check-out", Type: 2, EnableDisableBtn: 2, },
-    { name: "Location Capture", Type: 3, EnableDisableBtn: 1, },
-    { name: "Check-In / Check-out Selfie", Type: 4, EnableDisableBtn: 1, },
-    { name: "Reimbursement while Check-out", Type: 5, EnableDisableBtn: 1, },
-    { name: "Absent/Attendance Regularization", Type: 6, EnableDisableBtn: 1, },
-    { name: "Leave Apply", Type: 7, EnableDisableBtn: 1, },
-    { name: "Salary Advance and Loan", Type: 8, EnableDisableBtn: 1, },
-    { name: "Investments", Type: 9, EnableDisableBtn: 1, },
-    { name: "PMS", Type: 10, EnableDisableBtn: 1, },
-    { name: "Exit Apply", Type: 11, EnableDisableBtn: 1, },
+// const val = ref([
+//     { name: "Mobile App", Type: 1, EnableDisableBtn: 1, },
+//     { name: "Check-In / Check-out", Type: 2, EnableDisableBtn: 2, },
+//     { name: "Location Capture", Type: 3, EnableDisableBtn: 1, },
+//     { name: "Check-In / Check-out Selfie", Type: 4, EnableDisableBtn: 1, },
+//     { name: "Reimbursement while Check-out", Type: 5, EnableDisableBtn: 1, },
+//     { name: "Absent/Attendance Regularization", Type: 6, EnableDisableBtn: 1, },
+//     { name: "Leave Apply", Type: 7, EnableDisableBtn: 1, },
+//     { name: "Salary Advance and Loan", Type: 8, EnableDisableBtn: 1, },
+//     { name: "Investments", Type: 9, EnableDisableBtn: 1, },
+//     { name: "PMS", Type: 10, EnableDisableBtn: 1, },
+//     { name: "Exit Apply", Type: 11, EnableDisableBtn: 1, },
 
-]);
+// ]);
 
 </script>
 
