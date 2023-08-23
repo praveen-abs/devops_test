@@ -487,7 +487,7 @@ class VmtEmployeeService
             $compensatory->save();
 
             //save the onboard documents
-            if ($onboard_type == 'normal') {
+            if ($onboard_type == 'normal' ||$onboard_type == 'quick' ) {
                 $this->uploadDocument($user_id, $data['Aadharfront'], 'Aadhar Card Front');
                 $this->uploadDocument($user_id, $data['AadharBack'], 'Aadhar Card Back');
                 $this->uploadDocument($user_id, $data['panDoc'], 'Pan Card');
