@@ -27,21 +27,21 @@
             </div>
         </div>
         <div class="grid grid-cols-12 gap-2 mt-3">
-            <div class="flex items-center col-span-4">
-                <input type="text" v-model="filters['global'].value" placeholder="search employee.."
+            <div class="col-span-4 flex items-center">
+                <input type="text" v-model="filters['global'].value" placeholder="Search employee.."
                     class="border rounded-lg bg-gray-100 p-1.5 w-11/12">
                 <!-- <InputText  placeholder="Keyword Search" /> -->
             </div>
             <div class="flex items-center col-span-5">
                 <p>Legal entity</p>
-                <Dropdown v-model="legalEntity" class="w-full min-[280px]:" placeholder="legal entity"
+                <Dropdown v-model="legalEntity" class="w-full min-[280px]:" placeholder="Legal entity"
                     @change="getFilteredSource($event.value, '', type)"
                     :options="dropdownValues ? dropdownValues.legalEntity : []" optionLabel="client_name"
                     optionValue="id" />
             </div>
             <div class="flex items-center col-span-3">
                 <p>Department</p>
-                <Dropdown v-model="department" class="w-full" placeholder="department"
+                <Dropdown v-model="department" class="w-full" placeholder="Department"
                     @change="getFilteredSource('', $event.value, type)"
                     :options="dropdownValues ? dropdownValues.department : []" optionLabel="name" optionValue="id" />
 
@@ -125,7 +125,7 @@ let format = {
 const btn = ref(1);
 
 const getDropdownValues = async () => {
-    await axios.get('/getalldropdownfiltersetting').then(res => {
+    await axios.get('/getAllDropdownFilterSetting').then(res => {
         dropdownValues.value = res.data
     })
 }
@@ -134,7 +134,7 @@ const getFilteredSource = (legalEntity, department, type) => {
     console.log(legalEntity, department);
     console.log("sub_module_id", type);
     let sub_module_id = type;
-    axios.post('/get_employees_filter_data', {
+    axios.post('/getEmployeesFilterData', {
         department_id: department,
         client_name: legalEntity,
         sub_module_id: sub_module_id
@@ -205,7 +205,7 @@ val.forEach((element) => {
         useStore.getMobileSettings();
         useStore.canshowloading = false;
     })
-    
+
     // "selected_employees_user_code": selectedUserId
     // console.log(data);
     // let format = {
