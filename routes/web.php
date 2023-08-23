@@ -861,7 +861,7 @@ Route::middleware(['auth'])->group(function () {
 
        Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
        Route::post('/saveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'saveAppConfigStatus'])->name('saveAppConfigStatus');
-       Route::post('/get_employees_filter_data', [App\Http\Controllers\VmtMasterConfigController::class, 'get_employees_filter_data'])->name('get_employees_filter_data');
+       Route::post('/getEmployeesFilterData', [App\Http\Controllers\VmtMasterConfigController::class, 'getEmployeesFilterData'])->name('getEmployeesFilterData');
        Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
        Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
        Route::post('/fetchMobileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMobileModuleData'])->name('fetchMobileModuleData');
