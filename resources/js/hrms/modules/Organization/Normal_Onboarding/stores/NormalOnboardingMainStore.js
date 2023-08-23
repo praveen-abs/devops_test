@@ -359,6 +359,10 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         const newDate = subYears(value, 10);
         return newDate;
     }
+    const dateOfBirth = (value) => {
+        const newDate = subYears(value, 18);
+        return newDate;
+    }
 
 
     const validateFile = (value) => {
@@ -1503,7 +1507,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         getPersonalDocuments, readonly,
 
         // /Helper functions
-        afterYears, beforeYears, compen_disable
+        afterYears, beforeYears, compen_disable,dateOfBirth
 
 
 

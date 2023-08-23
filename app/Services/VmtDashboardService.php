@@ -23,6 +23,7 @@ use DatePeriod;
 use DateInterval;
 use \Datetime;
 use App\Services\VmtAttendanceService;
+use App\Services\VmtMasterConfigService;
 use App\Services\VmtHolidayService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -46,7 +47,7 @@ class VmtDashboardService{
 
     }
 
-    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService){
+    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService , $serviceVmtMasterConfigService){
 
         $validator = Validator::make(
             $data = [
@@ -128,6 +129,8 @@ class VmtDashboardService{
 
         }
 
+        $mobile_settings =$serviceVmtMasterConfigService->getEmployeesMobileSettingsData($user_code);
+
         $response['name']=$employee_details_query->name;
         $response['designation']=$employee_designation;
 
@@ -147,6 +150,7 @@ class VmtDashboardService{
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
         $response["events"] = $this->getAllEventsDashboard();
+        $response["mobile_settings"] = $mobile_settings;
 
         return $response;
     }
