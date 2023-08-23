@@ -6,6 +6,7 @@ import { required, email, minLength, sameAs, helpers } from '@vuelidate/validato
 import axios from "axios";
 import { inject } from "vue";
 import { useToast } from "primevue/usetoast";
+import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -575,48 +576,113 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             // Personal Documents
 
             AadharCardFront: {
-                required: helpers.withMessage('Aadhar front is required', () => {
-                    return isMandatoryDocuments.AadharFrontIsMandatory
+                required: helpers.withMessage('Aadhar front is required', (value) => {
+                    if (!isMandatoryDocuments.AadharFrontIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.AadharFrontIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.AadharFrontIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             AadharCardBack: {
                 required: helpers.withMessage('Aadhar back is required', () => {
-                    return isMandatoryDocuments.AadharBackIsMandatory
+                    if (!isMandatoryDocuments.AadharBackIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.AadharBackIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.AadharBackIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             PanCardDoc: {
                 required: helpers.withMessage('Pan Card is required', () => {
-                    return isMandatoryDocuments.panCardIsMandatory
+                    if (!isMandatoryDocuments.panCardIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.panCardIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.panCardIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
+
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             DrivingLicenseDoc: {
                 required: helpers.withMessage('Driving License is required', () => {
-                    return isMandatoryDocuments.DrivingLicense
-                }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+                    if (!isMandatoryDocuments.DrivingLicense) {
+                        if (!value) {
+                            return isMandatoryDocuments.DrivingLicense
+                        } else {
+                            return !isMandatoryDocuments.DrivingLicense
+                        }
+                    } else {
+                        return true
+                    }
+                }
+                ), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             EductionDoc: {
                 required: helpers.withMessage('Education Certificate is required', () => {
-                    return isMandatoryDocuments.educationCertificateIsMandatory
+                    if (!isMandatoryDocuments.educationCertificateIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.educationCertificateIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.educationCertificateIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             VoterIdDoc: {
                 required: helpers.withMessage('Voter Id is required', () => {
-                    return isMandatoryDocuments.voterId
+                    if (!isMandatoryDocuments.voterId) {
+                        if (!value) {
+                            return isMandatoryDocuments.voterId
+                        } else {
+                            return !isMandatoryDocuments.voterId
+                        }
+                    } else {
+                        return true
+                    }
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             RelievingLetterDoc: {
                 required: helpers.withMessage('Relieving Letter is required', () => {
-                    return isMandatoryDocuments.RelievingLetter
+                    if (!isMandatoryDocuments.RelievingLetter) {
+                        if (!value) {
+                            return isMandatoryDocuments.RelievingLetter
+                        } else {
+                            return !isMandatoryDocuments.RelievingLetter
+                        }
+                    } else {
+                        return true
+                    }
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             PassportDoc: {
                 required: helpers.withMessage('passport is required', () => {
-                    return isMandatoryDocuments.passport
+                    if (!isMandatoryDocuments.passport) {
+                        if (!value) {
+                            return isMandatoryDocuments.passport
+                        } else {
+                            return !isMandatoryDocuments.passport
+                        }
+                    } else {
+                        return true
+                    }
                 }),
                 validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
         }
-
 
     })
 
