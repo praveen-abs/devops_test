@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\VmtMaritalStatus;
+
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\ViewNotification;
@@ -578,7 +579,7 @@ class VmtEmployeeOnboardingController extends Controller
                     $emp_compensatory_data =Compensatory::where('user_id',  $user_id);
                     $emp_statutory_data =VmtEmployeeStatutoryDetails::where('user_id',  $user_id);
 
-                    if($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() && $emp_statutory_data->exists()){
+                    if($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() &&    $emp_statutory_data->exists()){
 
 
                         $response = [
@@ -782,6 +783,15 @@ class VmtEmployeeOnboardingController extends Controller
     public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService)
     {
         return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
+    }
+    public function getMandatoryDocumentDetails(Request $request)
+    {
+        $response =VmtDocuments::get(['id',
+                                     "document_name",
+                                     "is_mandatory"]);
+
+        return $response;
+
     }
 
 
