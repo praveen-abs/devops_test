@@ -757,7 +757,7 @@ class VmtEmployeeService
 
             //store employee_familyDetails details
 
-            VmtEmployeeFamilyDetails::where('user_id', $user_id)->appdelete();
+            VmtEmployeeFamilyDetails::where('user_id', $user_id)->delete();
 
             if (!empty($data['father_name'])) {
 
