@@ -544,22 +544,26 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                                 errorRecordsCount.value.push('invalid')
                                             }
                                             else
-                                                if (!isBankExists(data['Bank Name'])) {
+                                                if (isBankExists(data['Bank Name'])) {
                                                     errorRecordsCount.value.push('invalid')
                                                 }
                                                 else
-                                                    if (isValidBankIfsc(data['Bank ifsc'])) {
+                                                    if (isExistsOrNot(existingMartialStatus.value, data['Marital Status'])) {
                                                         errorRecordsCount.value.push('invalid')
                                                     }
-
                                                     else
-                                                        if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
+                                                        if (isValidBankIfsc(data['Bank ifsc'])) {
                                                             errorRecordsCount.value.push('invalid')
                                                         }
+
                                                         else
-                                                            if (!isDepartmentExists(data['Department'])) {
+                                                            if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
                                                                 errorRecordsCount.value.push('invalid')
                                                             }
+                                                            else
+                                                                if (!isDepartmentExists(data['Department'])) {
+                                                                    errorRecordsCount.value.push('invalid')
+                                                                }
             }
             else {
                 console.log("No more error record found!");
