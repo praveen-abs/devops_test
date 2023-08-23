@@ -169,7 +169,7 @@ class VmtMasterConfigController extends Controller
     }
     public function get_employees_filter_data(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-        $filtered_data = $this->employees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);
+        $filtered_data = $this->empolyees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);
 
         foreach ($filtered_data as $key => $single_value) {
              $emp_module_status =VmtEmpSubModules::where('client_id',sessionGetSelectedClientid())->where('app_sub_module_link_id',$request->sub_module_id)->where('user_id', $single_value['id']);
@@ -190,7 +190,7 @@ class VmtMasterConfigController extends Controller
         try {
 
             $select_employee = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                ->leftjoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
                 ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
                 ->where('process', '<>', 'S2 Admin')
                 ->select(
@@ -217,14 +217,7 @@ class VmtMasterConfigController extends Controller
                 $select_employee = $select_employee->where('client_id', $client_name);
             }
             // dd($select_employee->get());
-            $assigned_emp_user_ids = VmtEmpAssignSalaryAdvSettings::pluck('user_id');
-            if (!empty($assigned_emp_user_ids)) {
-                $assigned_emp_user_codes = array();
-                foreach ($assigned_emp_user_ids as $single_id) {
-                    array_push($assigned_emp_user_codes, User::where('id', $single_id)->first()->user_code);
-                }
-                return  $select_employee->whereNotIn('user_code',  $assigned_emp_user_codes)->get();
-            }
+
             $employee_data = $select_employee->get();
 
 
