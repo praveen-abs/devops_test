@@ -192,4 +192,8 @@ class VmtEmployeeAttendanceController extends Controller
     {
         return view('reports.attendance_absent_reports');
     }
+    public function showOvertimeReport(Request $request)
+    {
+        return view('reports.attendance_overtime_reports');
+    }
 }

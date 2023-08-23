@@ -800,6 +800,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports/latecoming-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showLateComingReport'])->name('showLateComingReport');
     Route::get('/reports/earlygoing-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showEarlygoingReport'])->name('showEarlygoingReport');
     Route::get('/reports/absent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showAbsentReport'])->name('showAbsentReport');
+    Route::get('/reports/attendane-overtime-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showOvertimeReport'])->name('showOvertimeReport');
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
     Route::post('/fetch-detailed-attendance-data', [
         App\Http\Controllers\VmtEmployeeAttendanceController::class,
