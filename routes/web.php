@@ -100,10 +100,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
     Route::post('/session-update-globalClient', [App\Http\Controllers\VmtMainDashboardController::class, 'updateGlobalClientSelection'])->name('session-update-globalClient');
     Route::get('/session-sessionselectedclient', [App\Http\Controllers\VmtMainDashboardController::class, 'sessionSelectedClient'])->name('session-sessionselectedclient');
-<<<<<<< HEAD
-
-=======
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
     Route::get('/isEmailExists/{email?}', function ($email) {
 
         return isEmailExists($email);
@@ -496,15 +492,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
     Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@updateUserAccountStatus')->name('updateUserAccountStatus');
 
-<<<<<<< HEAD
-=======
     //payrolltax calculation
 
     Route::get('get_comp_value', [App\Http\Controllers\VmtPayrollTaxController::class, 'getEmpCompValues']);
 
 
 
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
     //Asset Inventory
     Route::get('assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('assetinventory-index');
 
@@ -577,11 +570,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/AddReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddReimbursementComponents'])->name('AddReimbursementComponents');
     Route::post('/Paygroup/UpdateReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateReimbursementComponents'])->name('UpdateReimbursementComponents');
 
-<<<<<<< HEAD
-  // Salary software integration
-=======
     // Salary software integration
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
     Route::get('/Paygroup/fetchPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayrollAppIntegration'])->name('fetchPayrollAppIntegration');
     Route::post('/Paygroup/addPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPayrollAppIntegrations'])->name('addPayrollAppIntegrations');
     Route::post('/Paygroup/EnableDisableAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableAppIntegration'])->name('EnableDisableAppIntegration');
@@ -589,13 +578,7 @@ Route::middleware(['auth'])->group(function () {
 
     //paygroup structure
     Route::get('/Paygroup/fetchPayGroupEmpComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayGroupEmpComponents'])->name('fetchPayGroupEmpComponents');
-<<<<<<< HEAD
-    //Route::get('/Paygroup/ShowAssignEmployeelist', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'ShowAssignEmployeelist'])->name('ShowAssignEmployeelist');
-   // Route::get('/Paygroup/getAllDropdownFilterSetting', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
-    Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
-=======
     // Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
     Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
     Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');
 
@@ -1005,10 +988,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/disable-or-enable-interest-and-interest-free-loan-setting', [\App\Http\Controllers\VmtSalaryAdvanceController::class, 'disableOrEnableInterestAndInterestFreeLoanSetting']);
     //Loan Approval changeClientIdStsForLoan
     Route::post('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
-<<<<<<< HEAD
-    Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
-    Route::post('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
-=======
     Route::post('/reject-or-approve-loan', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'rejectOrApproveLoan']);
     Route::post('/enable-or-disable-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'enableOrDisableLoanSettings']);
     Route::post('/is-eligible-for-loan-and-advance', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'isEligibleForLoanAndAdvance']);
@@ -1016,7 +995,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/inmport-loan-adv-excel-data', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'inmportLoanAdvExcelData']);
 
     Route::post('/employee-dashboard-loan-and-advance', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'employeeDashboardLoanAndAdvance']);
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
 
     Route::get('/testing-karthi', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'testingKarthi']);
 
@@ -1055,10 +1033,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-<<<<<<< HEAD
-=======
     // generate payslip
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
 
     Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
 

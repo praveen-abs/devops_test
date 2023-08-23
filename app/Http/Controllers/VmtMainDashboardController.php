@@ -610,14 +610,10 @@ class VmtMainDashboardController extends Controller
             $pollingQuestionAdd->options = $encodedOptions;
             $pollingQuestionAdd->date = $request->date;
             $pollingQuestionAdd->notify_employees = isset($request->notify_employees) ? $request->notify_employees : '0';
-            $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $request->anonymous_poll : '0';
+            $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $ruseequest->anonymous_poll : '0';
             $pollingQuestionAdd->save();
             if ($pollingQuestionAdd) {
-                return response()->json(['status' => true, 'message' => 'Pooling Ques
-
-
-
-                tion added successfully']);
+                return response()->json(['status' => true, 'message' => 'Pooling Question added successfully']);
             }
             return response()->json(['status' => false, 'message' => 'Pooling Question not added']);
         } catch (Exception $e) {

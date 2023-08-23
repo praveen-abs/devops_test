@@ -544,32 +544,15 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                                 errorRecordsCount.value.push('invalid')
                                             }
                                             else
-<<<<<<< HEAD
-                                                if (!isBankExists(data['Bank Name'])) {
-                                                    errorRecordsCount.value.push('invalid')
-                                                }
-                                                else
-                                                    if (isValidBankIfsc(data['Bank ifsc'])) {
-=======
                                                 if (isBankExists(data['Bank Name'])) {
                                                     errorRecordsCount.value.push('invalid')
                                                 }
                                                 else
                                                     if (isExistsOrNot(existingMartialStatus.value, data['Marital Status'])) {
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
                                                         errorRecordsCount.value.push('invalid')
                                                     }
 
                                                     else
-<<<<<<< HEAD
-                                                        if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
-                                                            errorRecordsCount.value.push('invalid')
-                                                        }
-                                                        else
-                                                            if (!isDepartmentExists(data['Department'])) {
-                                                                errorRecordsCount.value.push('invalid')
-                                                            }
-=======
                                                         if (isValidBankIfsc(data['Bank ifsc'])) {
                                                             errorRecordsCount.value.push('invalid')
                                                         }
@@ -582,7 +565,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                                                 if (!isDepartmentExists(data['Department'])) {
                                                                     errorRecordsCount.value.push('invalid')
                                                                 }
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
             }
             else {
                 console.log("No more error record found!");

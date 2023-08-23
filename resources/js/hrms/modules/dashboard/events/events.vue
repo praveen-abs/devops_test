@@ -127,7 +127,6 @@ const service = Service()
 
 const useDashboard = useMainDashboardStore()
 
-<<<<<<< HEAD
 
 const colors = [
     'bg-emerald-600',
@@ -169,18 +168,7 @@ const findEventType = (type) => {
         }
 }
 
-=======
-const width = ref('h-10')
 
-const findCurrentEvent = (data) =>{
-    if(data == 'holiday'){
-        return 'fa text-orange fa-birthday-cake'  
-      }else
-    if(data == 'work_anniversery'){
-        return 'fa text-green fa-briefcase'
-    }
-}
->>>>>>> 364a04ef40528e673b79184b76938954c77db39e
 </script>
 
 

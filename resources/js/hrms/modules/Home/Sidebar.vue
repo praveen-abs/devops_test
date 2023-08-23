@@ -30,7 +30,7 @@
                     <i :class="menu.arrow_icon" class=" text-white  absolute  right-4"></i>
                 </a>
 
-                <a role="button" v-else @click="toggleMenu(index), redirectModule(menu.to)" :class="{
+                <a role="button" v-else @click="toggleMenu(index)" :href="menu.to" :class="{
                     ' bg-yellow-400 text-[001820]  w-[40px] relative left-2  text-[#F6F6F6] flex justify-center  ': isOpen(index),
                 }"
                     class=" py-3   w-[60px]  flex justify-center items-center text-[#001820] :hover:  rounded-l transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover: duration-300 hover:bg-yellow-400">
