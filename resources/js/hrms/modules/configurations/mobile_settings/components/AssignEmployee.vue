@@ -26,20 +26,20 @@
         </div>
         <div class="grid grid-cols-12 gap-2 mt-3">
             <div class="col-span-4 flex items-center">
-                <input type="text" v-model="filters['global'].value" placeholder="search employee.."
+                <input type="text" v-model="filters['global'].value" placeholder="Search employee.."
                     class="border rounded-lg bg-gray-100 p-1.5 w-11/12">
                 <!-- <InputText  placeholder="Keyword Search" /> -->
             </div>
             <div class="flex col-span-5 items-center">
                 <p>Legal entity</p>
-                <Dropdown v-model="legalEntity" class="w-full min-[280px]:" placeholder="legal entity"
+                <Dropdown v-model="legalEntity" class="w-full min-[280px]:" placeholder="Legal entity"
                     @change="getFilteredSource($event.value, '', type)"
                     :options="dropdownValues ? dropdownValues.legalEntity : []" optionLabel="client_name"
                     optionValue="id" />
             </div>
             <div class="flex col-span-3 items-center">
                 <p>Department</p>
-                <Dropdown v-model="department" class="w-full" placeholder="department"
+                <Dropdown v-model="department" class="w-full" placeholder="Department"
                     @change="getFilteredSource('', $event.value, type)"
                     :options="dropdownValues ? dropdownValues.department : []" optionLabel="name" optionValue="id" />
 
@@ -123,7 +123,7 @@ let format = {
 const btn = ref(1);
 
 const getDropdownValues = async () => {
-    await axios.get('/getalldropdownfiltersetting').then(res => {
+    await axios.get('/getAllDropdownFilterSetting').then(res => {
         dropdownValues.value = res.data
     })
 }
