@@ -10,6 +10,7 @@ class VmtPayRunController extends Controller
 {
     public function fetch_attendance_data(Request $request, VmtPayRunService $pay_run_service)
     {
+
         if ($request->start_date == null || $request->end_date == null) {
             $current_date = Carbon::now();
             $current_month = $current_date->format('m');
@@ -23,8 +24,8 @@ class VmtPayRunController extends Controller
                 $end_date =   $current_date->format('Y-m-d');
             }
         } else {
-            $start_date = $request->start_date;
-            $end_date =  $request->end_date;
+            $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
+            $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
         }
         return $pay_run_service->fetch_attendance_data($start_date,  $end_date);
     }
