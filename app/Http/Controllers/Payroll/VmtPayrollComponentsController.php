@@ -351,3 +351,4 @@ class VmtPayrollComponentsController extends Controller
     //     return $serviceVmtPayrollComponentsService->assignPaySlipTemplateToClient();
     // }
 }
+}
