@@ -452,7 +452,6 @@ Route::middleware(['auth'])->group(function () {
 
     //upload Financial components
     Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
-    Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
     Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
 
     //Payroll generalSettings
@@ -967,7 +966,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/salAdvSettingEdit', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingEdit']);
     Route::post('/salAdvSettingDelete', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingDelete']);
     Route::get('/salAdvAmtApprovedEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvAmtApprovedEmp']);
-
+    Route::post('imporExistingSalaryAdvanceData', [App\Http\Controllers\ImportExistingSADataController::class, 'imporExistingSalaryAdvanceData'])->name('imporExistingSalaryAdvanceData');
+    Route::get('saveSalaryAdvanceUploadPage', [App\Http\Controllers\ImportExistingSADataController::class, 'saveSalaryAdvanceUploadPage'])->name('saveSalaryAdvanceUploadPage');
     //Travel Advance
 
     Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
