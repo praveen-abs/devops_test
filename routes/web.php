@@ -854,13 +854,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
 //mobile Settings
-    
+
        Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
-       Route::post('/SaveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveAppConfigStatus'])->name('SaveAppConfigStatus');
-       Route::post('/get_empolyees_filter_data', [App\Http\Controllers\VmtMasterConfigController::class, 'get_empolyees_filter_data'])->name('get_empolyees_filter_data');
+       Route::post('/saveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'saveAppConfigStatus'])->name('saveAppConfigStatus');
+       Route::post('/get_employees_filter_data', [App\Http\Controllers\VmtMasterConfigController::class, 'get_employees_filter_data'])->name('get_employees_filter_data');
        Route::get('/getalldropdownfiltersetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
        Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
-       Route::post('/fetchMoileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMoileModuleData'])->name('fetchMoileModuleData');
+       Route::post('/fetchMobileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMobileModuleData'])->name('fetchMobileModuleData');
        Route::get('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
 
     //Configrations

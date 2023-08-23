@@ -805,7 +805,7 @@ function numberToWord($num)
         ]);
     }
 }
- function get_empolyees_filter_data($department_id, $designation, $work_location, $client_name)
+ function get_employees_filter_data($department_id, $designation, $work_location, $client_name)
 {
 
     try {
