@@ -134,7 +134,7 @@ const getFilteredSource = (legalEntity, department, type) => {
     console.log(legalEntity, department);
     console.log("sub_module_id", type);
     let sub_module_id = type;
-    axios.post('/get_employees_filter_data', {
+    axios.post('/getEmployeesFilterData', {
         department_id: department,
         client_name: legalEntity,
         sub_module_id: sub_module_id
