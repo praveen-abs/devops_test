@@ -43,16 +43,25 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
         })
     }
 
-    const saveEnableDisableSetting = async(id,status)=>{
-        // /SaveAppConfigStatus
-        // let ID = id;
-        // let Status =status;
+    const saveEnableDisableSetting = async(item,status)=>{
+
+
+        canshowloading.value = true;
+
         await axios.post('/saveAppConfigStatus',{
-            module_id:id,
+            module_id:item.id,
             status:status
         }).then((res)=>{
-            getMobileSettings(client_details.value.id);
+
+            console.log("Status received : "+res.data.status);
+
+            if(res.data.status == "success")
+            {
+                item.status = status; //Toggle the button
+            }
+
         }).finally(()=>{
+            canshowloading.value = false;
 
         })
 

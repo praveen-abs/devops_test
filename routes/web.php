@@ -806,6 +806,7 @@ Route::middleware(['auth'])->group(function () {
         App\Http\Controllers\VmtEmployeeAttendanceController::class,
         'fetchDetailedAttendancedata'
     ]);
+    Route::post('/fetch-overtime-report-data',[\App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchOvertimeReportData']);
     Route::post('/fetch-EG-report-data',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchEGReportData']);
     Route::post('/fetch-absent-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAbsentReportData']);
     Route::post('/report/download-absent-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadAbsentReport']);
@@ -814,6 +815,7 @@ Route::middleware(['auth'])->group(function () {
         'fetchLCReportData'
     ]);
     Route::get('/report/download-late-coming-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadLCReport']);
+    Route::post('/report/download-over-time-report',[App\Http\Controllers\VmtEmployeeAttendanceController::class,'downloadOvertimeReport']);
 
     //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
