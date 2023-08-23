@@ -298,7 +298,7 @@ class VmtEmployeeService
             $newEmployee->marital_status_id = $data["marital_status"] ?? '';
             $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
-            $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
+           // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->gender   =    $data["gender"] ?? '';
             $data_mobile_number = empty($data["mobile_number"]) ? "" : strval($data["mobile_number"]);
             $newEmployee->mobile_number  = $data_mobile_number;
@@ -534,9 +534,9 @@ class VmtEmployeeService
 
             $newEmployee->userid   =    $user_id;
             $newEmployee->marital_status_id = $data["marital_status"] ?? '';
-            $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
+           // $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
-            $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
+           // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->gender   =    $data["gender"] ?? '';
             $data_mobile_number = empty($data["mobile_number"]) ? "" : strval($data["mobile_number"]);
             $newEmployee->mobile_number  = $data_mobile_number;
@@ -877,14 +877,16 @@ class VmtEmployeeService
     {
 
         try {
+
             if (!empty($fileObject)) {
                 $emp_code = User::find($emp_id)->user_code;
 
                 $onboard_doc_id = VmtDocuments::where('document_name', $onboard_document_type);
 
-                if ($onboard_doc_id->exists())
+                if ($onboard_doc_id->exists()){
                     $onboard_doc_id = $onboard_doc_id->first()->id;
-                else
+
+                 } else
                     return null;
 
                 $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id', $onboard_doc_id);
@@ -1065,7 +1067,7 @@ class VmtEmployeeService
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
         if($onboard_type='normal'){
         $data["ctc_in_words"] = numberToWord(intval($employeeData['cic']) * 12);
-       
+
         }else{
             $data["ctc_in_words"] = numberToWord(intval($employeeData['ctc']) * 12);
         }
@@ -1076,32 +1078,32 @@ class VmtEmployeeService
         if ($fetchMasterConfigValue['config_value'] == "true") {
             //$client_name = str_replace(' ', '_', sessionGetSelectedClientName());
             $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
-        
-    
+
+
                 $html = view('appointment_mail_templates.appointment_Letter_client',$data);
-    
+
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
                 $options->set('isRemoteEnabled', true);
-    
+
                 $pdf = new Dompdf($options);
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-    
+
                 $docUploads =  $pdf->output();
                 $client_id =sessionGetSelectedClientid();
-    
+
                 $VmtClientMaster = VmtClientMaster::where("id",$client_id)->first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-    
+
                 // dd( $docUploads);
                  $filename = 'appoinment_letter_' . $data['employee_name'] . '_' . time() . '.pdf';
                  $file_path = public_path('appoinmentLetter/'.$filename);
                  file_put_contents($file_path, $docUploads);
                  $appoinmentPath = public_path('appoinmentLetter/') . $filename;
-            
-    
+
+
              $isSent = \Mail::to($data['email'])->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),$appoinmentPath , $image_view,$VmtClientMaster->client_code));
             return $isSent;
          }
@@ -1162,7 +1164,6 @@ class VmtEmployeeService
                 'vmt_employee_documents.status as doc_status',
                 'vmt_employee_documents.doc_url as doc_url'
             ]);
-
         // //store all the documents in single key
         foreach ($query_pending_onboard_docs as $single_pending_docs) {
 
@@ -1195,7 +1196,7 @@ class VmtEmployeeService
         }
 
 
-        return array_values($json_response);
+        return  array_values($json_response);
     }
     public function fetchAllEmployeesDocumentsProof(Request $request)
     {
