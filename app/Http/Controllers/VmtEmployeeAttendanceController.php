@@ -23,6 +23,7 @@ use App\Exports\LateComingReportExport;
 use App\Exports\EmployeeAttendanceExport;
 use App\Exports\BasicAttendanceExport;
 use App\Exports\DetailedAttendanceExport;
+use App\Exports\OverTimeReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -157,6 +158,25 @@ class VmtEmployeeAttendanceController extends Controller
         // $end_date = '2023-07-28';
         $response = $attendance_report_service->fetchEGReportData($start_date, $end_date);
         return $response;
+    }
+
+    public function fetchOvertimeReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
+        $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
+        // $start_date = '2023-07-25';
+        // $end_date = '2023-07-28';
+        $response = $attendance_report_service->fetchOvertimeReportData($start_date, $end_date);
+        return $response;
+    }
+
+    public function downloadOvertimeReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
+        $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
+        // $start_date = '2023-07-25';
+        // $end_date = '2023-07-28';
+        return Excel::download(new OverTimeReportExport($attendance_report_service->fetchOvertimeReportData($start_date, $end_date)['rows']), 'Over Time Report.xlsx');
     }
 
 
