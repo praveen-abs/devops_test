@@ -12,7 +12,7 @@
     </Dialog>
     <!-- {{ MobileSettingsStore.arrayMobileSetDetails ? MobileSettingsStore.arrayMobileSetDetails : [] }} -->
       <!-- <LoadingSpinner  v-if="MobileSettingsStore.canshowloading"  class="absolute z-50 bg-white w-[100%] h-[100%]"/> -->
-    <div class="w-full" v-if="!MobileSettingsStore.canshowloading">
+    <div class="w-full">
         <h1 class="text-[18px] text-[#000] my-2">Mobile App Settings</h1>
         <!-- {{ MobileSettingsStore.arrayMobileSetDetails }} -->
         <!-- {{ items }} -->
@@ -25,10 +25,10 @@
                 <div class="mx-auto">
                     <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]"
                         :class="[item.status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
-                        @click="MobileSettingsStore.saveEnableDisableSetting(item.id,1)">Enable</button>
+                        @click="MobileSettingsStore.saveEnableDisableSetting(item, 1)">Enable</button>
                     <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
                         :class="[item.status == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
-                        @click="MobileSettingsStore.saveEnableDisableSetting(item.id,0)">Disable</button>
+                        @click="MobileSettingsStore.saveEnableDisableSetting(item, 0)">Disable</button>
                 </div>
                 <div class="my-auto">
                     <!-- {{ val.Type }} -->
