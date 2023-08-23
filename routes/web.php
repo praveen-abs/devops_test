@@ -853,6 +853,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/updateMasterdataUploads', [App\Http\Controllers\VmtCorrectionController::class, 'updateMasterdataUploads'])->name('updateMasterdataUploads');
     Route::post('/vmt_employess/Master_upload', [App\Http\Controllers\VmtCorrectionController::class, 'importMasetrEmployeesExcelData'])->name('masterEmployeeOnboarding');
 
+    Route::get('/salary_adv', [App\Http\Controllers\VmtCorrectionController::class, 'setFinanceidHrid'])->name('setFinanceidHrid');
+
 
 
 
