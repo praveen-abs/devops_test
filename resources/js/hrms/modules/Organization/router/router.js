@@ -12,7 +12,15 @@ const router = createRouter({
             name: "QuickOnboarding",
             component: QuickOnboarding,
         },
+<<<<<<< HEAD
 
+=======
+        {
+            path: "/import/:module",
+            name: "BulkOnboarding",
+            component: BulkOnboarding,
+        },
+>>>>>>> 364a04ef40528e673b79184b76938954c77db39e
     ],
 });
 export default router;

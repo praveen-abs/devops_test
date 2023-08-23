@@ -101,7 +101,7 @@
                     </p>
 
                     <p v-else-if="field.includes('Bank Name')"
-                        :class="[!useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Bank Name'] ? data['Bank Name'] : '-' }}
                     </p>

@@ -162,10 +162,6 @@ clearstatcache();
 
             }
         }
-
-        #loading~#layout-wrapper .main-content {
-            display: none;
-        }
     </style>
 </head>
 
@@ -186,11 +182,23 @@ clearstatcache();
     <div id="Sidebar"></div>
     @endif
 
+<<<<<<< HEAD
     <div class="bg-gray-50  text-gray-700 h-screen w-[100%] main-content">
         @vite('resources/js/hrms/modules/Home/Topbar.js')
         <div id="Topbar"></div>
         <div class="h-full overflow-auto p-2 mb-14">
             @yield('content')
+=======
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <!-- <div class="container-fluid"> -->
+                @yield('content')
+            <!-- </div> -->
+            <!-- container-fluid -->
+>>>>>>> 364a04ef40528e673b79184b76938954c77db39e
         </div>
     </div>
 </div>

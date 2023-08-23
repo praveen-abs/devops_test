@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div class="w-full">
         <div class="flex justify-between pt-4 mx-6">
             <p class="">Payroll and attendance end date settings</p>
@@ -47,6 +48,90 @@
                         <div class="w-full">
                             <InputText class="w-full h-11" placeholder="December 01"
                                 v-model="uesPayroll.generalPayrollSettings.payment_date" />
+=======
+    <div class="w-full  border p-4">
+
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2">
+                <div class="flex mt-3 d-flex justify-content-between align-items-center pt-4 ml-6 ">
+                    <div class="">
+                        <p class=" fw-semibold text-gray-600 fs-14">Payroll and attendance end date settings</p>
+                    </div>
+                    <div class="">
+                        <i class="pi pi-pencil text-gray-600 pr-6 cursor-pointer" style="font-size: 1rem"
+                            @click="editAttendanceEndDate = !editAttendanceEndDate"></i>
+                    </div>
+                </div>
+                <div class=" p-4 my-2 bg-gray-100 shadow-md rounded-lg  border-1 ">
+                    <div class="my-2">
+                        <h5 class="my-2 font-semibold fs-13">Pay Frequency</h5>
+                        <div class="flex gap-8 justify-evenly">
+                            <div class="w-full">
+                                <InputText class="w-full h-11" placeholder="Monthly" v-if="editAttendanceEndDate"
+                                    v-model="uesPayroll.generalPayrollSettings.pay_frequency"
+                                    :readonly="editAttendanceEndDate" />
+                                <Dropdown :options="useHelper.payFrequencyDropdown" class="w-full h-11" optionLabel="name"
+                                    optionValue="id" placeholder="Select Pay Frequency" v-else />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-4">
+                        <h5 class="my-2 font-semibold fs-13">
+                            When would you like to start using the ABShrms payroll?
+                        </h5>
+                        <div class="flex gap-8 justify-evenly">
+                            <div class="w-full">
+                                <InputText class="w-full h-11" placeholder="November 2023" v-if="editAttendanceEndDate"
+                                    v-model="uesPayroll.generalPayrollSettings.payperiod_start_month"
+                                    :readonly="editAttendanceEndDate" />
+                                <Calendar v-model="uesPayroll.generalPayrollSettings.payperiod_start_month" view="month"
+                                    dateFormat="mm/yy" class="w-full h-11"
+                                    @date-select="daysAsDropdown(uesPayroll.generalPayrollSettings.payperiod_start_month.getMonth() + 1, uesPayroll.generalPayrollSettings.payperiod_start_month.getFullYear())"
+                                    v-else />
+                            </div>
+                        </div>
+                        <!-- MMMM D, YYYY ,dayjs date format -->
+                    </div>
+                    <div class="my-4">
+                        <h5 class="my-2 font-semibold fs-13">
+                            On which date did the pay peroid end in
+                            {{ uesPayroll.generalPayrollSettings.payperiod_start_month
+                                ? dayjs(uesPayroll.generalPayrollSettings.payperiod_start_month).format('MMMM') : null }}?
+                        </h5>
+                        <div class="flex gap-8 justify-evenly">
+                            <div class="w-full">
+                                <InputText class="w-full h-11" placeholder="Text Placeholder" v-if="editAttendanceEndDate"
+                                    v-model="uesPayroll.generalPayrollSettings.payperiod_end_date"
+                                    :readonly="editAttendanceEndDate" />
+                                <Dropdown v-model="uesPayroll.generalPayrollSettings.payperiod_end_date"
+                                    :options="daysArray" class="w-full h-11" optionLabel="day" optionValue="day"
+                                    placeholder="Select day" v-else />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-4">
+                        <h5 class="my-2 fs-13 font-semibold">
+                            The payment date for the peroid of {{ uesPayroll.generalPayrollSettings.payperiod_start_month
+                                ? dayjs(uesPayroll.generalPayrollSettings.payperiod_start_month).format('MMMM') : null }}
+                            {{ uesPayroll.generalPayrollSettings.payperiod_end_date ?
+                                uesPayroll.generalPayrollSettings.payperiod_end_date : 1 }}st to
+                            {{ uesPayroll.generalPayrollSettings.payperiod_start_month
+                                ? dayjs(uesPayroll.generalPayrollSettings.payperiod_start_month).format('MMMM') : null }}
+                            {{ uesPayroll.generalPayrollSettings.payperiod_start_month ?
+                                useHelper.getLastDayOfMonth(uesPayroll.generalPayrollSettings.payperiod_start_month.getMonth(),
+                                    uesPayroll.generalPayrollSettings.payperiod_start_month.getFullYear()) : null }}? is
+                        </h5>
+                        <div class="flex gap-8 justify-evenly">
+                            <div class="w-full">
+                                <InputText class="w-full h-11" placeholder="December 01" v-if="editAttendanceEndDate"
+                                    v-model="uesPayroll.generalPayrollSettings.payment_date"
+                                    :readonly="editAttendanceEndDate" />
+                                <Dropdown v-model="uesPayroll.generalPayrollSettings.payment_date" :options="daysArray"
+                                    class="w-full h-11" optionLabel="day" optionValue="day" placeholder="Select payment day"
+                                    v-else />
+                            </div>
+>>>>>>> 364a04ef40528e673b79184b76938954c77db39e
                         </div>
                     </div>
                 </div>
@@ -76,16 +161,8 @@
                 </div>
             </div>
         </div>
-        <div class="mx-6 ">
-            <div class="flex pt-4">
-                <p class="fs-14 text-gray-600">Attendance cut-off cycle</p>
-                <div>
-                    <i class="pi pi-pencil mr-3 cursor-pointer" style="font-size: 1rem"
-                        @click='active_Btn2 = !active_Btn2'></i>
-                </div>
-            </div>
-        </div>
 
+<<<<<<< HEAD
         <div class="grid grid-cols-12 gap-6 mx-6">
             <div class="col-span-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="my-4">
@@ -97,29 +174,55 @@
                             <Dropdown class="w-full h-11 " placeholder="select"
                                 v-model="uesPayroll.generalPayrollSettings.att_cutoff_period_id" />
                         </div>
+=======
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2">
+                <div class="flex pt-4">
+                    <p class="fs-14 text-gray-600">Attendance cut-off cycle</p>
+                    <div>
+                        <i class="pi pi-pencil mr-3 cursor-pointer" style="font-size: 1rem"
+                            @click='active_Btn2 = !active_Btn2'></i>
+>>>>>>> 364a04ef40528e673b79184b76938954c77db39e
                     </div>
                 </div>
-
-                <div class="my-4 ">
-                    <div class="flex gap-3 w-100 d-flex justify-content-between align-items-center">
-                        <div class="w-70">
-                            <h5 class="my-2 fs-13 font-semibold" style="line-height: 16px;">
-                                Do you want to consider new joinee post attendance cut off date ?
-                            </h5>
-                        </div>
-                        <div class=" w-30 d-flex justify-content-center align-items-center">
-                            <div class="mx-2 d-flex justify-content-between align-items-center ">
-                                <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name="" id=""
-                                    value="" v-model="uesPayroll.generalPayrollSettings.post_attendance_cutoff_date" />
-                                <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">Yes</label>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center ">
-                                <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name="" id=""
-                                    value="" v-model="uesPayroll.generalPayrollSettings.post_attendance_cutoff_date" />
-                                <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">No</label>
+                <div class=" p-4 my-2 bg-gray-100 rounded-lg  border-1 shadow-sm">
+                    <div class="my-4">
+                        <!-- <h1 style="color: #4E4E4E;">4E4E4E</h1> -->
+                        <h6 class="my-2 fs-14 font-semibold text-black-alpha-70">
+                            Select the attendance cut-off peroid in a month
+                        </h6>
+                        <div class="flex gap-8 justify-evenly">
+                            <div class="w-full">
+                                <Dropdown class="w-full h-11 " placeholder="select"
+                                    v-model="uesPayroll.generalPayrollSettings.att_cutoff_period_id" />
                             </div>
                         </div>
                     </div>
+
+                    <div class="my-4 ">
+                        <div class="flex gap-3 w-100 d-flex justify-content-between align-items-center">
+                            <div class="w-70">
+                                <h5 class="my-2 fs-13 font-semibold" style="line-height: 16px;">
+                                    Do you want to consider new joinee post attendance cut off date ?
+                                </h5>
+                            </div>
+                            <div class=" w-30 d-flex justify-content-center align-items-center">
+                                <div class="mx-2 d-flex justify-content-between align-items-center ">
+                                    <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name=""
+                                        id="" value=""
+                                        v-model="uesPayroll.generalPayrollSettings.post_attendance_cutoff_date" />
+                                    <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">Yes</label>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center ">
+                                    <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name=""
+                                        id="" value=""
+                                        v-model="uesPayroll.generalPayrollSettings.post_attendance_cutoff_date" />
+                                    <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<<<<<<< HEAD
                 </div>
 
                 <div class="my-4">
@@ -133,11 +236,25 @@
                             The employee's attendance cut-off date differs from their pay peroid end
                             date
                             <span class="text-blue-400 underline">what is Attendance cut-off date?</span>
+=======
+                    <div class="my-2 w-100">
+                        <div class="d-flex  align-items-center">
+                            <div class="">
+                                <input type="checkbox" name="" class="rounded-sm mr-2" id=""
+                                    style="width: 18px; height: 18px;">
+                            </div>
+                            <div class=" text-left">
+                               <p class="text-xs"> The employee's attendance cut-off date differs from their pay peroid end
+                                date <span class="text-blue-400 underline text-xs">what is Attendance cut-off date?</span></p>
+
+                            </div>
+>>>>>>> 364a04ef40528e673b79184b76938954c77db39e
                         </div>
                     </div>
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="col-span-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="bg-orange-100 p-2 rounded " v-if="active2 == 2 " >
                     <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true" ></i>
@@ -145,6 +262,19 @@
                 </div>
                 <h1 class=" mt-4 font-extralight">
                     The finalized payroll peroid is <strong>26th - 25th</strong>
+=======
+
+            <div class="col-span-3 px-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+                <Transition>
+                    <div class="bg-orange-100 p-2 rounded mt-4  " v-if="active_Btn2">
+                        <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true"></i>
+                        The edit option has been disabled. Please contact the ABShrms Support Team for assistance.
+                    </div>
+                </Transition>
+                <h1 class=" mt-4 text-gray-600 fs-13 ">
+                    The finalized payroll peroid is <span class=" text-black-alpha-80 fs-13 line-height-2 ">26th -
+                        25th</span>
+>>>>>>> 364a04ef40528e673b79184b76938954c77db39e
                 </h1>
                 <div class="mb-6 mt-4 w-full">
                     <DataTable :value="products">
@@ -246,17 +376,23 @@
                     </div>
                 </div>
                 <div class="d-flex flex-column justify-evenly">
+<<<<<<< HEAD
                     <h5 class="text-sm font-semibold w-7">Description</h5>
                     <div class="flex gap-6  my-3">
                         <div class="flex  ">
+=======
+                    <h5 class="text-lg font-semibold mt-4">Remuneration Types</h5>
+                    <div class="flex gap-6 my-3">
+                        <div class=" flex  items-center">
+>>>>>>> 364a04ef40528e673b79184b76938954c77db39e
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                 value="1" v-model="uesPayroll.generalPayrollSettings.remuneration_type" />
-                            <label class="ml-2 text-lg font-semibold from-check-label leave_type" for="">Monthly</label>
+                            <label class="ml-2 text-sm font-semibold from-check-label leave_type" for="">Monthly</label>
                         </div>
                         <div class="">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                 value="0" v-model="uesPayroll.generalPayrollSettings.remuneration_type" />
-                            <label class="ml-2 text-lg font-semibold form-check-label leave_type" for="">Daliy</label>
+                            <label class="ml-2 text-sm font-semibold form-check-label leave_type" for="">Daliy</label>
                         </div>
                     </div>
                 </div>
@@ -299,9 +435,16 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { usePayrollMainStore } from "../../../stores/payrollMainStore";
+import { usePayrollHelper } from "../../../stores/payrollHelper";
+import dayjs from "dayjs";
 
 
 const uesPayroll = usePayrollMainStore()
+const useHelper = usePayrollHelper()
+const editAttendanceEndDate = ref(true)
+
+
+const formattedDate = ref()
 
 const active = ref(1);
 const active2 = ref(1);
@@ -318,7 +461,17 @@ const active_Btn2 = ref(false);
 //     console.log(active2);
 // }
 
+const daysArray = ref([])
 
+
+const daysAsDropdown = (month, year) => {
+    daysArray.value.splice(0, daysArray.value.length)
+    const days = new Date(year, month, 0).getDate()
+    for (let day = 1; day <= days; day++) {
+        daysArray.value.push({ day: day });
+    }
+
+}
 
 
 const products = ref([
@@ -345,6 +498,16 @@ const products = ref([
     },
 ]);
 
+
+onMounted(() => {
+
+    uesPayroll.generalPayrollSettings.payperiod_start_month ? dayjs(uesPayroll.generalPayrollSettings.payperiod_start_month).format('MMM') : uesPayroll.generalPayrollSettings.payperiod_start_month
+
+
+    // for (let day = 1; day <= 31; day++) {
+    //     daysArray.value.push({ day: day });
+    // }
+})
 
 
 </script>

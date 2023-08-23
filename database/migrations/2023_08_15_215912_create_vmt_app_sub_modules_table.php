@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('vmt_employee_reimbursements', function (Blueprint $table) {
-            $table->text('total_expenses');
+        Schema::create('vmt_app_sub_modules', function (Blueprint $table) {
+            $table->id();
+            $table->text('sub_module_name');
+            $table->text('description');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('vmt_employee_reimbursements', function (Blueprint $table) {
-            $table->dropColumn('total_expenses');
-        });
+        Schema::dropIfExists('vmt_app_sub_modules');
     }
 };

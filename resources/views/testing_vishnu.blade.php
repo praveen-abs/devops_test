@@ -684,9 +684,17 @@
 
 
 
-        $fetchMasterConfigValue = VmtMasterConfig::where("config_name","can_send_appointmentletter_after_onboarding")->first();
-        dd($fetchMasterConfigValue['config_value']);
+        $getMonth = [];
+        foreach (range(1, 12) as $m) {
+         $getMonth[] = date('F', mktime(0, 0, 0, $m, 1));
+      }
 
+
+$monthl_dates =[];
+for($i=1;$i<=31;$i++){
+    $monthl_dates[]=$i;
+}
+dd($getMonth);
     ?>
 
 

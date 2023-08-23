@@ -139,7 +139,9 @@ class VmtSalaryAdvanceController extends Controller
     public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         // $request->loan_type = "InterestFreeLoan";
-        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails($request->loan_type);
+        $user_id = auth()->user()->id;
+        $client_id = sessionGetSelectedClientid();
+        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails($request->loan_type,$user_id, $client_id);
         return  $response;
     }
 
@@ -383,10 +385,29 @@ class VmtSalaryAdvanceController extends Controller
         $status = 'Rejected';
         $emp_id=144;
         $approver_user_id = auth()->user()->id;
-        $loan_details_id =1;
-        $loan_type ='Interest Free Loan';
-       //dd( $emp_image);
-        $response = $vmtSalaryAdvanceService->approveOrRejectLoan($status,$loan_type,$approver_user_id,$loan_details_id,$emp_image);
+        $loan_details_id = 1;
+        $loan_type = 'Interest Free Loan';
+        $cmds = 'Tesitngn';
+        //dd( $emp_image);
+        $response = $vmtSalaryAdvanceService->approveOrRejectLoan($status, $loan_type, $approver_user_id, $loan_details_id, $cmds, $emp_image);
         return $response;
+    }
+
+    public function isEligibleForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $loan_type =$request->eligible;
+        $user_id = auth()->user()->id;
+        $client_id = sessionGetSelectedClientid();
+        $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance($loan_type, $user_id, $client_id );
+
+        return $response;
+    }
+
+    public function employeeDashboardLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $loan_type = "sal_adv";
+        $user_id = auth()->user()->id;
+        $response = $vmtSalaryAdvanceService->employeeDashboardLoanAndAdvance($loan_type, $user_id);
+        return   $response;
     }
 }

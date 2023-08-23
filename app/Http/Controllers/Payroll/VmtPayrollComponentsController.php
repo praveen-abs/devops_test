@@ -9,6 +9,7 @@ use App\Models\VmtPaygroup;
 use App\Models\VmtAppIntegration;
 use App\Models\VmtEmpPaygroup;
 use App\Models\User;
+use App\Models\VmtAttendanceCutoffPeriod;
 use App\Models\VmtPaygroupComps;
 use App\Services\VmtPayrollComponentsService;
 
@@ -77,7 +78,7 @@ class VmtPayrollComponentsController extends Controller
 
     public function EnableDisableComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->EnableDisableComponents($request->comp_id,$request->status);
+        $response =$serviceVmtPayrollComponentsService->authorizeComponents($request->comp_id,$request->status);
 
         return $response;
     }
@@ -154,7 +155,7 @@ class VmtPayrollComponentsController extends Controller
     }
     public function EnableDisableAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->EnableDisableAppIntegration(
+        $response =$serviceVmtPayrollComponentsService->authorizeAppIntegration(
             $request->app_id,
             $request->status);
 
@@ -225,6 +226,120 @@ class VmtPayrollComponentsController extends Controller
         return $response;
 
     }
+    public function CreatePayrollEpf(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+       // dd($request->all());
+            $response = $serviceVmtPayrollComponentsService->CreatePayrollEpf(
+            $request->epf_number,
+            $request->epf_deduction_cycle,
+            $request->is_epf_num_default,
+            $request->epf_rule,
+            $request->epf_contrib_type,
+            $request->pro_rated_lop_status,
+            $request->can_consider_salcomp_pf,
+            $request->employer_contrib_in_ctc,
+            $request->employer_edli_contri_in_ctc,
+            $request->admin_charges_in_ctc,
+            $request->override_pf_contrib_rate,
+            $request->status,
+        );
+
+        return $response;
+    }
+    public function updatePayrollEpf(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        // dd($request->all());
+            $response = $serviceVmtPayrollComponentsService->updatePayrollEpf(
+            $request->epf_id,
+            $request->epf_number,
+            $request->epf_deduction_cycle,
+            $request->is_epf_num_default,
+            $request->epf_rule,
+            $request->epf_contrib_type,
+            $request->pro_rated_lop_status,
+            $request->can_consider_salcomp_pf,
+            $request->employer_contrib_in_ctc,
+            $request->employer_edli_contri_in_ctc,
+            $request->admin_charges_in_ctc,
+            $request->override_pf_contrib_rate,
+            $request->status,
+        );
+
+        return $response;
+    }
+    public function deleteEpfEmployee(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->deleteEpfEmployee($request->epf_id);
+
+        return $response;
+
+    }
+    public function authorizeEpfEmployee(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->authorizeEpfEmployee($request->epf_id,$request->status);
+
+        return $response;
+    }
+    public function CreatePayrollEsi(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        //  dd($request->status);
+
+            $response = $serviceVmtPayrollComponentsService->CreatePayrollEsi(
+            $request->esi_number,
+            $request->esi_deduction_cycle,
+            $request->state,
+            $request->location,
+            $request->employee_contribution_rate,
+            $request->employer_contribution_rate,
+            $request->employer_contribution_in_ctc,
+            $request->status,
+        );
+
+        return $response;
+    }
+    public function updatePayrollEsi( Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService){
+        $response = $serviceVmtPayrollComponentsService->updatePayrollEsi(
+            $request->esi_id,
+            $request->esi_number,
+            $request->esi_deduction_cycle,
+            $request->state,
+            $request->location,
+            $request->employee_contribution_rate,
+            $request->employer_contribution_rate,
+            $request->employer_contribution_in_ctc,
+            $request->status);
+
+            return $response;
+    }
+    public function deleteEsiEmployee(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->deleteEsiEmployee($request->esi_id);
+
+        return $response;
+
+    }
+    public function authorizeEsiEmployee(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->authorizeEsiEmployee($request->esi_id,$request->status);
+
+        return $response;
+    }
+    public function CreateEmpAbryPmrpy(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->CreateEmpAbryPmrpy(
+        $request->user_id,
+        $request->abry_scheme_status,
+        $request->pmrpy_scheme_status
+    );
+
+        return $response;
+    }
+    public function removeEmpAbryPmrpy(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->removeEmpAbryPmrpy(
+        $request->user_id,
+        $request->scheme_type,
+    );
 
 
     // public function ShowPaySlipTemplateMgmtPage(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)

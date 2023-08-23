@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtClientMaster;
+use App\Services\VmtMasterConfigService;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
@@ -509,6 +510,9 @@ class VmtMainDashboardController extends Controller
     }
 
 
+
+
+
     public function updateGlobalClientSelection(Request $request)
     {
 
@@ -609,7 +613,11 @@ class VmtMainDashboardController extends Controller
             $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $request->anonymous_poll : '0';
             $pollingQuestionAdd->save();
             if ($pollingQuestionAdd) {
-                return response()->json(['status' => true, 'message' => 'Pooling Question added successfully']);
+                return response()->json(['status' => true, 'message' => 'Pooling Ques
+
+
+
+                tion added successfully']);
             }
             return response()->json(['status' => false, 'message' => 'Pooling Question not added']);
         } catch (Exception $e) {
@@ -637,11 +645,11 @@ class VmtMainDashboardController extends Controller
 
     }
 
-    public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService)
+    public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService,VmtMasterConfigService $serviceVmtMasterConfigService)
     {
 
         //Fetch the data
-        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
+        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService , $serviceVmtMasterConfigService);
 
         return response()->json([
             'status' => 'success',

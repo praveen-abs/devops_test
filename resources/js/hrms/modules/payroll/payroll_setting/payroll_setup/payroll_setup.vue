@@ -180,5 +180,11 @@ onMounted(() => {
     height: 20px;
 }
 
+
 /* Style the tab content */
 </style>
+<!-- .p-dropdown .p-dropdown-label.p-placeholder {
+    color: #6c757d;
+    margin-top: -5px;
+    font-size: 10px;
+  } -->
