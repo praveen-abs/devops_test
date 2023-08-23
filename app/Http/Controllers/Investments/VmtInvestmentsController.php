@@ -991,11 +991,28 @@ class VmtInvestmentsController extends Controller
                   $single += $single_details['income_tax'];
              }
 
-             $tax_deduction =  $this->taxDeclaration();
+            $tax_deduction =  $this->taxDeclaration();
+            $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
+            $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
+
+           $emp_assign = VmtInvFEmpAssigned::where('user_id','194')->first();
+
+            if($emp_assign){
+
+                if($emp_assign->regime == "old" || $emp_assign->regime == ""){
+                    $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
+                   }else if($emp_assign->regime == "new"){
+                    $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
+                   }
+            }else{
+                $tax_calc_income_old =0;
+            }
+
+            // dd($tax_calc_income_old);
 
              $taxcalculation['Tax Paid Till Now'] = $single;
-             $taxcalculation['Total Tax Payable'] = $tax_deduction[9]['old_regime'];
-             $taxcalculation['Remaining Tax Amount'] = $tax_deduction[9]['old_regime'] - $single;
+             $taxcalculation['Total Tax Payable'] = $tax_calc_income_old;
+             $taxcalculation['Remaining Tax Amount'] = $tax_calc_income_old - $single;
 
             //  return ($taxcalculation);
 
@@ -1005,7 +1022,8 @@ class VmtInvestmentsController extends Controller
              $end_date = Carbon::parse($time_period->end_date);
              $current_date = Carbon::now();
 
-             $month_cal = 0;
+             $month_cal_previous = 0;
+             $month_cal_next = 0;
              $res1 = array();
              while ($start_date->lte($end_date)) {
                  $start_date = Carbon::parse($start_date)->addMonth();
@@ -1021,15 +1039,18 @@ class VmtInvestmentsController extends Controller
 
                     foreach($payroll_details as $single_payroll_details){
                         $simm['monthy_tax'] = (int)$single_payroll_details['income_tax'];
-                        $month_cal += $simm['monthy_tax'];
+                        $month_cal_previous += $simm['monthy_tax'];
+
                     }
 
                  } else {
 
                   $remainder_months  = ($current_date)->diffInMonths($end_date);
                     $add_months_remainders =  $remainder_months + 1 ;
-                     $simm['monthy_tax'] = $taxcalculation['Total Tax Payable'] / $add_months_remainders;
-                     $month_cal += $simm['monthy_tax'];
+                     $simm['monthy_tax'] = $taxcalculation['Remaining Tax Amount'] / $add_months_remainders;
+                     $month_cal_next += $simm['monthy_tax'];
+                     $month_cal = $month_cal_next - $month_cal_previous;
+
                  }
 
                  array_push($res1, $simm);
