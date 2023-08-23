@@ -429,7 +429,8 @@ class VmtSalaryAdvanceController extends Controller
         $loan_type =$request->eligible;
         $user_id = auth()->user()->id;
         $client_id = sessionGetSelectedClientid();
-        $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance($loan_type, $user_id, $client_id  );
+        $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance($loan_type, $user_id, $client_id );
+
         return $response;
     }
 
