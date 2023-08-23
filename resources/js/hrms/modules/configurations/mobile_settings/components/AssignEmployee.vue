@@ -1,7 +1,9 @@
 <template>
     <!-- <button @click="useStore.employeeAssignDialog = true">click</button> -->
     <Dialog v-model:visible="useStore.employeeAssignDialog" modal header="Holiday " :style="{ width: '70vw' }"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" style="border-top:5px solid #002f56" class="popup_card" :aria-controls="useStore.employeeAssignDialog ? '' : null" :aria-expanded="useStore.employeeAssignDialog ? true : canshowdialogbtn() " >
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" style="border-top:5px solid #002f56" class="popup_card"
+        :aria-controls="useStore.employeeAssignDialog ? '' : null"
+        :aria-expanded="useStore.employeeAssignDialog ? true : canshowdialogbtn()">
         <template #header>
             <div class="w-full p-2">
                 <div class="flex justify-between">
@@ -30,14 +32,14 @@
                     class="border rounded-lg bg-gray-100 p-1.5 w-11/12">
                 <!-- <InputText  placeholder="Keyword Search" /> -->
             </div>
-            <div class="flex col-span-5 items-center">
+            <div class="flex items-center col-span-5">
                 <p>Legal entity</p>
                 <Dropdown v-model="legalEntity" class="w-full min-[280px]:" placeholder="Legal entity"
                     @change="getFilteredSource($event.value, '', type)"
                     :options="dropdownValues ? dropdownValues.legalEntity : []" optionLabel="client_name"
                     optionValue="id" />
             </div>
-            <div class="flex col-span-3 items-center">
+            <div class="flex items-center col-span-3">
                 <p>Department</p>
                 <Dropdown v-model="department" class="w-full" placeholder="Department"
                     @change="getFilteredSource('', $event.value, type)"
@@ -60,12 +62,12 @@
                 <Column field="status" header="Action" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div class="mx-auto">
-                            <button
-                                 class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px] "
-                                @click="EnableDisable(slotProps.data.id, 1,slotProps.data.status = 1,slotProps.data.client_id )"  :class="[slotProps.data.status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']">Enable</button>
-                            <button
-                                class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
-                                @click="EnableDisable(slotProps.data.id, 0,slotProps.data.status = 0 )" :class="[slotProps.data.status == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']">Disable</button>
+                            <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px] "
+                                @click="EnableDisable(slotProps.data.id, 1, slotProps.data.status = 1, slotProps.data.client_id)"
+                                :class="[slotProps.data.status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']">Enable</button>
+                            <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
+                                @click="EnableDisable(slotProps.data.id, 0, slotProps.data.status = 0,slotProps.data.client_id)"
+                                :class="[slotProps.data.status == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']">Disable</button>
                         </div>
                     </template>
                 </Column>
@@ -75,7 +77,7 @@
                     class="mx-2 p-2 bg-black !text-[#fff] border-[2px] border-black rounded-lg">Cancel</button>
                 <!-- <button class="mx-2 bg-white !text-[#000] border-[2px] p-2 border-black rounded-lg" @click="saveCurrentlySelectedEmployeeConfig(selectedEmployee, type)">Confirm</button> -->
                 <button class="mx-2 bg-white !text-[#000] border-[2px] p-2 border-black rounded-lg"
-                    @click="saveCurrentlySelectedEmployeeConfig(selectedEmployee, type)">Confirm</button>
+                    @click="saveCurrentlySelectedEmployeeConfig(filteredSource, type)">Confirm</button>
             </div>
         </div>
     </Dialog>
@@ -117,7 +119,7 @@ const sub_module_id = ref();
 
 let format = {
     id: "",
-    isEnabled: ""
+    isEnabled: "",
 }
 
 const btn = ref(1);
@@ -139,9 +141,14 @@ const getFilteredSource = (legalEntity, department, type) => {
     }).then(res => {
         console.log(res.data);
         filteredSource.value = res.data;
+
         // useStore.client_id = res.data.client_id;
-    console.log(  "testing   res.data.client_id",res.data.client_id);
+        console.log("testing   res.data.client_id", res.data.client_id);
+    }).finally(() => {
+
+        console.log("selectedUserId", selectedUserId);
     })
+
 }
 
 
@@ -149,15 +156,16 @@ const selectedUserId = reactive([])
 
 // Enable Disable function
 
-function EnableDisable(user, EnableOrDisable,data,client_id) {
+function EnableDisable(user, EnableOrDisable, data, client_id) {
     console.log("isEnabled:" + EnableOrDisable, user);
-    let format = {
-        id:user,
-        isEnabled:EnableOrDisable,
-        client_id:client_id
-    }
-    selectedUserId.push(format)
-    console.log(selectedUserId);
+    // let format = {
+    //     id: user,
+    //     isEnabled: EnableOrDisable,
+    //     client_id: client_id
+    // }
+    // selectedUserId.push(format)
+    // console.log(selectedUserId);
+
 }
 
 function EnableAllAndDisableAll() {
@@ -168,22 +176,37 @@ function EnableAllAndDisableAll() {
 // const Employee_ConfigData = reactive([])
 
 const saveCurrentlySelectedEmployeeConfig = (data, type) => {
+    // console.log(data);
+let val = data;
+val.forEach((element) => {
+    if(element.status==1){
+        let format = {
+        id:element.id ,
+        isEnabled:element.status,
+        client_id: type
+    }
+    selectedUserId.push(format);
+    }else{
+        console.log(console.log(element.id,"else ::"));
+    }
+});
+
     useStore.canshowloading = true;
     axios.post('/SaveEmployeeAppConfigStatus', {
-        "client_id":useStore.client_id,
+        "client_id": useStore.client_details.id,
         "app_sub_modules_link_id": type,
         "selected_employees_user_code": selectedUserId
-    }
-    ).then((res) => {
-        console.log(res);
+    }).then((res) => {
+        // console.log(res);
     }).finally(() => {
-        selectedUserId.values = "";
-        filteredSource.value = "";
+        selectedUserId.splice(0, selectedUserId.length);
+        filteredSource.value ? filteredSource.value.splice(0, filteredSource.value.length) : []
         useStore.employeeAssignDialog = false;
-        useStore.getSessionClient();
+        useStore.getMobileSettings();
         useStore.canshowloading = false;
     })
 
+    // "selected_employees_user_code": selectedUserId
     // console.log(data);
     // let format = {
     //     "is_mobile_app_active": [],
@@ -211,11 +234,11 @@ const saveCurrentlySelectedEmployeeConfig = (data, type) => {
 
 }
 
-function canshowdialogbtn(){
-    selectedUserId.values = "";
-    filteredSource.value = "";
-    legalEntity.value ="";
-    department.value ="";
+function canshowdialogbtn() {
+    selectedUserId.values = [];
+    filteredSource.value = [];
+    legalEntity.value = "";
+    department.value = "";
     useStore.employeeAssignDialog = false
 }
 
