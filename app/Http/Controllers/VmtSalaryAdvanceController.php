@@ -168,7 +168,9 @@ class VmtSalaryAdvanceController extends Controller
     public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         // $request->loan_type = "InterestFreeLoan";
-        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails($request->loan_type);
+        $user_id = auth()->user()->id;
+        $client_id = sessionGetSelectedClientid();
+        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails($request->loan_type,$user_id, $client_id);
         return  $response;
     }
 
@@ -426,7 +428,7 @@ class VmtSalaryAdvanceController extends Controller
     {
         $loan_type =$request->eligible;
         $user_id = auth()->user()->id;
-        $client_id = sessionGetSelectedClientid()
+        $client_id = sessionGetSelectedClientid();
         $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance($loan_type, $user_id, $client_id  );
         return $response;
     }
