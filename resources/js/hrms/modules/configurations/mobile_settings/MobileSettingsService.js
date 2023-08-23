@@ -10,56 +10,65 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
     const arrayMobileSetDetails = ref();
 
-    const client_id = ref();
+    const client_details = ref();
 
     const currentlySelectedClient = ref();
 
     const canshowloading = ref(false);
 
- async function getMobileSettings(client_id){
-    canshowloading.value = true;
-    console.log("testings ",client_id);
-        await axios.post('/fetchMoileModuleData',{
-            client_id:client_id
-        }).then((res)=>{
-            console.log(res.data);
-            // if(res.data.data[1]){
-                arrayMobileSetDetails.value =res.data.data;
-                console.log( "mobile settings",arrayMobileSetDetails.value );
-            // }
-        }).finally(()=>{
-            canshowloading.value = false;
-        })
+    async function getMobileSettings(){
+        canshowloading.value = true;
+        console.log("testings ",client_details.value.id);
+            await axios.post('/fetchMobileModuleData',{
+                client_id:client_details.value.id
+            }).then((res)=>{
+                console.log(res.data);
+                // if(res.data.data[1]){
+                    arrayMobileSetDetails.value =res.data.data;
+                    console.log( "mobile settings",arrayMobileSetDetails.value );
+                // }
+            }).finally(()=>{
+                canshowloading.value = false;
+            })
     }
 
-    const getSessionClient = () => {
-        axios.get('session-sessionselectedclient').then(res => {
+     const getSessionClient = async () => {
+        await axios.get('session-sessionselectedclient').then(res => {
             console.log(res.data);
             currentlySelectedClient.value = res.data;
             if(res.data.id){
-                getMobileSettings(res.data.id);
+                client_details.value = res.data; //Store the client id here for future use
+                // getMobileSettings(client_id.value);
             }
         })
     }
 
-    const saveEnableDisableSetting = async(id,status)=>{
-        // /SaveAppConfigStatus
-        // let ID = id;
-        // let Status =status;
-        await axios.post('/SaveAppConfigStatus',{
-            module_id:id,
+    const saveEnableDisableSetting = async(item,status)=>{
+
+
+        canshowloading.value = true;
+
+        await axios.post('/saveAppConfigStatus',{
+            module_id:item.id,
             status:status
         }).then((res)=>{
-            getMobileSettings();
+
+            console.log("Status received : "+res.data.status);
+
+            if(res.data.status == "success")
+            {
+                item.status = status; //Toggle the button
+            }
+
         }).finally(()=>{
-            getSessionClient();
-          
+            canshowloading.value = false;
+
         })
-       
+
     }
 
     const SaveEmployeeAppConfigStatus =()=>{
-        
+
         axios.post('/SaveEmployeeAppConfigStatus',{
             app_sub_modules_link_id:app_sub_modules_link_id,
             selected_employees_user_code:selected_employees_user_code
@@ -79,9 +88,9 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
         getSessionClient,
         saveEnableDisableSetting,
         canshowloading,
-        client_id,
+        client_details,
 
-        // function 
+        // function
         SaveEmployeeAppConfigStatus,
 
         getMobileSettings

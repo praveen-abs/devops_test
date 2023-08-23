@@ -1,12 +1,9 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-// import '../../../../../public/assets/css/tailwind.css'
 
 
 import { createApp } from "vue";
-import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
@@ -29,23 +26,14 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
-import Textarea from 'primevue/textarea'
-import Chips from 'primevue/chips'
-import MultiSelect from 'primevue/multiselect';
-import InputNumber from 'primevue/inputnumber';
-import InputMask from 'primevue/inputmask';
-import ProgressBar from 'primevue/progressbar';
 
-import profilePage from './ProfilePageNew.vue';
-
-const app = createApp(profilePage);
-const pinia=createPinia()
+import AttendanceOvertimeReports from './attendanceOvertimeReports.vue'
+const app = createApp(AttendanceOvertimeReports);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
-app.use(pinia)
 
 
 app.directive('tooltip', Tooltip);
@@ -66,12 +54,6 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
-app.component('Textarea', Textarea)
-app.component('Chips', Chips)
-app.component('MultiSelect', MultiSelect)
-app.component('InputNumber', InputNumber)
-app.component('ProgressBar', ProgressBar)
-app.component('InputMask', InputMask)
 
-app.mount("#profilePage");
+app.mount("#AttendanceOvertimeReports");
 

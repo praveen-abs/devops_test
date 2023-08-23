@@ -56,7 +56,7 @@
                             <label for="" class="float-label">Date of Birth</label>
                             <Calendar inputId="icon" dropzone="true" v-model="service.employee_onboarding.dob" showIcon
                                 editable dateFormat="dd-mm-yy" placeholder="Date of birth" style="width: 350px;" class=""
-                                :maxDate="service.beforeYears(new Date())" :class="{
+                                :maxDate="service.dateOfBirth(new Date())" :class="{
                                     'p-invalid':
                                         v$.dob.$error,
                                 }" />

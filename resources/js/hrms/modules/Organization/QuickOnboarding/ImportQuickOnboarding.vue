@@ -55,6 +55,12 @@
                             {{ data['Employee Code'] ? data['Employee Code'] : '-' }}
                         </p>
                     </div>
+                    <div v-if="field.includes('Legal Entity')"
+                        :class="[useStore.isExistsOrNot(useStore.existingLegalEntity, data['Legal Entity']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        <p class="font-semibold fs-6">
+                            {{ data['Legal Entity'] ? data['Legal Entity'] : '-' }}
+                        </p>
+                    </div>
                     <p v-else-if="field.includes('Aadhar')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableAadharValues, data['Aadhar']) || useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
@@ -95,7 +101,7 @@
                     </p>
 
                     <p v-else-if="field.includes('Bank Name')"
-                        :class="[!useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Bank Name'] ? data['Bank Name'] : '-' }}
                     </p>
@@ -167,6 +173,9 @@
                     <InputText v-else-if="field == 'Email'" v-model="data[field]" />
                     <InputText v-else-if="field == 'Mobile Number'" v-model="data[field]" minLength="10" maxLength="10"
                         @keypress="useStore.isEnteredNos($event)" />
+                    <Dropdown v-else-if="field == 'Legal Entity'" v-model="data[field]"
+                        :options="useStore.legalEntityDropdown" optionLabel="client_fullname" optionValue="client_fullname"
+                        placeholder="Select Legal Entity" />
                     <Dropdown v-else-if="field == 'Bank Name'" v-model="data[field]"
                         :options="useNormalOnboardingStore.bankList" optionLabel="bank_name" optionValue="bank_name"
                         placeholder="Select Bank Name" />
