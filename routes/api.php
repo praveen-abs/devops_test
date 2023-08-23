@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\VmtAPIProfilePagesController;
 use App\Http\Controllers\Api\VmtAPIInvestmentsController;
 use App\Http\Controllers\Api\VmtApiNotificationsController;
 use App\Http\Controllers\Api\VmtAPIReimbursementsController;
+use App\Http\Controllers\Api\VmtAPILoanAndSalaryAdvanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -165,5 +166,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //loanandadvance
-    Route::post('/loanandsalaryadvance/empLoanAndSalaryAdvance', [App\Http\controllers\VmtAPILoanAndSalaryAdvanceController::class, 'empLoanAndSalaryAdvance']);
+    Route::post('/loanandsalaryadvance/getEmpLoanAndSalaryAdvance', [VmtAPILoanAndSalaryAdvanceController::class, 'getEmpLoanAndSalaryAdvance']);
 });

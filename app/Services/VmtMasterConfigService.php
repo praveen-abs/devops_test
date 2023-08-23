@@ -9,6 +9,9 @@ use \DateTime;
 use App\Models\VmtClientMaster;
 use App\Models\User;
 use App\Models\VmtConfigApps;
+use App\Models\Department;
+use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\State;
 use App\Models\VmtClientModules;
 use App\Models\VmtClientSubModules;
 use App\Models\VmtAppSubModuleslink;
@@ -245,5 +248,43 @@ class VmtMasterConfigService {
         }
     }
 
+    function getAllDropdownFilterSetting(){
 
+        $current_user_role = auth()->user()->org_role;
+
+        $option_all = [ 'id'=>0 , 'name'=>'All'];
+
+        try {
+
+            $queryGetDept = Department::select('id', 'name')->get();
+            $queryGetDept->push($option_all);
+
+            $queryGetDesignation = VmtEmployeeOfficeDetails::select('designation')->where('designation', '<>', 'S2 Admin')->whereNotNull("designation")->distinct()->get();
+            $queryGetDesignation->push($option_all);
+
+            $queryGetLocation = VmtEmployeeOfficeDetails::select('work_location')->whereNotNull("work_location")->distinct()->get();
+            $queryGetLocation->push($option_all);
+
+            $queryGetstate = State::select('id', 'state_name')->distinct()->get();
+            $queryGetstate->push($option_all);
+
+            if ($current_user_role == 1 || $current_user_role == 2) {
+
+                $queryGetlegalentity = VmtClientMaster::get(['id', 'client_name']);
+
+            }
+
+
+            $getsalary = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
+
+
+            return response()->json($getsalary);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error fetching the dropdown value",
+                "data" => $e,
+            ]);
+        }
+    }
 }

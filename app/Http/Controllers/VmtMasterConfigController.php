@@ -163,13 +163,13 @@ class VmtMasterConfigController extends Controller
 
     public function getAllDropdownFilterSetting(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-        $response = getAllDropdownFilterSetting();
-        return $response;
+        return  $serviceVmtMasterConfigService->getAllDropdownFilterSetting();
 
     }
-    public function get_employees_filter_data(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
 
-        $filtered_data = $this->empolyees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);
+    public function getEmployeesFilterData(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+
+        $filtered_data = $this->employees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);
 
         foreach ($filtered_data as $key => $single_value) {
              $emp_module_status =VmtEmpSubModules::where('client_id',sessionGetSelectedClientid())->where('app_sub_module_link_id',$request->sub_module_id)->where('user_id', $single_value['id']);
@@ -192,7 +192,7 @@ class VmtMasterConfigController extends Controller
             $select_employee = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->leftjoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
                 ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
-                ->where('process', '<>', 'S2 Admin')
+                ->where('is_ssa','0')
                 ->select(
                     'users.id',
                     'users.name',
