@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="grid grid-cols-12 gap-2 mt-3">
-            <div class="col-span-4 flex items-center">
+            <div class="flex items-center col-span-4">
                 <input type="text" v-model="filters['global'].value" placeholder="Search employee.."
                     class="border rounded-lg bg-gray-100 p-1.5 w-11/12">
                 <!-- <InputText  placeholder="Keyword Search" /> -->
@@ -183,7 +183,7 @@ val.forEach((element) => {
         let format = {
         id:element.id ,
         isEnabled:element.status,
-        client_id: type
+        client_id: useStore.client_details.id
     }
     selectedUserId.push(format);
     }else{

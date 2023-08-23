@@ -32,12 +32,12 @@
                 </div>
                 <div class="my-auto">
                     <!-- {{ val.Type }} -->
-                    <div class="flex float-right cursor-pointer w-[170px] items-center"
-                        @click="selectedType = item.id, MobileSettingsStore.employeeAssignDialog = true">
+                    <div class="flex float-right cursor-pointer w-[170px] items-center" v-if="item.status===1"
+                      >
                         <i class="pi pi-users"></i>
                         <span class="text-[#000] mx-2" >
                             {{ item.employee_count }}</span>
-                            <span class=" underline">Assign
+                            <span class="underline "   @click="selectedType = item.id, MobileSettingsStore.employeeAssignDialog = true">Assign
                             Employee</span>
                     </div>
                     <!-- <p
