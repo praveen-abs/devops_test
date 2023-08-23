@@ -684,7 +684,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             },
         }
 
-
     })
 
     const v$ = useValidate(rules, employee_onboarding);
