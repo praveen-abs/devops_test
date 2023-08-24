@@ -185,15 +185,16 @@ const getDynamicHeaders = () =>{
 }
 
 onMounted(()=>{
-    axios.get('/grossEarningsFromEmployment').then(res=>{
-        grossEarnings.value = Object.values(res.data)
+    // axios.get('/grossEarningsFromEmployment').then(res=>{
+    //     grossEarnings.value = Object.values(res.data)
         // Object.values(res.data).forEach(element => {
         //       sample.value.push(element.all[0])
         //       console.log(sample.value);
         // });
         // sample.value = Object.values(res.data.all)
-    }).finally(()=>{
-        getDynamicHeaders()
-    })
+//     }).finally(()=>{
+//         getDynamicHeaders()
+//     })
+// })
 })
 </script>
