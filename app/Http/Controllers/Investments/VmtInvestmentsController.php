@@ -603,14 +603,14 @@ class VmtInvestmentsController extends Controller
             // Employeer Income Is Greater than 300000 and Less Than  600000
             if ($total_income > 300000 && $total_income <= 600000) {
                 $taxable_amount = $total_income * 5 / 100;
-                return floor($taxable_amount);
+                return floor(15000 + $taxable_amount);
 
             } else
                 // Employeer Income Is Greater than 600000 and Less Than  900000
                 if ($total_income > 600000 && $total_income <= 900000) {
                     $taxable_amount = $total_income * 10 / 100;
                     $tax_amt = floor($taxable_amount);
-                    return floor(15000 + $taxable_amount);
+                    return floor(30000 + $taxable_amount);
                 } else
                     // Employeer Income Is Greater than 900000 and Less Than  1200000
                     if ($total_income > 900000 && $total_income <= 1200000) {
@@ -618,10 +618,10 @@ class VmtInvestmentsController extends Controller
                         return floor(45000 + $taxable_amount);
                     } else
                         // Employeer Income Is Greater than 1200000 and Less Than  1500000
-                        if ($total_income > 1200000 && $total_income < 1500000) {
+                        if ($total_income > 1200000 && $total_income <= 1500000) {
                             $taxable_amount = $total_income * 20 / 100;
                             $tax_amt = floor($taxable_amount);
-                            return floor(90000 + $taxable_amount);
+                            return floor(60000 + $taxable_amount);
 
                         } else
                             // Employeer Income Is Greater than 1500000
@@ -631,11 +631,7 @@ class VmtInvestmentsController extends Controller
                                 $subcharge = $this->subChargeCalculation($total_income);
                                 $heath_and_education = ($total_amount + $subcharge) * 4 / 100;
                                 $final_value = $total_amount + $subcharge + $heath_and_education;
-
                                 return floor($final_value);
-                            } else {
-                                $taxable_amount = 0;
-                                return $taxable_amount;
                             }
         }
     }
@@ -878,7 +874,7 @@ class VmtInvestmentsController extends Controller
             $pre_emp_income['sno'] = "c";
             $pre_emp_income['section'] = "Add: Previous Employer Income ";
             $pre_emp_income['old_regime'] = $sumOfpreviousempincome;
-            $pre_emp_income['new_regime'] = 0;
+            $pre_emp_income['new_regime'] = $sumOfpreviousempincome;
 
             $Reimbursement['sno'] = "d";
             $Reimbursement['section'] = "Less: Reimbursement Exemptions";
@@ -898,7 +894,7 @@ class VmtInvestmentsController extends Controller
             $tax_section_16['section'] = "Less: Deductions under section 16";
             // Sum Previous Employer Standard Deduction  and Previous Employer PT
             $tax_section_16['old_regime'] = $sumofSec16;
-            $tax_section_16['new_regime'] = $sumofSec16;
+            $tax_section_16['new_regime'] = $final_standard;
 
 
             // Values in negative
@@ -918,14 +914,14 @@ class VmtInvestmentsController extends Controller
             $total_tax_income['section'] = "Total Taxable Income";
             $total_old_tax = $sumofgross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + $sumofsection10 + $sumofSec16 + $sumofchap6a) + $sumofhouseproperty;
             $total_tax_income['old_regime'] = $total_old_tax;
-            $total_new_tax = $sumofgross + $sumOfOtherSourceOfIncome + 0 - ($sumOfReimbersument + 0 + $sumofSec16 + 0) + $sumofletout;
+            $total_new_tax = $sumofgross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + 0 + $final_standard + 0) + $sumofletout;
             $total_tax_income['new_regime'] = $total_new_tax;
 
 
             $total_tax_laibilty['sno'] = "j";
             $total_tax_laibilty['section'] = "Total Tax Laibility";
             $total_tax_laibilty['old_regime'] = $this->oldRegimeTaxCalculation("old", $empAge, $total_old_tax);
-            $total_tax_laibilty['new_regime'] = $this->newRegimeTaxCalculation("new", $total_new_tax);
+            $total_tax_laibilty['new_regime'] = $this->newRegimeTaxCalculation("new", 1500000);
             $total_tax_laibilty['age'] = $empAge;
             $total_tax_laibilty['regime'] = $dec_amt['regime'];
             $total_tax_laibilty['last_updated'] = $dec_amt['updated_at'];

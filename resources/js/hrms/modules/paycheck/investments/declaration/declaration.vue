@@ -287,14 +287,11 @@
                                 </template>
                             </Column>
                             <Column v-for="col of dynmaicHeadersForMonthTax" :key="col"  :header="col.title" :field="col.title" class="font-semibold">
-                            </Column>
-                            <!-- <Column  class="font-bold" v-for="(col,i) in monthWiseData" :key="i">
-                                <template #header="{data}">
-                                    {{data.month}}
+                                <template #body="{data,field}">
+                                    <p class="font-semibold fs-6">{{data[field]}}</p>
                                 </template>
+                            </Column>
 
-
-                            </Column> -->
                         </DataTable>
                     </div>
                     <div class="flex my-3">
