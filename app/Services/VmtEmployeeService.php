@@ -363,11 +363,16 @@ class VmtEmployeeService
             $emp_workshift = new VmtEmployeeWorkShifts;
             $emp_workshift->user_id = $user_id;
             $work_shift_id = VmtWorkShifts::where('is_default', '1')->first();
+            $emp_shift_id = VmtEmployeeWorkShifts::where('user_id', '$user_id')->first();
             if (!empty($work_shift_id)) {
                 $emp_workshift->work_shift_id = $work_shift_id->id;
             }
-            $emp_workshift->is_active = '1';
-            $emp_workshift->save();
+            if (empty($emp_shift_id)) {
+                $emp_workshift->is_active = '1';
+                $emp_workshift->save();
+            }
+
+
 
             //save statutory data of employee
             $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id', $user_id);
@@ -605,11 +610,14 @@ class VmtEmployeeService
             $emp_workshift = new VmtEmployeeWorkShifts;
             $emp_workshift->user_id = $user_id;
             $work_shift_id = VmtWorkShifts::where('is_default', '1')->first();
+            $emp_shift_id = VmtEmployeeWorkShifts::where('user_id', '$user_id')->first();
             if (!empty($work_shift_id)) {
                 $emp_workshift->work_shift_id = $work_shift_id->id;
             }
-            $emp_workshift->is_active = '1';
-            $emp_workshift->save();
+            if (empty($emp_shift_id)) {
+                $emp_workshift->is_active = '1';
+                $emp_workshift->save();
+            }
 
             //save statutory data of employee
 
@@ -734,6 +742,20 @@ class VmtEmployeeService
             $empOffice->official_mobile  = $data["official_mobile"] ?? ''; // => "1234567890"
             $empOffice->emp_notice  = $data["emp_notice"] ?? ''; // => "0"
             $empOffice->save();
+
+              //assign default workshift to employee
+
+              $emp_workshift = new VmtEmployeeWorkShifts;
+              $emp_workshift->user_id = $user_id;
+              $work_shift_id = VmtWorkShifts::where('is_default', '1')->first();
+              $emp_shift_id = VmtEmployeeWorkShifts::where('user_id', '$user_id')->first();
+              if (!empty($work_shift_id)) {
+                  $emp_workshift->work_shift_id = $work_shift_id->id;
+              }
+              if (empty($emp_shift_id)) {
+                  $emp_workshift->is_active = '1';
+                  $emp_workshift->save();
+              }
 
             //store employee_statutoryDetails details
 
