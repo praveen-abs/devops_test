@@ -29,6 +29,7 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
         sendWelcomeMail_Status_diaconfirmation.value= false;
         axios.post('/send_WelcomeMailNotification', {
             user_code: user_code,
+            mail_type: 'normal',
         }).then((response) => {
             console.log(" Response [send_WelcomeMail] : " + response.data);
         })
@@ -36,6 +37,7 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
                 console.log(data);
 
             }).finally(()=>{
+                getManageWelcomeMailStatus();
                 loading.value = false
             })
 

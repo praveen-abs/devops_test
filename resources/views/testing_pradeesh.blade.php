@@ -23,15 +23,6 @@ use App\Models\VmtClientMaster;
 <body>
 
     {{-- @vite('resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js')
-   <div id="EmployeeDocsUpload"></div> --}}
-
-
-    @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-    {{-- <div id="SalaryAdvanceLoan"></div> --}}
-
-    @vite('resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js')
-    {{-- <div id="testing_table"></div> --}}
-
      {{-- @vite( 'resources/js/hrms/modules/roles_permission/RolesPermission.js') --}}
      {{-- <div id="RolesPermission"></div> --}}
 
@@ -59,7 +50,7 @@ use App\Models\VmtClientMaster;
     <div id="AdminRolesPermission"></div> -->
 
     @vite('resources/js/hrms/modules/leave_module/LeaveModule.js')
-        {{-- <div id="LeaveModule"></div> --}}
+        <!-- <div id="LeaveModule"></div> -->
 
 
     @vite('resources\js\hrms\modules\approvals\salary_advance_loan\approvals_salary_advance.js')
@@ -68,9 +59,8 @@ use App\Models\VmtClientMaster;
     @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
     {{-- <div id="EmpSalaryAdvanceLoan"></div> --}}
 
-    @vite('resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js')
-    <div id="on_run_client_onboarding"></div>
-
+    @vite('resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js')
+    <div id="EmployeePayablesDetails"></div>
 </body>
 
 </html>

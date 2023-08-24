@@ -750,7 +750,7 @@ class VmtAttendanceService
         }
 
 
-        try{
+        try {
             //Get the user_code
             $query_user = User::where('user_code', $approver_user_code)->first();
             $approver_user_id = $query_user->id;
@@ -785,24 +785,34 @@ class VmtAttendanceService
             $VmtClientMaster = VmtClientMaster::first();
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
-        $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName($approver_user_id),true);
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
+            try {
+                $isSent    = \Mail::to($employee_mail)->send(
+                    new ApproveRejectLeaveMail(
+                        $obj_employee->name,
+                        $obj_employee->user_code,
+                        VmtLeaves::find($leave_record->leave_type_id)->leave_type,
+                        User::find($manager_user_id)->name,
+                        User::find($manager_user_id)->user_code,
+                        request()->getSchemeAndHttpHost(),
+                        $image_view,
+                        $emp_avatar,
+                        $status
+                    )
 
+                );
+            } catch (TransportException $e) {
 
-            $isSent    = \Mail::to($employee_mail)->send(
-                new ApproveRejectLeaveMail(
-                    $obj_employee->name,
-                    $obj_employee->user_code,
-                    VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                    User::find($manager_user_id)->name,
-                    User::find($manager_user_id)->user_code,
-                    request()->getSchemeAndHttpHost(),
-                    $image_view,
-                    $emp_avatar,
-                    $status
-                )
-
-            );
-
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'Leave approval successful',
+                        'mail_status' => 'failure',
+                        'error' => $e->getMessage(),
+                        'error_verbose' => $e
+                    ]
+                );
+            }
             if ($isSent) {
                 $mail_status = "success";
             } else {
@@ -824,18 +834,16 @@ class VmtAttendanceService
 
             $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
 
-            if($users_id->exists()){
-               $users_id = $users_id->first()->user_id;
+            if ($users_id->exists()) {
+
+                $users_id = $users_id->first()->user_id;
 
                 $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
                     notif_user_id: User::where('id', $users_id)->first()->user_code,
                     leave_module_type: $leave_module_type,
                     manager_user_code: $approver_user_code,
                 );
-
             }
-
-
 
             $response = [
                 'status' => 'success',
@@ -847,7 +855,6 @@ class VmtAttendanceService
             ];
 
             return $response;
-
         } catch (TransportException $e) {
 
             return response()->json(
@@ -2706,12 +2713,12 @@ class VmtAttendanceService
 
         try {
 
-            $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+            $map_allEmployees = User::all(['id', 'name', 'user_code'])->keyBy('id');
             $map_leaveTypes = VmtLeaves::all(['id', 'leave_type'])->keyBy('id');
 
             //Get the list of employees for the given Manager
             $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_code)->get('user_id');
-
+            $team_employee_user_code = User::whereIn('id', $team_employees_ids)->get('user_code');
             //use wherein and fetch the relevant records
             $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)
                 ->whereMonth('leaverequest_date', '=', $filter_month)
@@ -2725,6 +2732,7 @@ class VmtAttendanceService
 
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->user_code = $map_allEmployees[$singleItem->user_id]["user_code"];
                     $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
                 }
 
@@ -2737,7 +2745,6 @@ class VmtAttendanceService
                 //Map leave types
                 $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
             }
-
 
             return response()->json([
                 'status' => 'success',

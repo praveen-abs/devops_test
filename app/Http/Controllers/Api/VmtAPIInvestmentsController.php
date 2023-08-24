@@ -26,12 +26,12 @@ class VmtAPIInvestmentsController extends Controller
     public function saveSectionPopups(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
        // dd($request->all());
 
-        return $serviceVmtInvestmentsService->saveSectionPopups($request->id, $request->user_code, $request->fs_id, $request->from_month, $request->to_month, $request->city, $request->total_rent_paid, $request->landlord_name,  $request->landlord_PAN, $request->address );
+        return $serviceVmtInvestmentsService->saveSectionPopups($request->all());
     }
     public function saveSection80(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
        // dd($request->all());
 
-        return $serviceVmtInvestmentsService->saveSection80($request->user_code, $request->fs_id, $request->loan_sanction_date, $request->lender_type, $request->property_value, $request->loan_amount, $request->interest_amount_paid,  $request->section );
+        return $serviceVmtInvestmentsService->saveSection80($request->all());
     }
 
 

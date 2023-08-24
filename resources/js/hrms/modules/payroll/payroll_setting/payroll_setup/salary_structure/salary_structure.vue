@@ -2,13 +2,17 @@
     <div class="w-full p-3">
         <div v-if="route.params.name == undefined || route.params.name == ''">
             <section id="header" class="flex mx-2 my-5">
-                <div class="w-10">
+                <div class="w-full flex items-center">
                     <p class="font-semibold text-gray-800 fs-5"> Salary Structure <span
                             class="font-semibold text-gray-600 fs-6">(Paygroup)</span></p>
+                    <button class="btn btn-orange float-right px-6 py-2 w-[160px]">
+                        <router-link class="   " :to="`/payrollSetup/structure/create`">Add
+                            Structure</router-link>
+                    </button>
+
                 </div>
                 <div class="float-right">
-                    <router-link class=" btn btn-orange float-right ml-8" :to="`/payrollSetup/structure/create`">Add
-                        Structure</router-link>
+
                 </div>
             </section>
             <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 mx-1"
@@ -50,6 +54,14 @@
             </div>
         </div>
         <NewSalaryStructure v-if="route.params.name == 'create'" />
+        <div class="my-3 text-end">
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
+                @click="uesPayroll.activeTab--">Previous</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="uesPayroll.saveGeneralPayrollSettings(uesPayroll.generalPayrollSettings)">Save</button>
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
+                @click="uesPayroll.activeTab++">Next</button>
+        </div>
     </div>
 </template>
 
@@ -74,34 +86,41 @@ onMounted(() => {
 
 <style>
 .v-enter-active,
-.v-leave-active {
+.v-leave-active
+{
     transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
-.v-leave-to {
+.v-leave-to
+{
     opacity: 0;
 }
 
-.bounce-enter-active {
+.bounce-enter-active
+{
     animation: bounce-in 0.5s;
 }
 
-.bounce-leave-active {
+.bounce-leave-active
+{
     animation: bounce-in 0.5s reverse;
 }
 
-@keyframes bounce-in {
-    0% {
+@keyframes bounce-in
+{
+    0%
+    {
         transform: scale(0);
     }
 
-    50% {
+    50%
+    {
         transform: scale(1.25);
     }
 
-    100% {
+    100%
+    {
         transform: scale(1);
     }
-}
-</style>
+}</style>

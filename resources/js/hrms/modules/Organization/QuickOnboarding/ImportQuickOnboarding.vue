@@ -1,21 +1,21 @@
 <template>
-    <div class="grid grid-cols-3 w-8/12 place-content-center mx-auto my-2">
+    <div class="grid w-10/12 grid-cols-3 mx-auto my-2 place-content-center">
         <!-- <div class="flex">
-            <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
-                    class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
+            <label class="p-2 font-semibold border-gray-500 rounded-lg cursor-pointer border-1 fs-6" for="file"><i
+                    class="px-2 pi pi-folder" style="font-size: 1rem"></i>Browse</label>
             <input type="file" name="" id="file" hidden @change="useStore.convertExcelIntoArray($event)"
                 accept=".xls, .xlsx">
         </div> -->
-        <div class="bg-white text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Total Records : <span class="font-bold">
+        <div class="p-2 mx-6 font-semibold text-black bg-white rounded-lg fs-6">Total Records : <span class="font-bold">
                 {{ useStore.totalRecordsCount.length ? useStore.totalRecordsCount[0].length : 0 }}
             </span>
         </div>
-        <div class="bg-green-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Processed Records : <span
+        <div class="p-2 mx-6 font-semibold text-black bg-green-100 rounded-lg fs-6">Processed Records : <span
                 class="font-bold">
                 {{ useStore.totalRecordsCount.length ? useStore.totalRecordsCount[0].length -
                     useStore.errorRecordsCount.length : 0 }}</span>
         </div>
-        <div class="bg-red-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Error Records : <span class="font-bold">
+        <div class="p-2 mx-6 font-semibold text-black bg-red-100 rounded-lg fs-6">Error Records : <span class="font-bold">
                 {{ useStore.errorRecordsCount.length }}</span>
         </div>
     </div>
@@ -41,108 +41,131 @@
 
             <Column v-for="col of  useStore.EmployeeQuickOnboardingDynamicHeader " :key="col.title" :field="col.title"
                 style="min-width: 12rem;" :header="col.title">
-
+                <!-- || !useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code']) -->
                 <template #body="{ data, field }">
-                    <div v-if="field.includes('Employee code')"
-                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                    <div v-if="field.includes('Employee Code')"
+                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
-                            <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
+                            <!-- <i class="mx-2 cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
+                                v-tooltip.right="'Client code is not eligible'"
+                                v-if="!useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code'])"></i> -->
+                            <i class="mx-2 cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
-                                v-if="!useStore.isUserExists(data['Employee code'])"></i>
-                            {{ data['Employee code'] }}
+                                v-if="!useStore.isUserExists(data['Employee Code'])"></i>
+                            {{ data['Employee Code'] ? data['Employee Code'] : '-' }}
                         </p>
                     </div>
-                    <p v-else-if="field == 'Aadhar'"
+                    <div v-else-if="field.includes('Legal Entity')"
+                        :class="[useStore.isExistsOrNot(useStore.existingLegalEntity, data['Legal Entity']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        <p class="font-semibold fs-6">
+                            {{ data['Legal Entity'] ? data['Legal Entity'] : '-' }}
+                        </p>
+                    </div>
+                    <p v-else-if="field.includes('Aadhar')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableAadharValues, data['Aadhar']) || useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
-                            v-tooltip.right="'User code is already exists'"
+                        <i class="mx-2 cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
+                            v-tooltip.right="'Aadhar number is already exists'"
                             v-if="useStore.isAadharExists(data['Aadhar'])"></i>
-                        {{ data['Aadhar'] }}
+                        {{ useStore.splitNumberWithSpaces(data['Aadhar']) }}
                     </p>
-                    <p v-else-if="field == 'Employee Name'"
+                    <p v-else-if="field.includes('Employee Name')"
                         :class="[useStore.isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['Employee Name'] }}
+                        {{ data['Employee Name'] ? data['Employee Name'] : '-' }}
                     </p>
-                    <p v-else-if="field == 'Email'"
+                    <p v-else-if="field.includes('Email')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmailValues, data['Email']) || useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6 flex items-center">
-                        <i class="fa fa-exclamation-circle text-warning  cursor-pointer" aria-hidden="true"
+                        class="flex items-center font-semibold fs-6">
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                             v-tooltip.right="'Email is already exists'"
                             v-if="useStore.existingEmails.includes(data['Email'])"></i>
-                    <p class="font-semibold fs-6 px-2 py-auto">{{ data['Email'] }}</p>
+                    <span class="px-2 font-semibold fs-6 py-auto">{{ data['Email'] ? data['Email'] : '-' }}</span>
                     </p>
                     <p v-else-if="field.includes('Mobile Number')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableMobileNumberValues, data[field]) || useStore.existingMobileNumbers.includes(data[field]) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
                             v-if="useStore.existingMobileNumbers.includes(data[field])"></i>
-                        {{ data['Mobile Number'] }}
+                        {{ data['Mobile Number'] ? data['Mobile Number'] : '-' }}
                     </p>
 
-                    <p v-else-if="field == 'Account No'"
+                    <p v-else-if="field.includes('Account No')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableAccNoValues, data['Account No']) || useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
-                            v-tooltip.right="'Mobile number is already exists'"
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
+                            v-tooltip.right="'Account number is already exists'"
                             v-if="useStore.existingMobileNumbers.includes(data[field])"></i>
-                        {{ data['Account No'] }}
+                        {{ data['Account No'] ? data['Account No'] : '-' }}
                     </p>
 
-                    <p v-else-if="field == 'Bank Name'"
-                        :class="[useStore.isLetter(data['Bank Name']) || !useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                    <p v-else-if="field.includes('Bank Name')"
+                        :class="[useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['Bank Name'] }}
+                        {{ data['Bank Name'] ? data['Bank Name'] : '-' }}
                     </p>
 
                     <p v-else-if="field.includes('Pan No')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTablePanValues, data['Pan No']) || !useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
-                            v-tooltip.right="'Mobile number is already exists'"
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
+                            v-tooltip.right="'Pan number is already exists'"
                             v-if="!useStore.isValidPancard(data['Pan No'])"></i>
-                        {{ data['Pan No'].toUpperCase() }}
+                        {{ data['Pan No'] ? data['Pan No'].toUpperCase() : '-' }}
                     </p>
-                    <p v-else-if="field == 'DOB'"
+                    <p v-else-if="field.includes('Father DOB')" class="font-semibold fs-6">
+                        {{ data[field] ? data[field] : '-' }}
+                    </p>
+                    <p v-else-if="field.includes('Mother DOB')" class="font-semibold fs-6">
+                        {{ data[field] ? data[field] : '-' }}
+                    </p>
+                    <p v-else-if="field.includes('Spouse DOB')" class="font-semibold fs-6">
+                        {{ data[field] ? data[field] : '-' }}
+                    </p>
+                    <p v-else-if="field.includes('DOB')"
                         :class="[useStore.isValidDate(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['DOB'] }}
+                        {{ data['DOB'] ? data[field] : '-' }}
                     </p>
-                    <p v-else-if="field == 'DOJ'"
+                    <p v-else-if="field.includes('DOJ')"
                         :class="[useStore.isValidDate(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['DOJ'] }}
+                        {{ data['DOJ'] ? data[field] : '-' }}
                     </p>
-                    <p v-else-if="field == 'Bank ifsc'"
+                    <p v-else-if="field.includes('Bank ifsc')"
                         :class="[useStore.isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['Bank ifsc'].toUpperCase() }}
+                        {{ data['Bank ifsc'] ? data['Bank ifsc'].toUpperCase() : '-' }}
                     </p>
                     <p v-else-if="field.includes('Official Mail')"
                         :class="[useStore.isOfficialMailExists(data['Official Mail']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['Official Mail'] }}
+                        {{ data['Official Mail'] ? data['Official Mail'] : '-' }}
                     </p>
                     <p v-else-if="field.includes('Marital Status')"
                         :class="[useStore.isExistsOrNot(useStore.existingMartialStatus, data['Marital Status']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['Marital Status'] }}
+                        {{ data['Marital Status'] ? data['Marital Status'] : '-' }}
                     </p>
                     <p v-else-if="field.includes('Blood Group')"
                         :class="[useStore.isExistsOrNot(useStore.existingBloodgroups, data['Blood Group']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['Blood Group'] }}
+                        {{ data['Blood Group'] ? data['Blood Group'] : '-' }}
                     </p>
-
+                    <p v-else-if="field.includes('Department')"
+                        :class="[!useStore.isDepartmentExists(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Department'] ? data['Department'] : '-' }}
+                    </p>
                     <p v-else class="font-semibold fs-6">
-                        {{ data[field] }}
+                        {{ data[field] ? data[field] : '-' }}
                     </p>
-
                 </template>
                 <template #editor="{ data, field }">
-                    <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" />
+                    <!-- <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" /> -->
+                    <InputText v-if="field == 'Aadhar'" v-model="data[field]" minLength="12" maxLength="12"
+                        @keypress="useStore.isEnteredNos($event)" />
                     <Dropdown v-else-if="field == 'Gender'" v-model="data[field]" :options="Gender" optionLabel="name"
                         optionValue="name" placeholder="Select Gender" class="w-full" />
                     <InputMask v-else-if="field == 'Pan No'" id="serial" mask="aaaPa9999a" v-model="data[field]"
@@ -150,6 +173,9 @@
                     <InputText v-else-if="field == 'Email'" v-model="data[field]" />
                     <InputText v-else-if="field == 'Mobile Number'" v-model="data[field]" minLength="10" maxLength="10"
                         @keypress="useStore.isEnteredNos($event)" />
+                    <Dropdown v-else-if="field == 'Legal Entity'" v-model="data[field]"
+                        :options="useStore.legalEntityDropdown" optionLabel="client_fullname" optionValue="client_fullname"
+                        placeholder="Select Legal Entity" />
                     <Dropdown v-else-if="field == 'Bank Name'" v-model="data[field]"
                         :options="useNormalOnboardingStore.bankList" optionLabel="bank_name" optionValue="bank_name"
                         placeholder="Select Bank Name" />
@@ -159,11 +185,14 @@
                     <Dropdown v-else-if="field == 'Blood Group'" v-model="data[field]"
                         :options="useNormalOnboardingStore.bloodGroups" optionLabel="name" optionValue="name"
                         placeholder="Select Bloodgroup" class="p-error" />
+                    <Dropdown v-else-if="field == 'Department'" v-model="data[field]"
+                        :options="useNormalOnboardingStore.departmentDetails" optionLabel="name" optionValue="name"
+                        placeholder="Select Department" class="p-error" />
                     <InputText v-else v-model="data[field]" :readonly="checkingNonEditableFields(field)" />
                 </template>
             </Column>
             <template #footer>
-                <button class="btn btn-orange mx-auto flex justify-center"
+                <button class="flex justify-center mx-auto btn btn-orange"
                     @click="useStore.uploadOnboardingFile(useStore.EmployeeQuickOnboardingSource)">Upload</button>
             </template>
         </DataTable>
@@ -238,11 +267,6 @@ const onCellEditComplete = (event) => {
 
     for (let index = 0; index < useStore.EmployeeQuickOnboardingSource.length; index++) {
         useStore.getValidationMessages(useStore.EmployeeQuickOnboardingSource[index]);
-        let format = {
-            title: Object.keys(useStore.EmployeeQuickOnboardingSource[index]),
-            value: Object.values(useStore.EmployeeQuickOnboardingSource[index])
-        }
-        useStore.excelRowData.push(format)
     }
 }
 
@@ -251,8 +275,8 @@ const sampleTemplate = ref([
     {
         'Employee Code': 'ABS01',
         'Employee Name': 'Vishu',
-        'Date Of Birth (dd-mmm-yyyy)': '23-09-2001',
-        'Date of Joined (dd-mmm-yyyy)': '23-09-2023',
+        'Date Of Birth (dd-mm-yyyy)': '23-09-2001',
+        'Date of Joined (dd-mm-yyyy)': '23-09-2023',
         'Mobile Number': '9898989898',
         'Aadhaar Number': '2222 3333 4444',
         'Personal Email': 'abs@gmail.com',
@@ -264,16 +288,14 @@ const sampleTemplate = ref([
         'Department': 'IT',
         'Location': 'Chennai',
         'Father Name': 'Simma',
-        'Physically Handicapped': [
-            "one", "two", "three", "four"
-        ],
+        'Physically Handicapped': 'No',
     }
 ])
 const sampleTemplateHeaders = [
     { title: 'Employee Code' },
     { title: 'Employee Name' },
-    { title: 'Date Of Birth (dd-mmm-yyyy)', },
-    { title: 'Date of Joined (dd-mmm-yyyy)' },
+    { title: 'Date Of Birth (dd-mm-yyyy)', },
+    { title: 'Date of Joined (dd-mm-yyyy)' },
     { title: 'Mobile Number' },
     { title: 'Aadhaar Number' },
     { title: 'Personal Email' },
@@ -289,37 +311,7 @@ const sampleTemplateHeaders = [
 ]
 
 
-
-
-const datn = ref([
-
-    { header: "eid", value: "" },
-    { header: "test", value: [{ name: "test1" }, { name: "test2" }] },
-    { header: "ename", value: "" },
-    { header: "esal", value: [{ name: "val" }, { name: "val1" }] }])
-
-
-const transform = (data) => {
-    const noOfRowaToGenerate = 10;
-    return data.map(({ name, values }) => {
-        const headers = values.reduce((prev, next) =>
-        ({
-            ...prev, [next.header]: Array.isArray
-                (next.value) ? next.value.map(({ name }) => name) : next.value
-        }), {})
-        return {
-            workSheet: name,
-            rows: Array(noOfRowaToGenerate).fill(headers)
-        }
-    })
-}
-// transform(values.value)
-
-
-
 const download = () => {
-
-
     const data = XLSX.utils.json_to_sheet(sampleTemplate.value)
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, data, 'sheet1')
@@ -335,186 +327,3 @@ const Gender = ref([
 
 </script>
 
-
-<!-- <DataTable editMode="cell" @cell-edit-complete="onCellEditComplete" ref="dt" dataKey="id" :paginator="true"
-:rows="5"
-paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-:rowsPerPageOptions="[5, 10, 25]"
-currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-
-<Column header="Employee code" field="Employee code" style="min-width: 8rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Employee code'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Employee Name" header="Employee Name" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Employee Name'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Email" header="Email " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Email'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Aadhar" header="Aadhar " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Aadhar'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputMask id="ssn" mask="9999 9999 9999" v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Account No" header="Account No " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Account No'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" minlength="10" maxlength="18" />
-    </template>
-</Column>
-<Column field="Bank Name" header="Bank Name " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Bank Name'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Gender" header="Gender" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Gender']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Gender'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <Dropdown v-model="data[field]" :options="Gender" optionLabel="name" optionValue="name"
-            placeholder="Select Gender" class="w-full" />
-    </template>
-
-</Column>
-<Column field="DOJ" header="DOJ " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[isNumber(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg border-1' : '']"
-            class="font-semibold fs-6">
-            {{ data['DOJ'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field=" Location" header="Location" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data[' Location']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data[' Location'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="DOB" header="DOB" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[isNumber(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['DOB'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Pan No" header="Pan No" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Pan No'].toUpperCase() }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputMask id="serial" mask="aaaPa9999a" v-model="data[field]" class="uppercase" />
-    </template>
-</Column>
-<Column field="Mobile Number" header="Mobile Number" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[isNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Mobile Number'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText minLength="10" maxLength="10" v-model="data[field]" @keypress="isEnteredNos($event)" />
-    </template>
-</Column>
-<Column field="Department" header="Department" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Department'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="Process" header="Process" style="min-width: 12rem">isEnterLetter
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Process']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Process'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="Designation" header="Designation" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Designation']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Designation'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="Bank ifsc" header="Bank ifsc" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Bank ifsc'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterSpecialChars($event)" />
-    </template>
-</Column>
-
-<template></template>
-
-</DataTable> -->

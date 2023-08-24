@@ -31,15 +31,23 @@ export default defineConfig({
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
                 //Reports
+                'resources/js/hrms/modules/reports/ReportsModule.js',
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js',
 
                 //Attendance Detailed Report
-                'resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
                 'resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js',
+                'resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.js',
+                'resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.js',
 
                 // Approval Module
                 'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
@@ -170,7 +178,15 @@ export default defineConfig({
                 'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js',
 
                 //approvals_salary_advance
-                'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js'
+                'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js',
+
+                // salary Revision
+               'resources/js/hrms/modules/payroll/salary_Revision/salary_Revision.js',
+
+            //    Exit approval
+            'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
+         //Mobile Settings
+             'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
 
 
             ],

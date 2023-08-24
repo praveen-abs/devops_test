@@ -23,6 +23,7 @@ use DatePeriod;
 use DateInterval;
 use \Datetime;
 use App\Services\VmtAttendanceService;
+use App\Services\VmtMasterConfigService;
 use App\Services\VmtHolidayService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -46,7 +47,7 @@ class VmtDashboardService{
 
     }
 
-    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService){
+    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService , $serviceVmtMasterConfigService){
 
         $validator = Validator::make(
             $data = [
@@ -128,6 +129,8 @@ class VmtDashboardService{
 
         }
 
+    $mobile_settings =$serviceVmtMasterConfigService->getEmployeesMobileSettingsData($user_code);
+
         $response['name']=$employee_details_query->name;
         $response['designation']=$employee_designation;
 
@@ -147,6 +150,7 @@ class VmtDashboardService{
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
         $response["events"] = $this->getAllEventsDashboard();
+        $response["mobile_settings"] = $mobile_settings;
 
         return $response;
     }
@@ -181,40 +185,52 @@ class VmtDashboardService{
             ->whereNotNull('vmt_employee_details.doj')
             ->whereNotNull('vmt_employee_details.dob');
 
-            // dd($employeesEventDetails);
-
         //Employee events for the current month only
-        $dashboardEmployeeEventsData = [];
-        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->whereMonth('vmt_employee_details.dob', '>=', Carbon::now()->month)
+        $dashboardEmployeeEventsData_birthday = $employeesEventDetails->whereMonth('vmt_employee_details.dob', '>=', Carbon::now()->month)
                                                 ->whereMonth('vmt_employee_details.dob', '<=', Carbon::now()->month + 1)
                                                 ->get()->sortBy(function ($singleData, $key) {
                                                     return Carbon::createFromFormat('Y-m-d', $singleData["dob"])->dayOfYear;
                                                 });
 
-        $dashboardEmployeeEventsData['work_anniversary'] = $employeesEventDetails->whereMonth('vmt_employee_details.doj','>=',Carbon::now()->month)
-                                                            ->whereMonth('vmt_employee_details.doj','<=',Carbon::now()->month + 1)
-                                                            ->get()->sortBy(function ($singleData, $key) {
-                                                                return Carbon::createFromFormat('Y-m-d', $singleData["doj"])->dayOfYear;
-                                                            });
+         $dashboardEmployeeEventsData_workanniversery = $employeesEventDetails->whereMonth('vmt_employee_details.doj','>=',Carbon::now()->month)
+                                                 ->whereMonth('vmt_employee_details.doj','<=',Carbon::now()->month + 1)
+                                                ->get()->sortBy(function ($singleData, $key) {
+                                                    return Carbon::createFromFormat('Y-m-d', $singleData["doj"])->dayOfYear;
+                                                });
 
-        // $dashboardEmployeeEventsData['hasData'] = 'true';
+                    $emp_event =[];
+             foreach($dashboardEmployeeEventsData_birthday as $single_emp_birthday){
 
-        //If any events found, then set 'hasData' to TRUE else FALSE
-        if(count($dashboardEmployeeEventsData['birthday']) == 0 && count($dashboardEmployeeEventsData['work_anniversary']) == 0){
-            $dashboardEmployeeEventsData['hasData'] = 'false';
-        }
-        else{
+                 $emp_birth_datails['id']  =  $single_emp_birthday['id'];
+                 $emp_birth_datails['name']  =  $single_emp_birthday['name'];
+                 $emp_birth_datails['avatar']  =  $single_emp_birthday['avatar'];
+                 $emp_birth_datails['designation']  =  $single_emp_birthday['designation'];
+                 $emp_birth_datails['dob']  =  $single_emp_birthday['dob'];
+                 $emp_birth_datails['doj']  =  $single_emp_birthday['doj'];
+                 $emp_birth_datails['type']  =  "birthday";
 
-            $dashboardEmployeeEventsData['hasData'] = 'true';
+                         array_push($emp_event,$emp_birth_datails);
+                    }
 
-        }
 
-        // return  $dashboardEmployeeEventsData;
+             foreach($dashboardEmployeeEventsData_workanniversery as $single_emp_work){
+
+                 $emp_work_datails['id']  =  $single_emp_work['id'];
+                 $emp_work_datails['name']  =  $single_emp_work['name'];
+                 $emp_work_datails['avatar']  =  $single_emp_work['avatar'];
+                 $emp_work_datails['designation']  =  $single_emp_work['designation'];
+                 $emp_work_datails['dob']  =  $single_emp_work['dob'];
+                 $emp_work_datails['doj']  =  $single_emp_work['doj'];
+                 $emp_work_datails['type']  =  "work_anniversery";
+
+                         array_push($emp_event,$emp_work_datails);
+                    }
+
 
         return response()->json([
             "status" => "success",
             "message" => "",
-            "data" =>$dashboardEmployeeEventsData,
+            "data" =>$emp_event,
         ]);
 
     }

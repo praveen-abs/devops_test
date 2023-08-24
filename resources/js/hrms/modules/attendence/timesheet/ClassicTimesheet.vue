@@ -30,20 +30,20 @@
                     <div class="flex my-4">
                         <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check In Time</label>
                         </div>
-                        <span class=" p-input-icon-right">
-                            <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
-                                v-model="useTimesheet.absentRegularizationDetails.start_time" />
-                            <i class="pi pi-clock" />
-                        </span>
+                        <div class="w-6">
+                            <input placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
+                                class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                                v-model="useTimesheet.absentRegularizationDetails.start_time">
+                        </div>
                     </div>
                     <div class="flex">
                         <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
                         </div>
-                        <span class=" p-input-icon-right">
-                            <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
-                                v-model="useTimesheet.absentRegularizationDetails.end_time" />
-                            <i class="pi pi-clock" />
-                        </span>
+                        <div class="w-6">
+                            <input placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
+                                class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                                v-model="useTimesheet.absentRegularizationDetails.end_time">
+                        </div>
                     </div>
                     <div class="flex my-4">
                         <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
@@ -98,19 +98,21 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Mode</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.attendance_mode_checkin }}
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin) }}
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkin)"></i> -->
-                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkin == 'Mobile'"
-                            class="fa fa-picture-o fs-6"  @click="viewSelfieImage('checkin', currentlySelectedCellRecord.selfie_checkin)" aria-hidden="true"></i>
+                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkin == 'mobile'"
+                            class="fa fa-picture-o fs-6 cursor-pointer  animate-pulse"
+                            @click="viewSelfieImage('checkin', currentlySelectedCellRecord.selfie_checkin)"
+                            aria-hidden="true"></i>
                     </p>
 
                 </div>
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ findCheckInStatus('checkin', currentlySelectedCellRecord) }}
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(findCheckInStatus('checkin', currentlySelectedCellRecord)) }}
 
                     </p>
                 </div>
@@ -132,11 +134,12 @@
                     <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkout_time }}</p>
                 </div>
                 <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Check out Mode</p>
+                    <p class="font-medium fs-6 text-gray-700">Check Out Mode</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.attendance_mode_checkout }}
-                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'Mobile'"
-                            class="fa fa-picture-o fs-6" aria-hidden="true"  @click="viewSelfieImage('checkout',currentlySelectedCellRecord.selfie_checkout)"></i>
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkout) }}
+                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'mobile'"
+                            class="fa fa-picture-o fs-6 cursor-pointer animate-pulse" aria-hidden="true"
+                            @click="viewSelfieImage('checkout', currentlySelectedCellRecord.selfie_checkout)"></i>
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkout)"></i> -->
@@ -262,22 +265,22 @@
                                 <div v-if="isFutureDate(day)"
                                     class="w-full my-3  p-2.5  rounded-sm mr-3 flex font-semibold "
                                     style="max-width: 140px;" :class="findAttendanceStatus(singleAttendanceDay)">
-                                    <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
+                                    <!-- <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
-                                    </p>
+                                    </p> -->
                                     <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i
                                             v-if="singleAttendanceDay.isMOP"
                                             :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                         <i v-else-if="singleAttendanceDay.isLC"
                                             :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                         <i v-else-if="singleAttendanceDay.isEG"
                                             :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                         <i v-else-if="singleAttendanceDay.isMIP"
                                             :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
-                                            style="font-size: 1rem" class="px-1"></i>
+                                            style="font-size: 0.9rem" class="px-1"></i>
                                     </p>
                                 </div>
 
@@ -380,16 +383,16 @@ const visibleRight = ref(false)
 
 
 
-const viewSelfieImage = (isSelected ,selectedCells) => {
+const viewSelfieImage = (isSelected, selectedCells) => {
     useTimesheet.dialog_Selfie = true
-    if(isSelected == 'checkin'){
-        useTimesheet.selfieDetails =  selectedCells
-    }else
-    if(isSelected == 'checkout'){
-        useTimesheet.selfieDetails =   selectedCells
-    }else{
-        useTimesheet.selfieDetails =  ''
-    }
+    if (isSelected == 'checkin') {
+        useTimesheet.selfieDetails = selectedCells
+    } else
+        if (isSelected == 'checkout') {
+            useTimesheet.selfieDetails = selectedCells
+        } else {
+            useTimesheet.selfieDetails = ''
+        }
 
 }
 
@@ -709,6 +712,13 @@ const findAttendanceRegularizationStatus = (data) => {
 
 }
 
+
+function capitalizeFLetter(name) {
+    let result = name.charAt(0).toUpperCase() +
+        name.slice(1)
+        return result
+}
+
 const leaveShortFormat = (leave_type) => {
     if (leave_type == 'Sick Leave / Casual Leave') {
         return SL / CL
@@ -848,10 +858,11 @@ const getSession = (time) => {
     return timeFormat
 };
 
-const isAbesent = (date) => {
-
+const isNumber = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[0-9:]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
 }
-
 
 /**
  * Validates a day to check if event start date is current calendar date or not

@@ -166,10 +166,6 @@ clearstatcache();
 
             }
         }
-
-        #loading~#layout-wrapper .main-content {
-            display: none;
-        }
     </style>
 </head>
 
@@ -195,9 +191,9 @@ clearstatcache();
     <!-- ============================================================== -->
     <div class="main-content">
         <div class="page-content">
-            <div class="container-fluid">
+            <!-- <div class="container-fluid"> -->
                 @yield('content')
-            </div>
+            <!-- </div> -->
             <!-- container-fluid -->
         </div>
         <!-- End Page-content -->
