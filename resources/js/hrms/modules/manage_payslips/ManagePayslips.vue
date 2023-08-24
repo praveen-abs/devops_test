@@ -71,6 +71,8 @@
             </Column> -->
         </DataTable>
 
+        <button class="p-2 bg-black text-[12px] text-white mt-10" @click="viewpayslip = true">view</button>
+
     </div>
 
 
@@ -172,6 +174,240 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog>
+
+
+    <Dialog v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
+        <div class="w-[100%] h-[100]%">
+            <div class="w-[100%] flex justify-between">
+                <div class="flex flex-col">
+                    <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">MAR 2023</span></h1>
+                    <h2 class=" text-[16px] mt-[10px] text-[#000]">Lorem ipsum dolor sit.</h2>
+                    <p class=" w-[300px] mt-[10px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloribus
+                        magni ad corrupti iusto, et corporis laborum error?</p>
+                </div>
+                <div>
+                    <img src="" alt="testing">
+                </div>
+            </div>
+            <div class="mt-[30px]">
+                <h1 class="font-semibold  text-[16px] my-[16px]">Employee Name : PRADEESH</h1>
+                <div class="border-[1.5px] border-[#000] my-[12px]"></div>
+
+                <div class="mx-2 row border-b-[1px] border-[gray] py-2">
+                    <div class="col-3">
+                        <p class="">Employee Code</p>
+                        <p class=" text-[#000] text-[12px]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Date Joining</p>
+                        <p class=" text-[#000]">Date Joined</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Designation</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Department</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                </div>
+                <div class="mx-2 row border-b-[1px] border-[gray] py-2">
+                    <div class="col-3">
+                        <p>Payment Mode</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Bank Name</p>
+                        <p class=" text-[#000]">Date Joined</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Bank Account</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Bank ISFC</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                </div>
+                <div class="mx-2 row  py-2">
+                    <div class="col-3">
+                        <p>PAN</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>ESIC</p>
+                        <p class=" text-[#000]">Date Joined</p>
+                    </div>
+                    <div class="col-3">
+                        <p>UAN</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                    <div class="col-3">
+                        <p>EPF Number</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                </div>
+                     <div class="border-[1.5px] border-[#000] my-[12px]"></div>
+            </div>
+
+            <div class="">
+                <h1 class="font-semibold  text-[16px] my-[16px]">LEAVE DETAILS</h1>
+                <div class="border-[1.5px] border-[#000] my-[12px]"></div>
+
+                <div class="mx-2 row  py-2">
+                    <div class="col-3">
+                        <p>Leave Type</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Opening Balance</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Availed</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Closing Balance</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="">
+                <h1 class="font-semibold  text-[16px] my-[16px]">SALARY DETAILS</h1>
+                <div class="border-[1.5px] border-[#000] my-[12px]"></div>
+                <div class="mx-2 row  py-2">
+                    <div class="col-3">
+                        <p>Total Working Days</p>
+                        <p class=" text-[#000]">12312</p>
+                      
+                    </div>
+                    <div class="col-3">
+                        <p>ESIC</p>
+                        <p class=" text-[#000]">Date Joined</p>
+                    </div>
+                    <div class="col-3">
+                        <p>UAN</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                    <div class="col-3">
+                        <p>EPF Number</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2 py-2 border-y-[1px] border-[gray] mx-2">
+                <div class="col-7 border-r-[1.4px] border-[gray]">
+                    <table class=" w-[100%]" >
+                        <tr class="w-[100%]">
+                            <td><h1 class=" font-semibold">Earnings</h1>
+                            </td>
+                            <td> <h1 class=" font-semibold">Fixed</h1></td>
+                            <td> <h1 class="font-semibold">Earned</h1> </td>
+                            <td></td>
+                        </tr>
+                        <tr class="w-[100%]">
+                            <td><h1 class=" my-2">basic</h1>
+                            </td>
+                            <td><h1 class=" my-2">129</h1>
+                            </td>
+                            <td><h1 class=" my-2">123</h1>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr class="w-[100%]">
+                            <td><h1 class=" my-2">HRS</h1>
+                            </td>
+                            <td><h1 class=" my-2">129</h1>
+                            </td>
+                            <td><h1 class=" my-2">123</h1>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr class="w-[100%]">
+                            <td><h1 class=" my-2">special Allowance</h1>
+                            </td>
+                            <td><h1 class=" my-2">129</h1>
+                            </td>
+                            <td><h1 class=" my-2">123</h1>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr class="w-[100%]">
+                            <td><h1 class=" my-2 text-[#000]">Total Earnings(A) </h1>
+                            </td>
+                            <td><h1 class=" my-2">129</h1>
+                            </td>
+                            <td><h1 class=" my-2">123</h1>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col">
+                    <table border="2" class=" w-[100%]">
+                        <tr class="w-[100%]">
+                            <td >
+                                <h1 class=" font-semibold">CONTRIBUTIONS</h1>
+                                <p class=" my-2 text-[#000]">EPF Employee</p>
+                                <p class=" my-2 text-[#000]">Total Contributions (B)</p>
+                                <p class=" my-2 text-[#000]">TAXES <span>&</span> DEDUCTIONS</p>
+                                <p class=" my-2 text-[#000]">Professional Tax</p>
+                                <p class=" my-2 text-[#000]">Total Deduction(c)</p>
+                            </td>
+                            <td>
+                                <h1 class=" font-semibold"></h1>
+                                <p class=" my-2 text-[#000]">1232</p>
+                                <p class=" my-2 text-[#000]">1232</p>
+                                <p class=" my-2 text-[#000]">1232</p>
+                                <p class=" my-2 text-[#000]">1232</p>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="mt-4 row w-[100%] ">
+                <div class="col-5  my-2"><p class="">Net Salary Payable(A-B-C) </p></div>
+                <div class="col-7 my-2">
+                    <p> <span class=" font-sans text-[18px]">₹ </span> 39888</p>
+                </div>
+                <div class="col-5  my-2"><p class="">Net Salary in words </p></div>
+                <div class="col-7 my-2">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga,</p>
+                </div>
+            </div>
+            <div>
+                <p class="mt-2 ">*** Note:All amounts displayed in this payslips are in INR</p>
+                <p class="mt-[50px]">**This is computer generated statement,does not require signature.</p>
+            </div>
+            <div class=" ">
+                <div class="float-right flex items-center">
+                    <p>Generated</p>
+                    <img src="" alt="" class="border w-[140px] h-[50px]" >
+                </div>
+            </div>
+
+
+        </div>
+    </Dialog>
 </template>
 
 <script setup>
@@ -193,7 +429,7 @@ const selectedUserCode = ref();
 const selectedUsername = ref();
 const selectedMonth = ref();
 
-
+const viewpayslip = ref(true);
 
 onMounted( () => {
    managePayslipStore.selectedPayRollDate = new Date()
