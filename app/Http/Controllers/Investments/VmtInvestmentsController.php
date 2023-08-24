@@ -925,7 +925,7 @@ class VmtInvestmentsController extends Controller
             $total_tax_laibilty['sno'] = "j";
             $total_tax_laibilty['section'] = "Total Tax Laibility";
             $total_tax_laibilty['old_regime'] = $this->oldRegimeTaxCalculation("old", $empAge, $total_old_tax);
-            $total_tax_laibilty['new_regime'] = $this->newRegimeTaxCalculation("new", 1500000);
+            $total_tax_laibilty['new_regime'] = $this->newRegimeTaxCalculation("new", $total_new_tax);
             $total_tax_laibilty['age'] = $empAge;
             $total_tax_laibilty['regime'] = $dec_amt['regime'];
             $total_tax_laibilty['last_updated'] = $dec_amt['updated_at'];
