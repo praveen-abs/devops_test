@@ -47,7 +47,7 @@ class VmtDashboardService{
 
     }
 
-    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService , $serviceVmtMasterConfigService){
+    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService ){
 
         $validator = Validator::make(
             $data = [
@@ -129,7 +129,6 @@ class VmtDashboardService{
 
         }
 
-    $mobile_settings =$serviceVmtMasterConfigService->getEmployeesMobileSettingsData($user_code);
 
         $response['name']=$employee_details_query->name;
         $response['designation']=$employee_designation;
@@ -150,7 +149,6 @@ class VmtDashboardService{
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
         $response["events"] = $this->getAllEventsDashboard();
-        $response["mobile_settings"] = $mobile_settings;
 
         return $response;
     }
