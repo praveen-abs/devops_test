@@ -30,8 +30,7 @@ class VmtAPILoanAndSalaryAdvanceController extends Controller
             ]
         );
 
-        try
-        {
+        try {
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 'failure',
@@ -43,7 +42,7 @@ class VmtAPILoanAndSalaryAdvanceController extends Controller
             $response = $vmtsalaryAdvanceService->isEligibleForLoanAndAdvance($request->loan_type, $users_detail->id, $users_detail->client_id);
             $response = json_encode($response);
             $response = json_decode($response, true);
-            
+
             if ($request->loan_type == 'int_free_loan') {
                 $employee_loan_history = $vmtsalaryAdvanceService->EmployeeLoanHistory($users_detail->id, 'InterestFreeLoan');
                 $eligible_loan_details = $vmtsalaryAdvanceService->showEligibleInterestFreeLoanDetails('InterestFreeLoan', $users_detail->id, $users_detail->client_id);
@@ -58,7 +57,7 @@ class VmtAPILoanAndSalaryAdvanceController extends Controller
             } else if ($request->loan_type == 'sal_adv') {
                 $employee_loan_history = $vmtsalaryAdvanceService->getEmpsaladvDetails($users_detail->id);
                 $eligible_loan_details = $vmtsalaryAdvanceService->SalAdvShowEmployeeView();
-            if ($eligible_loan_details != null) {
+                if ($eligible_loan_details != null) {
                     $eligible_loan_details = json_encode($eligible_loan_details);
                     $eligible_loan_details = json_decode($eligible_loan_details, true);
                     $eligible_loan_details = $eligible_loan_details['original'];
@@ -76,7 +75,7 @@ class VmtAPILoanAndSalaryAdvanceController extends Controller
                 return [
                     "status" => "success",
                     "message" => "Not eligible",
-                    "loan_history" => [],
+                    "loan_history" =>  $employee_loan_history,
                     "employee_dashboard" => $emp_dash_data,
                     "eligible_borrow_amount" => []
                 ];
@@ -85,15 +84,13 @@ class VmtAPILoanAndSalaryAdvanceController extends Controller
                     "status" => "success",
                     "message" => "eligible",
                     "loan_history" => $employee_loan_history,
-                    "employee_dashboard" =>  $emp_dash['original']['data'],
+                    "employee_dashboard" =>   $emp_dash_data,
                     "eligible_borrow_amount" => $eligible_loan_details
-                
-                ];
 
+                ];
             }
             return $response;
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getEmpLoanAndSalaryAdvance() ] : Error while fetching data ",
