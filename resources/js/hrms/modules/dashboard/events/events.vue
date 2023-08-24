@@ -20,9 +20,9 @@
                                     <p class="font-semibold text-4xl py-4 text-center align-middle  text-white">{{
                                         JSON.parse(events.avatar).data }}</p>
                                 </div>
-                                <!-- <img src="../../../assests/images/family.png" alt=""  class="rounded-lg absolute w-[100%] border-[4px] border-[#000] h-[100%] top-0"> -->
+                                <!-- <img src="../../../assests/images/evangelist.png" alt=""  class="rounded-lg absolute w-[100%] h-[100%] top-0"> -->
                                 <img v-else :src="`data:image/png;base64,${JSON.parse(events.avatar).data}`" alt=""
-                                    class="rounded-lg absolute w-[100%] border-[4px] border-[#000] h-[100%] top-0">
+                                    class="rounded-lg absolute w-[100%]  h-[100%] top-0">
                             </div>
                             <div class="h-full">
                                 <div class="py-6">
