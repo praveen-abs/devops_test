@@ -75,58 +75,62 @@
                 <div class="px-2 row">
                     <div class="col-3">
                         <p>Employee Number</p>
-                        <p>12312</p>
+                        <p class=" text-[#000]">12312</p>
                     </div>
                     <div class="col-3">
                         <p>Date Joined</p>
-                        <p>Date Joined</p>
+                        <p class=" text-[#000]">Date Joined</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
-                        <p>Marteting</p>
+                        <p class=" text-[#000]">Marteting</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
-                        <p>Marteting</p>
+                        <p class=" text-[#000]">Marteting</p>
                     </div>
                 </div>
                 <div class="px-2 row">
                     <div class="col-3">
                         <p>Employee Number</p>
-                        <p>12312</p>
+                        <p class=" text-[#000]">12312</p>
                     </div>
                     <div class="col-3">
                         <p>Date Joined</p>
-                        <p>Date Joined</p>
+                        <p class=" text-[#000]">Date Joined</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
-                        <p>Marteting</p>
+                        <p class=" text-[#000]">Marteting</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
-                        <p>Marteting</p>
+                        <p class=" text-[#000]">Marteting</p>
                     </div>
                 </div>
                 <div class="px-2 row">
                     <div class="col-3">
                         <p>Employee Number</p>
-                        <p>12312</p>
+                        <p class=" text-[#000]">12312</p>
                     </div>
                     <div class="col-3">
                         <p>Date Joined</p>
-                        <p>Date Joined</p>
+                        <p class=" text-[#000]">Date Joined</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
-                        <p>Marteting</p>
+                        <p class=" text-[#000]">Marteting</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
-                        <p>Marteting</p>
+                        <p class=" text-[#000]">Marteting</p>
                     </div>
                 </div>
                 <div class="border-[1.5px] border-[#000] my-[12px]"></div>
+            </div>
+
+            <div class="">
+
             </div>
         </div>
     </Dialog>
