@@ -4,36 +4,36 @@
         <ImportQuickOnboarding />
     </div>
     <Transition name="fade" v-else>
-        <div class="h-screen w-full">
+        <div class="w-full h-screen">
             <div class="flex">
                 <div class="w-6 px-2">
-                    <p class="font-bold text-2xl">Employee Quick Onboarding</p>
-                    <ul class="list-disc p-2 my-3">
+                    <p class="text-2xl font-bold">Employee Quick Onboarding</p>
+                    <ul class="p-2 my-3 list-disc">
                         <li class="font-semibold fs-6">Download the <a href="/assets//ABSQuickOnboarding.xlsx"
-                                class="text-blue-300 font-semibold fs-6 cursor-pointer">Sample</a>
+                                class="font-semibold text-blue-300 cursor-pointer fs-6">Sample</a>
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
                     </ul>
-                    <div class="grid grid-cols-12 divide-x-2 divide-gray-600 border-gray-500 rounded-lg border-1 p-2  mr-3">
-                        <label class="col-span-3 font-semibold fs-6  cursor-pointer w-full"
-                            for="file"><i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
+                    <div class="grid grid-cols-12 p-2 mr-3 border-gray-500 divide-x-2 divide-gray-600 rounded-lg border-1">
+                        <label class="w-full col-span-3 font-semibold cursor-pointer fs-6"
+                            for="file"><i class="px-2 pi pi-folder" style="font-size: 1rem"></i>Browse</label>
                         <span class="col-span-9 px-4">
                             {{ useStore.selectedFile ? useStore.selectedFile.name : '' }}</span>
                     </div>
                     <input type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
                         accept=".xls, .xlsx">
-                    <button class="btn btn-orange mt-4 float-right mx-5"
+                    <button class="float-right mx-5 mt-4 btn btn-orange"
                         @click="useStore.convertExcelIntoArray('quick')">Upload</button>
                 </div>
                 <div>
                     <div class="col-form-label">
                         <!-- <p class="font-semibold fs-4"> Upload Instructions</p> -->
-                        <div class="py-2  bg-red-100 rounded-lg f-12 alert-warning font-semibold fs-6"><i
-                                class='fa fa-warning text-danger mx-2'></i>
+                        <div class="py-2 font-semibold bg-red-100 rounded-lg f-12 alert-warning fs-6"><i
+                                class='mx-2 fa fa-warning text-danger'></i>
                             Read these instructions before uploading the file.
                         </div>
                         <div>
-                            <ul class="list-disc font-semibold m-4" style="">
+                            <ul class="m-4 font-semibold list-disc" style="">
                                 <li class="font-semibold fs-6">
                                     The fields Employee Number, Employee Name, Email, Date of Joining, and Location must be
                                     filled in before adding workers.</li>
@@ -91,7 +91,7 @@
 <script setup>
 
 import { onMounted, onUpdated, ref } from 'vue';
-import ImportQuickOnboarding from './importquickonboarding.vue'
+import ImportQuickOnboarding from './ImportQuickOnboarding.vue';
 import { useRoute } from "vue-router";
 import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
 import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore';
