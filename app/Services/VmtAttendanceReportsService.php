@@ -1732,7 +1732,12 @@ class VmtAttendanceReportsService
                     }
                     $out_punch = $value['checkout_time'];
                     if ($in_punch  != null) {
-                        $LCDuration = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
+                        $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
+                        $lc_ar = CarbonInterval::minutes($lc1_total_mins)->cascade();
+                        $lc_hrs = (int) $lc_ar->totalHours;
+                        $lc_mins = $lc_ar->toArray()['minutes'];
+                        $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
+
                     } else {
                         $LCDuration  = '-';
                     }
@@ -1770,7 +1775,7 @@ class VmtAttendanceReportsService
                     }
                     $temp_ar['In Punch'] =  $in_punch;
                     $temp_ar['Out Punch'] = $out_punch;
-                    $temp_ar['Late Coming Duration'] = $LCDuration;
+                    $temp_ar['Late Coming Duration'] = $lc1_total_mins;
                     $temp_ar['Day Status'] = $day_sts;
                     $temp_ar['Regularise Status'] = $regularized_sts;
                     $temp_ar['Employee Reason For Late Coming'] = $reason;
