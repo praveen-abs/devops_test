@@ -23,7 +23,7 @@ class VmtPMSMail_Reviewer extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct($approvalStatus, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager,$login_link)
+    public function __construct($approvalStatus, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager,$login_link,$sender_gender)
     {
         //
         $this->approvalStatus = $approvalStatus;
@@ -33,6 +33,8 @@ class VmtPMSMail_Reviewer extends Mailable
         $this->user_manager_name = $user_manager_name;
         $this->comments_manager = $comments_manager;
         $this->login_Link = $login_link;
+        $this->sender_gender = $sender_gender;
+
     }
 
     /**
@@ -74,7 +76,9 @@ class VmtPMSMail_Reviewer extends Mailable
                 ->with('appraisal_period', $this->appraisal_period)
                 ->with('user_manager_name', $this->user_manager_name)
                 ->with('comments_manager', $this->comments_manager)
-                ->with('login_Link', $this->login_Link);
+                ->with('login_Link', $this->login_Link)
+                ->with('sender_gender', $this->sender_gender)
+
 
     }
 }
