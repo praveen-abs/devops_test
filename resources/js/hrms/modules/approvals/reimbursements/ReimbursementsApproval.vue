@@ -9,156 +9,159 @@
             <Button label="Yes" icon="pi pi-check" @click="show = false" autofocus />
         </template>
     </Dialog>
-    <div class="flex justify-content-between align-items-center">
+    <LoadingSpinner v-if="data_checking" class="absolute z-50 bg-white" />
 
-        <div class="flex justify-content-between align-items-center">
-            <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class=""
-                style=" border: 1px solid orange; border-radius: 7px;" />
-            <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full mx-3 md:w-14rem"
-                style=" border: 1px solid orange; border-radius: 7px;" />
-            <button label="Submit" class="btn btn-primary z-0" severity="danger"
-                :disabled="!selected_status == '' ? false : true" @click="generate_ajax"> <i class="fa fa-cog me-2"></i>
-                Generate</button>
-        </div>
-
-        <Button type="button" icon="pi pi-times-circle" severity="danger" v-if="!selectedAllEmployee == ''"
-            label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" />
-        <button class="btn btn-primary z-0" :disabled="data_reimbursements == '' ? true : false" severity="success"
-            @click="download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
-    </div>
-    <div>
-
-        <Dialog header="Header" v-model:visible="data_checking" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-            <template #header>
-                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
-            </template>
-            <template #footer>
-                <h5 style="text-align: center">Please wait...</h5>
-            </template>
-        </Dialog>
-        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-            <template #header>
-                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
-            </template>
-            <template #footer>
-                <h5 style="text-align: center">Please wait...</h5>
-            </template>
-        </Dialog>
-
-        <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
-            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
-            <div class="confirmation-content">
-                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
+    <div class="w-full">
+        <h6 class="font-semibold text-lg">Reimbursement Approvals</h6>
+        <div class="flex justify-end ">
+            <div class="grid grid-cols-4 w-1/2 gap-2  ">
+                <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class=""
+                    style="  border-radius: 7px;height:30px" />
+                <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full "
+                    style=" border-radius: 7px;height:30px" />
+                <button label="Submit" class="btn btn-primary z-0 whitespace-nowrap " severity="danger" style="height:30px"
+                    :disabled="!selected_status == '' ? false : true" @click="generate_ajax"> <i class="fa fa-cog me-2"></i>
+                    Generate</button>
+                <!-- <Button type="button" icon="pi pi-times-circle" severity="danger" v-if="!selectedAllEmployee == ''"
+                label="Reject all" style=" height: 2.5em"
+                @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" /> -->
+                <button class="btn btn-primary whitespace-nowrap mx-3 z-0 "
+                    :disabled="data_reimbursements == '' ? true : false" severity="success" @click="download_ajax"
+                    style="height:30px"><i class="fas fa-file-download me-2"></i>Download</button>
             </div>
-            <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
-                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
-            </template>
-        </Dialog>
+
+
+        </div>
         <div>
-            <DataTable :value="data_reimbursements" :paginator="true" :rows="10" class="mt-6 " dataKey="user_id"
-                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
-                v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
-                @row-select="onRowSelect" @row-unselect="onRowUnselect"
-                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
-                <template #empty> No Reimbursement data for the selected status filter </template>
-                <template #loading> Loading customers data. Please wait. </template>
-                <Column :expander="true" />
-                <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column>
-                <Column field="user_code" header="Employee Id" sortable></Column>
+            <div>
+                <DataTable :value="data_reimbursements" :paginator="true" :rows="10" class="mt-6 " dataKey="user_id"
+                    @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
+                    v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
+                    @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                    responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+                    <template #empty> No Reimbursement data for the selected status filter </template>
+                    <template #loading> Loading customers data. Please wait. </template>
+                    <Column :expander="true" />
+                    <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column>
+                    <Column field="user_code" header="Employee Id" sortable></Column>
 
-                <Column field="name" header="Employee Name">
-                    <template #body="slotProps">
-                        {{ slotProps.data.employee_name }}
+                    <Column field="name" header="Employee Name">
+                        <template #body="slotProps">
+                            {{ slotProps.data.employee_name }}
+                        </template>
+                        <template #filter="{ filterModel, filterCallback }">
+                            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                                class="p-column-filter" :showClear="true" />
+                        </template>
+                    </Column>
+
+                    <Column class="fontSize13px" field="total_distance_travelled" header="Overall Distance Travelled"
+                        :sortable="false">
+                        <template #body="slotProps">
+                            {{ slotProps.data.total_distance_travelled + " KM(s)" }}
+                        </template>
+                    </Column>
+
+
+                    <Column class="fontSize13px" field="total_expenses" header="Overall Reimbursements" :sortable="false">
+                        <template #body="slotProps">
+                            {{ "&#8377; " + slotProps.data.total_expenses }}
+                        </template>
+                    </Column>
+                    <Column field="" header="Action" :style="{ width: '15vw' }">
+                        <template #body="slotProps">
+                            <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
+                                <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"
+                                    label="Approve" @click="showConfirmDialog(slotProps.data, 'Approve')"
+                                    style="height: 2.5em" />
+                                <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button"
+                                    label="Reject" style="margin-left: 8px; height: 2.5em"
+                                    @click="showConfirmDialog(slotProps.data, 'Reject')" />
+                            </span>
+                        </template>
+                    </Column>
+
+                    <template #expansion="slotProps">
+
+                        <div class="orders-subtable">
+                            <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"
+                                v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                                @select-all-change="onSelectAllChange">
+                                <!-- <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column> -->
+                                <Column field="" header="Date" sortable>
+                                    <template #body="slotProps">
+                                        <p style="white-space: nowrap;"> {{
+                                            moment(slotProps.data.date).format('DD-MMM-YYYY') }}
+                                        </p>
+                                    </template>
+                                </Column>
+                                <Column field="reimbursement_type" header="Reimbursement Type"></Column>
+                                <Column field="from" header="From"></Column>
+                                <Column field="to" header="To"></Column>
+                                <Column field="user_comments" header="Comments"></Column>
+                                <Column field="vehicle_type" header="Mode of transport"></Column>
+                                <Column class="fontSize13px" field="distance_travelled" header="Distance Covered">
+                                    <template #body="slotProps">
+                                        {{ slotProps.data.distance_travelled + " KM(s)" }}
+                                    </template>
+                                </Column>
+                                <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
+                                    <template #body="slotProps">
+                                        {{ "&#8377; " + slotProps.data.total_expenses }}
+                                    </template>
+                                </Column>
+                                <Column field="status" header="Status" sortable>
+                                    <template #body="slotProps">
+                                        <span :class="'order-badge order-' + slotProps.data.status">{{
+                                            slotProps.data.status
+                                        }}</span>
+                                    </template>
+                                </Column>
+                            </DataTable>
+                        </div>
                     </template>
-                    <template #filter="{ filterModel, filterCallback }">
-                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
-                            class="p-column-filter" :showClear="true" />
-                    </template>
-                </Column>
-
-                <Column class="fontSize13px" field="total_distance_travelled" header="Overall Distance Travelled"
-                    :sortable="false">
-                    <template #body="slotProps">
-                        {{ slotProps.data.total_distance_travelled + " KM(s)" }}
-                    </template>
-                </Column>
-
-
-                <Column class="fontSize13px" field="total_expenses" header="Overall Reimbursements" :sortable="false">
-                    <template #body="slotProps">
-                        {{ "&#8377; " + slotProps.data.total_expenses }}
-                    </template>
-                </Column>
-                <Column field="" header="Action" :style="{ width: '15vw'}" >
-                    <template #body="slotProps">
-                        <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
-                            <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approve"
-                                @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2.5em" />
-                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Reject"
-                                style="margin-left: 8px; height: 2.5em"
-                                @click="showConfirmDialog(slotProps.data, 'Reject')" />
-                        </span>
-                    </template>
-                </Column>
-
-                <template #expansion="slotProps">
-
-                    <div class="orders-subtable">
-                        <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"
-                            v-model:selection="selectedAllEmployee" :selectAll="selectAll"
-                            @select-all-change="onSelectAllChange">
-                            <!-- <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column> -->
-                            <Column field="" header="Date" sortable>
-                                <template #body="slotProps">
-                                    <p style="white-space: nowrap;"> {{ moment(slotProps.data.date).format('DD-MMM-YYYY') }}
-                                    </p>
-                                </template>
-                            </Column>
-                            <Column field="reimbursement_type" header="Reimbursement Type"></Column>
-                            <Column field="from" header="From"></Column>
-                            <Column field="to" header="To"></Column>
-                            <Column field="user_comments" header="Comments"></Column>
-                            <Column field="vehicle_type" header="Mode of transport"></Column>
-                            <Column class="fontSize13px" field="distance_travelled" header="Distance Covered">
-                                <template #body="slotProps">
-                                    {{ slotProps.data.distance_travelled +" KM(s)"}}
-                                </template>
-                            </Column>
-                            <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
-                                <template #body="slotProps">
-                                    {{ "&#8377; " + slotProps.data.total_expenses }}
-                                </template>
-                            </Column>
-                            <Column field="status" header="Status" sortable>
-                                <template #body="slotProps">
-                                    <span :class="'order-badge order-' + slotProps.data.status">{{
-                                        slotProps.data.status
-                                    }}</span>
-                                </template>
-                            </Column>
-                        </DataTable>
-                    </div>
-                </template>
-            </DataTable>
+                </DataTable>
+            </div>
         </div>
     </div>
+
+
+
+
+    <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
+
+    <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '350px' }" :modal="true">
+        <div class="confirmation-content">
+            <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+            <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
+        </div>
+        <template #footer>
+            <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
+            <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
+        </template>
+    </Dialog>
 </template>
 
 <script setup>
-import { ref, onMounted, onRenderTracked, onUpdated, nextTick,onBeforeMount, onBeforeUpdate } from "vue";
+import { ref, onMounted, onRenderTracked, onUpdated, nextTick, onBeforeMount, onBeforeUpdate } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import moment from 'moment'
 import { watch } from "vue";
+import LoadingSpinner from '../../../components/LoadingSpinner.vue'
 
 
 let data_reimbursements = ref();
@@ -205,7 +208,7 @@ const isdisabled = ref(true)
 onMounted(() => {
     data_reimbursements.value = [];
     selected_date.value = new Date()
-   console.log(selected_date.value);
+    console.log(selected_date.value);
 
 
 });
@@ -360,7 +363,7 @@ function processApproveReject() {
         })
         .then((response) => {
             console.log(response);
-                generate_ajax();
+            generate_ajax();
             // canShowLoadingScreen.value = false;
 
             toast.add({ severity: "success", summary: "", detail: " Successfully Approved !", life: 3000 });
@@ -422,3 +425,11 @@ const getSeverity = (status) => {
 
 
 </script>
+
+<style>
+.p-dropdown .p-dropdown-label
+{
+    background: transparent;
+    border: 0 none;
+    margin-top: -6px;
+}</style>

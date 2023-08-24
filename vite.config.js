@@ -3,6 +3,9 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+    build:{
+          'outDir':'./dist'
+    },
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
@@ -38,9 +41,14 @@ export default defineConfig({
                 //Reports
                 'resources/js/hrms/modules/reports/ReportsModule.js',
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js',
 
                 //Attendance Detailed Report
-                'resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
@@ -165,7 +173,13 @@ export default defineConfig({
 
                 // login page
                 'resources/js/hrms/modules/login_Page/login_Page.js',
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
+            //    Exit approval
+            // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
+         //Mobile Settings
+             'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js'
 

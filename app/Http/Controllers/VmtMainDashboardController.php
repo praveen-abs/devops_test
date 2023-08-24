@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtClientMaster;
+use App\Services\VmtMasterConfigService;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
@@ -509,6 +510,9 @@ class VmtMainDashboardController extends Controller
     }
 
 
+
+
+
     public function updateGlobalClientSelection(Request $request)
     {
 
@@ -606,7 +610,7 @@ class VmtMainDashboardController extends Controller
             $pollingQuestionAdd->options = $encodedOptions;
             $pollingQuestionAdd->date = $request->date;
             $pollingQuestionAdd->notify_employees = isset($request->notify_employees) ? $request->notify_employees : '0';
-            $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $request->anonymous_poll : '0';
+            $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $ruseequest->anonymous_poll : '0';
             $pollingQuestionAdd->save();
             if ($pollingQuestionAdd) {
                 return response()->json(['status' => true, 'message' => 'Pooling Question added successfully']);
@@ -637,11 +641,11 @@ class VmtMainDashboardController extends Controller
 
     }
 
-    public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService)
+    public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService,VmtMasterConfigService $serviceVmtMasterConfigService)
     {
 
         //Fetch the data
-        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
+        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService , $serviceVmtMasterConfigService);
 
         return response()->json([
             'status' => 'success',
@@ -759,32 +763,15 @@ class VmtMainDashboardController extends Controller
             }
             $response['effective_hours'] =$effective_hours;
         }
-        if(!empty($response->checkin_date))
-        {
-            $response['effective_hours'] =null;
-        }
-
+        // if(!empty($response->checkin_date))
+        // {
+        //     $response['effective_hours'] =null;
+        // }
             return $response;
         //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
 
-
-
-
     //HR New Main Dashboard
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

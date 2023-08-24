@@ -14,6 +14,7 @@ use Dompdf\Options;
 use \stdClass;
 use App\Models\User;
 use App\Models\VmtEmployee;
+use App\Http\Controllers\VmtTestingController;
 use App\Models\VmtBloodGroup;
 use App\Models\Department;
 use App\Models\VmtMaritalStatus;
@@ -21,6 +22,7 @@ use App\Models\Bank;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtMasterConfig;
 
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
@@ -36,6 +38,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
+
 
 class VmtEmployeeService
 {
@@ -246,8 +249,8 @@ class VmtEmployeeService
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
             if($onboard_type == 'normal'){
-                $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
-                $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+                $client_data =VmtMasterConfig::where("config_name","client_id")->first('config_value');
+                $newUser->client_id = $client_data['config_value'];
             }else{
                 $emp_client_code = trim($data['legal_entity']);
                 $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
@@ -295,7 +298,7 @@ class VmtEmployeeService
             $newEmployee->marital_status_id = $data["marital_status"] ?? '';
             $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
-            $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
+           // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->gender   =    $data["gender"] ?? '';
             $data_mobile_number = empty($data["mobile_number"]) ? "" : strval($data["mobile_number"]);
             $newEmployee->mobile_number  = $data_mobile_number;
@@ -484,7 +487,7 @@ class VmtEmployeeService
             $compensatory->save();
 
             //save the onboard documents
-            if ($onboard_type == 'normal') {
+            if ($onboard_type == 'normal' ||$onboard_type == 'quick' ) {
                 $this->uploadDocument($user_id, $data['Aadharfront'], 'Aadhar Card Front');
                 $this->uploadDocument($user_id, $data['AadharBack'], 'Aadhar Card Back');
                 $this->uploadDocument($user_id, $data['panDoc'], 'Pan Card');
@@ -531,9 +534,9 @@ class VmtEmployeeService
 
             $newEmployee->userid   =    $user_id;
             $newEmployee->marital_status_id = $data["marital_status"] ?? '';
-            $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
+           // $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
-            $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
+           // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->gender   =    $data["gender"] ?? '';
             $data_mobile_number = empty($data["mobile_number"]) ? "" : strval($data["mobile_number"]);
             $newEmployee->mobile_number  = $data_mobile_number;
@@ -586,7 +589,11 @@ class VmtEmployeeService
             $empOffice->probation_period  = $data['probation_period'] ?? '';
             $empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb($confirmation_period, $user_id) : '';
             $empOffice->holiday_location  = $data["holiday_location"] ?? '';
-            $empOffice->l1_manager_code  = $data["l1_manager_code_id"] ?? '';
+            $empOffice->l1_manager_code  = $data["l1_manager_code"] ?? '';
+            $l1_manager_name =User::where("user_code",$data["l1_manager_code"])->first();
+            if( !empty($l1_manager_name)){
+                $empOffice->l1_manager_name  =$l1_manager_name->name;  // => "k"
+            }
             $empOffice->work_location  = $data["work_location"] ?? '';
             $empOffice->officical_mail  = $data["officical_mail"] ?? '';
             $empOffice->official_mobile  = $data["official_mobile"] ?? '';
@@ -718,6 +725,10 @@ class VmtEmployeeService
             $empOffice->confirmation_period  = $data['confirmation_period'] ?? '';
             $empOffice->holiday_location  = $data["holiday_location"] ?? ''; // => "k"
             $empOffice->l1_manager_code  = $data["l1_manager_code"] ?? ''; // => "k"
+            $l1_manager_name =User::where("user_code",$data["l1_manager_code"])->first();
+            if( !empty($l1_manager_name)){
+                $empOffice->l1_manager_name  =$l1_manager_name->name;  // => "k"
+            }
             $empOffice->officical_mail  = $data["official_mail"] ?? ''; // => "k@k.in"
             $empOffice->work_location  = $data["work_location"] ?? ''; // => "k"
             $empOffice->official_mobile  = $data["official_mobile"] ?? ''; // => "1234567890"
@@ -831,7 +842,7 @@ class VmtEmployeeService
             $compensatory->lta = $data["lta"] ?? '';
             $compensatory->special_allowance = $data["special_allowance"] ?? '';
             $compensatory->other_allowance = $data["other_allowance"] ?? '';
-            $compensatory->gross = $data["fixed_gross"] ?? '';
+            $compensatory->gross = $data["gross"] ?? '';
             $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '';
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
@@ -866,14 +877,16 @@ class VmtEmployeeService
     {
 
         try {
+
             if (!empty($fileObject)) {
                 $emp_code = User::find($emp_id)->user_code;
 
                 $onboard_doc_id = VmtDocuments::where('document_name', $onboard_document_type);
 
-                if ($onboard_doc_id->exists())
+                if ($onboard_doc_id->exists()){
                     $onboard_doc_id = $onboard_doc_id->first()->id;
-                else
+
+                 } else
                     return null;
 
                 $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id', $onboard_doc_id);
@@ -1013,70 +1026,87 @@ class VmtEmployeeService
 
 
     // Generate Employee Appointment PDF after onboarding
-    public function attachAppointmentLetterPDF($employeeData)
+    public function attachAppointmentLetterPDF($employeeData,$onboard_type)
     {
-        // dd($employeeData);
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
         $data = $employeeData;
+        // $gross =$employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
         $data['basic_monthly'] = $employeeData['basic'];
         $data['basic_yearly'] = intval($employeeData['basic']) * 12;
         $data['hra_monthly'] = $employeeData['hra'];
         $data['hra_yearly'] = intval($employeeData['hra']) * 12;
         $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
         $data['spl_allowance_yearly'] = intval($employeeData['special_allowance']) * 12;
-        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
-        $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
+        $data['gross_monthly'] = $employeeData["gross"] ;
+        $data['gross_yearly'] = intval($employeeData["gross"]) * 12;
         $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
         $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
         $data['employer_esi_monthly'] = $employeeData['esic_employer_contribution'];
         $data['employer_esi_yearly'] = intval($employeeData['esic_employer_contribution']) * 12;
-        $data['ctc_monthly'] = $data['gross_monthly'];
-        $data['ctc_yearly'] = intval($data['gross_monthly']) * 12;
-        $data['employee_epf_monthly'] =  $employeeData["epf_employer_contribution"];
-        $data['employee_epf_yearly'] = intval($employeeData["epf_employer_contribution"]) * 12;
-        $data['employer_pt_monthly'] = $employeeData["professional_tax"];
-        $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
+        $data['CEA_monthly'] = $employeeData["child_education_allowance"]??"0" ;
+        $data['CEA_yearly'] = intval($employeeData["child_education_allowance"]??"0") * 12;
+        $data['food_coupon_monthly'] = $employeeData['food_coupon']??"0";
+        $data['food_coupon_yearly'] = intval($employeeData['lta']??"0") * 12;
+        $data['lta_monthly'] = $employeeData['lta']??"0";tval($employeeData['food_coupon']??'0') * 12;
+        $data['lta_yearly'] = intval($employeeData['lta']??"0") * 12;
+        if($onboard_type='normal'){
+            $data['ctc_monthly'] = $employeeData['cic'];
+            $data['ctc_yearly'] = intval($employeeData['cic']) * 12;
+        }else{
+        $data['ctc_monthly'] = $employeeData['ctc'];
+        $data['ctc_yearly'] = intval($employeeData['ctc']) * 12;
+        }
+        $data['employee_epf_monthly'] =  $employeeData["epf_employee"];
+        $data['employee_epf_yearly'] = intval($employeeData["epf_employee"]) * 12;
+        $data['employee_esi_monthly'] =  $employeeData["esic_employee"];
+        $data['employee_esi_yearly'] = intval($employeeData["esic_employee"]) * 12;
+        $data['employer_pt_monthly'] = $employeeData["professional_tax"]??"0";
+        $data['employer_pt_yearly'] =  $employeeData["professional_tax" ] ? intval($employeeData["professional_tax" ])* 12 :"0";
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
+        if($onboard_type='normal'){
+        $data["ctc_in_words"] = numberToWord(intval($employeeData['cic']) * 12);
 
-        $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->client_logo;
-        $appoinmentPath = "";
+        }else{
+            $data["ctc_in_words"] = numberToWord(intval($employeeData['ctc']) * 12);
+        }
+        $data["ctc_in_words"]=str_replace("  "," ",$data["ctc_in_words"]);
 
-        if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
+        $fetchMasterConfigValue = VmtMasterConfig::where("config_name","can_send_appointmentletter_after_onboarding")->first();
 
-            //Fetch appointment letter based on client name
-            $client_name = str_replace(' ', '', sessionGetSelectedClientName());
-            //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-            $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_' . $client_name;
+        if ($fetchMasterConfigValue['config_value'] == "true") {
+            //$client_name = str_replace(' ', '_', sessionGetSelectedClientName());
+            $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 
-            //check if template exists
-            if (view()->exists($viewfile_appointmentletter)) {
-                $html =  view($viewfile_appointmentletter, compact('data'));
-                // dd($data);
+
+                $html = view('appointment_mail_templates.appointment_Letter_client',$data);
+
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
                 $options->set('isRemoteEnabled', true);
 
                 $pdf = new Dompdf($options);
-                $pdf->loadHtml($html, 'UTF-8');
+                $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
+
                 $docUploads =  $pdf->output();
+                $client_id =sessionGetSelectedClientid();
+
+                $VmtClientMaster = VmtClientMaster::where("id",$client_id)->first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
+
                 // dd( $docUploads);
-                \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
-                $appoinmentPath = public_path('appoinmentLetter/') . $filename;
-            }
-        }
+                 $filename = 'appoinment_letter_' . $data['employee_name'] . '_' . time() . '.pdf';
+                 $file_path = public_path('appoinmentLetter/'.$filename);
+                 file_put_contents($file_path, $docUploads);
+                 $appoinmentPath = public_path('appoinmentLetter/') . $filename;
 
-        $notification_user = User::where('id', auth::user()->id)->first();
-        $message = "Employee Bulk OnBoard was Created   ";
 
-        Notification::send($notification_user, new ViewNotification($message . $employeeData['employee_name']));
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
-
-        return $isSent;
+             $isSent = \Mail::to($data['email'])->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),$appoinmentPath , $image_view,$VmtClientMaster->client_code));
+            return $isSent;
+         }
     }
 
 
@@ -1134,7 +1164,6 @@ class VmtEmployeeService
                 'vmt_employee_documents.status as doc_status',
                 'vmt_employee_documents.doc_url as doc_url'
             ]);
-
         // //store all the documents in single key
         foreach ($query_pending_onboard_docs as $single_pending_docs) {
 
@@ -1167,7 +1196,7 @@ class VmtEmployeeService
         }
 
 
-        return array_values($json_response);
+        return  array_values($json_response);
     }
     public function fetchAllEmployeesDocumentsProof(Request $request)
     {

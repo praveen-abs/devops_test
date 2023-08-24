@@ -12,7 +12,6 @@ const router = createRouter({
             name: "QuickOnboarding",
             component: QuickOnboarding,
         },
-
     ],
 });
 export default router;

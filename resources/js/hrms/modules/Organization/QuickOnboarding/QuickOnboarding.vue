@@ -93,7 +93,7 @@
 <script setup>
 
 import { onMounted, onUpdated, ref } from 'vue';
-import ImportQuickOnboarding from './importquickonboarding.vue'
+import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
 import { useRoute } from "vue-router";
 import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
 import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore';

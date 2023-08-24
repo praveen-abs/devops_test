@@ -10,6 +10,9 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmpAssignSalaryAdvSettings;
+use App\Models\Department;
+use App\Models\State;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
@@ -113,17 +116,6 @@ function sessionGetSelectedClientName()
 }
 
 
-function sessionGetSelectedClientFullName()
-{
-
-    $query_client = VmtClientMaster::find(session('client_id'));
-
-    if (!empty($query_client))
-        return $query_client->client_fullname;
-    else
-        return "";
-}
-
 
 
 function sessionGetSelected_abs_clientcode()
@@ -207,6 +199,7 @@ function sessionGetSelectedClientLogo()
     else
         return "";
 }
+
 function getSessionCurrentlySelectedClient()
 {
 
@@ -216,8 +209,6 @@ function getSessionCurrentlySelectedClient()
     else
         return "";
 }
-
-
 function getOrganization_HR_Details()
 {
     $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
@@ -638,5 +629,171 @@ function num2alpha($n) {
     $n -= pow(26, $i);
     }
     return $r;
+}
+
+function numberToWord($num)
+{
+    $num = (string) ((int) $num);
+    if ((int) ($num) && ctype_digit($num)) {
+        $words = array();
+        $num = str_replace(array(',', ' '), '', trim($num));
+
+        $list1 = array(
+            '',
+            'one',
+            'two',
+            'three',
+            'four',
+            'five',
+            'six',
+            'seven',
+            'eight',
+            'nine',
+            'ten',
+            'eleven',
+            'twelve',
+            'thirteen',
+            'fourteen',
+            'fifteen',
+            'sixteen',
+            'seventeen',
+            'eighteen',
+            'nineteen'
+        );
+
+        $list2 = array(
+            '',
+            'ten',
+            'twenty',
+            'thirty',
+            'forty',
+            'fifty',
+            'sixty',
+            'seventy',
+            'eighty',
+            'ninety',
+            'hundred'
+        );
+
+        $list3 = array(
+            '',
+            'thousand',
+            'million',
+            'billion',
+            'trillion',
+            'quadrillion',
+            'quintillion',
+            'sextillion',
+            'septillion',
+            'octillion',
+            'nonillion',
+            'decillion',
+            'undecillion',
+            'duodecillion',
+            'tredecillion',
+            'quattuordecillion',
+            'quindecillion',
+            'sexdecillion',
+            'septendecillion',
+            'octodecillion',
+            'novemdecillion',
+            'vigintillion'
+        );
+
+        $num_length = strlen($num);
+
+        $levels = (int) (($num_length + 2) / 3);
+
+        $max_length = $levels * 3;
+
+        $num = substr('00' . $num, -$max_length);
+
+        $num_levels = str_split($num, 3);
+
+        foreach ($num_levels as $num_part) {
+            $levels--;
+
+            $hundreds = (int) ($num_part / 100);
+
+            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' ' : '');
+
+            $tens = (int) ($num_part % 100);
+
+            $singles = '';
+
+            if ($tens < 20) {
+                $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '');
+            } else {
+                $tens = (int) ($tens / 10);
+                $tens = ' ' . $list2[$tens] . ' ';
+                $singles = (int) ($num_part % 10);
+                $singles = ' ' . $list1[$singles] . ' ';
+            }
+            $words[] = $hundreds . $tens . $singles . (($levels && (int) ($num_part)) ? ' ' . $list3[$levels] . ' ' : '');
+        }
+        $commas = count($words);
+        if ($commas > 1) {
+            $commas = $commas - 1;
+        }
+
+        $words = implode(', ', $words);
+
+        $words = trim(str_replace(' ,', ',', ucwords($words)), ', ');
+
+        if ($commas) {
+            $words = str_replace(',', '', $words);
+        }
+        return $words . " Only";
+    } else if (!((int) $num)) {
+        return 'Zero';
+    }
+    return '';
+
+}
+    function getAllDropdownFilterSetting(){
+
+    $current_client_id = auth()->user()->client_id;
+
+
+    try {
+
+        $queryGetDept = Department::select('id', 'name')->get();
+
+        $queryGetDesignation = VmtEmployeeOfficeDetails::select('designation')->where('designation', '<>', 'S2 Admin')->whereNotNull("designation")->distinct()->get();
+
+        $queryGetLocation = VmtEmployeeOfficeDetails::select('work_location')->whereNotNull("work_location")->distinct()->get();
+
+        $queryGetstate = State::select('id', 'state_name')->distinct()->get();
+
+        if ($current_client_id == 1) {
+
+            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
+        } elseif ($current_client_id == 0) {
+
+            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+        } elseif ($current_client_id == 2) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        } elseif ($current_client_id == 3) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        } elseif ($current_client_id == 4) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        }
+
+
+        $getsalary = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
+
+
+        return response()->json($getsalary);
+    } catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error fetching the dropdown value",
+            "data" => $e,
+        ]);
+    }
 }
 

@@ -13,13 +13,15 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
     const array_employees_list = ref();
 
     async function getManageWelcomeMailStatus(){
+        loading.value = true;
         await axios.get('/getAllEmployees_WelcomeMailStatus_Details')
         .then((res)=>{
             array_employees_list.value = res.data ;
             console.log("testing",array_employees_list);
+        
         })
         .finally(()=>{
-
+            loading.value = false;
         })
     }
 
@@ -37,7 +39,7 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
 
             }).finally(()=>{
                 getManageWelcomeMailStatus();
-                loading.value = false
+                loading.value = false;
             })
 
     }

@@ -109,6 +109,9 @@
         <div class="col-span-6">
             <input type="text" placeholder="Search employee..." name="" class="border p-1.5 text-sm bg-gray-50 rounded-lg"
                 id="">
+            <input type="date" name="" id="" v-model="variable.start_date">
+            <input type="date" name="" id="" v-model="variable.end_date">
+            <button @click="getEmployeeAbsentReports" class="btn btn-orange">Generate</button>
         </div>
         <div class="col-span-6 flex justify-end gap-4">
             <button><img src="../../assests/icons/printer.svg" alt="" srcset="" class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
@@ -175,7 +178,7 @@ const cities = ref([
 ]);
 
 const reportsType = ref([
-    { name: 'Basic Report', code: '1' },
+    { name: 'Absent reports', code: '1' },
     { name: 'Detailed Report', code: '2' },
 ]);
 
@@ -229,3 +232,5 @@ onMounted(() => {
     margin-top: -11px;
 }
 </style>
+
+

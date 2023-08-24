@@ -1606,4 +1606,54 @@ $user_id = User::where('user_code',$data['employee_code'])->first();
     //             ]);
 
     //         }
+
+    public function setFinanceidHrid(Request $request){
+
+        //LANGRO INDIA PRIVATE LIMITED
+
+       $userslan = User::where('client_id','2')->get();
+
+       foreach ($userslan as $single_users) {
+
+          $emp_official_details =  VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
+          $emp_official_details->hr_user_id = '238';
+          $emp_official_details->fa_user__id = '185';
+          $emp_official_details->save();
+       }
+
+    //    PRITI SALES CORPORATIONS
+
+       $userspri = User::where('client_id','3')->get();
+
+       foreach ($userspri as $single_users) {
+
+          $emp_official_details =  VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
+          $emp_official_details->hr_user_id = '182';
+          $emp_official_details->fa_user__id = '185';
+          $emp_official_details->save();
+       }
+
+       //INDCHEM MARKETING AGENCIES
+
+       $usersind = User::where('client_id','4')->get();
+
+       foreach ($usersind as $single_users) {
+
+          $emp_official_details =  VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
+          $emp_official_details->hr_user_id = '164';
+          $emp_official_details->fa_user__id = '185';
+          $emp_official_details->save();
+       }
+
+       return response()->json([
+        'status' => 'success',
+        'message' => 'updated successfully',
+       ]);
+
+
+    }
+
+
+
+
 }

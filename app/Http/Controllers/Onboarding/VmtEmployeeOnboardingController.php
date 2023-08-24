@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\VmtMaritalStatus;
+
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\ViewNotification;
@@ -330,7 +331,8 @@ class VmtEmployeeOnboardingController extends Controller
                             $image_view = url('/') . $VmtClientMaster->client_logo;
                             $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-                            //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
+                           // $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data,"normal");
+
                             $message = "Employee onboarded successfully";
                         } else {
                             $message = "Employee details updated in draft";
@@ -513,7 +515,8 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+               // $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"quick");
 
                 if ($isEmailSent) {
                     $mail_message = 'success';
@@ -575,7 +578,7 @@ class VmtEmployeeOnboardingController extends Controller
                     $emp_compensatory_data =Compensatory::where('user_id',  $user_id);
                     $emp_statutory_data =VmtEmployeeStatutoryDetails::where('user_id',  $user_id);
 
-                    if($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() && $emp_statutory_data->exists()){
+                    if($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() &&    $emp_statutory_data->exists()){
 
 
                         $response = [
@@ -648,7 +651,13 @@ class VmtEmployeeOnboardingController extends Controller
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+
+                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"bulk");
+                // $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
+                //   ->delay(Carbon::now()->addSeconds(5));
+
+                // dispatch($isEmailSent);
 
                 if ($isEmailSent) {
                     $mail_message = 'success';
@@ -671,7 +680,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'message' => $message,
                 'Employee_Name' =>$row['employee_name']  ,
                 'mail_status' => $mail_message,
-                'data' => $response['data'] ,
+                'data' => $response['data'],
             ];
         } catch (\Exception $e) {
 
@@ -774,6 +783,15 @@ class VmtEmployeeOnboardingController extends Controller
     {
         return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
+    public function getMandatoryDocumentDetails(Request $request)
+    {
+        $response =VmtDocuments::get(['id',
+                                     "document_name",
+                                     "is_mandatory"]);
+
+        return $response;
+
+    }
 
 
 
@@ -871,6 +889,11 @@ class VmtEmployeeOnboardingController extends Controller
             });
             $data['official_mail'] = array_values($official_mail);
 
+            $client_data = VmtClientMaster::all('client_fullname')->toarray();
+            $client_data = array_filter($client_data, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['client_details'] = $client_data;
 
             $response = ([
                 'status' => 'success',

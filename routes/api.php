@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\VmtAPIProfilePagesController;
 use App\Http\Controllers\Api\VmtAPIInvestmentsController;
 use App\Http\Controllers\Api\VmtApiNotificationsController;
 use App\Http\Controllers\Api\VmtAPIReimbursementsController;
+use App\Http\Controllers\Api\VmtAPILoanAndSalaryAdvanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,8 +104,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/getData-att-regularization', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationData']);
     Route::post('/attendance/getAttendanceRegularizationStatus', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationStatus']);
     Route::post('/attendance/applyRequestAbsentRegularization', [VmtAPIAttendanceController::class, 'applyRequestAbsentRegularization']);
-    Route::post('/attendance/countOfAttendanceRegularization',[VmtAPIAttendanceController::class,'getCountForAttRegularization']);
-    Route::post('/attendance/fetchAttendadnceRegularization',[VmtAPIAttendanceController::class,'getfetchAttendadnceRegularization']);
+    Route::post('/attendance/countOfAttendanceRegularization', [VmtAPIAttendanceController::class, 'getCountForAttRegularization']);
+    Route::post('/attendance/fetchAttendadnceRegularization', [VmtAPIAttendanceController::class, 'getfetchAttendadnceRegularization']);
 
 
     //Payslip API
@@ -125,26 +126,25 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/updateEmployeeBankDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeBankDetails']);
     Route::post('/profile-pages/addEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'addEmployeeFamilyDetails']);
     Route::post('/profile-pages/updateEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeFamilyDetails']);
-    Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeFamilyDetails']);
-    Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'addEmployeeExperianceDetails']);
-    Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'updateEmployeeExperianceDetails']);
-    Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeExperianceDetails']);
+    Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'deleteEmployeeFamilyDetails']);
+    Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'addEmployeeExperianceDetails']);
+    Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeExperianceDetails']);
+    Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'deleteEmployeeExperianceDetails']);
 
 
     //Investments
-     Route::post('/investments/saveSection80', [VmtAPIInvestmentsController::class,'saveSection80']);
-     Route::post('/investments/saveSectionPopups', [VmtAPIInvestmentsController::class,'saveSectionPopups']);
-     Route::post('/investments/SaveInvDetails', [VmtAPIInvestmentsController::class,'SaveInvDetails']);
-     Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetailsTemplate']);
-     Route::post('/investments/fetchHousePropertyDetails', [VmtAPIInvestmentsController::class,'fetchHousePropertyDetails']);
-     Route::post('/investments/fetchEmpRentalDetails', [VmtAPIInvestmentsController::class,'fetchEmpRentalDetails']);
-     Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class,'deleteHousePropertyDetails']);
+    Route::post('/investments/saveSection80', [VmtAPIInvestmentsController::class, 'saveSection80']);
+    Route::post('/investments/saveSectionPopups', [VmtAPIInvestmentsController::class, 'saveSectionPopups']);
+    Route::post('/investments/SaveInvDetails', [VmtAPIInvestmentsController::class, 'SaveInvDetails']);
+    Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class, 'getInvestmentsFormDetailsTemplate']);
+    Route::post('/investments/fetchHousePropertyDetails', [VmtAPIInvestmentsController::class, 'fetchHousePropertyDetails']);
+    Route::post('/investments/fetchEmpRentalDetails', [VmtAPIInvestmentsController::class, 'fetchEmpRentalDetails']);
+    Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class, 'deleteHousePropertyDetails']);
 
     //Notifications
-    Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);
-    Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class,'saveNotification']);
-    Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class,'updateNotificationReadStatus']);
-
+    Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class, 'getNotifications']);
+    Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class, 'saveNotification']);
+    Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class, 'updateNotificationReadStatus']);
 
     //Onboarding
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
@@ -153,8 +153,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth'])->name('payroll/getCurrentPayrollDates');
 
+  //payroll statutory PT settings
+    Route::post('fetchProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchProfessionalTaxSettings'])->name('fetchProfessionalTaxSettings');
+    Route::post('saveProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveProfessionalTaxSettings'])->name('saveProfessionalTaxSettings');
+    Route::post('updateProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updateProfessionalTaxSettings'])->name('updateProfessionalTaxSettings');
+
+    //payroll statutory LWF settings
+    Route::post('fetchlwfSettingsDetails', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchlwfSettingsDetails'])->name('fetchlwfSettingsDetails');
+    Route::post('savelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'savelwfSettings'])->name('savelwfSettings');
+    Route::post('updatelwfSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'updatelwfSettings'])->name('updatelwfSettings');
 
 
 
-
+    //loanandadvance
+    Route::post('/loanandsalaryadvance/getEmpLoanAndSalaryAdvance', [VmtAPILoanAndSalaryAdvanceController::class, 'getEmpLoanAndSalaryAdvance']);
 });

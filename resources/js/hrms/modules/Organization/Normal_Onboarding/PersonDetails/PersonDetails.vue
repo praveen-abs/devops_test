@@ -56,7 +56,7 @@
                             <label for="" class="float-label">Date of Birth</label>
                             <Calendar inputId="icon" dropzone="true" v-model="service.employee_onboarding.dob" showIcon
                                 editable dateFormat="dd-mm-yy" placeholder="Date of birth" style="width: 350px;" class=""
-                                :maxDate="service.beforeYears(new Date())" :class="{
+                                :maxDate="service.dateOfBirth(new Date())" :class="{
                                     'p-invalid':
                                         v$.dob.$error,
                                 }" />
@@ -95,7 +95,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Date of Joining<span class="text-danger">*</span></label>
-                            <Calendar inputId="icon" dropzone="true" :manualInput="true" :maxDate="new Date()"
+                            <Calendar inputId="icon" dropzone="true" :manualInput="true"
                                 v-model="service.employee_onboarding.doj" editable dateFormat="dd-mm-yy"
                                 placeholder="Date of Joining" style="width: 350px;"
                                 :readonly="service.readonly.is_doj_quick" showIcon :class="[{

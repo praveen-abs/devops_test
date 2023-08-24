@@ -12,6 +12,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use PDF;
 use Carbon\Carbon;
+use DateTime;
 
 
 use App\Models\User;
@@ -1122,6 +1123,8 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
         // $user_code = "BA002";
 
 
+
+        $user_data =User::where('user_code',$user_code)->first();
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
@@ -1137,7 +1140,8 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ->whereMonth('payroll_date',$month);
 
 
-        $user_data =User::where('user_code',$user_code)->first();
+
+
      //get leave data
         $start_date= Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
         $end_date= Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
@@ -1160,11 +1164,11 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
         }
 
         $getpersonal['leave_data'] = $leave_data;
-        $getpersonal['client_details'] = $payroll_data->get(
+        $getpersonal['client_details'] = VmtClientMaster::where('id',sessionGetSelectedClientid())->get(
             [
-                'vmt_client_master.client_fullname',
-                'vmt_client_master.client_logo',
-                'vmt_client_master.address',
+                'client_fullname',
+                'client_logo',
+                'address',
             ]
         )->toArray();
 
@@ -1206,12 +1210,14 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                     'vmt_employee_payslip_v2.hra as HRA',
                     'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
                     'vmt_employee_payslip_v2.other_earnings as Other Earnings',
-                    'vmt_employee_payslip_v2.earned_spl_alw  as Special Allowance',
+                    'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                     'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                     'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
                     'vmt_employee_payslip_v2.overtime as Overtime',
                 ]
             )->toArray();
+
+
         $getarrears = $payroll_data
             ->get(
                 [
@@ -1252,7 +1258,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 [
                     'vmt_employee_compensatory_details.basic as Basic',
                     'vmt_employee_compensatory_details.hra as HRA',
-                    'vmt_employee_compensatory_details.special_allowance  as Special Allowance',
+
                 ]
             )->toArray();
 
@@ -1363,7 +1369,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ];
         }
 
-//dd($getpersonal);
+// dd($getpersonal);
 
         if($type =="pdf"){
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
@@ -1377,15 +1383,15 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-                $pdf->stream("payslip.pdf");
-
-                 return redirect()->back();
+                // $pdf->stream("payslip.pdf");
+                $response = base64_encode($pdf->output(['payslip.pdf']));
+                return $response;
 
         }elseif($type =="html"){
 
             $html = view('dynamic_payslip_templates.dynamic_payslip_template_view', $getpersonal);
 
-            return $html;
+            return  base64_encode( $html);
 
         }else if($type =="mail"){
 
@@ -1404,9 +1410,15 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
 
             if($isSent){
-                dd('success');
+
+                return response()->json([
+                    "status" => "success",
+                ]);
+
             }else{
-                dd('failure');
+                return response()->json([
+                    "status" => "failure",
+                ]);
             }
 
         }

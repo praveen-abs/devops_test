@@ -104,6 +104,7 @@
 <script setup>
 import { ref } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
+import LoadingSpinner from '../../../../../components/LoadingSpinner.vue'
 
 const investmentStore = investmentMainStore()
 

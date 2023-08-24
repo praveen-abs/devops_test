@@ -13,14 +13,16 @@
                     </div>
                     <div class="absolute top-8 w-full z-10 ">
                         <div class="grid grid-cols-2 w-11/12 bg-slate-100 mx-auto rounded-lg h-full">
-                            <div class="">
+                            <div class=" w-[100%] relative h-[90px]">
+                                <!-- <img src="../../../assests/images/family.png" alt=""  class=" w-[100%] border-[4px] border-[#000] absolute "> -->
                                 <div v-if="JSON.parse(events.avatar).type == 'shortname'" :class="getAvatarColor(index)"
-                                    class="h-full rounded-lg">
+                                    class="h-full rounded-lg ">
                                     <p class="font-semibold text-4xl py-4 text-center align-middle  text-white">{{
                                         JSON.parse(events.avatar).data }}</p>
                                 </div>
+                                <!-- <img src="../../../assests/images/evangelist.png" alt=""  class="rounded-lg absolute w-[100%] h-[100%] top-0"> -->
                                 <img v-else :src="`data:image/png;base64,${JSON.parse(events.avatar).data}`" alt=""
-                                    class="rounded-lg h-full">
+                                    class="rounded-lg absolute w-[100%]  h-[100%] top-0">
                             </div>
                             <div class="h-full">
                                 <div class="py-6">
@@ -74,7 +76,7 @@
                                         position: absolute;
                                         opacity: 0.4;
                                         right: 4px;
-                                        top: 3px;" class="fa text-orange fa-birthday-cake"></i>
+                                        top: 3px;" :class="findCurrentEvent(events.type)" class="fa text-orange fa-birthday-cake"></i>
                                 <i style="font-size: 20px;
                                         position: absolute;
                                         top: 20px;
@@ -135,7 +137,6 @@ const colors = [
     'bg-cyan-600',
     'bg-amber-600',
     'bg-red-600',
-    'bg-blue-600',
     'bg-pink-600',
     'bg-green-600',
     'bg-fuchsia-600',
@@ -148,7 +149,6 @@ const avatarColors = [
     'bg-cyan-200',
     'bg-amber-200',
     'bg-red-200',
-    'bg-blue-200',
     'bg-pink-200',
     'bg-green-200',
     'bg-fuchsia-200',
@@ -169,6 +169,7 @@ const findEventType = (type) => {
             return 'Work anniversary'
         }
 }
+
 
 </script>
 

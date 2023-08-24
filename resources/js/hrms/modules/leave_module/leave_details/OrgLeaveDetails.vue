@@ -8,20 +8,18 @@
                         <div></div>
                         <div class=" d-flex ">
                             <div class="">
-                                <label for=" " class=" text-blue-900 mx-2">Start Date</label>
-                                <Calendar v-model="leaveModuleStore.selectedStartDate" dateFormat="dd-mm-yy" class="p-l3"
-                                    style=" border: 1px solid orange; border-radius: 7px; height: 38px; width: 100px;"
-                                    :maxDate="new Date()" />
+                                <label for=" " class="text-lg font-semibold">Start Date</label>
+                                <Calendar v-model="leaveModuleStore.selectedStartDate" dateFormat="dd-mm-yy" class="pl-3"
+                                    style="  border-radius: 7px; height: 30px; width: 100px;" :maxDate="new Date()" />
                             </div>
                             <div class="">
-                                <label for=" " class=" text-blue-900 mx-2 ">End Date</label>
+                                <label for=" " class=" text-lg font-semibold mx-2 ">End Date</label>
                                 <Calendar class="mr-3" v-model="leaveModuleStore.selectedEndDate" dateFormat="dd-mm-yy"
-                                    style=" border: 1px solid orange; border-radius: 7px; height: 38px;width: 100px;"
-                                    :maxDate="new Date()" />
+                                    style="  border-radius: 7px; height: 30px;width: 100px;" :maxDate="new Date()" />
 
                             </div>
 
-                            <button class=" btn-orange py-1  px-4 rounded"
+                            <button class=" btn-orange py-1  px-4 rounded" style="height: 30px;"
                                 @click="leaveModuleStore.getOrgLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD'), dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD'))">submit</button>
                         </div>
 
@@ -85,15 +83,17 @@
         <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
             <div class="mb-0 card leave-history">
                 <div class="card-body">
-                    <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Org Leave history</h6>
-                    <div class="table-responsive">
+                    <div class="flex justify-between">
+                        <div>
+                            <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Org Leave history</h6>
+                        </div>
                         <div class="d-flex justify-content-end">
                             <label for="" class="my-2 text-lg font-semibold">Select Month</label>
                             <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
-                                style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
-                            <Button class="h-10 mb-2 btn btn-orange" label="Submit"
-                                @click="leaveModuleStore.getAllEmployeesLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses)" />
+                                style="border-radius: 7px; height: 30px;"  @date-select="leaveModuleStore.getAllEmployeesLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses)"  />
                         </div>
+                    </div>
+                    <div class="table-responsive">
                         <DataTable :value="leaveModuleStore.array_orgLeaveHistory" responsiveLayout="scroll"
                             :paginator="true" :rowsPerPageOptions="[5, 10, 25]"
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :rows="5"
