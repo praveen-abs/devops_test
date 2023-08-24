@@ -825,8 +825,9 @@ class VmtAttendanceController extends Controller
             $attendance_mode_checkin = null;
             $attendance_mode_checkout = null;
 
-            //dd($value);
             foreach ($value as $singleValue) {
+                // if($singleValue["date"] == '2023-08-05')
+                //     dd($singleValue);
                 //Find the employee_workshift. Right now, we are getting from web/mobile checkin only.
                 //For Biometric, we cant know which shift since the biometric table has no column for storing it
                 //dd($singleValue["vmt_employee_workshift_id"]);
@@ -839,28 +840,37 @@ class VmtAttendanceController extends Controller
                 //dd( $attendanceResponseArray[$key]);
                 //Find the min of checkin
                 if ($checkin_min == null) {
+
+
                     $checkin_min = $singleValue["checkin_time"];
                     $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
-                } else
-                if ($checkin_min > $singleValue["checkin_time"]) {
+                }
+                else
+                if ( !empty($singleValue["checkin_time"]) && ($checkin_min > $singleValue["checkin_time"])) {
+                    //Bug Fixing
+                    // if($singleValue["date"] == '2023-08-05')
+                    //     dd($singleValue);
+
                     $checkin_min = $singleValue["checkin_time"];
                     $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
                 }
 
                 //dd("Min value found : " . $singleValue["checkin_time"]);
 
-                //Find the max of checkin
+                //Find the max of checkout
                 if ($checkout_max == null) {
                     $checkout_max = $singleValue["checkout_time"];
                     $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
-                } else
-                if ($checkout_max < $singleValue["checkout_time"]) {
+                }
+                else
+                if ( !empty($singleValue["checkout_time"]) && $checkout_max < $singleValue["checkout_time"]) {
                     $checkout_max = $singleValue["checkout_time"];
                     $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
                 }
             }
 
             //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
+
 
             //dd($value[0]["attendance_mode"]);
             $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
@@ -878,6 +888,8 @@ class VmtAttendanceController extends Controller
             if ($singleValue["checkout_time"] && !empty($singleValue["selfie_checkout"]))
                 $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/' . $user->user_code . '/selfies/' . $singleValue["selfie_checkout"];
         }
+
+        // dd($attendanceResponseArray);
 
         //Get all the shift details
         $query_workShifts = VmtWorkShifts::all()->keyBy('id');
