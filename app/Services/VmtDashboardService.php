@@ -129,7 +129,7 @@ class VmtDashboardService{
 
         }
 
-        $mobile_settings =$serviceVmtMasterConfigService->getEmployeesMobileSettingsData($user_code);
+    $mobile_settings =$serviceVmtMasterConfigService->getEmployeesMobileSettingsData($user_code);
 
         $response['name']=$employee_details_query->name;
         $response['designation']=$employee_designation;
