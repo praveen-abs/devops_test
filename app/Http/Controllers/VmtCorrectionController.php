@@ -588,6 +588,22 @@ class VmtCorrectionController extends Controller
              "attendance_id": "DMC078",
              "user_id": "DM185"
             }
+            {
+                "attendance_id": "DMC084",
+                "user_id": "DM190"
+               }
+               {
+                "attendance_id": "DMC079",
+                "user_id": "DM188"
+               }
+               {
+                "attendance_id": "DMC077",
+                "user_id": "DM187"
+               }
+               {
+                "attendance_id": "DMC083",
+                "user_id": "DM189"
+               }
            ]';
 
         //Removing Extra Spaace and white space in string
