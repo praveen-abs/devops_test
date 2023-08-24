@@ -3,6 +3,9 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+    build:{
+          'outDir':'./app/dist'
+    },
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),

@@ -37,7 +37,7 @@
 
 <script setup>
 import attendance_regularization from "./attendance_regularization.vue";
-import absent_regularization from "./absent_regularization.vue";
+import absent_regularization from "./absent_Regularization.vue";
 import LoadingSpinner from '../../../components/LoadingSpinner.vue';
 import {UseAttendanceStore} from "./AttendanceStore";
 
