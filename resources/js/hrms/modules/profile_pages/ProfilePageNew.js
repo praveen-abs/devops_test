@@ -36,7 +36,7 @@ import InputNumber from 'primevue/inputnumber';
 import InputMask from 'primevue/inputmask';
 import ProgressBar from 'primevue/progressbar';
 
-import profilePage from './profilePageNew.vue'
+import profilePage from './ProfilePageNew.vue';
 
 const app = createApp(profilePage);
 const pinia=createPinia()

@@ -10,6 +10,9 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmpAssignSalaryAdvSettings;
+use App\Models\Department;
+use App\Models\State;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
@@ -198,8 +201,24 @@ function sessionGetSelectedClientLogo()
     else
         return "";
 }
+function getSessionCurrentlySelectedClientEmp($user_id)
+{
+    $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
 
+    if (!empty($query_client))
+        return $query_client;
+    else
+        return "";
+}
+function getSessionCurrentlySelectedClient()
+{
 
+    $query_client = VmtClientMaster::find(session('client_id'));
+    if (!empty($query_client))
+        return $query_client;
+    else
+        return "";
+}
 function getOrganization_HR_Details()
 {
     $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
@@ -620,6 +639,31 @@ function num2alpha($n)
         $n -= pow(26, $i);
     }
     return $r;
+
+}
+
+function getGenderNeutralTerm($user_id){
+
+    $emp_details  = VmtEmployee::where('userid',$user_id)->first();
+
+    if(isset($emp_details->gender)){
+
+    $emp_details  = strtoupper($emp_details->gender);
+
+    if(empty($emp_details)){
+        $result =  "Mr / Ms.";
+    }else if($emp_details == "FEMALE"){
+        $result =  "Ms.";
+    }else if($emp_details == "MALE"){
+        $result =  "Mr.";
+    }
+}
+else{
+    $result =  "Mr. / Ms.";
+}
+
+    return $result;
+
 }
 
 function numberToWord($num)
@@ -740,3 +784,50 @@ function numberToWord($num)
     }
     return '';
 }
+    function getAllDropdownFilterSetting(){
+
+    $current_client_id = auth()->user()->client_id;
+
+
+    try {
+
+        $queryGetDept = Department::select('id', 'name')->get();
+
+        $queryGetDesignation = VmtEmployeeOfficeDetails::select('designation')->where('designation', '<>', 'S2 Admin')->whereNotNull("designation")->distinct()->get();
+
+        $queryGetLocation = VmtEmployeeOfficeDetails::select('work_location')->whereNotNull("work_location")->distinct()->get();
+
+        $queryGetstate = State::select('id', 'state_name')->distinct()->get();
+
+        if ($current_client_id == 1) {
+
+            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
+        } elseif ($current_client_id == 0) {
+
+            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+        } elseif ($current_client_id == 2) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        } elseif ($current_client_id == 3) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        } elseif ($current_client_id == 4) {
+
+            $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+        }
+
+
+        $getsalary = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
+
+
+        return response()->json($getsalary);
+    } catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error fetching the dropdown value",
+            "data" => $e,
+        ]);
+    }
+}
+

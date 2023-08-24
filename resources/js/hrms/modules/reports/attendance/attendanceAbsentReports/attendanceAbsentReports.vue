@@ -170,7 +170,7 @@ const downloadAbsentReports = () => {
         console.log(response.data);
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(response.data);
-        link.download = ` Absent Report_${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}.xlsx`;
+        link.download = `Attendance Absent Report_${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}.xlsx`;
         link.click();
     }).finally(() => {
         canShowLoading.value = false

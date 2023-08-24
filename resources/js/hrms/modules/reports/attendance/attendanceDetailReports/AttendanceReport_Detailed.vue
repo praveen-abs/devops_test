@@ -166,7 +166,7 @@ const downloadDetailReports = () => {
         console.log(response.data);
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(response.data);
-        link.download = ` Detailed Report_${dayjs(variable.start_date).format('DD-MM-YYYY')}_${dayjs(variable.end_date).format('DD-MM-YYYY')}.xlsx`;
+        link.download = `Attendance Detailed Report_${dayjs(variable.start_date).format('DD-MM-YYYY')}_${dayjs(variable.end_date).format('DD-MM-YYYY')}.xlsx`;
         link.click();
     }).finally(() => {
         canShowLoading.value = false

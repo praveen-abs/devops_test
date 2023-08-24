@@ -37,6 +37,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js',
                 'resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js',
                 'resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js',
+                'resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js',
 
                 //Attendance Detailed Report
                 'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
@@ -184,6 +185,8 @@ export default defineConfig({
 
             //    Exit approval
             'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
+         //Mobile Settings
+             'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
 
 
             ],

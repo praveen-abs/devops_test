@@ -406,7 +406,12 @@ class VmtAttendanceReportsService
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                 $weekOffDays =  $shift_settings->week_off_days;
 
+                if ($attendanceResponseArray[$key]['checkin_time'] != null && $attendanceResponseArray[$key]['checkout_time'] != null && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
+                    $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
 
+                    $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
+                    $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
+                }
 
 
 
@@ -935,6 +940,12 @@ class VmtAttendanceReportsService
                 $weekOffDays =  $shift_settings->week_off_days;
                 $attendanceResponseArray[$key]['shift_start_time'] = $shiftStartTime;
                 $attendanceResponseArray[$key]['shift_end_time'] = $shiftEndTime;
+                if ($attendanceResponseArray[$key]['checkin_time'] != null && $attendanceResponseArray[$key]['checkout_time'] != null && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
+                    $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
+
+                    $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
+                    $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
+                }
                 // if(  $singleUser->id=='192'&&$key='2023-06-13'){
                 //     dd( $shift_settings);
                 // }
@@ -1721,7 +1732,12 @@ class VmtAttendanceReportsService
                     }
                     $out_punch = $value['checkout_time'];
                     if ($in_punch  != null) {
-                        $LCDuration = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
+                        $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
+                        $lc_ar = CarbonInterval::minutes($lc1_total_mins)->cascade();
+                        $lc_hrs = (int) $lc_ar->totalHours;
+                        $lc_mins = $lc_ar->toArray()['minutes'];
+                        $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
+
                     } else {
                         $LCDuration  = '-';
                     }
@@ -1743,7 +1759,13 @@ class VmtAttendanceReportsService
                             $reason = '-';
                         }
 
-                        $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
+
+                        if (empty(User::where('id',  $regularized_record->reviewer_id)->first())) {
+                            $approved_by = '-';
+                        } else {
+                            $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
+                        }
+
                         if ($regularized_record->reviewer_reviewed_date != null) {
                             $approved_on = Carbon::parse($regularized_record->reviewer_reviewed_date)->format('d-M-Y');
                         }
@@ -1753,7 +1775,7 @@ class VmtAttendanceReportsService
                     }
                     $temp_ar['In Punch'] =  $in_punch;
                     $temp_ar['Out Punch'] = $out_punch;
-                    $temp_ar['Late Coming Duration'] = $LCDuration;
+                    $temp_ar['Late Coming Duration'] = $lc1_total_mins;
                     $temp_ar['Day Status'] = $day_sts;
                     $temp_ar['Regularise Status'] = $regularized_sts;
                     $temp_ar['Employee Reason For Late Coming'] = $reason;
@@ -1799,7 +1821,14 @@ class VmtAttendanceReportsService
                     }
 
                     if ($out_punch   != null) {
-                        $EGDuration = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . ' Mins';
+                        // $EGDuration = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . ' Mins';
+                        $eg1_total_mins = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . 'Mins';
+                        $eg_ar = CarbonInterval::minutes($eg1_total_mins)->cascade();
+                        $eg_hrs = (int) $eg_ar->totalHours;
+                        $eg_mins = $eg_ar->toArray()['minutes'];
+                        $eg_duration =    $eg_hrs . ' Hrs : ' .  $eg_mins . ' Minutes';
+
+                        //  dd( $eg_hrs);
                     } else {
                         $EGDuration  = '-';
                     }
@@ -1831,7 +1860,7 @@ class VmtAttendanceReportsService
                     }
                     $temp_ar['In Punch'] =  $in_punch;
                     $temp_ar['Out Punch'] = $out_punch;
-                    $temp_ar['Early Going Duration'] =  $EGDuration;
+                    $temp_ar['Early Going Duration'] =   $eg_duration;
                     $temp_ar['Day Status'] = $day_sts;
                     $temp_ar['Regularise Status'] = $regularized_sts;
                     $temp_ar['Employee Reason For Late Coming'] = $reason;
@@ -1848,6 +1877,40 @@ class VmtAttendanceReportsService
             'Employee Reason For Late Coming', 'Approved By', 'Approved On', 'Approver Comments'
         );
         $response['rows'] =  $ecData;
+        return $response;
+    }
+
+    public function fetchOvertimeReportData($start_date, $end_date)
+    {
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $otData = array();
+        $response = array();
+        $temp_ar = array();
+        foreach ($attendance_data as $single_data) {
+            foreach ($single_data as $key => $value) {
+                $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
+                $shiftStartTime = Carbon::parse($current_shift->shift_start_time);
+                $shiftEndTime = Carbon::parse($current_shift->shift_end_time);
+                if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) && $value['checkout_time'] != null) {
+                    $ot =  $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
+                    $ot_ar = CarbonInterval::minutes($ot)->cascade();
+                    $ot_hrs = (int) $ot_ar->totalHours;
+                    $ot_mins = $ot_ar->toArray()['minutes'];
+                    $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+                    $temp_ar['Employee Code'] = $value['user_code'];
+                    $temp_ar['Employee Name'] = $value['name'];
+                    $temp_ar['Date'] = $value['date_day'];
+                    $temp_ar['Shift Name'] =  $current_shift->shift_name;
+                    $temp_ar['In Punch'] = $value['checkin_time'];
+                    $temp_ar['Out Punch'] = $value['checkout_time'];
+                    $temp_ar['OverTime Duration'] =   $total_ot;
+                    array_push($otData,  $temp_ar);
+                    unset($temp_ar);
+                }
+            }
+        }
+        $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
+        $response['rows'] = $otData;
         return $response;
     }
 }
