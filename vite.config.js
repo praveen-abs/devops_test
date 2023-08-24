@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     build:{
-          'outDir':'./app/dist'
+          'outDir':'./dist'
     },
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
