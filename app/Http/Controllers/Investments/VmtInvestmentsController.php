@@ -355,7 +355,6 @@ class VmtInvestmentsController extends Controller
                 $hra['proof_submitted'] = 0;
                 $hra['amount_rejected'] = 0;
                 $hra['amount_accepted'] = $sumOfHra;
-
             }
 
             $empBasic = $dec_amt['basic'] * 12;
@@ -395,7 +394,6 @@ class VmtInvestmentsController extends Controller
 
                 if ($dec_amt['dec_amount'] > $dec_amt['max_amount']) {
                     $chapterexe += $dec_amt['max_amount'];
-
                 }
                 if ($dec_amt['dec_amount'] < $dec_amt['max_amount']) {
                     $chapterexe += $dec_amt['dec_amount'];
@@ -436,9 +434,6 @@ class VmtInvestmentsController extends Controller
                 } else {
                     $houseProperty['amount_rejected'] = 0;
                 }
-
-
-
             }
             if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
@@ -554,24 +549,24 @@ class VmtInvestmentsController extends Controller
                     return $final_value;
                 } else
                     if ($total_income > 500000 && $total_income < 1000000) {
-                        // 5% (tax rebate u/s 87A is available)
-                        $deduction = $total_income - 500000;
-                        $taxable_amount = $deduction * 20 / 100;
-                        $heath_and_education = $taxable_amount * 4 / 100;
-                        $final_value = round($taxable_amount + 10000 + $heath_and_education);
-                        return $final_value;
-                    } else if ($total_income > 1000000) {
-                        $deduction = $total_income - 1000000;
-                        $taxable_amount = $deduction * 30 / 100;
-                        $total_amount = floor($taxable_amount + 110000);
-                        $subcharge = $this->subChargeCalculation($total_income);
-                        $heath_and_education = ($taxable_amount + $subcharge) * 4 / 100;
-                        $final_value = $total_amount + $subcharge + $heath_and_education;
-                        return $final_value;
-                    } else {
+                    // 5% (tax rebate u/s 87A is available)
+                    $deduction = $total_income - 500000;
+                    $taxable_amount = $deduction * 20 / 100;
+                    $heath_and_education = $taxable_amount * 4 / 100;
+                    $final_value = round($taxable_amount + 10000 + $heath_and_education);
+                    return $final_value;
+                } else if ($total_income > 1000000) {
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    $total_amount = floor($taxable_amount + 110000);
+                    $subcharge = $this->subChargeCalculation($total_income);
+                    $heath_and_education = ($taxable_amount + $subcharge) * 4 / 100;
+                    $final_value = $total_amount + $subcharge + $heath_and_education;
+                    return $final_value;
+                } else {
 
-                        return $total_income;
-                    }
+                    return $total_income;
+                }
             } else if ($age > 80) {
 
                 if ($total_income > 500000 && $total_income <= 1000000) {
@@ -579,20 +574,19 @@ class VmtInvestmentsController extends Controller
                     $taxable_amount = $deduction * 20 / 100;
                 } else
                     if ($total_income > 1000000) {
-                        $deduction = $total_income - 1000000;
-                        $taxable_amount = $deduction * 30 / 100;
-                        $total_amount = floor($taxable_amount + 112500);
-                        $subcharge = $this->subChargeCalculation($total_income);
-                        $heath_and_education = ($taxable_amount + $subcharge) * 4 / 100;
-                        $final_value = $total_amount + $subcharge + $heath_and_education;
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    $total_amount = floor($taxable_amount + 112500);
+                    $subcharge = $this->subChargeCalculation($total_income);
+                    $heath_and_education = ($taxable_amount + $subcharge) * 4 / 100;
+                    $final_value = $total_amount + $subcharge + $heath_and_education;
 
-                        return $final_value;
-                    } else {
-                        return $total_income;
-                    }
+                    return $final_value;
+                } else {
+                    return $total_income;
+                }
             }
         }
-
     }
 
 
@@ -602,36 +596,48 @@ class VmtInvestmentsController extends Controller
         if ($regime == 'new') {
             // Employeer Income Is Greater than 300000 and Less Than  600000
             if ($total_income > 300000 && $total_income <= 600000) {
-                $taxable_amount = $total_income * 5 / 100;
-                return floor($taxable_amount);
-
+                $taxable_amount = ($total_income - 300000) * 5 / 100;
+                $total_amount = round($taxable_amount);
+                $subcharge = $this->subChargeCalculation($total_income);
+                $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                $final_value = $total_amount + $subcharge + $heath_and_education;
+                return round($final_value);
             } else
                 // Employeer Income Is Greater than 600000 and Less Than  900000
                 if ($total_income > 600000 && $total_income <= 900000) {
-                    $taxable_amount = $total_income * 10 / 100;
-                    $tax_amt = floor($taxable_amount);
-                    return floor(15000 + $taxable_amount);
+                    $taxable_amount = ($total_income - 600000) * 10 / 100;
+                    $total_amount = round($taxable_amount + 15000);
+                    $subcharge = $this->subChargeCalculation($total_income);
+                    $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                    $final_value = $total_amount + $subcharge + $heath_and_education;
+                    return round($final_value);
                 } else
                     // Employeer Income Is Greater than 900000 and Less Than  1200000
                     if ($total_income > 900000 && $total_income <= 1200000) {
-                        $taxable_amount = $total_income * 15 / 100;
-                        return floor(45000 + $taxable_amount);
+                        $taxable_amount = ($total_income - 900000) * 15 / 100;
+                        $total_amount = floor($taxable_amount + 45000);
+                        $subcharge = $this->subChargeCalculation($total_income);
+                        $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                        $final_value = $total_amount + $subcharge + $heath_and_education;
+                        return floor($final_value);
                     } else
                         // Employeer Income Is Greater than 1200000 and Less Than  1500000
                         if ($total_income > 1200000 && $total_income < 1500000) {
-                            $taxable_amount = $total_income * 20 / 100;
-                            $tax_amt = floor($taxable_amount);
-                            return floor(90000 + $taxable_amount);
-
+                            $taxable_amount = ($total_income - 1200000) * 20 / 100;
+                            $total_amount = floor($taxable_amount + 90000);
+                            $subcharge = $this->subChargeCalculation($total_income);
+                            $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                            $final_value = $total_amount + $subcharge + $heath_and_education;
+                            return floor($final_value);
                         } else
                             // Employeer Income Is Greater than 1500000
                             if ($total_income > 1500000) {
-                                $taxable_amount = $total_income * 30 / 100;
+
+                                $taxable_amount = ($total_income - 1500000) * 30 / 100;
                                 $total_amount = floor($taxable_amount + 150000);
                                 $subcharge = $this->subChargeCalculation($total_income);
-                                $heath_and_education = ($total_amount + $subcharge) * 4 / 100;
+                                $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
                                 $final_value = $total_amount + $subcharge + $heath_and_education;
-
                                 return floor($final_value);
                             } else {
                                 $taxable_amount = 0;
@@ -764,7 +770,6 @@ class VmtInvestmentsController extends Controller
 
                 if ($dec_amt['dec_amount'] > $dec_amt['max_amount']) {
                     $chapterexe += $dec_amt['max_amount'];
-
                 }
                 if ($dec_amt['dec_amount'] < $dec_amt['max_amount']) {
                     $chapterexe += $dec_amt['dec_amount'];
@@ -786,7 +791,6 @@ class VmtInvestmentsController extends Controller
                 if ($dec_amt['particular'] == "Previous Employer PT") {
                     $inv_previous_emp_pt = $dec_amt['dec_amount'];
                 }
-
             }
 
             if ($dec_amt['section_group'] == "Other Source Of  Income") {
@@ -855,7 +859,6 @@ class VmtInvestmentsController extends Controller
                 $sumofhouseproperty = -200000;
             } else {
                 $sumofhouseproperty = $SumOfHousPropsInOld;
-
             }
 
             $sumofgross = round($dec_amt['gross'] * $joinmonth);
@@ -971,99 +974,98 @@ class VmtInvestmentsController extends Controller
     public function monthTaxDashboard(Request $request)
     {
 
-            $time_period = VmtOrgTimePeriod::where('status','1')->first();
-            $start_date =  Carbon::parse($time_period->start_date)->subMonth();
-            $diff_months =  $start_date->diffInMonths(Carbon::now());
+        $time_period = VmtOrgTimePeriod::where('status', '1')->first();
+        $start_date =  Carbon::parse($time_period->start_date)->subMonth();
+        $diff_months =  $start_date->diffInMonths(Carbon::now());
 
-            $res =[];
-            for($i=1; $i<$diff_months; $i++){
-               $sima  = $start_date->addMonths()->format('Y-m-d');
-               array_push($res,$sima);
-            }
+        $res = [];
+        for ($i = 1; $i < $diff_months; $i++) {
+            $sima  = $start_date->addMonths()->format('Y-m-d');
+            array_push($res, $sima);
+        }
 
-            $payroll_details  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-            ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
-            ->where('user_id',auth()->user()->id)->whereIn('payroll_date',$res)
+        $payroll_details  =  VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+            ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+            ->where('user_id', auth()->user()->id)->whereIn('payroll_date', $res)
             // ->toSql();
             ->get()->toArray();
-            // dd($payroll_details);
+        // dd($payroll_details);
 
-            $single = 0;
-             foreach($payroll_details as $single_details){
-                  $single += $single_details['income_tax'];
-             }
+        $single = 0;
+        foreach ($payroll_details as $single_details) {
+            $single += $single_details['income_tax'];
+        }
 
-            $tax_deduction =  $this->taxDeclaration();
-            $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
-            $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
+        $tax_deduction =  $this->taxDeclaration();
+        $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
+        $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
 
-           $emp_assign = VmtInvFEmpAssigned::where('user_id',auth()->user()->id)->first();
+        $emp_assign = VmtInvFEmpAssigned::where('user_id', auth()->user()->id)->first();
 
-            if($emp_assign){
+        if ($emp_assign) {
 
-                if($emp_assign->regime == "old" || $emp_assign->regime == ""){
-                    $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
-                   }else if($emp_assign->regime == "new"){
-                    $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
-                   }
-            }else{
-                $tax_calc_income_old =0;
+            if ($emp_assign->regime == "old" || $emp_assign->regime == "") {
+                $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
+            } else if ($emp_assign->regime == "new") {
+                $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
             }
+        } else {
+            $tax_calc_income_old = 0;
+        }
 
-            // dd($tax_calc_income_old);
+        // dd($tax_calc_income_old);
 
-             $taxcalculation['Tax Paid Till Now'] = $single;
-             $taxcalculation['Total Tax Payable'] = $tax_calc_income_old;
-             $taxcalculation['Remaining Tax Amount'] = $tax_calc_income_old - $single;
+        $taxcalculation['Tax Paid Till Now'] = $single;
+        $taxcalculation['Total Tax Payable'] = $tax_calc_income_old;
+        $taxcalculation['Remaining Tax Amount'] = $tax_calc_income_old - $single;
 
-            //  return ($taxcalculation);
+        //  return ($taxcalculation);
 
 
-             $time_period = VmtOrgTimePeriod::where('status', '1')->first();
-             $start_date = Carbon::parse($time_period->start_date);
-             $end_date = Carbon::parse($time_period->end_date);
-             $current_date = Carbon::now();
+        $time_period = VmtOrgTimePeriod::where('status', '1')->first();
+        $start_date = Carbon::parse($time_period->start_date);
+        $end_date = Carbon::parse($time_period->end_date);
+        $current_date = Carbon::now();
 
-             $month_cal_previous = 0;
-             $month_cal_next = 0;
-             $res1 = array();
-             while ($start_date->lte($end_date)) {
-                 $start_date = Carbon::parse($start_date)->addMonth();
+        $month_cal_previous = 0;
+        $month_cal_next = 0;
+        $res1 = array();
+        $simm = [];
+        while ($start_date->lte($end_date)) {
+            $start_date = Carbon::parse($start_date)->addMonth();
 
-                 $dates = Carbon::parse($start_date)->submonth()->format('M Y');
+            $dates = Carbon::parse($start_date)->submonth()->format('M Y');
 
-                 if ($start_date->lte($current_date)) {
+            if ($start_date->lte($current_date)) {
 
-                    $payroll_details  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-                    ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
-                    ->where('user_id', auth()->user()->id)->whereIn('payroll_date',$res)
+                $payroll_details  =  VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                    ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                    ->where('user_id', auth()->user()->id)->whereIn('payroll_date', $res)
                     ->get()->toArray();
 
-                    foreach($payroll_details as $single_payroll_details){
-                        $monthy_tax = (int)$single_payroll_details['income_tax'];
-                        $simm[$dates] = $monthy_tax;
-                        $month_cal_previous += $monthy_tax;
-                    }
+                foreach ($payroll_details as $single_payroll_details) {
+                    $monthy_tax = (int)$single_payroll_details['income_tax'];
+                    $simm[$dates] = $monthy_tax;
+                    $month_cal_previous += $monthy_tax;
+                }
+            } else {
 
-                 } else {
+                $remainder_months  = ($current_date)->diffInMonths($end_date);
+                $add_months_remainders =  $remainder_months + 1;
+                $monthy_tax = $taxcalculation['Remaining Tax Amount'] / $add_months_remainders;
+                $simm[$dates] = $monthy_tax;
+                $month_cal_next += $monthy_tax;
+                $month_cal = $month_cal_next - $month_cal_previous;
+            }
 
-                  $remainder_months  = ($current_date)->diffInMonths($end_date);
-                    $add_months_remainders =  $remainder_months + 1 ;
-                     $monthy_tax = $taxcalculation['Remaining Tax Amount'] / $add_months_remainders;
-                     $simm[$dates] = $monthy_tax;
-                     $month_cal_next += $monthy_tax;
-                     $month_cal = $month_cal_next - $month_cal_previous;
-                 }
+            array_push($res1, $simm);
+        }
 
-                 array_push($res1, $simm);
-             }
+        $res1[11]['Total'] = $month_cal;
+        $mos['date'] = $res1[11];
+        $mos['taxcalculation'] = $taxcalculation;
 
-            $res1[11]['Total'] = $month_cal;
-            $mos['date'] = $res1[11];
-            $mos['taxcalculation'] = $taxcalculation;
-
-             return $mos;
-
+        return $mos;
     }
 
 
