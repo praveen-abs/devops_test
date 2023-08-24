@@ -55,7 +55,7 @@
                             {{ data['Employee Code'] ? data['Employee Code'] : '-' }}
                         </p>
                     </div>
-                    <div v-if="field.includes('Legal Entity')"
+                    <div v-else-if="field.includes('Legal Entity')"
                         :class="[useStore.isExistsOrNot(useStore.existingLegalEntity, data['Legal Entity']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             {{ data['Legal Entity'] ? data['Legal Entity'] : '-' }}
