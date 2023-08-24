@@ -1816,7 +1816,14 @@ class VmtAttendanceReportsService
                     }
 
                     if ($out_punch   != null) {
-                        $EGDuration = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . ' Mins';
+                        // $EGDuration = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . ' Mins';
+                        $eg1_total_mins = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . 'Mins';
+                        $eg_ar = CarbonInterval::minutes($eg1_total_mins)->cascade();
+                        $eg_hrs = (int) $eg_ar->totalHours;
+                        $eg_mins = $eg_ar->toArray()['minutes'];
+                        $eg_duration =    $eg_hrs . ' Hrs : ' .  $eg_mins . ' Minutes';
+
+                        //  dd( $eg_hrs);
                     } else {
                         $EGDuration  = '-';
                     }
@@ -1848,7 +1855,7 @@ class VmtAttendanceReportsService
                     }
                     $temp_ar['In Punch'] =  $in_punch;
                     $temp_ar['Out Punch'] = $out_punch;
-                    $temp_ar['Early Going Duration'] =  $EGDuration;
+                    $temp_ar['Early Going Duration'] =   $eg_duration;
                     $temp_ar['Day Status'] = $day_sts;
                     $temp_ar['Regularise Status'] = $regularized_sts;
                     $temp_ar['Employee Reason For Late Coming'] = $reason;
@@ -1892,12 +1899,12 @@ class VmtAttendanceReportsService
                     $temp_ar['In Punch'] = $value['checkin_time'];
                     $temp_ar['Out Punch'] = $value['checkout_time'];
                     $temp_ar['OverTime Duration'] =   $total_ot;
-                    array_push( $otData ,  $temp_ar);
+                    array_push($otData,  $temp_ar);
                     unset($temp_ar);
                 }
             }
         }
-        $response['headers'] = array('Employee Code','Employee Name','Date','Shift Name','In Punch','Out Punch','OverTime Duration');
+        $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
         $response['rows'] = $otData;
         return $response;
     }
