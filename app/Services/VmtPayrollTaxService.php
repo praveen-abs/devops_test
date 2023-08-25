@@ -42,7 +42,7 @@ public function getEmpCompValues(){
          array_push($res1, $simma);
     }
 
-    dd($res1);
+    // dd($res1);
 
 
 
@@ -63,7 +63,7 @@ public function getEmpCompValues(){
 
     // dd($get_emp_value);
 
-    $user_id = User::where('user_code', 'BA016')->first()->id;
+    $user_id = User::where('user_code', 'PSC0060')->first()->id;
 
     $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
         ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
@@ -119,38 +119,44 @@ public function getEmpCompValues(){
 
         // $total_sum = 0;
 
-    for($i=0; $i<count($get_emp_value); $i++){
-
-        // dd($get_emp_value);
-
-            $total_sum = 1 + $get_emp_value[$i]['value'];
 
 
-        $Gross_earnings['particulars']    = $get_emp_value[$i]['comp_name'];
-        $Gross_earnings['actual']    =    0;
-        $Gross_earnings['projection']    = $get_emp_value[$i]['value'];
-        $Gross_earnings['total']    = $total_sum;
+    // for($i=0; $i<count($get_emp_value); $i++){
 
-        array_push($res["1) Gross Earnings"],$Gross_earnings);
+    //     // dd($get_emp_value);
 
-         }
+    //         $total_sum = 1 + $get_emp_value[$i]['value'];
+
+
+    //     $Gross_earnings['particulars']    = $get_emp_value[$i]['comp_name'];
+    //     $Gross_earnings['actual']    =    0;
+    //     $Gross_earnings['projection']    = $get_emp_value[$i]['value'];
+    //     $Gross_earnings['total']    = $total_sum;
+
+    //     array_push($res["1) Gross Earnings"],$Gross_earnings);
+
+    //      }
 
          // 2) Allowance to the extent exampt under section 10
 
+         $sumOfpreviousempincome=0;
          $sumOfHradeclared = 0;
+         $inv_previous_emp_pt=0;
+         $inv_stantard_deduction=0;
          foreach ($v_form_template as $dec_amt) {
 
             $empBasic = $dec_amt['basic'] * 12;
+
             if($dec_amt['section_group'] == "HRA"){
                 $hraTotalRent = json_decode($dec_amt['json_popups_value'],true);
                 $sumOfHradeclared += $hraTotalRent['total_rent_paid'];
                 $hraexamtions = intval($sumOfHradeclared) - intval($empBasic * 10 / 100);
+                $sumofsection10 = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) * 12;
 
-
-                $allowance_under_sec_10['particular']  =  $dec_amt['particular'];
-                $allowance_under_sec_10['actual']    = $hraexamtions;
+                $allowance_under_sec_10['particular']  =  [$dec_amt['particular'],"Note: Monthly splitup of HRA exemption can be found at the end of this tds sheet.", "Leave Encashment","Total of Allowance to the ex"];
+                $allowance_under_sec_10['actual']    = $sumofsection10;
                 $allowance_under_sec_10['projection']    = 0;
-                $allowance_under_sec_10['total']    = 0;
+                $allowance_under_sec_10['total']    = $allowance_under_sec_10['actual'] + $allowance_under_sec_10['projection'];
 
                 array_push($res["2) Allowance to the extent exampt under section 10"],$allowance_under_sec_10);
             }
@@ -158,37 +164,80 @@ public function getEmpCompValues(){
 
          // 3) Total after excemption (1 - 2);
 
-        $total_after_exemption['total'] = "2000";
+        $total_after_exemption['total'] = $allowance_under_sec_10['total'];
         array_push($res["3) Total after excemption (1 - 2)"],$total_after_exemption);
 
 
          // 4) Taxable Income Under Previous employment
+         if ($dec_amt['section_group'] == "Previous Employer Income") {
+            $sumOfpreviousempincome += $dec_amt['dec_amount'];
 
-        $taxincome_preEmployment['particular']  = ['1) income After Exemptions' => 0 , "2) Less: Professional Tax" => 0];
-        $taxincome_preEmployment['actual']    = 0;
+            if ($dec_amt['particular'] == "Previous Employer Standard Deduction") {
+                $inv_stantard_deduction = $dec_amt['dec_amount'];
+            }
+
+            if ($dec_amt['particular'] == "Previous Employer PT") {
+                $inv_previous_emp_pt = $dec_amt['dec_amount'];
+            }
+        }
+
+        $taxincome_preEmployment['particular']  = ['1) income After Exemptions', "2) Less: Professional Tax", "Total taxable income under Previous employment"];
+        $taxincome_preEmployment['actual']    = ['0','0'];
         $taxincome_preEmployment['projection']  = 0;
-        $taxincome_preEmployment['total']  = 0;
+        $taxincome_preEmployment['total']  = '848498';
 
          array_push($res["4) Taxable Income Under Previous employment"],$taxincome_preEmployment);
 
          // 5) Gross Total (3 - 4)
 
-         $Gross_total['total'] = "2000";
+         $Gross_total['total'] = $total_after_exemption['total'] + $taxincome_preEmployment['total'];
          array_push($res["5) Gross Total (3 - 4)"],$Gross_total);
 
          // 6) Under section 16
 
-        $undersection['particulars'] = 0;
-        $undersection['actual'] = 0;
+         $standardDeduction = $dec_amt['gross'];
+
+         if ($dec_amt['professional_tax'] >= 2500) {
+            $professional_tax = 2500;
+        } else {
+            // $professional_tax = intval($dec_amt['professional_tax']) + $perviousEmployeeProfessionalTax;
+            $professional_tax = 2500;
+        }
+
+         if ($professional_tax + $inv_previous_emp_pt >= 2500) {
+            $final_emp_pt = 2500;
+        } else {
+            $final_emp_pt = $professional_tax + $inv_previous_emp_pt;
+        }
+
+         if ($standardDeduction >= 50000) {
+            $standardDeducation = 50000;
+        } else {
+            $standardDeducation = intval($dec_amt['gross']);
+        }
+
+
+         $previous_standard = $standardDeducation + $inv_stantard_deduction;
+
+         if ($previous_standard >= 50000) {
+             $final_standard = 50000;
+         } else {
+             $final_standard = $previous_standard;
+         }
+
+         $sumofSec16 = $final_standard + $final_emp_pt;
+
+        $undersection['particulars'] = ['a) Entertainment allowance' ,'b) Tax on employment','c) Standard Deduction', 'Total Under Section 16'];
+        $undersection['actual'] = $sumofSec16;
         $undersection['projection'] = 0;
-        $undersection['total'] = 0;
+        $undersection['total'] = $sumofSec16;
 
         array_push($res["6) Under section 16"],$undersection);
 
 
         // 7) Income Chargeable Under the Head Salaries (5 - 6)
 
-        $income_charge_head_salaries['total'] = "2000";
+        $income_charge_head_salaries['total'] = $Gross_total['total'] + $undersection['total'] ;
         array_push($res["7) Income Chargeable Under the Head Salaries (5 - 6)"],$income_charge_head_salaries);
 
 
