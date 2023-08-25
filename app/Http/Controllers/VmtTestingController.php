@@ -800,7 +800,7 @@ class VmtTestingController extends Controller
 
             $html = view('investmentTdsWorkSheet.TDS_work_sheet');
 
-            // return $html;
+            return $html;
 
             $options = new Options();
             $options->set('isHtml5ParserEnabled', true);

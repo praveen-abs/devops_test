@@ -283,7 +283,7 @@
                     
                     <tr style="border-top:0px !important;">
                         <td colspan="4">
-                            <p style="font-size:11px; margin-top:-2px;" class="p-2 m-11">
+                            <p style="font-size:11px;" class="p-2 m-11">
                             Total House Rent Allowance Exemption Amount
                             </p>
                             <p  style="font-size:11px; margin-top:-10px;">Least amount of the three columns will be considered for tax exemption under HRA</p>
