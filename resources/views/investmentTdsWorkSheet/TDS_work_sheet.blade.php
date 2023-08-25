@@ -25,15 +25,20 @@
         .float-left {
             float: left
         }
-
-        .td {
+        .td,
+        tfoot {
             height: 20px !important;
         }
-        .m-11 p-2{
-            margin-top:-6px !important;
+        td{
+            padding: 0 0 0 8px;
         }
-        .p-2{
-            padding:0 4px !important;
+
+        .m-11 p-2 {
+            margin-top: -6px !important;
+        }
+
+        .p-2 {
+            padding: 0 4px !important;
         }
     </style>
 </head>
@@ -96,15 +101,15 @@
         </tr>
         <tr>
             <td colspan="4">
-                <table style="width: 100%;  border-collapse: collapse; " border="1" >
+                <table style="width: 100%;  border-collapse: collapse; " border="1">
                     <tr style="border-top:0px !important; height:20px !important;">
                         <td colspan="2" style="border-top:0px !important">
                             <p style="font-size:11px">Particulars</p>
                         </td>
-                        <td  colspan="1">
+                        <td colspan="1">
                             <p style="font-size:11px">Actual</p>
                         </td>
-                        <td colspan="1">
+                        <td colspan="1" >
                             <p style="font-size:11px">Projection</p>
                         </td>
                         <td colspan="1">
@@ -113,24 +118,24 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; " class="m-11 p-2" >Basic</p>
-                             <p style="font-size:11px; " class="m-11 p-2">Basic</p>                         
-                            <p style="font-size:11px; " class="m-11 p-2">House Rent Allowance</p>
-                        </td> 
-                        <td  colspan="1">
-                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
-                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
-                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; " class="p-2 m-11">House Rent Allowance</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="m-11 p-2">Projection</p>
-                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
-                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="m-11 p-2">Total</p>
-                            <p style="font-size:11px; " class="m-11 p-2">Total</p>
-                            <p style="font-size:11px; " class="m-11 p-2">Total</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Projection</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; " class="p-2 m-11">Total</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Total</p>
+                            <p style="font-size:11px; " class="p-2 m-11">Total</p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -139,7 +144,7 @@
                             <p style="font-size:11px; marign-top:-11px">Particulars</p>
                             <p style="font-size:11px; marign-top:-11px">Particulars</p>
                         </td>
-                        <td  colspan="1">
+                        <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px">Actual</p>
                             <p style="font-size:11px; marign-top:-11px">Actual</p>
                             <p style="font-size:11px; marign-top:-11px">Actual</p>
@@ -153,14 +158,146 @@
                             <p style="font-size:11px; marign-top:-11px">Total</p>
                             <p style="font-size:11px; marign-top:-11px">Total</p>
                             <p style="font-size:11px; marign-top:-11px">Total</p>
- 
+
                         </td>
                     </tr>
-
-
+                    <tr style="border-top:0px !important; height:20px !important; background-color:rgba(128, 128, 128, 0.629)">
+                        <td colspan="2" style="border-top:0px !important">
+                            <p style="font-size:11px">TDS for March</p>
+                        </td>
+                        <td colspan="1">
+                          
+                        </td>
+                        <td colspan="1" >
+                    
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px">₹ 99898</p>
+                        </td>
+                    </tr>                    
                 </table>
             </td>
         </tr>
+        <tr style="">
+            <td colspan="4">
+                <table style="width: 100%;">
+                    <tr style=" height:20px !important;">
+                        <td  style="width:40%; padding-top:16px;">
+                            <p style="font-size:11px; border:0.4px solid gray ; width:100%;"></p>
+                        </td>
+                        <td style="width:20%; padding-top:16px; ">
+                            <p style="font-size:11px;text-align:center;">WORKING NOTES</p>
+                        </td>
+                        <td  style="width:40%; padding-top:16px;">
+                            <p style="font-size:11px; border:0.4px solid gray ; width:100%;"></p>
+                        </td>
+                    </tr>             
+                </table>
+            </td>
+        </tr>
+        <tr style="height:20px !important">
+            <td colspan="4"><p style="font-size: 12px;">HRA exemption calculation under Section 10</p></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <table style="width: 100%;  border-collapse: collapse; " border="1">
+                    <tr style="border-top:0px !important; height:20px !important; background-color:rgb(204, 204, 255);">
+                        <td colspan="" style="border-top:0px !important">
+                            <p style="font-size:11px; padding-right:8px;">Months</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; text-align:right; padding-right:8px;">%Earned Basic (Metro 50%, Non-Metro 40%)</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px;  padding-right:8px;">HRA RECEIVED</p>
+                        </td>
+                        <td colspan="1" >
+                            <p style="font-size:11px; padding-right:8px;">Excess of Recent Paid Over 10% of Basic</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; padding-right:8px;">Exemption Amount</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="1" style=" text-align: right;">
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align:right; " class="p-2 m-11">Basic</p>
+                           
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; text-align: right;  " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right;" class="p-2 m-11">Basic</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                        </td>
+                    </tr> 
+                    
+                    <tr style="border-top:0px !important;">
+                        <td colspan="1">
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Actual</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Actual</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Actual</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Total</p>
+                        </td>
+                    </tr>
+                    
+                    <tr style="border-top:0px !important;">
+                        <td colspan="4">
+                            <p style="font-size:11px;" class="p-2 m-11">
+                            Total House Rent Allowance Exemption Amount
+                            </p>
+                            <p  style="font-size:11px; margin-top:-10px;">Least amount of the three columns will be considered for tax exemption under HRA</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; " class="p-2 m-11">$12920</p>
+                        </td>
+                    </tr>                      
+                </table>
+            </td>
+        </tr>
+
+    
+
     </table>
 </body>
 
