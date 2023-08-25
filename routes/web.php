@@ -1049,11 +1049,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/testing_shelly', function () {
         return view('testing_shelly');
+    });
 
     Route::get('/tds_work_sheet',[App\Http\Controllers\VmtTestingController::class, 'Tesingtdsworksheet']);
 
 
-    });
+   
 
     //investment testing
 
