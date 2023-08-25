@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vmt_emp_int_loan_details', function (Blueprint $table) {
-            $table->text('loan_category')->after('paid_date');
+            $table->text('loan_category')->nullable()->after('paid_date');
         });
 
         Schema::table('vmt_emp_int_free_loan_details', function (Blueprint $table) {
-            $table->text('loan_category')->after('paid_date');
+            $table->text('loan_category')->nullable()->after('paid_date');
         });
     }
 
