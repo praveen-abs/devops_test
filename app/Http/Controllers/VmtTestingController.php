@@ -794,7 +794,28 @@ class VmtTestingController extends Controller
                     $isSent = \Mail::to('vishnu@abshrms.com')->send(new WelcomeMail("ABS123", 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$VmtClientMaster->client_code));
 
                     }
-                }
+
+     public function Tesingtdsworksheet(Request $request){
+
+            $html = view('investmentTdsWorkSheet.TDS_work_sheet');
+
+            return $html;
+
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+
+            $pdf = new Dompdf($options);
+            $pdf->loadhtml($html, 'UTF-8');
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+
+            $docUploads =  $pdf->stream();
+
+        }
+
+
+     }
 
 
 
