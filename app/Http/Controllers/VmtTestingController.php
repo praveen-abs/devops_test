@@ -769,8 +769,8 @@ class VmtTestingController extends Controller
         $appoinmentPath = "";
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 //dd($client_name);
-        $html = view('appointment_mail_templates.appointment_Letter_client',$data);
-
+        $html = view('appointment_mail_templates.appointment_letter_langro_india_pvt_ltd',$data);
+return  $html;
                         $options = new Options();
                         $options->set('isHtml5ParserEnabled', true);
                         $options->set('isRemoteEnabled', true);

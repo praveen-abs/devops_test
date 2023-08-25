@@ -1418,5 +1418,56 @@ class VmtEmployeePayCheckService
         }
 
     }
+    public function generatetemplates($type)
+    {
+
+    
+        if($type =="pdf"){
+            $html = view('');
+
+
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
+
+                $pdf = new Dompdf($options);
+                $pdf->loadhtml($html, 'UTF-8');
+                $pdf->setPaper('A4', 'portrait');
+                $pdf->render();
+                // $pdf->stream("payslip.pdf");
+                $response = base64_encode($pdf->output(['payslip.pdf']));
+                return $response;
+
+        }elseif($type =="html"){
+
+            $html = view('appointment_mail_templates.appointment_Letter_dunamis_machines');
+
+            return $html;
+
+        }else if($type =="mail"){
+
+            $html = view('');
+
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+
+            $pdf = new Dompdf($options);
+            $pdf->loadhtml($html, 'UTF-8');
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+
+            $isSent = \Mail::to($getpersonal['personal_details'][0]['officical_mail'])
+            ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
+
+            if($isSent){
+                dd('success');
+            }else{
+                dd('failure');
+            }
+
+        }
+
+    }
 
 }

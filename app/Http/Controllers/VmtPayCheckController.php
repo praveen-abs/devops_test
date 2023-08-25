@@ -294,4 +294,16 @@ class VmtPayCheckController extends Controller
 
 
      }
+     public function generatetemplates(Request $request, VmtEmployeePayCheckService $employeePaySlipService, VmtAttendanceService $serviceVmtAttendanceService){
+
+
+        // $request->user_code = "PSC0060";
+        // $request->month = "05";
+        // $request->year = "2023";
+        // $request->type = "pdf";
+
+        return $employeePaySlipService->generatetemplates("html");
+
+
+     }
 }
