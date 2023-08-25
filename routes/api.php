@@ -13,6 +13,9 @@ use App\Http\Controllers\Api\VmtAPIInvestmentsController;
 use App\Http\Controllers\Api\VmtApiNotificationsController;
 use App\Http\Controllers\Api\VmtAPIReimbursementsController;
 use App\Http\Controllers\Api\VmtAPILoanAndSalaryAdvanceController;
+use App\Imports\VmtEmployee;
+use App\Http\Controllers\VmtProfilePagesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +133,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'addEmployeeExperianceDetails']);
     Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeExperianceDetails']);
     Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'deleteEmployeeExperianceDetails']);
+    Route::post('/profile-pages/getDocumentDetails',[VmtProfilePagesController::class, 'getDocumentDetails']);
 
 
     //Investments

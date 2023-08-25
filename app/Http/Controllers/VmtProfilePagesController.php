@@ -802,7 +802,7 @@ class VmtProfilePagesController extends Controller
 
 
         try {
-            $user_id=User::where('user_code',$request->user_code)->first()->id;
+            $user_id = User::where('user_code', $request->user_code)->first()->id;
             $doc_upload_status = array();
 
             foreach ($bulkonboard_docs as $doc_name => $doc_obj) {
@@ -1008,5 +1008,25 @@ class VmtProfilePagesController extends Controller
         }
         $response['can_edit'] = $status;
         return   $response;
+    }
+    public function getDocumentDetils(Request $request)
+    {
+        $mandatory_details = VmtEmployee::where('user_id', $request->user_id)->first();
+        $mandatory_details = new VmtEmployee;
+        $mandatory_details->aadhar_enrollment_number = "";
+        $mandatory_details->voter_id = "";
+        $mandatory_details->voter_id_issued_on = "";
+        $mandatory_details->degree = "";
+        $mandatory_details->branch_specialization = "";
+        $mandatory_details->year_of_completed = "";
+        $mandatory_details->cgpa_percentage = "";
+        $mandatory_details->university_school = "";
+        $mandatory_details->country_code = "";
+        $mandatory_details->passport_type = "";
+        $mandatory_details->date_of_issue = "";
+        $mandatory_details->place_of_issue = "";
+        $mandatory_details->place_of_birth = "";
+        $mandatory_details->exepire_on = "";
+        $mandatory_details->save();
     }
 }
