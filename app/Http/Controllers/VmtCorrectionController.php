@@ -788,6 +788,7 @@ class VmtCorrectionController extends Controller
 
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $corrected_data;
+
         $currentRowInExcel = 0;
         if(empty($excelRowdata_row )){
             return $rowdata_response = [
@@ -857,7 +858,7 @@ class VmtCorrectionController extends Controller
                                 $result =VmtMaritalStatus::where('name',$value)->first();
 
                                 if (empty($result)) {
-                                    $fail($value .'<b> : doesnt exist in application.Kindly create one' );
+                                    $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
                                 }
                             }
                         },
@@ -870,7 +871,7 @@ class VmtCorrectionController extends Controller
                         $result =Department::where('name',$value)->first();
 
                         if (empty($result)) {
-                            $fail($value .'<b> : doesnt exist in application.Kindly create one' );
+                            $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
                         }
                     }
                 },
@@ -883,7 +884,7 @@ class VmtCorrectionController extends Controller
                                 $result =VmtBloodGroup::where('name',$value)->first();
 
                                 if (empty($result)) {
-                                    $fail($value .'<b> : doesnt exist in application.Kindly create one' );
+                                    $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
                                 }
                             }
                         },
@@ -896,7 +897,7 @@ class VmtCorrectionController extends Controller
                                 $result =Bank::where('bank_name',$value)->first();
 
                                 if (empty($result)) {
-                                    $fail($value .'<b> : doesnt exist in application.Kindly create one' );
+                                    $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
                                 }
                             }
                         },
@@ -1048,7 +1049,7 @@ class VmtCorrectionController extends Controller
                                     "martial_status" =>"marital_status_id","nationality" =>"nationality", "bank_name" =>"bank_id", "bank_account_number" =>"bank_account_number",
                                     "bank_ifsc_code" =>"bank_ifsc_code"]);
 
-     $employee_office_details = ([ "department" => "department","designation" => "designation","work_location" =>"work_location","officical_mail" =>"officical_mail","official_mobile" =>"official_mobile",
+     $employee_office_details = ([ "department" => "department","designation" => "designation","work_location" =>"work_location",  "officical_mail" =>"officical_mail","official_mobile" =>"official_mobile",
                                    "l1_manager_code" =>"l1_manager_code",]);
 
      $employee_family_details = ([  "father_name" =>'name',"father_dob" =>'dob',"mother_name" =>'name',"mother_dob" =>'dob',"spouse_name" =>'name',
@@ -1056,7 +1057,7 @@ class VmtCorrectionController extends Controller
 
   $employee_statutory_details = ([ "uan_number" =>"uan_number","epf_number" =>"epf_number","esic_number" =>"esic_number"]);
 
-           $compensatory_data = ([ "basic" =>"basic","hra" =>"hra","special_allowance" =>"special_allowance","statutory_bonus" =>"Statutory_bonus","child_education_allowance" =>"child_education_allowance",
+           $compensatory_data = ([ "basic" =>"basic","hra" =>"hra","special_allowance" =>"special_allowance","statutory_bonus"    =>"Statutory_bonus","child_education_allowance" =>"child_education_allowance",
                                    "lta" =>"lta", "transport_allowance" =>"transport_allowance", "medical_allowance" =>"medical_allowance","education_allowance" =>"education_allowance",
                                    "communication_allowance" =>"communication_allowance","food_allowance" =>"food_allowance","other_allowance" =>'other_allowance', "gross" =>"gross",
                                    "epf_employer_contribution" =>"epf_employer_contribution", "esic_employer_contribution" =>"esic_employer_contribution", "insurance" =>"insurance","labour_welfare_fund" =>"labour_welfare_fund",
