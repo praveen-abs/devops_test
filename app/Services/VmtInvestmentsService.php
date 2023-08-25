@@ -67,7 +67,8 @@ class VmtInvestmentsService
             $org_timeperiod = VmtOrgTimePeriod::where('status','1')->first();
             $start_date = Carbon::parse($org_timeperiod->start_date);
             $doj = Carbon::parse($query_doj->doj);
-            $emp_comp = Compensatory::where('user_id',$user_id)->first();
+
+
 
             //Get the form template
             $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
@@ -89,6 +90,11 @@ class VmtInvestmentsService
 
                     ]
                 )->toArray();
+
+                $emp_comp = Compensatory::where('user_id',$user_id)->first();
+
+
+                if($emp_comp){
 
                     for($i=0; $i <count($query_inv_form_template); $i++){
                         if($query_inv_form_template[$i]['particular'] == "Communications Allowance ( Telephone)"){
@@ -132,6 +138,7 @@ class VmtInvestmentsService
                             }
                         }
                     }
+                }
 
 
             // employee declaration amount
@@ -201,19 +208,23 @@ class VmtInvestmentsService
                 unset($query_inv_form_template['Previous Employer Income']);
             }
 
-            if(($emp_comp->communication_allowance == "" || (int)$emp_comp->communication_allowance == 0) &&
-            ($emp_comp->driver_reimbursement == "" || $emp_comp->driver_reimbursement == 0) &&
-            ($emp_comp->vehicle_reimbursement == "" || $emp_comp->vehicle_reimbursement == 0) &&
-            ($emp_comp->lta == "" || $emp_comp->lta == 0)){
-                unset($query_inv_form_template["Reimbersument "]);
+            if($emp_comp){
+                if(($emp_comp->communication_allowance == "" || (int)$emp_comp->communication_allowance == 0) &&
+                ($emp_comp->driver_reimbursement == "" || $emp_comp->driver_reimbursement == 0) &&
+                ($emp_comp->vehicle_reimbursement == "" || $emp_comp->vehicle_reimbursement == 0) &&
+                ($emp_comp->lta == "" || $emp_comp->lta == 0)){
+                    unset($query_inv_form_template["Reimbersument "]);
+                }
             }else{
-                $query_inv_form_template;
+                unset($query_inv_form_template["Reimbersument "]);
             }
+
+
 
             $response["form_name"] = $query_form_details->form_name;
             $response["is_submitted"] = $query_is_sumbitted->is_sumbit ?? 0;
             $response["doj"] = $query_doj->doj;
-            $response["emp_epf"] = $emp_comp->epf_employee;
+            $response["emp_epf"] = $emp_comp->epf_employee ?? " -- ";
             $response["emp_vpf"] = 0;
             $response["form_details"] = $query_inv_form_template;
 

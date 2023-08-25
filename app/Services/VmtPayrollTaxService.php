@@ -143,11 +143,13 @@ public function getEmpCompValues(){
          $sumOfHradeclared = 0;
          $inv_previous_emp_pt=0;
          $inv_stantard_deduction=0;
+         $SumOfHousPropsInOld =0;
          foreach ($v_form_template as $dec_amt) {
 
             $empBasic = $dec_amt['basic'] * 12;
 
             if($dec_amt['section_group'] == "HRA"){
+
                 $hraTotalRent = json_decode($dec_amt['json_popups_value'],true);
                 $sumOfHradeclared += $hraTotalRent['total_rent_paid'];
                 $hraexamtions = intval($sumOfHradeclared) - intval($empBasic * 10 / 100);
@@ -195,6 +197,8 @@ public function getEmpCompValues(){
 
          // 6) Under section 16
 
+         foreach ($v_form_template as $dec_amt) {
+
          $standardDeduction = $dec_amt['gross'];
 
          if ($dec_amt['professional_tax'] >= 2500) {
@@ -227,6 +231,9 @@ public function getEmpCompValues(){
 
          $sumofSec16 = $final_standard + $final_emp_pt;
 
+
+        }
+
         $undersection['particulars'] = ['a) Entertainment allowance' ,'b) Tax on employment','c) Standard Deduction', 'Total Under Section 16'];
         $undersection['actual'] = $sumofSec16;
         $undersection['projection'] = 0;
@@ -242,17 +249,30 @@ public function getEmpCompValues(){
 
 
         // 8) Any other income reported by the employee
+        foreach ($v_form_template as $dec_amt) {
 
-        $other_income_report['particular']  =  0;
-        $other_income_report['actual']    = 0;
+        if ($dec_amt['section_group'] == "House Properties ") {
+
+            $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
+            $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
+            if ($totalIntersetPaid['property_type'] == "Let Out Property") {
+                $SumOfHousPropsInNew = $totalIntersetPaid['income_loss'];
+                $tax_calc_new_redime += $totalIntersetPaid['income_loss'];
+            }
+        }
+    }
+
+        $other_income_report['particular']  =  $totalIntersetPaid['property_type'];
+        $other_income_report['actual']    = $SumOfHousPropsInOld;
         $other_income_report['projection']    = 0;
-        $other_income_report['total']    = 0;
+        $other_income_report['total']    = $SumOfHousPropsInOld > 200000 ? 200000 : $SumOfHousPropsInOld;
+
         array_push($res["8) Any other income reported by the employee"],$other_income_report);
 
 
         // 9) Gross Total income
 
-        $gorsstotalincome['total'] = "2000";
+        $gorsstotalincome['total'] = $income_charge_head_salaries['total'] + $other_income_report['total'];
         array_push($res["9) Gross Total income"],$gorsstotalincome);
 
         // 10) Decuction Under chapter VI - A

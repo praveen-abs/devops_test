@@ -684,12 +684,14 @@ class VmtInvestmentsController extends Controller
         $res = array();
         $total_gross = array('sno' => 'a', 'section' => 'Total Gross Income', 'old_regime' => 0, 'new_regime' => 0);
         $Other_Source = array('sno' => 'b', 'section' => 'Other Source of Income', 'old_regime' => 0, 'new_regime' => 0);
-        $Reimbursement = array('sno' => 'c', 'section' => 'Reimbursement Exemptions', 'old_regime' => 0, 'new_regime' => 0);
-        $allowance_tax = array('sno' => 'd', 'section' => 'Allowance Exemptions (Sec 10)', 'old_regime' => 0, 'new_regime' => 0);
-        $tax_on_emp = array('sno' => 'e', 'section' => 'Tax on Employment (Sec 16)', 'old_regime' => 0, 'new_regime' => 0);
-        $exemption = array('sno' => 'f', 'section' => 'Exemptions under Sec 80', 'old_regime' => 0, 'new_regime' => 0);
-        $total_tax_income = array('sno' => 'g', 'section' => 'Total Taxable Income', 'old_regime' => 0, 'new_regime' => 0);
-        $total_tax_laibilty = array('sno' => 'h', 'section' => 'Total Tax Laibility', 'old_regime' => 0, 'new_regime' => 0);
+        $pre_emp_income = array('sno' => 'c', 'Add: Previous Employer Income ', 'old_regime' => 0, 'new_regime' => 0);
+        $Reimbursement = array('sno' => 'd', 'section' => 'Reimbursement Exemptions', 'old_regime' => 0, 'new_regime' => 0);
+        $allowance_tax = array('sno' => 'e', 'section' => 'Allowance Exemptions (Sec 10)', 'old_regime' => 0, 'new_regime' => 0);
+        $tax_section_16 = array('sno' => 'f', 'section' => 'Less: Deductions under section 16', 'old_regime' => 0, 'new_regime' => 0);
+        $tax_on_emp = array('sno' => 'g', 'section' => 'Tax on Employment (Sec 16)', 'old_regime' => 0, 'new_regime' => 0);
+        $exemption = array('sno' => 'h', 'section' => 'Exemptions under Sec 80', 'old_regime' => 0, 'new_regime' => 0);
+        $total_tax_income = array('sno' => 'i', 'section' => 'Total Taxable Income', 'old_regime' => 0, 'new_regime' => 0);
+        $total_tax_laibilty = array('sno' => 'j', 'section' => 'Total Tax Laibility', 'old_regime' => 0, 'new_regime' => 0);
 
         $sumOfHradeclared = 0;
         $sumOfReimbersument = 0;
@@ -713,6 +715,8 @@ class VmtInvestmentsController extends Controller
         $inv_stantard_deduction = 0;
         $inv_previous_emp_pt = 0;
         $sumofletout = 0;
+
+
 
 
         foreach ($v_form_template as $dec_amt) {
