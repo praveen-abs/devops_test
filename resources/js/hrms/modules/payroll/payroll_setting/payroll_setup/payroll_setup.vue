@@ -1,11 +1,38 @@
 <template>
-  <Toast />
-  <ConfirmDialog></ConfirmDialog>
-  <div class="w-full m-auto">
-    <h1 class="text-white font-semibold fs-4 py-2 mx-2">Payroll Setting</h1>
-    <div class="mt-3 tabs w-full  grid grid-cols-6">
-      <a class="d-flex font-semibold fs-6  justify-content-content align-items-center max-[1280px]:flex-col " @click="usePayroll.activeTab = 1" :class="[usePayroll.activeTab === 1 ? 'active' : '']"
-        ><div class="md:text-sm">1</div> <p style="" class="max-[1280px]:text-[12px] max-[1280px]:text-center">General payroll Setting</p></a
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
+    <div class="w-full m-auto">
+        <h1 class="font-semibold fs-4 py-2 mx-2">Payroll Setting</h1>
+        <div class="mt-3 tabs w-full grid grid-cols-6">
+            <a class="flex font-semibold fs-6 whitespace-nowrap" @click="usePayroll.activeTab = 1"
+                :class="[usePayroll.activeTab === 1 ? 'active' : '']">
+                <!-- <div class="md:text-sm">1</div>  -->General payroll Setting
+            </a>
+            <a class="flex font-semibold fs-6 whitespace-nowrap" @click="usePayroll.activeTab = 2"
+                :class="[usePayroll.activeTab === 2 ? 'active' : '']">
+                <!-- <div>2</div> -->
+                PF & ESI Setting</a>
+            <a class="flex font-semibold fs-6 whitespace-nowrap" @click="usePayroll.activeTab = 3"
+                :class="[usePayroll.activeTab === 3 ? 'active' : '']">
+                <!-- <div>3</div> -->
+                Salary Components</a>
+            <a class="flex font-semibold fs-6 whitespace-nowrap" @click="usePayroll.activeTab = 4"
+                :class="[usePayroll.activeTab === 4 ? 'active' : '']">
+                <!-- <div>4</div> -->
+                Salary Structure</a>
+            <a class="flex font-semibold fs-6 whitespace-nowrap" @click="usePayroll.activeTab = 5"
+                :class="[usePayroll.activeTab === 5 ? 'active' : '']">
+                <!-- <div>5</div> -->
+                Finance Setting
+            </a>
+            <a class="flex font-semibold fs-6 whitespace-nowrap" @click="usePayroll.activeTab = 6"
+                :class="[usePayroll.activeTab === 6 ? 'active' : '']">
+                <!-- <div>6</div> -->
+                Statutory Filling</a>
+        </div>
+        <!-- <div class="mt-3 tabs">
+      <a class="flex font-semibold fs-6" @click="usePayroll.activeTab = 1" :class="[usePayroll.activeTab === 1 ? 'active' : '']"
+        ><div class="md:text-sm">1</div> <p style="width: 200px;">General payroll Setting</p></a
       >
       <a class="d-flex font-semibold fs-6  justify-content-content align-items-center max-[1280px]:flex-col " @click="usePayroll.activeTab = 2" :class="[usePayroll.activeTab === 2 ? 'active' : '']"
         ><div>2</div><p class="max-[1280px]:text-[12px] max-[1280px]:text-center"> PF & ESI Setting</p></a
@@ -22,7 +49,7 @@
       <a class="d-flex font-semibold fs-6  justify-content-content align-items-center max-[1280px]:flex-col" @click="usePayroll.activeTab = 6" :class="[usePayroll.activeTab === 6 ? 'active' : '']"><div>6</div><p class="max-[1280px]:text-[12px] max-[1280px]:text-center"> Statutory Filling</p>
        </a
       >
-    </div>
+    </div> -->
 
     <div class="bg-white rounded-md">
       <div v-if="usePayroll.activeTab === 1" class="tabcontent">
@@ -67,7 +94,7 @@ import salart_structure from "./salary_structure/salary_structure.vue";
 import statutory_filling from "./statutory_filling/statutory_filling.vue";
 import finance_setting from "./finance_setting/finance_setting.vue";
 
-import {usePayrollMainStore} from '../../stores/payrollMainStore'
+import { usePayrollMainStore } from '../../stores/payrollMainStore'
 
 const usePayroll = usePayrollMainStore()
 
@@ -79,32 +106,30 @@ onMounted(() => {
 </script>
 
 <style>
-.page-content {
-  padding: calc(20px + 1.5rem) calc(1.5rem / 2) 0px calc(1.5rem / 2);
-  background: #003056;
+.tabs
+{
+    overflow: hidden;
+    margin-bottom: -2px;
 }
 
-.tabs {
-  overflow: hidden;
-  margin-bottom: -2px;
+.tabs ul
+{
+    list-style-type: none;
 }
 
-.tabs ul {
-  list-style-type: none;
+.tabs a
+{
+    float: left;
+    cursor: pointer;
+    color: #aaa;
+    padding: 12px 18px;
+    transition: background-color 0.2s;
+    border-right: none;
+    font-weight: bold;
 }
 
-.tabs a {
-  float: left;
-  cursor: pointer;
-  color: #aaa;
-  padding: 12px 18px;
-  transition: background-color 0.2s;
-  border: 1px solid #003056;
-  border-right: none;
-  background-color: #003056;
-  font-weight: bold;
-}
-.tabs a > div {
+.tabs a>div
+{
     color: #aaa;
     background: gainsboro;
     border-radius: 50%;
@@ -119,13 +144,16 @@ onMounted(() => {
 }
 
 /* Change background color of tabs on hover */
-.tabs a:hover  {
-  background-color: #aaa;
-  color: #fff;
-  border-radius: 4px 4px 0 0;
+.tabs a:hover
+{
+    background-color: #aaa;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
 
 }
-.tabs a:hover >div {
+
+.tabs a:hover>div
+{
     background: #F36826;
     color: #fff;
     width: 20px;
@@ -134,15 +162,18 @@ onMounted(() => {
 }
 
 /* Styling for active tab */
-.tabs a.active {
-  background-color: #fff;
-  color: #0f0101;
-  border-bottom: 2px solid #fff;
-  cursor: default;
-  border-top:3px solid #F36826 ;
-  border-radius:4px 4px 0  0 ;
+.tabs a.active
+{
+    background-color: #fff;
+    color: #0f0101;
+    border-bottom: 2px solid #fff;
+    cursor: default;
+    border-bottom: 3px solid #F36826;
+    border-radius: 4px 4px 0 0;
 }
-.tabs a.active >div{
+
+.tabs a.active>div
+{
     background: #F36826;
     color: #fff;
     width: 20px;

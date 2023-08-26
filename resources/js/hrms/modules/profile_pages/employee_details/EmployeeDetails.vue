@@ -1,385 +1,342 @@
 <template>
-    <Toast />
-    <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+    <div class="w-full" v-if="_instance_profilePagesStore.employeeDetails.get_employee_details">
+        <div class="w-full bg-white rounded-lg p-2 border">
+            <div class="flex justify-around">
+                <p class="font-semibold text-sm">General Information</p>
+                <div class="flex justify-end ">
+                    <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
+                    Edit -->
+                    <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""
+                        @click="onClick_EditButton_GeneralInfo">
+
+                    <!-- </p> -->
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-2 h-full py-2">
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Birthday</p>
+                    <p class="font-semibold text-sm">
+                        {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY')
+                        }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Gender</p>
+                    <p class="font-semibold text-sm">
+                        {{ fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.gender) }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Date Of Joining (DOJ)</p>
+                    <p class="font-semibold text-sm">
+                        {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY')
+                        }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Marital Status</p>
+                    <p class="font-semibold text-sm"> {{
+                        _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status }}</p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Blood Group</p>
+                    <p class="font-semibold text-sm"> {{
+                        _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_name }}</p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Physically Handicapped</p>
+                    <p class="font-semibold text-sm">{{
+                        fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged) }}</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="w-full bg-white rounded-lg p-2 border my-3">
+            <div class="flex justify-around">
+                <p class="font-semibold text-sm">Contact Information</p>
+                <div class="flex justify-end ">
+                    <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
+                    Edit -->
+                    <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""
+                        @click="onClick_EditButtonContacttInfo">
+                    <!-- </p> -->
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-4 h-full py-2">
+                <div class="col-span-3">
+                    <p class="font-semibold text-xs text-gray-500">Personal Email</p>
+                    <p class="font-semibold text-sm"> {{ _instance_profilePagesStore.employeeDetails.email ?
+                        _instance_profilePagesStore.employeeDetails.email : '-' }}</p>
+                </div>
+                <div class="col-span-3">
+                    <p class="font-semibold text-xs text-gray-500">Official Email</p>
+                    <p class="font-semibold text-sm">{{
+                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail ?
+                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail : '-' }}</p>
+                </div>
+                <div class="col-span-3">
+                    <p class="font-semibold text-xs text-gray-500">Mobile Number</p>
+                    <p class="font-semibold text-sm">{{
+                        _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number ?
+                        _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number : '-' }}</p>
+                </div>
+                <div class="col-span-3">
+                    <p class="font-semibold text-xs text-gray-500">Official Mobile Number</p>
+                    <p class="font-semibold text-sm"> {{
+                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile ?
+                        _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile : '-' }}</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="w-full bg-white rounded-lg p-2 border">
+            <div class="flex justify-around">
+                <p class="font-semibold text-sm">Address</p>
+                <div class="flex justify-end ">
+                    <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
+                    Edit -->
+                    <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""
+                        @click="onClick_EditButtonAddressInfo">
+
+                    <!-- </p> -->
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-12 gap-4 h-full py-2">
+                <div class="col-span-6">
+                    <p class="font-semibold text-xs text-gray-500">Current Address</p>
+                    <p class="font-semibold text-sm">
+                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1 ?
+                            _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1 : '-' }}</p>
+                </div>
+                <div class="col-span-6">
+                    <p class="font-semibold text-xs text-gray-500">Permanent Address </p>
+                    <p class="font-semibold text-sm">
+                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1 ?
+                            _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1 : '-' }}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- General Information -->
+
+    <Dialog v-model:visible="is_dialog_generalInfo_visible" modal header="General Information"
+        :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            <div>
+                <h5
+                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                    General Information</h5>
+            </div>
         </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
-    <div class="mb-2 card">
-        <div class="card-body">
-            <h6 class="fw-bold mb-3 fs-15">General Information
-                <!-- Button trigger modal -->
-                <a type="button" class="edit-icon" @click="onClick_EditButton_GeneralInfo">
-                    <i class="ri-pencil-fill"></i>
-                </a>
 
-                <Dialog v-model:visible="is_dialog_generalInfo_visible" modal header="General Information"
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                    <template #header>
-                        <div>
-                            <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                General Information</h5>
-                        </div>
-                    </template>
-
-                    <div class="row">
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
-                                <label :style="{ marginLeft: '10px' }">Birth Date<span class="text-danger">*</span>
-                                </label>
-                                <div class="cal-icon">
-                                    <!-- <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
+        <div class="grid grid-cols-2">
+            <div class=" ">
+                <div class="mb-1 form-group">
+                    <label class="ml-[5px]">Birth Date<span class="text-danger">*</span>
+                    </label>
+                    <div class="cal-icon">
+                        <!-- <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
                                         placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" /> -->
-                                    <Calendar class="mb-3 form-selects" v-model="dialog_general_information.dob"
-                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-1 form-group">
-                                <label>Gender<span class="text-danger">*</span></label>
-                                <Dropdown v-model="dialog_general_information.gender" :options="options_gender"
-                                    optionLabel="name" optionValue="value" placeholder="Choose Gender"
-                                    class="form-selects" />
-                            </div>
-                        </div>
+                        <Calendar class="mb-3 form-selects w-[94%] " v-model="dialog_general_information.dob"
+                            placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="mb-1 form-group">
+                    <label>Gender<span class="text-danger">*</span></label>
+                    <Dropdown v-model="dialog_general_information.gender" :options="options_gender" optionLabel="name"
+                        optionValue="value" placeholder="Choose Gender" class="form-selects  w-[94%]" />
+                </div>
+            </div>
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-1 form-group">
-                                <!-- <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
+            <div class="">
+                <div class="mb-1 form-group">
+                    <!-- <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
                                         class="text-danger">*</span></label>
                                 <div class="cal-icon">
                                     <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.doj"
                                         placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                                 </div> -->
 
-                                <label :style="{ marginLeft: '10px', marginRight: '10px' }">Marital status <span
-                                        class="text-danger">*</span></label>
-                                <Dropdown v-model="dialog_general_information.marital_status_id"
-                                    :options="option_maritals_status" optionLabel="name" optionValue="id"
-                                    placeholder="Select Marital Status" class="form-selects"
-                                    :style="{ marginLeft: '10px', marginRight: '10px' }" />
+                    <label :style="{ marginLeft: '10px', marginRight: '10px' }">Marital status <span
+                            class="text-danger">*</span></label>
+                    <Dropdown v-model="dialog_general_information.marital_status_id" :options="option_maritals_status"
+                        optionLabel="name" optionValue="id" placeholder="Select Marital Status" class="form-selects w-[94%]"
+                        :style="{ marginLeft: '10px', marginRight: '10px' }" />
 
-                            </div>
-                        </div>
+                </div>
+            </div>
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
-                            <div class="mb-2 form-group">
-                                <label>Blood Group<span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    <Dropdown v-model="dialog_general_information.blood_group_id"
-                                        :options="options_blood_group" optionLabel="name" optionValue="id"
-                                        placeholder="Select Bloodgroup" class="form-selects" />
-                                </div>
-                                <!-- {{dialog_general_information.blood_group_id  }} -->
+            <div class="">
+                <div class="mb-2 form-group">
+                    <label>Blood Group<span class="text-danger">*</span></label>
+                    <div class="cal-icon">
+                        <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
+                            optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects w-[94%]" />
+                    </div>
+                    <!-- {{dialog_general_information.blood_group_id  }} -->
 
-                            </div>
-                        </div>
+                </div>
+            </div>
 
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
-                            <div class=" form-group w-full" :style="{ marginLeft: '10px' }">
-                                <label class="my-1">Physically Handicapped</label>
-                                <Dropdown v-model="dialog_general_information.physically_challenged"
-                                    :options="options_phy_challenged" optionLabel="name" optionValue="value"
-                                    placeholder="Select" class="form-selects" />
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
-                                <!-- <label>Physically Handicapped</label>
+            <div class=" ">
+                <div class=" form-group w-full" :style="{ marginLeft: '10px' }">
+                    <label class="my-1">Physically Handicapped</label>
+                    <Dropdown v-model="dialog_general_information.physically_challenged" :options="options_phy_challenged"
+                        optionLabel="name" optionValue="value" placeholder="Select" class="form-selects w-[94%]" />
+                </div>
+            </div>
+            <div class="">
+                <div class="mb-3 form-group">
+                    <!-- <label>Physically Handicapped</label>
                                 <Dropdown v-model="dialog_general_information.physically_challenged"
                                     :options="options_phy_challenged" optionLabel="name" optionValue="value"
                                     placeholder="Select" class="form-selects" /> -->
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-right col-12">
-                        <button id="btn_submit_generalInfo" class="btn btn-border-orange submit-btn"
-                            @click="saveGeneralInformationDetails()">Save</button>
-                    </div>
-                </Dialog>
-
-            </h6>
-            <div>
-                <ul class="personal-info">
-                    <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title">Birthday</div>
-                        <div class="text">
-                            {{
-                                dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY')
-                            }}
-                        </div>
-                    </li>
-                    <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title">Gender </div>
-                        <div class="text ">
-
-                            {{ computedGenderValue }}
-
-                        </div>
-                    </li>
-                    <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title">Date Of Joining (DOJ)</div>
-                        <div class="text">
-                            {{
-                                dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY')
-                            }}
-
-                        </div>
-                    </li>
-                    <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title">Marital Status </div>
-                        <div class="text text-capitalize">
-
-                            {{ computedMarital_StatusValue }}
-
-                        </div>
-                    </li>
-                    <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title"> Blood Group</div>
-                        <div class="text">
-
-                            {{ cmpBldGrp }}
-
-                        </div>
-                    </li>
-                    <li class="pb-1 ">
-                        <div class="title">Physically Handicapped</div>
-                        <div class="text">
-
-                            {{ computedPhy_challenged }}
-
-                        </div>
-                    </li>
-                </ul>
+                </div>
             </div>
-
         </div>
-    </div>
+        <div class="text-right col-12">
+            <button id="btn_submit_generalInfo" class="btn btn-border-orange submit-btn"
+                @click="saveGeneralInformationDetails()">Save</button>
+        </div>
+    </Dialog>
 
 
-    <div class="mb-2 card">
-        <div class="card-body">
-            <h6 class="mb-3 fw-bold fs-15">Contact Information
-                <span class="personal-edit">
-                    <a href="#" class="edit-icon" @click="onClick_EditButtonContacttInfo"><i class="ri-pencil-fill"></i></a>
-                </span>
+    <!-- Contact Information  -->
 
-                <Dialog v-model:visible="ContactVisible" modal header="Contact Information"
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                    <template #header>
-                        <div>
-                            <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                Contact Information</h5>
-                        </div>
-                    </template>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3 form-group">
-                                    <label>Personal Email</label>
-                                    <input type="email" name="present_email" class="form-control"
-                                        v-model="dailog_contactinfo.email">
-                                </div>
-                            </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3 form-group">
-                                    <label> Office Email</label>
-                                    <input type="email" class="form-control" name="officical_mail"
-                                        v-model="dailog_contactinfo.official_email">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-
-                                <div class="mb-3 form-group">
-                                    <label>Mobile Number</label>
-                                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.mobile_number" mask="9999999999"
-                                placeholder="999999999" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-
-                                <div class="mb-3 form-group">
-                                    <label>Official Mobile Number</label>
-                                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.official_mobile_number" mask="9999999999"
-                                placeholder="999999999" />
-                                        <!-- v-model="dailog_contactinfo.official_mobile_number" -->
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="text-right">
-                                    <button class="btn btn-border-orange submit-btn"
-                                        @click="save_contactinfoDetails">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </Dialog>
-            </h6>
+    <Dialog v-model:visible="ContactVisible" modal header="Contact Information"
+        :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        <template #header>
             <div>
-                <ul class="personal-info">
-                    <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title">Personal Email</div>
-                        <div class="text">
-                            {{ _instance_profilePagesStore.employeeDetails.email }}
-
-                        </div>
-                    </li>
-                    <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title">Official Email</div>
-                        <div class="text">
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail }}
-
-                        </div>
-                    </li>
-                    <li class="pb-1 ">
-                        <div class="title">Mobile Number</div>
-                        <div class="text">
-
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number }}
-
-                        </div>
-                    </li>
-                    <li class="pb-1 ">
-                        <div class="title">Official Mobile Number</div>
-                        <div class="text" v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile">
-                            <!-- <h1>-</h1> -->
-                            -
-                        </div>
-                        <div class="text" v-else>
-
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile }}
-
-                        </div>
-                    </li>
-                </ul>
+                <h5
+                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                    Contact Information</h5>
             </div>
-
-        </div>
-    </div>
-    <div class="mb-2 card">
-        <div class="card-body">
-            <h6 class="ml-2 fw-bold fs-15">Address
-                <span class="personal-edit"><a href="#" class="edit-icon" @click="onClick_EditButtonAddressInfo"><i
-                            class="ri-pencil-fill"></i></a></span>
-
-                <Dialog v-model:visible="addressVisible" modal header
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                    <template #header>
-                        <div>
-                            <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                Address Information</h5>
-                        </div>
-                    </template>
-
-                    <div class="modal-body">
-
-                        <div class="col-md-12">
-                            <div class="mb-3 form-group">
-                                <label>Current Address</label>
-                                <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
-                                    class="form-control" v-model="diolog_Addressinfo.current_address"></textarea>
-                            </div>
-                            <div class="mb-3 form-group">
-                                <label>Permanent Address </label>
-                                <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
-                                    class="form-control" v-model="diolog_Addressinfo.Permanent_Address"></textarea>
-                            </div>
-
-                        </div>
-
-                        <div class="col-12">
-                            <div class=" d-flex justify-content-between align-items-center">
-                                <div class=" d-flex justify-content-center align-items-center" >
-                             <input type="checkbox" class="border rounded-md" v-model="CopyAddress" style="width: 20px; height: 20px;" @change="copyAddress" :value="1"  >
-                             <h1 class="mx-2">Copy current address to the permanent address</h1>
-                            </div>
-                            <div class="">
-                                <Toast />
-                                <button id="btn_submit_address" class="btn btn-border-orange submit-btn warn"
-                                    @click="saveAddressinfoDetails" severity="warn">Save</button>
-                            </div>
-                            </div>
-
-                        </div>
-
+        </template>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-group">
+                        <label>Personal Email</label>
+                        <input type="email" name="present_email" class="form-control" v-model="dailog_contactinfo.email">
                     </div>
+                </div>
 
-
-                </Dialog>
-            </h6>
-            <div>
-                <div class="row">
-                    <div class="col-6">
-                        <ul class="personal-info">
-                            <li class="pb-1 border-bottom-liteAsh flex-column">
-                                <div class="title">Current Address </div>
-                                <div class="text" v-if="_instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1 == 'none'">
-                                 -
-                                </div>
-                                <div v-else>
-                                    {{
-                                        _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1
-                                    }}
-                                </div>
-                            </li>
-                        </ul>
+                <div class="col-md-6">
+                    <div class="mb-3 form-group">
+                        <label> Office Email</label>
+                        <input type="email" class="form-control" name="officical_mail"
+                            v-model="dailog_contactinfo.official_email">
                     </div>
-                    <div class="col-6">
-                        <ul class="personal-info">
-                            <li class="pb-1 border-bottom-liteAsh flex-column">
-                                <div class="title">Permanent Address </div>
-                                <div class="text d-flex justify-items-center w-100" v-if=" _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1=='none'">
-                                    -
-                                </div>
-                                <div class="text d-flex justify-items-center w-100" v-else>
-                                    {{
-                                        _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1
-                                    }}
-                                </div>
+                </div>
 
-                            </li>
-                        </ul>
+                <div class="col-md-6">
+
+                    <div class="mb-3 form-group">
+                        <label>Mobile Number</label>
+                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.mobile_number"
+                            mask="9999999999" placeholder="999999999" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="mb-3 form-group">
+                        <label>Official Mobile Number</label>
+                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.official_mobile_number"
+                            mask="9999999999" placeholder="999999999" />
+                        <!-- v-model="dailog_contactinfo.official_mobile_number" -->
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="text-right">
+                        <button class="btn btn-border-orange submit-btn" @click="save_contactinfoDetails">Save</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </Dialog>
+
+
+    <!-- Address  -->
+
+    <Dialog v-model:visible="addressVisible" modal header :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        <template #header>
+            <div>
+                <h5
+                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                    Address Information</h5>
+            </div>
+        </template>
+
+        <div class="modal-body">
+
+            <div class="col-md-12">
+                <div class="mb-3 form-group">
+                    <label>Current Address</label>
+                    <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
+                        class="form-control" v-model="diolog_Addressinfo.current_address"></textarea>
+                </div>
+                <div class="mb-3 form-group">
+                    <label>Permanent Address </label>
+                    <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
+                        class="form-control" v-model="diolog_Addressinfo.Permanent_Address"></textarea>
+                </div>
+
+            </div>
+
+            <div class="col-12">
+                <div class=" d-flex justify-content-between align-items-center">
+                    <div class=" d-flex justify-content-center align-items-center">
+                        <input type="checkbox" class="border rounded-md" v-model="CopyAddress"
+                            style="width: 20px; height: 20px;" @change="copyAddress" :value="1">
+                        <h1 class="mx-2">Copy current address to the permanent address</h1>
+                    </div>
+                    <div class="">
+                        <Toast />
+                        <button id="btn_submit_address" class="btn btn-border-orange submit-btn warn"
+                            @click="saveAddressinfoDetails" severity="warn">Save</button>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
-    </div>
-</template>
 
+
+    </Dialog>
+</template>
 
 <script setup>
 import dayjs from 'dayjs';
-
 import { ref, onMounted, reactive, computed } from "vue";
 import moment from "moment";
 import { useNow, useDateFormat } from '@vueuse/core'
-
+import axios from "axios";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 
-import axios from "axios";
 
 import { Service } from "../../Service/Service";
 import { profilePagesStore } from '../stores/ProfilePagesStore'
 
 const fetch_data = Service()
-
 const _instance_profilePagesStore = profilePagesStore()
 
 const canShowLoading = ref(false)
@@ -432,11 +389,11 @@ const diolog_Addressinfo = reactive({
 
 const CopyAddress = ref(false);
 
-function copyAddress(){
-    if(CopyAddress.value == 1){
-        diolog_Addressinfo.Permanent_Address =   diolog_Addressinfo.current_address ;
+function copyAddress() {
+    if (CopyAddress.value == 1) {
+        diolog_Addressinfo.Permanent_Address = diolog_Addressinfo.current_address;
     }
-    else{
+    else {
         CopyAddress.value = false;
     }
 }
@@ -598,9 +555,9 @@ function onClick_EditButtonContacttInfo() {
     dailog_contactinfo.email = _instance_profilePagesStore.employeeDetails.email;
     dailog_contactinfo.official_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
     dailog_contactinfo.mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number);
-    if(!_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile){
+    if (!_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile) {
         dailog_contactinfo.official_mobile_number = 0;
-    }else{
+    } else {
         dailog_contactinfo.official_mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile);
     }
 
@@ -707,94 +664,4 @@ const saveAddressinfoDetails = () => {
 }
 
 
-
-
-
-
 </script>
-
-<style scoped>
-.p-dropdown .p-dropdown-label.p-placeholder {
-    position: relative;
-    top: -5px;
-    border: 1px solid red;
-    color: #6c757d;
-}
-
-.p-button .p-fileupload-choose {
-    /* height: 2.1em; */
-}
-
-i,
-span,
-.tabview-custom {
-    vertical-align: middle;
-}
-
-span {
-    margin: 0 0.5rem;
-}
-
-.AadharCardFront {
-    margin-left: 20px;
-}
-
-.label {
-    width: 170px;
-}
-
-.p-tabview p {
-    line-height: 1.5;
-    margin: 0;
-}
-
-dialog>header {
-    color: #002f56 !important;
-}
-
-.form-selects {
-    padding: 0;
-    width: 100%;
-    height: 2.5rem;
-}
-
-.save {
-    border: 1px solid #e63b1f;
-    color: #e63b1f;
-}
-
-.p-dialog-header {
-    border-left: #e63b1f 5px solid !important;
-}
-
-.form-selects ::-webkit-scrollbar {
-    width: 10px !important;
-    border-radius: 12px !important;
-}
-
-/* Track */
-.form-selects ::-webkit-scrollbar-track {
-    background: #f1f1f1 !important;
-}
-
-/* Handle */
-.form-selects ::-webkit-scrollbar-thumb {
-    background: #888 !important;
-    border-radius: 12px !important;
-}
-
-/* Handle on hover */
-.form-selects ::-webkit-scrollbar-thumb:hover {
-    background: #252222 !important;
-    border-radius: 12px !important;
-}
-
-Dialog {
-    color: #002f56;
-}
-</style>
-
-
-
-
-

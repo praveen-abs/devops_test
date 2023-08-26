@@ -2,7 +2,7 @@
     <div>
         <DataTable :value="arrayAbsentRegularization" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"  sortField="attendance_date" :sortOrder="-1"
+            :rowsPerPageOptions="[5, 10, 25]" sortField="attendance_date" :sortOrder="-1"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
             <template #empty> No Employeee found. </template>
@@ -12,14 +12,14 @@
                 <template #body="slotProps">
                     <div class="flex justify-content-center align-items-center">
                         <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'" if
-                            class="p-2 w-3 h-18 text-semibold rounded-full bg-blue-900 text-white">{{
+                            class="w-3 p-2 text-white bg-blue-900 rounded-full h-18 text-semibold">{{
                                 JSON.parse(slotProps.data.employee_avatar).data }} </p>
 
-                        <img v-else class="rounded-circle img-md w-3 userActive-status profile-img"
+                        <img v-else class="w-3 rounded-circle img-md userActive-status profile-img"
                             style="height: 30px !important;"
                             :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset=""
                             alt="" />
-                        <p class=" text-left pl-2">{{ slotProps.data.employee_name }} </p>
+                        <p class="pl-2 text-left ">{{ slotProps.data.employee_name }} </p>
                     </div>
                 </template>
                 <template #filter="{ filterModel, filterCallback }">
@@ -96,10 +96,10 @@
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
             :breakpoints="{ '960px': '80vw', '640px': '90vw' }" :style="{ width: '380px' }" :modal="true">
             <div class="confirmation-content">
-                <i class="mr-2 pi pi-exclamation-triangle text-red-600" style="font-size: 1.3rem" />
+                <i class="mr-2 text-red-600 pi pi-exclamation-triangle" style="font-size: 1.3rem" />
                 <span class="my-auto">Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
-            <div class="w-full flex justify-left p-2" v-if="reject == 'Reject'">
+            <div class="flex w-full p-2 justify-left" v-if="reject == 'Reject'">
                 <Textarea v-model="reviewer_comment" rows="3" cols="30" class="border rounded-md" />
             </div>
             <template #footer>
@@ -108,16 +108,7 @@
             </template>
         </Dialog>
 
-        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-            <template #header>
-                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
-            </template>
-            <template #footer>
-                <h5 style="text-align: center">Please wait...</h5>
-            </template>
-        </Dialog>
+
     </div>
 </template>
 
@@ -128,6 +119,9 @@ import { FilterMatchMode } from "primevue/api";
 import dayjs from 'dayjs';
 import { Service } from "../../Service/Service";
 import { useToast } from "primevue/usetoast";
+import {UseAttendanceStore} from "./AttendanceStore";
+
+const UseAttendance = UseAttendanceStore();
 
 
 
@@ -165,11 +159,11 @@ onMounted(() => {
 })
 
 async function getAbsentRegularization() {
-    canShowLoadingScreen.value = true
+    UseAttendance.canShowLoadingScreen  = true
     await axios.get('/fetch-absent-regularization-data').then((res) => {
         arrayAbsentRegularization.value = res.data;
     }).finally(() => {
-        canShowLoadingScreen.value = false
+        UseAttendance.canShowLoadingScreen  = false
     })
 
 }
@@ -190,7 +184,7 @@ const getSeverity = (status) => {
 };
 
 function showConfirmDialog(selectedRowData, status) {
-    canShowConfirmation.value = true;
+    UseAttendance.canShowLoadingScreen  = true;
     currentlySelectedStatus = status;
     reject.value = status;
     currentlySelectedRowData = selectedRowData;
@@ -198,12 +192,12 @@ function showConfirmDialog(selectedRowData, status) {
 }
 
 function hideConfirmDialog() {
-    canShowConfirmation.value = false;
+    UseAttendance.canShowLoadingScreen  = false;
 }
 
 function processApproveReject() {
     hideConfirmDialog(false);
-    canShowLoadingScreen.value = true;
+    UseAttendance.canShowLoadingScreen  = true;
     // console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
     axios
@@ -237,9 +231,9 @@ function processApproveReject() {
             getAbsentRegularization();
         })
         .catch((error) => {
-            canShowLoadingScreen.value = false;
+            UseAttendance.canShowLoadingScreen  = false;
         }).finally(() => {
-            canShowLoadingScreen.value = false;
+            UseAttendance.canShowLoadingScreen  = false;
             reviewer_comment.value = null
         })
 }

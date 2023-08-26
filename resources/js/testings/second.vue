@@ -1,47 +1,52 @@
 <template>
-    <div class="p-4">
-      <div class="flex space-x-4">
-        <button
-          v-for="(tab, index) in tabs"
-          :key="index"
-          @click="activeTab = index"
-          :class="{
-            'border text-white': activeTab === index,
-            'bg-gray-200': activeTab !== index,
-          }"
-          class="px-4 py-2 rounded focus:outline-none"
-        >
-          {{ tab.title }}
-        </button>
-      </div>
-
-      <transition name="fade" mode="out-in">
-        <div :key="activeTab" class="mt-4">
-          {{ tabs[activeTab].content }}
+    <div class="timeline-container">
+      <div v-for="experience in experiences" :key="experience.id" class="timeline-item">
+        <div class="timeline-dot">
+          {{ experience.years }}
         </div>
-      </transition>
+        <div class="timeline-content">
+          <h3 class="text-lg font-semibold">{{ experience.title }}</h3>
+          <p class="text-gray-600">{{ experience.details }}</p>
+        </div>
+      </div>
     </div>
   </template>
-
-
 
   <script setup>
   import { ref } from 'vue';
 
-  const tabs = [
-    { title: 'Tab 1', content: 'Content for Tab 1' },
-    { title: 'Tab 2', content: 'Content for Tab 2' },
-    { title: 'Tab 3', content: 'Content for Tab 3' },
-  ];
-
-  const activeTab = ref(0);
+  const experiences = ref([
+    {
+      id: 1,
+      years: '2015 - 2017',
+      title: 'Job Title 1',
+      details: 'Description of job responsibilities and achievements...',
+    },
+    {
+      id: 2,
+      years: '2017 - 2020',
+      title: 'Job Title 2',
+      details: 'Description of job responsibilities and achievements...',
+    },
+    // Add more experience items as needed
+  ]);
   </script>
 
-<style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-</style>
+  <style scoped>
+  .timeline-container {
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-dot {
+    @apply w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold;
+  }
+
+  .timeline-content {
+    margin-left: 1rem;
+  }
+  </style>

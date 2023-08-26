@@ -3,15 +3,10 @@
 @import "./components/card";
 @import "./components/calendar";
 // @import "./utilities/helpers";
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins&display=swap');
-
 
 
 * {
     // font-size: 1vw;
-    // font-family: ;
-    font-family: 'Lobster', cursive;
-    font-family: 'Poppins', sans-serif;
     font-weight: $font-weight-medium;
     box-sizing: border-box;
 }
@@ -25,7 +20,6 @@
 body {
     // background-color: $bg-body;
     background-color: $bg-body;
-
 }
 
 .collapse {
@@ -40,11 +34,16 @@ body {
     min-width: 120px;
 }
 
-.main-content {
-    transition: all 0.1s ease-out;
-    margin-left: 230px;
-    overflow: hidden;
+.nav-tabs-dashed .nav-item .nav-link.active::after {
+    content: "";
+    height: 2px;
+    width: 100%;
+    left: 0px;
+    position: absolute;
+    background-color: #F9BE00;
+    bottom: 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 5px;
 }
-
 
 

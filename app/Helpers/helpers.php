@@ -17,18 +17,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-
 function required()
 {
     $required = "<span class='text-danger required_star'>*</span>";
     return $required;
 }
 
-function dropColumnIfExists($table_name, $column_name)
-{
+function dropColumnIfExists($table_name, $column_name){
     if (Schema::hasColumn($table_name, $column_name)) //check the column
     {
-        Schema::table($table_name, function (Blueprint $table) use ($column_name) {
+        Schema::table($table_name, function (Blueprint $table) use ($column_name)
+        {
             $table->dropColumn($column_name); //drop it
         });
     }
@@ -74,13 +73,13 @@ function getEmployeeActiveStatus($user_id)
         if ($active_status == "1")
             return "Active";
         else
-            if ($active_status == "0")
-                return "Yet to Activate";
-            else
-                if ($active_status == "-1")
-                    return "Left";
-                else
-                    return null;
+        if ($active_status == "0")
+            return "Yet to Activate";
+        else
+        if ($active_status == "-1")
+            return "Left";
+        else
+            return null;
     } else
         return null;
 }
@@ -116,16 +115,6 @@ function sessionGetSelectedClientName()
         return "";
 }
 
-function sessionGetSelectedClientFullName()
-{
-
-    $query_client = VmtClientMaster::find(session('client_id'));
-
-    if (!empty($query_client))
-        return $query_client->client_fullname;
-    else
-        return "";
-}
 
 
 
@@ -142,7 +131,7 @@ function sessionGetSelected_abs_clientcode()
 function GetSelectedClientFullName($client_id)
 {
 
-    $query_client = VmtClientMaster::where('id', $client_id)->first();
+    $query_client = VmtClientMaster::where('id',$client_id)->first();
 
     if (!empty($query_client))
         return $query_client->client_fullname;
@@ -153,7 +142,7 @@ function GetSelectedClientFullName($client_id)
 function GetSelected_abs_clientcode($client_id)
 {
 
-    $query_client = VmtClientMaster::where('id', $client_id)->first();
+    $query_client = VmtClientMaster::where('id',$client_id)->first();
 
     if (!empty($query_client))
         return $query_client->abs_client_code;
@@ -191,16 +180,6 @@ function getClientLogo($user_id)
         return "";
 }
 
-function sessionGetSelectedClientLogo()
-{
-
-    $query_client = VmtClientMaster::find(session('client_id'));
-
-    if (!empty($query_client))
-        return $query_client->client_logo;
-    else
-        return "";
-}
 function getSessionCurrentlySelectedClientEmp($user_id)
 {
     $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
@@ -210,6 +189,17 @@ function getSessionCurrentlySelectedClientEmp($user_id)
     else
         return "";
 }
+
+function sessionGetSelectedClientLogo()
+{
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+    if (!empty($query_client))
+        return $query_client->client_logo;
+    else
+        return "";
+}
+
 function getSessionCurrentlySelectedClient()
 {
 
@@ -310,7 +300,6 @@ function hasSubClients()
 
 function fetchClients()
 {
-
     return VmtClientMaster::all(['id', 'client_name', 'client_logo']);
 }
 
@@ -365,13 +354,13 @@ function getUserShortName($user_id)
         $toStore = trim($dotPattern[0])[0] . trim($dotPattern[1])[0];
         return strtoupper($toStore);
     } else
-        if (count($whiteSpacePattern) > 1) {
-            $toStore = $whiteSpacePattern[0][0] . $whiteSpacePattern[1][0];
-            return strtoupper($toStore);
-        } else {
-            $toStore = $singleWordPattern[0] . $singleWordPattern[1];
-            return strtoupper($toStore);
-        }
+    if (count($whiteSpacePattern) > 1) {
+        $toStore = $whiteSpacePattern[0][0] . $whiteSpacePattern[1][0];
+        return strtoupper($toStore);
+    } else {
+        $toStore = $singleWordPattern[0] . $singleWordPattern[1];
+        return strtoupper($toStore);
+    }
 
     // return $whiteSpacePattern;
 }
@@ -430,19 +419,22 @@ function shortNameBGColor($shortName)
     } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar < 89) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 75)) {
         $colorPalette = "color-blue-600";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 70)) {
+    }  else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90)  && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 70)) {
         $colorPalette = "color_disco-500";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90) && ($getAsciiCodeSecondChar >= 70 && $getAsciiCodeSecondChar < 75)) {
+    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90)  && ($getAsciiCodeSecondChar >= 70 && $getAsciiCodeSecondChar < 75)) {
         $colorPalette = "color-skyblue-500";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90) && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 80)) {
+    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90)  && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 80)) {
         $colorPalette = "color-inkblue-600";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90) && ($getAsciiCodeSecondChar >= 80 && $getAsciiCodeSecondChar <= 90)) {
+    }
+    else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90)  && ($getAsciiCodeSecondChar >= 80 && $getAsciiCodeSecondChar <= 90)) {
         $colorPalette = "color-blue-200";
         return $colorPalette;
-    } else {
+    }
+
+    else {
         $colorPalette = "downy";
         return $colorPalette;
     }
@@ -479,12 +471,11 @@ function getEmployeeAvatarOrShortName($user_id)
     }
 }
 
-function getCurrentUserGender()
-{
+function getCurrentUserGender(){
 
     $currentuserid = auth()->user()->id;
     $emp_gender = VmtEmployee::where('userid', $currentuserid)->first()->gender;
-    $lowerCaseGender = strtolower($emp_gender);
+    $lowerCaseGender =  strtolower($emp_gender);
 
     if ($lowerCaseGender == 'male') {
         return "male";
@@ -508,7 +499,7 @@ function newgetEmployeeAvatarOrShortName($user_id)
         $user_code = $user->value('user_code');
         $responseJSON = null;
 
-        $get_emp_profile = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar);
+        $get_emp_profile  = Storage::disk('private')->get($user_code."/profile_pics/".$avatar);
 
         //IF images doesnt exists, then generate ShortName
         if (empty($avatar) || empty($get_emp_profile)) {
@@ -520,9 +511,9 @@ function newgetEmployeeAvatarOrShortName($user_id)
             //send the profile pic
             $responseJSON['type'] = 'avatar';
 
-            $get_emp_profile = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar);
+            $get_emp_profile  = Storage::disk('private')->get($user_code."/profile_pics/".$avatar);
 
-            $responseJSON['data'] = base64_encode($get_emp_profile);
+             $responseJSON['data'] = base64_encode($get_emp_profile);
         }
 
         //Add color
@@ -560,7 +551,7 @@ function calculateProfileCompleteness($user_id)
         ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
         ->leftjoin('vmt_employee_family_details', 'vmt_employee_family_details.user_id', '=', 'users.id')
         ->leftjoin('vmt_employee_emergency_contact_details', 'vmt_employee_emergency_contact_details.user_id', '=', 'users.id')
-        ->leftjoin('vmt_marital_status', 'vmt_marital_status.id', '=', 'vmt_employee_details.marital_status_id')
+        ->leftjoin('vmt_marital_status','vmt_marital_status.id','=', 'vmt_employee_details.marital_status_id')
 
         //Employee info
 
@@ -626,17 +617,16 @@ function calculateProfileCompleteness($user_id)
     //dd($count_null_fields);
     //dd($user_full_details);
 
-    $value = (int) (round((($count_total_fields - $count_null_fields) / $count_total_fields) * 100));
+    $value = (int)(round((($count_total_fields - $count_null_fields) / $count_total_fields) * 100));
     //dd($value);
     return $value;
 }
 
-function num2alpha($n)
-{
+function num2alpha($n) {
     $r = '';
     for ($i = 1; $n >= 0 && $i < 10; $i++) {
-        $r = chr(0x41 + ($n % pow(26, $i) / pow(26, $i - 1))) . $r;
-        $n -= pow(26, $i);
+    $r = chr(0x41 + ($n % pow(26, $i) / pow(26, $i - 1))) . $r;
+    $n -= pow(26, $i);
     }
     return $r;
 
@@ -750,7 +740,7 @@ function numberToWord($num)
 
             $hundreds = (int) ($num_part / 100);
 
-            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . 'Hundred' . ($hundreds == 1 ? '' : 's') . ' ' : '');
+            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' ' : '');
 
             $tens = (int) ($num_part % 100);
 
@@ -778,11 +768,12 @@ function numberToWord($num)
         if ($commas) {
             $words = str_replace(',', '', $words);
         }
-        return $words;
+        return $words . " Only";
     } else if (!((int) $num)) {
         return 'Zero';
     }
     return '';
+
 }
     function getAllDropdownFilterSetting(){
 

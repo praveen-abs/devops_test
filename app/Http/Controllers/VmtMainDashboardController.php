@@ -372,7 +372,7 @@ class VmtMainDashboardController extends Controller
         // }
         else
             if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
-                return view('vmt_employee_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
+                return view('vmt_hr_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
             }
         else{
             return "No Roles assigned for this user. Kindly contact the admin";
@@ -508,6 +508,11 @@ class VmtMainDashboardController extends Controller
              return  $logoSrc =  getSessionCurrentlySelectedClient(auth()->user()->id);
             }
     }
+
+
+
+
+
     public function updateGlobalClientSelection(Request $request)
     {
 
@@ -605,7 +610,7 @@ class VmtMainDashboardController extends Controller
             $pollingQuestionAdd->options = $encodedOptions;
             $pollingQuestionAdd->date = $request->date;
             $pollingQuestionAdd->notify_employees = isset($request->notify_employees) ? $request->notify_employees : '0';
-            $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $request->anonymous_poll : '0';
+            $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $ruseequest->anonymous_poll : '0';
             $pollingQuestionAdd->save();
             if ($pollingQuestionAdd) {
                 return response()->json(['status' => true, 'message' => 'Pooling Question added successfully']);
@@ -656,9 +661,19 @@ class VmtMainDashboardController extends Controller
     {
 
         //Fetch the data
-        // $request->user_code = "LAL0013";
-        return $serviceVmtDashboardService->getNotifications($request->user_code);
+        $user_code =  auth()->user()->user_code;
+        return $serviceVmtDashboardService->getNotifications($user_code );
     }
+
+    public function readNotification(Request $request, VmtDashboardService $serviceVmtDashboardService)
+    {
+
+        //Fetch the data
+        // $request->record_id = "23";
+        return $serviceVmtDashboardService->readNotification($request->record_id);
+    }
+
+
     public function performAttendanceCheckIn(Request $request, VmtDashboardService $serviceVmtDashboardService)
     {
         //  dd($request->all());
@@ -728,27 +743,35 @@ class VmtMainDashboardController extends Controller
         $request->user_code = auth()->user()->user_code;
 
 
-        return $serviceVmtDashboardService->fetchEmpLastAttendanceStatus( $request->user_code);
+        $response = $serviceVmtDashboardService->fetchEmpLastAttendanceStatus( $request->user_code);
+
+       if(!empty($response->checkout_date)){
+           $to ="";
+           $from ="";
+
+
+             if(!empty($response->checkout_time)){
+                $to = Carbon::createFromFormat('H:i:s', $response->checkout_time);
+              }
+
+              if(!empty($response->checkin_time)){
+                 $from = Carbon::createFromFormat('H:i:s', $response->checkin_time);
+              }
+
+            if(!empty($from) && !empty($to) ){
+                $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+            }
+            $response['effective_hours'] =$effective_hours;
+        }
+        // if(!empty($response->checkin_date))
+        // {
+        //     $response['effective_hours'] =null;
+        // }
+            return $response;
         //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
 
-
-
-
     //HR New Main Dashboard
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

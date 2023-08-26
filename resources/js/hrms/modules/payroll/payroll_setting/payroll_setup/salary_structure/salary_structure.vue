@@ -1,18 +1,20 @@
 <template>
     <div class="w-full p-3">
         <div v-if="route.params.name == undefined || route.params.name == ''">
-            <section id="header" class="flex mx-2 my-5">
-                <div class="w-full flex items-center">
-                    <p class="font-semibold text-gray-800 fs-5"> Salary Structure <span
-                            class="font-semibold text-gray-600 fs-6">(Paygroup)</span></p>
+            <section id="header" class="flex justify-between mx-2">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="font-semibold text-gray-800 fs-5"> Salary Structure <span
+                                class="font-semibold text-gray-600 fs-6">(Paygroup)</span></p>
+                    </div>
+
+
+                </div>
+                <div class="float-right">
                     <button class="btn btn-orange float-right px-6 py-2 w-[160px]">
                         <router-link class="   " :to="`/payrollSetup/structure/create`">Add
                             Structure</router-link>
                     </button>
-
-                </div>
-                <div class="float-right">
-
                 </div>
             </section>
             <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 mx-1"
@@ -123,4 +125,5 @@ onMounted(() => {
     {
         transform: scale(1);
     }
-}</style>
+}
+</style>

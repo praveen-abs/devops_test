@@ -6,7 +6,7 @@
     <link href="{{ URL::asset('assets/css/preview_template.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-    <div class="template-wrapper mt-30">
+    <div class="template-wrapper">
         <div class="card  left-line mb-2 ">
             <div class="card-body  pt-1 pb-0">
                 <ul class="nav nav-pills nav-tabs-dashed" role="tablist">

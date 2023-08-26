@@ -1,7 +1,5 @@
 <template>
-    <div class="client-onboard-wrapper mt-30">
-
-
+    <div class="client-onboard-wrapper">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-0 card-body">
                 <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">

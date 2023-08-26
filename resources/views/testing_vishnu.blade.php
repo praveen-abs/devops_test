@@ -9,7 +9,6 @@
     use Dompdf\Dompdf;
      use Dompdf\Options;
      use Carbon\Carbon;
-     use App\jobs\WelcomeMailJobs;
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
@@ -21,6 +20,7 @@
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
+
     use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -451,59 +451,59 @@
 
 
 
-//        $gross =50000;
+       $gross =50000;
 
-//        $basic =$gross/100*60;
+       $basic =$gross/100*60;
 
-//        $hra =$basic/100*50;
+       $hra =$basic/100*50;
 
-//        $communication_allowance = 0;
+       $communication_allowance = 0;
 
-//        $food_allowance = 0;
+       $food_allowance = 0;
 
-//        if($gross > 40000){
-//         $communication_allowance =2000;
-//        }
+       if($gross > 40000){
+        $communication_allowance =2000;
+       }
 
-//        $leave_travel_allowance = 0;
+       $leave_travel_allowance = 0;
 
-//        if($gross > 50000){
-//         $leave_travel_allowance =2000;
-//        }
+       if($gross > 50000){
+        $leave_travel_allowance =2000;
+       }
 
-//        $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
+       $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
 
 
-//        $epf_employer = 0;
-//        $epf_employee = 0;
+       $epf_employer = 0;
+       $epf_employee = 0;
 
-//        if(($gross - $hra) > 15000){
+       if(($gross - $hra) > 15000){
 
-//         $epf_employer = 15000/100*12;
-//         $epf_employee = 15000/100*12;
-//        }else{
-//         $epf_employer = ($gross - $hra)/100*12;
-//         $epf_employee =($gross - $hra)/100*12;
-//        }
+        $epf_employer = 15000/100*12;
+        $epf_employee = 15000/100*12;
+       }else{
+        $epf_employer = ($gross - $hra)/100*12;
+        $epf_employee =($gross - $hra)/100*12;
+       }
 
-//        $esi_employer = 0;
-//        $esi_employee = 0;
+       $esi_employer = 0;
+       $esi_employee = 0;
 
-//        if($gross > 21000){
-//         $esi_employer = 0;
-//        $esi_employee = 0;
+       if($gross > 21000){
+        $esi_employer = 0;
+       $esi_employee = 0;
 
-//        }else{
-//         $esi_employer = $gross/100*3.25;
-//         $esi_employee = $gross/100*0.75;
-//        }
-//        $insurance =0;
+       }else{
+        $esi_employer = $gross/100*3.25;
+        $esi_employee = $gross/100*0.75;
+       }
+       $insurance =0;
 
-//        $professional_tax = 208;
+       $professional_tax = 208;
 
-//        $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+       $ctc = $gross + $epf_employer +$esi_employer + $insurance;
 
-//        $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+       $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
 
 
 

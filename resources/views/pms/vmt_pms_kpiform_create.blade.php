@@ -5,6 +5,12 @@
 <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 
+<style>
+    .modal-backdrop {
+        width: 0;
+    }
+</style>
+
 
 @endsection
 

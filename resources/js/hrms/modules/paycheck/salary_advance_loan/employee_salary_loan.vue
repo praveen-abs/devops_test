@@ -1,4 +1,5 @@
 <template>
+            <LoadingSpinner v-if="useEmpStore.canShowLoading"  class="absolute z-50 bg-white w-[100%] h-[100%]"/>
     <div>
 
         <div class="p-4 pt-1 pb-0 mb-3 bg-white rounded-lg tw-card left-line">
@@ -64,7 +65,11 @@ import SalaryAdvance from './salary_advance/salary_advance.vue';
 import LoanWithInterest from './loan_with_interest/loan_with_interest.vue';
 import InterestFreeLoan from './interest_free_loan/interest_free_loan.vue';
 import TravelAdvance from './travel_advance/travel_advance.vue';
+import LoadingSpinner from '../../../components/LoadingSpinner.vue';
+import {useEmpSalaryAdvanceStore} from '.././stores/employeeSalaryAdvanceLoanMainStore'
 
+
+const useEmpStore = useEmpSalaryAdvanceStore()
 
 
 

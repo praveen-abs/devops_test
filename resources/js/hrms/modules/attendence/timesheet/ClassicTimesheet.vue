@@ -18,8 +18,8 @@
                 </div>
                 <div class="my-2 bg-orange-50 rounded-lg p-3 py-4 transition-all duration-700"
                     v-if="attendanceRegularizationDialog">
-                    <div class="flex">
-                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Date</label></div>
+                    <div class="grid grid-cols-2 ">
+                        <div class=""><label class="font-semibold fs-6 text-gray-700">Date</label></div>
                         <div class="">
                             <span class="text-ash-medium fs-15" id="current_date">
                                 {{ currentlySelectedCellRecord.date }}</span>
@@ -27,28 +27,29 @@
                                 id="attendance_date">
                         </div>
                     </div>
-                    <div class="flex my-4">
-                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check In Time</label>
+                    <div class="grid grid-cols-2  my-4">
+                        <div class="">
+                            <label class="font-semibold fs-6 text-gray-700">Check In Time</label>
                         </div>
-                        <div class="w-6">
+                        <div class="">
                             <input placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
                                 class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
                                 v-model="useTimesheet.absentRegularizationDetails.start_time">
                         </div>
                     </div>
-                    <div class="flex">
-                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
+                    <div class="grid grid-cols-2 ">
+                        <div class=""><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
                         </div>
-                        <div class="w-6">
+                        <div class="">
                             <input placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
                                 class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
                                 v-model="useTimesheet.absentRegularizationDetails.end_time">
                         </div>
                     </div>
-                    <div class="flex my-4">
-                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
+                    <div class="grid grid-cols-2  my-4">
+                        <div class=""><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
                         <div>
-                            <select name="reason" class="form-select btn-line-orange w-52" id="reason_lc"
+                            <select name="reason" class="form-select btn-line-orange w-full" id="reason_lc"
                                 v-model="useTimesheet.absentRegularizationDetails.reason">
                                 <option selected hidden disabled>
                                     Choose Reason
@@ -247,7 +248,7 @@
                         <div
                             class="w-full h-full text-xs md:text-sm lg:text-base text-left transition-colors font-semibold relative">
                             <div class="flex justify-center">
-                                <p class="mx-3">{{ dayjs(singleAttendanceDay.date).format('D') }}</p>
+                                <p class="mx-3 font-semibold text-sm">{{ dayjs(singleAttendanceDay.date).format('D') }}</p>
                             </div>
 
                             <!-- Week end -->
@@ -337,17 +338,6 @@
             </div>
         </div>
     </div>
-    <Dialog header="Header" v-model:visible="useTimesheet.canShowLoading"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
-        :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 </template>
 
 <script setup>

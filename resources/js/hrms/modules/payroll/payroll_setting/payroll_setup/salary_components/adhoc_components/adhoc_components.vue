@@ -11,11 +11,11 @@
                 <InputText class="w-full" placeholder="Search...." />
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-8  my-4 ">
             <div class="">
                 <div class="flex justify-between  my-4">
                     <p class="mx-1 font-semibold fs-5.5">Adhoc Allowances</p>
-                    <button class="text-blue-500" @click="dailogAdhocComponents = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add new</button>
+                    <button class="text-blue-500 whitespace-nowrap" @click="dailogAdhocComponents = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add new</button>
                 </div>
                 <div id="table">
                     <DataTable :value="helper.filterSource(usePayroll.salaryComponentsSource, 3)">
@@ -39,7 +39,7 @@
                 <div>
                     <div class="flex justify-between mx-2 my-4">
                         <p class="font-semibold fs-5.5">Deductions</p>
-                        <button class="text-blue-500" @click="dailogDeduction = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add new</button>
+                        <button class="text-blue-500 whitespace-nowrap" @click="dailogDeduction = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add new</button>
                     </div>
                     <div id="table">
                         <DataTable :value="helper.filterSource(usePayroll.salaryComponentsSource, 2)">

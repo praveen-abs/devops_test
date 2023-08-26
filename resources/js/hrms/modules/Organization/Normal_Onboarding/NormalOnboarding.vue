@@ -1,13 +1,11 @@
 <template>
     <Toast />
-    <div class="-mt-12 container-fluid">
+    <div class="w-full">
         <div class="">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div id="msform">
                         <form class="p-fluid" enctype="multipart/form-data">
-                            <input type="hidden" name="user_id" id="user_id" value="" />
-                            <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
                             <PersonDetails />
                             <Address />
                             <FamilyDetails />
@@ -222,6 +220,10 @@ const Sampledata = () => {
 <style >
 .form-control {
     height: 2.9em;
+}
+
+label{
+    font-weight: 501;
 }
 
 .form-control:focus {
