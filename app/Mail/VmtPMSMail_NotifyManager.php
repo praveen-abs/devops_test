@@ -17,7 +17,7 @@ class VmtPMSMail_NotifyManager extends Mailable
      * @return void
      */
     protected $empName;
-    public function __construct($empName, $empDesignation, $recipientName, $appraisal_period, $loginLink)
+    public function __construct($empName, $empDesignation, $recipientName, $appraisal_period, $loginLink , $emp_gender)
     {
         //
         $this->empName  = $empName;
@@ -25,6 +25,7 @@ class VmtPMSMail_NotifyManager extends Mailable
         $this->empDesignation = $empDesignation; //fetched from vmt_employee_office_details table
         $this->appraisal_period = $appraisal_period;
         $this->loginLink = $loginLink;
+        $this->emp_gender = $emp_gender;
     }
 
     /**
@@ -47,6 +48,7 @@ class VmtPMSMail_NotifyManager extends Mailable
                 ->with('empDesignation' , $this->empDesignation)
                 ->with('appraisal_period' , $this->appraisal_period)
                 ->with('recipientName' , $this->recipientName)
-                ->with('loginLink', $this->loginLink);
+                ->with('loginLink', $this->loginLink)
+                ->with('emp_gender', $this->emp_gender);
     }
 }

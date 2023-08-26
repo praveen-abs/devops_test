@@ -1,21 +1,21 @@
 <template>
-    <div class="grid grid-cols-3 w-10/12 place-content-center mx-auto my-2">
+    <div class="grid w-10/12 grid-cols-3 mx-auto my-2 place-content-center">
         <!-- <div class="flex">
-            <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
-                    class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
+            <label class="p-2 font-semibold border-gray-500 rounded-lg cursor-pointer border-1 fs-6" for="file"><i
+                    class="px-2 pi pi-folder" style="font-size: 1rem"></i>Browse</label>
             <input type="file" name="" id="file" hidden @change="useStore.convertExcelIntoArray($event)"
                 accept=".xls, .xlsx">
         </div> -->
-        <div class="bg-white text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Total Records : <span class="font-bold">
+        <div class="p-2 mx-6 font-semibold text-black bg-white rounded-lg fs-6">Total Records : <span class="font-bold">
                 {{ useStore.totalRecordsCount.length ? useStore.totalRecordsCount[0].length : 0 }}
             </span>
         </div>
-        <div class="bg-green-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Processed Records : <span
+        <div class="p-2 mx-6 font-semibold text-black bg-green-100 rounded-lg fs-6">Processed Records : <span
                 class="font-bold">
                 {{ useStore.totalRecordsCount.length ? useStore.totalRecordsCount[0].length -
                     useStore.errorRecordsCount.length : 0 }}</span>
         </div>
-        <div class="bg-red-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Error Records : <span class="font-bold">
+        <div class="p-2 mx-6 font-semibold text-black bg-red-100 rounded-lg fs-6">Error Records : <span class="font-bold">
                 {{ useStore.errorRecordsCount.length }}</span>
         </div>
     </div>
@@ -46,19 +46,25 @@
                     <div v-if="field.includes('Employee Code')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
-                            <!-- <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
+                            <!-- <i class="mx-2 cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                                 v-tooltip.right="'Client code is not eligible'"
                                 v-if="!useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code'])"></i> -->
-                            <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
+                            <i class="mx-2 cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
                                 v-if="!useStore.isUserExists(data['Employee Code'])"></i>
                             {{ data['Employee Code'] ? data['Employee Code'] : '-' }}
                         </p>
                     </div>
+                    <div v-else-if="field.includes('Legal Entity')"
+                        :class="[useStore.isExistsOrNot(useStore.existingLegalEntity, data['Legal Entity']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        <p class="font-semibold fs-6">
+                            {{ data['Legal Entity'] ? data['Legal Entity'] : '-' }}
+                        </p>
+                    </div>
                     <p v-else-if="field.includes('Aadhar')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableAadharValues, data['Aadhar']) || useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
+                        <i class="mx-2 cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                             v-tooltip.right="'Aadhar number is already exists'"
                             v-if="useStore.isAadharExists(data['Aadhar'])"></i>
                         {{ useStore.splitNumberWithSpaces(data['Aadhar']) }}
@@ -70,16 +76,16 @@
                     </p>
                     <p v-else-if="field.includes('Email')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmailValues, data['Email']) || useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6 flex items-center">
-                        <i class="fa fa-exclamation-circle text-warning  cursor-pointer" aria-hidden="true"
+                        class="flex items-center font-semibold fs-6">
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                             v-tooltip.right="'Email is already exists'"
                             v-if="useStore.existingEmails.includes(data['Email'])"></i>
-                    <p class="font-semibold fs-6 px-2 py-auto">{{ data['Email'] ? data['Email'] : '-' }}</p>
+                    <span class="px-2 font-semibold fs-6 py-auto">{{ data['Email'] ? data['Email'] : '-' }}</span>
                     </p>
                     <p v-else-if="field.includes('Mobile Number')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableMobileNumberValues, data[field]) || useStore.existingMobileNumbers.includes(data[field]) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
                             v-if="useStore.existingMobileNumbers.includes(data[field])"></i>
                         {{ data['Mobile Number'] ? data['Mobile Number'] : '-' }}
@@ -88,14 +94,14 @@
                     <p v-else-if="field.includes('Account No')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableAccNoValues, data['Account No']) || useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                             v-tooltip.right="'Account number is already exists'"
                             v-if="useStore.existingMobileNumbers.includes(data[field])"></i>
                         {{ data['Account No'] ? data['Account No'] : '-' }}
                     </p>
 
                     <p v-else-if="field.includes('Bank Name')"
-                        :class="[!useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Bank Name'] ? data['Bank Name'] : '-' }}
                     </p>
@@ -103,7 +109,7 @@
                     <p v-else-if="field.includes('Pan No')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTablePanValues, data['Pan No']) || !useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
+                        <i class="cursor-pointer fa fa-exclamation-circle text-warning" aria-hidden="true"
                             v-tooltip.right="'Pan number is already exists'"
                             v-if="!useStore.isValidPancard(data['Pan No'])"></i>
                         {{ data['Pan No'] ? data['Pan No'].toUpperCase() : '-' }}
@@ -167,6 +173,9 @@
                     <InputText v-else-if="field == 'Email'" v-model="data[field]" />
                     <InputText v-else-if="field == 'Mobile Number'" v-model="data[field]" minLength="10" maxLength="10"
                         @keypress="useStore.isEnteredNos($event)" />
+                    <Dropdown v-else-if="field == 'Legal Entity'" v-model="data[field]"
+                        :options="useStore.legalEntityDropdown" optionLabel="client_fullname" optionValue="client_fullname"
+                        placeholder="Select Legal Entity" />
                     <Dropdown v-else-if="field == 'Bank Name'" v-model="data[field]"
                         :options="useNormalOnboardingStore.bankList" optionLabel="bank_name" optionValue="bank_name"
                         placeholder="Select Bank Name" />
@@ -183,7 +192,7 @@
                 </template>
             </Column>
             <template #footer>
-                <button class="btn btn-orange mx-auto flex justify-center"
+                <button class="flex justify-center mx-auto btn btn-orange"
                     @click="useStore.uploadOnboardingFile(useStore.EmployeeQuickOnboardingSource)">Upload</button>
             </template>
         </DataTable>

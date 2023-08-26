@@ -8,10 +8,15 @@ use App\Services\VmtSalaryRevisionService;
 class VmtSalaryRevisionController extends Controller
 {
 
-public function empList(Request $request, VmtSalaryRevisionService $vmtSalaryRevisionService){
+    public function getAllEmployeeData(Request $request, VmtSalaryRevisionService $vmtSalaryRevisionService){
 
-    return  $vmtSalaryRevisionService->empList();
-}
+        return  $vmtSalaryRevisionService->getAllEmployeeData();
+    }
+    
+    public function getAllEmployeeData(Request $request, VmtSalaryRevisionService $vmtSalaryRevisionService){
+
+        return  $vmtSalaryRevisionService->getAllEmployeeData();
+    }
 
 
 

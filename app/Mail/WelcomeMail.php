@@ -45,13 +45,17 @@ class WelcomeMail extends Mailable
     {
 
 
-            $output = $this->view('vmt_welcomeemployee_email')
-            ->subject('ABShrms - Welcome')
-            ->with('uEmail', $this->uEmail)
-            ->with('uPassowrd', $this->uPassowrd)
-            ->with('loginLink', $this->loginLink)
-            ->with('image_view', $this->image_view)
-            ->with('client_code',$this->client_code);
+            // $output = $this->view('vmt_welcomeemployee_email')
+            // ->subject('ABShrms - Welcome')
+            // ->with('uEmail', $this->uEmail)
+            // ->with('uPassowrd', $this->uPassowrd)
+            // ->with('loginLink', $this->loginLink)
+            // ->with('image_view', $this->image_view)
+            // ->with('client_code',$this->client_code);
+
+            $output = $this->view('appointment_mail_templates.appointment_Letter_dunamis_machines')
+            ->subject('ABShrms - Welcome');
+            
 
 
         //Only for Employee Onboarding

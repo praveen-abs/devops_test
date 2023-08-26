@@ -9,7 +9,7 @@ use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Services\VmtConfigAppService;
+use App\Services\VmtMobileConfigService;
 use App\Services\VmtEmployeeService;
 use App\Services\VmtCoreService;
 
@@ -25,8 +25,11 @@ class HRMSBaseAPIController extends Controller
     }
 
 
-    public function getAppConfig(Request $request, VmtConfigAppService $serviceVmtConfigAppService){
-        return $serviceVmtConfigAppService->getAppConfig();
+    public function getAppConfig(Request $request, VmtMobileConfigService $serviceVmtMobileConfigService){
+
+        $response = $serviceVmtMobileConfigService->getEmployeesMobileSettingsData($request->user_code);
+
+        return $response;
     }
 
     public function getFCMToken(Request $request){

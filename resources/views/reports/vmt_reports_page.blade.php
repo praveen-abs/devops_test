@@ -143,6 +143,7 @@
                                     <li class=""><a href="{{ route('showAbsentReport') }}">Absent Report</a></li>
                                     <li class=""><a href="{{ route('showLateComingReport') }}">Late Coming Report</a></li>
                                     <li class=""><a href="{{ route('showEarlygoingReport') }}">Early going Report</a></li>
+                                    <li class=""><a href="{{ route('showOvertimeReport') }}">Overtime Report</a></li>
                                 </ul>
                             </div>
                         </div>
