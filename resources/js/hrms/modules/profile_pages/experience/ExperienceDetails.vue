@@ -1,4 +1,61 @@
 <template>
+    <h6 class="font-semibold text-lg">Experience Information</h6>
+    <div class="flex gap-6 items-center"
+        v-for="experience in _instance_profilePagesStore.employeeDetails.get_experience_details">
+        <div class="mx-4 flex justify-center">
+            <div class="relative flex h-full w-1 bg-green-300 items-center justify-center">
+                <div
+                    class="absolute flex flex-col justify-center h-12 w-12 rounded-full border-2 border-green-300 leading-none text-center z-10 bg-white font-thin">
+                    <div>20</div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full bg-white rounded-lg p-2 border my-2"
+            v-if="_instance_profilePagesStore.employeeDetails.get_experience_details">
+
+            <div class="grid grid-cols-12 gap-2 h-full py-2">
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Company Name</p>
+                    <p class="font-semibold text-sm">
+                        {{ experience.company_name }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Location</p>
+                    <p class="font-semibold text-sm">
+                        {{ experience.company_name }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">JOb Position</p>
+                    <p class="font-semibold text-sm">
+                        {{ experience.company_name }}
+
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Period From</p>
+                    <p class="font-semibold text-sm">
+                        {{ dayjs(experience.period_from).format('DD-MMM-YYYY')
+                        }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Period To</p>
+                    <p class="font-semibold text-sm">
+                        {{ dayjs(experience.period_to).format('DD-MMM-YYYY') }}
+
+                    </p>
+                </div>
+                <div class="col-span-2 flex justify-end ">
+                    <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div>
         <div class="mb-2 card">
             <div class="card-body">
@@ -39,7 +96,8 @@
 
                             <div class="">
                                 <span :style="{ paddingLeft: '6px' }">Period From<span class="text-danger">*</span></span>
-                                <Calendar class="!w-[98%] !mr-[15px] relative right-2" v-model="ExperienceInfo.period_from" />
+                                <Calendar class="!w-[98%] !mr-[15px] relative right-2"
+                                    v-model="ExperienceInfo.period_from" />
 
                             </div>
                         </div>
@@ -47,7 +105,8 @@
                         <div class="grid grid-cols-2">
                             <div class=" mr-2">
                                 <span :style="{ paddingLeft: '6px' }">Period To <span class="text-danger">*</span></span>
-                                <Calendar  v-model="ExperienceInfo.period_to" name="experienceDet_period_to[]" class="!w-[96%] relative right-2" />
+                                <Calendar v-model="ExperienceInfo.period_to" name="experienceDet_period_to[]"
+                                    class="!w-[96%] relative right-2" />
                             </div>
                             <div class=""></div>
                         </div>
@@ -154,17 +213,16 @@
                                                     <div class="ml-2 ">
                                                         <span :style="{ paddingLeft: '6px' }">Period From<span
                                                                 class="text-danger">*</span></span>
-                                                        <Calendar 
-                                                            v-model="ExperienceInfo.period_from"
-                                                            class="w-[100%] relative right-2"
-                                                           />
+                                                        <Calendar v-model="ExperienceInfo.period_from"
+                                                            class="w-[100%] relative right-2" />
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-2">
                                                     <div class="">
                                                         <span :style="{ paddingLeft: '6px' }">Period To <span
                                                                 class="text-danger">*</span></span>
-                                                        <Calendar v-model="ExperienceInfo.period_to" class="w-[95%] relative right-2" />
+                                                        <Calendar v-model="ExperienceInfo.period_to"
+                                                            class="w-[95%] relative right-2" />
                                                     </div>
                                                     <div class=""></div>
                                                 </div>

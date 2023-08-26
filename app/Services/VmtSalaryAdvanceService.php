@@ -1078,7 +1078,7 @@ class VmtSalaryAdvanceService
 
 
 
-    public function showEligibleInterestFreeLoanDetails($loan_type,$user_id,$client_id)
+    public function showEligibleInterestFreeLoanDetails($loan_type, $user_id, $client_id)
     {
 
         $validator = Validator::make(
@@ -1117,10 +1117,10 @@ class VmtSalaryAdvanceService
             $last_payroll_month = $last_payroll_month->payroll_date;
         }
         if ($loan_type == 'InterestWithLoan') {
-            $avaliable_int_loans = VmtLoanInterestSettings::where('client_id',$client_id)
+            $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', $client_id)
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
         } else if ($loan_type == 'InterestFreeLoan') {
-            $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id',$client_id)
+            $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', $client_id)
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
 
         } else {
@@ -2129,6 +2129,7 @@ class VmtSalaryAdvanceService
                     'vmt_loan_with_int_transaction_record.payroll_date as payroll_date',
                     'vmt_loan_with_int_transaction_record.expected_emi as expected_emi',
                     'vmt_loan_with_int_transaction_record.paid_emi as paid_emi',
+                    'vmt_emp_int_loan_details.borrowed_amount as borrowed_amount'
                 ]);
             $pending_request_query = VmtEmpInterestLoanDetails::where('user_id', $user_id)->where('loan_crd_sts', 0)->count();
             $compeleted_request_query = VmtEmpInterestLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
@@ -2144,6 +2145,7 @@ class VmtSalaryAdvanceService
                     'vmt_int_free_loan_transaction_record.payroll_date as payroll_date',
                     'vmt_int_free_loan_transaction_record.expected_emi as expected_emi',
                     'vmt_int_free_loan_transaction_record.paid_emi as paid_emi',
+                    'vmt_emp_int_free_loan_details.borrowed_amount as borrowed_amount'
                 ]);
             $pending_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->where('loan_crd_sts', 0)->count();
             $compeleted_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
@@ -2161,6 +2163,7 @@ class VmtSalaryAdvanceService
                     'vmt_sal_adv_transaction_record.payroll_date as payroll_date',
                     'vmt_sal_adv_transaction_record.expected_amt as expected_emi',
                     'vmt_sal_adv_transaction_record.paid_amt as paid_emi',
+                    'vmt_emp_sal_adv_details.borrowed_amount as borrowed_amount'
                 ]);
 
             $pending_request_query = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')->where('user_id', $user_id)->where('sal_adv_crd_sts', 0)->count();
@@ -2172,7 +2175,7 @@ class VmtSalaryAdvanceService
             ]);
         }
         foreach ($loan_amt_query  as $single_record) {
-            $total_borrowed_amt = $total_borrowed_amt + $single_record->expected_emi;
+            $total_borrowed_amt = $single_record->borrowed_amount;
             $total_repaid_amt = $total_repaid_amt + $single_record->paid_emi;
             $balance_amt =   $total_borrowed_amt -  $total_repaid_amt;
         }

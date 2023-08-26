@@ -1,23 +1,13 @@
 <template>
-    <div class="w-screen h-screen flex justify-center items-center bg-gray-100">
-      <div class="btn-status">
-        <input
-          type="checkbox"
-          name="checkbox"
-          id="checkbox"
-          class="hidden"
-          v-model="isChecked"
-        />
-        <label
-          for="checkbox"
-          class="relative inline-block w-12 h-6 rounded-lg  transition duration-300"
-          :class="[  isChecked  ? ' bg-green-200' : 'bg-red-200']"
-        >
-          <span
-            class="absolute inset-0 inline-block w-6 h-6 rounded-full shadow transform transition-transform"
-            :class="[  isChecked  ? 'translate-x-6 bg-green-500' : 'bg-red-500']"
-          ></span>
-        </label>
+    <div class="timeline-container">
+      <div v-for="experience in experiences" :key="experience.id" class="timeline-item">
+        <div class="timeline-dot">
+          {{ experience.years }}
+        </div>
+        <div class="timeline-content">
+          <h3 class="text-lg font-semibold">{{ experience.title }}</h3>
+          <p class="text-gray-600">{{ experience.details }}</p>
+        </div>
       </div>
     </div>
   </template>
@@ -25,9 +15,38 @@
   <script setup>
   import { ref } from 'vue';
 
-  const isChecked = ref(false);
+  const experiences = ref([
+    {
+      id: 1,
+      years: '2015 - 2017',
+      title: 'Job Title 1',
+      details: 'Description of job responsibilities and achievements...',
+    },
+    {
+      id: 2,
+      years: '2017 - 2020',
+      title: 'Job Title 2',
+      details: 'Description of job responsibilities and achievements...',
+    },
+    // Add more experience items as needed
+  ]);
   </script>
 
   <style scoped>
-  /* Add your global styles or Tailwind utility classes here */
+  .timeline-container {
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-dot {
+    @apply w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold;
+  }
+
+  .timeline-content {
+    margin-left: 1rem;
+  }
   </style>

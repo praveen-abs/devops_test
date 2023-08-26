@@ -63,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/new_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'showMainDashboardPage'])->name('new-main-dashboard');
     Route::get('/', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
-    Route::get('/old_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('old-main-dashboard');
+    // Route::get('/old_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('old-main-dashboard');
 
     //404 error page
     Route::get('/page-not-found', function () {
@@ -1066,7 +1066,7 @@ Route::middleware(['auth'])->group(function () {
     //investment testing
 
     Route::view('/investmenttest', 'testing.excellimport');
-    Route::post('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'testinginvest']);
+    Route::get('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'testinginvest']);
 
 
     //notification
