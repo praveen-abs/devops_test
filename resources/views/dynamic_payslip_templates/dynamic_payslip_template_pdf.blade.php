@@ -221,7 +221,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                 <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">DAYS PAYABLE</p>
+                <p style="font-size:10px;color:gray;">ARREAR DAYS PAYABLE</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
             </td>
 

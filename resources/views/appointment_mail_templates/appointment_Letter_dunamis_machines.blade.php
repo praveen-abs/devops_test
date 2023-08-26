@@ -94,7 +94,7 @@
                                                 clients, in order to partner in their business
                                                 success.
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 Thank you for the information and documentation
                                                 provided to ease your on­boarding process. You
                                                 can continue to use our online portal to access
@@ -104,7 +104,7 @@
                                                 statutory benefits. The next few pages will give
                                                 you more information on your employment with us.
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 For any queries, please feel free to contact the
                                                 ABS Help Desk. The facility is currently
                                                 available Monday through Friday, 9:30 am to 6:30
@@ -169,7 +169,7 @@
                                                 </li>
                                                 <li>
 
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         <img src="{{ URL::asset('assets/images/list_style.png') }}"
                                                             alt=""
                                                             style="padding-right:10px ">
@@ -179,7 +179,7 @@
                                                 </li>
                                                 <li>
 
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         <img src="{{ URL::asset('assets/images/list_style.png') }}"
                                                             alt=""
                                                             style="padding-right:10px ">
@@ -192,7 +192,7 @@
                                                 <li>
 
 
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         <img src="{{ URL::asset('assets/images/list_style.png') }}"
                                                             alt=""
                                                             style="padding-right:10px ">
@@ -204,7 +204,7 @@
                                                 </li>
                                                 <li>
 
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         <img src="{{ URL::asset('assets/images/list_style.png') }}"
                                                             alt=""
                                                             style="padding-right:10px ">
@@ -220,7 +220,7 @@
                                                 </li>
                                                 <li>
 
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         <img src="{{ URL::asset('assets/images/list_style.png') }}"
                                                             alt=""
                                                             style="padding-right:10px ">
@@ -237,7 +237,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12"align="left">
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 I wish you all the very best as you embark on an
                                                 exciting journey with ABS while enhancing your
                                                 professional stature, along the way.
@@ -318,10 +318,10 @@
                                             <p class="fw-600 txt-left">
                                                 To,
                                             </p>
-                                            <p class="fw-600 pt-5 txt-left">
+                                            <p class="pt-5 fw-600 txt-left">
                                                 Mr.XYZ
                                             </p>
-                                            <p class="fw-600 pt-5 txt-left">
+                                            <p class="pt-5 fw-600 txt-left">
                                                 Employee Code -XYZ
                                             </p>
 
@@ -339,7 +339,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12" align="">
-                                            <p class=" pb-10" style="">
+                                            <p class="pb-10 " style="">
                                                 We are pleased to appoint you to our
                                                 organization as SENIOR EXCUTIVE, for a fixed
                                                 period of employment, on the following terms and
@@ -490,14 +490,14 @@
 
                                     <tr>
                                         <td colspan="12" align="" class="pt-10">
-                                            <p class="txt-left a pt-10">
+                                            <p class="pt-10 txt-left a">
                                                 We are consciously endeavoring to build an
                                                 atmosphere of trust, openness, responsiveness,
                                                 autonomy, and growth among all members of the
                                                 ABS family. As a new entrant, we would like you
                                                 to wholeheartedly contribute to this process.
                                             </p>
-                                            <p class="txt-left a pt-10">
+                                            <p class="pt-10 txt-left a">
                                                 As a token of your acceptance of the above terms
                                                 and conditions, you are requested to sign the
                                                 duplicate copy of this letter and return it to
@@ -514,7 +514,7 @@
                                             <p class="txt-left pt-30 ">
                                                 Yours truly,
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 <b>For Ardens Business Solutions Private
                                                     Limited</b>
                                             </p>
@@ -628,10 +628,10 @@
                                             <p class="fw-600 txt-left">
                                                 To,
                                             </p>
-                                            <p class="fw-600 pt-5 txt-left">
+                                            <p class="pt-5 fw-600 txt-left">
                                                 Mr.XYZ
                                             </p>
-                                            <p class="fw-600 pt-5 txt-left">
+                                            <p class="pt-5 fw-600 txt-left">
                                                 Employee Code -XYZ
                                             </p>
 
@@ -817,7 +817,7 @@
                                 <tbody>
 
                                     <tr>
-                                        <td colspan="12" align="" class=" ">
+                                        <td colspan="12" align="" class="">
                                             <p class="pb-30">
                                                 All the other terms and conditions of your
                                                 employment remain unchanged. As a token of your
@@ -831,10 +831,10 @@
 
                                     <tr>
                                         <td colspan="12"align="left">
-                                            <p class="txt-left  ">
+                                            <p class="txt-left ">
                                                 Yours truly,
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 <b>For Ardens Business Solutions Private
                                                     Limited</b>
                                             </p>
@@ -1160,7 +1160,7 @@
                                             </p>
                                             <ol>
                                                 <li>
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         You will have to provide signed copies
                                                         of
                                                         all
@@ -1187,7 +1187,7 @@
                                                     </p>
                                                 </li>
                                                 <li>
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         ABS is working towards having a safe
                                                         transaction
                                                         mode for all payments and follows the
@@ -1222,7 +1222,7 @@
                                                     </p>
                                                 </li>
                                                 <li>
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         You will have to provide your PAN card
                                                         details
                                                         within 15 days of your date of joining.
@@ -1234,7 +1234,7 @@
 
                                                                 <li>
                                                                     <p
-                                                                        class="txt-left a pt-10">
+                                                                        class="pt-10 txt-left a">
                                                                         In case, you don’t have
                                                                         a PAN
                                                                         card, you
@@ -1250,7 +1250,7 @@
                                                                 </li>
                                                                 <li>
                                                                     <p
-                                                                        class="txt-left a pt-10">
+                                                                        class="pt-10 txt-left a">
                                                                         In case you do not
                                                                         provide PAN
                                                                         card
@@ -1281,7 +1281,7 @@
                                                     </ol>
                                                 </li>
 
-                                                <p class="txt-left a pt-10">
+                                                <p class="pt-10 txt-left a">
                                                     Your pay slips will be available online for
                                                     viewing, downloading, and printing. This is
                                                     a
@@ -1300,7 +1300,7 @@
                                                         href="payroll@ardens.in">payroll@ardens.in</a>
                                                     referencing your ABS employee ID. </p>
                                                 <li>
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         In case of any reimbursable components
                                                         in
                                                         your
@@ -1317,7 +1317,7 @@
                                                     </p>
                                                 </li>
                                                 <li>
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         If you are eligible for ESIC benefits
                                                         and have
                                                         an existing ESIC number, please inform
@@ -1334,7 +1334,7 @@
                                                     </p>
                                                 </li>
                                                 <li>
-                                                    <p class="txt-left a pt-10  ">
+                                                    <p class="pt-10 txt-left a ">
                                                         ABS do not accept or retain any original
                                                         certificates/ documents pertaining to
                                                         your
@@ -1348,7 +1348,7 @@
                                                     </p>
                                                 </li>
                                                 <li>
-                                                    <p class="txt-left a pt-10">
+                                                    <p class="pt-10 txt-left a">
                                                         You will have to complete all the exit
                                                         formalities and hand over any assets
                                                         including
@@ -1554,7 +1554,7 @@
                                 <tbody>
                                     <tr>
                                         <td colspan="12" align="center">
-                                            <p class="fw-600 txt-center pb-10" style="">
+                                            <p class="pb-10 fw-600 txt-center" style="">
                                                 Annexure 2:
                                             </p>
                                             <p class="fw-600 txt-center pb-30" style="">
@@ -1565,10 +1565,10 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="left">
-                                            <p class="fw-600  ">
+                                            <p class="fw-600 ">
                                                 Introduction
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 ABS recognizes people as its most important
                                                 asset and is committed to ensuring a safe and
                                                 healthy work environment for all its employees
@@ -1584,14 +1584,14 @@
                                                 treat their direct employees in matters of
                                                 health & safety.
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 This document is to be read and thoroughly
                                                 understood by all ABS AWs at the time of joining
                                                 an assignment; it requires them to be aware of
                                                 the policy and our recommendations for safe
                                                 working practices
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 We assure that we will not depute an AW to a
                                                 client site, which causes an Occupational Hazard
                                                 or risk to Health. We will only work with
@@ -1601,7 +1601,7 @@
                                                 that an AW might encounter and could be a
                                                 potential health & safety issue.
                                             </p>
-                                            <p class="txt-left pt-10">
+                                            <p class="pt-10 txt-left">
                                                 We also ask our AWs not to endanger themselves
                                                 or their colleagues at work by violating any
                                                 safety rules, and to comply with workplace
@@ -1624,7 +1624,7 @@
                                             <p class="pt-10 fw-600">
                                                 Health & Safety Policy:
                                             </p>
-                                            <p class=" pt-10">
+                                            <p class="pt-10 ">
                                                 Health & Safety in the work place is every ones
                                                 responsibility. ABS regards promotion of Health
                                                 & Safety measures as a mutual objective for the
@@ -1637,7 +1637,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="12" style=" " align="left">
-                                            <p class="fw-600 pt-10">
+                                            <p class="pt-10 fw-600">
                                                 General Safety:
                                             </p>
 
@@ -1782,7 +1782,7 @@
                                             <p class="txt-left a">
                                                 <b>Accident & First Aid:</b>
                                             </p>
-                                            <p class="text-justify a pt-10">
+                                            <p class="pt-10 text-justify a">
                                                 Familiarize yourself with the First Aid
                                                 arrangements at your workplace. Do not leave
                                                 vehicles or items relating to your work in

@@ -6,71 +6,75 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/leave_policy.css') }}">
 @endsection
 @section('content')
-    <div class="tw-card mt-30 mb-0">
-        <h6 class="text-gray-900 font-semibold text-lg mb-3">Leave Policy</h6>
+    <div class="mb-0 tw-card mt-30">
+        <h6 class="mb-3 text-lg font-semibold text-gray-900">Leave Policy</h6>
         <div id="policy_carousel" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
             <div class="carousel-inner">
-                <div class="carousel-item  active">
+                <div class="carousel-item active">
                     <div class="main-page">
                         <div class="sub-page">
+                            <div style="display: flex; justify-content:space-between; margin-bottom:12px">
+                                <h1>Policy</h1>
+                                <img src="../" style="border:1px solid black" alt="Image Not Found">
+                            </div>
                             <table class="dunamis_leavePolicy">
                                 <tbody>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   ">
+                                        <td colspan="1" class="text-yellow ">
                                             <h6>Name of the Policy</h6>
                                         </td>
-                                        <td colspan="3" class="  ">
+                                        <td colspan="3" class="">
                                             <span class="text-bolder "> Leave Policy</p>
                                         </td>
                                     </tr>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   ">
+                                        <td colspan="1" class="text-yellow ">
                                             <h6>Version Number</h6>
                                         </td>
-                                        <td colspan="3" class="  ">
+                                        <td colspan="3" class="">
                                             <p>HR/LEAVE/2021/02</p>
                                         </td>
                                     </tr>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   ">
+                                        <td colspan="1" class="text-yellow ">
                                             <h6>Version Date</h6>
                                         </td>
-                                        <td colspan="3" class="  ">
+                                        <td colspan="3" class="">
                                             <p>01January 2021</p>
                                         </td>
                                     </tr>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   ">
+                                        <td colspan="1" class="text-yellow ">
                                             <h6>Status</h6>
                                         </td>
-                                        <td colspan="3" class="  ">
+                                        <td colspan="3" class="">
                                             <p>Final</p>
                                         </td>
                                     </tr>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   ">
+                                        <td colspan="1" class="text-yellow ">
                                             <h6>Policy Owner</h6>
                                         </td>
-                                        <td colspan="3" class="  ">
+                                        <td colspan="3" class="">
                                             <p>Managing Director</p>
                                         </td>
                                     </tr>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   ">
+                                        <td colspan="1" class="text-yellow ">
                                             <h6>Responsibility Matrix</h6>
                                         </td>
-                                        <td colspan="3" class="  ">
-                                            <p class="  ">HR Department: Custodian of Policy, Version Control,
+                                        <td colspan="3" class="">
+                                            <p class="">HR Department: Custodian of Policy, Version Control,
                                                 Adhoc Compliance
                                                 Monitoring, Maintaining Leave Register</p>
-                                            <p class="  ">Approving Authority: Reporting Manager</p>
+                                            <p class="">Approving Authority: Reporting Manager</p>
                                         </td>
                                     </tr>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   " style="vertical-align:initial;">
+                                        <td colspan="1" class="text-yellow " style="vertical-align:initial;">
                                             <h6>General Guidelines</h6>
                                         </td>
-                                        <td colspan="3" class=" ">
+                                        <td colspan="3" class="">
                                             <ul>
                                                 <li>
                                                     Awareness and understanding of the policy shall be the responsibility of
@@ -107,10 +111,10 @@
                                         </td>
                                     </tr>
                                     <tr class="border-yellow-t-b">
-                                        <td colspan="1" class="text-yellow   ">
+                                        <td colspan="1" class="text-yellow ">
                                             <p>Applicability</p>
                                         </td>
-                                        <td colspan="3" class="  ">
+                                        <td colspan="3" class="">
                                             <p>This policy applies to all employees working for Dunamis Machines.</p>
                                         </td>
                                     </tr>
@@ -119,7 +123,7 @@
                                             style="padding-top:1.6em;padding-bottom:1.6em;vertical-align:initial">
                                             <h6>Terms</h6>
                                         </td>
-                                        <td colspan="3" class="  " style="padding-top:1.6em;padding-bottom:1.6em">
+                                        <td colspan="3" class="" style="padding-top:1.6em;padding-bottom:1.6em">
                                             <ol type="A"
                                                 style="list-style: upper-alpha;padding-left:.8em;padding-bottom:.7em">
                                                 <li style="padding-bottom:1.2em">
@@ -180,9 +184,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item  ">
+                <div class="carousel-item ">
                     <div class="main-page">
                         <div class="sub-page">
+                            <div style="display: flex; justify-content:space-between; margin-bottom:12px">
+                                <h1>Policy</h1>
+                                <img src="../" style="border:1px solid black" alt="Image Not Found">
+                            </div>
                             <table class="dunamis_leavePolicy">
                                 <tbody>
                                     <tr>
@@ -366,9 +374,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item  ">
+                <div class="carousel-item ">
                     <div class="main-page">
+                    
                         <div class="sub-page">
+                            <div style="display: flex; justify-content:space-between; ">
+                                <h1>Policy</h1>
+                                <img src="../" style="border:1px solid black" alt="Image Not Found">
+                            </div>
                             <table class="dunamis_leavePolicy">
                                 <tbody>
                                     <tr>
@@ -583,8 +596,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item  ">
+                <div class="carousel-item ">
                     <div class="main-page">
+                        <div style="display: flex; justify-content:space-between; margin-bottom:12px">
+                            <h1>Policy</h1>
+                            <img src="../" style="border:1px solid black" alt="Image Not Found">
+                        </div>
                         <div class="sub-page">
                             <table class="dunamis_leavePolicy">
                                 <tbody>
@@ -732,7 +749,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="4" class="" style="padding:1em 0">
-                                            <p class="text-yellow text-bolder text-center" style="padding-top:10em;">
+                                            <p class="text-center text-yellow text-bolder" style="padding-top:10em;">
                                                 * &nbsp; * &nbsp; *
                                             </p>
                                         </td>

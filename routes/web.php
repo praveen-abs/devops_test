@@ -940,7 +940,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/investments/saveSectionPopups', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
     Route::post('/investments/saveSection80', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
-    Route::get('/investments/TaxDeducation', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeducationCalculate']);
+    Route::get('/investments/monthTaxDashboard', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'monthTaxDashboard']);
     Route::get('/investments/TaxDeclaration', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeclaration']);
     Route::post('/investments/saveRegime', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpTaxRegime']);
     Route::get('/investments/investment-summary', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
@@ -1036,6 +1036,7 @@ Route::middleware(['auth'])->group(function () {
     // generate payslip
 
     Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
+    Route::get('/generatetemplates', [App\Http\Controllers\VmtPayCheckController::class, 'generatetemplates'])->name('generatetemplates');
 
     //salary revision
 
@@ -1063,6 +1064,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/testing_shelly', function () {
         return view('testing_shelly');
     });
+
+    Route::get('/tds_work_sheet',[App\Http\Controllers\VmtTestingController::class, 'Tesingtdsworksheet']);
+
+
+   
 
     //investment testing
 

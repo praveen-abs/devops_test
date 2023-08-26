@@ -261,22 +261,22 @@
                             <div class="text-left rounded-lg ">
                                 <p class="my-2 font-semibold fs-3 text-ash-medium ">Total Tax Payable</p>
                                 <div class="flex gap-2">
-                                    <h6 class="mb-0 font-semibold fs-4">INR 0</h6>
+                                    <h6 class="mb-0 font-semibold fs-4">INR {{taxComputationSource ? taxComputationSource['Total Tax Payable']:0}}</h6>
                                 </div>
                             </div>
                             <div class="p-2 text-left rounded-lg ">
                                 <p class="my-2 font-semibold fs-3 text-ash-medium ">Tax Paid Till Now</p>
-                                <h6 class="mb-0 font-semibold fs-4 ">INR 0</h6>
+                                <h6 class="mb-0 font-semibold fs-4 ">INR {{taxComputationSource ? taxComputationSource['Tax Paid Till Now']:0}}</h6>
                             </div>
 
                             <div class="p-2 text-left rounded-lg ">
                                 <p class="my-2 font-semibold fs-3 text-ash-medium ">Remaining Tax Amount</p>
-                                <h6 class="mb-0 font-semibold fs-4">INR 0</h6>
+                                <h6 class="mb-0 font-semibold fs-4">INR {{taxComputationSource ? taxComputationSource['Remaining Tax Amount']:0}}</h6>
                             </div>
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <DataTable :paginator="true" :rows="1" dataKey="id" scrollable :value="monthWiseData">
+                        <DataTable :paginator="true" :rows="1" dataKey="id" scrollable :value="monthWiseData" >
                             <template #empty> No Data Found. </template>
                             <template #loading> Loading customers data. Please wait. </template>
                             <Column field="particulars" header="Month" frozen class="font-bold">
@@ -286,20 +286,12 @@
                                     </p>
                                 </template>
                             </Column>
-                            <Column v-for="col of monthWiseData" :key="col"  :header="col.month" class="font-semibold">
-                                <template #body="{data}">
-                                    <p class="font-semibold fs-6">
-                                    {{data.monthy_tax}}
-                                    </p>
+                            <Column v-for="col of dynmaicHeadersForMonthTax" :key="col"  :header="col.title" :field="col.title" class="font-semibold">
+                                <template #body="{data,field}">
+                                    <p class="font-semibold fs-6">{{data[field]}}</p>
                                 </template>
                             </Column>
-                            <!-- <Column  class="font-bold" v-for="(col,i) in monthWiseData" :key="i">
-                                <template #header="{data}">
-                                    {{data.month}}
-                                </template>
 
-
-                            </Column> -->
                         </DataTable>
                     </div>
                     <div class="flex my-3">
@@ -313,6 +305,7 @@
             </div>
         </div>
     </div>
+
 
     <Dialog v-model:visible="switch_regime_dailog" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
@@ -366,15 +359,29 @@ import { onMounted, reactive, ref } from 'vue'
 import { investmentFormulaStore } from '../../stores/investmentFormulaStore'
 import { investmentMainStore } from '../../stores/investmentMainStore';
 const data = ref()
+
+
+const dynmaicHeadersForMonthTax = ref()
+
+const taxComputationSource = ref()
+
+
 onMounted(() => {
     investmentStore.canShowLoading = true
     investmentStore.fetchInvestmentSummary()
     investmentStore.fetchTaxableIncomeInfo()
     console.log(new Date().getFullYear() - 1);
 
-    // axios.get('/monthTaxDeductionDetails').then(res=>{
-    //     monthWiseData.value = res.data
-    // })
+    axios.get('/investments/monthTaxDashboard').then(res=>{
+        monthWiseData.value.push(res.data.date)
+        taxComputationSource.value = res.data.taxcalculation
+        let obj = Object.entries(res.data.date).map(item =>{
+            return{
+                title:item[0],
+            }
+        })
+        dynmaicHeadersForMonthTax.value = obj
+    })
 
 
 
@@ -389,7 +396,7 @@ const formula = investmentFormulaStore()
 const tax_deduction = ref()
 const total_gross = ref()
 const total_taxable = ref()
-const monthWiseData = ref()
+const monthWiseData = ref([])
 
 const amount = ref()
 const regime = ref()
