@@ -436,7 +436,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function employeeDashboardLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $loan_type = "sal_adv";
+        $loan_type = $request->loan_type;
         $user_id = auth()->user()->id;
         $response = $vmtSalaryAdvanceService->employeeDashboardLoanAndAdvance($loan_type, $user_id);
         return   $response;
