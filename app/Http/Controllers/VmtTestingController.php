@@ -769,8 +769,8 @@ class VmtTestingController extends Controller
         $appoinmentPath = "";
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 //dd($client_name);
-        $html = view('appointment_mail_templates.appointment_letter_langro_india_pvt_ltd',$data);
-return  $html;
+        $html = view('dynamic_payslip_templates.dynamic_payslip_v2',$data);
+    //    return  $html;
                         $options = new Options();
                         $options->set('isHtml5ParserEnabled', true);
                         $options->set('isRemoteEnabled', true);
@@ -798,9 +798,9 @@ return  $html;
      public function Tesingtdsworksheet(Request $request){
 
 
-            $html = view('investmentTdsWorkSheet.TDS_work_sheet');
+            $html = view('dynamic_payslip_templates.dynamic_payslip_v2');
 
-            return $html;
+            // return $html;
 
             $options = new Options();
             $options->set('isHtml5ParserEnabled', true);
