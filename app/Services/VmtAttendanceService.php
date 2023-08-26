@@ -42,7 +42,7 @@ class VmtAttendanceService
 {
 
 
-    public function fetchAttendanceRegularizationData($manager_user_code = null, $month, $year)
+    public function fetchAttendanceRegularizationData($month, $year,$manager_user_code = null)
     {
 
         $validator = Validator::make(
@@ -134,7 +134,7 @@ class VmtAttendanceService
 
 
 
-    public function fetchAbsentRegularizationData($manager_user_code = null, $month, $year)
+    public function fetchAbsentRegularizationData( $month, $year,$manager_user_code = null)
     {
 
 
