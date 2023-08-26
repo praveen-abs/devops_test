@@ -133,7 +133,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'addEmployeeExperianceDetails']);
     Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeExperianceDetails']);
     Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'deleteEmployeeExperianceDetails']);
-    Route::post('/profile-pages/getDocumentDetails',[VmtProfilePagesController::class, 'getDocumentDetails']);
+    Route::post('/profile-pages/saveDocumentDetails',[VmtProfilePagesController::class, 'saveDocumentDetails']);
 
 
     //Investments
