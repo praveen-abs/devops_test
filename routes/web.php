@@ -1039,7 +1039,7 @@ Route::middleware(['auth'])->group(function () {
 
     //salary revision
 
-    Route::get('/empList', [App\Http\Controllers\VmtSalaryRevisionController::class, 'empList'])->name('empList');
+    Route::get('getAllEmployeeData', [App\Http\Controllers\VmtSalaryRevisionController::class, 'getAllEmployeeData'])->name('getAllEmployeeData');
 
 
 

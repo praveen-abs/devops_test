@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vmt_emp_active_paygroup_id')->constrained('vmt_emp_active_paygroup');
             $table->foreignId('vmt_emp_paygroup_id')->constrained('vmt_emp_paygroup');
+            $table->text("Value");
             $table->timestamps();
         });
     }

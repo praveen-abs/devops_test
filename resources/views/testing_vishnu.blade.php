@@ -681,20 +681,152 @@
 
 
         //  }
+$comp_data = ['Basic',
+'Dearness Allowance',
+'Variable Dearness Allowance',
+'House Rent Allowance',
+'Child Education Allowance',
+'Communication Allowance',
+'Statutory Bonus',
+'Food Allowance',
+'Leave Travel Allowance',
+'Special Allowance',
+'Other Allowance',
+'Washing Allowance',
+'Uniform Allowance',
+'Vehicle Reimbursement',
+'Driver Salary',
+'Fuel Reimbursement',
+'Telephone Reimbursement',
+'Overtime',
+'Incentive',
+'Other Earnings',
+'Leave Encashment',
+'Referral Bonus',
+'Statutory Bonus',
+'Ex-Gratia',
+'Gift Payment',
+'Attendance Bonus',
+'Daily Allowance',
+'EPF_Employer',
+'Employer ESIC',
+'Employer LWF',
+'EPF_Employee',
+'VPF_Employee',
+'Employee ESIC',
+'Professional Tax',
+'Income Tax',
+'Salary Advance',
+'Medical Deductions',
+'Canteen Deduction',
+'Uniform Deduction',
+'Loan Deductions',
+'Other Deductions'];
 
+$comp_data = str_replace(" ","_",array_map('strtolower', $comp_data));
 
+     $data =   [" 50% from CTC ",
+      "50% from Gross",
+"Based on MW Table",
+"Based on MW Table",
+"50% from Basic Salary",
+"200 Maximum, if the person married",
+"3000 Max",
+"If the Basic is Less then 21K then we can give this",
+"2200 Max",
+"10% from Basic Salary",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"2400 Max",
+"900 Max",
+"3000 Max",
+"3000 Max",
+"Gross/Month Days/8*Overtime Hours*2 or Gross/Month Days/8*Overtime Hours*2 or Basic/Month Days/8*Overtime Hours*2 or Formula can be typed",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Rule Given",
+"Rule Given",
+"Rule Given",
+"Rule Given",
+"Rule Given",
+"Rule Given",
+"From Table",
+"From Table",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",
+"Open Amount",];
 
-        $getMonth = [];
-        foreach (range(1, 12) as $m) {
-         $getMonth[] = date('F', mktime(0, 0, 0, $m, 1));
-      }
+ $array_data =array();
+ $i=0;
+foreach ($data as $key => $value) {
+    if(strpos($value, '%') !== false){
+        preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
 
-
-$monthl_dates =[];
-for($i=1;$i<=31;$i++){
-    $monthl_dates[]=$i;
+        foreach ($calci_data as $key => $single_calci_data) {
+            $array_data[$i]['value'] = $single_calci_data[1];
+            $array_data[$i]['action'] = $single_calci_data[2];
+            $array_data[$i]['comp_name'] =$comp_data[$i] ;
+           $i++;
+        }
+     }
 }
-dd($getMonth);
+
+dd($array_data);
+
+// $inputSentence = "50% from Basic Salary";
+
+//   preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $inputSentence, $matches, PREG_SET_ORDER);
+
+// foreach ($matches as $match) {
+//     $percentage = $match[1]."_".$match[2];
+// }
+// dd($matches);
+
+// $input = "If the Basic is Less then 21K then we can give this";
+
+// $pattern = '/\bBasic\s*(?:is)?\s*(Less\s*than|<)\s*(\d+K)\b/i';
+// preg_match($pattern, $input, $matches);
+
+// if (count($matches) > 0) {
+//     $condition = "basic " . $matches[1] . " " . $matches[2];
+//     echo $condition;
+// } else {
+//     echo "Pattern not found.";
+// }
+// $input = "50% from CTC or 50% from Gross";
+
+// $pattern = '/\(([^)]+)\s*<\s*(\d+)\)/';
+// preg_match_all($pattern, $input, $matches, PREG_SET_ORDER);
+
+// foreach ($matches as $match) {
+//     $condition = $match[1];
+//     $value = $match[2];
+//     echo "Condition: $condition Value: $value" . PHP_EOL;
+// }
+
+$inputSentence = "200 Maximum, if the person married";
+$pattern = '/(\d+)\s*(?:|Max|Maximum)./i';
+
+preg_match($pattern, $inputSentence, $matches);
+
+if (isset($matches[1])) {
+    $maxValue = (int)$matches[1];
+    echo  $maxValue;
+} else {
+    echo "No max value found.";
+}
     ?>
 
 
