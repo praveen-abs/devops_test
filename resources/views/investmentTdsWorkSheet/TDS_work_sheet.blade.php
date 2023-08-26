@@ -1,3 +1,11 @@
+<?php
+
+    // dd($under_section_10["2) Allowance to the extent exampt under section 10"][0]['actual']);
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -118,47 +126,111 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; " class="p-2 m-11">House Rent Allowance</p>
+                            <p style="font-size:11px; " class="p-2 m-11"><b>1 Gross Earnings</b></p>
+                            @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{" -- "}}</p>
+                            @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
-                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
-                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">Projection</p>
-                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
-                            <p style="font-size:11px; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">Total</p>
-                            <p style="font-size:11px; " class="p-2 m-11">Total</p>
-                            <p style="font-size:11px; " class="p-2 m-11">Total</p>
+                            <p style="font-size:11px; " class="p-2 m-11"></p>
+
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; marign-top:-11px">Particulars</p>
-                            <p style="font-size:11px; marign-top:-11px">Particulars</p>
-                            <p style="font-size:11px; marign-top:-11px">Particulars</p>
+                            <p style="font-size:11px; " class="p-2 m-11"><b>2 Allowance to the extent exempt under Section 10</b></p>
+                            @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">Actual</p>
-                            <p style="font-size:11px; marign-top:-11px">Actual</p>
-                            <p style="font-size:11px; marign-top:-11px">Actual</p>
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $under_section_10["2) Allowance to the extent exampt under section 10"][0]["actual"] }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">Projection</p>
-                            <p style="font-size:11px; marign-top:-11px">Projection</p>
-                            <p style="font-size:11px; marign-top:-11px">Projection</p>
-                        </td>
-                        <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">Total</p>
-                            <p style="font-size:11px; marign-top:-11px">Total</p>
-                            <p style="font-size:11px; marign-top:-11px">Total</p>
 
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $under_section_10["2) Allowance to the extent exampt under section 10"][0]["total"]}}</p>
+
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>3 Total After Exception (1 -2)</b></p>
+                        </td>
+                        <td colspan="1">
+                        </td>
+                        <td colspan="1">
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{ $Total_after_excemption["3) Total after excemption (1 - 2)"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>4 Taxable Income under Previous employment</b></p>
+                            @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            @endforeach
+                        </td>
+                        <td colspan="1">
+                        </td>
+                        <td colspan="1">
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{  $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>5 Gross Total (3 + 4)</b></p>
+                        </td>
+                        <td colspan="1">
+                        </td>
+                        <td colspan="1">
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{  $Gross_Total["5) Gross Total (3 - 4)"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>6 Under Section 16</b></p>
+                            @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            @endforeach
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["actual"]}}</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["projection"]}}</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>6 Under Section 16</b></p>
+                            @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            @endforeach
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important; height:20px !important; background-color:rgba(128, 128, 128, 0.629)">
@@ -166,15 +238,15 @@
                             <p style="font-size:11px">TDS for March</p>
                         </td>
                         <td colspan="1">
-                          
+
                         </td>
                         <td colspan="1" >
-                    
+
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px">₹ 99898</p>
                         </td>
-                    </tr>                    
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -191,7 +263,7 @@
                         <td  style="width:40%; padding-top:16px;">
                             <p style="font-size:11px; border:0.4px solid gray ; width:100%;"></p>
                         </td>
-                    </tr>             
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -226,7 +298,7 @@
                             <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
                             <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
                             <p style="font-size:11px; text-align:right; " class="p-2 m-11">Basic</p>
-                           
+
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; text-align: right;  " class="p-2 m-11">Basic</p>
@@ -235,7 +307,7 @@
                             <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
                             <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
                             <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            
+
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
@@ -261,8 +333,8 @@
                             <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
                             <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
                         </td>
-                    </tr> 
-                    
+                    </tr>
+
                     <tr style="border-top:0px !important;">
                         <td colspan="1">
                             <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
@@ -280,7 +352,7 @@
                             <p style="font-size:11px; text-align: right;" class="p-2 m-11">Total</p>
                         </td>
                     </tr>
-                    
+
                     <tr style="border-top:0px !important;">
                         <td colspan="4">
                             <p style="font-size:11px;" class="p-2 m-11">
@@ -291,12 +363,12 @@
                         <td colspan="1">
                             <p style="font-size:11px; " class="p-2 m-11">$12920</p>
                         </td>
-                    </tr>                      
+                    </tr>
                 </table>
             </td>
         </tr>
 
-    
+
 
     </table>
 </body>
