@@ -197,7 +197,7 @@ class VmtEmployeeService
             ]);
         }
     }
-    private function createOrUpdate_User($user_id = null,$data, $can_onboard_employee,  $onboard_type)
+    private function createOrUpdate_User($data, $can_onboard_employee,  $onboard_type, $user_id = null)
     {
         $newUser = null;
 
