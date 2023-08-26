@@ -1066,7 +1066,7 @@ Route::middleware(['auth'])->group(function () {
     //investment testing
 
     Route::view('/investmenttest', 'testing.excellimport');
-    Route::post('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'testinginvest']);
+    Route::get('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'testinginvest']);
 
 
     //notification

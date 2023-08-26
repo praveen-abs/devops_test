@@ -8,7 +8,7 @@
                     <p class="font-bold text-2xl">Employee Quick Onboarding</p>
                     <ul class="list-disc p-2 my-3">
                         <li class="font-semibold fs-6">Download the <a href="/assets//ABSQuickOnboarding.xlsx"
-                                class="text-blue-300 font-semibold fs-6 cursor-pointer">Sample</a>
+                                class="font-semibold text-blue-300 cursor-pointer fs-6">Sample</a>
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
                     </ul>
@@ -21,18 +21,18 @@
                     </div>
                     <input ref="fileInput" type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
                         accept=".xls, .xlsx">
-                    <button class="btn btn-orange mt-4 float-right mx-5"
+                    <button class="float-right mx-5 mt-4 btn btn-orange"
                         @click="useStore.convertExcelIntoArray('quick')">Upload</button>
                 </div>
                 <div class="col-span-7">
                     <div class="col-form-label">
                         <!-- <p class="font-semibold fs-4"> Upload Instructions</p> -->
-                        <div class="py-2  bg-red-100 rounded-lg f-12 alert-warning font-semibold fs-6"><i
-                                class='fa fa-warning text-danger mx-2'></i>
+                        <div class="py-2 font-semibold bg-red-100 rounded-lg f-12 alert-warning fs-6"><i
+                                class='mx-2 fa fa-warning text-danger'></i>
                             Read these instructions before uploading the file.
                         </div>
                         <div>
-                            <ul class="list-disc font-semibold m-4" style="">
+                            <ul class="m-4 font-semibold list-disc" style="">
                                 <li class="font-semibold fs-6">
                                     The fields Employee Number, Employee Name, Email, Date of Joining, and Location must be
                                     filled in before adding workers.</li>

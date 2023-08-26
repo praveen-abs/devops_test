@@ -48,7 +48,7 @@ class VmtDashboardService{
 
     }
 
-    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService , $serviceVmtMasterConfigService){
+    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService ){
 
         $validator = Validator::make(
             $data = [
@@ -75,7 +75,7 @@ class VmtDashboardService{
         $user_id = User::where('user_code',$user_code)->first()->id;
 
         $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar','org_role'])->first();
-        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation;
+        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation ?? '';
 
         $profile_pic = null;
 
@@ -130,7 +130,6 @@ class VmtDashboardService{
 
         }
 
-        $mobile_settings =$serviceVmtMasterConfigService->getEmployeesMobileSettingsData($user_code);
 
         $response['name']=$employee_details_query->name;
         $response['designation']=$employee_designation;
@@ -151,7 +150,6 @@ class VmtDashboardService{
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
         $response["events"] = $this->getAllEventsDashboard();
-        $response["mobile_settings"] = $mobile_settings;
 
         return $response;
     }
@@ -564,7 +562,7 @@ class VmtDashboardService{
             $month = "0" . $month;
 
 
-        $days_count = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $days_count = date('t', mktime(0,0,0,$month,1, $year));
 
 
         for ($i = 1; $i <= $totalDays; $i++) {

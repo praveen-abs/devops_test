@@ -257,10 +257,9 @@ class VmtTestingController extends Controller
 
         // $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
-        // $image_view = url('/') . $VmtClientMaster->client_logo;
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
-        // $response = array();
-        // try {
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         //     foreach ($array_mail as $recipient) {
                 $isSent = \Mail::to('sheltonfdo23@gmail.com')->send(new WelcomeMail());
@@ -700,7 +699,7 @@ class VmtTestingController extends Controller
             "releivingDoc" => null,
             "voterId" => null,
             "passport" => null,
-            "dlDoc" => null, 
+            "dlDoc" => null,
             'food_coupon_monthly'=> 0,
             'food_coupon_yearly' =>0,
             'lta_monthly' => 0,
