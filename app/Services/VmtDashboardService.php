@@ -559,7 +559,7 @@ class VmtDashboardService{
             $month = "0" . $month;
 
 
-        $days_count = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $days_count = date('t', mktime(0,0,0,$month,1, $year));
 
 
         for ($i = 1; $i <= $totalDays; $i++) {
