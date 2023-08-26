@@ -172,9 +172,12 @@ class VmtAttendanceReportsService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        // print($user);exit;
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
+
+        if (sessionGetSelectedClientid() != 1) {
+            $user = $user->where('client_id', sessionGetSelectedClientid());
+        }
+        $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -666,9 +669,12 @@ class VmtAttendanceReportsService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        // print($user);exit;
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
+
+        if (sessionGetSelectedClientid() != 1) {
+            $user = $user->where('client_id', sessionGetSelectedClientid());
+        }
+        $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -1263,9 +1269,12 @@ class VmtAttendanceReportsService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        // print($user);exit;
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
+
+        if (sessionGetSelectedClientid() != 1) {
+            $user = $user->where('client_id', sessionGetSelectedClientid());
+        }
+        $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -1737,7 +1746,6 @@ class VmtAttendanceReportsService
                         $lc_hrs = (int) $lc_ar->totalHours;
                         $lc_mins = $lc_ar->toArray()['minutes'];
                         $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
-
                     } else {
                         $LCDuration  = '-';
                     }
