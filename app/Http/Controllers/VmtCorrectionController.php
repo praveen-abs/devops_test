@@ -605,12 +605,13 @@ class VmtCorrectionController extends Controller
                 "user_id": "DM189"
                }
            ]';
+           
 
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '',$dunamis);
 
         $dunamis = json_decode($dunamis, true);
-      
+
         $not_existed_user = array('The Give User IDS Does Not Exists In DataBase Please Check Ur Json data');
         $not_existed_attedance_id = array('The Give Attendance IDS Does Not Exists In DataBase Please Check Ur Json data');
         $update_ids = array('Scuessfully Updated');
