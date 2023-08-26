@@ -6,6 +6,7 @@ import { required, email, minLength, sameAs, helpers } from '@vuelidate/validato
 import axios from "axios";
 import { inject } from "vue";
 import { useToast } from "primevue/usetoast";
+import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -166,6 +167,18 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const is_mobile_no_exists = ref(false)
     const is_ac_no_exists = ref(false)
     const pan_card_exists = ref(false);
+    const mandatoryDocuments = ref()
+    const isMandatoryDocuments = reactive({
+        AadharFrontIsMandatory: true,
+        AadharBackIsMandatory: true,
+        panCardIsMandatory: true,
+        educationCertificateIsMandatory: true,
+        passport: true,
+        DrivingLicense: true,
+        voterId: true,
+        RelievingLetter: true
+    })
+
 
 
     const getPersonalDocuments = (e, filename) => {
@@ -359,6 +372,19 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         const newDate = subYears(value, 10);
         return newDate;
     }
+    const dateOfBirth = (value) => {
+        const newDate = subYears(value, 18);
+        return newDate;
+    }
+
+    const isMandatoryDocument = (doc) => {
+        console.log(doc);
+        // if(doc == 1){
+        //     return true
+        // }else{
+        //     return false
+        // }
+    }
 
 
     const validateFile = (value) => {
@@ -549,16 +575,114 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
             // Personal Documents
 
-            AadharCardFront: { required: helpers.withMessage('Aadhar front is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            AadharCardBack: { required: helpers.withMessage('Aadhar back is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            PanCardDoc: { required: helpers.withMessage('Pancard is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            DrivingLicenseDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            EductionDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            VoterIdDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            RelievingLetterDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-            PassportDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
-        }
+            AadharCardFront: {
+                required: helpers.withMessage('Aadhar front is required', (value) => {
+                    if (!isMandatoryDocuments.AadharFrontIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.AadharFrontIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.AadharFrontIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
+                }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+            AadharCardBack: {
+                required: helpers.withMessage('Aadhar back is required', () => {
+                    if (!isMandatoryDocuments.AadharBackIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.AadharBackIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.AadharBackIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
+                }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+            PanCardDoc: {
+                required: helpers.withMessage('Pan Card is required', () => {
+                    if (!isMandatoryDocuments.panCardIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.panCardIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.panCardIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
 
+                }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+            DrivingLicenseDoc: {
+                required: helpers.withMessage('Driving License is required', () => {
+                    if (!isMandatoryDocuments.DrivingLicense) {
+                        if (!value) {
+                            return isMandatoryDocuments.DrivingLicense
+                        } else {
+                            return !isMandatoryDocuments.DrivingLicense
+                        }
+                    } else {
+                        return true
+                    }
+                }
+                ), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+            EductionDoc: {
+                required: helpers.withMessage('Education Certificate is required', () => {
+                    if (!isMandatoryDocuments.educationCertificateIsMandatory) {
+                        if (!value) {
+                            return isMandatoryDocuments.educationCertificateIsMandatory
+                        } else {
+                            return !isMandatoryDocuments.educationCertificateIsMandatory
+                        }
+                    } else {
+                        return true
+                    }
+                }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+            VoterIdDoc: {
+                required: helpers.withMessage('Voter Id is required', () => {
+                    if (!isMandatoryDocuments.voterId) {
+                        if (!value) {
+                            return isMandatoryDocuments.voterId
+                        } else {
+                            return !isMandatoryDocuments.voterId
+                        }
+                    } else {
+                        return true
+                    }
+                }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+            RelievingLetterDoc: {
+                required: helpers.withMessage('Relieving Letter is required', () => {
+                    if (!isMandatoryDocuments.RelievingLetter) {
+                        if (!value) {
+                            return isMandatoryDocuments.RelievingLetter
+                        } else {
+                            return !isMandatoryDocuments.RelievingLetter
+                        }
+                    } else {
+                        return true
+                    }
+                }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+            PassportDoc: {
+                required: helpers.withMessage('passport is required', () => {
+                    if (!isMandatoryDocuments.passport) {
+                        if (!value) {
+                            return isMandatoryDocuments.passport
+                        } else {
+                            return !isMandatoryDocuments.passport
+                        }
+                    } else {
+                        return true
+                    }
+                }),
+                validateFile: helpers.withMessage('Upload Valid format', validateFile)
+            },
+        }
 
     })
 
@@ -924,6 +1048,69 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         });
 
         service.getBloodGroups().then((result) => (bloodGroups.value = result.data));
+
+        axios.get('/getMandatoryDocumentDetails').then(res => {
+            mandatoryDocuments.value = res.data
+            console.log(res.data);
+        }).finally(() => {
+            if (mandatoryDocuments.value) {
+                console.log("working");
+                mandatoryDocuments.value.forEach(element => {
+                    if (element.document_name == "Aadhar Card Front") {
+                        if (element.is_mandatory == 1) {
+                            console.log("Aadhar Card Front in man");
+                            isMandatoryDocuments.AadharFrontIsMandatory = false
+                        }
+                    }
+                    if (element.document_name == "Aadhar Card Back") {
+                        if (element.is_mandatory == 1) {
+                            console.log("Aadhar Card Back in man");
+
+                            isMandatoryDocuments.AadharBackIsMandatory = false
+                        }
+                    }
+                    if (element.document_name == "Pan Card") {
+                        if (element.is_mandatory == 1) {
+                            console.log("Pan in man");
+
+                            isMandatoryDocuments.panCardIsMandatory = false
+                        }
+                    }
+                    if (element.document_name == "Education Certificate") {
+                        if (element.is_mandatory == 1) {
+                            console.log("Education in man");
+
+                            isMandatoryDocuments.educationCertificateIsMandatory = false
+                        }
+                    }
+                    if (element.document_name == "Passport") {
+                        if (element.is_mandatory == 1) {
+                            console.log("Passport in man");
+
+                            isMandatoryDocuments.passport = false
+                        }
+                    }
+                    if (element.document_name == "Voter ID") {
+                        if (element.is_mandatory == 1) {
+                            isMandatoryDocuments.voterId = false
+                        }
+                    }
+                    if (element.document_name == "Driving License") {
+                        if (element.is_mandatory == 1) {
+                            isMandatoryDocuments.DrivingLicense = false
+                        }
+                    }
+                    if (element.document_name == "Relieving Letter") {
+                        if (element.is_mandatory == 1) {
+                            isMandatoryDocuments.RelievingLetter = false
+                        }
+                    }
+                });
+            }
+        })
+
+
+
     }
 
 
@@ -1503,7 +1690,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         getPersonalDocuments, readonly,
 
         // /Helper functions
-        afterYears, beforeYears, compen_disable
+        afterYears, beforeYears, compen_disable, dateOfBirth
 
 
 

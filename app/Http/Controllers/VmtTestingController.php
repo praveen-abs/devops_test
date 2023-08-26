@@ -257,10 +257,9 @@ class VmtTestingController extends Controller
 
         // $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
-        // $image_view = url('/') . $VmtClientMaster->client_logo;
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
-        // $response = array();
-        // try {
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         //     foreach ($array_mail as $recipient) {
                 $isSent = \Mail::to('sheltonfdo23@gmail.com')->send(new WelcomeMail());
@@ -733,7 +732,7 @@ class VmtTestingController extends Controller
             "releivingDoc" => null,
             "voterId" => null,
             "passport" => null,
-            "dlDoc" => null, 
+            "dlDoc" => null,
             'food_coupon_monthly'=> 0,
             'food_coupon_yearly' =>0,
             'lta_monthly' => 0,
@@ -769,8 +768,8 @@ class VmtTestingController extends Controller
         $appoinmentPath = "";
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 //dd($client_name);
-        $html = view('appointment_mail_templates.appointment_letter_langro_india_pvt_ltd',$data);
-return  $html;
+        $html = view('dynamic_payslip_templates.dynamic_payslip_v2',$data);
+    //    return  $html;
                         $options = new Options();
                         $options->set('isHtml5ParserEnabled', true);
                         $options->set('isRemoteEnabled', true);
@@ -798,9 +797,9 @@ return  $html;
      public function Tesingtdsworksheet(Request $request){
 
 
-            $html = view('investmentTdsWorkSheet.TDS_work_sheet');
+            $html = view('dynamic_payslip_templates.dynamic_payslip_v2');
 
-            return $html;
+            // return $html;
 
             $options = new Options();
             $options->set('isHtml5ParserEnabled', true);

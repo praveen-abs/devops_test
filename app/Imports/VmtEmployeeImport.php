@@ -14,8 +14,9 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
 use App\Models\Compensatory;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
-class VmtEmployeeImport extends DefaultValueBinder implements ToModel,  WithHeadingRow
+class VmtEmployeeImport extends DefaultValueBinder implements ToModel,  WithHeadingRow,WithCalculatedFormulas
 {
     
     public function model(array $row)

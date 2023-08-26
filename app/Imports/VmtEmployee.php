@@ -11,8 +11,9 @@ use App\Mail\WelcomeMail;
 use App\Models\VmtEmployee as EmployeeModel;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
-class VmtEmployee implements ToModel,  WithHeadingRow
+class VmtEmployee implements ToModel,  WithHeadingRow,WithCalculatedFormulas
 {
     /**
     * @param Collection $collection

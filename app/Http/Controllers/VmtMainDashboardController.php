@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtClientMaster;
+use App\Services\VmtMobileConfigService;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
@@ -492,6 +493,21 @@ class VmtMainDashboardController extends Controller
         }
     }
 
+    public function sessionSelectedClient()
+    {
+        if(sessionGetSelectedClientName()){
+
+            if(sessionGetSelectedClientName() == 'All'){
+               return  $logoSrc = getSessionCurrentlySelectedClient();
+              }else{
+                return $logoSrc = getSessionCurrentlySelectedClient();
+              }
+
+           }else{
+
+             return  $logoSrc =  getSessionCurrentlySelectedClient(auth()->user()->id);
+            }
+    }
     public function updateGlobalClientSelection(Request $request)
     {
 
