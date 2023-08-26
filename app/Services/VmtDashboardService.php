@@ -74,7 +74,7 @@ class VmtDashboardService{
         $user_id = User::where('user_code',$user_code)->first()->id;
 
         $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar','org_role'])->first();
-        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation;
+        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation ?? '';
 
         $profile_pic = null;
 
