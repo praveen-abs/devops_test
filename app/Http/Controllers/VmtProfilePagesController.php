@@ -802,7 +802,7 @@ class VmtProfilePagesController extends Controller
 
 
         try {
-            $user_id=User::where('user_code',$request->user_code)->first()->id;
+            $user_id = User::where('user_code', $request->user_code)->first()->id;
             $doc_upload_status = array();
 
             foreach ($bulkonboard_docs as $doc_name => $doc_obj) {
@@ -1009,4 +1009,40 @@ class VmtProfilePagesController extends Controller
         $response['can_edit'] = $status;
         return   $response;
     }
+    public function saveDocumentDetails(Request $request)
+    { 
+        // dd($request->all());
+       try{
+        $emp_doc_details = VmtEmployee::where('userid', $request->userid)->first();
+        // dd( $emp_doc_details);
+        if ($emp_doc_details->exists()) {
+            $emp_doc_details->aadhar_enrollment_number = $request->aadhar_enrollment_number;
+            $emp_doc_details->voter_id_number = $request->voter_id_number;
+            $emp_doc_details->voter_id_issued_on = $request->voter_id_issued_on;
+            $emp_doc_details->degree = $request->degree;
+            $emp_doc_details->dc_branch_specialization = $request->dc_branch_specialization;
+            $emp_doc_details->dc_year_of_completion = $request->dc_year_of_completion;
+            $emp_doc_details->dc_cgpa_percentage =$request->dc_cgpa_percentage;
+            $emp_doc_details->dc_university_school = $request->dc_university_school;
+            $emp_doc_details->passport_country_code =$request->passport_country_code;
+            $emp_doc_details->passport_type = $request->passport_type;
+            $emp_doc_details->passport_date_of_issue = $request->passport_date_of_issue;
+            $emp_doc_details->passport_place_of_issue = $request->passport_place_of_issue;
+            $emp_doc_details->passport_place_of_birth = $request->passport_place_of_birth;
+            $emp_doc_details->passport_expire_on = $request->passport_expire_on;
+            $emp_doc_details->save();
+            return $response =([
+                'status' =>"success",
+                'message'=>" saved successfully",
+            ]);
+        }
+    }catch(\Exception $e){
+        return $response =([
+             'status' =>"success",
+             'message'=>"error while fetching data successfully",
+             'data'=>$e->getmessage()."  Line ".$e->getline(),
+         ]); 
+    }
+}
+
 }

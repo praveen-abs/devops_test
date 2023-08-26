@@ -74,7 +74,7 @@ class VmtDashboardService{
         $user_id = User::where('user_code',$user_code)->first()->id;
 
         $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar','org_role'])->first();
-        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation;
+        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation ?? '';
 
         $profile_pic = null;
 
@@ -559,7 +559,7 @@ class VmtDashboardService{
             $month = "0" . $month;
 
 
-        $days_count = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $days_count = date('t', mktime(0,0,0,$month,1, $year));
 
 
         for ($i = 1; $i <= $totalDays; $i++) {
