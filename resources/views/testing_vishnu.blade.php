@@ -17,6 +17,7 @@
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
     use App\Mail\VmtPMSMail_Assignee;
+    use App\Mail\VmtAttendanceMail_Regularization;
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
@@ -676,25 +677,27 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-
-
-
-
         //  }
+        $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
 
-        $getMonth = [];
-        foreach (range(1, 12) as $m) {
-         $getMonth[] = date('F', mktime(0, 0, 0, $m, 1));
-      }
 
-
-$monthl_dates =[];
-for($i=1;$i<=31;$i++){
-    $monthl_dates[]=$i;
-}
-dd($getMonth);
+        $isSent    = \Mail::to("vvishva185@gmail.com")->cc(["vishnu@abshrms.com"])->send(new VmtAttendanceMail_Regularization(
+                    $query_user='Vishnu',
+                    $query_user="Abs@123123",
+                    "",
+                    "",
+                    $manager_details="karthick",
+                    $manager_details="ABS023",
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    "bye",
+                    "Pending",
+                    $user_type="Admin",
+                ));
+dd(  $isSent );
     ?>
 
 
