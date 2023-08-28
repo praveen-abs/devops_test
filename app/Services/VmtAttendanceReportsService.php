@@ -1715,6 +1715,51 @@ class VmtAttendanceReportsService
         $response['rows'] = $absent_data;
         return $response;
     }
+
+    public function fetchHalfDayReportData($start_date, $end_date)
+    {
+        $response = array();
+        $halfday_data = array();
+        $temp_ar = array();
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        // dd( $attendance_data);
+        foreach ($attendance_data as $single_data) {
+            foreach ($single_data as $key => $value) {
+                if ($value['isAbsent'] == false && $value['is_weekoff'] == false && $value['isLeave'] == false) {
+                    $current_shift =  VmtWorkShifts::where('id', $value['work_shift_id'])->first();
+                    if ($value['isLC'] == 'Approved' ||  $value['isMIP'] == 'Approved') {
+                        $value['checkin_time'] = $value['reged_checkin_time'];
+                    } else {
+                        $value['checkin_time'] = $value['checkin_time'];
+                    }
+
+                    if ($value['isEG'] == 'Approved' ||  $value['isMOP'] == 'Approved') {
+                        $value['checkout_time'] = $value['reged_checkout_time'];
+                    } else {
+                        $value['checkout_time'] = $value['checkout_time'];
+                    }
+                    if (Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) < $current_shift->fullday_min_workhrs) {
+                        $temp_ar['Employee Code'] = $value['user_code'];
+                        $temp_ar['Employee Name'] = $value['name'];
+                        $temp_ar['Date'] = Carbon::parse($value['date'])->format('d-M-Y');
+                        $temp_ar['Shift Name'] = $current_shift->shift_name;
+                        $temp_ar['In Punch'] = $value['checkin_time'];
+                        $temp_ar['Out Punch'] = $value['checkout_time'];
+                        $temp_ar['Status'] = 'Half Day';
+                        $temp_ar['Day Status'] = 'Half Day Absent';
+
+                        array_push($halfday_data, $temp_ar);
+                        unset($temp_ar);
+                    }
+                }
+            }
+        }
+   
+        $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Status', 'Day Status');
+        $response['rows'] = $halfday_data;
+        return $response;
+    }
+
     public function fetchLCReportData($start_date, $end_date)
     {
         $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
@@ -1917,6 +1962,7 @@ class VmtAttendanceReportsService
                 }
             }
         }
+
         $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
         $response['rows'] = $otData;
         return $response;
