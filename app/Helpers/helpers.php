@@ -750,7 +750,7 @@ function numberToWord($num)
 
             $hundreds = (int) ($num_part / 100);
 
-            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . 'Hundred' . ($hundreds == 1 ? '' : 's') . ' ' : '');
+            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' ' : '');
 
             $tens = (int) ($num_part % 100);
 
@@ -778,7 +778,7 @@ function numberToWord($num)
         if ($commas) {
             $words = str_replace(',', '', $words);
         }
-        return $words;
+        return $words." Only";
     } else if (!((int) $num)) {
         return 'Zero';
     }
