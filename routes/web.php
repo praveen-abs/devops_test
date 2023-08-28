@@ -52,7 +52,7 @@ Route::get('/create-holiday', function () {
 Route::get('/employee_profile', [App\Http\Controllers\VmtAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     //Basic DB data
     Route::get('/db/getBankDetails', [App\Http\Controllers\VmtBankController::class, 'getBankDetails'])->name('vmt_getBankDetails');
@@ -1095,6 +1095,12 @@ Route::get('/testEmployeeDocumentsJoin', [App\Http\Controllers\VmtTestingControl
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
 Route::get('/resetPassword', 'App\Http\Controllers\Auth\LoginController@showResetPasswordPage')->name('vmt-resetpassword-page');
+
+
+Route::get('/reset-password', function () {
+    return view('auth.reset_password');
+})->name('reset-password');
+
 Route::get('/forgetPassword', 'App\Http\Controllers\Auth\LoginController@showForgetPasswordPage')->name('vmt-forgetpassword-page');
 
 Route::post('/send-passwordresetlink', [App\Http\Controllers\Auth\LoginController::class, 'sendPasswordResetLink'])->name('vmt-send-passwordresetlink');
