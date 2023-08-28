@@ -25,6 +25,7 @@ COPY . .
 RUN composer update
 RUN composer dump-autoload
 # Set permissions for Laravel
+RUN mkdir -p /var/www/html/storage/framework/views
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 # Expose the PHP port
 EXPOSE 8000
