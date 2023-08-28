@@ -86,7 +86,7 @@ class VmtAttendanceReportsService
             for ($i = 0; $i < count($emp_work_shift); $i++) {
 
                 $regularTime  = VmtWorkShifts::where('id', $emp_work_shift[$i]->work_shift_id)->first();
-                $shift_start_time = Carbon::parse($regularTime->shift_start_time);
+                $shift_start_time = Carbon::parse($regularTime->shift_start_time)->addMinutes( $regularTime->grace_time);
                 $shift_end_time = Carbon::parse($regularTime->shift_end_time);
                 $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time), false);
                 $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time), false);
