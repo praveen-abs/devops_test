@@ -71,7 +71,7 @@
             </Column> -->
         </DataTable>
 
-        <button class="p-2 bg-black text-[12px] text-white mt-10" @click="viewpayslip = true">view</button>
+        <!-- <button class="p-2 bg-black text-[12px] text-white mt-10" @click="viewpayslip = true">view</button> -->
 
     </div>
 

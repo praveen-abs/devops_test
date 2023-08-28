@@ -188,6 +188,9 @@ export default defineConfig({
          //Mobile Settings
              'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
 
+            //  payslipPreview
+            'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
+
 
             ],
 
