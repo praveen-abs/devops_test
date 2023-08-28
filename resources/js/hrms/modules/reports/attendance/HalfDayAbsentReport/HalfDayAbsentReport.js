@@ -27,7 +27,7 @@ import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
 
-import HalfDayReport from './HalfDayReport.vue'
+import HalfDayReport from './HalfDayAbsentReport.vue'
 const app = createApp(HalfDayReport);
 
 app.use(PrimeVue, { ripple: true });

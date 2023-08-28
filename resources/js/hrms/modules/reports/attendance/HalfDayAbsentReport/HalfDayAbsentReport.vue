@@ -11,7 +11,7 @@
     </Dialog>
 
     <div>
-        <p class="font-semibold text-lg">Attendance Absent Reports</p>
+        <p class="font-semibold text-lg">Attendance Half Day Absent Reports</p>
     </div>
 
     <div class="bg-white p-2 my-2 rounded-lg grid grid-cols-12">
@@ -138,7 +138,7 @@ const getEmployeeAttendanceReports = async () => {
 
 const getEmployeeAbsentReports = () => {
     // Absent Reports
-    let url = '/fetch-absent-report-data'
+    let url = '/fetch-half-day-data'
     canShowLoading.value = true
     axios.post(url, {
         start_date: variable.start_date,
@@ -161,7 +161,7 @@ const getEmployeeAbsentReports = () => {
 }
 
 const downloadAbsentReports = () => {
-    let url = '/report/download-absent-report'
+    let url = '/report/download-half-day-report'
     canShowLoading.value = true
     axios.post(url, {
         start_date: variable.start_date,
@@ -170,7 +170,7 @@ const downloadAbsentReports = () => {
         console.log(response.data);
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(response.data);
-        link.download = `Attendance Absent Report_${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}.xlsx`;
+        link.download = `Attendance Half Day Absent Report_${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}.xlsx`;
         link.click();
     }).finally(() => {
         canShowLoading.value = false

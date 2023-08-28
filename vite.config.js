@@ -188,6 +188,9 @@ export default defineConfig({
          //Mobile Settings
              'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
 
+            //   Half Day Absent Report
+            'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js'
+
 
             ],
 

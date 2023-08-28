@@ -9,7 +9,7 @@
         @endslot
     @endcomponent --}}
 
-@vite( 'resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js')
-<div id="AttendanceAbsentReports"></div>
+@vite(  'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js')
+<div id="HalfDayReport"></div>
 
 @endsection
