@@ -1035,7 +1035,7 @@ Route::middleware(['auth'])->group(function () {
 
     // generate payslip
 
-    Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
+    Route::get('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
     Route::get('/generatetemplates', [App\Http\Controllers\VmtPayCheckController::class, 'generatetemplates'])->name('generatetemplates');
 
     //salary revision
@@ -1068,7 +1068,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tds_work_sheet',[App\Http\Controllers\VmtTestingController::class, 'Tesingtdsworksheet']);
 
 
-   
+
 
     //investment testing
 
