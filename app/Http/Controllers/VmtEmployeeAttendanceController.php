@@ -220,6 +220,10 @@ class VmtEmployeeAttendanceController extends Controller
     {
         return view('reports.attendance_overtime_reports');
     }
+    public function showHalfdayAbsentReport(Request $request)
+    {
+        return view('reports.attendance_halfday_absent_reports');
+    }
 
 
 }
