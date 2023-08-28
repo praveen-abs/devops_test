@@ -1692,6 +1692,7 @@ class VmtAttendanceReportsService
 
     public function fetchAbsentReportData($start_date, $end_date)
     {
+        ini_set('max_execution_time', 300);
         $response = array();
         $absent_data = array();
         $temp_ar = array();
@@ -1750,6 +1751,7 @@ class VmtAttendanceReportsService
 
     public function fetchHalfDayReportData($start_date, $end_date)
     {
+        ini_set('max_execution_time', 300);
         $response = array();
         $halfday_data = array();
         $temp_ar = array();
@@ -1794,6 +1796,7 @@ class VmtAttendanceReportsService
 
     public function fetchLCReportData($start_date, $end_date)
     {
+        ini_set('max_execution_time', 300);
         $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
         $lcData = array();
         $response = array();
@@ -1881,6 +1884,7 @@ class VmtAttendanceReportsService
     }
     public function fetchEGReportData($start_date, $end_date)
     {
+        ini_set('max_execution_time', 300);
         $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
         $ecData = array();
         $response = array();
@@ -1967,6 +1971,7 @@ class VmtAttendanceReportsService
 
     public function fetchOvertimeReportData($start_date, $end_date)
     {
+        ini_set('max_execution_time', 300);
         $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
         $otData = array();
         $response = array();
