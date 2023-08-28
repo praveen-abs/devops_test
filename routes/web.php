@@ -798,6 +798,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports/latecoming-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showLateComingReport'])->name('showLateComingReport');
     Route::get('/reports/earlygoing-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showEarlygoingReport'])->name('showEarlygoingReport');
     Route::get('/reports/absent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showAbsentReport'])->name('showAbsentReport');
+    Route::get('/reports/half-dayabsent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showHalfdayAbsentReport'])->name('showHalfdayAbsentReport');
     Route::get('/reports/attendane-overtime-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showOvertimeReport'])->name('showOvertimeReport');
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
     Route::post('/fetch-detailed-attendance-data', [
@@ -813,10 +814,12 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
         App\Http\Controllers\VmtEmployeeAttendanceController::class,
         'fetchLCReportData'
     ]);
+    Route::post('/fetch-half-day-report',[\App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchHalfDayReportData']);
     Route::post('/report/download-early-going-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadEGReport']);
     Route::post('/report/download-late-coming-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadLCReport']);
     Route::post('/report/download-over-time-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadOvertimeReport']);
-    Route::post('/report/download-HalfDay-Report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadHalfDayReport']);
+    Route::post('/report/download-half-day-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadHalfDayReport']);
+   
 
     //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
