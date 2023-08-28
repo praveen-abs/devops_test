@@ -1,3 +1,18 @@
+
+<?php
+
+$client_logo_path   = public_path($client_details[0]['client_logo']);
+
+$client_image  = base64_encode(file_get_contents($client_logo_path));
+
+$abs_public_logo  =  public_path($date_month['abs_logo']);
+
+$abs_logo  = base64_encode(file_get_contents($abs_public_logo));
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 
@@ -46,12 +61,11 @@
     <table style="background-color: white; width:100%;">
         <tr>
             <td colspan="3">
-                <h1 style="color:black; font-size:16px">ARDENS BUSINESS SOLUTIONS PRIVATE LIMITED</h1>
-                <p style="color:black; font-size:10px; margin-top:-8px;">Lorem ipsum dolor sit, amet consectetur
-                    adipisicing elit. Fuga, voluptates.</p>
+                <h1 style="color:black; font-size:16px">{{ $client_details[0]["client_fullname"] }}</h1>
+                <p style="color:black; font-size:10px; margin-top:-8px;">{{ $client_details[0]['address'] }}</p>
             </td>
             <td colspan="1" style=" ">
-                <img src="" alt="Image Not Found" style=" color:black;  float: right; margin-top:10px">
+                <img src="data:image/png;base64,{{ $client_image }}" alt="Image Not Found" style=" color:black;  float: right; margin-top:10px height:40px width:25px">
             </td>
         </tr>
         <tr>
@@ -59,7 +73,7 @@
         </tr>
         <tr>
             <td colspan="4"style="padding: 0 0 10px 0;">
-                <h1 style="color:black; font-size:14px;">Payslip for the month of April 2023</h1>
+                <h1 style="color:black; font-size:14px;">Payslip for the month of {{ $date_month['Month']}} {{$date_month['Year']}}</h1>
             </td>
         </tr>
         <tr>
@@ -76,20 +90,20 @@
             </td>
             <td colspan="2">
                 <p style="color:gray; font-size:12px; margin-top:-14px;">&nbsp;</p>
-                <p style="color:gray; font-size:12px; margin-top:-14px;">Pardeesh </p>
-                <p style="color:gray; font-size:12px; margin-top:-14px;">Manager Operations </p>
-                <p style="color:gray; font-size:12px; margin-top:-14px;">01/06/2023 </p>
-                <p style="color:gray; font-size:12px; margin-top:-14px;">April 2023 </p>
-                <p style="color:gray; font-size:12px; margin-top:-14px;">10/05/2023 </p>
-                <p style="color:gray; font-size:12px; margin-top:-14px;">2023390109 </p>
+                <p style="color:gray; font-size:12px; margin-top:-14px;"> {{ $personal_details[0]['name'] }}</p>
+                <p style="color:gray; font-size:12px; margin-top:-14px;">{{ $personal_details[0]['designation'] ?? " - " }}</p>
+                <p style="color:gray; font-size:12px; margin-top:-14px;">{{ $personal_details[0]['doj'] ?? " - "}}</p>
+                <p style="color:gray; font-size:12px; margin-top:-14px;">{{ $date_month['Month']}} {{$date_month['Year']}}</p>
+                <p style="color:gray; font-size:12px; margin-top:-14px;">{{ " - " }}</p>
+                <p style="color:gray; font-size:12px; margin-top:-14px;">{{ $personal_details[0]['bank_account_number'] ?? " - " }}</p>
 
 
             </td>
             <td colspan="1">
                 <p style=" font-size:14px; margin-top:-14px; text-align:center;">Employee Net Pay </p>
-                <h1 style=" font-size:32px; margin-top:-12px;color:#000;text-align:center; ">82,54,82,500.00</h1>
-                <p style=" font-size:12px; margin-top:-18px; text-align:center; color:gray; ">Paid Days : 30 | LOP Day :
-                    0 | ARREAR DAYS : </p>
+                <h1 style=" font-size:32px; margin-top:-12px;color:#000;text-align:center; ">{{ $over_all[0]['Net Salary Payable'].".00" }}</h1>
+                <p style=" font-size:12px; margin-top:-18px; text-align:center; color:gray; ">Paid Days : {{  $salary_details[0]['worked_Days'] }} | LOP Day :
+                    {{ $salary_details[0]['lop'] }} | ARREAR DAYS : 0</p>
                 <p style=" font-size:12px; margin-top:-12px; text-align:center; color:#fff"></p>
             </td>
         </tr>
@@ -110,8 +124,10 @@
                             </h1>
                         </td>
                         <td colspan="1">
+                            @if (!empty($arrears[0]))
                             <h1 style="color:#f9be00; font-size:12px ; margin:-6px 0 2px 0;text-align:right;">ARREARS
                             </h1>
+                            @endif
                         </td>
                         <td colspan="1">
                             <h1 style="color:#f9be00; font-size:12px ;  margin:-6px 0 2px 0;text-align:right;">YEAR TO
@@ -123,25 +139,22 @@
                     </tr> --}}
                     <tr style=" ">
                         <td colspan="2" style="margin-bottom: auto !important;">
-                            <p style=" font-size:12px; text-algin:left;margin-top:-7px;">Basic </p>
-                            <p style=" font-size:12px ;text-algin:left; margin-top:-7px;">House Education Allowance</p>
-                            <p style=" font-size:12px;text-algin:left;margin-top:-7px; ">Children Education Allowance
-                            </p>
-                            <p style=" font-size:12px;text-algin:left;margin-top:-7px;">Fixed Allowance</p>
-                            <p style=" font-size:12px;text-algin:left;margin-top:-7px; ">Total</p>
+                            @foreach ($earnings[0] as $earned_key => $single_earnings)
+                            <p style=" font-size:12px; text-algin:left;margin-top:-7px; ">{{ $earned_key }}</p>
+                            @endforeach
                         </td>
                         <td colspan="1" style="margin-bottom: auto !important;">
-                            <p style=" font-size:12px;margin-top:-7px; text-align:right; ">sajd</p>
-                            <p style=" font-size:12px ;margin-top:-7px; text-align:right;">sajd</p>
-                            <p style=" font-size:12px;margin-top:-7px;text-align:right; ">sajd</p>
-                            <p style=" font-size:12px ;margin-top:-7px; text-align:right;">sajd</p>
-                            <p style=" font-size:12px ;margin-top:-7px; text-align:right;">&nbsp;</p>
+                             @foreach ($earnings[0] as $earned_key => $single_earnings)
+                            <p style=" font-size:12px; text-algin:left;margin-top:-7px; text-align:right; ">{{ $single_earnings }}</p>
+                            @endforeach
+                            <p style=" font-size:12px ;margin-top:-7px;">&nbsp;</p>
                         </td>
                         <td colspan="1" style="margin-bottom: auto !important;">
-                            <p style=" font-size:12px;margin-top:-7px; text-align:right;">sajd</p>
-                            <p style=" font-size:12px ;margin-top:-7px; text-align:right;">sajd</p>
-                            <p style=" font-size:12px;margin-top:-7px;text-align:right; ">sajd</p>
-                            <p style=" font-size:12px ;margin-top:-7px; text-align:right;">sajd</p>
+                            @if (!empty($arrears[0]))
+                            @foreach ($arrears[0] as $key => $value )
+                            <p style=" font-size:12px;margin-top:-7px; text-align:right;">{{ $value }}</p>
+                            @endforeach
+                            @endif
                             <p style=" font-size:12px ;margin-top:-7px; text-align:right;">&nbsp;</p>
                         </td>
                         <td colspan="1">
@@ -182,18 +195,14 @@
                     </tr> --}}
                     <tr style=" ">
                         <td colspan="2" style="margin-bottom: auto !important;">
-                            <p style=" font-size:12px; text-algin:left;margin-top:-7px;">Basic </p>
-                            <p style=" font-size:12px ;text-algin:left; margin-top:-7px;">House Education Allowance</p>
-                            <p style=" font-size:12px;text-algin:left;margin-top:-7px; ">Children Education Allowance
-                            </p>
-                            <p style=" font-size:12px;text-algin:left;margin-top:-7px;">Fixed Allowance</p>
-                            <p style=" font-size:12px;text-algin:left;margin-top:-7px; ">Total</p>
+                            @foreach ($Tax_Deduction[0] as $key => $single_taxdeduction)
+                            <p style=" font-size:12px; text-algin:left;margin-top:-7px;">{{ $key }}</p>
+                            @endforeach
                         </td>
                         <td colspan="1" style="margin-bottom: auto !important;">
-                            <p style=" font-size:12px;margin-top:-7px;text-align:right; ">sajd</p>
-                            <p style=" font-size:12px ;margin-top:-7px; text-align:right;">sajd</p>
-                            <p style=" font-size:12px;margin-top:-7px; text-align:right;">sajd</p>
-                            <p style=" font-size:12px ;margin-top:-7px; text-align:right;">sajd</p>
+                            @foreach ($Tax_Deduction[0] as $key => $single_taxdeduction)
+                            <p style=" font-size:12px; text-algin:left;margin-top:-7px; text-align:right;">{{ $single_taxdeduction }}</p>
+                            @endforeach
                             <p style=" font-size:12px ;margin-top:-7px; text-align:right;">&nbsp;</p>
                         </td>
                         <td colspan="1" style="margin-bottom: auto !important;">
@@ -216,13 +225,12 @@
                             <p
                                 style="border-radius:4px; background-color: #fff7db; font-size:12px; width:100%; padding:8px;">
                                 NET PAY (Gross Earnings - Total Deduction) <span style="margin-left: 18%; font-size:12px;">
-                                    400250</span></p>
+                                    {{ $over_all[0]['Net Salary Payable']}}</span></p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="5">
-                            <p style="font-size: 10px; margin-top:-12px;">Total Net Payable 1,05,578.00 (indian rupee
-                                One Lakh Five Thousand Five Hundred Seventy-Eight Only)</p>
+                            <p style="font-size: 10px; margin-top:-12px;">Total Net Payable {{ $over_all[0]['Net Salary Payable']}} ({{ $over_all[0]['Net Salary in words']}} )</p>
                         </td>
                     </tr>
                 </table>
@@ -234,26 +242,33 @@
                 <h1 style="color:#f9be00; margin-bottom:-8px; margin-top:-6px; font-size:14px;">LEAVE DETAILS</p>
             </td>
         </tr>
-
         <tr class="td" style="height: 20px;">
             <td colspan="4">
                 <table style="width: 100%;" >
                     <tr>
                         <td class="" style="height: 20px; width:25%;" >
                             <p style="font-size:10px;color:gray; ">Leave Type</p>
-                            <p style="font-size:11px; margin-top:-8px">6</p>
+                            @for ($i=0; $i<count($leave_data); $i++)
+                            <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['leave_type']}}</p>
+                            @endfor
                         </td>
                         <td colspan="1" style=" width:25%;">
                             <p style="font-size:10px;color:gray; ">Opening Balance</p>
-                            <p style="font-size:11px; margin-top:-8px">8</p>
+                            @for ($i=0; $i<count($leave_data); $i++)
+                            <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['opening_balance']}}</p>
+                            @endfor
                         </td>
                         <td colspan="1" style=" width:25%;">
                             <p style="font-size:10px;color:gray;">Avalied</p>
-                            <p style="font-size:11px; margin-top:-8px">2</p>
+                            @for ($i=0; $i<count($leave_data); $i++)
+                            <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['avalied']}}</p>
+                            @endfor
                         </td>
                         <td colspan="1" style=" width:25%;">
                             <p style="font-size:10px;color:gray;">Closing Balance</p>
-                            <p style="font-size:11px; margin-top:-8px">2</p>
+                            @for ($i=0; $i<count($leave_data); $i++)
+                            <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['closing_balance']}}</p>
+                            @endfor
                         </td>
                     </tr>
                 </table>
@@ -268,12 +283,11 @@
                 <p style="font-size: 10px; text-align:center;">- This is a system generated payslip, hence the signature is not required.-</p>
             </td>
         </tr>
-        
+
         <tr>
             <td colspan="4">
-               <img src="" alt="image Not Found" style="border:2px solid black; float: right;" >
-               <p style="float:right; ">abs_logo</p>
-               <p style="float:right; color:gray; font-size:12px;">Powered By</p>
+               <img src="data:image/png;base64,{{ $abs_logo }}" alt="image Not Found" style="margin-top:5px; margin-left:5px; float: right; height:40px width:25px " >
+               <p style="float:right; color:gray; font-size:10px;">Powered By</p>
             </td>
         </tr>
     </table>
