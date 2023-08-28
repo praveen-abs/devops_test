@@ -1,6 +1,6 @@
 <?php
 
-    // dd($under_section_10["2) Allowance to the extent exampt under section 10"][0]['actual']);
+    // dd( $Decuction_Under_chapter_6a["10) Decuction Under chapter VI - A"][0]['particular'][0] );
 
 ?>
 
@@ -126,7 +126,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; " class="p-2 m-11"><b>1 Gross Earnings</b></p>
+                            <p style="font-size:11px; " class="p-2 m-11"><b>1) Gross Earnings</b></p>
                             @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{" -- "}}</p>
                             @endforeach
@@ -144,7 +144,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; " class="p-2 m-11"><b>2 Allowance to the extent exempt under Section 10</b></p>
+                            <p style="font-size:11px; " class="p-2 m-11"><b>2) Allowance to the extent exempt under Section 10</b></p>
                             @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
@@ -162,7 +162,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; marign-top:-11px"><b>3 Total After Exception (1 -2)</b></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>3) Total After Exception (1 -2)</b></p>
                         </td>
                         <td colspan="1">
                         </td>
@@ -174,7 +174,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; marign-top:-11px"><b>4 Taxable Income under Previous employment</b></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>4) Taxable Income under Previous employment</b></p>
                             @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
@@ -189,7 +189,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; marign-top:-11px"><b>5 Gross Total (3 + 4)</b></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>5) Gross Total (3 + 4)</b></p>
                         </td>
                         <td colspan="1">
                         </td>
@@ -201,7 +201,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; marign-top:-11px"><b>6 Under Section 16</b></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>6) Under Section 16</b></p>
                             @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
@@ -218,10 +218,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; marign-top:-11px"><b>6 Under Section 16</b></p>
-                            @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
-                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
-                            @endforeach
+                            <p style="font-size:11px; marign-top:-11px"><b>7) Income Chargeable Under the Head Salaries (5 - 6)</b></p>
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
@@ -230,7 +227,62 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{  $Under_the_Head_Salaries["7) Income Chargeable Under the Head Salaries (5 - 6)"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>8) Any other income reported by the employee</b></p>
+                           @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["particular"][0] as $key => $value)
+                           <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                           @endforeach
+                           <p style="font-size:11px; marign-top:-11px"><b>Total Income From Other Sources</b></p>
+                           <p style="font-size:11px; marign-top:-11px">Note: A maximum of 12,00,000.000 is allowed as exemption for housing loan interest on Self Occupied House Property and Let Out Property</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"> {{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["actual"]}}</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"> {{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["projection"]}}</p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"> {{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>9) Gross Total Income (7 -8)</b></p>
+                        </td>
+                        <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"> {{ $Gross_Total_income["9) Gross Total income"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>10) Deduction under Chapter VI-A</b></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>80C</b></p>
+                           <?php
+                        //    $i=0;
+                        //     foreach($Decuction_Under_chapter_6a["10) Decuction Under chapter VI - A"][0]["particular"][0] as $key => $value){
+                        //         echo  $key;
+                        //     $i++;
+                            // }
+                           ?>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"> {{ $Gross_Total_income["9) Gross Total income"][0]["total"] }}</p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important; height:20px !important; background-color:rgba(128, 128, 128, 0.629)">
@@ -367,9 +419,6 @@
                 </table>
             </td>
         </tr>
-
-
-
     </table>
 </body>
 

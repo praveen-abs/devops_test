@@ -111,7 +111,7 @@ public function getEmpCompValues(){
         "Tax_Calculation" => ["12) Tax Calculation" => []],
         "Total_Tax_on_income" => ["13) Total Tax on income" => []],
         "Relief_Under_Section_89" => ["14) Tax Payable including Education Cess minus of Relief Under Section 89" => []],
-        "Source_u/s_192" => ["15) Tax Deduction at Source u/s 192" => []],
+        "Source_us_192" => ["15) Tax Deduction at Source u/s 192" => []],
         ];
 
 
@@ -331,14 +331,14 @@ public function getEmpCompValues(){
 
         // 15) Tax Deduction at Source u/s 192
 
-        // $tax_deduction_192['particular']  =  0;
-        // $tax_deduction_192['actual']    = 0;
-        // $tax_deduction_192['projection']    = 0;
-        // $tax_deduction_192['total']    = 0;
-        // array_push($res["15) Tax Deduction at Source u/s 192"],$tax_deduction_192);
+        $tax_deduction_192['particular']  =  0;
+        $tax_deduction_192['actual']    = 0;
+        $tax_deduction_192['projection']    = 0;
+        $tax_deduction_192['total']    = 0;
+        array_push($res["Source_us_192"]["15) Tax Deduction at Source u/s 192"],$tax_deduction_192);
 
 
-        return dd($res);
+        // return dd($res);
 
         $html = view('investmentTdsWorkSheet.TDS_work_sheet',$res);
 
