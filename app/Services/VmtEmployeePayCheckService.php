@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AbsActivePayslip;
 use Illuminate\Support\Collection;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Hash;
@@ -1139,9 +1140,9 @@ class VmtEmployeePayCheckService
             ->whereYear('payroll_date',$year)
             ->whereMonth('payroll_date',$month);
 
-            
-      
-   
+
+
+
      //get leave data
         $start_date= Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
         $end_date= Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
@@ -1371,9 +1372,11 @@ class VmtEmployeePayCheckService
 
 // dd($getpersonal);
 
-        if($type =="pdf"){
-            $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+         $get_payslip =  AbsActivePayslip::where('is_active','1')->first();
 
+        if($type =="pdf"){
+
+            $html = view($get_payslip->payslip_pdf, $getpersonal);
 
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
@@ -1383,7 +1386,7 @@ class VmtEmployeePayCheckService
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-                // $pdf->stream("payslip.pdf");
+                $pdf->stream("payslip.pdf");
                 $response = base64_encode($pdf->output(['payslip.pdf']));
                 return $response;
 
@@ -1395,7 +1398,7 @@ class VmtEmployeePayCheckService
 
         }else if($type =="mail"){
 
-            $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+            $html = view($get_payslip->payslip_pdf, $getpersonal);
 
             $options = new Options();
             $options->set('isHtml5ParserEnabled', true);
@@ -1440,9 +1443,9 @@ try{
             ->whereYear('payroll_date',$year)
             ->whereMonth('payroll_date',$month);
 
-            
-      
-   
+
+
+
      //get leave data
         $start_date= Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
         $end_date= Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
@@ -1669,7 +1672,7 @@ try{
                 ]
             ];
         }
-      
+
         return response()->json([
             'status' => 'success',
             'message' => "",
@@ -1689,7 +1692,7 @@ try{
     public function generatetemplates($type)
     {
 
-    
+
         if($type =="pdf"){
             $html = view('');
 
