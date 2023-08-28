@@ -1691,7 +1691,7 @@ class VmtAttendanceService
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id), true);
 
 
                 $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
