@@ -451,10 +451,18 @@ class VmtAttendanceReportsService
                     $attendanceResponseArray[$key]["checkout_time"] == null &&
                     $attendanceResponseArray[$key]['is_weekoff'] == false
                 ) {
-                    $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id'])
-                        ->whereBetween('start_date', [$start_date, $end_date])
-                        ->orWhereBetween('end_date', [$start_date, $end_date])
-                        ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+
+                    $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id']);
+
+                    if (empty($leave_Details)) {
+                        $leave_Details =   $leave_Details->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                    } else {
+                        $leave_Details =   $leave_Details->WhereBetween('start_date', [$start_date, $end_date]);
+                        $leave_Details =   $leave_Details->WhereBetween('end_date', [$start_date, $end_date])
+                            ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                        // if ($key == '2023-08-12')
+                        // dd($leave_Details);
+                    }
                     if ($leave_Details->count() == 0) {
                         // dd( $leave_Details->count());
                         $attendanceResponseArray[$key]['isAbsent'] = true;
@@ -1021,15 +1029,15 @@ class VmtAttendanceReportsService
                 ) {
 
                     $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id']);
-                   
+
                     if (empty($leave_Details)) {
                         $leave_Details =   $leave_Details->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
                     } else {
                         $leave_Details =   $leave_Details->WhereBetween('start_date', [$start_date, $end_date]);
                         $leave_Details =   $leave_Details->WhereBetween('end_date', [$start_date, $end_date])
                             ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
-                            // if ($key == '2023-08-12')
-                            // dd($leave_Details);
+                        // if ($key == '2023-08-12')
+                        // dd($leave_Details);
                     }
 
                     // if ($key == '2023-08-12')
@@ -1134,7 +1142,7 @@ class VmtAttendanceReportsService
             }
 
 
-           // dd($attendanceResponseArray);
+            // dd($attendanceResponseArray);
             foreach ($attendanceResponseArray as $key => $value) {
                 $lc_mins = 0;
                 if ($attendanceResponseArray[$key]['isLC'] != null) {
@@ -1543,10 +1551,17 @@ class VmtAttendanceReportsService
                     $attendanceResponseArray[$key]["checkout_time"] == null &&
                     $attendanceResponseArray[$key]['is_weekoff'] == false
                 ) {
-                    $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id'])
-                        ->whereBetween('start_date', [$start_date, $end_date])
-                        ->orWhereBetween('end_date', [$start_date, $end_date])
-                        ->get(['id', 'start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                    $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id']);
+
+                    if (empty($leave_Details)) {
+                        $leave_Details =   $leave_Details->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                    } else {
+                        $leave_Details =   $leave_Details->WhereBetween('start_date', [$start_date, $end_date]);
+                        $leave_Details =   $leave_Details->WhereBetween('end_date', [$start_date, $end_date])
+                            ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                        // if ($key == '2023-08-12')
+                        // dd($leave_Details);
+                    }
                     if ($leave_Details->count() == 0) {
                         $attendanceResponseArray[$key]['isAbsent'] = true;
                     } else {
