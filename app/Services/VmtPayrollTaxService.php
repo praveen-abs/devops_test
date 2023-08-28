@@ -97,21 +97,21 @@ public function getEmpCompValues(){
         // dd($v_form_template);
 
     $res= [
-        "1) Gross Earnings" => [],
-        "2) Allowance to the extent exampt under section 10" => [],
-        "3) Total after excemption (1 - 2)" => [],
-        "4) Taxable Income Under Previous employment" => [],
-        "5) Gross Total (3 - 4)" => [],
-        "6) Under section 16" => [],
-        "7) Income Chargeable Under the Head Salaries (5 - 6)" => [],
-        "8) Any other income reported by the employee" => [],
-        "9) Gross Total income" => [],
-        "10) Decuction Under chapter VI - A" => [],
-        "11) Total income (Round By 10 Rupees) (9 - 10)" => [],
-        "12) Tax Calculation" => [],
-        "13) Total Tax on income" => [],
-        "14) Tax Payable including Education Cess minus of Relief Under Section 89" => [],
-        "15) Tax Deduction at Source u/s 192" => [],
+        "Gross_Earnings" => ["1) Gross Earnings" => []],
+        "under_section_10" => ["2) Allowance to the extent exampt under section 10" => []],
+        "Total_after_excemption" => ["3) Total after excemption (1 - 2)" => []],
+        "Under_Previous_employment" => ["4) Taxable Income Under Previous employment" => []],
+        "Gross_Total" => ["5) Gross Total (3 - 4)" => []],
+        "Under_section_16" => ["6) Under section 16" => []],
+        "Under_the_Head_Salaries" => ["7) Income Chargeable Under the Head Salaries (5 - 6)" => []],
+        "reported_by_the_employee" => ["8) Any other income reported by the employee" => []],
+        "Gross_Total_income" => ["9) Gross Total income" => []],
+        "Decuction_Under_chapter_6a" => ["10) Decuction Under chapter VI - A" => []],
+        "Total_income" => ["11) Total income (Round By 10 Rupees) (9 - 10)" => []],
+        "Tax_Calculation" => ["12) Tax Calculation" => []],
+        "Total_Tax_on_income" => ["13) Total Tax on income" => []],
+        "Relief_Under_Section_89" => ["14) Tax Payable including Education Cess minus of Relief Under Section 89" => []],
+        "Source_us_192" => ["15) Tax Deduction at Source u/s 192" => []],
         ];
 
 
@@ -133,7 +133,7 @@ public function getEmpCompValues(){
     //     $Gross_earnings['projection']    = $get_emp_value[$i]['value'];
     //     $Gross_earnings['total']    = $total_sum;
 
-    //     array_push($res["1) Gross Earnings"],$Gross_earnings);
+    //     array_push($res["Gross_Earnings"]["1) Gross Earnings"],$Gross_earnings);
 
     //      }
 
@@ -144,6 +144,8 @@ public function getEmpCompValues(){
          $inv_previous_emp_pt=0;
          $inv_stantard_deduction=0;
          $SumOfHousPropsInOld =0;
+         $tax_calc_new_redime = 0;
+         $sumof80s =0;
          foreach ($v_form_template as $dec_amt) {
 
             $empBasic = $dec_amt['basic'] * 12;
@@ -155,19 +157,19 @@ public function getEmpCompValues(){
                 $hraexamtions = intval($sumOfHradeclared) - intval($empBasic * 10 / 100);
                 $sumofsection10 = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) * 12;
 
-                $allowance_under_sec_10['particular']  =  [$dec_amt['particular'],"Note: Monthly splitup of HRA exemption can be found at the end of this tds sheet.", "Leave Encashment","Total of Allowance to the ex"];
+                $allowance_under_sec_10['particular']  =  [$dec_amt['particular'],"Note: Monthly splitup of HRA exemption can be found at the end of this tds sheet.", "Leave Encashment","Total of Allowance to the extent exempt under Section 10"];
                 $allowance_under_sec_10['actual']    = $sumofsection10;
                 $allowance_under_sec_10['projection']    = 0;
                 $allowance_under_sec_10['total']    = $allowance_under_sec_10['actual'] + $allowance_under_sec_10['projection'];
 
-                array_push($res["2) Allowance to the extent exampt under section 10"],$allowance_under_sec_10);
+                array_push($res["under_section_10"]["2) Allowance to the extent exampt under section 10"],$allowance_under_sec_10);
             }
          }
 
          // 3) Total after excemption (1 - 2);
 
         $total_after_exemption['total'] = $allowance_under_sec_10['total'];
-        array_push($res["3) Total after excemption (1 - 2)"],$total_after_exemption);
+        array_push($res["Total_after_excemption"]["3) Total after excemption (1 - 2)"],$total_after_exemption);
 
 
          // 4) Taxable Income Under Previous employment
@@ -188,12 +190,12 @@ public function getEmpCompValues(){
         $taxincome_preEmployment['projection']  = 0;
         $taxincome_preEmployment['total']  = '848498';
 
-         array_push($res["4) Taxable Income Under Previous employment"],$taxincome_preEmployment);
+         array_push($res["Under_Previous_employment"]["4) Taxable Income Under Previous employment"],$taxincome_preEmployment);
 
          // 5) Gross Total (3 - 4)
 
          $Gross_total['total'] = $total_after_exemption['total'] + $taxincome_preEmployment['total'];
-         array_push($res["5) Gross Total (3 - 4)"],$Gross_total);
+         array_push($res["Gross_Total"]["5) Gross Total (3 - 4)"],$Gross_total);
 
          // 6) Under section 16
 
@@ -239,21 +241,24 @@ public function getEmpCompValues(){
         $undersection['projection'] = 0;
         $undersection['total'] = $sumofSec16;
 
-        array_push($res["6) Under section 16"],$undersection);
+        array_push($res["Under_section_16"]["6) Under section 16"],$undersection);
 
 
         // 7) Income Chargeable Under the Head Salaries (5 - 6)
 
         $income_charge_head_salaries['total'] = $Gross_total['total'] + $undersection['total'] ;
-        array_push($res["7) Income Chargeable Under the Head Salaries (5 - 6)"],$income_charge_head_salaries);
+        array_push($res["Under_the_Head_Salaries"]["7) Income Chargeable Under the Head Salaries (5 - 6)"],$income_charge_head_salaries);
 
 
         // 8) Any other income reported by the employee
+
+        $property_type = [];
         foreach ($v_form_template as $dec_amt) {
 
         if ($dec_amt['section_group'] == "House Properties ") {
 
             $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
+            $property_type[]   =  $totalIntersetPaid['property_type'];
             $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
             if ($totalIntersetPaid['property_type'] == "Let Out Property") {
                 $SumOfHousPropsInNew = $totalIntersetPaid['income_loss'];
@@ -262,31 +267,48 @@ public function getEmpCompValues(){
         }
     }
 
-        $other_income_report['particular']  =  $totalIntersetPaid['property_type'];
+        $other_income_report['particular']  =  [$property_type,"Total Income From Other Sources", "Note: A maximum of 200000 is allowed as exemption for housing loan interest on Self Occupied House Property and Let Out Property"];
         $other_income_report['actual']    = $SumOfHousPropsInOld;
         $other_income_report['projection']    = 0;
         $other_income_report['total']    = $SumOfHousPropsInOld > 200000 ? 200000 : $SumOfHousPropsInOld;
 
-        array_push($res["8) Any other income reported by the employee"],$other_income_report);
+        array_push($res["reported_by_the_employee"]["8) Any other income reported by the employee"],$other_income_report);
 
 
         // 9) Gross Total income
 
         $gorsstotalincome['total'] = $income_charge_head_salaries['total'] + $other_income_report['total'];
-        array_push($res["9) Gross Total income"],$gorsstotalincome);
+        array_push($res["Gross_Total_income"]["9) Gross Total income"],$gorsstotalincome);
+
+        $section =[];
+        $particulars =[];
+        foreach ($v_form_template as $dec_amt) {
+            if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
+                       $section[] = [$dec_amt['section'], $dec_amt['particular'],$dec_amt['max_amount'],$dec_amt['dec_amount']];
+                    //    $particulars[] = $dec_amt['particular'];
+                $sumof80s += $dec_amt['dec_amount'];
+                $dec = $dec_amt;
+
+                if ($sumof80s > 150000) {
+                    $chapter80s = 150000;
+                } else {
+                    $chapter80s = $sumof80s;
+                }
+            }
+    }
 
         // 10) Decuction Under chapter VI - A
 
-        $deductablecapterVIA['particular']  =  0;
-        $deductablecapterVIA['actual']    = 0;
-        $deductablecapterVIA['projection']    = 0;
+        $deductablecapterVIA['particular']  =  [$section , "Total(80C+80CCC+80CCD)"];
+        $deductablecapterVIA['actual']    = ["qualifying","0",1500000, 30000000];
+        $deductablecapterVIA['projection']    = ["Decuctible","0",1500000, 30000000];
         $deductablecapterVIA['total']    = 0;
-        array_push($res["10) Decuction Under chapter VI - A"],$deductablecapterVIA);
+        array_push($res["Decuction_Under_chapter_6a"]["10) Decuction Under chapter VI - A"],$deductablecapterVIA);
 
         // 11) Total income (Round By 10 Rupees) (9 - 10)
 
         $total_income_9_10['total'] = "2000";
-        array_push($res["11) Total income (Round By 10 Rupees) (9 - 10)"],$total_income_9_10);
+        array_push($res["Total_income"]["11) Total income (Round By 10 Rupees) (9 - 10)"],$total_income_9_10);
 
         // 12) Tax Calculation
 
@@ -294,18 +316,18 @@ public function getEmpCompValues(){
         $tax_calculation['actual']    = 0;
         $tax_calculation['projection']    = 0;
         $tax_calculation['total']    = 0;
-        array_push($res["12) Tax Calculation"],$tax_calculation);
+        array_push($res["Tax_Calculation"]["12) Tax Calculation"],$tax_calculation);
 
         // 13) Total Tax on income
 
         $total_tax_income['total'] = "2000";
-        array_push($res["13) Total Tax on income"],$total_tax_income);
+        array_push($res["Total_Tax_on_income"]["13) Total Tax on income"],$total_tax_income);
 
         // 14) Tax Payable including Education Cess minus of Relief Under Section 89
 
 
         $tax_payable_ecucation['total'] = "2000";
-        array_push($res["14) Tax Payable including Education Cess minus of Relief Under Section 89"],$tax_payable_ecucation);
+        array_push($res["Relief_Under_Section_89"]["14) Tax Payable including Education Cess minus of Relief Under Section 89"],$tax_payable_ecucation);
 
         // 15) Tax Deduction at Source u/s 192
 
@@ -313,10 +335,25 @@ public function getEmpCompValues(){
         $tax_deduction_192['actual']    = 0;
         $tax_deduction_192['projection']    = 0;
         $tax_deduction_192['total']    = 0;
-        array_push($res["15) Tax Deduction at Source u/s 192"],$tax_deduction_192);
+        array_push($res["Source_us_192"]["15) Tax Deduction at Source u/s 192"],$tax_deduction_192);
 
 
-        return dd($res);
+        // return dd($res);
+
+        $html = view('investmentTdsWorkSheet.TDS_work_sheet',$res);
+
+        return $html;
+
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $pdf = new Dompdf($options);
+        $pdf->loadhtml($html, 'UTF-8');
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+
+        $docUploads =  $pdf->stream();
 
 
 
