@@ -71,7 +71,7 @@
             </Column> -->
         </DataTable>
 
-        <button class="p-2 bg-black text-[12px] text-white mt-10" @click="viewpayslip = true">view</button>
+        <!-- <button class="p-2 bg-black text-[12px] text-white mt-10" @click="viewpayslip = true">view</button> -->
 
     </div>
 
@@ -185,7 +185,7 @@
                     <p class=" w-[300px] mt-[10px]"  v-for="item in managePayslipStore.paySlipHTMLView.data.client_details" :key="item">{{ item.address}}</p>
                 </div>
                 <div v-for="item in managePayslipStore.paySlipHTMLView.data.client_details" :key="item">
-                    <img :src="`${item.client_logo}`" alt="testing">
+                    <img :src="`${item.client_logo}`" alt="testing" class="w-[200px]">
                 </div>
             </div>
             <div class="mt-[30px]">
@@ -307,13 +307,13 @@
                                 <h1 class="my-3" v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.earnings[0]" :key="index" :class="[key == 'Total Earnings' ?'text-black text-[16px]':'']"> {{ key }}</h1>
                             </td>
 
-                            <td>
+                            <td class="flex flex-col items-start">
                             <h1 class="font-semibold ">Fixed</h1>
                             <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="my-3" > {{ value }}</h1>
                             </td>
 
                             <td class=" border-[2px solid ] border-black" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">              
-                                <h1 class="font-semibold" >Arrears</h1>
+                                <h1 class="flex items-start font-semibold" >Arrears</h1>
                                 <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.arrears[0]" :key="index" class="my-3">{{ value }}</h1>
                                 <!-- <h1  v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="my-3" >&nbsp;</h1> -->
                             </td>

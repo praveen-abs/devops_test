@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-[28px] mt-[28px] font-['poppins']">Salary Revision</h1>
+        <h1 class="text-[28px] font-['poppins']">Salary Revision</h1>
         <div>
             <div style="position: relative;" >
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
