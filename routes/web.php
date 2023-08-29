@@ -314,12 +314,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/poll-voting', [App\Http\Controllers\HomeController::class, 'poll_voting'])->name('poll_voting');
     Route::post('/signin', [App\Http\Controllers\HomeController::class, 'signin'])->name('signin');
 
+    Route::get('/showDocumentPayslip', [App\Http\Controllers\HomeController::class, 'showDocumentPayslip'])->name('showDocumentPayslip');
+
 
 
 
     Route::get('/registerNewAccount', function () {
         return view('/auth/register');
-    })->name('registerNewAccount');
+    })->name('registerNewAccount');   
 
 
     // Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
