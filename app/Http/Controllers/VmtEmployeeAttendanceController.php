@@ -203,6 +203,15 @@ class VmtEmployeeAttendanceController extends Controller
         return Excel::download(new OverTimeReportExport($attendance_report_service->fetchOvertimeReportData($start_date, $end_date)['rows']), 'Over Time Report.xlsx');
     }
 
+    public function shiftTimeForEmployee(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = "2022-07-15";
+         $end_date = "2022-11-02";
+          $client_domain = "";
+        $response = $attendance_report_service->shiftTimeForEmployee($start_date, $end_date, $client_domain);
+        return $response;
+    }
+
 
     public function showLateComingReport(Request $request)
     {
