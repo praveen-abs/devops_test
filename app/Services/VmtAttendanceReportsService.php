@@ -39,6 +39,19 @@ class VmtAttendanceReportsService
             return 'Not Applied';
         }
     }
+    public function canCalculateOt($user_code)
+    {
+        $ot_ids = array('DM007', 'DM009', 'DM012', 'DM016', 'DM018', 'DM019', 'DM022', 'DM028', 'DM029', 'DM032', 'DM034', 'DM038', 'DM045', 'DM054', 'DM059', 'DM069', 'DM088', 'DM091', 'DM101', 'DM103', 'DM104', 'DM107', 'DM112', 'DM113', 'DM120', 'DM123', 'DM124', 'DM125', 'DM127', 'DM128', 'DM134', 'DM140', 'DM145', 'DM146', 'DM148', 'DM149', 'DM150', 'DM151', 'DM153', 'DM156', 'DM160', 'DM161', 'DM162', 'DM163', 'DM165', 'DM166', 'DM167', 'DM169', 'DM170', 'DM175', 'DM176', 'DM177', 'DM178', 'DM179', 'DM180', 'DM181', 'DM182', 'DM183', 'DMC069', 'DMC072', 'DMC083', 'DMC084', 'DMC086', 'DMC087', 'DMC089', 'DMC090', 'DMC091', 'DMC092', 'DMC093', 'DMC094', 'DMC095', 'DMC097', 'DMC101', 'DMC102', 'DMC103', 'DMC104', 'DMC105', 'DMC106', 'DMC107', 'DMC108', 'DMC110', 'DMC111', 'DMC114', 'DMC115', 'DMC116', 'DMC118', 'DMC119', 'DMC120', 'DMC121', 'DMC123', 'DMC124', 'DMC125', 'DMC126', 'DMC128', 'DMC129', 'DMC130', 'DMC133', 'DMC136', 'DMC137', 'DMC138', 'DMC139', 'DMC142', 'DMC143', 'DMC144', 'DMC145', 'DMC146', 'DMC147', 'DMC148', 'DMC149', 'DMC150', 'DMC151', 'DMC152', 'DMC153', 'DMC154', 'DMC155', 'DMC156', 'DMC158', 'DMC159', 'DMC161', 'DMC162', 'DMC163', 'DMC164', 'DMC165', 'DMC166', 'DMC168', 'DMC169', 'DMC170', 'DMC173', 'DMC174', 'DMC176', 'DMC177');
+        if (sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "DMC") {
+            if (in_array($user_code,  $ot_ids)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 
     public function findMIPOrMOP($time, $shiftStartTime, $shiftEndTime)
     {
@@ -969,23 +982,28 @@ class VmtAttendanceReportsService
                 //dd(Carbon::parse($value['checkin_time'])->diffInMinutes($value['checkout_time']));
                 // dd($shiftStartTime->diffInMinutes($shiftEndTime) );
                 //  dd(Carbon::parse($value['checkout_time']));
-                if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes($value['checkout_time']) && $value['checkout_time'] != null) {
-                    $ot = $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
-                    $total_OT =  $total_OT +  $ot;
-                    $ot_ar = CarbonInterval::minutes($ot)->cascade();
-                    $ot_hrs = (int) $ot_ar->totalHours;
-                    $ot_mins = $ot_ar->toArray()['minutes'];
-                    $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-                    // dd( $total_ot);
-                    if ($ot_hrs == 0) {
-                        if ($ot_mins > 30) {
-                            $attendanceResponseArray[$key]['OT'] =  $total_ot;
+                if ($this->canCalculateOt($singleUser->user_code)) {
+                    if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes($value['checkout_time']) && $value['checkout_time'] != null) {
+                        $ot = $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
+                        $ot_ar = CarbonInterval::minutes($ot)->cascade();
+                        $ot_hrs = (int) $ot_ar->totalHours;
+                        $ot_mins = $ot_ar->toArray()['minutes'];
+                        $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+                        // dd( $total_ot);
+                        if ($ot_hrs == 0) {
+                            if ($ot_mins > 30) {
+                                $attendanceResponseArray[$key]['OT'] =  $total_ot;
+                                $total_OT =  $total_OT +  $ot;
+                            } else {
+                                $attendanceResponseArray[$key]['OT'] =  0;
+                            }
                         } else {
-                            $attendanceResponseArray[$key]['OT'] =  0;
+                            $attendanceResponseArray[$key]['OT'] =  $total_ot;
+                            $total_OT =  $total_OT +  $ot;
                         }
-                    } else {
-                        $attendanceResponseArray[$key]['OT'] =  $total_ot;
                     }
+                } else {
+                    $attendanceResponseArray[$key]['OT'] =  0;
                 }
 
                 // if ($shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time'])) > 30 && $value['checkout_time'] != null && $shiftStartTime->diffInMinutes($shiftEndTime) > 270) {
@@ -1980,17 +1998,32 @@ class VmtAttendanceReportsService
         $temp_ar = array();
         foreach ($attendance_data as $single_data) {
             foreach ($single_data as $key => $value) {
-                $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                $shiftStartTime = Carbon::parse($current_shift->shift_start_time);
-                $shiftEndTime = Carbon::parse($current_shift->shift_end_time);
-                if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) && $value['checkout_time'] != null) {
-                    $shiftEndTime = Carbon::parse($value['checkin_time'])->addMinutes($current_shift->fullday_min_workhrs);
-                    $ot =  $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
-                    $ot_ar = CarbonInterval::minutes($ot)->cascade();
-                    $ot_hrs = (int) $ot_ar->totalHours;
-                    $ot_mins = $ot_ar->toArray()['minutes'];
-                    if ($ot_hrs == 0) {
-                        if ($ot_mins > 30) {
+                if ($this->canCalculateOt($value['user_code'])) {
+                    $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
+                    $shiftStartTime = Carbon::parse($current_shift->shift_start_time);
+                    $shiftEndTime = Carbon::parse($current_shift->shift_end_time);
+                    if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) && $value['checkout_time'] != null) {
+                        $shiftEndTime = Carbon::parse($value['checkin_time'])->addMinutes($current_shift->fullday_min_workhrs);
+                        $ot =  $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
+                        $ot_ar = CarbonInterval::minutes($ot)->cascade();
+                        $ot_hrs = (int) $ot_ar->totalHours;
+                        $ot_mins = $ot_ar->toArray()['minutes'];
+                        if ($ot_hrs == 0) {
+                            if ($ot_mins > 30) {
+                                $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+                                $temp_ar['Employee Code'] = $value['user_code'];
+                                $temp_ar['Employee Name'] = $value['name'];
+                                $temp_ar['Date'] = $value['date_day'];
+                                $temp_ar['Shift Name'] =  $current_shift->shift_name;
+                                $temp_ar['In Punch'] = $value['checkin_time'];
+                                $temp_ar['Out Punch'] = $value['checkout_time'];
+                                $temp_ar['OverTime Duration'] =   $total_ot;
+                                array_push($otData,  $temp_ar);
+                                unset($temp_ar);
+                            } else {
+                                break;
+                            }
+                        } else {
                             $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
                             $temp_ar['Employee Code'] = $value['user_code'];
                             $temp_ar['Employee Name'] = $value['name'];
@@ -2001,20 +2034,7 @@ class VmtAttendanceReportsService
                             $temp_ar['OverTime Duration'] =   $total_ot;
                             array_push($otData,  $temp_ar);
                             unset($temp_ar);
-                        } else {
-                            break;
                         }
-                    } else {
-                        $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-                        $temp_ar['Employee Code'] = $value['user_code'];
-                        $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = $value['date_day'];
-                        $temp_ar['Shift Name'] =  $current_shift->shift_name;
-                        $temp_ar['In Punch'] = $value['checkin_time'];
-                        $temp_ar['Out Punch'] = $value['checkout_time'];
-                        $temp_ar['OverTime Duration'] =   $total_ot;
-                        array_push($otData,  $temp_ar);
-                        unset($temp_ar);
                     }
                 }
             }
