@@ -4,7 +4,7 @@
         <div>
             <div style="position: relative;">
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-                <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3 " id="pills-tab" role="tablist">
+                <ul class="mb-3 divide-x nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
                     <li class=" nav-item" role="presentation">
                         <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" id=""
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
@@ -13,10 +13,10 @@
                             Payslip v1
                         </a>
                         <div v-if="activetab === 1" class=" border-3 h-1 rounded-l-3xl border-[#F9BE00]"></div>
-                        <div v-else class=" border-3 h-1 rounded-l-3xl border-gray-300"></div>
+                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"></div>
                     </li>
 
-                    <li class=" nav-item position-relative  border-0" role="presentation">
+                    <li class="border-0 nav-item position-relative" role="presentation">
                         <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id=""
                             data-bs-toggle="pill" href="" @click="activetab_btn2"
                             :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab"
@@ -25,7 +25,7 @@
                         </a>
                         <div v-if="activetab === 2" class=" border-3 h-1 border-[#F9BE00] position-absolute left-0 w-12">
                         </div>
-                        <div v-else class=" border-3 h-1  border-gray-300"></div>
+                        <div v-else class="h-1 border-gray-300 border-3"></div>
                     </li>
 
                     <div class="border-gray-300 border-b-[7px]  w-100 mt-[-7px]"></div>
@@ -35,14 +35,15 @@
                 <div class="tab-content" id="">
                     <div>
                         <div class="card-body">
-                            <div v-if="activetab === 1" class=" flex justify-center" >
+                            <div v-if="activetab === 1" class="flex justify-center " >
                                 <div class="w-[70%] shadow-lg p-4 my-[50px] ">
                                     <dynamicPayslip />
                                 </div>
                             </div>
-                            <div v-if="activetab === 2" class=" flex justify-center">
-
-
+                            <div v-if="activetab === 2" class="flex justify-center ">
+                                <div class="w-[70%] shadow-lg  my-[50px] ">
+                                    <dynamicPayslipv2/>
+                                </div>
                                 <!-- <EmployeeSummary /> -->
                                 <!-- <salary_Revision_Processed /> -->
                             </div>
@@ -61,6 +62,7 @@
 <script setup>
 import { ref } from 'vue';
 import dynamicPayslip from '../../manage_payslips/dynamicPayslip.vue';
+import dynamicPayslipv2 from '../../manage_payslips/dynamicPayslipv2.vue';
 
 const activetab = ref(1);
 
