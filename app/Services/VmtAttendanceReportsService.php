@@ -980,6 +980,8 @@ class VmtAttendanceReportsService
                     if ($ot_hrs == 0) {
                         if ($ot_mins > 30) {
                             $attendanceResponseArray[$key]['OT'] =  $total_ot;
+                        } else {
+                            $attendanceResponseArray[$key]['OT'] =  0;
                         }
                     } else {
                         $attendanceResponseArray[$key]['OT'] =  $total_ot;
