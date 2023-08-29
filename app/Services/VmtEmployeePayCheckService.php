@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\AbsActivePayslip;
+use App\Models\VmtOrgTimePeriod;
 use Illuminate\Support\Collection;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Hash;
@@ -1141,10 +1142,9 @@ class VmtEmployeePayCheckService
             ->whereMonth('payroll_date',$month);
 
 
-
-
      //get leave data
-        $start_date= Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
+        $start_date = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
+
         $end_date= Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
 
        $getleavedetails =$serviceVmtAttendanceService->leavetypeAndBalanceDetails($user_data->id,$start_date,$end_date, $month);
@@ -1165,6 +1165,28 @@ class VmtEmployeePayCheckService
         }
 
         $getpersonal['leave_data'] = $leave_data;
+
+
+        // $financial_time   = VmtOrgTimePeriod::where('status','1')->first()->start_date;
+        // $start_date =  Carbon::parse($financial_time );
+        // $diff_months  = $start_date->diffInMonths(Carbon::now());
+
+        // $months = [];
+        // for($i=0; $i<$diff_months; $i++){
+        //     $month = Carbon::parse($start_date)->addMonths($i)->format('Y-m-d');
+        //     array_push($months,$month);
+        // }
+
+        // $months_details =[];
+        // for($i=0; $i<count($months); $i++){
+        // $vmt_payroll  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
+        //             ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
+        //             ->where('vmt_emp_payroll.user_id',$user_data->id)
+        //             ->where('payroll_date',$months[$i])
+        //             ->get()->toArray();
+        //             array_push($months_details,$vmt_payroll);
+        // }
+
         $getpersonal['client_details'] = VmtClientMaster::where('id',sessionGetSelectedClientid())->get(
             [
                 'client_fullname',
@@ -1376,7 +1398,7 @@ class VmtEmployeePayCheckService
 
         if($type =="pdf"){
 
-            $html = view($get_payslip->payslip_pdf, $getpersonal);
+            $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
 
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
@@ -1386,7 +1408,7 @@ class VmtEmployeePayCheckService
                 $pdf->loadhtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
-                $pdf->stream("payslip.pdf");
+                // $pdf->stream("payslip.pdf");
                 $response = base64_encode($pdf->output(['payslip.pdf']));
                 return $response;
 
@@ -1398,7 +1420,7 @@ class VmtEmployeePayCheckService
 
         }else if($type =="mail"){
 
-            $html = view($get_payslip->payslip_pdf, $getpersonal);
+            $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
 
             $options = new Options();
             $options->set('isHtml5ParserEnabled', true);

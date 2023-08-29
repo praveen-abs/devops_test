@@ -65,7 +65,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                 <p style="color:black; font-size:10px; margin-top:-8px;">{{ $client_details[0]['address'] }}</p>
             </td>
             <td colspan="1" style=" ">
-                <img src="data:image/png;base64,{{ $client_image }}" alt="Image Not Found" style=" color:black;  float: right; margin-top:10px height:40px width:25px">
+                {{-- <img src="data:image/png;base64,{{ $client_image }}" alt="Image Not Found" style=" color:black;  float: right; margin-top:10px height:40px width:25px"> --}}
             </td>
         </tr>
         <tr>
