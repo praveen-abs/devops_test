@@ -21,7 +21,7 @@ class RequestLeaveMail extends Mailable
 
     protected $leaveRequestDate;
     protected $empCode;
-    protected $empAvatar;
+
     protected $startDate;
     protected $endDate;
     protected $reason;
@@ -33,12 +33,11 @@ class RequestLeaveMail extends Mailable
     protected $manager_image;
     protected $emp_designation;
 
-    public function __construct($uEmployeeName, $uEmpCode, $uEmpAvatar, $uManagerName,$uLeaveRequestDate, $uStartDate,$uEndDate,$uReason, $uLeaveType, $uTotal_leave_datetime,  $loginLink, $image_view , $emp_image , $manager_image , $emp_designation)
+    public function __construct($uEmployeeName, $uEmpCode, $uManagerName,$uLeaveRequestDate, $uStartDate,$uEndDate,$uReason, $uLeaveType, $uTotal_leave_datetime,  $loginLink, $image_view , $emp_image , $manager_image , $emp_designation)
     {
         //
         $this->employeeName  = $uEmployeeName;
         $this->empCode  = $uEmpCode;
-        $this->empAvatar   =$uEmpAvatar;
         $this->managerName   =$uManagerName;
         $this->leaveRequestDate = $uLeaveRequestDate;
         $this->startDate   =$uStartDate;
@@ -76,7 +75,6 @@ class RequestLeaveMail extends Mailable
                     ->view('mail_leave_request')
                     ->with('employeeName', $this->employeeName)
                     ->with('empCode', $this->empCode)
-                    ->with('empAvatar', $this->empAvatar)
                     ->with('managerName', $this->managerName)
                     ->with('leaveRequestDate',$this->leaveRequestDate)
                     ->with('startDate', $this->startDate)

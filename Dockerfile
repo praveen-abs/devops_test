@@ -25,7 +25,10 @@ COPY . .
 RUN composer update
 RUN composer dump-autoload
 # Set permissions for Laravel
+RUN mkdir -p /var/www/html/storage/framework/views
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 # Expose the PHP port
 EXPOSE 8000
-# Start Laravel development serverCMD php artisan migrateCMD php artisan serve --host=0.0.0.0 --port=8000
+# Start Laravel development server
+CMD php artisan migrate
+CMD php artisan serve --host=0.0.0.0 --port=8000

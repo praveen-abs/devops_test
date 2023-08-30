@@ -103,7 +103,7 @@
                                         <!-- <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
                                                 class="m-0 fw-bold h4 me-1">ABS</span><small
                                                 class="text-orange fw-bold f-10">hrms</small></p> -->
-                                        <p class="text-muted f-12 mb-3 fw-bold">Reset your password</p>
+                                        <p class="text-muted f-12 mb-3 fw-bold">Reset your password to proceed further</p>
 
 
                                         @csrf
@@ -202,7 +202,7 @@
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Reset Password</h5>
+                        Kindly Reset Password to proceed further</h5>
                     <input type="button" value="X" onclick="closeModal()" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" />
                 </div>
                 <div class="modal-body">

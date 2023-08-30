@@ -12,6 +12,7 @@
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
+    use App\Models\VmtEmployeeLeaves;
     use App\Models\VmtMasterConfig;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
@@ -21,7 +22,7 @@
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
-
+    use App\Models\vmtHolidays;
     use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -681,7 +682,11 @@
         $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
+    //     $start_date="2023-08-01";
+    //     $end_date ="2023-08-25";
 
+    //   $date_array = array();
+    //   $leave_array = array();
 
 
         $isSent    = \Mail::to("vvishva185@gmail.com")->cc(["vishnu@abshrms.com"])->send(new VmtAttendanceMail_Regularization(
