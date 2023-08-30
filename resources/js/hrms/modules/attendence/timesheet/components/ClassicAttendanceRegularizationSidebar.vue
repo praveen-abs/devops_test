@@ -11,57 +11,57 @@
             </div>
         </div>
         <!-- {{ source }} -->
-        <div class="col-12" v-if="type == 'LC'">
+        <div class="col-12 my-3" v-if="type == 'LC'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.lc_status.includes('Approved')"> {{ source.checkin_time }} </p>
+                    <p v-if="!source.lc_status.includes('None')"> {{ source.lc_regularized_time }} </p>
                     <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
-                        class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                        class="border p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
                         v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
 
             </div>
         </div>
-        <div class="col-12" v-if="type == 'MIP'">
+        <div class="col-12 my-3" v-if="type == 'MIP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.mip_status.includes('Approved')"> {{ source.checkin_time }} </p>
+                    <p v-if="!source.mip_status.includes('None')"> {{ source.mip_regularized_time }} </p>
                     <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
-                        class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                        class="border p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
                         v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
             </div>
         </div>
 
 
-        <div class=" col-12" v-if="type == 'EG'">
+        <div class=" col-12 my-3" v-if="type == 'EG'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.eg_status.includes('Approved')"> {{ source.checkout_time }} </p>
+                    <p v-if="!source.eg_status.includes('None')"> {{ source.eg_regularized_time }} </p>
                     <input v-else placeholder="format-06:30:00" type="time" @keypress="isNumber($event)"
-                        class="border-1 p-1.5 rounded-lg border-gray-400  w-full" name="" id=""
+                        class="border p-1.5 rounded-lg border-gray-400  w-full" name="" id=""
                         v-model="useTimesheet.AttendanceEarylOrMopRegularization">
                 </div>
             </div>
         </div>
-        <div class=" col-12" v-if="type == 'MOP'">
+        <div class=" col-12 my-3" v-if="type == 'MOP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.mop_status.includes('Approved')"> {{ source.checkout_time }} </p>
+                    <p v-if="!source.mop_status.includes('None')"> {{ source.mop_regularized_time }} </p>
                     <input v-else placeholder="format-06:30:00" type="time" @keypress="isNumber($event)"
-                        class="border-1 p-1.5 rounded-lg border-gray-400  w-full" name="" id=""
+                        class="border p-1.5 rounded-lg border-gray-400  w-full" name="" id=""
                         v-model="useTimesheet.AttendanceEarylOrMopRegularization">
                 </div>
             </div>
@@ -94,7 +94,7 @@
                 <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
                     placeholder="Reason here...." v-model="useTimesheet.lcDetails.custom_reason"></textarea>
             </div>
-            <div class="col-12" v-else-if="source.lc_reason == 'Others'">
+            <div class="col-12 my-3" v-else-if="source.lc_reason == 'Others'">
                 <div class="row">
                     <div class="col-6">
                         <label class="font-medium fs-6 text-gray-700">Custom reason</label>
@@ -105,7 +105,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" v-if="type == 'LC'">
+        <div class="row my-3" v-if="type == 'LC'">
             <div class="col-6">
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
@@ -117,7 +117,7 @@
         </div>
         <div v-if="type == 'LC'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
             <button v-if="source.lc_status == 'None'" type="button" class="btn btn-orange"
-                @click="useTimesheet.applyLcRegularization()">Apply</button>
+                @click="useTimesheet.applyLcRegularization(service.current_user_role == 2 ? '/applyLeaveInAdminAccess' : '/attendance-req-regularization' )">Apply</button>
         </div>
         <!-- Late coming regularization  Ends-->
 
@@ -161,18 +161,18 @@
                 </div>
             </div>
         </div>
-        <div class="row" v-if="type == 'MIP'">
+        <div class="row my-3" v-if="type == 'MIP'">
             <div class="col-6">
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
             <div class="col-6">
                 <p v-if="source.mip_status.includes('None')" class="p-1 ml-3 min-w-max"
                     :class="findStatus(source.mip_status)"> - </p>
-                <p v-else class="p-1 ml-3 min-w-max" :class="findStatus(source.mip_status)"> {{ source.mip_status }}</p>
+                <p v-else class="p-1 min-w-max" :class="findStatus(source.mip_status)"> {{ source.mip_status }}</p>
             </div>
         </div>
-        <div v-if="source.mip_status == 'None'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-            <button type="button" class="btn btn-orange" @click="useTimesheet.applyMipRegularization()">Apply</button>
+        <div  v-if="type == 'MIP'"  class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
+            <button  v-if="source.mip_status == 'None'" type="button" class="btn btn-orange" @click="useTimesheet.applyMipRegularization(service.current_user_role == 2 ? '/applyLeaveInAdminAccess' : '/attendance-req-regularization')">Apply</button>
         </div>
         <!-- Missed In Punch regularization  Ends-->
 
@@ -217,7 +217,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" v-if="type == 'EG'">
+        <div class="row my-3" v-if="type == 'EG'">
             <div class="col-6">
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
@@ -229,12 +229,12 @@
         </div>
         <div v-if="type == 'EG'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
             <button v-if="source.eg_status == 'None'" type="button" class="btn btn-orange"
-                @click="useTimesheet.applyEgRegularization()">Apply</button>
+                @click="useTimesheet.applyEgRegularization(service.current_user_role == 2 ? '/applyLeaveInAdminAccess' : '/attendance-req-regularization')">Apply</button>
         </div>
         <!-- Early Going regularization  Ends-->
 
         <!-- Missed Out Punch regularization  Ends-->
-        <div class="col-12" v-if="type == 'MOP'">
+        <div class="col-12 " v-if="type == 'MOP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
                 <div class="col-6" v-if="source.mop_status == 'None'">
@@ -251,7 +251,7 @@
                     </select>
                 </div>
                 <div class="col-6" v-else>
-                    <p class=" ml-3"> {{ source.mop_reason }}</p>
+                    <p class=""> {{ source.mop_reason }}</p>
                 </div>
             </div>
         </div>
@@ -262,30 +262,30 @@
                         placeholder="Reason here...." v-model="useTimesheet.mopDetails.custom_reason"></textarea>
                 </div>
             </div>
-            <div class="col-12" v-else-if="source.mop_reason == 'Others'">
+            <div class="col-12 my-3" v-else-if="source.mop_reason == 'Others'">
                 <div class="row">
                     <div class="col-6">
-                        <label class="font-medium fs-6 text-gray-700 p-1">Custom reason</label>
+                        <label class="font-medium fs-6 text-gray-700 ">Custom reason</label>
                     </div>
                     <div class="col-6">
-                        <p class="ml-3"> {{ source.mop_reason_custom }}</p>
+                        <p class=""> {{ source.mop_reason_custom }}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row" v-if="type == 'MOP'">
-            <div class="col-6" v-if="!source.mop_status == 'None'">
+        <div class="row my-3" v-if="type == 'MOP'">
+            <div class="col-6">
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
-            <div class="col-6" v-if="!source.mop_status == 'None'">
-                <p v-if="source.mop_status.includes('None')" class="max-w-min p-1 ml-3"
-                    :class="findStatus(source.mop_status)"> - </p>
-                <p v-else class="max-w-min p-1 ml-3" :class="findStatus(source.mop_status)"> {{ source.mop_status }}</p>
+            <div class="col-6">
+                <p v-if="source.mop_status.includes('None')" class="max-w-min ml-3 p-1"
+                    :class="findStatus(source.mop_status)">-</p>
+                <p v-else class="max-w-min ml-3 p-1" :class="findStatus(source.mop_status)"> {{ source.mop_status }}</p>
             </div>
         </div>
         <div v-if="type == 'MOP'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
             <button v-if="source.mop_status == 'None'" type="button" class="btn btn-orange"
-                @click="useTimesheet.applyMopRegularization()">Apply</button>
+                @click="useTimesheet.applyMopRegularization(service.current_user_role == 2 ? '/applyLeaveInAdminAccess' : '/attendance-req-regularization')">Apply</button>
         </div>
     </div>
     <!-- Missed Out Punch regularization  Ends-->
@@ -294,10 +294,13 @@
 <script setup>
 import { onUpdated } from 'vue';
 import { useAttendanceTimesheetMainStore } from '../stores/attendanceTimesheetMainStore';
+import { Service } from '../../../Service/Service';
+
 
 
 
 const useTimesheet = useAttendanceTimesheetMainStore()
+const service = Service()
 
 const props = defineProps({
     source: {

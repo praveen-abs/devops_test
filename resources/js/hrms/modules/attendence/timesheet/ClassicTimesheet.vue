@@ -94,12 +94,14 @@
                 <div class="flex my-1 justify-center">
                     <p class="font-medium fs-6 text-gray-700">In Time</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkin_time }}</p>
+                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkin_time ?
+                        currentlySelectedCellRecord.checkin_time : '-' }}</p>
                 </div>
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Mode</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin) }}
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin)
+                    }}
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkin)"></i> -->
@@ -113,7 +115,8 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ capitalizeFLetter(findCheckInStatus('checkin', currentlySelectedCellRecord)) }}
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(findCheckInStatus('checkin',
+                        currentlySelectedCellRecord)) }}
 
                     </p>
                 </div>
@@ -132,12 +135,14 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Out Time</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkout_time }}</p>
+                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkout_time ?
+                        currentlySelectedCellRecord.checkout_time : '-' }}</p>
                 </div>
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check Out Mode</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkout) }}
+                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkout)
+                    }}
                         <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'mobile'"
                             class="fa fa-picture-o fs-6 cursor-pointer animate-pulse" aria-hidden="true"
                             @click="viewSelfieImage('checkout', currentlySelectedCellRecord.selfie_checkout)"></i>
@@ -169,7 +174,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isLC">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Late Coming</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Late Coming</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isLC, currentlySelectedCellRecord.lc_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
@@ -180,7 +185,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isMIP">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Missed in punch</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Missed in punch</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isMIP, currentlySelectedCellRecord.mip_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
@@ -191,7 +196,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isEG">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Early going</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Early going</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isEG, currentlySelectedCellRecord.eg_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
@@ -202,7 +207,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isMOP">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Missed out punch</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Missed out punch</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isMOP, currentlySelectedCellRecord.mop_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
@@ -269,19 +274,20 @@
                                     <!-- <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
                                     </p> -->
-                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i
-                                            v-if="singleAttendanceDay.isMOP"
-                                            :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
-                                            style="font-size: 0.9rem" class="px-1"></i>
-                                        <i v-else-if="singleAttendanceDay.isLC"
+                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}
+                                        <i v-if="singleAttendanceDay.isLC"
                                             :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
-                                            style="font-size: 0.9rem" class="px-1"></i>
-                                        <i v-else-if="singleAttendanceDay.isEG"
-                                            :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
                                             style="font-size: 0.9rem" class="px-1"></i>
                                         <i v-else-if="singleAttendanceDay.isMIP"
                                             :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
                                             style="font-size: 0.9rem" class="px-1"></i>
+                                        <i v-else-if="singleAttendanceDay.isEG"
+                                            :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
+                                            style="font-size: 0.9rem" class="px-1"></i>
+                                        <i v-else-if="singleAttendanceDay.isMOP"
+                                            :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
+                                            style="font-size: 0.9rem" class="px-1"></i>
+
                                     </p>
                                 </div>
 
@@ -706,7 +712,7 @@ const findAttendanceRegularizationStatus = (data) => {
 function capitalizeFLetter(name) {
     let result = name.charAt(0).toUpperCase() +
         name.slice(1)
-        return result
+    return result
 }
 
 const leaveShortFormat = (leave_type) => {
@@ -915,7 +921,8 @@ onUpdated(() => {
 </script>
 
 <style>
-.hop {
+.hop
+{
     display: none;
     width: 150px;
     top: 80px;
@@ -923,24 +930,28 @@ onUpdated(() => {
 
 }
 
-.hp:hover+.hop {
+.hp:hover+.hop
+{
     display: block;
 }
 
 
 
 .modal-enter-active,
-.modal-leave-active {
+.modal-leave-active
+{
     transition: translate 0.5s ease;
 }
 
 .modal-enter-from,
-.modal-leave-to {
+.modal-leave-to
+{
     /** opacity: 0; **/
     translate: 0px 100%;
 }
 
-.regualarization_button {
+.regualarization_button
+{
     padding: 1px !important;
     height: 14px;
     width: auto;

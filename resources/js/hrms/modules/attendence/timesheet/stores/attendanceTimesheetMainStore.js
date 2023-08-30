@@ -154,7 +154,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     /* Creating constructor for Attendance Regularization request */
     const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
         let AttendanceRegularizeFormat = {
-            user_code: service.current_user_code,
+            admin_user_code:service.current_user_role == 2 ? service.current_user_code : '',
+            user_code: service.current_user_role == 2 ? selectedDayRegularizationRecord.user_id : service.current_user_code,
             regularization_type: selectedAttendanceRegularizationType,
             attendance_date: selectedDayRegularizationRecord.date,
             user_time: selectedDayRegularizationRecord.checkin_time,
@@ -178,13 +179,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
 
-    const applyLcRegularization = () => {
+    const applyLcRegularization = (url) => {
+        console.log(url);
         canShowLoading.value = true
-        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
+        axios.post(url, AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
             .then((res) => {
-                getSelectedEmployeeAttendance()
+                currentlySelectedOrgMemberUserId.value ? getSelectedEmployeeOrgDetails(currentlySelectedOrgMemberUserId.value) : getSelectedEmployeeAttendance()
                 let message = res.data.message
-                console.log(message);
                 if (res.data.status == 'success') {
                     Swal.fire(
                         'Good job!',
@@ -209,14 +210,14 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         egDetails.value = { ...attendance }
     }
 
-    const applyEgRegularization = () => {
+    const applyEgRegularization = (url) => {
+        console.log(url);
         classicTimesheetSidebar.value = false
         canShowLoading.value = true
-        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
+        axios.post(url, AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
             .then((res) => {
-                getSelectedEmployeeAttendance()
+                currentlySelectedOrgMemberUserId.value ? getSelectedEmployeeOrgDetails(currentlySelectedOrgMemberUserId.value) : getSelectedEmployeeAttendance()
                 let message = res.data.message
-                console.log(message);
                 if (res.data.status == 'success') {
                     Swal.fire(
                         'Success!',
@@ -245,12 +246,14 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
 
-    const applyMipRegularization = () => {
+    const applyMipRegularization = (url) => {
+        console.log(url);
+
         classicTimesheetSidebar.value = false
         canShowLoading.value = true
-        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
+        axios.post(url, AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
             .then((res) => {
-                getSelectedEmployeeAttendance()
+                currentlySelectedOrgMemberUserId.value ? getSelectedEmployeeOrgDetails(currentlySelectedOrgMemberUserId.value) : getSelectedEmployeeAttendance()
                 let message = res.data.message
                 console.log(message);
                 if (res.data.status == 'success') {
@@ -277,12 +280,14 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         mopDetails.value = { ...attendance }
     }
 
-    const applyMopRegularization = () => {
+    const applyMopRegularization = (url) => {
+        console.log(url);
+
         classicTimesheetSidebar.value = false
         canShowLoading.value = true
-        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mopDetails.value, 'MOP'))
+        axios.post(url, AttendanceRegularizationApplyFormat(mopDetails.value, 'MOP'))
             .then((res) => {
-                getSelectedEmployeeAttendance()
+                currentlySelectedOrgMemberUserId.value ? getSelectedEmployeeOrgDetails(currentlySelectedOrgMemberUserId.value) : getSelectedEmployeeAttendance()
                 let message = res.data.message
                 console.log(message);
                 if (res.data.status == 'success') {
@@ -319,7 +324,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             custom_reason: absentRegularizationDetails.value.custom_reason ? absentRegularizationDetails.value.custom_reason : "",
         })
             .then((res) => {
-                getSelectedEmployeeAttendance()
+                currentlySelectedOrgMemberUserId.value ? getSelectedEmployeeOrgDetails(currentlySelectedOrgMemberUserId.value) : getSelectedEmployeeAttendance()
                 let message = res.data.message
                 // console.log(message);
                 if (res.data.status == 'success') {

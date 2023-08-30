@@ -173,6 +173,7 @@ class VmtAttendanceReportsService
             ->where('is_ssa', '0')
             ->where('active', '1')
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
+            // ->where('vmt_employee_office_details.department_id', '=','1')
             ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         // print($user);exit;
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');

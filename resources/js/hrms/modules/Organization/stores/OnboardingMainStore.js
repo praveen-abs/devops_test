@@ -587,8 +587,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
         isOfficialMailExists, isAadharExists, isExistsOrNot, isClientCodeExists, splitNumberWithSpaces,
 
-
-
         convertExcelIntoArray, EmployeeQuickOnboardingDynamicHeader, EmployeeQuickOnboardingSource, getValidationMessages, getExcelForUpload,
 
         // View
