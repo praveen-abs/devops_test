@@ -3,9 +3,6 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-    build:{
-          'outDir':'./dist'
-    },
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
@@ -35,8 +32,6 @@ export default defineConfig({
                 // Leaves
 
                 'resources/js/hrms/modules/leave_module/LeaveModule.js',
-                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
-                'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
                 //Reports
                 'resources/js/hrms/modules/reports/ReportsModule.js',
