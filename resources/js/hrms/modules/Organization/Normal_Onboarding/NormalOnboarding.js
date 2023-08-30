@@ -1,14 +1,7 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import 'sweetalert2/dist/sweetalert2.min.css';
-
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { faFamily} from '@fortawesome/free-solid-svg-icons'
-
-// library.add(faUserSecret)
 
 
 import { createApp } from "vue";
@@ -27,27 +20,20 @@ import ColumnGroup from 'primevue/columngroup';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmationService from 'primevue/confirmationservice';
-import ContextMenu from 'primevue/contextmenu';
-import DataTable from 'primevue/datatable';
 import Dialog from 'primevue/dialog';
 import DialogService from 'primevue/dialogservice'
 import Dropdown from 'primevue/dropdown';
 import DynamicDialog from 'primevue/dynamicdialog';
-import Fieldset from 'primevue/fieldset';
-import FileUpload from 'primevue/fileupload';
 import FocusTrap from 'primevue/focustrap';
 import InputSwitch from 'primevue/inputswitch';
 import InputText from 'primevue/inputtext';
 import InputMask from 'primevue/inputmask';
 import InputNumber from 'primevue/inputnumber';
-import Knob from 'primevue/knob';
-import Listbox from 'primevue/listbox';
 import ProgressSpinner from 'primevue/progressspinner';
 import RadioButton from 'primevue/radiobutton';
 import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
-import OrganizationChart from 'primevue/organizationchart';
 import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 import Textarea from 'primevue/textarea';
@@ -83,24 +69,17 @@ app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('ConfirmPopup', ConfirmPopup);
-app.component('ContextMenu', ContextMenu);
-app.component('DataTable', DataTable);
 app.component('Dialog', Dialog);
 app.component('Dropdown', Dropdown);
 app.component('DynamicDialog', DynamicDialog);
-app.component('Fieldset', Fieldset);
-app.component('FileUpload', FileUpload);
 app.component('InputMask', InputMask);
 app.component('InputNumber', InputNumber);
 app.component('InputSwitch', InputSwitch);
 app.component('InputText', InputText);
-app.component('Knob', Knob);
-app.component('Listbox', Listbox);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('RadioButton', RadioButton);
 app.component('Toast', Toast)
 app.component('Textarea', Textarea)
-app.component('OrganizationChart', OrganizationChart)
 
 // app.component('FontAwesomeIcon',FontAwesomeIcon)
 

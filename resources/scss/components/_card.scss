@@ -54,7 +54,6 @@
                 &:nth-child(#{$key}) {
                     background-color: $values-100;
                     border-left: .4em solid;
-
                 }
             }
             .dynamic-card-without-border {

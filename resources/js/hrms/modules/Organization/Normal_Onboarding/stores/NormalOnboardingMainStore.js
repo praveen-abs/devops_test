@@ -690,6 +690,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
     const submit = (isSubmitted) => {
+        console.log(isSubmitted);
 
         let formData = new FormData();
         formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
@@ -843,6 +844,11 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             .post("/vmt-employee-onboard", formData)
             .then((response) => {
                 if (response.data.status == 'success') {
+                    if (isSubmitted == 1) {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    }
                     Swal.fire({
                         title: response.data.status = "success",
                         text: response.data.message,
@@ -856,11 +862,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                         }
                     });
 
-                    if (isSubmitted == 1) {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 2000);
-                    }
+
                 }
                 else {
                     Swal.fire(
@@ -885,7 +887,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const submitForm = (isEmployeeOnboard) => {
 
-        console.log(isEmployeeOnboard);
 
 
         employee_onboarding.can_onboard_employee = isEmployeeOnboard
@@ -909,7 +910,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                         if (!v$.value.$error) {
                             // if ANY fail validation
                             console.log('Form successfully submitted.')
-                            submit()
+                            submit(isEmployeeOnboard)
                             v$.value.$reset()
                         } else {
                             console.log('Form failed validation')

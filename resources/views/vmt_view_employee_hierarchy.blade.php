@@ -57,7 +57,7 @@
     {{-- @component('components.organization_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent --}}
-    <div class="hierarchy-wrapper mt-30">
+    <div class="hierarchy-wrapper">
         <div id="chart-container" class="">
         </div>
         <div class="form-check  department-wise">

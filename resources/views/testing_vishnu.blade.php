@@ -9,10 +9,10 @@
     use Dompdf\Dompdf;
      use Dompdf\Options;
      use Carbon\Carbon;
-     use App\jobs\WelcomeMailJobs;
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
+    use App\Models\VmtEmployeeLeaves;
     use App\Models\VmtMasterConfig;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
@@ -21,6 +21,7 @@
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
+    use App\Models\vmtHolidays;
     use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -451,59 +452,59 @@
 
 
 
-//        $gross =50000;
+       $gross =50000;
 
-//        $basic =$gross/100*60;
+       $basic =$gross/100*60;
 
-//        $hra =$basic/100*50;
+       $hra =$basic/100*50;
 
-//        $communication_allowance = 0;
+       $communication_allowance = 0;
 
-//        $food_allowance = 0;
+       $food_allowance = 0;
 
-//        if($gross > 40000){
-//         $communication_allowance =2000;
-//        }
+       if($gross > 40000){
+        $communication_allowance =2000;
+       }
 
-//        $leave_travel_allowance = 0;
+       $leave_travel_allowance = 0;
 
-//        if($gross > 50000){
-//         $leave_travel_allowance =2000;
-//        }
+       if($gross > 50000){
+        $leave_travel_allowance =2000;
+       }
 
-//        $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
+       $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
 
 
-//        $epf_employer = 0;
-//        $epf_employee = 0;
+       $epf_employer = 0;
+       $epf_employee = 0;
 
-//        if(($gross - $hra) > 15000){
+       if(($gross - $hra) > 15000){
 
-//         $epf_employer = 15000/100*12;
-//         $epf_employee = 15000/100*12;
-//        }else{
-//         $epf_employer = ($gross - $hra)/100*12;
-//         $epf_employee =($gross - $hra)/100*12;
-//        }
+        $epf_employer = 15000/100*12;
+        $epf_employee = 15000/100*12;
+       }else{
+        $epf_employer = ($gross - $hra)/100*12;
+        $epf_employee =($gross - $hra)/100*12;
+       }
 
-//        $esi_employer = 0;
-//        $esi_employee = 0;
+       $esi_employer = 0;
+       $esi_employee = 0;
 
-//        if($gross > 21000){
-//         $esi_employer = 0;
-//        $esi_employee = 0;
+       if($gross > 21000){
+        $esi_employer = 0;
+       $esi_employee = 0;
 
-//        }else{
-//         $esi_employer = $gross/100*3.25;
-//         $esi_employee = $gross/100*0.75;
-//        }
-//        $insurance =0;
+       }else{
+        $esi_employer = $gross/100*3.25;
+        $esi_employee = $gross/100*0.75;
+       }
+       $insurance =0;
 
-//        $professional_tax = 208;
+       $professional_tax = 208;
 
-//        $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+       $ctc = $gross + $epf_employer +$esi_employer + $insurance;
 
-//        $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+       $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
 
 
 
@@ -682,19 +683,171 @@
 
         //  }
 
+    //     $start_date="2023-08-01";
+    //     $end_date ="2023-08-25";
+
+    //   $date_array = array();
+    //   $leave_array = array();
+
+    //         $lastAttendanceDate = Carbon::parse($end_date);
+    //         $client_id =sessionGetSelectedClientid();
+    //         $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($start_date));
+
+    //         for ($i = 0; $i < ($totalDays); $i++) {
+    //             $date_array = array();
+
+    //             $dayStr = Carbon::parse($start_date)->addDay($i)->format('l');
+    //             $dateString  = Carbon::parse($start_date)->addDay($i)->format('Y-m-d');
+
+    //             $current_date = $dateString;
+    //             $previous_date =Carbon::parse($dateString)->subDay()->format('Y-m-d');
+    //             $day_after_date =Carbon::parse($dateString)->addDay()->format('Y-m-d');
+
+    //          $current_month_holidays = vmtHolidays::all();
+
+    //          array_push($date_array,$current_date,$previous_date,$day_after_date);
+
+    //          //$attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+
+    //         //  $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
 
 
-        $getMonth = [];
-        foreach (range(1, 12) as $m) {
-         $getMonth[] = date('F', mktime(0, 0, 0, $m, 1));
-      }
+    //     for ($j = 0; $j <count($user_data); $j++) {
+
+    //          $leave_details =VmtEmployeeLeaves::where('user_id',$user_data[$j]['id'])->wheredate("start_date", $previous_date )
+    //                                                 ->wheredate("end_date",$day_after_date )
+    //                                                 ->get();
+
+    //             if(!empty($leave_details->toarray())){
+
+    //                    array_push();
+
+    //             }else{
 
 
-$monthl_dates =[];
-for($i=1;$i<=31;$i++){
-    $monthl_dates[]=$i;
-}
-dd($getMonth);
+    //             }
+    //         }
+
+    //     }
+
+
+    //     dd($reportresponse);
+
+
+
+   $client_id =sessionGetSelectedClientid();
+
+    $start_date="2023-08-01";
+    $end_date ="2023-08-25";
+
+               $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
+
+               $dateString  = Carbon::parse($date)->format('Y-m-d');    //   $date_array = array();
+               $leave_array = array();
+               $deviceData =array();
+
+            $lastAttendanceDate = Carbon::parse($end_date);
+            $client_id =sessionGetSelectedClientid();
+            $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($start_date));
+
+      for ($i = 0; $i < ($totalDays); $i++) {
+                $date_array = array();
+
+                $dayStr = Carbon::parse($start_date)->addDay($i)->format('l');
+                $dateString  = Carbon::parse($start_date)->addDay($i)->format('Y-m-d');
+
+                $current_date = $dateString;
+                $previous_date =Carbon::parse($dateString)->subDay()->format('Y-m-d');
+                $day_after_date =Carbon::parse($dateString)->addDay()->format('Y-m-d');
+
+     foreach($user_data as $key =>$single_user_data){
+
+      if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+            || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                ) {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id', $single_user_data['user_code'])
+                        ->first(['check_out_time']);
+
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id',  $single_user_data['user_code'])
+                        ->first(['check_in_time']);
+                } else {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'out')
+                        ->where('user_Id', $single_user_data['user_code'])
+                        ->first(['check_out_time']);
+
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'in')
+                        ->where('user_Id', $single_user_data['user_code'])
+                        ->first(['check_in_time']);
+                }
+                //dd($attendanceCheckIn);
+
+                $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+                $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+                //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
+
+                $leave_details =VmtEmployeeLeaves::where('user_id',$single_user_data['id'])->where('date',$dateString)->first();
+
+                $emp_work_shifts = VmtEmployeeWorkShifts::where("user_id",$single_user_data['id'])->first();
+                $work_shift =VmtWorkShifts::where('id',$emp_work_shifts->work_shift_id)->first();
+
+                if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+                    $deviceData[] = array(
+                        'date' => $dateString,
+                        'user_code'=>$single_user_data['user_code'],
+                        'user_code'=>$single_user_data['name'],
+                        'checkin_time' => $deviceCheckInTime,
+                        'checkout_time' => $deviceCheckOutTime,
+                        'attendance_mode_checkin' => 'biometric',
+                        'attendance_mode_checkout' => 'biometric'
+                    );
+                }
+            }
+        }
+dd($deviceData);
+
+            $weekoff_sunday = getWeekoffSundays("2023","09");
+
+   foreach ($weekoff_sunday as $key => $single_weekoff) {
+
+            foreach ($employee_data as $key => $single_emp_data) {
+
+
+
+
+            }
+
+   }
+
+   function getWeekoffSundays($y,$m){
+        $date = "$y-$m-01";
+        $first_day = date('N',strtotime($date));
+        $first_day = 7 - $first_day + 1;
+        $last_day =  date('t',strtotime($date));
+        $days = array();
+    for($i=$first_day; $i<=$last_day; $i=$i+7 ){
+
+        $days[] = "$y-$m-".$i;
+    }
+      return  $days;
+   }
+
+
+
+
+
+
     ?>
 
 

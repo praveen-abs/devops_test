@@ -275,21 +275,16 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     }
 
 
-    public function approveRejectBulkAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    public function approveRejectAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
         //Fetch the data
-        foreach($request->record_id as $single_record_id){
-
-        
-        $response= $serviceVmtAttendanceService->approveRejectAbsentRegularization(
+        return $serviceVmtAttendanceService->approveRejectAbsentRegularization(
             approver_user_code: $request->approver_user_code,
-            record_id: $single_record_id,
+            record_id: auth()->user()->record_id,
             status: $request->status,
             status_text: $request->status_text
         );
-    }
-    return $response;
     }
 
     public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)

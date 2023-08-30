@@ -1,11 +1,66 @@
 <template>
+    <h6 class="font-semibold text-lg">Experience Information</h6>
+    <div class="flex gap-6 items-center"
+        v-for="experience in _instance_profilePagesStore.employeeDetails.get_experience_details">
+        <div class="mx-4 flex justify-center">
+            <div class="relative flex h-full w-1 bg-green-300 items-center justify-center">
+                <div
+                    class="absolute flex flex-col justify-center h-12 w-12 rounded-full border-2 border-green-300 leading-none text-center z-10 bg-white font-thin">
+                    <div>20</div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full bg-white rounded-lg p-2 border my-2"
+            v-if="_instance_profilePagesStore.employeeDetails.get_experience_details">
+
+            <div class="grid grid-cols-12 gap-2 h-full py-2">
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Company Name</p>
+                    <p class="font-semibold text-sm">
+                        {{ experience.company_name }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Location</p>
+                    <p class="font-semibold text-sm">
+                        {{ experience.company_name }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">JOb Position</p>
+                    <p class="font-semibold text-sm">
+                        {{ experience.company_name }}
+
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Period From</p>
+                    <p class="font-semibold text-sm">
+                        {{ dayjs(experience.period_from).format('DD-MMM-YYYY')
+                        }}
+                    </p>
+                </div>
+                <div class="col-span-2">
+                    <p class="font-semibold text-xs text-gray-500">Period To</p>
+                    <p class="font-semibold text-sm">
+                        {{ dayjs(experience.period_to).format('DD-MMM-YYYY') }}
+
+                    </p>
+                </div>
+                <div class="col-span-2 flex justify-end ">
+                    <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div>
         <div class="mb-2 card">
             <div class="card-body">
-                <h6 class="fw-bold fs-15">Experience Information
-
-                    <button type="button" class="float-right btn btn-orange" style="margin-left: 76%"
-                        @click="dialog_ExperienceInfovisible = true">
+                <h6 class="font-semibold text-lg">Experience Information
+                    <button type="button" class="float-right btn btn-orange" @click="dialog_ExperienceInfovisible = true">
                         Add New
 
                     </button>
@@ -19,47 +74,46 @@
                             </div>
                         </template>
 
-                        <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
 
-                            <div class="row">
-                                <div class="col" style="margin-right: 20px; !important">
-                                    <span>Company Name <span class="text-danger">*</span></span>
-                                    <InputText type="text" v-model="ExperienceInfo.company_name"
-                                        name="ExperienceDetails_company_name[]" class="" required />
-                                </div>
-                                <div class="col mr-2">
-                                    <span> Location<span class="text-danger">*</span></span>
-                                    <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
-                                        required />
-                                </div>
-                                <div class="row w-100  ml-1  p-0">
-                                    <div class="col mr-4">
-                                        <span>Job Position <span class="text-danger">*</span></span>
-                                    <InputText type="text" @keypress="isLetter($event)" v-model="ExperienceInfo.job_position"
-                                        name="experienceDet_job_position[]" required />
+                        <div class="grid grid-cols-2">
+                            <div class="" style="margin-right: 20px; !important">
+                                <span>Company Name <span class="text-danger">*</span></span>
+                                <InputText type="text" v-model="ExperienceInfo.company_name"
+                                    name="ExperienceDetails_company_name[]" required class=" !w-[100%]" />
+                            </div>
+                            <div class="mr-2">
+                                <span> Location<span class="text-danger">*</span></span>
+                                <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
+                                    required class=" w-[100%]" />
+                            </div>
 
-                                    </div>
-                                    <div class="col mr-5 ml-1 mt-2 p-0 ">
-                                        <span :style="{ paddingLeft: '6px' }">Period From<span
-                                            class="text-danger">*</span></span>
-                                    <Calendar class=" w-100"  v-model="ExperienceInfo.period_from"
-                                        />
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mr-3">
-                                    <span :style="{ paddingLeft: '6px' }">Period To <span
-                                            class="text-danger">*</span></span>
-                                    <Calendar class="w-100 mr-5"  v-model="ExperienceInfo.period_to"
-                                        name="experienceDet_period_to[]" />
-                                </div>
-                                <div class="col-6"></div>
-                                </div>
+                            <div class="">
+                                <span>Job Position <span class="text-danger">*</span></span>
+                                <InputText type="text" @keypress="isLetter($event)" v-model="ExperienceInfo.job_position"
+                                    name="experienceDet_job_position[]" class=" !w-[95%]" required />
 
                             </div>
 
+                            <div class="">
+                                <span :style="{ paddingLeft: '6px' }">Period From<span class="text-danger">*</span></span>
+                                <Calendar class="!w-[98%] !mr-[15px] relative right-2"
+                                    v-model="ExperienceInfo.period_from" />
+
+                            </div>
                         </div>
+
+                        <div class="grid grid-cols-2">
+                            <div class=" mr-2">
+                                <span :style="{ paddingLeft: '6px' }">Period To <span class="text-danger">*</span></span>
+                                <Calendar v-model="ExperienceInfo.period_to" name="experienceDet_period_to[]"
+                                    class="!w-[96%] relative right-2" />
+                            </div>
+                            <div class=""></div>
+                        </div>
+
+
+
+
 
 
 
@@ -106,10 +160,23 @@
                         <Column :exportable="false" header="Action" style="min-width:12rem">
                             <template #body="slotProps">
 
-                                <button class="mr-3 btn btn-success"
-                                    @click="editExperienceDetails(slotProps.data)">Edit</button>
-                                <button class="btn btn-danger"
-                                    @click="diolog_Delete_Exp_Details(slotProps.data)">Delete</button>
+                                <button class=" p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
+                                    @click="editExperienceDetails(slotProps.data)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+
+                                    </svg>
+                                </button>
+                                <button class="  p-2 bg-red-200 border-red-500 rounded-xl"
+                                    @click="diolog_Delete_Exp_Details(slotProps.data)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5 font-bold">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
 
                                 <template>
 
@@ -125,37 +192,39 @@
 
                                         <div style=" padding: 0.5rem;">
                                             <div>
-                                                <div class="row ">
-                                                    <div class="col-6 ">
+                                                <div class="grid grid-cols-2 ">
+                                                    <div class="mr-2">
                                                         <span>Company Name <span class="text-danger">*</span></span>
-                                                    <InputText type="text" v-model="ExperienceInfo.company_name"
-                                                        required class="w-100" />
+                                                        <InputText type="text" v-model="ExperienceInfo.company_name"
+                                                            required class="!w-[98%] " />
                                                     </div>
-                                                    <div class="col-6">
+                                                    <div class="ml-2">
                                                         <span> Location<span class="text-danger">*</span></span>
-                                                    <InputText type="text" v-model="ExperienceInfo.location"
-                                                        name="experienceDet_location[]" required />
+                                                        <InputText type="text" v-model="ExperienceInfo.location"
+                                                            name="experienceDet_location[]" class="!w-[100%] " required />
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-6">
+                                                <div class="grid grid-cols-2">
+                                                    <div class="mr-2">
                                                         <span>Job Position <span class="text-danger">*</span></span>
-                                                    <InputText type="text" v-model="ExperienceInfo.job_position"
-                                                         required @keypress="isLetter($event)" class="w-100" />
+                                                        <InputText type="text" v-model="ExperienceInfo.job_position"
+                                                            required @keypress="isLetter($event)" class="!w-[98%]" />
                                                     </div>
-                                                    <div class="col-6 position-relative ">
+                                                    <div class="ml-2 ">
                                                         <span :style="{ paddingLeft: '6px' }">Period From<span
-                                                            class="text-danger">*</span></span>
-                                                    <Calendar :style="{ paddingRight: '15px' }"  v-model="ExperienceInfo.period_from" class=" position-absolute left-0 bottom-2 m" style="width: 100%;"   />
+                                                                class="text-danger">*</span></span>
+                                                        <Calendar v-model="ExperienceInfo.period_from"
+                                                            class="w-[100%] relative right-2" />
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col mr-2  pr-4">
+                                                <div class="grid grid-cols-2">
+                                                    <div class="">
                                                         <span :style="{ paddingLeft: '6px' }">Period To <span
-                                                            class="text-danger">*</span></span>
-                                                    <Calendar   v-model="ExperienceInfo.period_to" class="w-100 mr-4" />
+                                                                class="text-danger">*</span></span>
+                                                        <Calendar v-model="ExperienceInfo.period_to"
+                                                            class="w-[95%] relative right-2" />
                                                     </div>
-                                                    <div class="col-6 "></div>
+                                                    <div class=""></div>
                                                 </div>
 
                                             </div>
@@ -230,8 +299,8 @@ const saveExperienceDetails = () => {
         company_name: ExperienceInfo.company_name,
         experience_location: ExperienceInfo.location,
         job_position: ExperienceInfo.job_position,
-        period_from:  dayjs( ExperienceInfo.period_from ).format('YYYY-MM-DD'),
-        period_to: dayjs(  ExperienceInfo.period_to  ).format('YYYY-MM-DD'),
+        period_from: dayjs(ExperienceInfo.period_from).format('YYYY-MM-DD'),
+        period_to: dayjs(ExperienceInfo.period_to).format('YYYY-MM-DD'),
     })
         .then((res) => {
 
@@ -274,7 +343,7 @@ const editExperienceDetails = (get_experience_details) => {
     ExperienceInfo.location = get_experience_details.location
     ExperienceInfo.job_position = get_experience_details.job_position
     ExperienceInfo.period_from = get_experience_details.period_from,
-    ExperienceInfo.period_to = get_experience_details.period_to
+        ExperienceInfo.period_to = get_experience_details.period_to
 
 };
 
@@ -291,8 +360,8 @@ const sumbit_Edit_Exp_details = (get_experience_details) => {
         company_name: ExperienceInfo.company_name,
         experience_location: ExperienceInfo.location,
         job_position: ExperienceInfo.job_position,
-        period_from:   dayjs( ExperienceInfo.period_from ).format('YYYY-MM-DD'),
-        period_to:  dayjs(  ExperienceInfo.period_to ).format('YYYY-MM-DD'),
+        period_from: dayjs(ExperienceInfo.period_from).format('YYYY-MM-DD'),
+        period_to: dayjs(ExperienceInfo.period_to).format('YYYY-MM-DD'),
     })
         .then((res) => {
 
@@ -379,190 +448,6 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 //     width: 85%;
 // }
 
-.p-datatable .p-datatable-thead>tr>th {
-    text-align: center;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-width: 0 0 1px 0;
-    font-weight: 600;
-    color: #fff;
-    background: #003056;
-    transition: box-shadow 0.2s;
-    font-size: 13px;
-
-    .p-column-title {
-        font-size: 13px;
-    }
-
-    .p-column-filter {
-        width: 100%;
-    }
-
-    #pv_id_2 {
-        height: 30px;
-    }
-
-    .p-fluid .p-dropdown .p-dropdown-label {
-        margin-top: -10px;
-    }
-
-    .p-dropdown .p-dropdown-label.p-placeholder {
-        margin-top: -12px;
-    }
-
-    .p-column-filter-menu-button {
-        color: white;
-        margin-left: 10px;
-    }
-
-    .p-column-filter-menu-button:hover {
-        color: white;
-        border-color: transparent;
-        background: #023e70;
-    }
-}
-
-.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
-    margin-bottom: 0.5rem;
-    visibility: hidden;
-    position: absolute;
-}
-
-.p-button .p-component .p-button-sm {
-    background-color: #003056;
-}
-
-.p-datatable .p-datatable-tbody>tr {
-    font-size: 13px;
-
-    .employee_name {
-        font-weight: bold;
-        font-size: 13.5px;
-    }
-}
-
-.employee_name {
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.p-column-title {
-    font-size: 13.5px;
-}
-
-.fontSize13px {
-    font-size: 13px;
-}
-
-.pending {
-    font-weight: 700;
-    color: #ffa726;
-}
-
-.approved {
-    font-weight: 700;
-    color: #26ff2d;
-}
-
-.p-button.p-component.p-button-success.Button {
-    padding: 8px;
-}
-
-.rejected {
-    font-weight: 700;
-    color: #ff2634;
-}
-
-.p-button.p-component.p-button-danger.Button {
-    padding: 8px;
-}
-
-@media screen and (max-width: 960px) {
-    button {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
-}
-
-.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
-    color: red;
-}
-
-.p-button.p-component.p-confirm-dialog-accept {
-    background-color: #003056;
-}
-
-.p-button.p-component.p-confirm-dialog-reject.p-button-text {
-    color: #003056;
-}
-
-.p-column-filter-overlay-menu .p-column-filter-buttonbar {
-    padding: 1.25rem;
-    position: absolute;
-    visibility: hidden;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
-    color: white;
-    border-color: transparent;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-open {
-    background: none;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-active {
-    background: none;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter {
-    width: 50%;
-}
-
-/* For Sort */
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover {
-    background: #003056;
-    color: white;
-}
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
-    color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight {
-    background: #003056;
-    color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight:hover {
-    background: #003056;
-    color: white;
-}
-
-.p-datatable .p-sortable-column:focus {
-    box-shadow: none;
-    outline: none;
-    color: white;
-}
-
-.p-datatable .p-sortable-column .p-sortable-column-icon {
-    color: white;
-}
-
-.pi-sort-amount-down::before {
-    content: "\e9a0";
-    color: white;
-}
-
-.pi-sort-amount-up-alt::before {
-    content: "\e9a2";
-    color: white;
-}
 
 #file_upload {
     display: inline-block;
@@ -645,53 +530,3 @@ span {
     margin: 0;
 }
 </style>
-
-
-{
-<!--
-<template>
-    <div class="card">
-        <Message severity="success">Success Message Content</Message>
-        <Message severity="info">Info Message Content</Message>
-
-        <Message severity="error">Error Message Content</Message>
-    </div>
-</template>
-
-
-<template>
-    <div class="flex card justify-content-center">
-        <Toast />
-        <div class="flex flex-wrap gap-2">
-            <Button label="Success" severity="success" @click="showSuccess" />
-            <Button label="Info" severity="info" @click="showInfo" />
-            <Button label="Warn" severity="warning" @click="showWarn" />
-            <Button label="Error" severity="danger" @click="showError" />
-        </div>
-    </div>
-</template>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
-const showSuccess = () => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-};
-
-const showInfo = () => {
-    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
-};
-
-const showWarn = () => {
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-};
-
-const showError = () => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
-};
-</script>
-
-<script setup>
-</script> -->
-}

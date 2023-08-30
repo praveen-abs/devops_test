@@ -12,7 +12,6 @@ use App\Models\Department;
 use App\Models\VmtBloodGroup;
 use App\Models\Bank;
 use App\Models\VmtEmployee;
-use App\jobs\WelcomeMailJobs;
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Validator;
@@ -895,7 +894,7 @@ class VmtEmployeeOnboardingController extends Controller
                 return !is_null($data) && $data != 'NULL';
             });
             $data['client_details'] = $client_data;
-            
+
             $response = ([
                 'status' => 'success',
                 'message' => '',

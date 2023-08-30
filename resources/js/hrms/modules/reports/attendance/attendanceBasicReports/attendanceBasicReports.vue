@@ -9,11 +9,12 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog>
+   <div class="w-full">
     <div>
         <p class="font-semibold text-lg">Attendance Basic Reports</p>
     </div>
 
-    <div class="bg-white p-2 my-2 rounded-lg grid grid-cols-12">
+    <div class="bg-white p-2 my-2 rounded-lg grid grid-cols-12 ">
         <div class="grid grid-cols-12 gap-6 col-span-6">
             <div class="col-span-4">
                 <p>Start date</p>
@@ -30,14 +31,14 @@
             </div>
         </div>
         <div class="col-span-6 flex justify-end gap-4">
-            <button><img src="../../assests/printer.svg" alt="" srcset=""
+            <button><img src="../../../../assests/printer.svg" alt="" srcset=""
                     class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
-            <button><img src="../../assests/download.svg" alt="" srcset="" @click="downloadAbsentReports"
+            <button><img src="../../../../assests/download.svg" alt="" srcset="" @click="downloadAbsentReports"
                     class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
         </div>
     </div>
 
-    <div class="my-4">
+    <div class="my-4 w-full overflow-hidden">
         <DataTable :value="AttendanceReportSource"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
@@ -70,6 +71,7 @@
             </div>
         </div>
     </div>
+   </div>
 </template>
 
 <script setup>
