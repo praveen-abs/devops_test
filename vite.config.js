@@ -183,6 +183,9 @@ export default defineConfig({
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js'
 
+            //   Half Day Absent Report
+            'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js'
+
 
             ],
 
