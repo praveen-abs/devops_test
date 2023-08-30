@@ -37,13 +37,13 @@
                     <div>
                         <div class="card-body">
                             <div v-if="activetab === 1" class="flex justify-center">
-                                <div class="w-[100%] shadow-lg p-4">
+                                <div class="w-[100%] p-4">
                                     <!-- <dynamicPayslip /> -->
                                     <apponiment_letter />
                                 </div>
                             </div>
                             <div v-if="activetab === 2" class="flex justify-center ">
-                                <div class="w-[70%] shadow-lg  my-[50px] ">
+                                <div class="w-[70%] my-[50px] ">
                                     <dynamicPayslipv2/>
                                 </div>
                                 <!-- <EmployeeSummary /> -->

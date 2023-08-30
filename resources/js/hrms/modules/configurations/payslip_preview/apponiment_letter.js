@@ -2,7 +2,7 @@ import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import 'primeicons/primeicons.css';
 import '../../../assests/tailwind.css';
-import "primeflex/primeflex.css";
+import PrimeVue from "primevue/config";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -42,9 +42,9 @@ import OrganizationChart from 'primevue/organizationchart';
 
 
 
-import payslipPreview from './payslipPreview.vue'
+import apponiment_letter from './apponiment_letter.vue'
 
-const app = createApp(payslipPreview);
+const app = createApp(apponiment_letter);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -84,4 +84,4 @@ app.component('Checkbox' ,Checkbox)
 app.component('OrganizationChart' ,OrganizationChart)
 
 
-app.mount("#payslipPreview");
+app.mount("#apponiment_letter");
