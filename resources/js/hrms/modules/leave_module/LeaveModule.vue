@@ -1,4 +1,5 @@
 <template>
+    <LeaveApply/>
     <LoadingSpinner v-if="useLeaveStore.canShowLoading" class="absolute z-50 bg-white" />
    <div class="w-full" >
     <div class="p-2 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
@@ -92,7 +93,7 @@ import OrgLeaveDetails from './leave_details/OrgLeaveDetails.vue';
 import TeamLeaveDetails from './leave_details/TeamLeaveDetails.vue';
 import { useLeaveModuleStore } from './LeaveModuleService'
 import { onMounted, ref } from 'vue';
-import leaveapply2 from './leave_apply_v2/leave_apply_v2.vue'
+import LeaveApply from './leave_apply/LeaveApply.vue';
 import LoadingSpinner from '../../components/LoadingSpinner.vue'
 
 const useLeaveStore = useLeaveModuleStore()
