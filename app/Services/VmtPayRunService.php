@@ -17,7 +17,7 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function fetch_attendance_data($start_date, $end_date)
+    public function fetch_attendance_data($start_date, $end_date, $department)
     {
         ini_set('max_execution_time', 300);
         $reportresponse = array();
@@ -25,7 +25,6 @@ class VmtPayRunService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
-<<<<<<< HEAD
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
         if (sessionGetSelectedClientid() != 1) {
@@ -36,11 +35,6 @@ class VmtPayRunService
         }
         $user = $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         // pr
-=======
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        // print($user);exit;
->>>>>>> parent of 8a2108466 (hr dashboard Layout completed)
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -148,7 +142,7 @@ class VmtPayRunService
             //dd($totalDays );
             //For Excel Sheet Headers
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
-            
+
 
             for ($i = 0; $i <= $totalDays; $i++) {
                 $fulldate = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
@@ -162,7 +156,7 @@ class VmtPayRunService
                     "user_id" => $singleUser->id, "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false,
                     "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false,
                     "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null,
-                    "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null,'date_day'=>$date_day
+                    "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day
                 );
 
                 //echo "Date is ".$fulldate."\n";
@@ -535,10 +529,5 @@ class VmtPayRunService
             unset($arrayReport);
         }
 
-        // $data = array($heading_dates, $reportresponse);
-      //  dd($heading_dates);
-        $data['header'] = $heading_dates;
-        $data['rows'] = $reportresponse;
-        return $data;
     }
 }
