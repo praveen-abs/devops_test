@@ -816,6 +816,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/report/download-late-coming-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadLCReport']);
     Route::post('/report/download-over-time-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadOvertimeReport']);
 
+    Route::get('fetchMIPReportData', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchMIPReportData'])->name('fetchMIPReportData');
+
+    Route::get('getSandWidchData', [App\Http\Controllers\VmtOnboardingTestingController::class, 'getSandWidchData'])->name('getSandWidchData');
+
     //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
     //Reimbursements Reports

@@ -1887,11 +1887,119 @@ class VmtAttendanceReportsService
         $response['rows'] =  $ecData;
         return $response;
     }
+    public function fetchMIPReportData($date)
+   {
+    try{
+               $client_id =sessionGetSelectedClientid();
+
+               $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
+
+               $dateString  = Carbon::parse($date)->format('Y-m-d');
+
+     foreach($user_data as $key =>$single_user_data){
+
+      if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+            || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                ) {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id', $single_user_data['user_code'])
+                        ->first(['check_out_time']);
+
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id',  $single_user_data['user_code'])
+                        ->first(['check_in_time']);
+                } else {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'out')
+                        ->where('user_Id', $single_user_data['user_code'])
+                        ->first(['check_out_time']);
+
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'in')
+                        ->where('user_Id', $single_user_data['user_code'])
+                        ->first(['check_in_time']);
+                }
+                //dd($attendanceCheckIn);
+
+                $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+                $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+                //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
+
+                // $leave_details =VmtEmployeeLeaves::where('user_id',$single_user_data['id'])->where('date',$dateString)->first();
+
+                // $emp_work_shifts = VmtEmployeeWorkShifts::where("user_id",$single_user_data['id'])->first();
+                // $work_shift =VmtWorkShifts::where('id',$emp_work_shifts->work_shift_id)->first();
+
+                if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+                    $deviceData[] = array(
+                        'date' => $dateString,
+                        'user_code'=>$single_user_data['user_code'],
+                        'user_code'=>$single_user_data['name'],
+                        'checkin_time' => $deviceCheckInTime,
+                        'checkout_time' => $deviceCheckOutTime,
+                        'attendance_mode_checkin' => 'biometric',
+                        'attendance_mode_checkout' => 'biometric'
+                    );
+                }
+
+            }
+                  return $deviceData;
+
+            }catch(\Exception $e){
+                return response()->json([
+                     'status'=>"failure",
+                     'message'=>"",
+                     'data'=>$e->getmessage(),
+                ]);
+            }
+
+   }
 
     public function fetchOvertimeReportData($start_date, $end_date)
     {
         $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
         $otData = array();
+        $response = array();
+        $temp_ar = array();
+        foreach ($attendance_data as $single_data) {
+            foreach ($single_data as $key => $value) {
+                $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
+                $shiftStartTime = Carbon::parse($current_shift->shift_start_time);
+                $shiftEndTime = Carbon::parse($current_shift->shift_end_time);
+                if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) && $value['checkout_time'] != null) {
+                    $ot =  $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
+                    $ot_ar = CarbonInterval::minutes($ot)->cascade();
+                    $ot_hrs = (int) $ot_ar->totalHours;
+                    $ot_mins = $ot_ar->toArray()['minutes'];
+                    $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+                    $temp_ar['Employee Code'] = $value['user_code'];
+                    $temp_ar['Employee Name'] = $value['name'];
+                    $temp_ar['Date'] = $value['date_day'];
+                    $temp_ar['Shift Name'] =  $current_shift->shift_name;
+                    $temp_ar['In Punch'] = $value['checkin_time'];
+                    $temp_ar['Out Punch'] = $value['checkout_time'];
+                    $temp_ar['OverTime Duration'] =   $total_ot;
+                    array_push($otData,  $temp_ar);
+                    unset($temp_ar);
+                }
+            }
+        }
+        $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
+        $response['rows'] = $otData;
+        return $response;
+    }
+    public function fetchSandwidchReportData($start_date, $end_date)
+    {
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $sandwitchData = array();
         $response = array();
         $temp_ar = array();
         foreach ($attendance_data as $single_data) {

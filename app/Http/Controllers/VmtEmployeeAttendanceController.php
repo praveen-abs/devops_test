@@ -204,4 +204,13 @@ class VmtEmployeeAttendanceController extends Controller
     {
         return view('reports.attendance_overtime_reports');
     }
+    public function fetchMIPReportData(Request $request, VmtAttendanceReportsService $serviceVmtAttendanceReportsService)
+    {
+        return $serviceVmtAttendanceReportsService->fetchMIPReportData($date ="2023-08-01",);
+    }
+    public function fetchSandwidchReportData(Request $request, VmtAttendanceReportsService $serviceVmtAttendanceReportsService)
+    {
+        return $serviceVmtAttendanceReportsService->fetchSandwidchReportData($start_date ="2023-08-01",$end_date ="2023-08-20");
+    }
+
 }
