@@ -183,9 +183,6 @@ export default defineConfig({
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
 
-            //   Half Day Absent Report
-            // 'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js'
-
 
             ],
 
@@ -195,14 +192,4 @@ export default defineConfig({
     resolve: {
         dedupe: ['vue', 'vue-router'],
     },
-    // css: {
-    //     preprocessorOptions: {
-    //       scss: {
-    //         additionalData: `
-    //           @import "./resources/scss/views/main_dashboard.scss";
-    //           @import "./resources/scss/main.scss";
-    //         `
-    //       }
-    //     }
-    //   }
 });

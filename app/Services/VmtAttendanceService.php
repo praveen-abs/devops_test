@@ -1683,9 +1683,7 @@ class VmtAttendanceService
             $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-                $res_notification="";
-
-         if($user_type == "manager"){
+         if($user_type != "Admin"){
             //Check if manager's mail exists or not
             if (!empty($manager_details)) {
                 //dd($manager_details);
@@ -1746,7 +1744,7 @@ class VmtAttendanceService
             return [
                 'status' => 'success',
                 'message' => 'Request sent successfully!',
-                'notification_status' => $res_notification??" ",
+                'notification_status' => $res_notification,
                 'mail_status' => $mail_status,
                 'data' => [],
             ];
@@ -1805,7 +1803,6 @@ class VmtAttendanceService
 
 
         try {
-
             //Get the user_code
             $query_user = User::where('user_code', $approver_user_code)->first();
             $user_id = $query_user->id;

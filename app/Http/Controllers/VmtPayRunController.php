@@ -27,6 +27,6 @@ class VmtPayRunController extends Controller
             $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
             $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
         }
-        return $pay_run_service->fetch_attendance_data($start_date,  $end_date,$request->department);
+        return $pay_run_service->fetch_attendance_data($start_date,  $end_date);
     }
 }

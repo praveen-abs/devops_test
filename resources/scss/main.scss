@@ -22,12 +22,6 @@ body {
     background-color: $bg-body;
 }
 
-.main-content {
-    transition: all 0.1s ease-out;
-    overflow: hidden;
-    padding-bottom: 80px;
-}
-
 .collapse {
     visibility: visible !important;
 }
@@ -51,3 +45,5 @@ body {
     border-top-left-radius: 8px;
     border-top-right-radius: 5px;
 }
+
+

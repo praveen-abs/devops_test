@@ -185,12 +185,18 @@ class VmtAttendanceReportsService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
+<<<<<<< HEAD
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
         if (sessionGetSelectedClientid() != 1) {
             $user = $user->where('client_id', sessionGetSelectedClientid());
         }
         $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+=======
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
+            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+        // print($user);exit;
+>>>>>>> parent of 8a2108466 (hr dashboard Layout completed)
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 

@@ -185,7 +185,7 @@ clearstatcache();
     <div class="bg-gray-50  text-gray-700 h-screen w-[100%] main-content">
         @vite('resources/js/hrms/modules/Home/Topbar.js')
         <div id="Topbar"></div>
-        <div class="h-full overflow-auto p-2">
+        <div class="h-full overflow-auto p-2 mb-14">
             @yield('content')
         </div>
     </div>

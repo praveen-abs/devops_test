@@ -1391,13 +1391,10 @@ class VmtAttendanceController extends Controller
 
                $is_admin = User::where('user_code',$admin_user_code)->where('org_role',"2")->first();
 
-               $user_code =  User::where('id',$request->user_code)->get('user_code')->first();
-
-
                if(!empty($is_admin)){
 
                 $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization(
-                    user_code : $user_code->user_code,
+                    user_code : $request->user_code,
                     attendance_date : $request->attendance_date,
                     regularization_type : $request->regularization_type,
                     user_time : $request->user_time,
@@ -1408,13 +1405,11 @@ class VmtAttendanceController extends Controller
                     serviceVmtNotificationsService : $serviceVmtNotificationsService
                  );
 
-
                  if($response['status']=="success"){
 
-                     $user_data = User::where('user_code',$user_code->user_code)->first();
+                    $user_data = User::where('user_code',$request->user_code)->first();
 
-                    $record_id= VmtEmployeeAttendanceRegularization::where('user_id',$user_data->id )->where('attendance_date',$request->attendance_date)->first();
-
+                    $record_id= VmtEmployeeAttendanceRegularization::where('user_id',$user_data->id)->first();
 
                     $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
                         approver_user_code : $admin_user_code  ,
@@ -1424,6 +1419,7 @@ class VmtAttendanceController extends Controller
                          user_type : "Admin",
                         serviceVmtNotificationsService : $serviceVmtNotificationsService);
                  }
+
                }
 
                return $response= [
