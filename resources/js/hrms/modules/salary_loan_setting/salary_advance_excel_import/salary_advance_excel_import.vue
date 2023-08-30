@@ -1,7 +1,7 @@
 <template>
     <Toast />
     <!-- v-if="route.params.module == null" -->
-    <Transition name="fade">
+    <Transition name="fade" v-if="false">
         <div class="w-full h-screen">
             <div class="grid grid-cols-12">
                 <div class="col-span-5 px-2">
@@ -87,6 +87,7 @@
             </template>
         </Dialog>
     </Transition>
+<importSalaryAdvance />
 </template>
 
 
@@ -95,10 +96,14 @@
 import { onMounted, onUpdated, ref } from 'vue';
 import { useRoute } from "vue-router";
 // import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
-import { useSalaryAdvanceMainStore } from './stores/salary_advance_existing_data_store';
+import { useImportSalaryAdvance } from './stores/useImportSalaryAdvance';
+import { Service } from '../../Service/Service';
+import importSalaryAdvance from './import_salary_advance.vue'
 
 
-const useStore = useSalaryAdvanceMainStore()
+
+const useStore = useImportSalaryAdvance()
+const service = Service()
 // const useNormalOnboardingStore = useSalaryAdvanceMainStore()
 
 
@@ -111,27 +116,6 @@ const openFileInput = () => {
 
 
 
-onMounted(() => {
-    useStore.getExistingOnboardingDocuments()
-    useNormalOnboardingStore.getBasicDeps()
-    // change().prevent()
-})
-
-
-const change = () => {
-    window.location.replace(window.location.origin + '/quickEmployeeOnboarding')
-}
-
-onUpdated(() => {
-    if (useStore.initialUpdate) {
-        useStore.currentlyImportedTableEmployeeCodeValues.splice(0, useStore.currentlyImportedTableEmployeeCodeValues.length)
-        useStore.currentlyImportedTableAadharValues.splice(0, useStore.currentlyImportedTableAadharValues.length)
-        useStore.currentlyImportedTableMobileNumberValues.splice(0, useStore.currentlyImportedTableMobileNumberValues.length)
-        useStore.currentlyImportedTableAccNoValues.splice(0, useStore.currentlyImportedTableAccNoValues.length)
-        useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
-        useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
-    }
-})
 const route = useRoute();
 
 </script>

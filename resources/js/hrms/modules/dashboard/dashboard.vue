@@ -64,6 +64,7 @@
 
         </div> -->
     <!-- </div> -->
+    asdsasFa
     <loadingSpinner v-if="useDashboard.canShowLoading" />
     <transition  v-else enter-active-class="transition ease-out transform duration-600"
     enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
@@ -77,8 +78,8 @@
 <script setup>
 import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
 import loadingSpinner from '../../components/LoadingSpinner.vue'
-import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
-import Events from './events/events.vue'
+// import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
+// import Events from './events/events.vue'
 import { useMainDashboardStore } from './stores/dashboard_service'
 import { ref, onMounted } from 'vue'
 import { Service } from '../Service/Service'
