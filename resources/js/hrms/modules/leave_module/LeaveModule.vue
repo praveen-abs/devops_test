@@ -1,5 +1,4 @@
 <template>
-    <LeaveApply/>
     <LoadingSpinner v-if="useLeaveStore.canShowLoading" class="absolute z-50 bg-white" />
    <div class="w-full" >
     <div class="p-2 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
