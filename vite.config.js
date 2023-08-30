@@ -11,8 +11,10 @@ export default defineConfig({
         vue(),
         laravel({
             input: [
+
                 'resources/scss/main.scss',
                 'resources/scss/views/main_dashboard.scss',
+
                 'resources/js/app.js',
 
                 // Home
