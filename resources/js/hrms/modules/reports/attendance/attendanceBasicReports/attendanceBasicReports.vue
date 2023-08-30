@@ -108,7 +108,7 @@
                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-8"
                             v-model="variable.end_date" />
                     </div>
-                    <div class="col-span-4 ">
+                    <div class="col-span-4 mt-4">
                         <!-- <button @click="getEmployeeAttendanceReports" class="btn btn-orange">Generate</button> -->
                         <button @click="canShowPeriodDialog = false, getEmployeeAttendanceReports()"
                             class="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold  fs-6 px-2 py-1.5 border border-gray-400 rounded shadow">
@@ -178,6 +178,7 @@ const downloadAbsentReports = () => {
     axios.post(url, {
         start_date: variable.start_date,
         end_date: variable.end_date,
+        department:variable.department
 
     }, { responseType: 'blob' }).then((response) => {
         console.log(response.data);
