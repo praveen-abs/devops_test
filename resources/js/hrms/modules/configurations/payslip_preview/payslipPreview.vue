@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1 class="text-[28px] font-['poppins']">Document Template</h1>
+        <p>Here you can change Document Template,<span class="underline">Company's Leave Policy</span></p>
         <div>
             <div style="position: relative;">
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
@@ -10,7 +11,7 @@
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="activetab_btn1"
                             :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
-                            Payslip v1
+                            Appointment Letter
                         </a>
                         <div v-if="activetab === 1" class=" border-3 h-1 rounded-l-3xl border-[#F9BE00]"></div>
                         <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"></div>
@@ -21,7 +22,7 @@
                             data-bs-toggle="pill" href="" @click="activetab_btn2"
                             :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab"
                             aria-controls="" aria-selected="true">
-                            Payslip v2
+                            Payslip
                         </a>
                         <div v-if="activetab === 2" class=" border-3 h-1 border-[#F9BE00] position-absolute left-0 w-12">
                         </div>
@@ -35,9 +36,10 @@
                 <div class="tab-content" id="">
                     <div>
                         <div class="card-body">
-                            <div v-if="activetab === 1" class="flex justify-center " >
-                                <div class="w-[70%] shadow-lg p-4 my-[50px] ">
-                                    <dynamicPayslip />
+                            <div v-if="activetab === 1" class="flex justify-center">
+                                <div class="w-[100%] shadow-lg p-4">
+                                    <!-- <dynamicPayslip /> -->
+                                    <apponiment_letter />
                                 </div>
                             </div>
                             <div v-if="activetab === 2" class="flex justify-center ">
@@ -63,6 +65,7 @@
 import { ref } from 'vue';
 import dynamicPayslip from '../../manage_payslips/dynamicPayslip.vue';
 import dynamicPayslipv2 from '../../manage_payslips/dynamicPayslipv2.vue';
+import apponiment_letter from './apponiment_letter.vue';
 
 const activetab = ref(1);
 
