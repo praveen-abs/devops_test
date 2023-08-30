@@ -362,7 +362,7 @@
         </div>
     </Dialog>
 
-    <dynamicPayslipv2 :source="payslipSource ? payslipSource : {}"/>
+    <!-- <dynamicPayslipv2 :source="payslipSource ? payslipSource : {}"/> -->
 </template>
 
 <script setup>
