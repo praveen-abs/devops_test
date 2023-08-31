@@ -132,8 +132,6 @@ onMounted(() => {
     console.log(window.location.origin)
     axios.get('/currentUserRole').then(res => {
         console.log("current logined user" + res.data);
-        axios.get('/getClientName').then(client => {
-            console.log(client.data);
             menuItems.value = [
                 {
                     label: 'Dashboard',
@@ -245,5 +243,4 @@ onMounted(() => {
 
         })
     })
-})
 </script>
