@@ -269,7 +269,7 @@
 
             var temp = '{{ $cacheStatus }}';
             console.log(temp);
-
+            // document.cookie = 'XSRF-TOKEN=your-token-value; SameSite=None; Secure';
             var allCookies = document.cookie.split(';');
 
             for (var i = 0; i < allCookies.length; i++)
