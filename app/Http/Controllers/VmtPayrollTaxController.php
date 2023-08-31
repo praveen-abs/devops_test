@@ -13,6 +13,11 @@ public function getEmpCompValues(Request $request, VmtPayrollTaxService $vmtPayr
     return $vmtPayrollTaxService->getEmpCompValues();
 
 }
+public function annualProjection(Request $request, VmtPayrollTaxService $vmtPayrollTaxService){
+
+    return $vmtPayrollTaxService->annualProjection();
+
+}
 
 
 }
