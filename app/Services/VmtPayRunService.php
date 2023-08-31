@@ -17,7 +17,7 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function fetch_attendance_data($start_date, $end_date)
+    public function fetch_attendance_data($start_date, $end_date, $department)
     {
         ini_set('max_execution_time', 300);
         $reportresponse = array();
@@ -30,8 +30,11 @@ class VmtPayRunService
         if (sessionGetSelectedClientid() != 1) {
             $user = $user->where('client_id', sessionGetSelectedClientid());
         }
-        $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        // print($user);exit;
+        if ($department) {
+            $user = $user->where('vmt_employee_office_details.department_id', '=', $department);
+        }
+        $user = $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+        // pr
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -526,10 +529,5 @@ class VmtPayRunService
             unset($arrayReport);
         }
 
-        // $data = array($heading_dates, $reportresponse);
-        //  dd($heading_dates);
-        $data['header'] = $heading_dates;
-        $data['rows'] = $reportresponse;
-        return $data;
     }
 }

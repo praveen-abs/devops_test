@@ -18,6 +18,7 @@
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
     use App\Mail\VmtPMSMail_Assignee;
+    use App\Mail\VmtAttendanceMail_Regularization;
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
@@ -677,11 +678,9 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-
-
-
-
         //  }
+        $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
 
     //     $start_date="2023-08-01";
     //     $end_date ="2023-08-25";
@@ -689,165 +688,21 @@
     //   $date_array = array();
     //   $leave_array = array();
 
-    //         $lastAttendanceDate = Carbon::parse($end_date);
-    //         $client_id =sessionGetSelectedClientid();
-    //         $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($start_date));
 
-    //         for ($i = 0; $i < ($totalDays); $i++) {
-    //             $date_array = array();
-
-    //             $dayStr = Carbon::parse($start_date)->addDay($i)->format('l');
-    //             $dateString  = Carbon::parse($start_date)->addDay($i)->format('Y-m-d');
-
-    //             $current_date = $dateString;
-    //             $previous_date =Carbon::parse($dateString)->subDay()->format('Y-m-d');
-    //             $day_after_date =Carbon::parse($dateString)->addDay()->format('Y-m-d');
-
-    //          $current_month_holidays = vmtHolidays::all();
-
-    //          array_push($date_array,$current_date,$previous_date,$day_after_date);
-
-    //          //$attendance_data = $this->fetch_attendance_data($start_date, $end_date);
-
-    //         //  $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
-
-
-    //     for ($j = 0; $j <count($user_data); $j++) {
-
-    //          $leave_details =VmtEmployeeLeaves::where('user_id',$user_data[$j]['id'])->wheredate("start_date", $previous_date )
-    //                                                 ->wheredate("end_date",$day_after_date )
-    //                                                 ->get();
-
-    //             if(!empty($leave_details->toarray())){
-
-    //                    array_push();
-
-    //             }else{
-
-
-    //             }
-    //         }
-
-    //     }
-
-
-    //     dd($reportresponse);
-
-
-
-   $client_id =sessionGetSelectedClientid();
-
-    $start_date="2023-08-01";
-    $end_date ="2023-08-25";
-
-               $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
-
-               $dateString  = Carbon::parse($date)->format('Y-m-d');    //   $date_array = array();
-               $leave_array = array();
-               $deviceData =array();
-
-            $lastAttendanceDate = Carbon::parse($end_date);
-            $client_id =sessionGetSelectedClientid();
-            $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($start_date));
-
-      for ($i = 0; $i < ($totalDays); $i++) {
-                $date_array = array();
-
-                $dayStr = Carbon::parse($start_date)->addDay($i)->format('l');
-                $dateString  = Carbon::parse($start_date)->addDay($i)->format('Y-m-d');
-
-                $current_date = $dateString;
-                $previous_date =Carbon::parse($dateString)->subDay()->format('Y-m-d');
-                $day_after_date =Carbon::parse($dateString)->addDay()->format('Y-m-d');
-
-     foreach($user_data as $key =>$single_user_data){
-
-      if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-            || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
-                ) {
-                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('user_Id', $single_user_data['user_code'])
-                        ->first(['check_out_time']);
-
-                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('user_Id',  $single_user_data['user_code'])
-                        ->first(['check_in_time']);
-                } else {
-                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('direction', 'out')
-                        ->where('user_Id', $single_user_data['user_code'])
-                        ->first(['check_out_time']);
-
-                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('direction', 'in')
-                        ->where('user_Id', $single_user_data['user_code'])
-                        ->first(['check_in_time']);
-                }
-                //dd($attendanceCheckIn);
-
-                $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-                $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-                //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
-
-                $leave_details =VmtEmployeeLeaves::where('user_id',$single_user_data['id'])->where('date',$dateString)->first();
-
-                $emp_work_shifts = VmtEmployeeWorkShifts::where("user_id",$single_user_data['id'])->first();
-                $work_shift =VmtWorkShifts::where('id',$emp_work_shifts->work_shift_id)->first();
-
-                if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
-                    $deviceData[] = array(
-                        'date' => $dateString,
-                        'user_code'=>$single_user_data['user_code'],
-                        'user_code'=>$single_user_data['name'],
-                        'checkin_time' => $deviceCheckInTime,
-                        'checkout_time' => $deviceCheckOutTime,
-                        'attendance_mode_checkin' => 'biometric',
-                        'attendance_mode_checkout' => 'biometric'
-                    );
-                }
-            }
-        }
-dd($deviceData);
-
-            $weekoff_sunday = getWeekoffSundays("2023","09");
-
-   foreach ($weekoff_sunday as $key => $single_weekoff) {
-
-            foreach ($employee_data as $key => $single_emp_data) {
-
-
-
-
-            }
-
-   }
-
-   function getWeekoffSundays($y,$m){
-        $date = "$y-$m-01";
-        $first_day = date('N',strtotime($date));
-        $first_day = 7 - $first_day + 1;
-        $last_day =  date('t',strtotime($date));
-        $days = array();
-    for($i=$first_day; $i<=$last_day; $i=$i+7 ){
-
-        $days[] = "$y-$m-".$i;
-    }
-      return  $days;
-   }
-
-
-
-
-
-
+        $isSent    = \Mail::to("vvishva185@gmail.com")->cc(["vishnu@abshrms.com"])->send(new VmtAttendanceMail_Regularization(
+                    $query_user='Vishnu',
+                    $query_user="Abs@123123",
+                    "",
+                    "",
+                    $manager_details="karthick",
+                    $manager_details="ABS023",
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    "bye",
+                    "Pending",
+                    $user_type="Admin",
+                ));
+dd(  $isSent );
     ?>
 
 

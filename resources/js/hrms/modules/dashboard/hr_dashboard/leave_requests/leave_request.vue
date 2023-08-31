@@ -1,60 +1,24 @@
 <template>
-     <div class="card"  style="width: 100%; height: 260px">
-                <div class="card-body">
-                  <div
-                    class="card-title d-flex align-items-center justify-content-between"
-                    id=""
-                  >
-                    <span class="text-primary">Leave Request</span>
-                  </div>
-                  <!-- <ul class="leave-request-wrapper">
-                    <li class="leave-request-content">
-                      <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                          <div class="user-img">
-                            <div class="icons bg-blue-lighten">
-                              <i class="fas fa-users blue-darken"></i>
-                            </div>
-                          </div>
-                          <div class="mx-2 leave-request-user">
-                            <p class="f-14 text-primary">Anto</p>
-                            <p class="fs-10">Technical Lead</p>
-                          </div>
+    <div class="p-2 overflow-hidden bg-white rounded-lg" style="height: 200px;">
+        <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Leave Balance</span>
+        <div class="h-full overflow-x-scroll bg-white rounded-lg">
+            <div class="px-auto">
+                <div
+                    class="p-2  my-2 transition duration-700 ease-in-out bg-[#E4ECFF] rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100 ">
+                    <div class="flex px-2 justify-between items-center">
+                        <div>
+                            <span class="text-[14px] font-semibold">Document update</span>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <span class="text-xl font-semibold text-black">1</span>
+                            <span>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </span>
                         </div>
 
-                        <div class="mx-3 leave-request-date">
-                          <p class="px-3 rounded-pill">2 days Casual Leave</p>
-                          <p class="text-center fs-10 text-muted">13 jan - 16 jan</p>
-                        </div>
-                        <a role="button" class="btn border-primary leave-request-view"
-                          >View</a
-                        >
-                      </div>
-                    </li>
-                    <li class="leave-request-content">
-                      <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                          <div class="user-img">
-                            <div class="icons bg-blue-lighten">
-                              <i class="fas fa-users blue-darken"></i>
-                            </div>
-                          </div>
-                          <div class="mx-2 leave-request-user">
-                            <p class="f-14 text-primary">Karthikeyan</p>
-                            <p class="fs-10">Technical Lead</p>
-                          </div>
-                        </div>
-
-                        <div class="mx-3 leave-request-date">
-                          <p class="px-3 rounded-pill">2 days Casual Leave</p>
-                          <p class="text-center fs-10 text-muted">13 jan - 16 jan</p>
-                        </div>
-                        <a role="button" class="btn border-primary leave-request-view"
-                          >View</a
-                        >
-                      </div>
-                    </li>
-                  </ul> -->
+                    </div>
                 </div>
-              </div>
+            </div>
+        </div>
+    </div>
 </template>
