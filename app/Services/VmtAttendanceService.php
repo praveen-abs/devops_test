@@ -1599,6 +1599,7 @@ class VmtAttendanceService
 
     public function applyRequestAttendanceRegularization($user_code, $attendance_date, $regularization_type, $user_time, $regularize_time, $reason, $custom_reason, $user_type, VmtNotificationsService $serviceVmtNotificationsService)
     {
+
         $validator = Validator::make(
             $data = [
                 "user_code" => $user_code,
@@ -1613,8 +1614,8 @@ class VmtAttendanceService
                 'user_code' => 'required|exists:users,user_code',
                 "attendance_date" => "required",
                 'regularization_type' => ['required', Rule::in(['LC', 'EG', 'MIP', 'MOP'])],
-                'user_time' => 'nullable',// Its null for MIP, MOP
-                "regularize_time" => "nullable", //LG, EG. MIP. MOP
+                "user_time" => "required",
+                "regularize_time" => "required",
                 "reason" => "required", //
                 "custom_reason" => "nullable",
             ],
@@ -1653,38 +1654,8 @@ class VmtAttendanceService
                 ];
             } else {
 
-                $array_validation_error = array();
-
-                //Check for required data
-                if ($regularization_type == 'LC' || $regularization_type == 'EG')
-                {
-                    if(empty($user_time))
-                        $array_validation_error[] = "User Time is missing";
-
-                    if(empty($regularize_time))
-                        $array_validation_error[] =  "Regularize Time is missing";
-                }
-                else
-                if ($regularization_type == 'MIP' || $regularization_type == 'MOP')
-                {
-
-                    if(empty($regularize_time))
-                        $array_validation_error[] =  "Regularize Time is missing";
-                }
-
-                //dd($array_validation_error);
-
-                if(count($array_validation_error) != 0)
-                    return response()->json([
-                        'status' => 'failure',
-                        'message' => $array_validation_error,
-                        'data' => ''
-                    ]);
-
-                //DB Saving logic starts here
-
                 //dd("Request not applied");
-                //For MIP, MOP , usertime is NULL. For LC - EG, we will get the employee's time
+
                 if ($regularization_type == 'MIP' || $regularization_type == 'MOP')
                     $user_time = null;
 
@@ -1789,7 +1760,6 @@ class VmtAttendanceService
                 ]
             );
         } catch (\Exception $e) {
-
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ applyRequestAttendanceRegularization() ] " . $e->getMessage(),

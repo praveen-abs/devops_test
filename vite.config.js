@@ -3,6 +3,9 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+    // build:{
+    //       'outDir':'./dist'
+    // },
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
@@ -18,6 +21,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/Home/Home.js',
                 'resources/js/hrms/modules/Home/Sidebar.js',
                 'resources/js/hrms/modules/Home/Topbar.js',
+
 
                 //Main dashboard
                 'resources/js/hrms/modules/dashboard/dashboard.js',

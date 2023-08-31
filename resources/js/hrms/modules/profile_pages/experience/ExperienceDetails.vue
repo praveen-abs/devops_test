@@ -1,5 +1,5 @@
 <template>
-    <!-- <h6 class="font-semibold text-lg">Experience Information</h6>
+    <h6 class="font-semibold text-lg">Experience Information</h6>
     <div class="flex gap-6 items-center"
         v-for="experience in _instance_profilePagesStore.employeeDetails.get_experience_details">
         <div class="mx-4 flex justify-center">
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <div>
         <div class="mb-2 card">

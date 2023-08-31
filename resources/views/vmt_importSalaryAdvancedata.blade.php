@@ -10,12 +10,66 @@
 @slot('li_1') @endslot
 @endcomponent --}}
 
-<div>
+    <div class="uploadEmployee-wrpper mt-30 ">
+        <div class="border-0 shadow card profile-box card-top-border">
+            <div class="form-control">
+                <div class="row">
+                    <div class="col-md-5 col-xl-5 col-sm-12">
+                        <h6 class="text-xl font-semibold"> Salary Advance Upload</h6>
+                        <div class="col col-form-label">
+                            <ul class="list-style-numbered ">
+                                <li class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Download
 
-@vite('resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js')
-<div id="salary_advance_excel_import"></div>
 
-</div>
+                                <li class="my-4">
+                                    <form method="POST" id='role-form'
+                                        action="{{ url('imporExistingSalaryAdvanceData') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div>
+                                            <!-- <span class="">Please Upload the employees details excel-sheet.</span> -->
+                                            <div class="p-2 my-4 bg-gray-100 rounded-lg">
+                                                  <span class="choose-file ms-1">
+                                                <input name="file" type="file" required>
+                                                <i class="fa fa-file" aria-hidden="true"></i>
+                                                Choose file
+                                            </span>
+                                            <span style="width: 500px;" class="mx-4 text-bold" id="uploaded_doc"></span>
+                                        </div>
+                                            <!-- <span class="choose-file ms-1">
+                                                <input name="file" type="file" required>
+                                                <i class="fa fa-file" aria-hidden="true"></i>
+                                                Choose file
+                                            </span> -->
+                                        </div>
+
+                                            {{-- <div class="col-md-10">
+                                                <input id="upload_doc" name="file" type="file" required>
+                                            </div> --}}
+
+                                            <span style="width: 500px;" class="font-bold" id="uploaded_doc"></span>
+
+
+
+
+                                            <div class="text-end">
+                                                <button type="submit" class="btn btn-orange">Upload</button>
+                                            </div>
+
+                                        <div class="">
+
+                                                <p id="success-msg"></p>
+                                                <p id="error-msg"></p>
+
+
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+
+                            </form>
+                        </div>
+                    </div>
 
     @endsection
     @section('script')

@@ -36,9 +36,9 @@ import Galleria from 'primevue/galleria';
 
 
 
-import dashboard from './dashboard.vue'
+import Dashboard from './dashboard.vue'
 
-const app = createApp(dashboard);
+const app = createApp(Dashboard);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -76,5 +76,5 @@ app.component('Carousel', Carousel)
 app.component('Galleria', Galleria)
 
 
-app.mount("#dashboard");
+app.mount("#Dashboard");
 
