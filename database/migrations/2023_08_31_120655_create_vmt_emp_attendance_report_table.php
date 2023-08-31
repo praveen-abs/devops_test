@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_employee_attendance_v2', function (Blueprint $table) {
+        Schema::create('vmt_emp_attendance_report', function (Blueprint $table) {
             $table->id();
             $table->date('date');
             $table->text('day');
             $table->foreignId('user_id')->nullable()->constrained('users');
-          //  $table->foreignId('work_shift_id')->nullable()->constrained('vmt_work_shifts');
-           // $table->unsignedBigInteger('work_shift_id')->nullable();
             $table->integer('work_shift_id')->nullable();
             $table->text('checkin_time');
             $table->text('checkin_mode');
@@ -40,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_employee_attendance_v2');
+        Schema::dropIfExists('vmt_emp_attendance_report');
     }
 };

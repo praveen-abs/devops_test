@@ -1013,7 +1013,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::post('/employee-dashboard-loan-and-advance', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'employeeDashboardLoanAndAdvance']);
 
-    Route::get('/testing-karthi', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'testingKarthi']);
+    Route::get('/testing-karthi', [App\Http\Controllers\VmtAttendanceControllerV2::class, 'testing']);
 
     Route::get('/get-pending-requested-for-loan-and-advance', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getApprovedRequestedForLoanAndAdvance'])->name('getApprovedRequestedForLoanAndAdvance');
     //loan with intrest
