@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg p-2 mb-16">
+    <div class="bg-white rounded-lg p-2 ">
         <span class="text-primary font-semibold fs-6">Events</span>
 
         <div class="h-[500px] overflow-x-scroll">
