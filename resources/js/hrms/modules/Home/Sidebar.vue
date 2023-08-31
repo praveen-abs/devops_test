@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-gray-900  transition-all duration-700 overflow-x-scroll pt-2 h-screen" ref="content"
+    <nav class="bg-gray-900  transition-all duration-700 !overflow-x-hidden pt-2 h-screen" ref="content"
         v-if="service.current_user_role" :class="[!open ? 'w-[56px] ' : 'w-60 px-2']"
         @mouseenter="open = true, isActive = true" @mouseleave="open = false, isActive = false, subMenuDisable = false">
         <div class="w-full">
@@ -9,7 +9,7 @@
                 <img src="./assests/images/ABS_logo_Yellow.png" class="h-8 w-[180px]" alt="" v-if="isActive">
             </button>
         </div>
-        <template v-for="(menu, index) in menuItems" :key="index" class="relative">
+        <template v-for="(menu, index) in menuItems" :key="index" class="relative" >
             <div class="" v-if="menu">
                 <a v-if="open" role="button" @click="toggleMenu(index), menu.subItems ? ' ' : redirectModule(menu.to)"
                     :class="{
