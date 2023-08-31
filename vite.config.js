@@ -175,12 +175,16 @@ export default defineConfig({
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
                 'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
-            //    Exit approval
-            // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
-              //Mobile Settings
-             'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
+                //    Exit approval
+                // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
+                //Mobile Settings
+                'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
+
+                // salary advance existing data
+
+                'resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js'
 
 
             ],
