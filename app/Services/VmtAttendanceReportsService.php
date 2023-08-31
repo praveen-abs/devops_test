@@ -185,12 +185,9 @@ class VmtAttendanceReportsService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
-
-        if (sessionGetSelectedClientid() != 1) {
-            $user = $user->where('client_id', sessionGetSelectedClientid());
-        }
-        $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
+            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+        // print($user);exit;
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -1487,8 +1484,7 @@ class VmtAttendanceReportsService
                 //  dd(Carbon::parse($value['checkout_time']));
                 if ($this->canCalculateOt($singleUser->user_code)) {
                     if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes($value['checkout_time']) && $value['checkout_time'] != null) {
-                        $end_time = Carbon::parse($value['checkin_time'])->addMinutes($shift_settings->fullday_min_workhrs);
-                        $ot =   $end_time->diffInMinutes(Carbon::parse($value['checkout_time']));
+                        $ot = $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
                         $ot_ar = CarbonInterval::minutes($ot)->cascade();
                         $ot_hrs = (int) $ot_ar->totalHours;
                         $ot_mins = $ot_ar->toArray()['minutes'];

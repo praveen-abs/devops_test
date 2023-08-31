@@ -1230,7 +1230,7 @@ class VmtEmployeeController extends Controller
         $client_id=User::where('user_code',$employeeData['employee_name'])->first();
 
         $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
-        
+
         $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
@@ -1836,6 +1836,37 @@ class VmtEmployeeController extends Controller
                                  ->get(['users.user_code','users.name']);
                                // dd($reportingManagers);
         return $reportingManagers;
+    }
+
+
+    public function getEmployeeLoanDetails(Request $request)
+    {
+
+        try {
+            $data = array();
+
+            //get existing employee_code
+            $employees_user_code = User::where("active","1")->where("is_ssa","0")->pluck('user_code')->toarray();
+            $user_code = array_filter($employees_user_code, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['user_code'] = array_values($user_code);
+
+
+            $response = ([
+                'status' => 'success',
+                'message' => '',
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            $response = ([
+                'status' => 'success',
+                'message' => '',
+                "data" => $e->getmessage() . " " . $e->getline()
+            ]);
+        }
+
+        return response()->json($response);
     }
 
 }

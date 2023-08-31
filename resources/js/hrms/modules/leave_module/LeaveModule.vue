@@ -92,7 +92,7 @@ import OrgLeaveDetails from './leave_details/OrgLeaveDetails.vue';
 import TeamLeaveDetails from './leave_details/TeamLeaveDetails.vue';
 import { useLeaveModuleStore } from './LeaveModuleService'
 import { onMounted, ref } from 'vue';
-import leaveapply2 from './leave_apply_v2/leave_apply_v2.vue'
+import LeaveApply from './leave_apply/LeaveApply.vue';
 import LoadingSpinner from '../../components/LoadingSpinner.vue'
 
 const useLeaveStore = useLeaveModuleStore()

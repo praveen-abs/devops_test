@@ -6,7 +6,6 @@ import '../../assests/tailwind.css'
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
-import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -37,9 +36,9 @@ import Galleria from 'primevue/galleria';
 
 
 
-import dashboard from './dashboard.vue'
+import Dashboard from './dashboard.vue'
 
-const app = createApp(dashboard);
+const app = createApp(Dashboard);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -77,5 +76,5 @@ app.component('Carousel', Carousel)
 app.component('Galleria', Galleria)
 
 
-app.mount("#dashboard");
+app.mount("#Dashboard");
 
