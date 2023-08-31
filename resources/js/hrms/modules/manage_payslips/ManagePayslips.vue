@@ -161,7 +161,7 @@
 
     <div class="flex inline-flex card justify-content-center">
         <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :breakpoints="{ '960px': '75vw', '640px': '90vw' }">
-            <div v-html="managePayslipStore.paySlipHTMLView" ></div>
+            <!-- <div v-html="managePayslipStore.paySlipHTMLView" ></div> -->
         </Dialog>
     </div>
     <Dialog header="Header" v-model:visible="managePayslipStore.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -307,14 +307,14 @@
                                 <h1 class="my-3" v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.earnings[0]" :key="index" :class="[key == 'Total Earnings' ?'text-black text-[16px]':'']"> {{ key }}</h1>
                             </td>
 
-                            <td class="flex flex-col items-start">
-                            <h1 class="font-semibold ">Fixed</h1>
-                            <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="my-3" > {{ value }}</h1>
+                            <td class="flex flex-col items-start pt-[2px]">
+                            <h1 class="font-semibold">Fixed</h1>
+                            <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="mt-[12px]" > {{ value }}</h1>
                             </td>
 
-                            <td class=" border-[2px solid ] border-black" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">              
-                                <h1 class="flex items-start font-semibold" >Arrears</h1>
-                                <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.arrears[0]" :key="index" class="my-3">{{ value }}</h1>
+                            <td class=" flex flex-col items-start pt-[2px]" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">              
+                                <h1 class="font-semibold " >Arrears</h1>
+                                <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.arrears[0]" :key="index" class="mt-[12px]">{{ value }}</h1>
                                 <!-- <h1  v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="my-3" >&nbsp;</h1> -->
                             </td>
                             <td v-if="managePayslipStore.paySlipHTMLView.data.earnings[0]"> <h1 class="font-semibold" >Earned</h1>
@@ -361,11 +361,14 @@
 
         </div>
     </Dialog>
+
+    <!-- <dynamicPayslipv2 :source="payslipSource ? payslipSource : {}"/> -->
 </template>
 
 <script setup>
 import { ref, onMounted, reactive, computed } from "vue";
 import { useManagePayslipStore } from './ManagePayslipService';
+import dynamicPayslipv2 from "./dynamicPayslipv2.vue";
 
 const managePayslipStore = useManagePayslipStore();
 
@@ -384,6 +387,8 @@ const selectedMonth = ref();
 
 const viewpayslip = ref(false);
 
+const payslipSource = ref()
+
 let list= ref([]);
 
 onMounted( () => {
@@ -398,10 +403,10 @@ async function showPaySlipHTMLView(selected_user_code) {
 
     await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
 
-    // canShowPayslipHTMLView.value = true;
-    viewpayslip.value = true;
+    canShowPayslipHTMLView.value = true;
+    // viewpayslip.value = true;
 
-    console.log(viewpayslip.value);
+    // console.log(viewpayslip.value);
 
 
 }

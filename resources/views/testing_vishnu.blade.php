@@ -14,6 +14,7 @@
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
     use App\Models\VmtMasterConfig;
+    use App\Models\VmtEmployeeLeaves;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
@@ -769,11 +770,10 @@ $comp_data = str_replace(" ","_",array_map('strtolower', $comp_data));
 "Open Amount",];
 
  $array_data =array();
- $i=0;
+ $i=1;
 foreach ($data as $key => $value) {
     if(strpos($value, '%') !== false){
         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
-
         foreach ($calci_data as $key => $single_calci_data) {
             $array_data[$i]['value'] = $single_calci_data[1];
             $array_data[$i]['action'] = $single_calci_data[2];
@@ -781,9 +781,19 @@ foreach ($data as $key => $value) {
            $i++;
         }
      }
+     else{
+        preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
+         foreach ($calci_data as $key => $single_calci_data) {
+            $array_data[$i]['value'] = $single_calci_data[1];
+            $array_data[$i]['action'] = $single_calci_data[2];
+            $array_data[$i]['comp_name'] =$comp_data[$i] ;
+           $i++;
+        }
+     }
+
 }
 
-dd($array_data);
+//dd($array_data);
 
 // $inputSentence = "50% from Basic Salary";
 
@@ -816,10 +826,12 @@ dd($array_data);
 //     echo "Condition: $condition Value: $value" . PHP_EOL;
 // }
 
-$inputSentence = "200 Maximum, if the person married";
-$pattern = '/(\d+)\s*(?:|Max|Maximum)./i';
 
-preg_match($pattern, $inputSentence, $matches);
+$inputSentence = "200 Max, if the person married";
+$pattern = '/(\d+)(?:\s*(?:from\s*)?)\s*(?:|Max|Maximum)./i';
+
+preg_match_all('/(\d+%)(?:\s*(?:Max\s*)?)(Maximum|Max)/i', $inputSentence, $calci_data, PREG_SET_ORDER);
+
 
 if (isset($matches[1])) {
     $maxValue = (int)$matches[1];
@@ -827,6 +839,36 @@ if (isset($matches[1])) {
 } else {
     echo "No max value found.";
 }
+
+
+$sentence = "200 Maximum, if the person married";
+
+// Extract the maximum value using regular expression
+if (preg_match('/(\d+)\s*Maximum/', $sentence, $matches)) {
+    $maxValue = (int)$matches[1];
+    if ($maxValue <= 200) {
+        // Do something with the maximum value
+        echo "Maximum value is: " . $maxValue;
+    } else {
+        // Handle the case when the value is greater than 200
+        echo "Maximum value exceeds 200.";
+    }
+} else {
+    // Handle the case when the pattern is not found in the sentence
+    echo "Pattern not found.";
+}
+
+
+
+
+//    $leave_data =VmtEmployeeLeaves::where('user_id',"334")->whereBetween('start_date', ["2023-08-30", "2023-08-30"])->get();
+
+$leave_Details = VmtEmployeeLeaves::where('user_id', "334")
+                        ->whereBetween('start_date', ["2023-08-29", "2023-08-29"])
+                        ->orWhereBetween('end_date', ["2023-08-30", "2023-08-30"])
+                        ->get();
+
+        dd($leave_Details);
     ?>
 
 
