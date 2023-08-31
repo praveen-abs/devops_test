@@ -1484,7 +1484,8 @@ class VmtAttendanceReportsService
                 //  dd(Carbon::parse($value['checkout_time']));
                 if ($this->canCalculateOt($singleUser->user_code)) {
                     if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes($value['checkout_time']) && $value['checkout_time'] != null) {
-                        $ot = $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
+                        $end_time = Carbon::parse($value['checkin_time'])->addMinutes($shift_settings->fullday_min_workhrs);
+                        $ot =   $end_time->diffInMinutes(Carbon::parse($value['checkout_time']));
                         $ot_ar = CarbonInterval::minutes($ot)->cascade();
                         $ot_hrs = (int) $ot_ar->totalHours;
                         $ot_mins = $ot_ar->toArray()['minutes'];
