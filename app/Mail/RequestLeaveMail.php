@@ -21,22 +21,23 @@ class RequestLeaveMail extends Mailable
 
     protected $leaveRequestDate;
     protected $empCode;
-    protected $empAvatar;
+
     protected $startDate;
     protected $endDate;
     protected $reason;
-
     protected $leaveType;
     protected $totalLeaveDatetime;
     protected $loginLink;
     protected $image_view;
+    protected $emp_image;
+    protected $manager_image;
+    protected $emp_designation;
 
-    public function __construct($uEmployeeName, $uEmpCode, $uEmpAvatar, $uManagerName,$uLeaveRequestDate, $uStartDate,$uEndDate,$uReason, $uLeaveType, $uTotal_leave_datetime,  $loginLink, $image_view )
+    public function __construct($uEmployeeName, $uEmpCode, $uManagerName,$uLeaveRequestDate, $uStartDate,$uEndDate,$uReason, $uLeaveType, $uTotal_leave_datetime,  $loginLink, $image_view , $emp_image , $manager_image , $emp_designation)
     {
         //
         $this->employeeName  = $uEmployeeName;
         $this->empCode  = $uEmpCode;
-        $this->empAvatar   =$uEmpAvatar;
         $this->managerName   =$uManagerName;
         $this->leaveRequestDate = $uLeaveRequestDate;
         $this->startDate   =$uStartDate;
@@ -46,6 +47,9 @@ class RequestLeaveMail extends Mailable
         $this->totalLeaveDatetime =$uTotal_leave_datetime;
         $this->loginLink  = $loginLink;
         $this->image_view   = $image_view;
+        $this->emp_image   = $emp_image;
+        $this->manager_image   = $manager_image;
+        $this->emp_designation   = $emp_designation;
 
     }
 
@@ -71,7 +75,6 @@ class RequestLeaveMail extends Mailable
                     ->view('mail_leave_request')
                     ->with('employeeName', $this->employeeName)
                     ->with('empCode', $this->empCode)
-                    ->with('empAvatar', $this->empAvatar)
                     ->with('managerName', $this->managerName)
                     ->with('leaveRequestDate',$this->leaveRequestDate)
                     ->with('startDate', $this->startDate)
@@ -80,7 +83,10 @@ class RequestLeaveMail extends Mailable
                     ->with('leaveType', $this->leaveType)
                     ->with('totalLeaveDatetime', $this->totalLeaveDatetime)
                     ->with('loginLink', $this->loginLink)
-                    ->with('image_view', $this->image_view);
+                    ->with('image_view', $this->image_view)
+                    ->with('emp_image', $this->emp_image)
+                    ->with('manager_image', $this->manager_image)
+                    ->with('emp_designation', $this->emp_designation);
 
     }
 }

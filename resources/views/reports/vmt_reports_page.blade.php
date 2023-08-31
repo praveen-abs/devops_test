@@ -127,21 +127,22 @@
             </div>
         </div>
 
-        <div id="attendance_tab" class="tab-pane fade ">
-            <div class="card top-line mb-0">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-3">
-                            <ul class=' list-style-circle px-4'>
-                                <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic Report</a></li>
-                                <li class=""><a href="{{ route('showDetailedAttendanceReport') }}">Detailed Report</a></li>
-                                <li class=""><a href="{{ route('showAbsentReport') }}">Absent Report</a></li>
-                                <li class=""><a href="{{ route('showLateComingReport') }}">Late Coming Report</a></li>
-                                <li class=""><a href="{{ route('showEarlygoingReport') }}">Early going Report</a></li>
-                                <li class=""><a href="{{ route('showOvertimeReport') }}">Overtime Report</a></li>
-                            </ul>
+            <div id="attendance_tab" class="tab-pane fade ">
+                <div class="card top-line mb-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <ul class=' list-style-circle px-4'>
+                                    <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic Report</a></li>
+                                    <li class=""><a href="{{ route('showDetailedAttendanceReport') }}">Detailed Report</a></li>
+                                    <li class=""><a href="{{ route('showAbsentReport') }}">Absent Report</a></li>
+                                    <li class=""><a href="{{ route('showLateComingReport') }}">Late Coming Report</a></li>
+                                    <li class=""><a href="{{ route('showEarlygoingReport') }}">Early going Report</a></li>
+                                    <li class=""><a href="{{ route('showOvertimeReport') }}">Overtime Report</a></li>
+                                    <li class=""><a href="{{ route('showHalfdayAbsentReport') }}">Half Day Absent Report</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
                 </div>
             </div>

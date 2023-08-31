@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-gray-900  transition-all duration-700 overflow-x-scroll pt-2 h-screen" ref="content"
+    <nav class="bg-gray-900  transition-all duration-700 !overflow-x-hidden pt-2 h-screen" ref="content"
         v-if="service.current_user_role" :class="[!open ? 'w-[56px] ' : 'w-60 px-2']"
         @mouseenter="open = true, isActive = true" @mouseleave="open = false, isActive = false, subMenuDisable = false">
         <div class="w-full">
@@ -9,11 +9,12 @@
                 <img src="./assests/images/ABS_logo_Yellow.png" class="h-8 w-[180px]" alt="" v-if="isActive">
             </button>
         </div>
-        <template v-for="(menu, index) in menuItems" :key="index" class="relative">
+        <template v-for="(menu, index) in menuItems" :key="index" class="relative" >
             <div class="" v-if="menu">
-                <a v-if="open" role="button" @click="toggleMenu(index),menu.subItems ? ' ' : redirectModule(menu.to)" :class="{
-                    'bg-yellow-400 text-[001820] ': isOpen(index),
-                }"
+                <a v-if="open" role="button" @click="toggleMenu(index), menu.subItems ? ' ' : redirectModule(menu.to)"
+                    :class="{
+                        'bg-yellow-400 text-[001820] ': isOpen(index),
+                    }"
                     class=" flex items-center rounded-l-md my-2 p-2  w-full  relative left-3 transition ease-in-out delay-75 hover:-translate-y-1 hover:scale-110 hover: duration-300 hover:bg-yellow-400">
                     <span>
                         <svg width="14" height="14" class="mx-2" viewBox="0 0 24 24" fill="none"
@@ -184,7 +185,7 @@ onMounted(() => {
                     icon3: 'M17.2101 13.9563V13.2523C17.2101 11.7336 16.1299 10.387 14.5327 9.91431L14.5253 9.91213L12.189 9.56263C11.9902 9.50736 11.7777 9.60247 11.7062 9.77968L9.05541 16.3509C8.90247 16.73 8.30904 16.73 8.1561 16.3509L5.50528 9.77968C5.4475 9.63657 5.29805 9.54688 5.13786 9.54688C5.09985 9.54688 2.68632 9.91164 2.68632 9.91164C1.07596 10.3965 0 11.7453 0 13.2704V18.7383C0 19.5577 0.735194 20.2219 1.64211 20.2219H12.6794C12.6453 19.9808 12.6257 19.7357 12.6257 19.4863C12.6258 16.8713 14.5639 14.6588 17.2101 13.9563Z',
                     icon4: 'M9.58139 9.1629C9.47791 9.06108 9.32667 9.00977 9.17373 9.00977H8.03257C7.87953 9.00977 7.72829 9.061 7.6249 9.1629C7.46471 9.32055 7.44146 9.54827 7.55523 9.72629L8.1652 10.5572L7.87962 12.7337L8.44193 14.0852C8.49676 14.2211 8.70953 14.2211 8.76436 14.0852L9.32667 12.7337L9.04109 10.5572L9.65107 9.72629C9.76483 9.54827 9.74158 9.32055 9.58139 9.1629Z',
                 } : null,
-            {
+            false ? {
                 label: 'Performance',
                 subItems: res.data == 2 || res.data == 4 ? [{ label: 'Self Appraisal', to: 'employee-appraisal' }, { label: 'Team Appraisal', to: 'team-appraisal' }, { label: 'Org Appraisal', to: 'pms' }, { label: 'PMS Config', to: 'config-pms' }, { label: 'PMS Forms Management', to: 'pms-forms-mgmt' }] : [{ label: 'Self Appraisal', to: 'employee-appraisal' }],
                 arrow_icon: 'pi pi-angle-right',
@@ -194,7 +195,7 @@ onMounted(() => {
                 icon3: '',
                 icon4: '',
                 stroke_width: '1.71429'
-            },
+            } : null,
 
             res.data == 2 || res.data == 4 ?
                 {
@@ -239,6 +240,8 @@ onMounted(() => {
                     icon4: '',
                 } : null
         ]
+
     })
 })
+
 </script>

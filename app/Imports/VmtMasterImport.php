@@ -10,10 +10,11 @@ use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Validators\ValidationException;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
 
 
-class VmtMasterImport extends DefaultValueBinder implements ToModel,  WithHeadingRow
+class VmtMasterImport extends DefaultValueBinder implements ToModel,  WithHeadingRow,WithCalculatedFormulas
 {
     /**
     * @param array $row

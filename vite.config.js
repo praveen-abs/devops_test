@@ -3,16 +3,18 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-    build:{
-          'outDir':'./dist'
-    },
+    // build:{
+    //       'outDir':'./dist'
+    // },
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
         laravel({
             input: [
+
                 'resources/scss/main.scss',
                 'resources/scss/views/main_dashboard.scss',
+
                 'resources/js/app.js',
 
                 // Home
@@ -35,7 +37,6 @@ export default defineConfig({
                 // Leaves
 
                 'resources/js/hrms/modules/leave_module/LeaveModule.js',
-                'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
                 //Reports
                 'resources/js/hrms/modules/reports/ReportsModule.js',
@@ -45,9 +46,8 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js',
                 'resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js',
                 'resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js',
-
-                //Attendance Detailed Report
                 'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
+                'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
@@ -177,10 +177,10 @@ export default defineConfig({
 
             //    Exit approval
             // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
-         //Mobile Settings
+              //Mobile Settings
              'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
                 // Employee Payables Details
-                'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js'
+                'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
 
 
             ],
@@ -191,14 +191,4 @@ export default defineConfig({
     resolve: {
         dedupe: ['vue', 'vue-router'],
     },
-    // css: {
-    //     preprocessorOptions: {
-    //       scss: {
-    //         additionalData: `
-    //           @import "./resources/scss/views/main_dashboard.scss";
-    //           @import "./resources/scss/main.scss";
-    //         `
-    //       }
-    //     }
-    //   }
 });
