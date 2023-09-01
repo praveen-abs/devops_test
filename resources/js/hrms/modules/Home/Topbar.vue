@@ -114,6 +114,9 @@
                         <a href="investment_settings"
                             class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Investment setting</a>
+                        <a href="showMobileSettingsPage"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Mobile setting</a>
                         <a href="showSAsettingsView"
                             class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting
