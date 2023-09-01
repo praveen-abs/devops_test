@@ -753,8 +753,13 @@ class VmtMainDashboardController extends Controller
         return $response;
         //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
+public function getEmployeesCountDetails(Request $request, VmtDashboardService $serviceVmtDashboardService)
+{
 
     //HR New Main Dashboard
+    return $serviceVmtDashboardService->getEmployeesCountDetails();
+
+}
 
     function getCurrentClientName()
     {

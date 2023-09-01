@@ -4,17 +4,17 @@
        @mouseleave="useDashboard.canShowConfiguration = false, useDashboard.canShowClients = false">
         <div class="grid items-center justify-between grid-cols-12 ">
             <!-- Organization List  -->
-            <div class="relative col-span-4 px-2 py-2 mx-2 border-1 border-x-gray-300"
-              >
-                <button class="text-black rounded focus:outline-none">
-                    <p class="text-left text-gray-600 text-md">Your organization</p>
+            <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-4"
+                >
+                <button class=" text-black rounded  focus:outline-none">
+                    <p class="text-md text-gray-600 text-left">Your organization</p>
                     <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient">
 
-                        <img :src="currentlySelectedClient.client_logo" alt="" class="w-12 h-6">
-                        <p class="px-2 text-sm font-semibold whitespace-nowrap"
-                            v-if="currentlySelectedClient.client_fullname.length <= 13"   @click="useDashboard.canShowClients = !useDashboard.canShowClients">{{
+                        <img :src="currentlySelectedClient.client_logo" alt="" class="h-6 w-12">
+                        <p class="text-sm whitespace-nowrap  font-semibold px-2"
+                            v-if="currentlySelectedClient.client_fullname.length <= 13" @click="useDashboard.canShowClients = !useDashboard.canShowClients">{{
                                 currentlySelectedClient.client_fullname }}</p>
-                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"   @click="useDashboard.canShowClients = !useDashboard.canShowClients" v-tooltip="currentlySelectedClient.client_fullname "  v-else> {{
+                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-tooltip="currentlySelectedClient.client_fullname "  v-else @click="useDashboard.canShowClients = !useDashboard.canShowClients"> {{
                             currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
                                 13) + '..' : '' }}</p>
                     </div>
@@ -22,9 +22,9 @@
 
                 <transition enter-active-class="transition duration-200 ease-out transform"
                     v-if="service.current_user_role == 2 || service.current_user_role == 4"
-                    enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
-                    leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
-                    leave-to-class="translate-y-2 opacity-0">
+                    enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
+                    leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
+                    leave-to-class="opacity-0 translate-y-2"   @mouseleave ="useDashboard.canShowClients = false ">
                     <div v-if="useDashboard.canShowClients"
                         class="absolute z-20 w-11/12 bg-white rounded shadow-lg top-5 left-2 mt-14">
                         <!-- Dropdown content goes here -->
@@ -33,23 +33,17 @@
                             <div class="flex items-center justify-between p-2 hover:bg-gray-200"
                                 @click="submitSelectedClient(client.id)">
                                 <div class="cursor-pointer flex mx-2 align-center justify-between rounded-lg p-0.5 ">
-                                    <div class="flex items-center justify-between gap-4 p-1 mx-2 "
-                                       >
-                                        <div style="height: 30px;width:30px" class="border rounded">
-                                            <img :src="client.client_logo" alt="" class=" mh-100 mw-100">
-                                        </div>
-                                        <!-- <div class=" w-[240px] bg-yellow-300 truncate">
-                                            <p class="text-sm font-semibold flex bg-yellow-400 truncate" style="">{{ client.client_fullname }} ({{
-                                            client.abs_client_code }})</p>
-
-                                        </div> -->
-                                        <p class="px-2 text-sm font-semibold whitespace-nowrap"
+                                    <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
+                                        style="height: 30px;width:30px">
+                                        <img :src="client.client_logo" alt="" class=" mh-100 mw-100">
+                                        <!-- <p class="font-semibold whitespace-nowrap text-sm ">{{ client.client_fullname }} ({{
+                                            client.abs_client_code }})</p> -->
+                                            <p class="text-sm whitespace-nowrap  font-semibold px-2"
                             v-if="client.client_fullname.length <= 40">{{
-                                client.client_fullname }}</p>
-                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-tooltip="client.client_fullname "  v-else> {{
+                                client.client_fullname }} {{client.abs_client_code   }}</p>
+                        <p class="text-sm whitespace-nowrap  font-semibold px-2" v-tooltip="client.client_fullname "  v-else> {{
                             client.client_fullname ? client.client_fullname.substring(0,
                                 40) + '..' : '' }}</p>
-                                        
                                     </div>
                                 </div>
                                 <div v-if="currentlySelectedClient ? currentlySelectedClient.id == client.id : ''">
@@ -97,10 +91,10 @@
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"    >
                     <img src="./assests/icons/setting.svg" alt="" class="w-6 h-6">
                 </button>
-                <transition enter-active-class="transition duration-200 ease-out transform"
-                    enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
-                    leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
-                    leave-to-class="translate-y-2 opacity-0"  >
+                <transition enter-active-class="transition ease-out duration-200 transform"
+                    enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
+                    leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
+                    leave-to-class="opacity-0 translate-y-2"  @mouseleave="useDashboard.canShowConfiguration = false">
                     <div v-if="useDashboard.canShowConfiguration"
                         @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"
                         class="absolute top-0 z-40 p-2 mt-16 bg-white rounded shadow-lg right-40 w-60 " @mouseleave="useDashboard.canShowConfiguration = false">
@@ -124,8 +118,11 @@
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Attendance setting</a>
                         <a href="investment_settings"
-                            class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                        class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Investment setting</a>
+                        <a href="showMobileSettingsPage"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Mobile setting</a>
                         <a href="showSAsettingsView"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting

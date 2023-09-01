@@ -186,6 +186,9 @@ export default defineConfig({
 
                 'resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js'
 
+            //  payslipPreview
+            'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
+
 
             ],
 
