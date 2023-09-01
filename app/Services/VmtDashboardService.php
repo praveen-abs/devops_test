@@ -590,7 +590,7 @@ class VmtDashboardService
 
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
             //dd($merged_attendanceData);
-            //dd($dateWiseData);
+            // dd($dateWiseData);
             foreach ($dateWiseData  as $key => $value) {
 
                 // dd($value[0]);
@@ -783,23 +783,47 @@ class VmtDashboardService
             // return ($attendanceResponseArray);
 
 
-            $count = 0;
-            $count1 = 0;
-            $count2 = 0;
+            $absentCount = 0;
+            $presentCount = 0;
+            $notAppliedCount = 0;
+            $lcCount = 0;
+            $egCount = 0;
+            $mipCount = 0;
+            $mopCount = 0;
+
+            $data = array();
 
             foreach ($attendanceResponseArray as $attendancedash) {
 
+
                 if ($attendancedash['isAbsent']) {
-                    $count++;
+                    $absentCount++;
                 }
                 if (!$attendancedash['isAbsent']) {
-                    $count1++;
+                    $presentCount++;
                 }
                 if ($attendancedash['absent_status'] == "Not Applied") {
-                    $count2++;
+                    $notAppliedCount++;
                 }
+                if ($attendancedash['isLC']) {
+                    $lcCount++;
+                }
+                if (!$attendancedash['isEG']) {
+                    $egCount++;
+                }
+                if ($attendancedash['isMIP']) {
+                    $mipCount++;
+                }
+                if (!$attendancedash['isMOP']) {
+                    $mopCount++;
+                }
+                array_push($data,$attendancedash);
+
             }
-            $current_mnth = ["absent" => $count, "present" => $count1, "not_applied" => $count2];
+            // dd($data);
+            $current_mnth = ["absent" => $absentCount, "present" => $presentCount, "not_applied" => $notAppliedCount,
+                             "late_coming" => $lcCount, "early_going" =>$egCount,"mip"=>$mipCount,"mop"=>$mopCount];
+            dd($current_mnth);
 
             //array_push($res, $current_mnth);
 
