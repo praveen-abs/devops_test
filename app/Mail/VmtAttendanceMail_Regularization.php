@@ -31,10 +31,11 @@ class VmtAttendanceMail_Regularization extends Mailable
     protected $loginLink;
     protected $image_view;
     protected $custom_reason;
+    protected $user_type;
 
     protected $status;
 
-    public function __construct($uEmployeeName, $uEmpCode, $uEmpAvatar, $uAttendance_date, $managerName, $managerCode, $loginLink, $image_view, $custom_reason, $status)
+    public function __construct($uEmployeeName, $uEmpCode, $uEmpAvatar, $uAttendance_date, $managerName, $managerCode, $loginLink, $image_view, $custom_reason, $status,$user_type)
     {
         //
         $this->employeeName  = $uEmployeeName;
@@ -47,6 +48,7 @@ class VmtAttendanceMail_Regularization extends Mailable
         $this->image_view   = $image_view;
         $this->custom_reason   = $custom_reason;
         $this->status   = $status;
+        $this->user_type   = $user_type;
     }
 
     /**
@@ -61,7 +63,26 @@ class VmtAttendanceMail_Regularization extends Mailable
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
-        if ($this->status == "Pending") {
+
+       if ($this->user_type == "Admin") {
+    
+            //Mail sent to Manager
+            $output = $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
+                ->subject("Attendance Regularization Mail")
+                ->view('admin_mail_attendanceRegularization')
+                ->with('employeeName', $this->employeeName)
+                ->with('empCode', $this->empCode)
+                ->with('empAvatar', $this->empAvatar)
+                ->with('attendance_date', $this->attendance_date)
+                ->with('managerName', $this->managerName)
+                ->with('managerCode', $this->managerCode)
+                ->with('loginLink', $this->loginLink)
+                ->with('image_view', $this->image_view)
+                ->with('status', $this->status)
+                ->with('custom_reason', $this->custom_reason);
+        } else{
+
+         if ($this->status == "Pending") {
             //Mail sent to Manager
             $output = $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
                 ->subject("Attendance Regularization Mail")
@@ -93,6 +114,7 @@ class VmtAttendanceMail_Regularization extends Mailable
                 ->with('status', $this->status)
                 ->with('custom_reason', $this->custom_reason);
         }
+    }
 
         return $output;
     }

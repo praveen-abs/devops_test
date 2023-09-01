@@ -76,7 +76,7 @@ class VmtPayrollComponentsController extends Controller
 
     }
 
-    public function authorizeComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    public function EnableDisableComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
         $response =$serviceVmtPayrollComponentsService->authorizeComponents($request->comp_id,$request->status);
 
@@ -153,7 +153,7 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
-    public function authorizeAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    public function EnableDisableAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
         $response =$serviceVmtPayrollComponentsService->authorizeAppIntegration(
             $request->app_id,
@@ -341,8 +341,6 @@ class VmtPayrollComponentsController extends Controller
         $request->scheme_type,
     );
 
-        return $response;
-    }
 
     // public function ShowPaySlipTemplateMgmtPage(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     // {
@@ -352,4 +350,5 @@ class VmtPayrollComponentsController extends Controller
     // {
     //     return $serviceVmtPayrollComponentsService->assignPaySlipTemplateToClient();
     // }
+}
 }

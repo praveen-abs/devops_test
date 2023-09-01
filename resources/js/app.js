@@ -1,4 +1,3 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
@@ -108,6 +107,7 @@ import router from "./hrms/modules/Organization/router/router";
 
 
 import second from './testings/second.vue'
+import QUickOnboarding from './hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
 const app = createApp(second);
 const pinia=createPinia()
 

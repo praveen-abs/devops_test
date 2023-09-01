@@ -1,4 +1,3 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
@@ -33,6 +32,8 @@ import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
 import Textarea from 'primevue/textarea';
 import OverlayPanel from 'primevue/overlaypanel';
+import Sidebar from 'primevue/sidebar';
+
 
 import LeaveModule from './LeaveModule.vue'
 
@@ -70,6 +71,7 @@ app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('Textarea', Textarea)
 app.component('OverlayPanel', OverlayPanel)
+app.component('Sidebar', Sidebar)
 
 app.mount("#LeaveModule");
 

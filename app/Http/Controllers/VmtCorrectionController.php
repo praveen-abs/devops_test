@@ -590,28 +590,30 @@ class VmtCorrectionController extends Controller
             {
              "attendance_id": "DMC078",
              "user_id": "DM185"
-            }
+            },
             {
-             "attendance_id": "DMC084",
-             "user_id": "DM190"
-            }
-            {
-             "attendance_id": "DMC079",
-             "user_id": "DM188"
-            }
-            {
-             "attendance_id": "DMC077",
-             "user_id": "DM187"
-            }
-            {
-             "attendance_id": "DMC083",
-             "user_id": "DM189"
-            }
+                "attendance_id": "DMC084",
+                "user_id": "DM190"
+               },
+               {
+                "attendance_id": "DMC079",
+                "user_id": "DM188"
+               },
+               {
+                "attendance_id": "DMC077",
+                "user_id": "DM187"
+               },
+               {
+                "attendance_id": "DMC083",
+                "user_id": "DM189"
+               }
            ]';
+           
 
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '', $dunamis);
         $dunamis = json_decode($dunamis, true);
+
         $not_existed_user = array('The Give User IDS Does Not Exists In DataBase Please Check Ur Json data');
         $not_existed_attedance_id = array('The Give Attendance IDS Does Not Exists In DataBase Please Check Ur Json data');
         $update_ids = array('Scuessfully Updated');

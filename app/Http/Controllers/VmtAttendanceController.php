@@ -236,6 +236,62 @@ class VmtAttendanceController extends Controller
         return $daterange;
     }
 
+    public function checkApplyleaveEmployeeAdminStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    {
+
+     try{
+               $admin_user_code = $request->admin_user_code;
+
+               $is_admin = User::where('user_code',$admin_user_code)->where('org_role',"2")->first();
+
+               if(!empty($is_admin)){
+
+
+                $response = $serviceVmtAttendanceService->applyLeaveRequest(
+                    user_code : $request->user_code,
+                    attendance_date : $request->attendance_date,
+                    regularization_type : $request->regularization_type,
+                    user_time : $request->user_time,
+                    regularize_time: $request->regularize_time,
+                    reason: $request->reason,
+                    custom_reason: $request->custom_reason,
+                    user_type : "Admin",
+                    serviceVmtNotificationsService : $serviceVmtNotificationsService
+                 );
+
+                 if($response['status']=="success"){
+
+                    $user_data = User::where('user_code',$request->user_code)->first();
+
+                    $record_id= VmtEmployeeAttendanceRegularization::where('user_id',$user_data->id)->first();
+
+                    $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
+                        approver_user_code : $admin_user_code  ,
+                        record_id : $record_id->id,
+                        status : "Approved",
+                        status_text :"---",
+                         user_type : "Admin",
+                        serviceVmtNotificationsService : $serviceVmtNotificationsService);
+                 }
+
+               }
+
+               return $response= [
+                'status' => 'success',
+                'message' => 'Regularization done successfully!',
+                'mail_status' =>$response['mail_status']??"",
+                'data' => "",
+            ];
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while doing regularization",
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
+
     public function applyLeaveRequest(Request $request, VmtNotificationsService $serviceNotificationsService)
     {
 
@@ -618,7 +674,7 @@ class VmtAttendanceController extends Controller
         } else if (count($emp_work_shift) > 1) {
             foreach ($emp_work_shift as $single_work_shift) {
                 $regularTime  = VmtWorkShifts::where('id', $single_work_shift->work_shift_id)->first();
-                $shift_start_time = Carbon::parse($regularTime->shift_start_time);
+                $shift_start_time =  Carbon::parse($regularTime->shift_start_time)->addMinutes($regularTime->grace_time);
                 $shift_end_time = Carbon::parse($regularTime->shift_end_time);
                 $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time), false);
                 $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time), false);
@@ -1222,6 +1278,7 @@ class VmtAttendanceController extends Controller
     }
 
     /*
+
         Fetch Attendance Regularization data
 
         Todo : Need to restrict employee access
@@ -1326,6 +1383,60 @@ class VmtAttendanceController extends Controller
         Employee send request to HR for attendance regularization
 
     */
+    public function checkAttendanceEmployeeAdminStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    {
+
+     try{
+               $admin_user_code = $request->admin_user_code;
+
+               $is_admin = User::where('user_code',$admin_user_code)->where('org_role',"2")->first();
+
+               if(!empty($is_admin)){
+
+                $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization(
+                    user_code : $request->user_code,
+                    attendance_date : $request->attendance_date,
+                    regularization_type : $request->regularization_type,
+                    user_time : $request->user_time,
+                    regularize_time: $request->regularize_time,
+                    reason: $request->reason,
+                    custom_reason: $request->custom_reason,
+                    user_type : "Admin",
+                    serviceVmtNotificationsService : $serviceVmtNotificationsService
+                 );
+
+                 if($response['status']=="success"){
+
+                    $user_data = User::where('user_code',$request->user_code)->first();
+
+                    $record_id= VmtEmployeeAttendanceRegularization::where('user_id',$user_data->id)->first();
+
+                    $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
+                        approver_user_code : $admin_user_code  ,
+                        record_id : $record_id->id,
+                        status : "Approved",
+                        status_text :"---",
+                         user_type : "Admin",
+                        serviceVmtNotificationsService : $serviceVmtNotificationsService);
+                 }
+
+               }
+
+               return $response= [
+                'status' => 'success',
+                'message' => 'Regularization done successfully!',
+                'mail_status' =>$response['mail_status']??"",
+                'data' => "",
+            ];
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while doing regularization",
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
     public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
         return $serviceVmtAttendanceService->applyRequestAttendanceRegularization(
@@ -1336,10 +1447,65 @@ class VmtAttendanceController extends Controller
                         regularize_time: $request->regularize_time,
                         reason: $request->reason,
                         custom_reason: $request->custom_reason,
+                        user_type : "manager",
                         serviceVmtNotificationsService : $serviceVmtNotificationsService
         );
 
     }
+
+    public function checkAbsentEmployeeAdminStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    {
+
+     try{
+               $admin_user_code = $request->admin_user_code;
+
+               $is_admin = User::where('user_code',$admin_user_code)->where('org_role',"2")->first();
+
+               if(!empty($is_admin)){
+
+                $response = $serviceVmtAttendanceService->applyRequestAbsentRegularization(user_code : $request->user_code,
+                                                                                attendance_date: $request->attendance_date,
+                                                                                regularization_type : $request->regularization_type,
+                                                                                checkin_time : $request->checkin_time,
+                                                                                checkout_time : $request->checkout_time,
+                                                                                reason : $request->reason,
+                                                                                custom_reason : $request->custom_reason,
+                                                                                user_type : "Admin",
+                                                                            );
+
+
+                 if($response['status']=="success"){
+
+                    $user_data = User::where('user_code',$request->user_code)->first();
+
+                    $record_id= VmtEmployeeAttendanceRegularization::where('user_id',$user_data->id)->first();
+
+                    return $serviceVmtAttendanceService->approveRejectAbsentRegularization(approver_user_code : $admin_user_code,
+                    record_id: $record_id,
+                    status :"Approved",
+                    status_text : "---",
+                    user_type : "Admin",
+                 );
+
+               }
+            }
+
+               return $response= [
+                'status' => 'success',
+                'message' => 'Regularization done successfully!',
+                'mail_status' =>$response['mail_status']??"",
+                'data' => "",
+            ];
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while doing regularization",
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
+
 
     public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
@@ -1349,7 +1515,8 @@ class VmtAttendanceController extends Controller
                                                                                 checkin_time : $request->checkin_time,
                                                                                 checkout_time : $request->checkout_time,
                                                                                 reason : $request->reason,
-                                                                                custom_reason : $request->custom_reason
+                                                                                custom_reason : $request->custom_reason,
+                                                                                user_type : "manager",
                                                                             );
 
     }
@@ -1369,6 +1536,7 @@ class VmtAttendanceController extends Controller
                                                                                 record_id: $request->record_id,
                                                                                 status : $request->status,
                                                                                 status_text : $request->status_text,
+                                                                                user_type : "manager",
                                                                              );
 
     }
@@ -1382,6 +1550,7 @@ class VmtAttendanceController extends Controller
                                         record_id : $request->record_id,
                                         status : $request->status,
                                         status_text : $request->status_text,
+                                        user_type : "manager",
                                         serviceVmtNotificationsService : $serviceVmtNotificationsService);
 
     }

@@ -13,6 +13,9 @@ use App\Http\Controllers\Api\VmtAPIInvestmentsController;
 use App\Http\Controllers\Api\VmtApiNotificationsController;
 use App\Http\Controllers\Api\VmtAPIReimbursementsController;
 use App\Http\Controllers\Api\VmtAPILoanAndSalaryAdvanceController;
+use App\Imports\VmtEmployee;
+use App\Http\Controllers\VmtProfilePagesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +103,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Attendance Regularize
     Route::post('/attendance/apply-att-regularization', [VmtAPIAttendanceController::class, 'applyRequestAttendanceRegularization']);
     Route::post('/attendance/approveReject-att-regularization', [VmtAPIAttendanceController::class, 'approveRejectAttendanceRegularization']);
-    Route::post('/attendance/approveReject-bulk-absent-regularization', [VmtAPIAttendanceController::class, 'approveRejectBulkAbsentRegularization']);
+    Route::post('/attendance/approveReject-absent-regularization', [VmtAPIAttendanceController::class, 'approveRejectAbsentRegularization']);
     Route::post('/attendance/getData-att-regularization', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationData']);
     Route::post('/attendance/getAttendanceRegularizationStatus', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationStatus']);
     Route::post('/attendance/applyRequestAbsentRegularization', [VmtAPIAttendanceController::class, 'applyRequestAbsentRegularization']);
@@ -130,6 +133,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'addEmployeeExperianceDetails']);
     Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeExperianceDetails']);
     Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class, 'deleteEmployeeExperianceDetails']);
+    Route::post('/profile-pages/saveDocumentDetails',[VmtProfilePagesController::class, 'saveDocumentDetails']);
 
 
     //Investments

@@ -77,7 +77,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
         <tr class="td" style="height: 30px">
             <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray;margin-top:-4px">Employee Number</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code'] ?? "-"}}</p>
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Date Joined</p>

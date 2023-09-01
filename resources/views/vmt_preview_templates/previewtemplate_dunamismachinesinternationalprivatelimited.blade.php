@@ -39,7 +39,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="template-wrapper mt-30">
+    <div class="template-wrapper">
         <div class="card  left-line mb-2 ">
             <div class="card-body pb-0 pt-1">
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">

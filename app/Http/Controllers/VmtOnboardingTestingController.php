@@ -22,7 +22,10 @@ use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
-
+use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeeWorkShifts;
+use App\Models\VmtEmployeeLeaves;
+use carbon\carbon;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
@@ -36,6 +39,7 @@ use Dompdf\Dompdf;
 use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 use PDF;
 use Illuminate\Support\Facades\File;
+use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -317,5 +321,146 @@ try{
 
             }
 
+    public function getSandWidchData($start_date="2023-08-01",$end_date ="2023-08-10"){
+        try{
+             ini_set("max_execution_time", 3000);
+
+                     $client_id =sessionGetSelectedClientid();
+                     $emp_attendance_data =array();
+
+                     $user_data =User::where('client_id',$client_id)->where('active',"1")->get(["id","name","user_code","client_id", "email"])->toarray();
+
+                     $add_after_before_weeoffs =array();
+                     $WeekoffSundays = $this->getWeekoffSundays($start_date,$end_date);
+
+                     foreach ($WeekoffSundays as $key => $single_sunday) {
+
+                        $add_after_before_weeoffs[$key]['saturday'] = Carbon::parse($single_sunday)->addDay()->format('Y-m-d');
+                        $add_after_before_weeoffs[$key]['sunday'] =$single_sunday;
+                        $add_after_before_weeoffs[$key]['monday'] =Carbon::parse($single_sunday)->subDay()->format('Y-m-d');;
+
+                     }
+
+                     dd($add_after_before_weeoffs);
+                    $i=0;
+                foreach ($user_data as $key => $single_user_data) {
+                    $attendance_data = $this->getEmployeeAttendanceData($start_date,$end_date,$single_user_data['user_code']);
+                        $emp_attendance_data[$i] = $attendance_data;
+                        $i++;
+                    }
+
+                    $response =([
+                        'status' => "success",
+                        'message' => "",
+                        'data' => $e->getmessage(),
+                    ]);
+                    return  $response;
+
+                }catch(\Exception $e){
+                    $response =([
+                        'status' => "success",
+                        'message' => "",
+                        'data' => $e->getmessage(),
+                    ]);
+                    return  $response;
+                }
+        }
+
+         public function getEmployeeAttendanceData($start_date,$end_date,$user_code){
+
+            ini_set("max_execution_time", 3000);
+
+                    $client_id = sessionGetSelectedClientid();
+
+                    $deviceData =array();
+
+                    $date_array = array();
+                    $user_data =User::where('user_code',$user_code)->first();
+                    $lastAttendanceDate = Carbon::parse($end_date);
+                    $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($start_date));
+
+              for ($i = 0; $i < ($totalDays); $i++) {
+                        $date_array = array();
+
+                        $dayStr = Carbon::parse($start_date)->addDay($i)->format('l');
+                        $dateString  = Carbon::parse($start_date)->addDay($i)->format('Y-m-d');
+
+                  if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                        || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                            ) {
+                                $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                                    ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                                    ->whereDate('date', $dateString)
+                                    ->where('user_Id', $user_code)
+                                    ->first(['check_out_time']);
+
+                                $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                                    ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                                    ->whereDate('date', $dateString)
+                                    ->where('user_Id',  $user_code)
+                                    ->first(['check_in_time']);
+                            } else {
+                                $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                                    ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                                    ->whereDate('date', $dateString)
+                                    ->where('direction', 'out')
+                                    ->where('user_Id', $user_code)
+                                    ->first(['check_out_time']);
+
+                                $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                                    ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                                    ->whereDate('date', $dateString)
+                                    ->where('direction', 'in')
+                                    ->where('user_Id', $user_code)
+                                    ->first(['check_in_time']);
+                            }
+                            //dd($attendanceCheckIn);
+
+                            $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+                            $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+                            //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
+
+                            if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+                                $deviceData[] = array(
+                                    'date' => $dateString,
+                                    'user_code'=>$user_code,
+                                    'user_code'=>$user_data->name,
+                                    'checkin_time' => $deviceCheckInTime,
+                                    'checkout_time' => $deviceCheckOutTime,
+                                    'attendance_mode_checkin' => 'biometric',
+                                    'attendance_mode_checkout' => 'biometric'
+                                );
+                            }
+                        }
+                            return $deviceData;
+
+                    //}
+
+
+            //             $weekoff_sunday = getWeekoffSundays("2023","09");
+            //    foreach ($weekoff_sunday as $key => $single_weekoff) {
+            //    }
+            }
+
+     Public function getWeekoffSundays($start_date,$end_date){
+
+            $start_date = new DateTime($start_date);
+            $end_date = new DateTime($end_date);
+
+            $sundays = array();
+
+            while ($start_date <= $end_date) {
+                if ($start_date->format('w') == 0) {
+                    $sundays[] = $start_date->format('Y-m-d');
+                }
+                $start_date->modify('+1 day');
+            }
+            return $sundays;
+
+      }
+
+
+
     }
+
 
