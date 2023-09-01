@@ -33,14 +33,17 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     async function getEmployeePayslipDetailsAsHTML(user_code, month, year) {
         loading.value = true
 
-        await axios.post('/generatePayslip', {
+        // let url = `/generatePayslip`;
+        let url = `/viewPayslipdetails`;
+
+        await axios.post(url, {
             user_code: user_code,
             month: month,
             year: year,
             type:'pdf'
         }).then((response) => {
             // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
-            paySlipHTMLView.value = 'data:application/pdf;base64,'+response.data;
+            paySlipHTMLView.value = response.data;
 
         }).finally(() => {
             loading.value = false
@@ -148,7 +151,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         console.log("Downloading payslip PDF.....");
 
-
+        loading.value = true;
         // let month_payroll = parseInt(dayjs(payroll_month).month()) + 1;
         // let year_payroll = dayjs(payroll_month).year();
 
@@ -180,7 +183,14 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
 
 
+            }).finally(()=>{
+                loading.value = false;
             })
+
+    }
+
+
+    function viewpayslipv2(){
 
     }
 

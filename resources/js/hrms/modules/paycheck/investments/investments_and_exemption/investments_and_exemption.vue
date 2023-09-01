@@ -43,7 +43,7 @@
                 </li>
 
 
-                <li class="nav-item " role="presentation">
+                <li class="nav-item " role="presentation"  v-if="investmentStore.reimbursmentSource">
                     <a class="mx-2 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""
                         @click="investmentStore.investment_exemption_steps = 5"
                         :class="[investmentStore.investment_exemption_steps === 5 ? 'active' : '']" role="tab"
@@ -51,7 +51,7 @@
                         Reimbursement
                     </a>
                 </li>
-                <li class=" nav-item" role="presentation">
+                <li class=" nav-item" role="presentation" v-if="investmentStore.previousEmployeerIncomeSource">
                     <a class="mx-3 nav-link" id="" data-bs-toggle="pill" href=""
                         @click="investmentStore.investment_exemption_steps = 6"
                         :class="[investmentStore.investment_exemption_steps === 6 ? 'active' : '']" role="tab"

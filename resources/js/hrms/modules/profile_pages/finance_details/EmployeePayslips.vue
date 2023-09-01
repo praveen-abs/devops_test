@@ -28,30 +28,112 @@
 
             <Column header="Action">
                 <template #body="slotProps">
-                    <Button class="btn-primary z-0" label="View "
+                    <Button class="z-0 btn-primary" label="View "
                         @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('', slotProps.data.PAYROLL_MONTH)" />
                 </template>
             </Column>
             <column header="Download">
                 <template #body="slotProps">
                     <!-- {{slotProps.data}} -->
-                    <Button class="btn-primary z-0" label="Download "
+                    <Button class="z-0 btn-primary" label="Download "
                         @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)" />
                 </template>
 
             </column>
         </DataTable>
-        </div>
+
+        <button class="p-2 bg-black text-[12px] text-white mt-10" @click="viewpayslip = true">view</button>
+    </div>
     <!-- <div class="d-flex justify-content-end">
         <Button class="mb-2 btn btn-primary" label="Submit" />
     </div> -->
     <!-- dialog for show details -->
-    <div class="card flex justify-content-center inline-flex">
+    <div class="flex inline-flex card justify-content-center">
         <Dialog v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Payslip" :style="{ width: '58vw' }">
             <div v-html="employeePayslipStore.paySlipHTMLView">
             </div>
         </Dialog>
     </div>
+
+    <Dialog v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
+        <div class="w-[100%] h-[100]%">
+            <div class="w-[100%] flex justify-between">
+                <div class="flex flex-col">
+                    <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">MAR 2023</span></h1>
+                    <h2 class=" text-[16px] mt-[10px] text-[#000]">Lorem ipsum dolor sit.</h2>
+                    <p class=" w-[300px] mt-[10px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta doloribus
+                        magni ad corrupti iusto, et corporis laborum error?</p>
+                </div>
+                <div>
+                    <img src="../../../assests/images/logo_avatar_live.png" width="100" alt="">
+                </div>
+            </div>
+            <div class="mt-[30px]">
+                <h1 class="font-semibold  text-[16px] my-[16px]">Employee Name : PRADEESH</h1>
+                <div class="border-[1.5px] border-[#000] my-[12px]"></div>
+
+                <div class="px-2 row">
+                    <div class="col-3">
+                        <p>Employee Number</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Date Joined</p>
+                        <p class=" text-[#000]">Date Joined</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Department</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Department</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                </div>
+                <div class="px-2 row">
+                    <div class="col-3">
+                        <p>Employee Number</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Date Joined</p>
+                        <p class=" text-[#000]">Date Joined</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Department</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Department</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                </div>
+                <div class="px-2 row">
+                    <div class="col-3">
+                        <p>Employee Number</p>
+                        <p class=" text-[#000]">12312</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Date Joined</p>
+                        <p class=" text-[#000]">Date Joined</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Department</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Department</p>
+                        <p class=" text-[#000]">Marteting</p>
+                    </div>
+                </div>
+                <div class="border-[1.5px] border-[#000] my-[12px]"></div>
+            </div>
+
+            <div class="">
+
+            </div>
+        </div>
+    </Dialog>
 </template>
 
 <script setup>
@@ -66,6 +148,8 @@ import loadingSpinner from '../../../components/LoadingSpinner.vue'
 
 
 const employeePayslipStore = useEmployeePayslipStore()
+
+const viewpayslip = ref(true);
 
 onMounted(async () => {
     console.log("EmployeePayslips,vue loaded");

@@ -182,6 +182,9 @@ export default defineConfig({
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
 
+            //  payslipPreview
+            'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
+
 
             ],
 
