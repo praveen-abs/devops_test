@@ -294,23 +294,4 @@ class VmtPayCheckController extends Controller
 
 
      }
-
-     public function viewPayslipdetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService ,VmtAttendanceService $serviceVmtAttendanceService)
-     {
-        return $employeePaySlipService->viewPayslipdetails($request->user_code,
-        $request->month ,
-         $request->year,$serviceVmtAttendanceService);
-     }
-     public function generatetemplates(Request $request, VmtEmployeePayCheckService $employeePaySlipService, VmtAttendanceService $serviceVmtAttendanceService){
-
-
-        // $request->user_code = "PSC0060";
-        // $request->month = "05";
-        // $request->year = "2023";
-        // $request->type = "pdf";
-
-        return $employeePaySlipService->generatetemplates("html");
-
-
-     }
 }

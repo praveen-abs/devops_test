@@ -160,8 +160,8 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->category_id =$component_category->id;
                 $calculation_method_id =VmtPayrollCalculatiomMethod::where('name',strtolower($row["calculation_method"]))->first();
                 $fin_components->calculation_method_id =$calculation_method_id->id;
-                $fin_components->calculation_desc = ;
-                $fin_components->calculation_amount = ;
+                $fin_components->flat_amount =$row["flat_amount"];
+                $fin_components->percentage =$row["percentage"];
                 $fin_components->epf =$row["epf"];
                 $fin_components->esi =$row["esi"];
                 $fin_components->pt =$row["pt"];
@@ -172,7 +172,6 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->calculate_on_prorate_basis =$row["calculate_on_prorate_basis"];
                 $fin_components->can_show_inpayslip =$row["can_show_inpayslip"];
                 $fin_components->status =$row["status"];
-                $fin_components->comp_identifier =$row[""];
                 $fin_components->is_default =$row["is_default"];
                 $fin_components->save();
 

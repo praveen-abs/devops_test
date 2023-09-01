@@ -20,9 +20,6 @@ use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtMaritalStatus;
 use App\Models\Bank;
-use App\Models\VmtOrgTimePeriod;
-use App\Models\AbsSalaryProjection;
-use App\Models\abs;
 use App\Models\Department;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
@@ -31,7 +28,7 @@ use App\Models\VmtWorkShifts;
 use App\Imports\VmtMasterImport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
-use Exception;
+Use Exception;
 
 class VmtCorrectionController extends Controller
 {
@@ -42,12 +39,12 @@ class VmtCorrectionController extends Controller
         foreach ($reimbursement_details as $single_details) {
             if ($single_details->vehicle_type_id == 1) {
                 $totalExpense = 3.5 * $single_details->distance_travelled;
-                $UpdateDetails = VmtEmployeeReimbursements::where('id', '=', $single_details->id)->first();
+                $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
                 $UpdateDetails->total_expenses = $totalExpense;
                 $UpdateDetails->save();
             } else if ($single_details->vehicle_type_id == 2) {
                 $totalExpense = 6 * $single_details->distance_travelled;
-                $UpdateDetails = VmtEmployeeReimbursements::where('id', '=', $single_details->id)->first();
+                $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
                 $UpdateDetails->total_expenses = $totalExpense;
                 $UpdateDetails->save();
                 // dd('---------------');
@@ -55,7 +52,7 @@ class VmtCorrectionController extends Controller
                 //  dd( $single_details);
             }
         }
-        return $reimbursement_details;
+        return  $reimbursement_details;
     }
 
     public function addingReimbursementsDataForSpecificMonth(Request $request)
@@ -86,7 +83,7 @@ class VmtCorrectionController extends Controller
 
         return $response;
     }
-    public function checkallemployeeonboardingstatus()
+    public function  checkallemployeeonboardingstatus()
     {
 
         $query_all_users_details = User::get();
@@ -111,7 +108,7 @@ class VmtCorrectionController extends Controller
             dd($e);
         }
     }
-    public function addAllEmployeePayslipDetails()
+    public function  addAllEmployeePayslipDetails()
     {
 
         /*Get all employee payslip details */
@@ -485,7 +482,7 @@ class VmtCorrectionController extends Controller
 
                     $employee_leave = new VmtEmployeeLeaves;
                     $employee_leave->user_id = $user_id->id;
-                    $employee_leave->leave_type_id = $leave_type_id;
+                    $employee_leave->leave_type_id =   $leave_type_id;
                     $employee_leave->start_date = '2022-06-01';
                     $employee_leave->end_date = '2022-06-10';
                     $employee_leave->total_leave_datetime = $single_user['el_balance'];
@@ -608,10 +605,11 @@ class VmtCorrectionController extends Controller
                 "user_id": "DM189"
                }
            ]';
-
+           
 
         //Removing Extra Spaace and white space in string
-        $dunamis = preg_replace('/\s+/', '', $dunamis);
+        $dunamis = preg_replace('/\s+/', '',$dunamis);
+
         $dunamis = json_decode($dunamis, true);
 
         $not_existed_user = array('The Give User IDS Does Not Exists In DataBase Please Check Ur Json data');
@@ -638,8 +636,8 @@ class VmtCorrectionController extends Controller
 
         return response()->json([
             'not_existed_user' => $not_existed_user,
-            'not_existed_attedance_id' => $not_existed_attedance_id,
-            'update_ids' => $update_ids
+            'not_existed_attedance_id' =>  $not_existed_attedance_id,
+            'update_ids' =>  $update_ids
         ]);
     }
 
@@ -659,7 +657,7 @@ class VmtCorrectionController extends Controller
                     $employee_work_shift->user_id = $single_employee->id;
                     $employee_work_shift->work_shift_id = 2;
                     $employee_work_shift->is_active = 1;
-                    $employee_work_shift->flexi_shift_status = 0;
+                    $employee_work_shift->flexi_shift_status=0;
                     $employee_work_shift->save();
                 } catch (Exception $e) {
                     dd($e->getMessage());
@@ -670,7 +668,7 @@ class VmtCorrectionController extends Controller
                     $employee_work_shift->user_id = $single_employee->id;
                     $employee_work_shift->work_shift_id = 3;
                     $employee_work_shift->is_active = 1;
-                    $employee_work_shift->flexi_shift_status = 0;
+                    $employee_work_shift->flexi_shift_status=0;
                     $employee_work_shift->save();
                 } catch (Exception $e) {
                     dd($e->getMessage());
@@ -684,9 +682,9 @@ class VmtCorrectionController extends Controller
                     try {
                         $employee_work_shift = new VmtEmployeeWorkShifts;
                         $employee_work_shift->user_id = $single_employee->id;
-                        $employee_work_shift->work_shift_id = VmtWorkShifts::where('shift_name', 'Shift ' . $i)->first('id')->id;
+                        $employee_work_shift->work_shift_id = VmtWorkShifts::where('shift_name', 'Shift ' .$i)->first('id')->id;
                         $employee_work_shift->is_active = 1;
-                        $employee_work_shift->flexi_shift_status = 1;
+                        $employee_work_shift->flexi_shift_status=1;
                         $employee_work_shift->save();
                     } catch (Exception $e) {
                         dd($e->getMessage());
@@ -698,7 +696,7 @@ class VmtCorrectionController extends Controller
                     $employee_work_shift->user_id = $single_employee->id;
                     $employee_work_shift->work_shift_id = 1;
                     $employee_work_shift->is_active = 1;
-                    $employee_work_shift->flexi_shift_status = 0;
+                    $employee_work_shift->flexi_shift_status=0;
                     $employee_work_shift->save();
                 } catch (Exception $e) {
                     dd($e->getMessage());
@@ -708,10 +706,9 @@ class VmtCorrectionController extends Controller
 
         return "Employee Work Shift Added";
     }
-    //update all employee master data
+//update all employee master data
 
-    public function updateMasterdataUploads()
-    {
+  public function updateMasterdataUploads(){
 
         return view('vmt_MasterEmployeedata_Upload');
 
@@ -720,7 +717,7 @@ class VmtCorrectionController extends Controller
     public function importMasetrEmployeesExcelData(Request $request)
     {
 
-        $validator = Validator::make(
+        $validator =Validator::make(
             $request->all(),
             ['file' => 'required|file|mimes:xls,xlsx'],
             ['required' => 'The :attribute is required.']
@@ -729,9 +726,9 @@ class VmtCorrectionController extends Controller
 
         if ($validator->passes()) {
 
-            $importDataArry = \Excel::toArray(new VmtMasterImport, request()->file('file'));
-            //DD($importDataArry );
-            return $this->storeMasterdEmployeesData($importDataArry);
+                $importDataArry = \Excel::toArray(new VmtMasterImport, request()->file('file'));
+                //DD($importDataArry );
+                return $this->storeMasterdEmployeesData($importDataArry);
         } else {
             $data['failed'] = $validator->errors()->all();
             return response()->json($data);
@@ -747,44 +744,44 @@ class VmtCorrectionController extends Controller
         $data_array = [];
         $isAllRecordsValid = true;
 
-        $corrected_data = $data;
+        $corrected_data =$data;
 
         foreach ($corrected_data[0] as &$Single_data) {
 
-            if (array_key_exists('dob', $Single_data) && is_int($Single_data['dob'])) {
+               if (array_key_exists('dob', $Single_data) && is_int($Single_data['dob'])) {
 
-                $Single_data['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dob'])->format('Y-m-d');
-            }
-            if (array_key_exists('doj', $Single_data) && is_int($Single_data['doj'])) {
+                   $Single_data['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dob'])->format('Y-m-d');
+               }
+               if (array_key_exists('doj', $Single_data) && is_int($Single_data['doj'])) {
 
-                $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
-            }
-            if (array_key_exists('dol', $Single_data) && is_int($Single_data['dol'])) {
+                   $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
+               }
+               if (array_key_exists('dol', $Single_data) && is_int($Single_data['dol'])) {
 
-                $Single_data['dol'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dol'])->format('Y-m-d');
-            }
-            if (array_key_exists('father_dob', $Single_data) && is_int($Single_data['father_dob'])) {
+                   $Single_data['dol'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dol'])->format('Y-m-d');
+               }
+               if (array_key_exists('father_dob', $Single_data) && is_int($Single_data['father_dob'])) {
 
-                $Single_data['father_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['father_dob'])->format('Y-m-d');
-            }
-            if (array_key_exists('mother_dob', $Single_data) && is_int($Single_data['mother_dob'])) {
+                   $Single_data['father_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['father_dob'])->format('Y-m-d');
+               }
+               if (array_key_exists('mother_dob', $Single_data) && is_int($Single_data['mother_dob'])) {
 
-                $Single_data['mother_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['mother_dob'])->format('Y-m-d');
-            }
-            if (array_key_exists('spouse_dob', $Single_data) && is_int($Single_data['spouse_dob'])) {
+                   $Single_data['mother_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['mother_dob'])->format('Y-m-d');
+               }
+               if (array_key_exists('spouse_dob', $Single_data) && is_int($Single_data['spouse_dob'])) {
 
-                $Single_data['spouse_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['spouse_dob'])->format('Y-m-d');
-            }
+                   $Single_data['spouse_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['spouse_dob'])->format('Y-m-d');
+               }
 
-            if (array_key_exists('child_dob', $Single_data) && is_int($Single_data['child_dob'])) {
+               if (array_key_exists('child_dob', $Single_data) && is_int($Single_data['child_dob'])) {
 
-                $Single_data['child_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['child_dob'])->format('Y-m-d');
-            }
+                   $Single_data['child_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['child_dob'])->format('Y-m-d');
+               }
 
-        }
-        unset($Single_data);
+       }
+       unset($Single_data);
 
-        //dd($corrected_data);
+//dd($corrected_data);
         $rules = [];
         $responseJSON = [
             'status' => 'none',
@@ -796,208 +793,201 @@ class VmtCorrectionController extends Controller
         $excelRowdata_row = $corrected_data;
 
         $currentRowInExcel = 0;
-        if (empty($excelRowdata_row)) {
+        if(empty($excelRowdata_row )){
             return $rowdata_response = [
                 'status' => 'failure',
                 'message' => 'Please fill the excel',
             ];
 
-        } else {
-            foreach ($excelRowdata_row[0] as $key => $excelRowdata) {
+        }else{
+        foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
 
-                $currentRowInExcel++;
+            $currentRowInExcel++;
 
-                //Validation
-                $rules = [
-                    'employee_code' => 'required|exists:users,user_code',
-                    'name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'email' => 'nullable',
-                    'doj' => 'nullable',
-                    'dob' => 'nullable',
-                    'epf_number' => 'nullable|required_unless:epf_number,!=,NULL',
-                    'esic_number' => 'nullable|required_unless:esic_number,!=,NULL',
-                    'uan_number' => 'nullable|required_unless:uan_number,!=,NULL',
-                    //'pan_number' => 'nullable|required_unless:pan_number,!=,null|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                    'pan_number' => [
-                        'nullable',
-                        function ($attribute, $value, $fail) {
+            //Validation
+            $rules = [
+                'employee_code' =>'required|exists:users,user_code' ,
+                'name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'email' => 'nullable',
+                'doj' => 'nullable',
+                'dob' => 'nullable',
+                'epf_number' => 'nullable|required_unless:epf_number,!=,NULL',
+                'esic_number' => 'nullable|required_unless:esic_number,!=,NULL',
+                'uan_number' => 'nullable|required_unless:uan_number,!=,NULL',
+                //'pan_number' => 'nullable|required_unless:pan_number,!=,null|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
+                'pan_number' => ['nullable',
+                function ($attribute, $value, $fail) {
 
-                            if ($value !== 'NULL') {
-                                $result = preg_match("/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u", $value);
-                                if (!$result) {
-                                    $fail($value . '<b> : ' . $attribute . ' is invalid');
+                    if($value !== 'NULL'){
+                        $result = preg_match("/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u", $value);
+                        if (!$result) {
+                            $fail($value .'<b> : '.$attribute .' is invalid' );
                                 }
                             }
                         },
                     ],
-                    //'aadhar_number' => 'nullable|required_unless:aadhar_number,!=,NULL&regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
-                    'aadhar_number' => [
-                        'nullable',
-                        function ($attribute, $value, $fail) {
+                //'aadhar_number' => 'nullable|required_unless:aadhar_number,!=,NULL&regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
+             'aadhar_number' => ['nullable',
+                function ($attribute, $value, $fail) {
 
-                            if ($value !== 'NULL') {
-                                $result = preg_match("/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u", $value);
-                                if (!$result) {
-                                    $fail($value . '<b> : ' . $attribute . ' is invalid');
-                                }
+                    if($value !== 'NULL'){
+                        $result = preg_match("/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u", $value);
+                        if (!$result) {
+                            $fail($value .'<b> : '.$attribute .' is invalid' );
+                        }
+                        }
+                    },
+                ],
+               // 'mobile_number' => 'nullable|required_unless:mobile_number,!=,NULL&regex:/^([0-9]{10})?$/u&numeric',
+                'mobile_number' => ['nullable',
+                function ($attribute, $value, $fail) {
+
+                    if($value !== 'NULL'){
+                        $result = preg_match("/^([0-9]{10})?$/u", $value);
+                        if (!$result) {
+                            $fail($value .'<b> : '.$attribute .' is invalid' );
                             }
-                        },
-                    ],
-                    // 'mobile_number' => 'nullable|required_unless:mobile_number,!=,NULL&regex:/^([0-9]{10})?$/u&numeric',
-                    'mobile_number' => [
-                        'nullable',
+
+                        }
+                    },
+                ],
+                'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'mother_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                //'martial_status' => 'nullable|exists:vmt_marital_status,name',
+                'martial_status' => ['nullable',
                         function ($attribute, $value, $fail) {
 
-                            if ($value !== 'NULL') {
-                                $result = preg_match("/^([0-9]{10})?$/u", $value);
-                                if (!$result) {
-                                    $fail($value . '<b> : ' . $attribute . ' is invalid');
-                                }
-
-                            }
-                        },
-                    ],
-                    'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'mother_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    //'martial_status' => 'nullable|exists:vmt_marital_status,name',
-                    'martial_status' => [
-                        'nullable',
-                        function ($attribute, $value, $fail) {
-
-                            if ($value !== 'NULL') {
-                                $result = VmtMaritalStatus::where('name', $value)->first();
+                            if($value !== 'NULL'){
+                                $result =VmtMaritalStatus::where('name',$value)->first();
 
                                 if (empty($result)) {
-                                    $fail($value . '<b> :' . $attribute . ' doesnt exist in application.Kindly create one');
+                                    $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
                                 }
                             }
                         },
                     ],
-                    'spouse_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'department' => [
-                        'nullable',
+                'spouse_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'department' =>['nullable',
+                function ($attribute, $value, $fail) {
+
+                    if($value !== 'NULL'){
+                        $result =Department::where('name',$value)->first();
+
+                        if (empty($result)) {
+                            $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
+                        }
+                    }
+                },
+            ],
+                //'blood_group' =>'nullable|required_unless:blood_group,!=,NULL&exists:vmt_bloodgroup,name&regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'blood_group' => ['nullable',
                         function ($attribute, $value, $fail) {
 
-                            if ($value !== 'NULL') {
-                                $result = Department::where('name', $value)->first();
+                            if($value !== 'NULL'){
+                                $result =VmtBloodGroup::where('name',$value)->first();
 
                                 if (empty($result)) {
-                                    $fail($value . '<b> :' . $attribute . ' doesnt exist in application.Kindly create one');
+                                    $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
                                 }
                             }
                         },
                     ],
-                    //'blood_group' =>'nullable|required_unless:blood_group,!=,NULL&exists:vmt_bloodgroup,name&regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'blood_group' => [
-                        'nullable',
+               // 'bank_name' => 'nullable|required_unless:bank_name,!=,null&exists:vmt_banks,bank_name',
+                'bank_name' => ['nullable',
                         function ($attribute, $value, $fail) {
 
-                            if ($value !== 'NULL') {
-                                $result = VmtBloodGroup::where('name', $value)->first();
+                            if($value !== 'NULL'){
+                                $result =Bank::where('bank_name',$value)->first();
 
                                 if (empty($result)) {
-                                    $fail($value . '<b> :' . $attribute . ' doesnt exist in application.Kindly create one');
+                                    $fail($value .'<b> :'.$attribute.' doesnt exist in application.Kindly create one' );
                                 }
                             }
                         },
                     ],
-                    // 'bank_name' => 'nullable|required_unless:bank_name,!=,null&exists:vmt_banks,bank_name',
-                    'bank_name' => [
-                        'nullable',
-                        function ($attribute, $value, $fail) {
+                //'bank_ifsc_code' => 'nullable|required_unless:bank_ifsc_code,!=,NULL|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
+                'bank_ifsc_code' => 'nullable',
+                'bank_account_number' => 'nullable|required_unless:bank_account_number,!=,NULL',
+                'current_address' => 'nullable',
+                'basic' => 'required|numeric',
+                'hra' => 'required|numeric',
+                'statutory_bonus' => 'required|numeric',
+                'special_allowance' => 'required|numeric',
+                'child_education_allowance' => 'required|numeric',
+                'lta' => 'required|numeric',
+                'transport_allowance' => 'required|numeric',
+                'medical_allowance' => 'required|numeric',
+                'education_allowance' => 'required|numeric',
+                'other_allowance' => 'required|numeric',
+                'gross' => 'required|numeric',
+                'epf_employer_contribution' => 'nullable|numeric',
+                'epf_employee_contribution' => 'nullable|numeric',
+                'esic_employer_contribution' => 'nullable|numeric',
+                'esic_employee_contribution' => 'nullable|numeric',
+                'insurance' => 'required|numeric',
+                'professional_tax' => 'required|numeric',
+                'labour_welfare_fund' => 'required|numeric',
+                'net_income' => 'required|numeric',
+                'dearness_allowance' => 'required|numeric',
 
-                            if ($value !== 'NULL') {
-                                $result = Bank::where('bank_name', $value)->first();
+            ];
 
-                                if (empty($result)) {
-                                    $fail($value . '<b> :' . $attribute . ' doesnt exist in application.Kindly create one');
-                                }
-                            }
-                        },
-                    ],
-                    //'bank_ifsc_code' => 'nullable|required_unless:bank_ifsc_code,!=,NULL|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-                    'bank_ifsc_code' => 'nullable',
-                    'bank_account_number' => 'nullable|required_unless:bank_account_number,!=,NULL',
-                    'current_address' => 'nullable',
-                    'basic' => 'required|numeric',
-                    'hra' => 'required|numeric',
-                    'statutory_bonus' => 'required|numeric',
-                    'special_allowance' => 'required|numeric',
-                    'child_education_allowance' => 'required|numeric',
-                    'lta' => 'required|numeric',
-                    'transport_allowance' => 'required|numeric',
-                    'medical_allowance' => 'required|numeric',
-                    'education_allowance' => 'required|numeric',
-                    'other_allowance' => 'required|numeric',
-                    'gross' => 'required|numeric',
-                    'epf_employer_contribution' => 'nullable|numeric',
-                    'epf_employee_contribution' => 'nullable|numeric',
-                    'esic_employer_contribution' => 'nullable|numeric',
-                    'esic_employee_contribution' => 'nullable|numeric',
-                    'insurance' => 'required|numeric',
-                    'professional_tax' => 'required|numeric',
-                    'labour_welfare_fund' => 'required|numeric',
-                    'net_income' => 'required|numeric',
-                    'dearness_allowance' => 'required|numeric',
+            $messages = [
+                'numeric' => 'Field <b>:attribute</b> should be numeric',
+                'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+              //  'date_format' => 'Field <b>:attribute</b> should have the following format DD/MM/YYYY ',
+                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+                'required' => 'Field <b>:attribute</b> is required',
+                'regex' => 'Field <b>:attribute</b> is invalid',
+                'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
+                'unique' => 'Field <b>:attribute</b> should be unique',
+                'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
+                'email' => 'Field <b>:attribute</b> is invalid',
+                'pan_no.required_if' =>'Field <b>:attribute</b> is required if <b>pan ack</b> not provided ',
+                'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
+                'required_unless' => 'Field <b>:attribute</b> is invalid',
+                'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
 
+            ];
+
+            $validator = Validator::make($excelRowdata, $rules, $messages);
+
+            if (!$validator->passes()) {
+
+                $rowDataValidationResult = [
+                    'row_number' => $currentRowInExcel,
+                    'status' => 'failure',
+                    'message' => 'In Excel Row - '.$excelRowdata['employee_code'].' : ' . $currentRowInExcel . ' has following error(s)',
+                    'error_fields' => json_encode($validator->errors()),
                 ];
 
-                $messages = [
-                    'numeric' => 'Field <b>:attribute</b> should be numeric',
-                    'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
-                    //  'date_format' => 'Field <b>:attribute</b> should have the following format DD/MM/YYYY ',
-                    'in' => 'Field <b>:attribute</b> should have the following values : :values .',
-                    'required' => 'Field <b>:attribute</b> is required',
-                    'regex' => 'Field <b>:attribute</b> is invalid',
-                    'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
-                    'unique' => 'Field <b>:attribute</b> should be unique',
-                    'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
-                    'email' => 'Field <b>:attribute</b> is invalid',
-                    'pan_no.required_if' => 'Field <b>:attribute</b> is required if <b>pan ack</b> not provided ',
-                    'pan_ack.required_if' => 'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
-                    'required_unless' => 'Field <b>:attribute</b> is invalid',
-                    'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
+                array_push($data_array, $rowDataValidationResult);
 
-                ];
-
-                $validator = Validator::make($excelRowdata, $rules, $messages);
-
-                if (!$validator->passes()) {
-
-                    $rowDataValidationResult = [
-                        'row_number' => $currentRowInExcel,
-                        'status' => 'failure',
-                        'message' => 'In Excel Row - ' . $excelRowdata['employee_code'] . ' : ' . $currentRowInExcel . ' has following error(s)',
-                        'error_fields' => json_encode($validator->errors()),
-                    ];
-
-                    array_push($data_array, $rowDataValidationResult);
-
-                    $isAllRecordsValid = false;
-                }
+                $isAllRecordsValid = false;
             }
+        }
         } //for loop
 
         //Runs only if all excel records are valid
         if ($isAllRecordsValid) {
-            foreach ($excelRowdata_row[0] as $key => $excelRowdata) {
+            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
                 $rowdata_response = $this->storeSingleRecord_MasterEmployee($excelRowdata);
 
                 array_push($data_array, $rowdata_response);
             }
-            return $responseJSON = [
+            return  $responseJSON = [
                 'status' => $rowdata_response['status'],
                 'message' => "Excelsheet data import success",
                 'mail_status' => $rowdata_response['mail_status'] ?? "failure",
-                'data' => $data_array,
-                'error_data' => $rowdata_response['data']
+                'data' =>$data_array,
+                'error_data' =>$rowdata_response['data']
             ];
 
         } else {
 
-            return $responseJSON = [
-                'status' => 'failure',
-                'message' => "Please fix the below excelsheet data",
+            return  $responseJSON = [
+                'status' =>'failure',
+                'message'=> "Please fix the below excelsheet data",
                 'data' => $data_array
             ];
 
@@ -1006,398 +996,356 @@ class VmtCorrectionController extends Controller
         return response()->json($responseJSON);
     }
 
-    /*
+      /*
 
-      $outputArray should be passed from parent function.
-  */
+        $outputArray should be passed from parent function.
+    */
     private function storeSingleRecord_MasterEmployee($row)
+
     {
 
         //DB level validation
 
-        try {
+          try{
 
-            $response = $this->Update_MasterEmployeeData(data: $row);
+            $response = $this->Update_MasterEmployeeData( data: $row);
 
-            $status = $response['status'];
+              $status =  $response['status'];
 
-            if ($response['status'] == "success")
-                $message = $row['employee_code'] . ' added successfully';
-            else
-                $message = $row['employee_code'] . ' has failed';
+             if( $response['status'] == "success")
+                $message =  $row['employee_code']  . ' added successfully';
+             else
+                $message =  $row['employee_code']  . ' has failed';
 
-            return $rowdata_response = [
+                    return  $rowdata_response = [
 
-                'status' => $response['status'],
-                'message' => $message,
-                'mail_status' => '',
-                'data' => $response['data']
-            ];
+                        'status' => $response['status'],
+                        'message' => $message,
+                        'mail_status' =>'',
+                        'data' =>$response['data']
+                    ];
 
 
-        } catch (\Exception $e) {
-            //dd($e);
-            // $this->deleteUser($user->id);
+            } catch(\Exception $e) {
+                //dd($e);
+               // $this->deleteUser($user->id);
 
-            return $rowdata_response = [
+               return $rowdata_response = [
                 'status' => $status,
-                'message' => '',
-                'data' => $e->getMessage(),
+                'message' =>'',
+                'data' =>  $e->getMessage(),
             ];
+            }
+
         }
 
-    }
+
+
+ private function Update_MasterEmployeeData($data){
+     try{
+
+
+                  $user_data = (["name" =>"name","email" =>"email"]);
+
+              $employee_data = ([  "gender" =>"gender","dob" =>"dob","doj" =>"doj","dol" =>"dol","pan_number" =>"pan_number","aadhar_number" =>"aadhar_number",
+                                    "mobile_number" =>"mobile_number", "current_address" =>"current_address_line_1", "permaent_address" =>"permanent_address_line_1",
+                                    "martial_status" =>"marital_status_id","nationality" =>"nationality", "bank_name" =>"bank_id", "bank_account_number" =>"bank_account_number",
+                                    "bank_ifsc_code" =>"bank_ifsc_code"]);
+
+     $employee_office_details = ([ "department" => "department","designation" => "designation","work_location" =>"work_location",  "officical_mail" =>"officical_mail","official_mobile" =>"official_mobile",
+                                   "l1_manager_code" =>"l1_manager_code",]);
+
+     $employee_family_details = ([  "father_name" =>'name',"father_dob" =>'dob',"mother_name" =>'name',"mother_dob" =>'dob',"spouse_name" =>'name',
+                                    "spouse_dob" =>'dob',"child_name" =>'name',"child_dob" =>'dob']);
+
+  $employee_statutory_details = ([ "uan_number" =>"uan_number","epf_number" =>"epf_number","esic_number" =>"esic_number"]);
+
+           $compensatory_data = ([ "basic" =>"basic","hra" =>"hra","special_allowance" =>"special_allowance","statutory_bonus"    =>"Statutory_bonus","child_education_allowance" =>"child_education_allowance",
+                                   "lta" =>"lta", "transport_allowance" =>"transport_allowance", "medical_allowance" =>"medical_allowance","education_allowance" =>"education_allowance",
+                                   "communication_allowance" =>"communication_allowance","food_allowance" =>"food_allowance","other_allowance" =>'other_allowance', "gross" =>"gross",
+                                   "epf_employer_contribution" =>"epf_employer_contribution", "esic_employer_contribution" =>"esic_employer_contribution", "insurance" =>"insurance","labour_welfare_fund" =>"labour_welfare_fund",
+                                   "ctc" =>"cic","epf_employee_contribution" =>"epf_employee","esic_employee_contribution" =>"esic_employee","dearness_allowance" =>"dearness_allowance","professional_tax" =>"professional_tax",
+                                   "net_income" =>'net_income']);
 
 
 
-    private function Update_MasterEmployeeData($data)
-    {
-        try {
+$user_id = User::where('user_code',$data['employee_code'])->first();
 
+ if(!empty($user_id)){
 
-            $user_data = (["name" => "name", "email" => "email"]);
+        $user_id = $user_id->id;
 
-            $employee_data = ([
-                "gender" => "gender",
-                "dob" => "dob",
-                "doj" => "doj",
-                "dol" => "dol",
-                "pan_number" => "pan_number",
-                "aadhar_number" => "aadhar_number",
-                "mobile_number" => "mobile_number",
-                "current_address" => "current_address_line_1",
-                "permaent_address" => "permanent_address_line_1",
-                "martial_status" => "marital_status_id",
-                "nationality" => "nationality",
-                "bank_name" => "bank_id",
-                "bank_account_number" => "bank_account_number",
-                "bank_ifsc_code" => "bank_ifsc_code"
-            ]);
+    foreach($data as $data_key => $single_data){
 
-            $employee_office_details = ([
-                "department" => "department",
-                "designation" => "designation",
-                "work_location" => "work_location",
-                "officical_mail" => "officical_mail",
-                "official_mobile" => "official_mobile",
-                "l1_manager_code" => "l1_manager_code",
-            ]);
+            foreach($user_data as $user_key => $single_user_data ){
 
-            $employee_family_details = ([
-                "father_name" => 'name',
-                "father_dob" => 'dob',
-                "mother_name" => 'name',
-                "mother_dob" => 'dob',
-                "spouse_name" => 'name',
-                "spouse_dob" => 'dob',
-                "child_name" => 'name',
-                "child_dob" => 'dob'
-            ]);
+                $update_Userdata = User::where('id',$user_id)->first();
 
-            $employee_statutory_details = (["uan_number" => "uan_number", "epf_number" => "epf_number", "esic_number" => "esic_number"]);
+                if($user_key == $data_key ){
 
-            $compensatory_data = ([
-                "basic" => "basic",
-                "hra" => "hra",
-                "special_allowance" => "special_allowance",
-                "statutory_bonus" => "Statutory_bonus",
-                "child_education_allowance" => "child_education_allowance",
-                "lta" => "lta",
-                "transport_allowance" => "transport_allowance",
-                "medical_allowance" => "medical_allowance",
-                "education_allowance" => "education_allowance",
-                "communication_allowance" => "communication_allowance",
-                "food_allowance" => "food_allowance",
-                "other_allowance" => 'other_allowance',
-                "gross" => "gross",
-                "epf_employer_contribution" => "epf_employer_contribution",
-                "esic_employer_contribution" => "esic_employer_contribution",
-                "insurance" => "insurance",
-                "labour_welfare_fund" => "labour_welfare_fund",
-                "ctc" => "cic",
-                "epf_employee_contribution" => "epf_employee",
-                "esic_employee_contribution" => "esic_employee",
-                "dearness_allowance" => "dearness_allowance",
-                "professional_tax" => "professional_tax",
-                "net_income" => 'net_income'
-            ]);
+                if(!empty($update_Userdata)){
+                    $update_Userdata->$single_user_data = $single_data;
+                    $update_Userdata->save();
+                }
+            }
+        }
 
+        foreach($employee_data as $emp_data_key => $single_employee_data ){
 
+                $update_employee_data =VmtEmployee::where('userid',$user_id)->first();
 
-            $user_id = User::where('user_code', $data['employee_code'])->first();
+             if($emp_data_key == $data_key ){
 
-            if (!empty($user_id)) {
+                 if(!empty($update_employee_data)){
 
-                $user_id = $user_id->id;
+                    if($data_key =='dob'){
 
-                foreach ($data as $data_key => $single_data) {
+                        $dob=$single_data;
+                        $update_employee_data->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
 
-                    foreach ($user_data as $user_key => $single_user_data) {
-
-                        $update_Userdata = User::where('id', $user_id)->first();
-
-                        if ($user_key == $data_key) {
-
-                            if (!empty($update_Userdata)) {
-                                $update_Userdata->$single_user_data = $single_data;
-                                $update_Userdata->save();
-                            }
                         }
+                   else if($data_key =='doj'){
+
+                        $doj=$single_data;
+                        $update_employee_data->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
+
+                        }
+                   else if($data_key =='dol'){
+
+                        $dol=$single_data;
+                        $update_employee_data->dol   =  $dol ? $this->getdateFormatForDb($dol) : '';
+
+                        }
+                    else if($data_key =='martial_status'){
+
+                        $martial_status_id =VmtMaritalStatus::where('name',ucfirst($single_data ?? ''))->first();
+                        $update_employee_data->marital_status_id =!empty($martial_status_id) ? $martial_status_id->id :'';
+
+                    }else if($data_key =='blood_group'){
+
+                        $blood_group_id =VmtBloodGroup::where('name',$single_data ?? '')->first();
+                        $update_employee_data->blood_group_id  =  !empty($blood_group_id) ? $blood_group_id->id : '';
+
+                    }else if($data_key =='bank_name'){
+
+                        $bank_id =Bank::where('bank_name',$single_data ?? '')->first();
+                        $update_employee_data->bank_id   = !empty($bank_id) ? $bank_id->id : '';
+
+                    }else{
+                        $update_employee_data->$single_employee_data  = $single_data;
                     }
 
-                    foreach ($employee_data as $emp_data_key => $single_employee_data) {
+                    $update_employee_data->save();
+                }
+             }
+        }
 
-                        $update_employee_data = VmtEmployee::where('userid', $user_id)->first();
+        foreach($employee_family_details as $emp_family_key => $single_emp_family ){
 
-                        if ($emp_data_key == $data_key) {
+            $emp_father_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('relationship','Father')->first();
 
-                            if (!empty($update_employee_data)) {
+            if($emp_family_key == $data_key ){
 
-                                if ($data_key == 'dob') {
+                        if(!empty($emp_father_data)){
 
-                                    $dob = $single_data;
-                                    $update_employee_data->dob = $dob ? $this->getdateFormatForDb($dob) : '';
+                            if($data_key =='father_name'){
 
-                                } else if ($data_key == 'doj') {
+                                if(!empty($single_data)){
 
-                                    $doj = $single_data;
-                                    $update_employee_data->doj = $doj ? $this->getdateFormatForDb($doj) : '';
-
-                                } else if ($data_key == 'dol') {
-
-                                    $dol = $single_data;
-                                    $update_employee_data->dol = $dol ? $this->getdateFormatForDb($dol) : '';
-
-                                } else if ($data_key == 'martial_status') {
-
-                                    $martial_status_id = VmtMaritalStatus::where('name', ucfirst($single_data ?? ''))->first();
-                                    $update_employee_data->marital_status_id = !empty($martial_status_id) ? $martial_status_id->id : '';
-
-                                } else if ($data_key == 'blood_group') {
-
-                                    $blood_group_id = VmtBloodGroup::where('name', $single_data ?? '')->first();
-                                    $update_employee_data->blood_group_id = !empty($blood_group_id) ? $blood_group_id->id : '';
-
-                                } else if ($data_key == 'bank_name') {
-
-                                    $bank_id = Bank::where('bank_name', $single_data ?? '')->first();
-                                    $update_employee_data->bank_id = !empty($bank_id) ? $bank_id->id : '';
-
-                                } else {
-                                    $update_employee_data->$single_employee_data = $single_data;
+                                     $emp_father_data->name =  $single_data;
+                                     $emp_father_data->save();
                                 }
-
-                                $update_employee_data->save();
                             }
-                        }
-                    }
-
-                    foreach ($employee_family_details as $emp_family_key => $single_emp_family) {
-
-                        $emp_father_data = VmtEmployeeFamilyDetails::where('user_id', $user_id)->where('relationship', 'Father')->first();
-
-                        if ($emp_family_key == $data_key) {
-
-                            if (!empty($emp_father_data)) {
-
-                                if ($data_key == 'father_name') {
-
-                                    if (!empty($single_data)) {
-
-                                        $emp_father_data->name = $single_data;
-                                        $emp_father_data->save();
-                                    }
-                                }
-                                if ($data_key == 'father_dob') {
+                            if($data_key =='father_dob'){
 
                                     $emp_father_data->dob = $this->getdateFormatForDb($single_data);
                                     $emp_father_data->save();
-                                }
                             }
                         }
+                    }
 
-                        $emp_mother_data = VmtEmployeeFamilyDetails::where('user_id', $user_id)->where('relationship', 'Mother');
+                $emp_mother_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('relationship','Mother');
 
-                        if ($emp_mother_data->exists()) {
+                        if($emp_mother_data->exists()){
 
-                            $emp_mother_data = $emp_mother_data->first();
+                          $emp_mother_data=$emp_mother_data->first();
 
-                            if ($data_key == 'mother_name') {
+                          if($data_key =='mother_name'){
 
-                                if (!empty($single_data)) {
+                            if(!empty($single_data)){
 
-                                    $emp_mother_data->name = $single_data;
-                                    $emp_mother_data->save();
-                                }
-
-                            } else if ($data_key == 'mother_dob') {
-
-                                $emp_mother_data->dob = $this->getdateFormatForDb($single_data);
-                                $emp_mother_data->save();
-
+                                 $emp_mother_data->name =  $single_data;
+                                 $emp_mother_data->save();
                             }
+
+                           }else if($data_key =='mother_dob'){
+
+                                 $emp_mother_data->dob = $this->getdateFormatForDb( $single_data) ;
+                                 $emp_mother_data->save();
+
+                          }
                         }
 
-                        $emp_spouse_data = VmtEmployeeFamilyDetails::where('user_id', $user_id)->where('gender', 'Female')->where('relationship', 'Spouse');
+                $emp_spouse_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('gender','Female')->where('relationship','Spouse');
 
-                        if ($emp_spouse_data->exists()) {
+                        if($emp_spouse_data->exists()){
 
-                            $emp_spouse_data = $emp_spouse_data->first();
+                            $emp_spouse_data=$emp_spouse_data->first();
 
-                            if ($data_key == 'spouse_name') {
+                            if($data_key =='spouse_name'){
 
-                                if (!empty($single_data)) {
+                                if(!empty($single_data)){
 
-                                    $emp_spouse_data->name = $single_data;
-                                    $emp_spouse_data->save();
+                                  $emp_spouse_data->name =  $single_data;
+                                  $emp_spouse_data->save();
 
+                                 }
+                             } else if($data_key =='spouse_dob'){
+
+                                if(!empty($single_data)){
+
+                                     $emp_spouse_data->dob = $this->getdateFormatForDb($single_data);
+                                     $emp_spouse_data->save();
                                 }
-                            } else if ($data_key == 'spouse_dob') {
-
-                                if (!empty($single_data)) {
-
-                                    $emp_spouse_data->dob = $this->getdateFormatForDb($single_data);
-                                    $emp_spouse_data->save();
-                                }
-                            }
                         }
+                    }
 
-                        $emp_spouse_male_data = VmtEmployeeFamilyDetails::where('user_id', $user_id)->where('gender', 'male')->where('relationship', 'Spouse');
+                 $emp_spouse_male_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('gender','male')->where('relationship','Spouse');
 
-                        if ($emp_spouse_male_data->exists()) {
+                     if($emp_spouse_male_data->exists()){
 
-                            $emp_spouse_male_data = $emp_spouse_male_data->first();
+                         $emp_spouse_male_data=$emp_spouse_male_data->first();
 
-                            if ($data_key == 'spouse_name') {
+                         if($data_key =='spouse_name'){
 
-                                if (!empty($single_data)) {
+                            if(!empty($single_data)){
 
-                                    $emp_spouse_male_data->name = $single_data;
-                                    $emp_spouse_male_data->save();
+                                $emp_spouse_male_data->name = $single_data;
+                                $emp_spouse_male_data->save();
 
-                                }
-                            } else if ($data_key == 'spouse_dob') {
+                             }
+                         } else if($data_key =='spouse_dob'){
 
-                                if (!empty($single_data)) {
+                              if(!empty($single_data)){
 
-                                    $emp_spouse_male_data->dob = $this->getdateFormatForDb($single_data);
-                                    $emp_spouse_data->save();
-                                }
-                            }
-                        }
+                                $emp_spouse_male_data->dob = $this->getdateFormatForDb($single_data);
+                                $emp_spouse_data->save();
+                             }
+                       }
+                    }
 
-                        $emp_child_data = VmtEmployeeFamilyDetails::where('user_id', $user_id)->where('relationship', 'Child')->first();
+                 $emp_child_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('relationship','Child')->first();
 
-                        if (!empty($emp_child_data)) {
+                        if (!empty($emp_child_data)){
                             $emp_child_data = $emp_child_data;
 
-                            if ($data_key == 'child_name') {
-                                if (!empty($single_data)) {
-                                    $emp_child_data->name = $single_data;
+                            if($data_key =='child_name'){
+                                if(!empty($single_data)){
+                                     $emp_child_data->name =$single_data;
                                 }
-                                $emp_child_data->relationship = 'Children';
-                                $emp_child_data->gender = '';
-                                $emp_child_data->save();
-                            } else if ($data_key == 'child_dob') {
-                                $emp_child_data->dob = $this->getdateFormatForDb($single_data);
-                                $emp_child_data->save();
+                                     $emp_child_data->relationship = 'Children';
+                                     $emp_child_data->gender = '';
+                                     $emp_child_data->save();
                             }
-                        }
-                    }
+                            else if($data_key =='child_dob'){
+                                     $emp_child_data->dob = $this->getdateFormatForDb($single_data) ;
+                                     $emp_child_data->save();
+                            }
+                 }
+        }
 
-                    foreach ($employee_office_details as $office_key => $single_office_data) {
+        foreach($employee_office_details as $office_key => $single_office_data ){
 
-                        $update_empOffice_data = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first();
+                $update_empOffice_data = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first();
 
-                        if ($office_key == $data_key) {
+                if($office_key == $data_key ){
 
-                            if (!empty($update_empOffice_data)) {
+                        if(!empty($update_empOffice_data)){
 
-                                if ($data_key == 'department') {
+                         if($data_key =='department'){
 
-                                    if (!empty($single_data) && $single_data != 'NULL') {
-                                        $department_id = Department::where('name', $single_data)->first();
-                                        $update_empOffice_data->department_id = $department_id->id;
+                             if(!empty($single_data) && $single_data !='NULL'){
+                                 $department_id=Department::where('name',$single_data)->first();
+                                 $update_empOffice_data->department_id = $department_id->id ;
 
-                                    }
-                                } else {
-                                    $update_empOffice_data->$single_office_data = $single_data;
                                 }
-                                $update_empOffice_data->save();
-                            }
-                        }
-                    }
-
-                    foreach ($employee_statutory_details as $statutory_key => $single_statutory_data) {
-
-                        if ($statutory_key == $data_key) {
-
-                            $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id', $user_id);
-
-                            if ($newEmployee_statutoryDetails->exists()) {
-                                $newEmployee_statutoryDetails = $newEmployee_statutoryDetails->first();
-                            } else {
-
-                                $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
-                                $newEmployee_statutoryDetails->user_id = $user_id;
-                            }
-                            $newEmployee_statutoryDetails->$single_statutory_data = $single_data;
-                            $newEmployee_statutoryDetails->save();
-
-                        }
-                    }
-
-                    foreach ($compensatory_data as $comp_key => $single_comp_data) {
-
-                        if ($comp_key == $data_key) {
-
-                            $compensatory = Compensatory::where('user_id', $user_id);
-
-                            if ($compensatory->exists()) {
-                                $compensatory = $compensatory->first();
-                            } else {
-                                $compensatory = new Compensatory;
-                                $compensatory->user_id = $user_id;
-                            }
-
-                            $compensatory->$single_comp_data = $single_data;
-                            $compensatory->save();
-                        }
-                    }
-
+                         }else{
+                                $update_empOffice_data->$single_office_data =$single_data;
+                         }
+                          $update_empOffice_data->save();
+                     }
                 }
-                return $response = ([
-                    'status' => 'success',
-                    'message' => 'Master data updated successfully',
-                    'data' => ''
-                ]);
-            }
+        }
 
-        } catch (\Exception $e) {
-            return $response = ([
+        foreach($employee_statutory_details as $statutory_key => $single_statutory_data ){
+
+            if($statutory_key == $data_key ){
+
+                $newEmployee_statutoryDetails =VmtEmployeeStatutoryDetails::where('user_id',$user_id);
+
+                    if($newEmployee_statutoryDetails->exists()){
+                        $newEmployee_statutoryDetails=$newEmployee_statutoryDetails->first();
+                    }else{
+
+                        $newEmployee_statutoryDetails=new VmtEmployeeStatutoryDetails;
+                        $newEmployee_statutoryDetails->user_id = $user_id;
+                    }
+                    $newEmployee_statutoryDetails->$single_statutory_data = $single_data ;
+                    $newEmployee_statutoryDetails->save();
+
+            }
+        }
+
+        foreach($compensatory_data as $comp_key => $single_comp_data ){
+
+            if($comp_key == $data_key ){
+
+                $compensatory =Compensatory::where('user_id',$user_id);
+
+                    if($compensatory->exists()){
+                        $compensatory=$compensatory->first();
+                    }else{
+                        $compensatory=new Compensatory;
+                        $compensatory->user_id = $user_id;
+                    }
+
+                    $compensatory->$single_comp_data =$single_data ;
+                    $compensatory->save();
+            }
+         }
+
+           }
+                return $response=([
+                'status' => 'success',
+                'message' =>'Master data updated successfully',
+                'data' => ''
+            ]);
+      }
+
+    }catch(\Exception $e){
+             return $response = ([
                 'status' => 'failure',
-                'message' => 'Error for input date',
-                'data' => $e->getMessage() . ' error_line' . $e->getline(),
+                'message' =>'Error for input date',
+                'data' =>  $e->getMessage() .' error_line'.$e->getline(),
             ]);
         }
 
     }
-    private function getdateFormatForDb($date)
-    {
+    private function getdateFormatForDb($date){
 
 
-        try {
-            $processed_date = null;
-            //Check if its in proper format
-            $processed_date_one = \DateTime::createFromFormat('d-m-Y', $date);
-            $processed_date_three = \DateTime::createFromFormat('Y-m-d', $date);
-            $processed_date_two = \DateTime::createFromFormat('d/m/Y', $date);
+            try{
+                $processed_date =null;
+                //Check if its in proper format
+                $processed_date_one = \DateTime::createFromFormat('d-m-Y', $date);
+                $processed_date_three = \DateTime::createFromFormat('Y-m-d', $date);
+                $processed_date_two = \DateTime::createFromFormat('d/m/Y', $date);
 
-            //If date is in 'd-m-y' format, then convert into one
-            //If date is in 'd-m-y' format, then convert into one
-            if ($processed_date_one) {
+                //If date is in 'd-m-y' format, then convert into one
+               //If date is in 'd-m-y' format, then convert into one
+               if ($processed_date_one) {
                 //Then convert to Y-m-d
-                $processed_date = $processed_date_one->format('Y-m-d');
+                $processed_date =  $processed_date_one->format('Y-m-d');
             } else if (!empty($processed_date_two)) {
 
                 $processed_date = $processed_date_two->format('Y-m-d');
@@ -1409,18 +1357,19 @@ class VmtCorrectionController extends Controller
             }
 
 
-            return $processed_date;
-        } catch (\Exception $e) {
-            return $response = ([
-                'status' => 'failure',
-                'message' => 'Error for input date',
-                'data' => $e->getMessage() . ' error_line ' . $e->getline(),
-            ]);
+                return $processed_date;
+            }
+            catch(\Exception $e){
+                return $response = ([
+                    'status' => 'failure',
+                    'message' =>'Error for input date',
+                    'data' =>  $e->getMessage() .' error_line '.$e->getline(),
+                ]);
 
+            }
         }
-    }
 
-    //     private function Update_MasterEmployeeData($data){
+ //     private function Update_MasterEmployeeData($data){
 
     //         try{
     //  //dd($data);
@@ -1662,147 +1611,49 @@ class VmtCorrectionController extends Controller
 
     //         }
 
-    public function setFinanceidHrid(Request $request)
-    {
+    public function setFinanceidHrid(Request $request){
 
         //LANGRO INDIA PRIVATE LIMITED
 
-        $userslan = User::where('client_id', '2')->get();
+       $userslan = User::where('client_id','2')->get();
 
-        foreach ($userslan as $single_users) {
+       foreach ($userslan as $single_users) {
 
-            $emp_official_details = VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
-            $emp_official_details->hr_user_id = '238';
-            $emp_official_details->fa_user__id = '185';
-            $emp_official_details->save();
-        }
+          $emp_official_details =  VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
+          $emp_official_details->hr_user_id = '238';
+          $emp_official_details->fa_user__id = '185';
+          $emp_official_details->save();
+       }
 
-        //    PRITI SALES CORPORATIONS
+    //    PRITI SALES CORPORATIONS
 
-        $userspri = User::where('client_id', '3')->get();
+       $userspri = User::where('client_id','3')->get();
 
-        foreach ($userspri as $single_users) {
+       foreach ($userspri as $single_users) {
 
-            $emp_official_details = VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
-            $emp_official_details->hr_user_id = '182';
-            $emp_official_details->fa_user__id = '185';
-            $emp_official_details->save();
-        }
+          $emp_official_details =  VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
+          $emp_official_details->hr_user_id = '182';
+          $emp_official_details->fa_user__id = '185';
+          $emp_official_details->save();
+       }
 
-        //INDCHEM MARKETING AGENCIES
+       //INDCHEM MARKETING AGENCIES
 
-        $usersind = User::where('client_id', '4')->get();
+       $usersind = User::where('client_id','4')->get();
 
-        foreach ($usersind as $single_users) {
+       foreach ($usersind as $single_users) {
 
-            $emp_official_details = VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
-            $emp_official_details->hr_user_id = '164';
-            $emp_official_details->fa_user__id = '185';
-            $emp_official_details->save();
-        }
+          $emp_official_details =  VmtEmployeeOfficeDetails::where('user_id', $single_users->id)->first();
+          $emp_official_details->hr_user_id = '164';
+          $emp_official_details->fa_user__id = '185';
+          $emp_official_details->save();
+       }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'updated successfully',
-        ]);
+       return response()->json([
+        'status' => 'success',
+        'message' => 'updated successfully',
+       ]);
 
-
-    }
-
-    public function setAnnualProjection()
-    {
-
-        $client_id = '3';
-        $payslip_month = '2023-04-01';
-
-        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
-        $start_date = Carbon::parse($timeperiod->start_date)->subMonth(1);
-        $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
-        $end_date = Carbon::parse($end_date)->subMonth(1);
-        $current_date = Carbon::parse($payslip_month);
-
-        $users = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-        ->where('client_id', $client_id)->get(['users.id','vmt_employee_details.doj']);
-
-        // dd($users);
-        foreach ($users as $single_users) {
-
-            $payroll_date = VmtPayroll::where('payroll_date', $payslip_month)->where('client_id', $client_id)->first();
-            $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_users->id)->first();
-            $start_date = Carbon::parse($timeperiod->start_date)->subMonth(1);
-            $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
-            $end_date = Carbon::parse($end_date)->subMonth(1);
-            $res = [];
-            while ($start_date->lte($end_date)) {
-
-                // if( $current_date $single_users->doj ){
-                //     array_push($res,$single_users->id);
-                // }
-
-
-                $start_date = Carbon::parse($start_date)->addMonth();
-                if ($start_date->lt($current_date)) {
-
-                    $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-                    ->where('vmt_payroll.payroll_date', $start_date)
-                    ->where('vmt_emp_payroll.user_id', $single_users->id)
-                    ->first([
-                        'vmt_emp_payroll.id as id'
-                    ]);
-
-                    if($payslip_id){
-                        $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id',$payslip_id->id)->first();
-                    }else
-                    {
-                        $payslip_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                        ->where('user_id', $single_users->id)->first();
-
-                    }
-
-                    if ($payslip_details) {
-                        if($emp_payroll){
-                        $salary_project_data = new AbsSalaryProjection;
-                        $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                        $salary_project_data->payroll_months = $start_date;
-                        $salary_project_data->earned_basic = $payslip_details['earned_basic'];
-                        $salary_project_data->earned_hra = $payslip_details['earned_hra'];
-                        $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
-                        $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
-                        $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
-                        $salary_project_data->save();
-                        }
-                    }else{
-                        return 'no payslip data found for '.$single_users->id.'user';
-                    }
-
-                    array_push($res,$payslip_details);
-                } else {
-
-                    $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                        ->where('user_id', $single_users->id)->first();
-
-                    $salary_project_data = new AbsSalaryProjection;
-                    if($emp_payroll){
-                    $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                    $salary_project_data->payroll_months = $start_date;
-                    $salary_project_data->earned_basic = $compensatory_details['basic'];
-                    $salary_project_data->earned_hra = $compensatory_details['hra'];
-                    $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'];
-                    $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'];
-                    $salary_project_data->total_earned_gross = $compensatory_details['gross'];
-                    $salary_project_data->save();
-                    }
-
-
-                    array_push($res,$compensatory_details);
-
-                }
-
-            }
-        }
-
-            // dd($res);
-        return  "saved" ;
 
     }
 

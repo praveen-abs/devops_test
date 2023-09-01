@@ -644,15 +644,7 @@ class HomeController extends Controller
         if (view()->exists($viewfile))
             return view($viewfile);
         else
-            return view('vmt_preview_templates.previewtemplate_vasa');
-
-    }
-
-    public function showDocumentPayslip(){
-
-        return view('preview_dynamicpayslip_template.preview_document_template');
-
-
+            return view('vmt_preview_templates.previewtemplate_nodata');
 
     }
 

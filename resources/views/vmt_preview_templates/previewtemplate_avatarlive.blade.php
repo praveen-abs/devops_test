@@ -1330,7 +1330,6 @@
 
                     <div class="container-fluid m-2 pdf-container ">
                         <div class="main-page">
-
                             <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                 <div class="table-responsive">
                                     <table cellspacing="0" cellpadding="0" class="payslip_table payslip-avatarLive">
@@ -1801,7 +1800,6 @@
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

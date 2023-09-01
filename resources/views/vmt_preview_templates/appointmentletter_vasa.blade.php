@@ -134,16 +134,16 @@
         @slot('li_1')
         @endslot
     @endcomponent
-    <div class="bg-white container-fluid ">
+    <div class="container-fluid bg-white  ">
         <div class="fill salary-header nav-tab-header">
             <div>
-                <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="mx-4 nav-item active ember-view" role="presentation">
+                <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
+                    <li class="nav-item active ember-view mx-4" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#appointment" role="tab" aria-controls="pills-home" aria-selected="true">
                             Appointment Letter</a>
                     </li>
-                    <li class="mx-4 nav-item ember-view" role="presentation ">
+                    <li class="nav-item mx-4 ember-view" role="presentation ">
                         <a class="nav-link ember-view" id="payslips-tab" data-bs-toggle="pill" data-bs-target="#payslips"
                             type="button" role="tab" aria-controls="payslips" aria-selected="false">Pay Slip</a>
                     </li>
@@ -173,9 +173,9 @@
 
             </div>
 
-            <div class="tab-pane fade " id="payslips" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="tab-pane fade  " id="payslips" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                <div class="m-2 container-fluid pdf-container ">
+                <div class="container-fluid m-2 pdf-container ">
                     <div class="main-page">
                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                             <div class="table-responsive">

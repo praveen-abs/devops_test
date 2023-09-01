@@ -768,7 +768,7 @@ function numberToWord($num)
         if ($commas) {
             $words = str_replace(',', '', $words);
         }
-        return $words." Only";
+        return $words . " Only";
     } else if (!((int) $num)) {
         return 'Zero';
     }

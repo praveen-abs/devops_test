@@ -101,9 +101,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const employeDoj = ref()
     const isSubmitted = ref(true)
     const sumOfTotalRentPaid = ref()
-    const epfPayrollDeduction = ref()
-    const vpfPayrollDeduction = ref()
-    const reimbursemntMaxLimit  = ref()
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
@@ -135,9 +132,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
                 let result = res.data.data.is_submitted == 0 ? true : false
                 isSubmitted.value = result
-                epfPayrollDeduction.value = res.data.data.emp_epf
-                vpfPayrollDeduction.value = res.data.data.emp_vpf
-                reimbursemntMaxLimit.value = res.data.data.emp_vpf
                 console.log(result)
 
                 //    Getting Employee Doj For HRA validation
@@ -1163,9 +1157,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         previousEmployeerIncomeSource,
         otherIncomeSource,
         isSubmitted,
-        epfPayrollDeduction,
-        vpfPayrollDeduction,
-        reimbursemntMaxLimit,
 
         // Tax Saving Investments
 
