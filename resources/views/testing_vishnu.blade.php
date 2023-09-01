@@ -770,11 +770,12 @@ $comp_data = str_replace(" ","_",array_map('strtolower', $comp_data));
 "Open Amount",];
 
  $array_data =array();
- $i=1;
+ $i=0;
 foreach ($data as $key => $value) {
     if(strpos($value, '%') !== false){
         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
         foreach ($calci_data as $key => $single_calci_data) {
+
             $array_data[$i]['value'] = $single_calci_data[1];
             $array_data[$i]['action'] = $single_calci_data[2];
             $array_data[$i]['comp_name'] =$comp_data[$i] ;
@@ -782,10 +783,12 @@ foreach ($data as $key => $value) {
         }
      }
      else{
-        preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
+
+        preg_match_all('/(\d+ Max)/', $value, $calci_data, PREG_SET_ORDER);
          foreach ($calci_data as $key => $single_calci_data) {
+         
             $array_data[$i]['value'] = $single_calci_data[1];
-            $array_data[$i]['action'] = $single_calci_data[2];
+            $array_data[$i]['action'] = "";
             $array_data[$i]['comp_name'] =$comp_data[$i] ;
            $i++;
         }
@@ -793,7 +796,7 @@ foreach ($data as $key => $value) {
 
 }
 
-//dd($array_data);
+ dd($array_data);
 
 // $inputSentence = "50% from Basic Salary";
 
@@ -827,48 +830,48 @@ foreach ($data as $key => $value) {
 // }
 
 
-$inputSentence = "200 Max, if the person married";
-$pattern = '/(\d+)(?:\s*(?:from\s*)?)\s*(?:|Max|Maximum)./i';
+// $sentence = "30000 Maximum, if the person married";
+// $pattern = '/(\d+ Max)/';
 
-preg_match_all('/(\d+%)(?:\s*(?:Max\s*)?)(Maximum|Max)/i', $inputSentence, $calci_data, PREG_SET_ORDER);
+// if (preg_match($pattern, $sentence, $matches)) {
+//     dd($matches);
+//     $result = Str::of($matches[0])->trim();
+//     echo $result;
+// } else {
+//     // Pattern not found
+//     echo "Pattern not found in the sentence.";
+// }
+$sentence = "Basic is Less then 21K then we can give this";
+$pattern = '/(\d+)K/';
+    preg_match($pattern, $sentence, $matches);
 
+    if (isset($matches[1])) {
+        // Convert the extracted value to an integer and multiply by 1000
+        $numericValue = intval($matches[1]) * 1000;
 
-if (isset($matches[1])) {
-    $maxValue = (int)$matches[1];
-    echo  $maxValue;
-} else {
-    echo "No max value found.";
-}
+        // Replace the original sentence with the formatted result
+        $formattedSentence = str_replace($matches[0], "< $numericValue", $sentence);
 
-
-$sentence = "200 Maximum, if the person married";
-
-// Extract the maximum value using regular expression
-if (preg_match('/(\d+)\s*Maximum/', $sentence, $matches)) {
-    $maxValue = (int)$matches[1];
-    if ($maxValue <= 200) {
-        // Do something with the maximum value
-        echo "Maximum value is: " . $maxValue;
-    } else {
-        // Handle the case when the value is greater than 200
-        echo "Maximum value exceeds 200.";
+        dd($formattedSentence);
     }
-} else {
-    // Handle the case when the pattern is not found in the sentence
-    echo "Pattern not found.";
-}
+
+    // If no match found, return the original sentence
+
+
+// Example usage:
+
+
+
+
 
 
 
 
 //    $leave_data =VmtEmployeeLeaves::where('user_id',"334")->whereBetween('start_date', ["2023-08-30", "2023-08-30"])->get();
 
-$leave_Details = VmtEmployeeLeaves::where('user_id', "334")
-                        ->whereBetween('start_date', ["2023-08-29", "2023-08-29"])
-                        ->orWhereBetween('end_date', ["2023-08-30", "2023-08-30"])
-                        ->get();
 
-        dd($leave_Details);
+
+        //dd($leave_Details);
     ?>
 
 
