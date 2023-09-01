@@ -1187,7 +1187,7 @@ class VmtEmployeePayCheckService
         //             array_push($months_details,$vmt_payroll);
         // }
 
-        $getpersonal['client_details'] = VmtClientMaster::where('id',sessionGetSelectedClientid())->get(
+        $getpersonal['client_details'] = VmtClientMaster::where('id', $user_data->client_id)->get(
             [
                 'client_fullname',
                 'client_logo',
@@ -1435,9 +1435,9 @@ class VmtEmployeePayCheckService
             ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
 
             if($isSent){
-                dd('success');
+                return "success";
             }else{
-                dd('failure');
+                return "failure";
             }
 
         }
@@ -1490,7 +1490,7 @@ try{
         }
 
         $getpersonal['leave_data'] = $leave_data;
-        $getpersonal['client_details'] = VmtClientMaster::where('id',sessionGetSelectedClientid())->get(
+        $getpersonal['client_details'] = VmtClientMaster::where('id',$user_data->client_id)->get(
             [
                 'client_fullname',
                 'client_logo',

@@ -2,7 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\AbsSalaryProjection;
+use App\Models\VmtEmployeePayroll;
+use App\Models\VmtOrgTimePeriod;
 use App\Models\VmtPaygroup;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Hash;
@@ -338,7 +342,7 @@ public function getEmpCompValues(){
         array_push($res["Source_us_192"]["15) Tax Deduction at Source u/s 192"],$tax_deduction_192);
 
 
-        // return dd($res);
+        return dd($res);
 
         $html = view('investmentTdsWorkSheet.TDS_work_sheet',$res);
 
@@ -355,8 +359,66 @@ public function getEmpCompValues(){
 
         $docUploads =  $pdf->stream();
 
-
-
         }
 
+    public function annualProjection(){
+
+        $user_id = '144';
+        $payroll_date  =  VmtPayroll::where('payroll_date','2023-04-01')->where('client_id','3')->first();
+        $emp_payroll  =  VmtEmployeePayroll::where('payroll_id',$payroll_date->id)->where('user_id',$user_id)->first();
+        $timeperiod =  VmtOrgTimePeriod::where('status','1')->first();
+        $start_date   =  Carbon::parse($timeperiod->start_date)->subMonth(1);
+        $end_date  =  Carbon::parse($timeperiod->end_date);
+        $current_date = Carbon::now();
+
+        $res = [];
+        while ($start_date->lte($end_date)) {
+
+            $start_date = Carbon::parse($start_date)->addMonth();
+            if ($start_date->lt($current_date)) {
+
+                $payslip_data = User::join('vmt_emp_payroll', 'vmt_emp_payroll.user_id', '=', 'users.id')
+                    ->join('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
+                    ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                    ->where('vmt_emp_payroll.user_id', $user_id)
+                    ->where('payroll_date', $start_date)
+                    ->first();
+
+                    if($payslip_data){
+                    $salary_project_data = new AbsSalaryProjection;
+                    $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                    $salary_project_data->earned_basic = $payslip_data['earned_basic'];
+                    $salary_project_data->earned_hra = $payslip_data['earned_hra'];
+                    $salary_project_data->earned_child_edu_allowance = $payslip_data['earned_child_edu_allowance'];
+                    $salary_project_data->earned_spl_alw = $payslip_data['earned_spl_alw'];
+                    $salary_project_data->total_earned_gross = $payslip_data['total_earned_gross'];
+                    $salary_project_data->save();
+                    }
+
+                array_push($res,$payslip_data);
+
+            } else {
+
+                $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                    ->where('user_id', $user_id)->first();
+
+                    $salary_project_data = new AbsSalaryProjection;
+                    $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                    $salary_project_data->earned_basic = $compensatory_details['basic'];
+                    $salary_project_data->earned_hra = $compensatory_details['hra'];
+                    $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'];
+                    $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'];
+                    $salary_project_data->total_earned_gross = $compensatory_details['gross'];
+                    $salary_project_data->save();
+
+                array_push($res,$compensatory_details);
+
+                }
+
+            }
+            dd("saved");
+    }
+
 }
+
+

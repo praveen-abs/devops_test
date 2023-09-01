@@ -321,7 +321,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/registerNewAccount', function () {
         return view('/auth/register');
-    })->name('registerNewAccount');   
+    })->name('registerNewAccount');
 
 
     // Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
@@ -497,6 +497,8 @@ Route::middleware(['auth'])->group(function () {
     //payrolltax calculation
 
     Route::get('get_comp_value', [App\Http\Controllers\VmtPayrollTaxController::class, 'getEmpCompValues']);
+
+    Route::get('annualProjection', [App\Http\Controllers\VmtPayrollTaxController::class, 'annualProjection']);
 
 
 
@@ -854,6 +856,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vmt_employess/Master_upload', [App\Http\Controllers\VmtCorrectionController::class, 'importMasetrEmployeesExcelData'])->name('masterEmployeeOnboarding');
 
     Route::get('/salary_adv', [App\Http\Controllers\VmtCorrectionController::class, 'setFinanceidHrid'])->name('setFinanceidHrid');
+
+    Route::get('/setAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'setAnnualProjection'])->name('setAnnualProjection');
 
 
 
