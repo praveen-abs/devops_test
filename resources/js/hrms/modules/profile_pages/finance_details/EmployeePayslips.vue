@@ -27,16 +27,13 @@
             <Column field="NET_TAKE_HOME" header="Take Home"></Column>
 
             <Column header="Action">
+
                 <template #body="slotProps">
-                    <Button class="z-0 btn-primary" label="View "
-                        @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('', slotProps.data.PAYROLL_MONTH)" />
-                </template>
-            </Column>
-            <column header="Download">
-                <template #body="slotProps">
-                    <!-- {{slotProps.data}} -->
-                    <Button class="z-0 btn-primary" label="Download "
-                        @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)" />
+                                    <button class="bg-black text-white rounded-md p-2 mx-2"
+                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)">Download</button>
+                                    <!-- bg-blue-500 -->
+                                    <button class=" border-[2px] border-[#000] py-2 px-3 rounded-md"
+                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('', slotProps.data.PAYROLL_MONTH)">View</button>
                 </template>
 
             </column>
@@ -81,7 +78,7 @@
                         </div>
                         <div class="col-3">
                             <p>Date Joining</p>
-                            <p class=" text-[#000]">{{ item.doj ? item.doj : '-' }}</p>
+                            <p class=" text-[#000]">{{ item.doj ? dayjs(item.doj).format('DD-MMM-YYYY') : '-' }} </p>
                         </div>
                         <div class="col-3">
                             <p>Department</p>
@@ -305,6 +302,7 @@ import loadingSpinner from '../../../components/LoadingSpinner.vue'
 const employeePayslipStore = useEmployeePayslipStore()
 
 const viewpayslip = ref(true);
+const op = ref();
 
 onMounted(async () => {
     console.log("EmployeePayslips,vue loaded");
@@ -321,6 +319,23 @@ const filters = ref({
     },
 });
 
+
+function toggle(event){
+    op.value.toggle(event);
+}
+
+
 </script>
+
+<style>
+.dropdown:hover .dropdown-content {
+    display: block !important;
+}
+
+.p-overlaypanel .p-overlaypanel-content {
+    padding: 0;
+    z-index: 0 !important;
+}
+</style>
 
 
