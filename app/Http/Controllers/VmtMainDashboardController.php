@@ -755,16 +755,9 @@ class VmtMainDashboardController extends Controller
     }
 public function getEmployeesCountDetails(Request $request, VmtDashboardService $serviceVmtDashboardService)
 {
-    
-    //HR New Main Dashboard
-    return $serviceVmtDashboardService->getEmployeesCountDetails($serviceVmtDashboardService);
 
-}
-public function getHrMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService)
-{
-    
     //HR New Main Dashboard
-    return $serviceVmtDashboardService->getHrMainDashboardData($serviceVmtDashboardService);
+    return $serviceVmtDashboardService->getEmployeesCountDetails();
 
 }
 
