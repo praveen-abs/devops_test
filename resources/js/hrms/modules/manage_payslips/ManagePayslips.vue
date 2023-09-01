@@ -374,7 +374,7 @@
 
 
         </div>
-    </div>
+       </div>
     </Sidebar>
 
     <!-- <dynamicPayslipv2 :source="payslipSource ? payslipSource : {}"/> -->
