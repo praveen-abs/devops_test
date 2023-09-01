@@ -294,4 +294,74 @@ class VmtPayCheckController extends Controller
 
 
      }
+
+     public function empGeneratePayslipPdfMail(Request $request, VmtEmployeePayCheckService $employeePaySlipService, VmtAttendanceService $serviceVmtAttendanceService){
+
+        $user_code = null;
+
+        //If empty, then show current user profile page
+        if (empty($request->uid)) {
+            if(empty($request->user_code))
+                $user_code = auth()->user()->user_code;
+            else
+                $user_code = $request->user_code ;
+        }
+        else {
+            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+            //dd("Enc User details from request : ".$user);
+        }
+
+
+        return $employeePaySlipService->generatePayslip($user_code,
+            $request->month ,
+             $request->year,
+             $request->type,$serviceVmtAttendanceService);
+
+
+     }
+
+     public function viewPayslipdetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService ,VmtAttendanceService $serviceVmtAttendanceService)
+     {
+  
+        return $employeePaySlipService->viewPayslipdetails($request->user_code,
+        $request->month ,
+         $request->year,$serviceVmtAttendanceService);
+     }
+
+     public function empViewPayslipdetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService ,VmtAttendanceService $serviceVmtAttendanceService)
+     {
+
+        $user_code = null;
+
+        //If empty, then show current user profile page
+        if (empty($request->uid)) {
+            if(empty($request->user_code))
+                $user_code = auth()->user()->user_code;
+            else
+                $user_code = $request->user_code ;
+        }
+        else {
+            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+            //dd("Enc User details from request : ".$user);
+        }
+
+
+        return $employeePaySlipService->viewPayslipdetails($user_code,
+        $request->month ,
+         $request->year,$serviceVmtAttendanceService);
+     }
+
+
+     public function generatetemplates(Request $request, VmtEmployeePayCheckService $employeePaySlipService, VmtAttendanceService $serviceVmtAttendanceService){
+
+
+        // $request->user_code = "PSC0060";
+        // $request->month = "05";
+        // $request->year = "2023";
+        // $request->type = "pdf";
+
+        return $employeePaySlipService->generatetemplates("html");
+
+
+     }
 }

@@ -143,6 +143,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     //Attendance
     Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
+    Route::get('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData'])->name('getAttendanceDashboardData');
     Route::get('/attendance-leave', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePage'])->name('attendance-leave');
 
     Route::get('/attendance-leavesettings', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveSettings'])->name('attendance-leavesettings');
@@ -315,6 +316,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     //notifications
     Route::post('/poll-voting', [App\Http\Controllers\HomeController::class, 'poll_voting'])->name('poll_voting');
     Route::post('/signin', [App\Http\Controllers\HomeController::class, 'signin'])->name('signin');
+
+    Route::get('/showDocumentPayslip', [App\Http\Controllers\HomeController::class, 'showDocumentPayslip'])->name('showDocumentPayslip');
 
 
 
@@ -497,6 +500,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     //payrolltax calculation
 
     Route::get('get_comp_value', [App\Http\Controllers\VmtPayrollTaxController::class, 'getEmpCompValues']);
+
+    Route::get('annualProjection', [App\Http\Controllers\VmtPayrollTaxController::class, 'annualProjection']);
 
 
 
@@ -869,6 +874,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('/salary_adv', [App\Http\Controllers\VmtCorrectionController::class, 'setFinanceidHrid'])->name('setFinanceidHrid');
 
+    Route::get('/setAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'setAnnualProjection'])->name('setAnnualProjection');
+
 
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
@@ -955,7 +962,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::post('/investments/saveSectionPopups', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
     Route::post('/investments/saveSection80', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
-    Route::get('/investments/TaxDeducation', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeducationCalculate']);
+    Route::get('/investments/monthTaxDashboard', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'monthTaxDashboard']);
     Route::get('/investments/TaxDeclaration', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeclaration']);
     Route::post('/investments/saveRegime', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpTaxRegime']);
     Route::get('/investments/investment-summary', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
@@ -1055,10 +1062,14 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     // generate payslip
 
     Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
+    Route::post('/viewPayslipdetails', [App\Http\Controllers\VmtPayCheckController::class, 'viewPayslipdetails'])->name('viewPayslipdetails');
+    Route::post('/empGeneratePayslipPdfMail', [App\Http\Controllers\VmtPayCheckController::class, 'empGeneratePayslipPdfMail'])->name('empGeneratePayslipPdfMail');
+    Route::post('/empViewPayslipdetails', [App\Http\Controllers\VmtPayCheckController::class, 'empViewPayslipdetails'])->name('empViewPayslipdetails');
+    Route::get('/generatetemplates', [App\Http\Controllers\VmtPayCheckController::class, 'generatetemplates'])->name('generatetemplates');
 
     //salary revision
 
-    Route::get('/empList', [App\Http\Controllers\VmtSalaryRevisionController::class, 'empList'])->name('empList');
+    Route::get('getAllEmployeeData', [App\Http\Controllers\VmtSalaryRevisionController::class, 'getAllEmployeeData'])->name('getAllEmployeeData');
 
 
 
@@ -1081,6 +1092,11 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/testing_shelly', function () {
         return view('testing_shelly');
     });
+
+    Route::get('/tds_work_sheet',[App\Http\Controllers\VmtTestingController::class, 'Tesingtdsworksheet']);
+
+
+
 
     //investment testing
 
