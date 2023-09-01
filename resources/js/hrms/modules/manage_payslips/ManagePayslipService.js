@@ -43,7 +43,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             type:'pdf'
         }).then((response) => {
             // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
-            paySlipHTMLView.value = 'data:application/pdf;base64,'+response.data;
+            paySlipHTMLView.value = response.data;
 
         }).finally(() => {
             loading.value = false

@@ -170,32 +170,9 @@
 
     </Dialog>
 
-
-    <div class="flex card justify-content-center">
-        <Dialog v-model:visible="canShowPayslipHTMLView" maximizable modal header="Payslip" :style="{ width: '50vw' }">
-            <!-- <div v-html="managePayslipStore.paySlipHTMLView">
-            </div> -->
-            <!-- <img :src="managePayslipStore.paySlipHTMLView" class="" alt="File not found" /> -->
-
-    <div class="flex inline-flex card justify-content-center">
-        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :breakpoints="{ '960px': '75vw', '640px': '90vw' }">
-            <!-- <div v-html="managePayslipStore.paySlipHTMLView" ></div> -->
-        </Dialog>
-    </div>
-    <!-- <Dialog header="Header" v-model:visible="managePayslipStore.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
-
-
-    <Dialog v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
-        <div class="w-[100%] h-[100]%">
+    <Sidebar position="right" v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
+        <div class=" flex justify-center w-[100%]"> 
+        <div class="w-[95%] h-[90%] shadow-lg p-4 ">
             <div class="w-[100%] flex justify-between">
                 <div class="flex flex-col">
                     <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">MAR 2023</span></h1>
@@ -389,7 +366,8 @@
 
 
         </div>
-    </Dialog>
+    </div>
+    </Sidebar>
 
     <!-- <dynamicPayslipv2 :source="payslipSource ? payslipSource : {}"/> -->
 </template>
@@ -414,7 +392,6 @@ const selectedUserCode = ref();
 const selectedUsername = ref();
 const viewpayslip = ref(false);
 const payslipSource = ref()
-et list= ref([]);
 
 onMounted(() => {
     managePayslipStore.selectedPayRollDate = new Date()
@@ -429,12 +406,7 @@ async function showPaySlipHTMLView(selected_user_code) {
     console.log("Showing payslip html for (user_code, month): " + selected_user_code + " , " + parseInt(managePayslipStore.selectedPayRollDate.getMonth() + 1));
 
     await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
-
-    // canShowPayslipHTMLView.value = true;
     viewpayslip.value = true;
-
-    // console.log(viewpayslip.value);
-
 
 }
 
