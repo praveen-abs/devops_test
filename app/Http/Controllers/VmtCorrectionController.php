@@ -1710,22 +1710,26 @@ class VmtCorrectionController extends Controller
     public function setAnnualProjection()
     {
 
-        $client_id = '3';
-        $payslip_month = '2023-04-01';
+        $client_id = ['2','3','4'];
+
+        foreach($client_id as $single_client_id){
+
+        $payslip_month = ['2023-04-01','2023-05-01','2023-06-01','2023-07-01'];
+
+        foreach($payslip_month as $single_months){
 
         $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
         $start_date = Carbon::parse($timeperiod->start_date)->subMonth(1);
         $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
         $end_date = Carbon::parse($end_date)->subMonth(1);
-        $current_date = Carbon::parse($payslip_month);
+        $current_date = Carbon::parse($single_months);
 
         $users = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-        ->where('client_id', $client_id)->get(['users.id','vmt_employee_details.doj']);
+        ->where('client_id', $single_client_id)->get(['users.id','vmt_employee_details.doj']);
 
-        // dd($users);
         foreach ($users as $single_users) {
 
-            $payroll_date = VmtPayroll::where('payroll_date', $payslip_month)->where('client_id', $client_id)->first();
+            $payroll_date = VmtPayroll::where('payroll_date', $payslip_month)->where('client_id', $single_client_id)->first();
             $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_users->id)->first();
             $start_date = Carbon::parse($timeperiod->start_date)->subMonth(1);
             $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
@@ -1733,13 +1737,8 @@ class VmtCorrectionController extends Controller
             $res = [];
             while ($start_date->lte($end_date)) {
 
-                // if( $current_date $single_users->doj ){
-                //     array_push($res,$single_users->id);
-                // }
-
-
                 $start_date = Carbon::parse($start_date)->addMonth();
-                if ($start_date->lt($current_date)) {
+                if ($start_date->lt($single_months)) {
 
                     $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
                     ->where('vmt_payroll.payroll_date', $start_date)
@@ -1798,6 +1797,8 @@ class VmtCorrectionController extends Controller
 
             }
         }
+    }
+}
 
             // dd($res);
         return  "saved" ;
