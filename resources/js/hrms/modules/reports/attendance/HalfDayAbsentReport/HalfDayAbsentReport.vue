@@ -11,11 +11,19 @@
     </Dialog>
 
     <div>
+<<<<<<< HEAD
         <p class="font-semibold text-lg">Attendance Half Day Absent Reports</p>
     </div>
 
     <div class="bg-white p-2 my-2 rounded-lg grid grid-cols-12">
         <div class="grid grid-cols-12 gap-6 col-span-6">
+=======
+        <p class="text-lg font-semibold">Attendance Half Day Absent Reports</p>
+    </div>
+
+    <div class="grid grid-cols-12 p-2 my-2 bg-white rounded-lg">
+        <div class="grid grid-cols-12 col-span-6 gap-6">
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
             <div class="col-span-4">
                 <p>Start date</p>
                 <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10"
@@ -25,11 +33,16 @@
                 <p>End date</p>
                 <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10" v-model="variable.end_date" />
             </div>
+<<<<<<< HEAD
             <div class=" d-flex justify-content-center align-items-end col-span-4 ">
+=======
+            <div class="col-span-4 d-flex justify-content-center align-items-end">
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
                 <button @click="getEmployeeAbsentReports" class="btn btn-orange">Generate</button>
 
             </div>
         </div>
+<<<<<<< HEAD
         <div class="col-span-6 flex justify-end gap-4">
             <button><img src="../../../../assests/icons/printer.svg" alt="" srcset=""
                     class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
@@ -38,6 +51,16 @@
             <!-- <button class="bg-gray-100 rounded-full p-2 text-sm flex">
                 <p class="bg-orange-400 p-1 h-6 w-6 rounded-full text-xs">A</p>
                 <p class="text-sm my-auto">Abbrevation</p>
+=======
+        <div class="flex justify-end col-span-6 gap-4">
+            <button><img src="../../../../assests/icons/printer.svg" alt="" srcset=""
+                    class="p-2 rounded-lg w-9 h-9 bg-gray-50"></button>
+            <button><img src="../../../../assests/icons/download.svg" alt="" srcset="" @click="downloadAbsentReports"
+                    class="p-2 rounded-lg w-9 h-9 bg-gray-50"></button>
+            <!-- <button class="flex p-2 text-sm bg-gray-100 rounded-full">
+                <p class="w-6 h-6 p-1 text-xs bg-orange-400 rounded-full">A</p>
+                <p class="my-auto text-sm">Abbrevation</p>
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
             </button> -->
         </div>
     </div>
@@ -204,4 +227,8 @@ onMounted(() => {
 .page-content {
     padding: calc(30px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
   }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a

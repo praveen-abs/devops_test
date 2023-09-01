@@ -75,20 +75,22 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                                 let heath_and_education = 0;
                                 let deduction = total_income - 1000000
                                 let taxable_amount = deduction * 30 / 100;
+                                console.log('---------------------------------------------');
                                 console.log("Tax On Income" + taxable_amount);
                                 let total_amount = Math.round(taxable_amount + 112500)
                                 subcharge = subChargeCalculation(total_income)
                                 if (subcharge) {
                                     heath_and_education = (taxable_amount + subcharge) * 4 / 100;
                                     console.log("child Eduction :" + Math.round(heath_and_education));
+                                    console.log("surchage"+ Math.round(subcharge));
                                     let final_value = parseInt(total_amount) + parseInt(subcharge) + parseInt(heath_and_education)
                                     console.log("taxable_amount :" + Math.round(final_value));
-                                    return final_value;
+                                    return  Math.round(final_value);
                                 } else {
                                     heath_and_education = total_amount * 4 / 100;
                                     console.log("child Eduction :" + Math.round(heath_and_education));
                                     let final_value = total_amount + heath_and_education;
-                                    return final_value;
+                                    return Math.round(final_value);
                                 }
 
 

@@ -33,7 +33,10 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     async function getEmployeePayslipDetailsAsHTML(user_code, month, year) {
         loading.value = true
 
-        await axios.post('/generatePayslip', {
+        // let url = `/generatePayslip`;
+        let url = `/viewPayslipdetails`;
+
+        await axios.post(url, {
             user_code: user_code,
             month: month,
             year: year,
@@ -181,6 +184,11 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
 
             })
+
+    }
+
+
+    function viewpayslipv2(){
 
     }
 

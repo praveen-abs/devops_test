@@ -81,6 +81,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Date Joined</p>
+<<<<<<< HEAD
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['doj'] ?? '-'}}</p>
             </td>
             <td style="width:25%;">
@@ -90,6 +91,17 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             <td class="" style="height: 30px;width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Designation </p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation'] ?? "-"}}</p>
+=======
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['doj'] ?? " - "}}</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray; margin-top:-4px">Department</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['department_name'] ?? " - "}}</p>
+            </td>
+            <td class="" style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray; margin-top:-4px">Designation </p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation'] ?? " - " }}</p>
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
             </td>
 
         </tr>
@@ -102,11 +114,16 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
 
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Payment Mode</p>
+<<<<<<< HEAD
                 <p style="font-size:11px; margin-top:-8px"> {{ $personal_details[0]['bank_account_number'] ? "Bank" : "Cheque" }}</p>
+=======
+                <p style="font-size:11px; margin-top:-8px"> {{ empty($personal_details[0]['bank_account_number']) ? "Cheque" : "Bank" }}</p>
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
             </td>
 
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Bank Name</p>
+<<<<<<< HEAD
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_name'] ?? "-"}}</p>
             </td>
             <td class="" style="height: 30px;width:25%;">
@@ -116,6 +133,17 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;margin-top:-4px">Bank IFSC</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_ifsc_code'] ?? "-"}}</p>
+=======
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_name'] ?? " - " }}</p>
+            </td>
+            <td class="" style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray;margin-top:-4px">Bank Account</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_account_number'] ?? " - " }}</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;margin-top:-4px">Bank IFSC</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_ifsc_code'] ?? " - " }}</p>
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
             </td>
 
         </tr>
@@ -128,7 +156,11 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
 
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;margin-top:-4px">PAN</p>
+<<<<<<< HEAD
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['pan_number'] ?? "-" }}</p>
+=======
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['pan_number'] ?? " - " }}</p>
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;margin-top:-4px">ESIC</p>
@@ -136,11 +168,19 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;margin-top:-4px">UAN</p>
+<<<<<<< HEAD
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['uan_number'] ?? "-" }}</p>
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;margin-top:-4px">EPF Number</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['epf_number'] ?? "-"}}</p>
+=======
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['uan_number'] ?? " - " }}</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;margin-top:-4px">EPF Number</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['epf_number'] ?? " - " }}</p>
+>>>>>>> abf3a183463ed9a7806f9d013535f6f8c6772e1a
             </td>
 
 
@@ -210,19 +250,19 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
         <tr class="td" style="height: 20px">
             <td class="" style="height: 20px;width:25%;">
                 <p style="font-size:10px;color:gray;">ACTUAL PAYABLE DAYS</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days'] ?? " - " }}</p>
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;">TOTAL WORKING DAYS</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days'] ?? " - " }}</p>
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray;">LOSS OF PAY DAYS</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop'] ?? " - " }}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">DAYS PAYABLE</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
+                <p style="font-size:10px;color:gray;">ARREAR DAYS PAYABLE</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days'] ?? " - " }}</p>
             </td>
 
         </tr>

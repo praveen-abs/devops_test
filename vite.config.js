@@ -179,8 +179,6 @@ export default defineConfig({
             // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
               //Mobile Settings
              'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
-                // Employee Payables Details
-                'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
 
 
             ],

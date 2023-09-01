@@ -10,6 +10,7 @@ use App\Models\VmtInvEmpFormdata;
 use App\Models\VmtInvFEmpAssigned;
 use App\Http\Controllers\Controller;
 use App\Models\VmtOrgTimePeriod;
+use App\Models\VmtPayroll;
 use App\Services\VmtInvestmentsService;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -313,11 +314,11 @@ class VmtInvestmentsController extends Controller
 
         $res = array();
         $hra = array('section_name' => 'HRA', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
-        $section80 =  array('section_name' => 'Section 80C & 80CC', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
-        $otherExemption =  array('section_name' => 'Other Excemptions', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
-        $houseProperty = array('section_name' => 'House Properties',  'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
-        $reimbersument = array('section_name' => 'Reimbersument',  'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
-        $previousEmployerIncome = array('section_name' => 'Previous Employer Income',  'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $section80 = array('section_name' => 'Section 80C & 80CC', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $otherExemption = array('section_name' => 'Other Excemptions', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $houseProperty = array('section_name' => 'House Properties', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $reimbersument = array('section_name' => 'Reimbersument', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $previousEmployerIncome = array('section_name' => 'Previous Employer Income', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
         $otherSourceIncome = array('section_name' => 'Other Source Of  Income', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
 
         $sumOfSec = 0;
@@ -329,6 +330,7 @@ class VmtInvestmentsController extends Controller
         $sumOfOtherSourceIncome = 0;
         $totalSumOfExemption = 0;
         $sumOfOtherExemptionDec = 0;
+        $chapterexe = 0;
 
 
         foreach ($v_form_template as $dec_amt) {
@@ -352,10 +354,14 @@ class VmtInvestmentsController extends Controller
                 $hra['dec_amount'] = $sumOfHra;
                 $hra['proof_submitted'] = 0;
                 $hra['amount_rejected'] = 0;
-                $hra['amount_accepted'] = 0;
-                // dd($hraTotalRent);
-                // dd($hra);
+                $hra['amount_accepted'] = $sumOfHra;
             }
+
+            $empBasic = $dec_amt['basic'] * 12;
+
+            $hraexamtions = intval($sumOfHra) - intval($empBasic * 10 / 100);
+
+
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
 
                 $sumOfSec += $dec_amt['dec_amount'];
@@ -381,16 +387,34 @@ class VmtInvestmentsController extends Controller
                 $otherExemption['section_name'] = $dec_amt['section_group'];
                 $otherExemption['dec_amount'] = $sumOfotherExemption;
                 $otherExemption['proof_submitted'] = 0;
-                if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
-                    $otherExemption['amount_rejected'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
-                } else {
-                    $otherExemption['amount_rejected'] = 0;
+
+                if ($dec_amt['max_amount'] == 0) {
+                    $chapterexe += $dec_amt['dec_amount'];
                 }
-                if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
-                    $otherExemption['amount_accepted'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
-                } else {
-                    $otherExemption['amount_accepted'] = 0;
+
+                if ($dec_amt['dec_amount'] > $dec_amt['max_amount']) {
+                    $chapterexe += $dec_amt['max_amount'];
                 }
+                if ($dec_amt['dec_amount'] < $dec_amt['max_amount']) {
+                    $chapterexe += $dec_amt['dec_amount'];
+                }
+
+                $otherExemption['amount_accepted'] = $chapterexe;
+
+                $otherExemption['amount_rejected'] = $chapterexe - $sumOfotherExemption;
+
+
+
+                // if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
+                //     $otherExemption['amount_rejected'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
+                // } else {
+                //     $otherExemption['amount_rejected'] = 0;
+                // }
+                // if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
+                //     $otherExemption['amount_accepted'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
+                // } else {
+                //     $otherExemption['amount_accepted'] = 0;
+                // }
             }
             if ($dec_amt['section_group'] == "House Properties ") {
                 $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
@@ -399,7 +423,17 @@ class VmtInvestmentsController extends Controller
                 $houseProperty['dec_amount'] = $sumOfHouseProperty;
                 $houseProperty['proof_submitted'] = 0;
                 $houseProperty['amount_rejected'] = 0;
-                $houseProperty['amount_accepted'] = 0;
+
+                if ($sumOfHouseProperty > 200000) {
+                    $houseProperty['amount_accepted'] = 200000;
+                } else {
+                    $houseProperty['amount_accepted'] = $sumOfHouseProperty;
+                }
+                if ($sumOfHouseProperty > 200000) {
+                    $houseProperty['amount_rejected'] = 200000 - $sumOfHouseProperty;
+                } else {
+                    $houseProperty['amount_rejected'] = 0;
+                }
             }
             if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
@@ -408,7 +442,7 @@ class VmtInvestmentsController extends Controller
                 $reimbersument['dec_amount'] = $sumOfReimbersument;
                 $reimbersument['proof_submitted'] = 0;
                 $reimbersument['amount_rejected'] = 0;
-                $reimbersument['amount_accepted'] = 0;
+                $reimbersument['amount_accepted'] = $sumOfReimbersument;
             }
             if ($dec_amt['section_group'] == "Previous Employer Income") {
                 $sumOfPreviousEmployerIncome += $dec_amt['dec_amount'];
@@ -417,7 +451,7 @@ class VmtInvestmentsController extends Controller
                 $previousEmployerIncome['dec_amount'] = $sumOfPreviousEmployerIncome;
                 $previousEmployerIncome['proof_submitted'] = 0;
                 $previousEmployerIncome['amount_rejected'] = 0;
-                $previousEmployerIncome['amount_accepted'] = 0;
+                $previousEmployerIncome['amount_accepted'] = $sumOfPreviousEmployerIncome;
             }
 
             if ($dec_amt['section_group'] == "Other Source Of  Income") {
@@ -427,7 +461,7 @@ class VmtInvestmentsController extends Controller
                 $otherSourceIncome['dec_amount'] = $sumOfOtherSourceIncome;
                 $otherSourceIncome['proof_submitted'] = 0;
                 $otherSourceIncome['amount_rejected'] = 0;
-                $otherSourceIncome['amount_accepted'] = 0;
+                $otherSourceIncome['amount_accepted'] = $sumOfOtherSourceIncome;
             }
         }
         // dd($sumOfOtherExemptionDec);
@@ -447,7 +481,170 @@ class VmtInvestmentsController extends Controller
         return $res;
     }
 
-    public function taxDeclaration(Request $request)
+    public function subChargeCalculation($total_income)
+    {
+
+        if ($total_income >= 5000000 && $total_income < 10000000) {
+            $subcharge = $total_income * 10 / 100;
+            return $subcharge;
+        } else if ($total_income >= 10000000 && $total_income < 20000000) {
+            $subcharge = $total_income * 15 / 100;
+            return $subcharge;
+        } else if ($total_income >= 20000000 && $total_income < 50000000) {
+            $subcharge = $total_income * 25 / 100;
+            return $subcharge;
+        } else if ($total_income > 50000000) {
+            $subcharge = $total_income * 37 / 100;
+            return $subcharge;
+        }
+    }
+
+    public function oldRegimeTaxCalculation($regime, $age, $total_income)
+    {
+
+        if ($regime == "old") {
+            if ($age < 60) {
+                if ($total_income <= 250000) {
+                    return $taxable_amt = 0;
+                } else if ($total_income > 250000 && $total_income <= 500000) {
+                    $deduction = $total_income - 250000;
+                    $taxable_amount = $deduction * 5 / 100;
+                    $total_amount = round($taxable_amount + 12500);
+                    $heath_and_education = $total_amount * 4 / 100;
+                    $final_value = $total_amount + $heath_and_education;
+                    return $final_value;
+                } else if ($total_income > 500000 && $total_income <= 1000000) {
+                    $deduction = $total_income - 500000;
+                    $taxable_amount = $deduction * 20 / 100;
+                    $total_amount = round($taxable_amount + 12500);
+                    $heath_and_education = $taxable_amount * 4 / 100;
+                    $final_value = $total_amount + $heath_and_education;
+                    return $final_value;
+                } else if ($total_income > 1000000) {
+                    $subcharge = '';
+                    $heath_and_education = 0;
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    $total_amount = round($taxable_amount + 112500);
+                    $subcharge = $this->subChargeCalculation($total_income);
+
+                    if ($subcharge) {
+                        $heath_and_education = ($taxable_amount + $subcharge) * 4 / 100;
+                        $final_value = ($total_amount) + ($subcharge) + ($heath_and_education);
+                        return round($final_value);
+                    } else {
+                        $heath_and_education = $total_amount * 4 / 100;
+                        $final_value = $total_amount + $heath_and_education;
+                        return round($final_value);
+                    }
+                } else {
+                    return $total_income;
+                }
+            } else if ($age >= 60 && $age <= 80) {
+                if ($total_income > 300000 && $total_income <= 500000) {
+                    $deduction = $total_income - 300000;
+                    $taxable_amount = $deduction * 5 / 100;
+                    $heath_and_education = $taxable_amount * 4 / 100;
+                    $final_value = round($taxable_amount + $heath_and_education);
+                    return $final_value;
+                } else
+                    if ($total_income > 500000 && $total_income < 1000000) {
+                    // 5% (tax rebate u/s 87A is available)
+                    $deduction = $total_income - 500000;
+                    $taxable_amount = $deduction * 20 / 100;
+                    $heath_and_education = $taxable_amount * 4 / 100;
+                    $final_value = round($taxable_amount + 10000 + $heath_and_education);
+                    return $final_value;
+                } else if ($total_income > 1000000) {
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    $total_amount = floor($taxable_amount + 110000);
+                    $subcharge = $this->subChargeCalculation($total_income);
+                    $heath_and_education = ($taxable_amount + $subcharge) * 4 / 100;
+                    $final_value = $total_amount + $subcharge + $heath_and_education;
+                    return $final_value;
+                } else {
+
+                    return $total_income;
+                }
+            } else if ($age > 80) {
+
+                if ($total_income > 500000 && $total_income <= 1000000) {
+                    $deduction = $total_income - 500000;
+                    $taxable_amount = $deduction * 20 / 100;
+                } else
+                    if ($total_income > 1000000) {
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    $total_amount = floor($taxable_amount + 112500);
+                    $subcharge = $this->subChargeCalculation($total_income);
+                    $heath_and_education = ($taxable_amount + $subcharge) * 4 / 100;
+                    $final_value = $total_amount + $subcharge + $heath_and_education;
+
+                    return $final_value;
+                } else {
+                    return $total_income;
+                }
+            }
+        }
+    }
+
+
+    public function newRegimeTaxCalculation($regime, $total_income)
+    {
+
+        if ($regime == 'new') {
+            // Employeer Income Is Greater than 300000 and Less Than  600000
+            if ($total_income > 300000 && $total_income <= 600000) {
+                $taxable_amount = ($total_income - 300000) * 5 / 100;
+                $total_amount = round($taxable_amount);
+                $subcharge = $this->subChargeCalculation($total_income);
+                $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                $final_value = $total_amount + $subcharge + $heath_and_education;
+                return round($final_value);
+            } else
+                // Employeer Income Is Greater than 600000 and Less Than  900000
+                if ($total_income > 600000 && $total_income <= 900000) {
+                    $taxable_amount = ($total_income - 600000) * 10 / 100;
+                    $total_amount = round($taxable_amount + 15000);
+                    $subcharge = $this->subChargeCalculation($total_income);
+                    $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                    $final_value = $total_amount + $subcharge + $heath_and_education;
+                    return round($final_value);
+                } else
+                    // Employeer Income Is Greater than 900000 and Less Than  1200000
+                    if ($total_income > 900000 && $total_income <= 1200000) {
+                        $taxable_amount = ($total_income - 900000) * 15 / 100;
+                        $total_amount = floor($taxable_amount + 45000);
+                        $subcharge = $this->subChargeCalculation($total_income);
+                        $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                        $final_value = $total_amount + $subcharge + $heath_and_education;
+                        return floor($final_value);
+                    } else
+                        // Employeer Income Is Greater than 1200000 and Less Than  1500000
+                        if ($total_income > 1200000 && $total_income < 1500000) {
+                            $taxable_amount = ($total_income - 1200000) * 20 / 100;
+                            $total_amount = floor($taxable_amount + 90000);
+                            $subcharge = $this->subChargeCalculation($total_income);
+                            $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                            $final_value = $total_amount + $subcharge + $heath_and_education;
+                            return floor($final_value);
+                        } else
+                            // Employeer Income Is Greater than 1500000
+                            if ($total_income > 1500000) {
+
+                                $taxable_amount = ($total_income - 1500000) * 30 / 100;
+                                $total_amount = floor($taxable_amount + 150000);
+                                $subcharge = $this->subChargeCalculation($total_income);
+                                $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
+                                $final_value = $total_amount + $subcharge + $heath_and_education;
+                                return floor($final_value);
+                            }
+        }
+    }
+
+
+    public function taxDeclaration()
     {
 
         $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
@@ -462,6 +659,8 @@ class VmtInvestmentsController extends Controller
             ->get(
                 [
                     'vmt_inv_section_group.section_group',
+                    'vmt_inv_section.particular',
+                    'vmt_inv_section.max_amount',
                     'vmt_inv_emp_formdata.dec_amount',
                     'vmt_inv_emp_formdata.json_popups_value',
                     'vmt_employee_compensatory_details.gross',
@@ -485,27 +684,40 @@ class VmtInvestmentsController extends Controller
         $res = array();
         $total_gross = array('sno' => 'a', 'section' => 'Total Gross Income', 'old_regime' => 0, 'new_regime' => 0);
         $Other_Source = array('sno' => 'b', 'section' => 'Other Source of Income', 'old_regime' => 0, 'new_regime' => 0);
-        $Reimbursement = array('sno' => 'c', 'section' => 'Reimbursement Exemptions', 'old_regime' => 0, 'new_regime' => 0);
-        $allowance_tax = array('sno' => 'd', 'section' => 'Allowance Exemptions (Sec 10)', 'old_regime' => 0, 'new_regime' => 0);
-        $tax_on_emp = array('sno' => 'e', 'section' => 'Tax on Employment (Sec 16)', 'old_regime' => 0, 'new_regime' => 0);
-        $exemption = array('sno' => 'f', 'section' => 'Exemptions under Sec 80', 'old_regime' => 0, 'new_regime' => 0);
-        $total_tax_income = array('sno' => 'g', 'section' => 'Total Taxable Income', 'old_regime' => 0, 'new_regime' => 0);
-        $total_tax_laibilty = array('sno' => 'h', 'section' => 'Total Tax Laibility', 'old_regime' => 0, 'new_regime' => 0);
+        $pre_emp_income = array('sno' => 'c', 'Add: Previous Employer Income ', 'old_regime' => 0, 'new_regime' => 0);
+        $Reimbursement = array('sno' => 'd', 'section' => 'Reimbursement Exemptions', 'old_regime' => 0, 'new_regime' => 0);
+        $allowance_tax = array('sno' => 'e', 'section' => 'Allowance Exemptions (Sec 10)', 'old_regime' => 0, 'new_regime' => 0);
+        $tax_section_16 = array('sno' => 'f', 'section' => 'Less: Deductions under section 16', 'old_regime' => 0, 'new_regime' => 0);
+        $tax_on_emp = array('sno' => 'g', 'section' => 'Tax on Employment (Sec 16)', 'old_regime' => 0, 'new_regime' => 0);
+        $exemption = array('sno' => 'h', 'section' => 'Exemptions under Sec 80', 'old_regime' => 0, 'new_regime' => 0);
+        $total_tax_income = array('sno' => 'i', 'section' => 'Total Taxable Income', 'old_regime' => 0, 'new_regime' => 0);
+        $total_tax_laibilty = array('sno' => 'j', 'section' => 'Total Tax Laibility', 'old_regime' => 0, 'new_regime' => 0);
 
         $sumOfHradeclared = 0;
         $sumOfReimbersument = 0;
         $sumOfOtherSourceOfIncome = 0;
-        $totalRentPaid = 0;
+        $chapter80s = 0;
+        $sumof80s = 0;
         $standardDeducation = 0;
         $professional_tax = 0;
         $perviousEmployeeProfessionalTax = 0;
+        $sumOfpreviousempincome = 0;
         $ExemptionsUnder80s = 0;
         $SumOfHousPropsInNew = 0;
         $SumOfHousPropsInOld = 0;
-         $tax_calc_new_redime = 0;
+        $tax_calc_new_redime = 0;
         $otherAllowance = 0;
         $sumOfOtherExemptionDec = 0;
         $sumOfOtherExemptionMax = 0;
+        $chapterexe = 0;
+        $old_regime_tax = 0;
+        $new_regime_tax = 0;
+        $inv_stantard_deduction = 0;
+        $inv_previous_emp_pt = 0;
+        $sumofletout = 0;
+
+
+
 
         foreach ($v_form_template as $dec_amt) {
 
@@ -516,17 +728,17 @@ class VmtInvestmentsController extends Controller
             $year = $dob["year"];
             $empAge = ($current_year - $year);
 
-           $current_financial = VmtOrgTimePeriod::where('status',"1")->first();
-           $finance_month = Carbon::parse($current_financial->end_date);
+            $current_financial = VmtOrgTimePeriod::where('status', "1")->first();
+            $finance_month = Carbon::parse($current_financial->end_date);
             $doj = Carbon::parse($dec_amt['doj']);
 
-             $joining_months =  ($doj)->diffInMonths($finance_month);
+            $joining_months = ($doj)->diffInMonths($finance_month);
 
-             if($joining_months > 12){
+            if ($joining_months > 12) {
                 $joinmonth = 12;
-             }else{
+            } else {
                 $joinmonth = $joining_months;
-             }
+            }
 
 
             $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
@@ -542,36 +754,82 @@ class VmtInvestmentsController extends Controller
             }
 
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+                $sumof80s += $dec_amt['dec_amount'];
+
+                if ($sumof80s > 150000) {
+                    $chapter80s = 150000;
+                } else {
+                    $chapter80s = $sumof80s;
+                }
             }
+
             if ($dec_amt['section_group'] == "Other Excemptions ") {
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
-            }
-            if ($dec_amt['section_group'] == "Previous Employer Income") {
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+
+                if ($dec_amt['max_amount'] == 0) {
+                    $chapterexe += $dec_amt['dec_amount'];
+                }
+
+                if ($dec_amt['dec_amount'] > $dec_amt['max_amount']) {
+                    $chapterexe += $dec_amt['max_amount'];
+                }
+                if ($dec_amt['dec_amount'] < $dec_amt['max_amount']) {
+                    $chapterexe += $dec_amt['dec_amount'];
+                }
             }
 
             if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+                // $ExemptionsUnder80s += $dec_amt['dec_amount'];
+            }
+
+            if ($dec_amt['section_group'] == "Previous Employer Income") {
+                $sumOfpreviousempincome += $dec_amt['dec_amount'];
+
+                if ($dec_amt['particular'] == "Previous Employer Standard Deduction") {
+                    $inv_stantard_deduction = $dec_amt['dec_amount'];
+                }
+
+                if ($dec_amt['particular'] == "Previous Employer PT") {
+                    $inv_previous_emp_pt = $dec_amt['dec_amount'];
+                }
             }
 
             if ($dec_amt['section_group'] == "Other Source Of  Income") {
                 $sumOfOtherSourceOfIncome = $dec_amt['dec_amount'];
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+                // $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
 
-            if ($dec_amt['gross'] >= 50000) {
+            $standardDeduction = $dec_amt['gross'];
+
+            // dd( $standardDeduction);
+
+            if ($standardDeduction >= 50000) {
                 $standardDeducation = 50000;
             } else {
                 $standardDeducation = intval($dec_amt['gross']);
             }
 
+            $previous_standard = $standardDeducation + $inv_stantard_deduction;
+
+            if ($previous_standard >= 50000) {
+                $final_standard = 50000;
+            } else {
+                $final_standard = $previous_standard;
+            }
+
             if ($dec_amt['professional_tax'] >= 2500) {
                 $professional_tax = 2500;
             } else {
-                $professional_tax = intval($dec_amt['professional_tax']) + $perviousEmployeeProfessionalTax;
+                // $professional_tax = intval($dec_amt['professional_tax']) + $perviousEmployeeProfessionalTax;
+                $professional_tax = 2500;
             }
+
+            if ($professional_tax + $inv_previous_emp_pt >= 2500) {
+                $final_emp_pt = 2500;
+            } else {
+                $final_emp_pt = $professional_tax + $inv_previous_emp_pt;
+            }
+
             // Compare standard deduction and pervious standard deduction
             //  50,000
 
@@ -583,123 +841,95 @@ class VmtInvestmentsController extends Controller
                 $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
                 if ($totalIntersetPaid['property_type'] == "Let Out Property") {
                     $SumOfHousPropsInNew = $totalIntersetPaid['income_loss'];
-
                     $tax_calc_new_redime += $totalIntersetPaid['income_loss'];
                 }
             }
 
-            if($SumOfHousPropsInOld > 200000){
-                    $sumofhouseproperty = 200000;
-            }else{
-                $sumofhouseproperty = $SumOfHousPropsInOld ;
+            if ($tax_calc_new_redime > 200000) {
+                $sumofletout = 200000;
+            } else if (-200000 > $tax_calc_new_redime) {
+                $sumofletout = -200000;
+            } else {
+                $sumofletout = $tax_calc_new_redime;
             }
+
+
+            if ($SumOfHousPropsInOld > 200000) {
+                $sumofhouseproperty = 200000;
+            } else if (-200000 > $SumOfHousPropsInOld) {
+                $sumofhouseproperty = -200000;
+            } else {
+                $sumofhouseproperty = $SumOfHousPropsInOld;
+            }
+
+            $sumofgross = round($dec_amt['gross'] * $joinmonth);
 
 
             // sum pervious employee gross with actual gross
             $total_gross['sno'] = "a";
             $total_gross['section'] = "Total Gross Salary";
-            $total_gross['old_regime'] = round($dec_amt['gross'] * $joinmonth);
-            $total_gross['new_regime'] = round($dec_amt['gross'] * $joinmonth);
+            $total_gross['old_regime'] = $sumofgross;
+            $total_gross['new_regime'] = $sumofgross;
 
 
 
             $Other_Source['sno'] = "b";
-            $Other_Source['section'] = "Other Source of Income";
+            $Other_Source['section'] = "Add: Other Source of Income";
             $Other_Source['old_regime'] = $sumOfOtherSourceOfIncome;
-            $Other_Source['new_regime'] =  $sumOfOtherSourceOfIncome;
+            $Other_Source['new_regime'] = $sumOfOtherSourceOfIncome;
 
 
+            $pre_emp_income['sno'] = "c";
+            $pre_emp_income['section'] = "Add: Previous Employer Income ";
+            $pre_emp_income['old_regime'] = $sumOfpreviousempincome;
+            $pre_emp_income['new_regime'] = $sumOfpreviousempincome;
 
-            $Reimbursement['sno'] = "c";
-            $Reimbursement['section'] = "Reimbursement Exemptions";
+            $Reimbursement['sno'] = "d";
+            $Reimbursement['section'] = "Less: Reimbursement Exemptions";
             $Reimbursement['old_regime'] = $sumOfReimbersument;
             $Reimbursement['new_regime'] = $sumOfReimbersument;
 
-            // Allowance Tax
+            $sumofsection10 = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) * 12;
 
-            $allowance_tax['sno'] = "d";
+            $allowance_tax['sno'] = "e";
             $allowance_tax['section'] = "Less: Allowances to the extent exempt under section 10";
-            $allowance_tax['old_regime'] = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta']);
+            $allowance_tax['old_regime'] = $sumofsection10;
             $allowance_tax['new_regime'] = 0;
 
+            $sumofSec16 = $final_standard + $final_emp_pt;
 
-            $tax_on_emp['sno'] = "e";
-            $tax_on_emp['section'] = "Less: Deductions under section 16";
+            $tax_section_16['sno'] = "f";
+            $tax_section_16['section'] = "Less: Deductions under section 16";
             // Sum Previous Employer Standard Deduction  and Previous Employer PT
-            $tax_on_emp['old_regime'] = intval($standardDeducation) + $professional_tax * 12;
-            $tax_on_emp['new_regime'] = $standardDeducation;
+            $tax_section_16['old_regime'] = $sumofSec16;
+            $tax_section_16['new_regime'] = $final_standard;
 
 
             // Values in negative
-            $tax_on_emp['sno'] = "f";
+            $tax_on_emp['sno'] = "g";
             $tax_on_emp['section'] = "Add: Income or loss from house property (Section 24)";
             $tax_on_emp['old_regime'] = $sumofhouseproperty;
-            $tax_on_emp['new_regime'] = $tax_calc_new_redime;
+            $tax_on_emp['new_regime'] = $sumofletout;
 
+            $sumofchap6a = $chapter80s + $chapterexe;
 
-            $exemption['sno'] = "g";
-            $exemption['section'] = "Deduction under Chapter VI-A";
-            $exemption['old_regime'] = round($ExemptionsUnder80s);
+            $exemption['sno'] = "h";
+            $exemption['section'] = "Less: Deduction under Chapter VI-A";
+            $exemption['old_regime'] = $sumofchap6a;
             $exemption['new_regime'] = 0;
 
-            $total_tax_income['sno'] = "h";
+            $total_tax_income['sno'] = "i";
             $total_tax_income['section'] = "Total Taxable Income";
-            $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $sumofhouseproperty - round($ExemptionsUnder80s));
-            $total_old_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $sumofhouseproperty - round($ExemptionsUnder80s));
-            $total_tax_income['new_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
-            $total_new_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
-
-            // tax liability calculation old regime
-
-            if($total_old_tax < 250000){
-                $old_regime_tax = 0;
-            }else if($total_old_tax > 250000 && $total_old_tax <= 500000){
-                $old_regime_tax = $total_old_tax * 5 / 100 ;
-
-            }else if($total_old_tax > 500000 && $total_old_tax <= 750000){
-                $old_regime_tax = $total_old_tax * 20  / 100 ;
-
-            }else if($total_old_tax > 750000 && $total_old_tax <= 1000000){
-                $old_regime_tax = $total_old_tax * 20  / 100 ;
-
-            }else if($total_old_tax > 1000000 && $total_old_tax <= 1250000){
-                $old_regime_tax = $total_old_tax * 30 / 100 ;
-
-            }else if($total_old_tax > 1250000 && $total_old_tax <= 1500000){
-                $old_regime_tax = $total_old_tax * 30 / 100 ;
-
-            }else if($total_old_tax > 1250000 && $total_old_tax <= 1500000){
-                $old_regime_tax = $total_old_tax * 30 / 100 ;
-            }
-
-            // tax liability calculation new regime
-
-            if( $total_new_tax < 250000){
-                             $new_regime_tax = 0;
-            }else if( $total_new_tax > 250000 &&  $total_new_tax <= 500000){
-                        $new_regime_tax =  $total_new_tax * 5 / 100 ;
-
-            }else if( $total_new_tax > 500000 &&  $total_new_tax <= 750000){
-                        $new_regime_tax =  $total_new_tax * 10  / 100 ;
-
-            }else if( $total_new_tax > 750000 &&  $total_new_tax <= 1000000){
-                $new_regime_tax =  $total_new_tax * 15  / 100 ;
-
-            }else if( $total_new_tax > 1000000 && $total_new_tax <= 1250000){
-                $new_regime_tax =  $total_new_tax * 20 / 100 ;
-
-            }else if( $total_new_tax > 1250000 &&  $total_new_tax <= 1500000){
-                $new_regime_tax = $total_new_tax * 25 / 100 ;
-
-            }else if( $total_new_tax > 1250000 &&  $total_new_tax <= 1500000){
-                $new_regime_tax = $total_new_tax * 30 / 100 ;
-            }
+            $total_old_tax = $sumofgross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + $sumofsection10 + $sumofSec16 + $sumofchap6a) + $sumofhouseproperty;
+            $total_tax_income['old_regime'] = $total_old_tax;
+            $total_new_tax = $sumofgross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + 0 + $final_standard + 0) + $sumofletout;
+            $total_tax_income['new_regime'] = $total_new_tax;
 
 
-            $total_tax_laibilty['sno'] = "i";
+            $total_tax_laibilty['sno'] = "j";
             $total_tax_laibilty['section'] = "Total Tax Laibility";
-            $total_tax_laibilty['old_regime'] = $old_regime_tax ;
-            $total_tax_laibilty['new_regime'] = $new_regime_tax;
+            $total_tax_laibilty['old_regime'] = $this->oldRegimeTaxCalculation("old", $empAge, $total_old_tax);
+            $total_tax_laibilty['new_regime'] = $this->newRegimeTaxCalculation("new", $total_new_tax);
             $total_tax_laibilty['age'] = $empAge;
             $total_tax_laibilty['regime'] = $dec_amt['regime'];
             $total_tax_laibilty['last_updated'] = $dec_amt['updated_at'];
@@ -711,12 +941,15 @@ class VmtInvestmentsController extends Controller
             $res,
             $total_gross,
             $Other_Source,
+            $pre_emp_income,
             $Reimbursement,
             $allowance_tax,
+            $tax_section_16,
             $tax_on_emp,
             $exemption,
             $total_tax_income,
-            $total_tax_laibilty
+            $total_tax_laibilty,
+
 
         );
 
@@ -739,18 +972,101 @@ class VmtInvestmentsController extends Controller
         return "Saved";
     }
 
-    public function taxDeducationCalculate(Request $request)
+    public function monthTaxDashboard(Request $request)
     {
-        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-        $table = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
-            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
+        $time_period = VmtOrgTimePeriod::where('status', '1')->first();
+        $start_date =  Carbon::parse($time_period->start_date)->subMonth();
+        $diff_months =  $start_date->diffInMonths(Carbon::now());
 
-        $sumOfDeclarationAmount = 0;
-        foreach ($table as $dec_amt) {
-            $sumOfDeclarationAmount += $dec_amt['dec_amount'];
+        $res = [];
+        for ($i = 1; $i < $diff_months; $i++) {
+            $sima  = $start_date->addMonths()->format('Y-m-d');
+            array_push($res, $sima);
         }
-        dd($sumOfDeclarationAmount);
+
+        $payroll_details  =  VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+            ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+            ->where('user_id', auth()->user()->id)->whereIn('payroll_date', $res)
+            // ->toSql();
+            ->get()->toArray();
+        // dd($payroll_details);
+
+        $single = 0;
+        foreach ($payroll_details as $single_details) {
+            $single += $single_details['income_tax'];
+        }
+
+        $tax_deduction =  $this->taxDeclaration();
+        $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
+        $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
+
+        $emp_assign = VmtInvFEmpAssigned::where('user_id', auth()->user()->id)->first();
+
+        if ($emp_assign) {
+
+            if ($emp_assign->regime == "old" || $emp_assign->regime == "") {
+                $tax_calc_income_old = ($tax_deduction[9]['old_regime']);
+            } else if ($emp_assign->regime == "new") {
+                $tax_calc_income_old = ($tax_deduction[9]['new_regime']);
+            }
+        } else {
+            $tax_calc_income_old = 0;
+        }
+
+        // dd($tax_calc_income_old);
+
+        $taxcalculation['Tax Paid Till Now'] = $single;
+        $taxcalculation['Total Tax Payable'] = $tax_calc_income_old;
+        $taxcalculation['Remaining Tax Amount'] = $tax_calc_income_old - $single;
+
+        //  return ($taxcalculation);
+
+
+        $time_period = VmtOrgTimePeriod::where('status', '1')->first();
+        $start_date = Carbon::parse($time_period->start_date);
+        $end_date = Carbon::parse($time_period->end_date);
+        $current_date = Carbon::now();
+
+        $month_cal_previous = 0;
+        $month_cal_next = 0;
+        $res1 = array();
+        $simm = [];
+        while ($start_date->lte($end_date)) {
+            $start_date = Carbon::parse($start_date)->addMonth();
+
+            $dates = Carbon::parse($start_date)->submonth()->format('M Y');
+
+            if ($start_date->lte($current_date)) {
+
+                $payroll_details  =  VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                    ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                    ->where('user_id', auth()->user()->id)->whereIn('payroll_date', $res)
+                    ->get()->toArray();
+
+                foreach ($payroll_details as $single_payroll_details) {
+                    $monthy_tax = (int)$single_payroll_details['income_tax'];
+                    $simm[$dates] = $monthy_tax;
+                    $month_cal_previous += $monthy_tax;
+                }
+            } else {
+
+                $remainder_months  = ($current_date)->diffInMonths($end_date);
+                $add_months_remainders =  $remainder_months + 1;
+                $monthy_tax = $taxcalculation['Remaining Tax Amount'] / $add_months_remainders;
+                $simm[$dates] = $monthy_tax;
+                $month_cal_next += $monthy_tax;
+                $month_cal = $month_cal_next - $month_cal_previous;
+            }
+
+            array_push($res1, $simm);
+        }
+
+        $res1[11]['Total'] = $month_cal;
+        $mos['date'] = $res1[11];
+        $mos['taxcalculation'] = $taxcalculation;
+
+        return $mos;
     }
 
 
