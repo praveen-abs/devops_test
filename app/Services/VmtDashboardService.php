@@ -201,14 +201,14 @@ class VmtDashboardService
             $emp_event = [];
             foreach ($dashboardEmployeeEventsData_birthday as $single_emp_birthday) {
 
-                $emp_birth_datails['id']  =  $single_emp_birthday['id'];
-                $emp_birth_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_birthday['id']);
-                $emp_birth_datails['name']  =  $single_emp_birthday['name'];
+                 $emp_birth_datails['id']  =  $single_emp_birthday['id'];
+                 $emp_birth_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_birthday['id']);
+                 $emp_birth_datails['name']  =  $single_emp_birthday['name'];
                 //  $emp_birth_datails['avatar']  =  $single_emp_birthday['avatar'];
-                $emp_birth_datails['designation']  =  $single_emp_birthday['designation'];
-                $emp_birth_datails['dob']  =  $single_emp_birthday['dob'];
-                $emp_birth_datails['doj']  =  $single_emp_birthday['doj'];
-                $emp_birth_datails['type']  =  "birthday";
+                 $emp_birth_datails['designation']  =  $single_emp_birthday['designation'];
+                 $emp_birth_datails['dob']  =  $single_emp_birthday['dob'];
+                 $emp_birth_datails['doj']  =  $single_emp_birthday['doj'];
+                 $emp_birth_datails['type']  =  "birthday";
 
                 array_push($emp_event, $emp_birth_datails);
             }
@@ -216,14 +216,14 @@ class VmtDashboardService
 
             foreach ($dashboardEmployeeEventsData_workanniversery as $single_emp_work) {
 
-                $emp_work_datails['id']  =  $single_emp_work['id'];
-                $emp_work_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_work['id']);
-                $emp_work_datails['name']  =  $single_emp_work['name'];
+                 $emp_work_datails['id']  =  $single_emp_work['id'];
+                 $emp_work_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_work['id']);
+                 $emp_work_datails['name']  =  $single_emp_work['name'];
                 //  $emp_work_datails['avatar']  =  $single_emp_work['avatar'];
-                $emp_work_datails['designation']  =  $single_emp_work['designation'];
-                $emp_work_datails['dob']  =  $single_emp_work['dob'];
-                $emp_work_datails['doj']  =  $single_emp_work['doj'];
-                $emp_work_datails['type']  =  "work_anniversery";
+                 $emp_work_datails['designation']  =  $single_emp_work['designation'];
+                 $emp_work_datails['dob']  =  $single_emp_work['dob'];
+                 $emp_work_datails['doj']  =  $single_emp_work['doj'];
+                 $emp_work_datails['type']  =  "work_anniversery";
 
                 array_push($emp_event, $emp_work_datails);
             }
@@ -590,7 +590,7 @@ class VmtDashboardService
 
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
             //dd($merged_attendanceData);
-            // dd($dateWiseData);
+            //dd($dateWiseData);
             foreach ($dateWiseData  as $key => $value) {
 
                 // dd($value[0]);
@@ -783,47 +783,23 @@ class VmtDashboardService
             // return ($attendanceResponseArray);
 
 
-            $absentCount = 0;
-            $presentCount = 0;
-            $notAppliedCount = 0;
-            $lcCount = 0;
-            $egCount = 0;
-            $mipCount = 0;
-            $mopCount = 0;
-
-            $data = array();
+            $count = 0;
+            $count1 = 0;
+            $count2 = 0;
 
             foreach ($attendanceResponseArray as $attendancedash) {
 
-
                 if ($attendancedash['isAbsent']) {
-                    $absentCount++;
+                    $count++;
                 }
                 if (!$attendancedash['isAbsent']) {
-                    $presentCount++;
+                    $count1++;
                 }
                 if ($attendancedash['absent_status'] == "Not Applied") {
-                    $notAppliedCount++;
+                    $count2++;
                 }
-                if ($attendancedash['isLC']) {
-                    $lcCount++;
-                }
-                if (!$attendancedash['isEG']) {
-                    $egCount++;
-                }
-                if ($attendancedash['isMIP']) {
-                    $mipCount++;
-                }
-                if (!$attendancedash['isMOP']) {
-                    $mopCount++;
-                }
-                array_push($data,$attendancedash);
-
             }
-            // dd($data);
-            $current_mnth = ["absent" => $absentCount, "present" => $presentCount, "not_applied" => $notAppliedCount,
-                             "late_coming" => $lcCount, "early_going" =>$egCount,"mip"=>$mipCount,"mop"=>$mopCount];
-            dd($current_mnth);
+            $current_mnth = ["absent" => $count, "present" => $count1, "not_applied" => $count2];
 
             //array_push($res, $current_mnth);
 
@@ -899,8 +875,7 @@ class VmtDashboardService
         }
     }
 
-    public function getNotifications($user_code)
-    {
+    public function getNotifications($user_code){
         //Validate
         $validator = Validator::make(
             $data = [
@@ -923,14 +898,14 @@ class VmtDashboardService
             ]);
         }
 
-        try {
+        try{
 
-            $user_id = User::where('user_code', $user_code)->first()->id;
+                $user_id = User::where('user_code',$user_code)->first()->id;
 
             //Get the user record and update avatar column
-            $query_notifications = User::join('vmt_notifications', 'vmt_notifications.user_id', '=', 'users.id')
-                ->where('users.id', $user_id)
-                ->where('vmt_notifications.is_read', '0')->get();
+            $query_notifications = User::join('vmt_notifications','vmt_notifications.user_id','=','users.id')
+                                    ->where('users.id', $user_id)
+                                    ->where('vmt_notifications.is_read','0')->get();
 
             return response()->json([
                 "status" => "success",
@@ -944,6 +919,7 @@ class VmtDashboardService
                 "message" => "Unable to fetch notifications",
                 "data" => $e,
             ]);
+
         }
     }
 
@@ -1162,9 +1138,9 @@ class VmtDashboardService
 
             return response()->json(
                 [
-                    "all_events" => json_decode($getAllEvent->content(), true)['data'],
-                    "leave_balance_per_month" => json_decode($getEmpLeaveBalance->content(), true)['data'],
-                    "attenance_report_permonth" => json_decode($getAttenanceReportpermonth->content(), true)['data']
+                     "all_events"=>json_decode($getAllEvent->content(), true)['data'],
+                     "leave_balance_per_month"=>json_decode($getEmpLeaveBalance->content(), true)['data'],
+                     "attenance_report_permonth"=>json_decode($getAttenanceReportpermonth->content(), true)['data']
                 ]
             );
         } catch (\Exception $e) {
@@ -1472,7 +1448,7 @@ class VmtDashboardService
 
 
 
-    public function getEmployeesCountDetails()
+    public function getEmployeesCountDetails($serviceVmtDashboardService)
     {
         $current_date = Carbon::now()->format('Y-m-d');
 
@@ -1480,10 +1456,7 @@ class VmtDashboardService
 
         $user_data = User::where("user_code", $user_code)->first();
 
-
         $emp_details_count = array();
-
-        $pending_request_count = array();
 
         $employees_data = array();
 
@@ -1501,7 +1474,7 @@ class VmtDashboardService
 
             $emp_details_count['exit_employee_count'] = User::where('active', '-1')->get()->count();
 
-            $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
+            $emp_details_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
         } else if ($user_data['org_role'] == "4") {
 
 
@@ -1521,11 +1494,11 @@ class VmtDashboardService
 
             $emp_details_count['exit_employee_count'] = User::where('active', '-1')->whereIn('id', $employees_data)->get()->count();
 
-            $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
+            $emp_details_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
 
-            $emp_details_count['others_count'] =  $emp_details_count['active_employee_count'] - ($emp_details_count['male_employee_count'] +  $emp_details_count['female_employee_count']);
+            $emp_details_count['others_count'] =  $emp_details_count['active_employee_count'] - ($emp_details_count['male_employee_count'] +  $emp_details_count['female_employee_count']) ;
 
-            // dd($emp_details_count['others_count']);
+            dd( $emp_details_count['others_count']);
         }
 
         $get_document_update_data = array();
@@ -1546,12 +1519,8 @@ class VmtDashboardService
                 $reg_count++;
             }
         }
-        $pending_request_count['emp_doc_pending_count'] = $doc_count;
-        $pending_request_count['emp_att_reg_count'] = $reg_count;
-
-        $response = ['Emp_details_count' => $emp_details_count, 'Pending_request_count' => $pending_request_count];
-
-        return($response);
+        $emp_details_count['emp_doc_pending_count'] = $doc_count;
+        $emp_details_count['emp_att_reg_count'] = $reg_count;
     }
 
     public function getBioMatricAttendanceData($user_code, $current_date)
