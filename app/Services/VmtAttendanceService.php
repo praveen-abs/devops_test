@@ -3363,4 +3363,11 @@ class VmtAttendanceService
             ]);
         }
     }
+
+    public function getAttendanceDashboardData(){
+
+        dd("simma");
+
+    }
+
 }

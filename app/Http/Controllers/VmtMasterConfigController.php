@@ -15,6 +15,7 @@ use App\Models\VmtEmpAssignSalaryAdvSettings;
 
 
 use App\Services\VmtMasterConfigService;
+use App\Services\VmtMobileConfigService;
 use Illuminate\Http\Request;
 
 class VmtMasterConfigController extends Controller
@@ -86,7 +87,7 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function  saveAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function  saveAppConfigStatus(Request $request,VmtMobileConfigService $serviceVmtMasterConfigService){
 
         $response = $serviceVmtMasterConfigService->saveAppConfigStatus($request->module_id,$request->status);
 
