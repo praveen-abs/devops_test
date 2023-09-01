@@ -194,43 +194,43 @@
                 <div class="mx-2 row border-b-[1px] border-[gray] py-2" v-for="item in managePayslipStore.paySlipHTMLView.data.personal_details" :key="item" >
                     <div class="col-3">
                         <p class="">Employee Code</p>
-                        <p class=" text-[#000] text-[12px]" >{{ item.user_code }}</p>
+                        <p class=" text-[#000] text-[12px]" >{{ item.user_code? item.user_code : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Date Joining</p>
-                        <p class=" text-[#000]">{{  item.doj }}</p>
-                    </div>
-                    <div class="col-3">
-                        <p>Designation</p>
-                        <p class=" text-[#000]">{{ item.designation }}</p>
+                        <p class=" text-[#000]">{{  item.doj? item.doj : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
-                        <p class=" text-[#000]">{{ item.department_name }}</p>
+                        <p class=" text-[#000]">{{ item.department_name? item.department_name:'-' }}</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Designation</p>
+                        <p class=" text-[#000]">{{ item.designation ?item.designation : '-' }}</p>
                     </div>
                 </div>
                 <div class="mx-2 row border-b-[1px] border-[gray] py-2"  v-for="item in managePayslipStore.paySlipHTMLView.data.personal_details" :key="item">
                     <div class="col-3">
                         <p>Payment Mode</p>
-                        <p class=" text-[#000]">{{  }}</p>
+                        <p class=" text-[#000]"  > {{item.bank_account_number ? "Bank" : "cheque" }}</p>
                     </div>
                     <div class="col-3">
                         <p>Bank Name</p>
-                        <p class=" text-[#000]">{{item.bank_name}}</p>
+                        <p class=" text-[#000]">{{item.bank_name? item.bank_name : '-'}}</p>
                     </div>
                     <div class="col-3">
                         <p>Bank Account</p>
-                        <p class=" text-[#000]">{{ item.bank_account_number }}</p>
+                        <p class=" text-[#000]">{{ item.bank_account_number? item.bank_account_number:'-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Bank ISFC</p>
-                        <p class=" text-[#000]">{{ item.bank_ifsc_code }}</p>
+                        <p class=" text-[#000]">{{ item.bank_ifsc_code?item.bank_ifsc_code:'-' }}</p>
                     </div>
                 </div>
                 <div class="py-2 mx-2 row" v-for="item in managePayslipStore.paySlipHTMLView.data.personal_details" :key="item">
                     <div class="col-3">
                         <p>PAN</p>
-                        <p class=" text-[#000]"> {{item.pan_number}}</p>
+                        <p class=" text-[#000]"> {{item.pan_number? item.pan_number : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>ESIC</p>
@@ -238,11 +238,11 @@
                     </div>
                     <div class="col-3">
                         <p>UAN</p>
-                        <p class=" text-[#000]">{{item.uan_number}}</p>
+                        <p class=" text-[#000]">{{item.uan_number ?item.uan_number : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>EPF Number</p>
-                        <p class=" text-[#000]">{{ item.epf_number }}</p>
+                        <p class=" text-[#000]">{{ item.epf_number ?  item.epf_number : '-' }}</p>
                     </div>
                 </div>
                      <div class="border-[1.5px] border-[#000] my-[12px]"></div>
@@ -255,19 +255,19 @@
                 <div class="py-2 mx-2 row"  >
                     <div class="col-3">
                         <p>Leave Type</p>
-                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.leave_type }}</p>
+                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.leave_type ? item.leave_type : '-' }}</p>
                     </div>
                     <div class="col-3" >
                         <p>Opening Balance</p>
-                        <p class=" text-[#000]"  v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.opening_balance }}</p>
+                        <p class=" text-[#000]"  v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.opening_balance ?  item.opening_balance : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Availed</p>
-                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.avalied }}</p>
+                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.avalied ? item.avalied :'-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Closing Balance</p>
-                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.closing_balance }}</p>
+                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.closing_balance ?  item.closing_balance : '-' }}</p>
                     </div>
                 </div>
 
@@ -280,20 +280,20 @@
                 <div class="py-2 mx-2 row"  v-for="item in managePayslipStore.paySlipHTMLView.data.salary_details" :key="item" >
                     <div class="col-3">
                         <p>ACTUAL PAYABLE DAYS</p>
-                        <p class=" text-[#000]">{{item.month_days }}</p>
+                        <p class=" text-[#000]">{{item.month_days  ? item.month_days : '-'}}</p>
                       
                     </div>
                     <div class="col-3">
                         <p>TOTAL WORKING DAYS</p>
-                        <p class=" text-[#000]">{{ item.worked_Days }}</p>
+                        <p class=" text-[#000]">{{ item.worked_Days ? item.worked_Days : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>LOSS OF PAY DAYS</p>
-                        <p class=" text-[#000]">{{ item.lop }}</p>
+                        <p class=" text-[#000]">{{ item.lop ? item.lop : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>ARREAR DAYS PAYABLE</p>
-                        <p class=" text-[#000]">{{ item.arrears_Days}}</p>
+                        <p class=" text-[#000]">{{ item.arrears_Days ? item.arrears_Days : '-' }}</p>
                     </div>
                 </div>
             </div>
@@ -304,12 +304,12 @@
                         <tr class="w-[100%]" >
                             <td>
                                 <h1 class="font-semibold " >Earnings</h1>
-                                <h1 class="my-3" v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.earnings[0]" :key="index" :class="[key == 'Total Earnings' ?'text-black text-[16px]':'']"> {{ key }}</h1>
+                                <h1 class="my-3" v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.earnings[0]" :key="index" :class="[key == 'Total Earnings' ?'text-black text-[16px]':'text-black']"> {{ key }}</h1>
                             </td>
 
                             <td class="flex flex-col items-start pt-[2px]">
                             <h1 class="font-semibold">Fixed</h1>
-                            <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="mt-[12px]" > {{ value }}</h1>
+                            <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="mt-[12px] text-black" > {{ value }}</h1>
                             </td>
 
                             <td class=" flex flex-col items-start pt-[2px]" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">              
@@ -337,6 +337,17 @@
                                 <p class=" my-2 text-[#000]" v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.contribution[0]" :key="index" >{{ value }}</p>
                             </td>
                         </tr>
+                       <!-- {{ managePayslipStore.paySlipHTMLView.data.Tax_Deduction}} -->
+                        <tr class="w-[100%]">
+                            <td >
+                                <h1 class="font-semibold ">Tax Duductions</h1>
+                                <p class=" my-2 text-[#000]"  v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.Tax_Deduction[0]" :key="index" :class="[key == 'Total Deduction'? 'text-[18px] ' : ' text-black']" >{{ key }}</p>
+                            </td>
+                            <td>
+                                <h1 class="font-semibold ">&nbsp;</h1>
+                                <p class=" my-2 text-[#000]" v-for="(value, key, index) in  managePayslipStore.paySlipHTMLView.data.Tax_Deduction[0]" :key="index" :class="[key == 'Total Deduction'? 'text-[18px] ' : ' text-black']"  >{{ value }}</p>
+                            </td>
+                        </tr>
 
                     </table>
                 </div>
@@ -344,7 +355,7 @@
             <div class="my-2 row w-[100%] " v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.over_all[0]" :key="index" >
                 <div class="my-2 col-5" ><p class="">{{ key }} </p></div>
                 <div class="my-2 col-7">
-                    <p> <span class=" font-sans text-[18px]" v-if="key=='Net Salary Payable'">₹ </span> {{ value }}</p>
+                    <p class="text-[16px]"> <span class=" text-[16px]" style=" font-family:sans-serif !important;" v-if="key=='Net Salary Payable'">₹ </span> {{ value }}</p>
                 </div>
             </div>
             <div>
@@ -403,8 +414,8 @@ async function showPaySlipHTMLView(selected_user_code) {
 
     await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
 
-    canShowPayslipHTMLView.value = true;
-    // viewpayslip.value = true;
+    // canShowPayslipHTMLView.value = true;
+    viewpayslip.value = true;
 
     // console.log(viewpayslip.value);
 
