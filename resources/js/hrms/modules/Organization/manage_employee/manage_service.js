@@ -8,7 +8,8 @@ export const useManageEmployeesStore = defineStore("manageEmployees", () => {
     // Variable Declarations
     const array_active_employees = ref()
     const yet_to_active_employees_data = ref()
-    const exit_employees_data = ref()
+    const exit_employees_data = ref();
+    const canShowLoadingScreen =ref(true);
 
     // Events
 
@@ -52,6 +53,7 @@ export const useManageEmployeesStore = defineStore("manageEmployees", () => {
 
 
 
+
     return {
 
         // Varaible Declartion
@@ -60,7 +62,9 @@ export const useManageEmployeesStore = defineStore("manageEmployees", () => {
 
         // Functions
 
-        getActiveEmployees, ajax_yet_to_active_employees_data, ajax_exit_employees_data
+        getActiveEmployees, ajax_yet_to_active_employees_data, ajax_exit_employees_data,
+
+        canShowLoadingScreen
 
 
 

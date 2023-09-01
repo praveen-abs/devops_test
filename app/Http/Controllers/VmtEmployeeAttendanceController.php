@@ -203,6 +203,15 @@ class VmtEmployeeAttendanceController extends Controller
         return Excel::download(new OverTimeReportExport($attendance_report_service->fetchOvertimeReportData($start_date, $end_date)['rows']), 'Over Time Report.xlsx');
     }
 
+    public function shiftTimeForEmployee(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = "2022-07-15";
+         $end_date = "2022-11-02";
+          $client_domain = "";
+        $response = $attendance_report_service->shiftTimeForEmployee($start_date, $end_date, $client_domain);
+        return $response;
+    }
+
 
     public function showLateComingReport(Request $request)
     {
@@ -225,5 +234,14 @@ class VmtEmployeeAttendanceController extends Controller
         return view('reports.attendance_halfday_absent_reports');
     }
 
+
+    public function fetchMIPReportData(Request $request, VmtAttendanceReportsService $serviceVmtAttendanceReportsService)
+    {
+        return $serviceVmtAttendanceReportsService->fetchMIPReportData($date ="2023-08-01",);
+    }
+    public function fetchSandwidchReportData(Request $request, VmtAttendanceReportsService $serviceVmtAttendanceReportsService)
+    {
+        return $serviceVmtAttendanceReportsService->fetchSandwidchReportData($start_date ="2023-08-01",$end_date ="2023-08-20");
+    }
 
 }

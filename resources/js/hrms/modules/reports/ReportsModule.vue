@@ -114,10 +114,8 @@
             <button @click="getEmployeeAbsentReports" class="btn btn-orange">Generate</button>
         </div>
         <div class="col-span-6 flex justify-end gap-4">
-            <button><img src="../../assests/icons/printer.svg" alt="" srcset=""
-                    class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
-            <button><img src="../../assests/icons/download.svg" alt="" srcset="" @click="downloadAbsentReports"
-                    class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
+            <button><img src="../../assests/icons/printer.svg" alt="" srcset="" class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
+            <button><img src="../../assests/icons/download.svg" alt="" srcset="" class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
             <button class="bg-gray-100 rounded-full p-2 text-sm flex">
                 <p class="bg-orange-400 p-1 h-6 w-6 rounded-full text-xs">A</p>
                 <p class="text-sm my-auto">Abbrevation</p>
@@ -130,9 +128,7 @@
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-            <Column v-for="col of AttendanceReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
-                style="white-space: nowrap;text-align: left; !important">
-
+            <Column v-for="col of AttendanceReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title" style="white-space: nowrap;text-align: left; !important">
             </Column>
         </DataTable>
     </div>
@@ -162,12 +158,7 @@
 
 <script setup>
 import axios from 'axios';
-import { ref, onMounted, reactive } from 'vue';
-
-const variable = reactive({
-    start_date: '',
-    end_date: '',
-})
+import { ref, onMounted } from 'vue';
 
 const products = ref([
     { product: 'Bamboo Watch', lastYearSale: 51, thisYearSale: 40, lastYearProfit: 54406, thisYearProfit: 43342 },
@@ -197,11 +188,8 @@ const AttendanceReportSource = ref([])
 const canShowLoading = ref(false)
 
 const getEmployeeAttendanceReports = async () => {
-
-    // Attendance Basic Reports
-    let url = '/fetch-attendance-data'
     canShowLoading.value = true
-    await axios.get(url).then(res => {
+    await axios.get('/fetch-attendance-data').then(res => {
         console.log(res.data.rows);
         AttendanceReportSource.value = res.data.rows
         res.data.header.forEach(element => {
@@ -219,49 +207,8 @@ const getEmployeeAttendanceReports = async () => {
 
 }
 
-const getEmployeeAbsentReports = () => {
-    // Absent Reports
-    let url = '/fetch-absent-report-data'
-    canShowLoading.value = true
-    axios.post(url, {
-        start_date: variable.start_date,
-        end_date: variable.end_date,
-    }).then(res => {
-        console.log(res.data.rows);
-        AttendanceReportSource.value = res.data.rows
-        res.data.headers.forEach(element => {
-            let format = {
-                title: element
-            }
-            AttendanceReportDynamicHeaders.value.push(format)
-            console.log(element);
-        });
-        console.log(AttendanceReportDynamicHeaders.value);
-
-    }).finally(() => {
-        canShowLoading.value = false
-    })
-}
-
-const downloadAbsentReports = () => {
-    let url = '/report/download-absent-report'
-    canShowLoading.value = true
-    axios.post(url, {
-        start_date: variable.start_date,
-        end_date: variable.end_date,
-    }, { responseType: 'blob' }).then((response) => {
-        console.log(response.data);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(response.data);
-        link.download = ` Absent Report_${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}.xlsx`;
-        link.click();
-    }).finally(() => {
-        canShowLoading.value = false
-    })
-}
-
 onMounted(() => {
-    // getEmployeeAttendanceReports()
+    getEmployeeAttendanceReports()
 })
 
 

@@ -8,7 +8,7 @@
 @endsection
 @section('content')
 
-    <div class="cotainer-fluid mt-30">
+    <div class="cotainer-fluid">
         <div class="card mb-2">
             <div class="py-1 card-body">
 

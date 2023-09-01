@@ -9,18 +9,20 @@
     use Dompdf\Dompdf;
      use Dompdf\Options;
      use Carbon\Carbon;
-     use App\jobs\WelcomeMailJobs;
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
+    use App\Models\VmtEmployeeLeaves;
     use App\Models\VmtMasterConfig;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
     use App\Mail\VmtPMSMail_Assignee;
+    use App\Mail\VmtAttendanceMail_Regularization;
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
+    use App\Models\vmtHolidays;
     use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -451,59 +453,59 @@
 
 
 
-//        $gross =50000;
+       $gross =50000;
 
-//        $basic =$gross/100*60;
+       $basic =$gross/100*60;
 
-//        $hra =$basic/100*50;
+       $hra =$basic/100*50;
 
-//        $communication_allowance = 0;
+       $communication_allowance = 0;
 
-//        $food_allowance = 0;
+       $food_allowance = 0;
 
-//        if($gross > 40000){
-//         $communication_allowance =2000;
-//        }
+       if($gross > 40000){
+        $communication_allowance =2000;
+       }
 
-//        $leave_travel_allowance = 0;
+       $leave_travel_allowance = 0;
 
-//        if($gross > 50000){
-//         $leave_travel_allowance =2000;
-//        }
+       if($gross > 50000){
+        $leave_travel_allowance =2000;
+       }
 
-//        $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
+       $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
 
 
-//        $epf_employer = 0;
-//        $epf_employee = 0;
+       $epf_employer = 0;
+       $epf_employee = 0;
 
-//        if(($gross - $hra) > 15000){
+       if(($gross - $hra) > 15000){
 
-//         $epf_employer = 15000/100*12;
-//         $epf_employee = 15000/100*12;
-//        }else{
-//         $epf_employer = ($gross - $hra)/100*12;
-//         $epf_employee =($gross - $hra)/100*12;
-//        }
+        $epf_employer = 15000/100*12;
+        $epf_employee = 15000/100*12;
+       }else{
+        $epf_employer = ($gross - $hra)/100*12;
+        $epf_employee =($gross - $hra)/100*12;
+       }
 
-//        $esi_employer = 0;
-//        $esi_employee = 0;
+       $esi_employer = 0;
+       $esi_employee = 0;
 
-//        if($gross > 21000){
-//         $esi_employer = 0;
-//        $esi_employee = 0;
+       if($gross > 21000){
+        $esi_employer = 0;
+       $esi_employee = 0;
 
-//        }else{
-//         $esi_employer = $gross/100*3.25;
-//         $esi_employee = $gross/100*0.75;
-//        }
-//        $insurance =0;
+       }else{
+        $esi_employer = $gross/100*3.25;
+        $esi_employee = $gross/100*0.75;
+       }
+       $insurance =0;
 
-//        $professional_tax = 208;
+       $professional_tax = 208;
 
-//        $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+       $ctc = $gross + $epf_employer +$esi_employer + $insurance;
 
-//        $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+       $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
 
 
 
@@ -676,25 +678,31 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-
-
-
-
         //  }
+        $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
+
+    //     $start_date="2023-08-01";
+    //     $end_date ="2023-08-25";
+
+    //   $date_array = array();
+    //   $leave_array = array();
 
 
-
-        $getMonth = [];
-        foreach (range(1, 12) as $m) {
-         $getMonth[] = date('F', mktime(0, 0, 0, $m, 1));
-      }
-
-
-$monthl_dates =[];
-for($i=1;$i<=31;$i++){
-    $monthl_dates[]=$i;
-}
-dd($getMonth);
+        $isSent    = \Mail::to("vvishva185@gmail.com")->cc(["vishnu@abshrms.com"])->send(new VmtAttendanceMail_Regularization(
+                    $query_user='Vishnu',
+                    $query_user="Abs@123123",
+                    "",
+                    "",
+                    $manager_details="karthick",
+                    $manager_details="ABS023",
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    "bye",
+                    "Pending",
+                    $user_type="Admin",
+                ));
+dd(  $isSent );
     ?>
 
 

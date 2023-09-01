@@ -1,11 +1,11 @@
 <template>
     <!-- <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p> -->
     <div v-if="interest_free_loans ==2">
-    <div class="my-4 flex align-items-center">
-        <h1 class="text-xl  w-5  xl:text-2xl ">Name of the Interest Free Loan</h1>
+    <div class="my-4 flex  justify-between w-[600px]">
+        <h1 class="text-xl  xl:text-2xl ">Name of the Interest Free Loan</h1>
         <div class=" ">
             <InputText type="text" placeholder="Name of Interest free loan" v-model="salaryStore.ifl.name"
-                class="w-full d-flex justify-items-center md:w-18rem" :class="[
+                class=" d-flex justify-items-center w-[200px] md:w-18rem" :class="[
                     v$.name.$error ? 'p-invalid' : '',
                 ]" />
             <span v-if="v$.name.$error" class="font-semibold text-red-400 fs-6">
@@ -17,13 +17,13 @@
     </div>
 
 
-    <div class=" d-flex align-items-center mt-5 ">
-        <h1 class="text-xl w-5  xl:text-2xl">Select organization</h1>
+    <div class=" flex justify-between items-center mt-5 w-[600px]">
+        <h1 class="text-xl  xl:text-2xl">Select organization</h1>
         <div class="">
             <div class="d-flex flex-col position-relative">
                 <MultiSelect v-model="salaryStore.ifl.selectClientID" v-if="!salaryStore.EnableAndDisable"  :options="salaryStore.ClientsName"
                     optionLabel="client_name" optionValue="id" placeholder="Select Branches" :maxSelectedLabels="3"
-                    class="w-full  md:w-18rem" :class="[
+                    class="w-[200px]  md:w-24rem" :class="[
                         v$.selectClientID.$error ? 'p-invalid' : '',
                     ]" />
                 <span v-if="v$.selectClientID.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">
@@ -182,7 +182,7 @@
         <div class="card border-L">
             <div class="py-3 row d-flex">
                 <div class="my-3 col col-2 d-flex align-items-center" style="width: 200px;">
-                    <P class="mx-3 fs-5">Employee Request
+                    <P class=" text-[18px] w-[200px] ">Employee Request
                     </P>
                     <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
                 </div>
@@ -246,7 +246,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-[12px]">
         <div class="col">
             <div class=" flex justify-center align-middle">
                 <button class="btn btn-border-primary" v-if="!salaryStore.EnableAndDisable" @click="cancel_btn">Cancel</button>

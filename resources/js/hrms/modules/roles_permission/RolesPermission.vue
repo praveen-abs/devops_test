@@ -17,31 +17,26 @@
         </div>
     </div> -->
 
-    <div class="w-full">
+    <div class="w-full p-3">
         <div>
-            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissions</h4>
+            <h4 class="fs-4 text-xl font-semibold ">Employee Roles and Permissions</h4>
         </div>
-        <div class="p-4 my-4 card">
-            <div class="card-body">
-                <p class="text-lg font-semibold text-gray-700 fs-4">Here you can manage the Employees Roles and Permissions</p>
-                <div class="flex my-6">
-                    <InputText placeholder="Search...."  class="w-4 h-10"/>
-                    <!-- Creating New Job Roles dailog-->
-                    <button class="h-10 mx-6 btn btn-orange" @click="addNewroleDailog = true">Create Role</button>
-                </div>
+        <div class="bg-white rounded-lg p-3 border my-3">
+            <p class="text-lg font-semibold text-gray-700 ">Here you can manage the Employees Roles and Permissions</p>
+            <div class="flex justify-between my-6">
+                <InputText placeholder="Search...." class="h-10" />
+                <!-- Creating New Job Roles dailog-->
+                <button class="h-10 mx-6 btn btn-orange" @click="addNewroleDailog = true">Create Role</button>
+            </div>
 
-                <div>
-                    <DataTable>
-                        <Column field="product" header="Role"></Column>
-                        <Column field="lastYearSale" header="Who Has Access"></Column>
-                        <Column field="thisYearSale" header="Actions"></Column>
-                    </DataTable>
-                </div>
+            <div>
+                <DataTable>
+                    <Column field="product" header="Role"></Column>
+                    <Column field="lastYearSale" header="Who Has Access"></Column>
+                    <Column field="thisYearSale" header="Actions"></Column>
+                </DataTable>
             </div>
         </div>
-
-
-
     </div>
 
 
@@ -51,26 +46,27 @@
     <Dialog header="Header" v-model:visible="addNewroleDailog" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '65vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="false" :closeOnEscape="false">
         <template #header>
-            <h6 class=" modal-title fs-21">
-                Creating New Job Role</h6>
+            <p class="font-semibold text-lg">
+                Creating New Job Role</p>
         </template>
-        <div class="px-4 row">
+        <!-- <div class="px-4 row">
             <h3 class="text-xl font-semibold col-12">Roles Details</h3>
-        </div>
+        </div> -->
         <div class="p-4">
-            <div class=" row">
-                <h5 class="text-lg font-semibold col-12">Role Title</h5>
-                <InputText placeholder="Role Title" class="w-8 h-10 col-4" />
+            <div class="grid grid-cols-12">
+                <h5 class="text-lg font-semibold col-span-2">Role Title</h5>
+                <InputText placeholder="Role Title" class="h-10 col-span-6" />
             </div>
-            <div class="my-3 row">
-                <h5 class="text-lg font-semibold col-12">Role Description</h5>
-                <Textarea placeholder="Role Description " autoResize class="w-8 col-4" />
+            <div class="my-3 grid grid-cols-12">
+                <h5 class="text-lg font-semibold col-span-2">Role Description</h5>
+                <Textarea placeholder="Role Description " autoResize class="col-span-6" />
             </div>
-            <div class="my-3">
-                <h5 class="text-lg font-semibold">Assign To</h5>
+            <div class="my-3 grid grid-cols-12">
+                <h5 class="text-lg font-semibold col-span-2">Assign To</h5>
+                <Tree :value="nodes" selectionMode="checkbox" class="font-semibold col-span-6 ">
+                </Tree>
             </div>
-            <Tree :value="allpermission" selectionMode="checkbox" class="w-8 font-semibold ">
-            </Tree>
+
         </div>
         <template #footer>
             <div>
@@ -118,7 +114,7 @@ const nodes = ref([
     {
         id: 1,
         key: '0',
-        label: 'Documents',
+        label: '',
         data: 'Documents Folder',
         icon: 'pi pi-fw pi-inbox',
         children: [
@@ -166,7 +162,8 @@ onMounted(() => {
 </script>
 
 <style>
-.p-treenode-label {
+.p-treenode-label
+{
     font-weight: 600;
 }
 </style>

@@ -1,8 +1,7 @@
-import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-// import '../../../../../public/assets/css/tailwind.css'
+import '../../assests/tailwind.css'
 
 
 import { createApp } from "vue";
@@ -35,6 +34,7 @@ import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber';
 import InputMask from 'primevue/inputmask';
 import ProgressBar from 'primevue/progressbar';
+import Sidebar from 'primevue/sidebar'
 
 import profilePage from './ProfilePageNew.vue';
 
@@ -72,6 +72,7 @@ app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('ProgressBar', ProgressBar)
 app.component('InputMask', InputMask)
+app.component('Sidebar', Sidebar)
 
 app.mount("#profilePage");
 

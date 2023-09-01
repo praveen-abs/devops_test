@@ -1371,7 +1371,8 @@ class VmtAttendanceService
         $checkin_time,
         $checkout_time,
         $reason,
-        $custom_reason
+        $custom_reason,
+        $user_type
     ) {
 
         $validator = Validator::make(
@@ -1461,7 +1462,7 @@ class VmtAttendanceService
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
             $isSent = null;
-
+        if($user_type != "Admin"){
             if (empty($manager_details)) {
                 //Manager mail is empty or no manager assigned. Cant send mail
 
@@ -1487,6 +1488,7 @@ class VmtAttendanceService
                 $mail_status = "There was one or more failures.";
             }
 
+        }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Absent Regularization applied successfully',
@@ -1595,7 +1597,7 @@ class VmtAttendanceService
         }
     }
 
-    public function applyRequestAttendanceRegularization($user_code, $attendance_date, $regularization_type, $user_time, $regularize_time, $reason, $custom_reason, VmtNotificationsService $serviceVmtNotificationsService)
+    public function applyRequestAttendanceRegularization($user_code, $attendance_date, $regularization_type, $user_time, $regularize_time, $reason, $custom_reason, $user_type, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         $validator = Validator::make(
@@ -1681,7 +1683,7 @@ class VmtAttendanceService
             $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-
+         if($user_type != "Admin"){
             //Check if manager's mail exists or not
             if (!empty($manager_details)) {
                 //dd($manager_details);
@@ -1704,7 +1706,8 @@ class VmtAttendanceService
                     request()->getSchemeAndHttpHost(),
                     $image_view,
                     $custom_reason,
-                    "Pending"
+                    "Pending",
+                    $user_type="",
                 ));
 
                 if ($isSent) {
@@ -1735,7 +1738,7 @@ class VmtAttendanceService
                 manager_user_code: $manager_usercode,
             );
 
-
+        }
 
 
             return [
@@ -1765,7 +1768,7 @@ class VmtAttendanceService
         }
     }
 
-    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text, VmtNotificationsService $serviceVmtNotificationsService)
+    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text,$user_type, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         //Validate the request
@@ -1828,6 +1831,40 @@ class VmtAttendanceService
             $mail_status = "";
 
             //Get employee details
+        if($user_type == "Admin"){
+
+            $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                          ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+                    //dd($employee_details->officical_mail);
+
+
+                    $VmtClientMaster = VmtClientMaster::first();
+                    $image_view = url('/') . $VmtClientMaster->client_logo;
+                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+
+                    $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                        $employee_details->name,
+                        $employee_details->user_code,
+                        $emp_avatar,
+                        $data->attendance_date,
+                        $query_user->name,
+                        $query_user->user_code,
+                        request()->getSchemeAndHttpHost(),
+                        $image_view,
+                        $status_text,
+                        $status,
+                        $user_type="Admin",
+                   ));
+
+                if ($isSent) {
+                    $mail_status = "Mail sent successfully";
+                } else {
+                    $mail_status = "There was one or more failures.";
+                }
+        }
+        else
+        {
             $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
@@ -1848,7 +1885,9 @@ class VmtAttendanceService
                 request()->getSchemeAndHttpHost(),
                 $image_view,
                 $status_text,
-                $status
+                $status,
+                $user_type="",
+
             ));
 
             if ($isSent) {
@@ -1869,11 +1908,12 @@ class VmtAttendanceService
                 attendance_regularization_type: $attendance_regularization_type,
                 manager_user_code: $approver_user_code,
             );
+        }
 
             return $responseJSON = [
                 'status' => 'success',
                 'message' => 'Regularization done successfully!',
-                'notification_status' => $res_notification,
+                'notification_status' => $res_notification ?? "",
                 'mail_status' => $mail_status,
                 'data' => [],
             ];
@@ -1897,8 +1937,9 @@ class VmtAttendanceService
         }
     }
 
-    public function approveRejectAbsentRegularization($approver_user_code, $record_id, $status, $status_text)
+    public function approveRejectAbsentRegularization($approver_user_code, $record_id, $status, $status_text,$user_type)
     {
+        try{
         // dd($approver_user_code, $record_id, $status, $status_text);
         //Get the user_code
         $query_user = User::where('user_code', $approver_user_code)->first();
@@ -1926,36 +1967,67 @@ class VmtAttendanceService
         //Send mail to Employee
 
         $mail_status = "";
+        if($user_type == "Admin"){
 
         //Get employee details
-        $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+            $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-        //dd($employee_details->officical_mail);
+            //dd($employee_details->officical_mail);
 
 
-        $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->client_logo;
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
 
-        $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
-            $employee_details->name,
-            $employee_details->user_code,
-            $emp_avatar,
-            $data->attendance_date,
-            $query_user->name,
-            $query_user->user_code,
-            request()->getSchemeAndHttpHost(),
-            $image_view,
-            $status_text,
-            $status
-        ));
+            $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
+                $employee_details->name,
+                $employee_details->user_code,
+                $emp_avatar,
+                $data->attendance_date,
+                $query_user->name,
+                $query_user->user_code,
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                $status_text,
+                $status
+            ));
 
-        if ($isSent) {
-            $mail_status = "Mail sent successfully";
-        } else {
-            $mail_status = "There was one or more failures.";
-        }
+            if ($isSent) {
+                $mail_status = "Mail sent successfully";
+            } else {
+                $mail_status = "There was one or more failures.";
+            }
+    }else{
+     $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+            //dd($employee_details->officical_mail);
+
+
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+
+            $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
+                $employee_details->name,
+                $employee_details->user_code,
+                $emp_avatar,
+                $data->attendance_date,
+                $query_user->name,
+                $query_user->user_code,
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                $status_text,
+                $status
+            ));
+
+            if ($isSent) {
+                $mail_status = "Mail sent successfully";
+            } else {
+                $mail_status = "There was one or more failures.";
+            }
+    }
         // if ($status == 'Approved') {
 
         //     $attendance_regularization_type = 'manager_approves_attendance_reg';
@@ -1973,10 +2045,27 @@ class VmtAttendanceService
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Regularization done successfully!',
-            // 'notification_status' => $res_notification,
             'mail_status' => $mail_status,
             'data' => [],
         ];
+        } catch (TransportException $e) {
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Absent Regularization approval successful',
+                    'mail_status' => 'failure',
+                    'error' => $e->getMessage(),
+                    'error_verbose' => $e
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while doing absent regularization",
+                'data' => $e->getMessage()
+            ]);
+        }
     }
 
 

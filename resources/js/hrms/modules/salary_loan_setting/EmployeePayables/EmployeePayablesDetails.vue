@@ -298,15 +298,6 @@ const btn_download = ref(false);
 
 </script>
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital@0;1&display=swap');
-
-  *{
-    font-family: 'Lobster', cursive;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-</style>
 
 <style lang="sass" scoped>
 

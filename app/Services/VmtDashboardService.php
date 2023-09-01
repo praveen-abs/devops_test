@@ -20,6 +20,7 @@ use App\Models\VmtClientMaster;
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 use App\Models\VmtOrgRoles;
+use App\Models\VmtNotifications;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
@@ -200,13 +201,14 @@ class VmtDashboardService
             $emp_event = [];
             foreach ($dashboardEmployeeEventsData_birthday as $single_emp_birthday) {
 
-                $emp_birth_datails['id']  =  $single_emp_birthday['id'];
-                $emp_birth_datails['name']  =  $single_emp_birthday['name'];
-                $emp_birth_datails['avatar']  =  $single_emp_birthday['avatar'];
-                $emp_birth_datails['designation']  =  $single_emp_birthday['designation'];
-                $emp_birth_datails['dob']  =  $single_emp_birthday['dob'];
-                $emp_birth_datails['doj']  =  $single_emp_birthday['doj'];
-                $emp_birth_datails['type']  =  "birthday";
+                 $emp_birth_datails['id']  =  $single_emp_birthday['id'];
+                 $emp_birth_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_birthday['id']);
+                 $emp_birth_datails['name']  =  $single_emp_birthday['name'];
+                //  $emp_birth_datails['avatar']  =  $single_emp_birthday['avatar'];
+                 $emp_birth_datails['designation']  =  $single_emp_birthday['designation'];
+                 $emp_birth_datails['dob']  =  $single_emp_birthday['dob'];
+                 $emp_birth_datails['doj']  =  $single_emp_birthday['doj'];
+                 $emp_birth_datails['type']  =  "birthday";
 
                 array_push($emp_event, $emp_birth_datails);
             }
@@ -214,13 +216,14 @@ class VmtDashboardService
 
             foreach ($dashboardEmployeeEventsData_workanniversery as $single_emp_work) {
 
-                $emp_work_datails['id']  =  $single_emp_work['id'];
-                $emp_work_datails['name']  =  $single_emp_work['name'];
-                $emp_work_datails['avatar']  =  $single_emp_work['avatar'];
-                $emp_work_datails['designation']  =  $single_emp_work['designation'];
-                $emp_work_datails['dob']  =  $single_emp_work['dob'];
-                $emp_work_datails['doj']  =  $single_emp_work['doj'];
-                $emp_work_datails['type']  =  "work_anniversery";
+                 $emp_work_datails['id']  =  $single_emp_work['id'];
+                 $emp_work_datails['avatar']  =  newgetEmployeeAvatarOrShortName($single_emp_work['id']);
+                 $emp_work_datails['name']  =  $single_emp_work['name'];
+                //  $emp_work_datails['avatar']  =  $single_emp_work['avatar'];
+                 $emp_work_datails['designation']  =  $single_emp_work['designation'];
+                 $emp_work_datails['dob']  =  $single_emp_work['dob'];
+                 $emp_work_datails['doj']  =  $single_emp_work['doj'];
+                 $emp_work_datails['type']  =  "work_anniversery";
 
                 array_push($emp_event, $emp_work_datails);
             }
@@ -871,8 +874,8 @@ class VmtDashboardService
             return null;
         }
     }
-    public function getNotifications($user_code)
-    {
+
+    public function getNotifications($user_code){
         //Validate
         $validator = Validator::make(
             $data = [
@@ -895,18 +898,14 @@ class VmtDashboardService
             ]);
         }
 
-        try {
+        try{
+
+                $user_id = User::where('user_code',$user_code)->first()->id;
 
             //Get the user record and update avatar column
-            $query_notifications = User::with('array_notifications')
-                ->where('users.user_code', $user_code)
-                ->first(['users.id', 'users.name', 'users.user_code']);
-
-            //Add recipient name
-            foreach ($query_notifications['array_notifications'] as $singleNotification) {
-
-                $singleNotification["recipient_name"] = User::find($singleNotification["recipient_user_id"])->name;
-            }
+            $query_notifications = User::join('vmt_notifications','vmt_notifications.user_id','=','users.id')
+                                    ->where('users.id', $user_id)
+                                    ->where('vmt_notifications.is_read','0')->get();
 
             return response()->json([
                 "status" => "success",
@@ -920,6 +919,7 @@ class VmtDashboardService
                 "message" => "Unable to fetch notifications",
                 "data" => $e,
             ]);
+
         }
     }
 
@@ -1130,7 +1130,6 @@ class VmtDashboardService
 
         try {
             $getAllEvent = $this->getAllEventsDashboard();
-            $getAllNotification =  $this->getNotifications($user_code);
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
@@ -1139,10 +1138,9 @@ class VmtDashboardService
 
             return response()->json(
                 [
-                    "all_events" => json_decode($getAllEvent->content(), true)['data'],
-                    "all_notification" => json_decode($getAllNotification->content(), true)['data'],
-                    "leave_balance_per_month" => json_decode($getEmpLeaveBalance->content(), true)['data'],
-                    "attenance_report_permonth" => json_decode($getAttenanceReportpermonth->content(), true)['data']
+                     "all_events"=>json_decode($getAllEvent->content(), true)['data'],
+                     "leave_balance_per_month"=>json_decode($getEmpLeaveBalance->content(), true)['data'],
+                     "attenance_report_permonth"=>json_decode($getAttenanceReportpermonth->content(), true)['data']
                 ]
             );
         } catch (\Exception $e) {
