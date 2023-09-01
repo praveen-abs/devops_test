@@ -6,7 +6,11 @@
 
  $abs_public_logo  =  public_path($date_month['abs_logo']);
 
-$abs_logo  = base64_encode(file_get_contents($abs_public_logo));
+ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
+
+ $date=date_create($personal_details[0]['doj']);
+
+ $doj  =  date_format($date ,"d-m-Y");
 
 ?>
 
@@ -81,7 +85,7 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Date Joined</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['doj'] ?? " - "}}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $doj ?? " - "}}</p>
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Department</p>
