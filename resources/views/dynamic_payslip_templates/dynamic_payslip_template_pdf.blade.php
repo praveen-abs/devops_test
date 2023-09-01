@@ -76,19 +76,19 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
         </tr>
         <tr class="td" style="height: 30px">
             <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:#383838;margin-top:-4px;">Employee Number</p>
+                <p style="font-size:10px;color:#383838;margin-top:-2px;">Employee Number</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code'] ?? "-"}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:#383838; margin-top:-4px">Date Joined</p>
+                <p style="font-size:10px;color:#383838; margin-top:-2px">Date Joined</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['doj'] ?? '-'}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:#383838; margin-top:-4px">Department</p>
+                <p style="font-size:10px;color:#383838; margin-top:-2px">Department</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['department_name'] ?? "-"}}</p>
             </td>
             <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:#383838; margin-top:-4px">Designation </p>
+                <p style="font-size:10px;color:#383838; margin-top:-2px">Designation </p>
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation'] ?? "-"}}</p>
             </td>
 
