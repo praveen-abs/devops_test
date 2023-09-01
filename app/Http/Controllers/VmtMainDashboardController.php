@@ -757,7 +757,14 @@ public function getEmployeesCountDetails(Request $request, VmtDashboardService $
 {
     
     //HR New Main Dashboard
-    return $serviceVmtDashboardService->getEmployeesCountDetails();
+    return $serviceVmtDashboardService->getEmployeesCountDetails($serviceVmtDashboardService);
+
+}
+public function getHrMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService)
+{
+    
+    //HR New Main Dashboard
+    return $serviceVmtDashboardService->getHrMainDashboardData($serviceVmtDashboardService);
 
 }
 
