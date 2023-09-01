@@ -39,7 +39,6 @@
             </column>
         </DataTable>
 
-        <button class="p-2 bg-black text-[12px] text-white mt-10" @click="viewpayslip = true">view</button>
     </div>
     <!-- <div class="d-flex justify-content-end">
         <Button class="mb-2 btn btn-primary" label="Submit" />
