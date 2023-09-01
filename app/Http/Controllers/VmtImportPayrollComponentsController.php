@@ -149,7 +149,7 @@ $i=array_keys($excelRowdata_row);
         try{
             $component_type =VmtPayrollCompTypes::where('name',strtolower($row["componant_type"]))->first();
             $paygroup_components =VmtPayrollComponents::where('comp_name',$row["component_name"])->where('comp_type_id',$component_type->id)->first();
-
+            $comp_identifier = str_replace(" ","_", $row["component_name"]);
             if(empty($paygroup_components)){
                 $fin_components = new VmtPayrollComponents;
                 $fin_components->comp_name =$row["component_name"];
@@ -160,10 +160,39 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->category_id =$component_category->id;
                 $calculation_method_id =VmtPayrollCalculatiomMethod::where('name',strtolower($row["calculation_method"]))->first();
                 $fin_components->calculation_method_id =$calculation_method_id->id;
-                $fin_components->calculation_desc = ;
-                $fin_components->calculation_amount = ;
-                $fin_components->epf =$row["epf"];
-                $fin_components->esi =$row["esi"];
+
+                $array_data = array();
+
+                    if(strpos($row["flat_amount"], '%') !== false){
+                        preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i',$row["flat_amount"], $calci_data, PREG_SET_ORDER);
+                        foreach ($calci_data as $key => $single_calci_data) {
+                            $numericValue = rtrim($single_calci_data[1], '%');
+                            $array_data['value'] = (float)($numericValue) / 100;;
+                            $array_data['action'] = $single_calci_data[2];
+                            $array_data['comp_name'] =$comp_identifier ;
+
+                        }
+                     }
+                     else{
+
+                        preg_match_all('/(\d+ Max)/', $row["flat_amount"], $calci_data, PREG_SET_ORDER);
+                         foreach ($calci_data as $key => $single_calci_data) {
+
+                            $array_data['value'] = $single_calci_data[1];
+                            $array_data['action'] = "";
+                            $array_data['comp_name'] =$comp_identifier ;
+
+                        }
+                     }
+                     $calculation_amount=
+                 $calculation_amount = json_encode( $array_data,true);
+
+
+                $fin_components->calculation_desc = $row["flat_amount"];
+                $fin_components->calculation_amount =$calculation_amount ;
+                $fin_components->comp_identifier =$comp_identifier;
+                $fin_components->is_part_of_epf =$row["epf"];
+                $fin_components->is_part_of_esi =$row["esi"];
                 $fin_components->pt =$row["pt"];
                 $fin_components->lwf =$row["lwf"];
                 $fin_components->impact_on_gross =$row["impact_on_gross"];
@@ -172,7 +201,6 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->calculate_on_prorate_basis =$row["calculate_on_prorate_basis"];
                 $fin_components->can_show_inpayslip =$row["can_show_inpayslip"];
                 $fin_components->status =$row["status"];
-                $fin_components->comp_identifier =$row[""];
                 $fin_components->is_default =$row["is_default"];
                 $fin_components->save();
 

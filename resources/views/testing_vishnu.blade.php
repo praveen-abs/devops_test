@@ -775,8 +775,8 @@ foreach ($data as $key => $value) {
     if(strpos($value, '%') !== false){
         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
         foreach ($calci_data as $key => $single_calci_data) {
-
-            $array_data[$i]['value'] = $single_calci_data[1];
+            $numericValue = rtrim($single_calci_data[1], '%');
+            $array_data[$i]['value'] = (float)($numericValue) / 100;;
             $array_data[$i]['action'] = $single_calci_data[2];
             $array_data[$i]['comp_name'] =$comp_data[$i] ;
            $i++;
@@ -786,7 +786,7 @@ foreach ($data as $key => $value) {
 
         preg_match_all('/(\d+ Max)/', $value, $calci_data, PREG_SET_ORDER);
          foreach ($calci_data as $key => $single_calci_data) {
-         
+
             $array_data[$i]['value'] = $single_calci_data[1];
             $array_data[$i]['action'] = "";
             $array_data[$i]['comp_name'] =$comp_data[$i] ;
@@ -841,24 +841,22 @@ foreach ($data as $key => $value) {
 //     // Pattern not found
 //     echo "Pattern not found in the sentence.";
 // }
-$sentence = "Basic is Less then 21K then we can give this";
-$pattern = '/(\d+)K/';
-    preg_match($pattern, $sentence, $matches);
+// $sentence = "Basic is Less then 21K then we can give this";
+// $pattern = '/(\d+)K/';
+//     preg_match($pattern, $sentence, $matches);
 
-    if (isset($matches[1])) {
-        // Convert the extracted value to an integer and multiply by 1000
-        $numericValue = intval($matches[1]) * 1000;
+//     if (isset($matches[1])) {
+//         // Convert the extracted value to an integer and multiply by 1000
+//         $numericValue = intval($matches[1]) * 1000;
 
-        // Replace the original sentence with the formatted result
-        $formattedSentence = str_replace($matches[0], "< $numericValue", $sentence);
+//         // Replace the original sentence with the formatted result
+//         $formattedSentence = str_replace($matches[0], "< $numericValue", $sentence);
 
-        dd($formattedSentence);
-    }
-
-    // If no match found, return the original sentence
+//         dd($formattedSentence);
+//     }
 
 
-// Example usage:
+
 
 
 
