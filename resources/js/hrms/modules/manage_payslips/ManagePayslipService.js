@@ -151,7 +151,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         console.log("Downloading payslip PDF.....");
 
-
+        loading.value = true;
         // let month_payroll = parseInt(dayjs(payroll_month).month()) + 1;
         // let year_payroll = dayjs(payroll_month).year();
 
@@ -183,6 +183,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
 
 
+            }).finally(()=>{
+                loading.value = false;
             })
 
     }

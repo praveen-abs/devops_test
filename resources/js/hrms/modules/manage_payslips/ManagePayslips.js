@@ -23,7 +23,8 @@ import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
 import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
-import Sidebar from 'primevue/sidebar'
+import Sidebar from 'primevue/sidebar';
+import OverlayPanel from 'primevue/overlaypanel';
 import { createPinia } from "pinia";
 
 import ManagePayslips from './ManagePayslips.vue';
@@ -53,6 +54,7 @@ app.component('ProgressSpinner',ProgressSpinner);
 app.component('InputText', InputText)
 app.component('Sidebar', Sidebar)
 app.component('Calendar', Calendar)
+app.component('OverlayPanel' ,OverlayPanel)
 
 app.mount("#vjs_manage_payslips");
 

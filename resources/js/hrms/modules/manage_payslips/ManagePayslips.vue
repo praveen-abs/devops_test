@@ -1,6 +1,6 @@
 <template>
-    <LoadingSpinner v-if="managePayslipStore.loading" class="absolute z-50 bg-white" />
-    <div class="flex justify-between">
+    <LoadingSpinner v-if="managePayslipStore.loading" class=" absolute z-50 bg-white" />
+    <div class="flex justify-between ">
         <div>
             <h6 class="mb-2 font-semibold text-lg">Manage Employee Payslips</h6>
         </div>
@@ -29,11 +29,11 @@
                 <template #body="slotProps">
                     <div class="d-flex flex-column">
 
-                        <button class="btn z-0" style="border:1px solid navy ;"
+                        <button class="btn z-0 border-[1px solid ] border-black "
                             v-if="slotProps.data.is_payslip_released == 1"
                             @click="showWithdraw_confimationDialog(slotProps.data.user_code)">withdraw</button>
 
-                        <button class="btn-primary rounded z-0" v-else style="padding: 4px 0 !important; margin-top: 10px;"
+                        <button class="bg-[#000] text-[white] rounded z-0" v-else style="padding: 4px 0 !important; margin-top: 10px;"
                             @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
 
                         <!-- {{slotProps.data.is_payslip_released}} -->
@@ -50,30 +50,38 @@
                 </template>
 
             </Column>
+
             <Column field="is_payslip_mail_sent" header="Mail Status">
                 <template #body="slotProps">
                     <div v-if="slotProps.data.is_payslip_mail_sent == 1">
                         <h1> Payslip sent</h1>
                     </div>
                     <div v-else>
-                        <button class="btn-primary rounded z-0"
+                        <button class="bg-[#f9be00] text-white rounded p-2 z-0"
                             @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
                     </div>
                 </template>
             </Column>
+            <Column header="Action">
+                <template #body="slotProps">
+                            <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
+                            </button>
+                            <OverlayPanel ref="op"
+                                style="width: 160px;margin-top:12px !important;margin-right: 20px !important; "
+                                class="p-0 m-0 !z-0 ">
+                                <div class=" d-flex flex-column p-0 m-0 ">
+                                    <!-- bg-green-200 -->
+                                    <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
+                                    @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)">Download</button>
+                                    <!-- bg-blue-500 -->
+                                    <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
+                                    @click="showPaySlipHTMLView(slotProps.data.user_code)">View</button>
+                                </div>
+                            </OverlayPanel>
+                        </template>
+            </Column>
 
-            <Column header="Download">
-                <template #body="slotProps">
-                    <Button class="btn-primary z-0" style="" label="Download"
-                        @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
-                </template>
-            </Column>
-            <Column header="View Payslip">
-                <template #body="slotProps">
-                    <Button class="btn-primary z-0" style="" label="View"
-                        @click="showPaySlipHTMLView(slotProps.data.user_code)" />
-                </template>
-            </Column>
+
 
             <!-- <Column header="Action">
                 <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
@@ -387,7 +395,10 @@ const show_downloadPayslip_dialogconfirmation = ref(false);
 const show_withdraw_dialogConfirmation = ref(false);
 
 const selectedPayRollDate = ref();
-
+const op = ref();
+const toggle = (event) => {
+    op.value.toggle(event);
+}
 const selectedUserCode = ref();
 const selectedUsername = ref();
 const viewpayslip = ref(false);
@@ -407,6 +418,7 @@ async function showPaySlipHTMLView(selected_user_code) {
 
     await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     viewpayslip.value = true;
+    toggle()
 
 }
 
@@ -421,6 +433,7 @@ function showReleasePayslipConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
 
     show_releasePayslip_dialogconfirmation.value = true;
+    toggle()
 }
 function showdownloadPayslipConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
@@ -451,8 +464,9 @@ async function UpdateWithDrawStatus(selectedUserCode) {
 }
 
 async function downloadPayslip(selectedUserCode) {
-    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     show_downloadPayslip_dialogconfirmation.value = false;
+    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+    toggle()
 
 }
 
@@ -641,6 +655,15 @@ async function downloadPayslip(selectedUserCode) {
     content: "\e9a2";
     color: white;
 }
+.dropdown:hover .dropdown-content {
+    display: block !important;
+}
+
+.p-overlaypanel .p-overlaypanel-content {
+    padding: 0;
+    z-index: 0 !important;
+}
+
 </style>
 
 
