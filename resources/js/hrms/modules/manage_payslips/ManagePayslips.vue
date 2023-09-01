@@ -171,7 +171,7 @@
     </Dialog>
 
     <Sidebar position="right" v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
-        <div class=" flex justify-center w-[100%]"> 
+        <div class=" flex justify-center w-[100%] my-3 rounded-lg">
         <div class="w-[95%] h-[90%] shadow-lg p-4 ">
             <div class="w-[100%] flex justify-between">
                 <div class="flex flex-col">
@@ -276,7 +276,7 @@
                     <div class="col-3">
                         <p>ACTUAL PAYABLE DAYS</p>
                         <p class=" text-[#000]">{{item.month_days  ? item.month_days : '-'}}</p>
-                      
+
                     </div>
                     <div class="col-3">
                         <p>TOTAL WORKING DAYS</p>
@@ -307,7 +307,7 @@
                             <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="mt-[12px] text-black" > {{ value }}</h1>
                             </td>
 
-                            <td class=" flex flex-col items-start pt-[2px]" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">              
+                            <td class=" flex flex-col items-start pt-[2px]" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">
                                 <h1 class="font-semibold " >Arrears</h1>
                                 <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.arrears[0]" :key="index" class="mt-[12px]">{{ value }}</h1>
                                 <!-- <h1  v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="my-3" >&nbsp;</h1> -->
