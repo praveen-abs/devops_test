@@ -43,7 +43,11 @@ use App\Models\Bank;
 use Mail;
 use App\Mail\PayslipMail;
 
-class VmtEmployeePayCheckService {
+class VmtEmployeePayCheckService
+{
+
+    /*
+  class VmtEmployeePayCheckService {
 
     /*
         NOTE:
@@ -1289,7 +1293,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $getpersonal['date_month'] = [
                 "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
                 "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
-                "abs_logo" => '/assets/images/ABSlogo\ABS hrms Mobile logo(1).png',
+                "abs_logo" => '/assets/clients/ess/logos\AbsLogo1.png',
             ];
 
         // Total earnings
@@ -1644,7 +1648,7 @@ try{
             $getpersonal['date_month'] = [
                 "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
                 "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
-                "abs_logo" => '/assets/images/ABSlogo\ABS hrms Mobile logo(1).png',
+                "abs_logo" => '/assets/clients/ess/logos\AbsLogo1.png',
             ];
 
         // Total earnings
@@ -1760,8 +1764,5 @@ try{
         ]);
     }
 
-
-
     }
-
 }
