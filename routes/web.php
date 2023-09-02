@@ -121,7 +121,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     })->name('isEmpCodeExists');
 
     Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
-        Route::get('/employee-onboarding-v2', 'showNormalOnboardingPage')->name('employee-onboarding-v2');
+        Route::get('/employee-onboarding', 'showNormalOnboardingPage')->name('employee-onboarding');
 
         //normal onboarding checks
         Route::get('/personal-mail-exists/{mail}', 'isEmployeePersonalEmailAlreadyExists')->name('personal-mail-exists');
@@ -158,12 +158,15 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
     Route::get('/getAttendanceStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceStatus'])->name('getAttendanceStatus');
 
-    //Pms Form download
+ 
     Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');
     Route::get('/fetch-assigned-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAllAssignedPMSForms'])->name('fetch-assigned-pmsforms');
     Route::get('/fetchAssignmentPeriodForGivenYear', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAssignmentPeriodForGivenYear'])->name('fetchAssignmentPeriodForGivenYear');
     Route::get('/report-download-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'downloadPMSForm'])->name('downloadPMSForm'); //Leave Balance Calculation
     Route::get('/process-employee-leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'processEmployeeLeaveBalance'])->name('processEmployeeLeaveBalance');
+
+    Route::get('/upload/leave-balance',[App\Http\Controllers\VmtEmployeeLeaveController::class,'showLeaveBalanceUpload']);
+    Route::post('/import-leave-balance',[App\Http\Controllers\VmtEmployeeLeaveController::class,'importLeaveBalanceData']);
 
     //PMS forms management
     //Route::get('/pms-forms-mgmt/getAssignedPMSFormTemplates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAssignedPMSFormTemplates'])->name('getAssignedPMSFormTemplates');
@@ -276,6 +279,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/profile-page/pdfview/{emp_code?}/{selectedPaySlipMonth?}', [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_PDFView'])->name('vmt_employee_payslip_pdf');
     Route::post('/profile-page/uploadEmployeeDocs', [App\Http\Controllers\VmtProfilePagesController::class, 'uploadEmployeeDocument'])->name('uploadEmployeeDocument');
 
+//save profile page documents
+   Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
 //save profile page documents
    Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
 
@@ -1067,7 +1072,6 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/empViewPayslipdetails', [App\Http\Controllers\VmtPayCheckController::class, 'empViewPayslipdetails'])->name('empViewPayslipdetails');
     Route::get('/generatetemplates', [App\Http\Controllers\VmtPayCheckController::class, 'generatetemplates'])->name('generatetemplates');
 
-    //salary revision
 
     Route::get('getAllEmployeeData', [App\Http\Controllers\VmtSalaryRevisionController::class, 'getAllEmployeeData'])->name('getAllEmployeeData');
 
@@ -1147,6 +1151,9 @@ Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtSta
 
 //TESTING ROUTES
 //// SASS TESTING
+
+Route::get('TestingMail', [App\Http\Controllers\VmtTestingController::class, 'TestingMail']);
+
 Route::get('/testing_sass', function () {
 
     return view('testing_views.sassTest');
