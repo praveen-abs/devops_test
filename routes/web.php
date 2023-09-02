@@ -278,6 +278,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
 //save profile page documents
    Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
+//save profile page documents
+   Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
 
 
 
@@ -1067,7 +1069,6 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/empViewPayslipdetails', [App\Http\Controllers\VmtPayCheckController::class, 'empViewPayslipdetails'])->name('empViewPayslipdetails');
     Route::get('/generatetemplates', [App\Http\Controllers\VmtPayCheckController::class, 'generatetemplates'])->name('generatetemplates');
 
-    //salary revision
 
     Route::get('getAllEmployeeData', [App\Http\Controllers\VmtSalaryRevisionController::class, 'getAllEmployeeData'])->name('getAllEmployeeData');
 
