@@ -33,6 +33,7 @@ export default defineConfig({
                 // Attendance
 
                 'resources/js/hrms/modules/attendence/AttendanceModule.js',
+                'resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.js',
 
                 // Leaves
 

@@ -1,6 +1,6 @@
 <template>
-    <!-- {{ useDashboard.hrDashboardSource ? useDashboard.hrDashboardSource : [] }} -->
-    <div class="w-full">
+    <!-- {{ useDashboard.orgEmployeeDetailCount ? useDashboard.orgEmployeeDetailCount : [] }} -->
+    <div class="w-full" v-if="useDashboard.orgEmployeeDetailCount">
         <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
             Current month - <span class="mb-2 text-xl font-semibold">{{ dayjs(new
                 Date()).format('MMMM') }}</span>
@@ -9,7 +9,7 @@
             <div class=" bg-[#F6F6F6] rounded-lg p-2">
                 <div class="px-auto flex justify-center">
                     <span class=" text-3xl font-semibold text-center">
-                        {{ useDashboard.hrDashboardSource ? useDashboard.hrDashboardSource.active_employee_count : 0 }}
+                        {{ useDashboard.orgEmployeeDetailCount.total_employee_count ? useDashboard.orgEmployeeDetailCount.total_employee_count : 0 }}
                     </span>
                 </div>
                 <p class=" text-lg font-semibold text-center text-gray-500">Total Employees</p>
@@ -17,7 +17,7 @@
             <div class=" bg-[#F6F6F6] rounded-lg p-2">
                 <div class="px-auto flex justify-center">
                     <span class=" text-3xl font-semibold text-center">
-                        {{ useDashboard.hrDashboardSource.new_employee_count ? useDashboard.hrDashboardSource.new_employee_count : 0 }}
+                        {{ useDashboard.orgEmployeeDetailCount.new_employee_count ? useDashboard.orgEmployeeDetailCount.new_employee_count : 0 }}
                     </span>
                 </div>
                 <p class=" text-lg font-semibold text-center text-gray-500">New Employees</p>
@@ -25,7 +25,7 @@
             <div class=" bg-[#F6F6F6] rounded-lg p-2">
                 <div class="px-auto flex justify-center">
                     <span class=" text-3xl font-semibold text-center">
-                        {{ useDashboard.hrDashboardSource ? useDashboard.hrDashboardSource.exit_employee_count : 0 }}
+                        {{ useDashboard.orgEmployeeDetailCount.exit_employee_count ? useDashboard.orgEmployeeDetailCount.exit_employee_count : 0 }}
                     </span>
                 </div>
                 <p class=" text-lg font-semibold text-center text-gray-500">Exit Employees</p>
@@ -33,7 +33,7 @@
             <div class=" bg-[#F6F6F6] rounded-lg p-2">
                 <div class="px-auto flex justify-center">
                     <span class=" text-3xl font-semibold text-center">
-                        {{ useDashboard.hrDashboardSource ? useDashboard.hrDashboardSource.yet_active_employee_count : 0 }}
+                        {{ useDashboard.orgEmployeeDetailCount.yet_to_active_employee_count ? useDashboard.orgEmployeeDetailCount.yet_to_active_employee_count : 0 }}
                     </span>
                 </div>
                 <p class=" text-lg font-semibold text-center text-gray-500">Yet to Active Employees </p>

@@ -8,7 +8,7 @@
 
                 <div class="col-span-12 !rounded-[20px]">
                     <div class="grid grid-cols-12 gap-4 my-2">
-                        <div class="!rounded-[20px] overflow-hidden bg-red-100 col-span-5">
+                        <div class="!rounded-[20px] overflow-hidden col-span-5">
                             <LeaveRequest />
                         </div>
                         <div class="!rounded-[20px] overflow-hidden bg-white col-span-7">
