@@ -158,12 +158,15 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
     Route::get('/getAttendanceStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceStatus'])->name('getAttendanceStatus');
 
-    //Pms Form download
+ 
     Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');
     Route::get('/fetch-assigned-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAllAssignedPMSForms'])->name('fetch-assigned-pmsforms');
     Route::get('/fetchAssignmentPeriodForGivenYear', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAssignmentPeriodForGivenYear'])->name('fetchAssignmentPeriodForGivenYear');
     Route::get('/report-download-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'downloadPMSForm'])->name('downloadPMSForm'); //Leave Balance Calculation
     Route::get('/process-employee-leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'processEmployeeLeaveBalance'])->name('processEmployeeLeaveBalance');
+
+    Route::get('/upload/leave-balance',[App\Http\Controllers\VmtEmployeeLeaveController::class,'showLeaveBalanceUpload']);
+    Route::post('/import-leave-balance',[App\Http\Controllers\VmtEmployeeLeaveController::class,'importLeaveBalanceData']);
 
     //PMS forms management
     //Route::get('/pms-forms-mgmt/getAssignedPMSFormTemplates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAssignedPMSFormTemplates'])->name('getAssignedPMSFormTemplates');
