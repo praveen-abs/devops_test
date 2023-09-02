@@ -37,6 +37,7 @@ use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
 use Carbon\Carbon;
+use App\Http\Controllers\VmtEmployeeBirthdayController;
 use App\Models\VmtEmployeePaySlipV2;
 
 use Illuminate\Support\Facades\DB;
@@ -448,6 +449,7 @@ class VmtTestingController extends Controller
 
         return 'save successfully';
     }
+}
 
 
     public function importexcell(Request $request)
@@ -735,8 +737,8 @@ class VmtTestingController extends Controller
         $appoinmentPath = "";
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 //dd($client_name);
-        $html = view('appointment_mail_templates.appointment_Letter_client',$data);
-
+        $html = view('dynamic_payslip_templates.dynamic_payslip_v2',$data);
+    //    return  $html;
                         $options = new Options();
                         $options->set('isHtml5ParserEnabled', true);
                         $options->set('isRemoteEnabled', true);
@@ -760,7 +762,35 @@ class VmtTestingController extends Controller
                     $isSent = \Mail::to('vishnu@abshrms.com')->send(new WelcomeMail("ABS123", 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$VmtClientMaster->client_code));
 
                     }
-                }
+
+     public function Tesingtdsworksheet(Request $request){
+
+
+            $html = view('dynamic_payslip_templates.dynamic_payslip_v2');
+
+            // return $html;
+
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+
+            $pdf = new Dompdf($options);
+            $pdf->loadhtml($html, 'UTF-8');
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+
+            $docUploads =  $pdf->stream();
+
+        }
+    public function TestingMail(Request $request){
+
+       $data = ( new VmtEmployeeBirthdayController )->sendBirthdayNotificationtoEmployee();
+       $data = ( new VmtEmployeeBirthdayController )->sendAniversaryNotificationtoEmployee();
+
+       return $data;
+    }
+
+}
 
 
 

@@ -2,6 +2,7 @@
 $client_data = \DB::table('vmt_client_master')->where('id',$client_id)->first();
 $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_logo;
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
@@ -72,8 +73,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                   <table class="sm-w-full" style="margin-left: auto; margin-right: auto; margin-top: 16px; width: 500px" cellpadding="0" cellspacing="0" role="presentation">
                     <tr>
                       <td>
-                        <img src={{URL::asset('assets/images/client_logos/ardens/evangelist.png')}} width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: left ; ">
-                        <img src={{ $client_logo }} width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: right; ">
+                        <img src="{{URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: left ; ">
+                        <img src="{{ $client_logo }}" width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: right; ">
                       </td>
                     </tr>
                   </table>
@@ -106,7 +107,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                               <table style="width: 100%;" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr>
                                   <td>
-                                    <img src="../images/birthday.png" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; padding: 12px">
+                                    <img src="{{ URL::asset("assets\images\happy_birthday_mail_icon.png")}}" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; padding: 12px">
                                   </td>
                                 </tr>
                               </table>

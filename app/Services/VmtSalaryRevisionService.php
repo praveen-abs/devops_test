@@ -44,11 +44,30 @@ use Symfony\Component\Mailer\Exception\TransportException;
 
 class VmtSalaryRevisionService{
 
-    public function empList(){
+    public function getAllEmployeeData(){
 
-        $emp_list = User::where('is_ssa','<>','1')->get(['id','name']);
+        try{
 
-        return response()->json(["emp_List" => $emp_list]);
+            $employee_data = User::where('is_ssa','<>','1')->get(['id','name']);
+
+            return $response = ([
+                "status" => "success",
+                "message" => "Data fetched successfully",
+                "data" => $employee_data,
+            ]);
+
+        } catch (\Exception $e) {
+
+        return $response = ([
+
+            "status" => "failure",
+            "message" => "error while fetch data",
+            "data" => $e->getmessage(),
+
+        ]);
+    }
+
+
     }
 
     // public function

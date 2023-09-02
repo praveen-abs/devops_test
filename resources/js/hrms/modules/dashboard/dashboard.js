@@ -32,6 +32,8 @@ import Badge from 'primevue/badge';
 import BadgeDirective from 'primevue/badgedirective';
 import Carousel from 'primevue/carousel';
 import Galleria from 'primevue/galleria';
+import Chart from 'primevue/chart';
+
 
 
 
@@ -74,6 +76,7 @@ app.component('Badge', Badge)
 app.component('MultiSelect', MultiSelect)
 app.component('Carousel', Carousel)
 app.component('Galleria', Galleria)
+app.component('Chart', Chart)
 
 
 app.mount("#Dashboard");

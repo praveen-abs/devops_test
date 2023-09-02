@@ -41,7 +41,7 @@
             </div>
         </div> -->
 
-        <!-- <div class="tab-content" id="pills-tabContent">
+    <!-- <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane show fade active " id="dashboard" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <employee_dashboard />
             </div>
@@ -64,22 +64,37 @@
 
         </div> -->
     <!-- </div> -->
+    <div class="col">
+        <button class="orange_btn font-semibold text-sm"
+            :class="[useDashboard.currentDashboard === 1 ? 'bg-white text-slate-600 border border-black' : 'text-slate-600']"
+            @click="useDashboard.currentDashboard = 0">Self-dashboard</button>
+        <button class="Enable_btn font-semibold text-sm"
+            :class="[useDashboard.currentDashboard === 1 ? 'bg-[#d4d4d4] text-slate-600' : 'text-slate-600']"
+            @click="useDashboard.currentDashboard = 1">Org-dashboard</button>
+    </div>
     <loadingSpinner v-if="useDashboard.canShowLoading" />
-    <transition  v-else enter-active-class="transition ease-out transform duration-600"
-    enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
-    leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
-    leave-to-class="translate-y-2 opacity-0">
-    <employee_dashboard   />
-</transition>
+    <transition v-else-if="useDashboard.currentDashboard == 1"
+        enter-active-class="transition ease-out transform duration-600" enter-class="translate-y-2 opacity-0"
+        enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in transform"
+        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
+        <Hr_dashboard />
+    </transition>
+    <transition v-else enter-active-class="transition ease-out transform duration-600" enter-class="translate-y-2 opacity-0"
+        enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in transform"
+        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
+        <employee_dashboard />
+    </transition>
 </template>
 
 
 <script setup>
 import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
+
 import loadingSpinner from '../../components/LoadingSpinner.vue'
 import { useMainDashboardStore } from './stores/dashboard_service'
 import { ref, onMounted } from 'vue'
 import { Service } from '../Service/Service'
+import Hr_dashboard from './hr_dashboard/hr_dashboard.vue';
 
 const useDashboard = useMainDashboardStore();
 const canShowLoadingScreen = ref();
@@ -87,6 +102,7 @@ const canShowLoadingScreen = ref();
 onMounted(async () => {
     canShowLoadingScreen.value = true;
     await useDashboard.getMainDashboardData();
+    useDashboard.getHrDashboardMainSource()
     // await useDashboard.getAttendanceStatus();
     Service();
     canShowLoadingScreen.value = false;
@@ -95,3 +111,26 @@ onMounted(async () => {
 
 </script>
 
+
+<style>
+:root
+{
+    --disable: #d4d4d4;
+    --white: #fff;
+    --navy: #002f56;
+}
+
+.orange_btn
+{
+    background-color: var(--disable);
+    padding: 3px 30px;
+    border-radius: 4px 0 0 4px;
+}
+
+.Enable_btn
+{
+    border: 1px solid var(--navy);
+    padding: 3px 30px;
+    border-radius: 0 4px 4px 0;
+}
+</style>

@@ -34,7 +34,13 @@
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.dec_amount" class="dec_amt">
+                        <div v-if="slotProps.data.particular == 'Employee PF (Payroll Deduction)'" class="dec_amt">
+                            {{ investmentStore.formatCurrency(investmentStore.epfPayrollDeduction) }}
+                        </div>
+                        <div v-else-if="slotProps.data.particular == 'Voluntary Provident Fund (VPF) ( Payroll Deduction)'" class="dec_amt">
+                            {{ investmentStore.formatCurrency(investmentStore.vpfPayrollDeduction) }}
+                        </div>
+                        <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
                         <div v-else>

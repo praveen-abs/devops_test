@@ -75,7 +75,7 @@ class VmtMainDashboardController extends Controller
                         //User record already exists. So fetch it and show in normal onboard form
                         $encr_user_id = Crypt::encrypt(auth()->user()->id);
 
-                        return redirect()->route('employee-onboarding-v2', ['uid' => $encr_user_id]);
+                        return redirect()->route('employee-onboarding', ['uid' => $encr_user_id]);
                     } else
                     if (auth()->user()->onboard_type == 'bulk') {
 
@@ -383,7 +383,7 @@ class VmtMainDashboardController extends Controller
                     //User record already exists. So fetch it and show in normal onboard form
                     $encr_user_id = Crypt::encrypt(auth()->user()->id);
 
-                    return redirect()->route('employee-onboarding-v2', ['uid' => $encr_user_id]);
+                    return redirect()->route('employee-onboarding', ['uid' => $encr_user_id]);
                 } else
                     if (auth()->user()->onboard_type == 'bulk') {
 
@@ -753,8 +753,13 @@ class VmtMainDashboardController extends Controller
         return $response;
         //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
+public function getEmployeesCountDetails(Request $request, VmtDashboardService $serviceVmtDashboardService)
+{
 
     //HR New Main Dashboard
+    return $serviceVmtDashboardService->getEmployeesCountDetails();
+
+}
 
     function getCurrentClientName()
     {

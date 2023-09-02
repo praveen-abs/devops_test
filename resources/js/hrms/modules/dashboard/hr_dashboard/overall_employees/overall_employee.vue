@@ -1,63 +1,94 @@
 <template>
-      <div class="card-body"  style="width: 100%; height: 320px">
-          <div
-            class="mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
-            id=""
-          >
-            <span>Employee</span>
-          </div>
-          <!-- <div class="contents list-style-none employee-contents">
-            <div class="mb-0 mb-3 border card box-shadow-sm">
-              <div class="p-2 card-body">
-                <div
-                  class="employee-content d-flex align-items-center justify-content-between"
-                >
-                  <div class="">
-                    <p class="fs-13 text-dark">Design Team</p>
-                    <p class="fs-10 text-muted">Total Members:10</p>
-                  </div>
-                  <div class="zee-cards-wrapper">
-                    <ul class="zee-cards">
-                      <li>
-                        <div class="user-img">
-                          <div class="icons img-xs bg-blue-lighten">
-                            <i class="fas fa-users blue-darken"></i>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="user-img">
-                          <div class="icons img-xs bg-green-lighten">
-                            <i class="fas fa-users blue-darken"></i>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="user-img">
-                          <div class="icons img-xs bg-pink-lighten">
-                            <i class="fas fa-users blue-darken"></i>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="user-img">
-                          <div class="icons img-xs bg-blue-lighten">
-                            <i class="fas fa-users blue-darken"></i>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="user-img">
-                          <div class="icons img-xs bg-green-lighten">
-                            <i class="fas fa-users blue-darken"></i>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-        </div>
+    <Chart type="bar" :data="chartData" :options="chartOptions" class="h-full" />
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+
+onMounted(() => {
+    chartData.value = setChartData();
+    chartOptions.value = setChartOptions();
+});
+
+const chartData = ref();
+const chartOptions = ref();
+
+const setChartData = () => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    return {
+        labels: ['Male', 'Female', 'Others', 'App Check-Ins', 'Active Apps', 'Inactive Apps',],
+        datasets: [
+            {
+                backgroundColor: [
+                    'rgba(8, 115, 205, 1)',
+                    'rgba(205, 159, 71, 1)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(80, 64, 34, 1)',
+                    'rgba(113, 74, 161, 1)',
+                    'rgba(181, 86, 151, 1)',
+                    'rgba(126, 164, 79, 1)',
+                ],
+                borderWidth: 5,
+                borderColor: 'white',
+                data: [65, 59, 80, 81, 56, 55, 40],
+            },
+        ],
+    };
+};
+const setChartOptions = () => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue(
+        '--text-color-secondary'
+    );
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    return {
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        plugins: {
+            title: {
+                display: false,
+                text: 'Custom Chart Title'
+            },
+            legend: {
+                display: false,
+                labels: {
+                    fontColor: textColor,
+                },
+
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    // autoSkip: false, // Prevent auto-skipping of labels
+                    // maxRotation: 0, // Rotate the labels to 0 degrees (horizontal)
+                    // minRotation: 0,
+                    textAlign: 'center', // Center-align the tick labels
+                    // padding: 10, // Add some padding for better alignment
+                    color: textColorSecondary,
+                    font: {
+                        weight: 600,
+                        // align:center,
+                    },
+                },
+                grid: {
+                    display: false,
+                    drawBorder: false,
+                },
+            },
+            y: {
+                display: false,
+                ticks: {
+                    color: textColorSecondary,
+                },
+                grid: {
+                    color: false,
+                    drawBorder: false,
+                },
+            },
+        },
+    };
+};
+</script>

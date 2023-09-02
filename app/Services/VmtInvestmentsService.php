@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Compensatory;
 use App\Models\User;
 
 use App\Models\VmtEmployee;
@@ -60,20 +61,14 @@ class VmtInvestmentsService
         try {
             //get the current active form id
             $query_form_details = VmtInvForm::where('form_name', $form_name)->first();
-
             $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
-
             $query_is_sumbitted = VmtInvFEmpAssigned::where('user_id', $user_id)->first();
-
             $query_doj = VmtEmployee::where('userid', $user_id)->first();
+            $org_timeperiod = VmtOrgTimePeriod::where('status','1')->first();
+            $start_date = Carbon::parse($org_timeperiod->start_date);
+            $doj = Carbon::parse($query_doj->doj);
 
 
-            // $query_fempAssigned_table = VmtInvFEmpAssigned::where('user_id', $user_id)
-            // ->where('year', $year)
-            //  ->first();
-
-            //  $assigned_form_id = $query_fempAssigned_table->form_id;
-            //  $f_emp_id = $query_fempAssigned_table->id;
 
             //Get the form template
             $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
@@ -96,7 +91,55 @@ class VmtInvestmentsService
                     ]
                 )->toArray();
 
-            // dd($query_inv_form_template);
+                $emp_comp = Compensatory::where('user_id',$user_id)->first();
+
+
+                if($emp_comp){
+
+                    for($i=0; $i <count($query_inv_form_template); $i++){
+                        if($query_inv_form_template[$i]['particular'] == "Communications Allowance ( Telephone)"){
+                            if($emp_comp->communication_allowance == "" || (int)$emp_comp->communication_allowance == 0){
+                                unset($query_inv_form_template[$i]);
+                            }else{
+                                $emp_communication =  empty($emp_comp->communication_allowance) ? 0 : $emp_comp->communication_allowance;
+                                $yearly_communication = ((int)$emp_communication) * 12;
+                                $query_inv_form_template[$i]['max_amount'] = $yearly_communication;
+
+                            }
+                        }else
+                        if($query_inv_form_template[$i]['particular'] == "Driver Reimbursement"){
+                            if($emp_comp->driver_reimbursement == "" || $emp_comp->driver_reimbursement == 0){
+                                unset($query_inv_form_template[$i]);
+                            }else{
+
+                                $emp_driver_rem =  empty($emp_comp->driver_reimbursement) ? 0 : $emp_comp->driver_reimbursement ;
+                                $yearly_driver_rem = ((int)$emp_driver_rem) * 12;
+                                $query_inv_form_template[$i]['max_amount'] = $yearly_driver_rem;
+                            }
+                        }else
+                        if($query_inv_form_template[$i]['particular'] == "Vehicle Reimbursement"){
+                            if($emp_comp->vehicle_reimbursement == "" || $emp_comp->vehicle_reimbursement == 0){
+                                unset($query_inv_form_template[$i]);
+                            }else{
+
+                                $emp_vehicle_reim =  empty($emp_comp->vehicle_reimbursement) ? 0 : $emp_comp->vehicle_reimbursement ;
+                                $yearly_vehicle_reim = ((int)$emp_vehicle_reim) * 12;
+                                $query_inv_form_template[$i]['max_amount'] = $yearly_vehicle_reim;
+                            }
+                        }else
+                        if($query_inv_form_template[$i]['particular'] == "Leave Travel Allowance (LTA)"){
+                            if($emp_comp->lta == "" || $emp_comp->lta == 0){
+                                unset($query_inv_form_template[$i]);
+                            }else{
+
+                                $emp_lta =  empty($emp_comp->lta ) ? 0 : $emp_comp->lta;
+                                $yearly_lta = ((int)$emp_lta) * 12;
+                                $query_inv_form_template[$i]['max_amount'] = $yearly_lta;
+                            }
+                        }
+                    }
+                }
+
 
             // employee declaration amount
             $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
@@ -119,10 +162,7 @@ class VmtInvestmentsService
                 $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
                 array_push($popdecode, $rentalDetail);
 
-            }
-            ;
-
-
+            };
 
             $arr = array();
             foreach ($query_inv_form_template as $single_template) {
@@ -163,12 +203,29 @@ class VmtInvestmentsService
                 $count++;
 
             }
-            //  dd($query_inv_form_template);
+
+            if($doj->lte($start_date)){
+                unset($query_inv_form_template['Previous Employer Income']);
+            }
+
+            if($emp_comp){
+                if(($emp_comp->communication_allowance == "" || (int)$emp_comp->communication_allowance == 0) &&
+                ($emp_comp->driver_reimbursement == "" || $emp_comp->driver_reimbursement == 0) &&
+                ($emp_comp->vehicle_reimbursement == "" || $emp_comp->vehicle_reimbursement == 0) &&
+                ($emp_comp->lta == "" || $emp_comp->lta == 0)){
+                    unset($query_inv_form_template["Reimbersument "]);
+                }
+            }else{
+                unset($query_inv_form_template["Reimbersument "]);
+            }
+
 
 
             $response["form_name"] = $query_form_details->form_name;
             $response["is_submitted"] = $query_is_sumbitted->is_sumbit ?? 0;
             $response["doj"] = $query_doj->doj;
+            $response["emp_epf"] = $emp_comp->epf_employee ?? " -- ";
+            $response["emp_vpf"] = 0;
             $response["form_details"] = $query_inv_form_template;
 
             return response()->json([
@@ -181,7 +238,7 @@ class VmtInvestmentsService
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching investments form template",
-                "data" => $e,
+                "data" => $e->getMessage(),
             ]);
         }
 
