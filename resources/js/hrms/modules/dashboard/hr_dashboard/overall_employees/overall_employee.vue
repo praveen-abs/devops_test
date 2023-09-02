@@ -28,8 +28,8 @@ const setChartData = () => {
                     'rgba(181, 86, 151, 1)',
                     'rgba(126, 164, 79, 1)',
                 ],
-                // borderWidth: 10,
-                // borderColor: documentStyle.getPropertyValue('--blue-500'),
+                borderWidth: 5,
+                borderColor: 'white',
                 data: [65, 59, 80, 81, 56, 55, 40],
             },
         ],
@@ -74,12 +74,12 @@ const setChartOptions = () => {
                     },
                 },
                 grid: {
-                    // display: false,
+                    display: false,
                     drawBorder: false,
                 },
             },
             y: {
-                // display: false,
+                display: false,
                 ticks: {
                     color: textColorSecondary,
                 },
