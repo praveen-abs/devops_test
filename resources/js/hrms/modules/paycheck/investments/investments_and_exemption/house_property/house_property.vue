@@ -90,11 +90,10 @@
 
         </div>
 
-        <!-- {{ investmentStore.house_props_data ? investmentStore.house_props_data : 'asd' }} -->
-        <!-- <div class="my-4 table-responsive" v-if="investmentStore.house_props_data[0] == 'failure'">
-        </div> -->
+        <div class="my-4 table-responsive" v-if="investmentStore.house_props_data[0] == 'failure'">
+        </div>
 
-        <!-- <div class=" table-responsive" v-if="investmentStore.house_props_data[0]" >
+        <div class=" table-responsive" v-else  >
             <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
                 :value="investmentStore.house_props_data[0]" :sortOrder="+1" sortField="property_type" :paginator="true"
                 :rows="10" scrollable
@@ -207,7 +206,7 @@
 
             </DataTable>
 
-        </div> -->
+        </div>
 
     <div class="my-3 text-end">
         <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
