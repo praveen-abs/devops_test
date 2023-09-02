@@ -1063,6 +1063,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
     Route::post('/viewPayslipdetails', [App\Http\Controllers\VmtPayCheckController::class, 'viewPayslipdetails'])->name('viewPayslipdetails');
+    Route::post('/empGeneratePayslipPdfMail', [App\Http\Controllers\VmtPayCheckController::class, 'empGeneratePayslipPdfMail'])->name('empGeneratePayslipPdfMail');
+    Route::post('/empViewPayslipdetails', [App\Http\Controllers\VmtPayCheckController::class, 'empViewPayslipdetails'])->name('empViewPayslipdetails');
     Route::get('/generatetemplates', [App\Http\Controllers\VmtPayCheckController::class, 'generatetemplates'])->name('generatetemplates');
 
     //salary revision

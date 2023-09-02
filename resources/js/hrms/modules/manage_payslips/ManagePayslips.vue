@@ -201,7 +201,7 @@
                     </div>
                     <div class="col-3">
                         <p>Date Joining</p>
-                        <p class=" text-[#000]">{{  item.doj? item.doj : '-' }}</p>
+                        <p class=" text-[#000]">{{  item.doj? dayjs(item.doj).format('DD-MMM-YYYY')  : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
@@ -374,7 +374,7 @@
 
 
         </div>
-    </div>
+       </div>
     </Sidebar>
 
     <!-- <dynamicPayslipv2 :source="payslipSource ? payslipSource : {}"/> -->

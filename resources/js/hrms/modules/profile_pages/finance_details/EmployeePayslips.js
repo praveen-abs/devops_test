@@ -22,7 +22,8 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
-import Textarea from 'primevue/textarea'
+import Textarea from 'primevue/textarea';
+import OverlayPanel from 'primevue/overlaypanel';
 
 
 import employeePayslip from './EmployeePayslips.vue'
@@ -56,6 +57,9 @@ app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
+app.component('OverlayPanel' ,OverlayPanel)
 
 app.mount("#vjs_manage_payslips");
+
+
 
