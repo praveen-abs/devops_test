@@ -1345,6 +1345,7 @@ class VmtDashboardService
 
     public function getHrMainDashboardData($serviceVmtDashboardService)
     {
+        
         /*
 
         Employee count status :
@@ -1360,8 +1361,8 @@ class VmtDashboardService
 
         $employee_count = array();
         //Total Employee count
-        //$employee_count['activeEmpCount'] = user::where('is_ssa', '0')->where('active', '=', '1')->count();
-        // dd( $active_employee_count);
+    //   $employee_count['totalEmpCount'] = user::where('is_ssa', '0')->where('active', '!=', '-1')->count();
+    //    dd( $employee_count);
         // New Employee count
         //$employee_count['newEmpCount'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->whereMonth('vmt_employee_details.doj',  Carbon::now('m'))->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
 
@@ -1369,8 +1370,10 @@ class VmtDashboardService
 
         $user_code =  auth()->user()->user_code;
 
+        
         $user_data = User::where("user_code", $user_code)->first();
 
+      
         $employees_data = "";
 
         if ($user_data['org_role'] == "2" || $user_data['org_role'] == "3" || $user_data['org_role'] == "1") {
@@ -1380,6 +1383,8 @@ class VmtDashboardService
             $employee_count['activeEmpCount'] = count($employees_data);
 
             $employee_count['newEmpCount'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
+
+
         } else if ($user_data['org_role'] == "4") {
 
             $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id']);
@@ -1448,6 +1453,13 @@ class VmtDashboardService
 
 
 
+
+
+
+
+
+
+
     public function getEmployeesCountDetails()
     {
         $current_date = Carbon::now()->format('Y-m-d');
@@ -1464,8 +1476,14 @@ class VmtDashboardService
         $employees_data = array();
 
         if ($user_data['org_role'] == "2" || $user_data['org_role'] == "3" || $user_data['org_role'] == "1") {
+ 
+            // $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(); //foractiveemployee
 
-            $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get();
+            $emp_details_count['totalEmpCount'] = user::where('is_ssa', '0')->where('active', '!=', '-1')->count();//fortotalemployee
+            
+            $emp_details_count['newEmpCount'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
+         
+            // dd( $emp_details_count['newEmpCount']);
 
             $emp_details_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
 
@@ -1480,10 +1498,12 @@ class VmtDashboardService
             $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
         } else if ($user_data['org_role'] == "4") {
 
+          
+            $emp_details_count['totalEmployeeCount'] = VmtEmployeeOfficeDetails::join("users", "users.id", "=", "vmt_employee_office_details.user_id")->where('l1_manager_code', $user_code)->where('active', '!=', '-1')->get(['user_id']);//formanagertotalemployeecount
+          
+            $emp_details_count['newEmpCount'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
 
-            $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id']);
-
-
+          
             $emp_details_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
 
 
@@ -1501,7 +1521,7 @@ class VmtDashboardService
 
             $emp_details_count['others_count'] =  $emp_details_count['active_employee_count'] - ($emp_details_count['male_employee_count'] +  $emp_details_count['female_employee_count']);
 
-            // dd($emp_details_count['others_count']);
+           
         }
 
         $get_document_update_data = array();

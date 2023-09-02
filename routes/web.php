@@ -277,6 +277,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
 //save profile page documents
    Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
+//save profile page documents
+   Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
 
 
 
@@ -869,7 +871,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('/salary_adv', [App\Http\Controllers\VmtCorrectionController::class, 'setFinanceidHrid'])->name('setFinanceidHrid');
 
-
+   
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
@@ -1054,9 +1056,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     // generate payslip
 
-    Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
+Route::get('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
 
-    //salary revision
 
     Route::get('/empList', [App\Http\Controllers\VmtSalaryRevisionController::class, 'empList'])->name('empList');
 
