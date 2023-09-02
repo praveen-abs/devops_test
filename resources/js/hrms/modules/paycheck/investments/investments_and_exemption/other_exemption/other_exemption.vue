@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="table-responsive">
+        <div class="table-responsive" v-if="investmentStore.otherExemptionSource">
             <DataTable ref="dt" resizableColumns columnResizeMode="expand" dataKey="fs_id" :paginator="true" :rows="25"
                 :value="investmentStore.otherExemptionSource" @row-edit-save="onRowEditSave"
                 tableClass="editable-cells-table" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
@@ -254,25 +254,21 @@
             </DataTable>
 
         </div>
-        <div class="my-4 table-responsive" v-if="investmentStore.otherExeSectionData[0] == 'failure'">
-
-        </div>
-        <div class="my-4 table-responsive" v-else>
-
-            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExeSectionData"
+        <div class="my-4 table-responsive" v-if="investmentStore.otherExeSectionData[0]">
+            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExeSectionData[0]"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
+                :rowsPerPageOptions="[5, 10, 25]" v-if="investmentStore.otherExeSectionData.length > 0 "
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
                 <Column header="Loan Sanction Date" field="json_popups_value.loan_sanction_date" style="min-width: 8rem">
                     <template #body="slotProps">
-                        {{ moment(slotProps.data.json_popups_value.loan_sanction_date).format('DD-MM-YYYY') }}
+                        {{ slotProps.data.json_popups_value.loan_sanction_date ? moment(slotProps.data.json_popups_value.loan_sanction_date).format('DD-MM-YYYY') : '-' }}
                     </template>
                 </Column>
 
                 <Column field="json_popups_value.lender_type" header="Lender Type" style="min-width: 12rem">
                     <template #body="slotProps">
                         <p v-if="slotProps.data.json_popups_value.section == '80EEB'" style="font-weight: 501;">NA</p>
-                        <p v-else style="font-weight: 501;">{{ slotProps.data.json_popups_value.lender_type }}</p>
+                        <p v-else style="font-weight: 501;">{{ slotProps.data.json_popups_value.lender_type ? slotProps.data.json_popups_value.lender_type : '-' }}</p>
                     </template>
 
                 </Column>
@@ -280,7 +276,7 @@
                 <Column field="json_popups_value.property_value" header="Property Value " style="min-width: 12rem">
                     <template #body="slotProps">
                         <p v-if="slotProps.data.json_popups_value.section == '80EEB'" style="font-weight: 501;">NA</p>
-                        <p v-else style="font-weight: 501;">{{ slotProps.data.json_popups_value.property_value }}</p>
+                        <p v-else style="font-weight: 501;">{{ slotProps.data.json_popups_value.property_value ? slotProps.data.json_popups_value.property_value : '-' }}</p>
                     </template>
                 </Column>
 
@@ -332,6 +328,9 @@
                 </Column>
             </DataTable>
         </div>
+        <!-- <div class="my-4 table-responsive" v-if="investmentStore.otherExeSectionData[0] == 'failure'">
+
+        </div> -->
 
         <div class="my-3 text-end">
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
