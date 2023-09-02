@@ -254,7 +254,7 @@
             </DataTable>
 
         </div>
-        <div class="my-4 table-responsive" v-if="investmentStore.otherExeSectionData[0]">
+        <!-- <div class="my-4 table-responsive" v-if="investmentStore.otherExeSectionData[0]">
             <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExeSectionData[0]"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" v-if="investmentStore.otherExeSectionData.length > 0 "
@@ -327,7 +327,7 @@
                     </template>
                 </Column>
             </DataTable>
-        </div>
+        </div> -->
         <!-- <div class="my-4 table-responsive" v-if="investmentStore.otherExeSectionData[0] == 'failure'">
 
         </div> -->
