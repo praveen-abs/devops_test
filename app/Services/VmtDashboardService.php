@@ -1404,7 +1404,7 @@ class VmtDashboardService
 
                 $emp_user_code = user::where('id', $single_user_data['user_id'])->first('user_code');
 
-                $emp_bio_attendance = $this->getBioMatricAttendanceData($emp_user_code, $current_date);
+                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
 
                 if (empty($emp_bio_attendance)) {
                     $absent_count++;
@@ -1418,7 +1418,6 @@ class VmtDashboardService
         $i = 0;
 
         foreach ($employees_data as $key => $single_user_data) {
-            //$employee_leave_data = array();
 
             $user_data = User::where('id', $single_user_data['user_id'])->first();
 
@@ -1458,9 +1457,10 @@ class VmtDashboardService
 
 
 
-    public function getEmployeesCountDetails($serviceVmtDashboardService)
+    public function getEmployeesCountDetails()
     {
         $current_date = Carbon::now()->format('Y-m-d');
+        $Current_month = Carbon::now()->format('m');
 
         $user_code =  auth()->user()->user_code;
 
@@ -1471,11 +1471,12 @@ class VmtDashboardService
         $employees_data = array();
 
         if ($user_data['org_role'] == "2" || $user_data['org_role'] == "3" || $user_data['org_role'] == "1") {
-            // $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(); //foractiveemployee
 
-            $emp_details_count['totalEmpCount'] = user::where('is_ssa', '0')->where('active', '!=', '-1')->count(); //fortotalemployee
+            $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']); //foractiveemployee
 
-            $emp_details_count['newEmpCount'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
+            $emp_details_count['total_employee_count'] = user::where('is_ssa', '0')->where('active', '!=', '-1')->count(); //fortotalemployee
+
+            $emp_details_count['new_employee_count'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
 
             // dd( $emp_details_count['newEmpCount']);
 
@@ -1485,7 +1486,7 @@ class VmtDashboardService
 
             $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->get()->count();
 
-            $emp_details_count['yet_active_employee_count'] = User::where('active', '0')->get()->count();
+            $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->get()->count();
 
             $emp_details_count['exit_employee_count'] = User::where('active', '-1')->get()->count();
 
@@ -1493,10 +1494,11 @@ class VmtDashboardService
             $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
         } else if ($user_data['org_role'] == "4") {
 
+            $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id as id']);
 
-            $emp_details_count['totalEmployeeCount'] = VmtEmployeeOfficeDetails::join("users", "users.id", "=", "vmt_employee_office_details.user_id")->where('l1_manager_code', $user_code)->where('active', '!=', '-1')->get(['user_id']); //formanagertotalemployeecount
+            $emp_details_count['total_employee_count'] = VmtEmployeeOfficeDetails::join("users", "users.id", "=", "vmt_employee_office_details.user_id")->where('l1_manager_code', $user_code)->where('active', '!=', '-1')->get(['user_id']); //formanagertotalemployeecount
 
-            $emp_details_count['newEmpCount'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
+            $emp_details_count['new_employee_count'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
 
 
             $emp_details_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
@@ -1508,7 +1510,7 @@ class VmtDashboardService
 
             $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->whereIn('id', $employees_data)->get()->count();
 
-            $emp_details_count['yet_active_employee_count'] = User::where('active', '0')->whereIn('id', $employees_data)->get()->count();
+            $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->whereIn('id', $employees_data)->get()->count();
 
             $emp_details_count['exit_employee_count'] = User::where('active', '-1')->whereIn('id', $employees_data)->get()->count();
 
@@ -1517,36 +1519,92 @@ class VmtDashboardService
             $emp_details_count['others_count'] =  $emp_details_count['active_employee_count'] - ($emp_details_count['male_employee_count'] +  $emp_details_count['female_employee_count']);
 
            
-           // dd( $emp_details_count['others_count']);
+            
         }
 
         $get_document_update_data = array();
 
         $doc_count = 0;
         $reg_count = 0;
+        $absent_count = 0;
+        $leave_employee_count = array();
+        $i = 0;
+
+        foreach ($employees_data as $key => $single_user_data) {
+      
+
+
+            $user_data = User::where('id', $single_user_data['id'])->first();
+
+            $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Approved")->get()->toarray();
+       
+
+            if (!empty($emp_leave_data)) {
+
+                $start_Date = Carbon::parse($emp_leave_data['0']['start_date'])->format('Y-m-d');
+                $end_Date = Carbon::parse($emp_leave_data['0']['end_date'])->format('Y-m-d');
+
+                $dateRange = CarbonPeriod::create($start_Date, $end_Date);
+
+                foreach ($dateRange as $single_date) {
+
+                    $leave_date = $single_date->format('Y-m-d');
+
+                    if ($leave_date == $current_date) {
+                        $leave_employee_count[$i]['id'] =  $single_user_data['id'];
+                        $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
+                        $leave_employee_count[$i]['user_name'] =  $user_data->name;
+                        $leave_employee_count[$i]['leave_date'] = $leave_date;
+                        $i++;
+                    }
+                }
+            }
+        }
+
+        $pending_request_count['emp_leave_count'] = count($leave_employee_count);
 
         foreach ($employees_data as $key => $single_user_data) {
 
-            $get_document_update_data = VmtEmployeeDocuments::where('user_id', $single_user_data['user_id'])->where('status', 'Pending')->get()->toarray();
+            $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
+
+            if (empty($absent_employee_data)) {
+
+                $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
+
+                $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+
+                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+
+                if (empty($emp_bio_attendance)) {
+                    $absent_count++;
+                }
+            }
+        }
+        $pending_request_count['employee_absent_count'] =  $absent_count;
+
+
+        foreach ($employees_data as $key => $single_user_data) {
+
+            $get_document_update_data = VmtEmployeeDocuments::where('user_id', $single_user_data['id'])->where('status', 'Pending')->get()->toarray();
             if (!empty($get_document_update_data)) {
                 $doc_count++;
             }
 
-            $get_attendance_regularization_data = VmtEmployeeAttendanceRegularization::where('user_id', $single_user_data['user_id'])->where('status', 'pending')->get()->toarray();
+            $get_attendance_regularization_data = VmtEmployeeAttendanceRegularization::where('user_id', $single_user_data['id'])->where('status', 'pending')->get()->toarray();
 
             if (!empty($get_attendance_regularization_data)) {
                 $reg_count++;
             }
         }
-        $pending_request_count['emp_doc_pending_count'] = $doc_count;
-        $pending_request_count['emp_att_reg_count'] = $reg_count;
+        $pending_request_count['employee_doc_pending_count'] = $doc_count;
+        $pending_request_count['employee_att_reg_count'] = $reg_count;
 
-        $response = ['Emp_details_count' => $emp_details_count, 'Pending_request_count' => $pending_request_count];
+        $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count];
 
         return ($response);
     }
 
-    public function getBioMatricAttendanceData($user_code, $current_date)
+    public function getBioMetricAttendanceData($user_code, $current_date)
     {
         $deviceData = array();
         if (
