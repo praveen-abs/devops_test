@@ -67,7 +67,6 @@
             "app/Services/VmtSalaryRevisionService.php",
             "app/Services/VmtMobileConfigService.php"
 
-
         ]
     },
     "autoload-dev": {
