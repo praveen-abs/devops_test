@@ -456,14 +456,14 @@ class VmtAttendanceController extends Controller
 
             $manager_image =  json_decode(newgetEmployeeAvatarOrShortName($query_manager_id), true);
 
-            $emp_designation = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first()->designation;
+            $emp_designation = VmtEmployeeOfficeDetails::where('user_id', $query_manager->first()->id)->first()->designation;
 
 
 
             $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                 uEmployeeName: auth::user()->name,
                 uEmpCode: auth::user()->user_code,
-                uEmpAvatar: $emp_avatar,
+                // uEmpAvatar: $emp_avatar,
                 uManagerName: $query_manager->name,
                 uLeaveRequestDate: Carbon::parse($request->leave_request_date)->format('M jS Y'),
                 uStartDate: Carbon::parse($request->start_date)->format('M jS Y'),

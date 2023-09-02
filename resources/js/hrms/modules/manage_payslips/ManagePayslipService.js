@@ -137,14 +137,15 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
-    function downloadFileObject(base64String,employeeName ,payslipMonth) {
+    function downloadFileObject(base64String,employeeName ,payslipyear,payslipMonth) {
         const linkSource = base64String;
         const downloadLink = document.createElement("a");
-        const fileName = `${employeeName}-${payslipMonth}.pdf`;
+        const fileName = `${employeeName}-${payslipyear}-${payslipMonth}.pdf`;
         downloadLink.href = linkSource;
         downloadLink.download = fileName;
         downloadLink.click();
     }
+
     async function downloadPayslip(user_code, month, year, status) {
 
         // show_dialogconfirmation.value= false;
@@ -168,14 +169,18 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
                 console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));
 
                 if(response.data){
-                    let base64String = response.data
-                    let employeeName = user_code
-                    let payslipMonth = month
-                    if (base64String.startsWith("JVB")) {
-                        base64String = "data:application/pdf;base64," + base64String;
-                        downloadFileObject(base64String,employeeName,payslipMonth);
-                    } else if (base64String.startsWith("data:application/pdf;base64")) {
-                        downloadFileObject(base64String);
+                    let base64String = response.data.payslip;
+                    let employeeName = response.data.emp_name
+                    let payslipMonth = response.data.month;
+                    let payslipyear = response.data.year;
+                    console.log(base64String);
+                    if(base64String){
+                        if (base64String.startsWith("JVB")) {
+                            base64String = "data:application/pdf;base64," + base64String;
+                            downloadFileObject(base64String,employeeName,payslipMonth,payslipyear);
+                        } else if (base64String.startsWith("data:application/pdf;base64")) {
+                            downloadFileObject(base64String);
+                        }
                     }
                 }else{
                     console.log("Response Url Not Found");

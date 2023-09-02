@@ -64,7 +64,7 @@
             </Column>
             <Column header="Action">
                 <template #body="slotProps">
-                            <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
+                            <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v" @click="saveusercode(slotProps.data.user_code)"></i>
                             </button>
                             <OverlayPanel ref="op"
                                 style="width: 160px;margin-top:12px !important;margin-right: 20px !important; "
@@ -435,8 +435,17 @@ function showReleasePayslipConfirmationDialog(selected_user_code) {
     show_releasePayslip_dialogconfirmation.value = true;
     toggle()
 }
-function showdownloadPayslipConfirmationDialog(selected_user_code) {
+
+function saveusercode(selected_user_code){
+    console.log("selected_user_code",selected_user_code);
     selectedUserCode.value = selected_user_code;
+
+}
+
+
+function showdownloadPayslipConfirmationDialog(selected_user_code) {
+    // console.log("selected_user_code",selected_user_code);
+    // selectedUserCode.value = selected_user_code;
 
     show_downloadPayslip_dialogconfirmation.value = true;
 }
