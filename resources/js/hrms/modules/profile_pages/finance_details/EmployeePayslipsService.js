@@ -65,10 +65,10 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
     }
 
-    function downloadFileObject(base64String,employeeName ,payslipMonth) {
+    function downloadFileObject(base64String,employeeName ,payslipyear,payslipMonth) {
         const linkSource = base64String;
         const downloadLink = document.createElement("a");
-        const fileName = `${employeeName}-${payslipMonth}.pdf`;
+        const fileName = `${employeeName}-${payslipyear}-${payslipMonth}.pdf`;
         downloadLink.href = linkSource;
         downloadLink.download = fileName;
         downloadLink.click();
@@ -98,14 +98,18 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
                 console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));
 
                 if(response.data){
-                    let base64String = response.data
-                    // let employeeName = response.data.emp_name
-                    // let payslipMonth = response.data.emp_month
-                    if (base64String.startsWith("JVB")) {
-                        base64String = "data:application/pdf;base64," + base64String;
-                        downloadFileObject(base64String,user_code,month);
-                    } else if (base64String.startsWith("data:application/pdf;base64")) {
-                        downloadFileObject(base64String);
+                    let base64String = response.data.payslip;
+                    let employeeName = response.data.emp_name
+                    let payslipMonth = response.data.month;
+                    let payslipyear = response.data.year;
+                    console.log(base64String);
+                    if(base64String){
+                        if (base64String.startsWith("JVB")) {
+                            base64String = "data:application/pdf;base64," + base64String;
+                            downloadFileObject(base64String,employeeName,payslipMonth,payslipyear);
+                        } else if (base64String.startsWith("data:application/pdf;base64")) {
+                            downloadFileObject(base64String);
+                        }
                     }
                 }else{
                     console.log("Response Url Not Found");
