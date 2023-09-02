@@ -14,7 +14,6 @@ use App\Mail\VmtAttendanceMail_Regularization;
 use App\Models\VmtClientMaster;
 use App\Models\User;
 use App\Models\VmtEmployee;
-use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeCompensatoryLeave;
