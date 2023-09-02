@@ -70,8 +70,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                   <table class="sm-w-full" style="margin-left: auto; margin-right: auto; margin-top: 16px; width: 500px" cellpadding="0" cellspacing="0" role="presentation">
                     <tr>
                       <td>
-                        <img src={{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }} width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: left">
-                        <img src={{ $client_logo }} width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: right">
+                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: left">
+                        <img src="{{ $client_logo }}" width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; float: right">
                       </td>
                     </tr>
                   </table>
