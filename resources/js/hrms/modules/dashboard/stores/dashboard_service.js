@@ -81,6 +81,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     };
 
 
+
     // async function getMainDashboardData() {
     //     if (!currentUserCode.value) {
     //         await axios.get("/currentUserCode").then((res) => {
@@ -123,6 +124,9 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
     const orgEmployeeDetailCount = ref()
     const hrPendingRequestCount = ref()
+    const overallEmployeeCount = ref()
+    const overallEmployeeCountForGraph = ref([])
+
 
 
     const getHrDashboardMainSource = () => {
@@ -137,6 +141,18 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
                 }
             })
             hrPendingRequestCount.value = obj
+            let graph = Object.entries(res.data.graph_chart_count).map(item => {
+                return {
+                    title: item[0],
+                    value: item[1]
+                }
+            })
+            overallEmployeeCount.value = graph
+
+            overallEmployeeCount.value.forEach(element => {
+                overallEmployeeCountForGraph.value.push(element.value)
+            });
+
         })
     }
 
@@ -170,7 +186,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         // hr Dashboard source
 
-        getHrDashboardMainSource, hrDashboardSource, orgEmployeeDetailCount, hrPendingRequestCount
+        getHrDashboardMainSource, hrDashboardSource, orgEmployeeDetailCount, hrPendingRequestCount,overallEmployeeCount,overallEmployeeCountForGraph
 
     };
 });
