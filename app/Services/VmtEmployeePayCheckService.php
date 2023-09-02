@@ -1293,7 +1293,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $getpersonal['date_month'] = [
                 "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
                 "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
-                "abs_logo" => '/assets/clients/ess/logos\AbsLogo1.png',
+                "abs_logo" => '/assets/clients/ess/logos/AbsLogo1.png',
             ];
 
         // Total earnings
@@ -1448,57 +1448,57 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 
     }
 
-    public function generatetemplates($type)
-    {
+    // public function generatetemplates($type)
+    // {
 
 
-        if($type =="pdf"){
-            $html = view('');
+    //     if($type =="pdf"){
+    //         $html = view('');
 
 
-                $options = new Options();
-                $options->set('isHtml5ParserEnabled', true);
-                $options->set('isRemoteEnabled', true);
+    //             $options = new Options();
+    //             $options->set('isHtml5ParserEnabled', true);
+    //             $options->set('isRemoteEnabled', true);
 
-                $pdf = new Dompdf($options);
-                $pdf->loadhtml($html, 'UTF-8');
-                $pdf->setPaper('A4', 'portrait');
-                $pdf->render();
-                // $pdf->stream("payslip.pdf");
-                $response = base64_encode($pdf->output(['payslip.pdf']));
-                return $response;
+    //             $pdf = new Dompdf($options);
+    //             $pdf->loadhtml($html, 'UTF-8');
+    //             $pdf->setPaper('A4', 'portrait');
+    //             $pdf->render();
+    //             // $pdf->stream("payslip.pdf");
+    //             $response = base64_encode($pdf->output(['payslip.pdf']));
+    //             return $response;
 
-        }elseif($type =="html"){
+    //     }elseif($type =="html"){
 
-            $html = view('appointment_mail_templates.appointment_Letter_dunamis_machines');
+    //         $html = view('appointment_mail_templates.appointment_Letter_dunamis_machines');
 
-            return $html;
+    //         return $html;
 
-        }else if($type =="mail"){
+    //     }else if($type =="mail"){
 
-            $html = view('');
+    //         $html = view('');
 
-            $options = new Options();
-            $options->set('isHtml5ParserEnabled', true);
-            $options->set('isRemoteEnabled', true);
+    //         $options = new Options();
+    //         $options->set('isHtml5ParserEnabled', true);
+    //         $options->set('isRemoteEnabled', true);
 
-            $pdf = new Dompdf($options);
-            $pdf->loadhtml($html, 'UTF-8');
-            $pdf->setPaper('A4', 'portrait');
-            $pdf->render();
+    //         $pdf = new Dompdf($options);
+    //         $pdf->loadhtml($html, 'UTF-8');
+    //         $pdf->setPaper('A4', 'portrait');
+    //         $pdf->render();
 
-            $isSent = \Mail::to($getpersonal['personal_details'][0]['officical_mail'])
-            ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
+    //         $isSent = \Mail::to($getpersonal['personal_details'][0]['officical_mail'])
+    //         ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
 
-            if($isSent){
-                dd('success');
-            }else{
-                dd('failure');
-            }
+    //         if($isSent){
+    //             dd('success');
+    //         }else{
+    //             dd('failure');
+    //         }
 
-        }
+    //     }
 
-    }
+    // }
     public function viewPayslipdetails($user_code,$month,$year,$serviceVmtAttendanceService)
     {
 
@@ -1648,7 +1648,7 @@ try{
             $getpersonal['date_month'] = [
                 "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
                 "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
-                "abs_logo" => '/assets/clients/ess/logos\AbsLogo1.png',
+                "abs_logo" => '/assets/clients/ess/logos/AbsLogo1.png',
             ];
 
         // Total earnings
