@@ -1128,6 +1128,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 
         // $user_code = "BA002";
 
+        // dd($user_code);
 
 
         $user_data =User::where('user_code',$user_code)->first();
@@ -1414,10 +1415,12 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 $pdf->render();
                 // $pdf->stream("payslip.pdf");
 
-                $response['payslip'] = base64_encode($pdf->output(['payslip.pdf']));
                 $response['user_code'] = $user_code;
                 $response['month'] = $month;
                 $response['year'] = $year;
+                $response['emp_name']  = $user_data->name;
+                $response['payslip'] = base64_encode($pdf->output(['payslip.pdf']));
+
 
                 return $response;
 
