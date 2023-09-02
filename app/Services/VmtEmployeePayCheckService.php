@@ -1413,7 +1413,12 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
                 // $pdf->stream("payslip.pdf");
-                $response = base64_encode($pdf->output(['payslip.pdf']));
+
+                $response['payslip'] = base64_encode($pdf->output(['payslip.pdf']));
+                $response['user_code'] = $user_code;
+                $response['month'] = $month;
+                $response['year'] = $year;
+
                 return $response;
 
         }elseif($type =="html"){
