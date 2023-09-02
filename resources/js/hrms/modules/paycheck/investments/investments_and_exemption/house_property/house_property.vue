@@ -89,12 +89,13 @@
             </DataTable>
 
         </div>
+
         <div class="my-4 table-responsive" v-if="investmentStore.house_props_data[0] == 'failure'">
         </div>
 
-        <div class=" table-responsive" v-else >
+        <div class=" table-responsive" v-else  >
             <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
-                :value="investmentStore.house_props_data" :sortOrder="+1" sortField="property_type" :paginator="true"
+                :value="investmentStore.house_props_data[0]" :sortOrder="+1" sortField="property_type" :paginator="true"
                 :rows="10" scrollable
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"

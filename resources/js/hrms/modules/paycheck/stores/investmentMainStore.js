@@ -534,7 +534,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 otherExe,
             })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 otherExeSectionData.value = Object.values(res.data);
             });
     };

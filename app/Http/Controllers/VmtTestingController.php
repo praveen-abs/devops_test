@@ -37,6 +37,7 @@ use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
 use Carbon\Carbon;
+use App\Http\Controllers\VmtEmployeeBirthdayController;
 use App\Models\VmtEmployeePaySlipV2;
 
 use Illuminate\Support\Facades\DB;
@@ -448,6 +449,7 @@ class VmtTestingController extends Controller
 
         return 'save successfully';
     }
+}
 
 
     public function importexcell(Request $request)
@@ -780,9 +782,15 @@ class VmtTestingController extends Controller
             $docUploads =  $pdf->stream();
 
         }
+    public function TestingMail(Request $request){
 
+       $data = ( new VmtEmployeeBirthdayController )->sendBirthdayNotificationtoEmployee();
+       $data = ( new VmtEmployeeBirthdayController )->sendAniversaryNotificationtoEmployee();
 
-     }
+       return $data;
+    }
+
+}
 
 
 
