@@ -16,11 +16,14 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const canShowConfiguration = ref(false)
     const canShowCurrentEmployee = ref(false)
 
+    const currentDashboard = ref(1)
+
     const allEventSource = ref()
     const allNotificationSource = ref([])
     const leaveBalancePerMonthSource = ref([])
     const attenanceReportPerMonth = ref([])
     const canShowLoading = ref(true)
+
 
     // Subscribe Main DashBoard Data Source
     // const getMainDashboardSource = (async () => {
@@ -115,6 +118,17 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
         );
     };
 
+
+    const hrDashboardSource = ref()
+
+
+    const getHrDashboardMainSource = () =>{
+        axios.get('/get-employees_count-detail').then(res=>{
+            console.log(res.data);
+            hrDashboardSource.value = res.data
+        })
+    }
+
     return {
         // varaible Declarations
         service,canShowLoading,open,
@@ -140,7 +154,12 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         // Attendance report Per Month
 
-        attenanceReportPerMonth
+        attenanceReportPerMonth,
+        currentDashboard,
+
+        // hr Dashboard source
+
+        getHrDashboardMainSource,hrDashboardSource
 
     };
 });

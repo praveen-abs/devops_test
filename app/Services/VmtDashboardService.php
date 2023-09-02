@@ -1448,7 +1448,7 @@ class VmtDashboardService
 
 
 
-    public function getEmployeesCountDetails($serviceVmtDashboardService)
+    public function getEmployeesCountDetails()
     {
         $current_date = Carbon::now()->format('Y-m-d');
 
@@ -1521,6 +1521,8 @@ class VmtDashboardService
         }
         $emp_details_count['emp_doc_pending_count'] = $doc_count;
         $emp_details_count['emp_att_reg_count'] = $reg_count;
+
+        return $emp_details_count;
     }
 
     public function getBioMatricAttendanceData($user_code, $current_date)
