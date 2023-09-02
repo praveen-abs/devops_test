@@ -283,7 +283,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             approver_user_code: $request->approver_user_code,
             record_id: auth()->user()->record_id,
             status: $request->status,
-            status_text: $request->status_text
+            status_text: $request->status_text,
+            user_type: "manager",
         );
     }
 
@@ -359,7 +360,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             checkin_time: $request->checkin_time,
             checkout_time: $request->checkout_time,
             reason: $request->reason,
-            custom_reason: $request->custom_reason
+            custom_reason: $request->custom_reason,
+            user_type: "manager",
         );
     }
 
@@ -393,7 +395,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason, serviceVmtNotificationsService: $serviceVmtNotificationsService);
+        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason,"manager",serviceVmtNotificationsService: $serviceVmtNotificationsService);
 
 
         return $response;
@@ -413,10 +415,11 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             record_id: $single_record_ids,
             status: $request->status,
             status_text: $request->status_text,
+            user_type: "manager",
             serviceVmtNotificationsService: $serviceVmtNotificationsService
         );
     }
-    
+
     return response()->json(
                 [
                     'status' => 'success',
