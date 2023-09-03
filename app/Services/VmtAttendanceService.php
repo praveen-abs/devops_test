@@ -43,7 +43,6 @@ class VmtAttendanceService
 
 
     public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
-    public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
     {
 
         $validator = Validator::make(
@@ -1470,7 +1469,6 @@ class VmtAttendanceService
                         'message' => "Manager mail is not found. Kindly contact the Admin.",
                         'data' => ''
                     ]);
-
                 } else {
                     //If Manager mail is available, then send mail
                     $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAbsentMail_Regularization(
@@ -3381,12 +3379,12 @@ class VmtAttendanceService
         $absent_count = 0;
 
         $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
-        dd($employees_data);
-     
+        // dd($employees_data);
+
         foreach ($employees_data as $key => $single_user_data) {
-         
+
             $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
-           
+
             if (empty($absent_employee_data)) {
 
                 $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
@@ -3401,7 +3399,12 @@ class VmtAttendanceService
             }
         }
 
-        $pending_request_count['employee_absent_count'] =  $absent_count;
+        // $pending_request_count['employee_absent_count'] =  $absent_count;
+        $work_shift = $this->getWorkShiftDetails();
+
+        $response = ['work_shift' => $work_shift];
+
+        return $response;
     }
 
 
@@ -3454,6 +3457,34 @@ class VmtAttendanceService
                 'attendance_mode_checkout' => 'biometric'
             ]);
         }
+
         return $deviceData;
+    }
+
+
+
+    public function getWorkShiftDetails()
+    {
+
+
+        $workshiftCount = array();
+        $work_shift_details = VmtWorkShifts::all()->toArray();
+
+        foreach ($work_shift_details as $key => $single_shift_id) {
+
+            $work_shift_assigned_employees = VmtWorkShifts::join('vmt_employee_workshifts', 'vmt_employee_workshifts.work_shift_id', '=', 'vmt_work_shifts.id')
+                ->join('users', 'users.id', '=', 'vmt_employee_workshifts.user_id')
+                ->where('vmt_employee_workshifts.work_shift_id', '=', $single_shift_id['id'])
+                ->where('users.active', '=', 1)
+                ->get();
+            //  $response ["work_shift_assigned_employees"][$key] = count( $work_shift_assigned_employees) ;
+            $response[$key]["work_shift_assigned_employees"] = count($work_shift_assigned_employees);
+            $response[$key]["work_shift_employee_data"] = $work_shift_assigned_employees;
+        }
+        // dd(count($workshiftCount));
+
+        return $response;
+
+        // return $work_shift->toArray();
     }
 }
