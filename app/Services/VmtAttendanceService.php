@@ -3531,7 +3531,7 @@ class VmtAttendanceService
     {
 
         $current_date = Carbon::now()->format('Y-m-d');
-        // $Current_month = Carbon::now()->format('m');
+        $Current_month = Carbon::now()->format('m');
 
         $user_code =  auth()->user()->user_code;
 
