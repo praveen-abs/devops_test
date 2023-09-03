@@ -29,10 +29,9 @@ import Sidebar from 'primevue/sidebar';
 
 import { createPinia } from "pinia";
 
-import Holidays_List from './Holidays_List.vue';
-import MyGlobalComponent from './employee_holidays/';
+import Holidays_Lists from './Holidays_Lists.vue';
 
-const app = createApp(Holidays_List);
+const app = createApp(Holidays_Lists);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
