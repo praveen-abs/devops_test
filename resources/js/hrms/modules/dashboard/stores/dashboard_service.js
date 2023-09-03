@@ -42,6 +42,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     // })
 
     async function getMainDashboardData(month, year) {
+        canShowLoading.value = true
         await axios.get('/getAllNewDashboardDetails').then((response) => {
             allEventSource.value = response.data.all_events;
             // allNotificationSource.value = response.data.all_notification.array_notifications;
@@ -130,6 +131,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
 
     const getHrDashboardMainSource = () => {
+        canShowLoading.value = true
         axios.get('/get-employees_count-detail').then(res => {
             console.log(res.data.pending_request_count);
             orgEmployeeDetailCount.value = res.data.employee_details_count
@@ -153,6 +155,8 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
                 overallEmployeeCountForGraph.value.push(element.value)
             });
 
+        }).finally(() => {
+            canShowLoading.value = false
         })
     }
 
@@ -186,7 +190,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         // hr Dashboard source
 
-        getHrDashboardMainSource, hrDashboardSource, orgEmployeeDetailCount, hrPendingRequestCount,overallEmployeeCount,overallEmployeeCountForGraph
+        getHrDashboardMainSource, hrDashboardSource, orgEmployeeDetailCount, hrPendingRequestCount, overallEmployeeCount, overallEmployeeCountForGraph
 
     };
 });

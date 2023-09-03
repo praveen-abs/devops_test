@@ -3610,15 +3610,17 @@ class VmtAttendanceService
             }
 
         }
+
+
         $response['absent_count'] =$absent_count;
         $response['present_count'] = $present_count;
         $response['leave_emp_count'] = count($leave_employee_count);
         return $response ;
     }
-        $response = ['work_shift' => $work_shift];
+    //     $response = ['work_shift' => $work_shift];
 
-        return $response;
-    }
+    //     return $response;
+    // }
 
 
 
