@@ -3502,7 +3502,7 @@ class VmtAttendanceService
     {
 
         $current_date = Carbon::now()->format('Y-m-d');
-        // $Current_month = Carbon::now()->format('m');
+        $Current_month = Carbon::now()->format('m');
 
         $user_code =  auth()->user()->user_code;
 
@@ -3512,16 +3512,32 @@ class VmtAttendanceService
 
         $absent_count = 0;
 
+        $present_count = 0;
+
+        $leave_employee_count = 0;
+
+        $i = 0;
+
         $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
 
 
         foreach ($employees_data as $key => $single_user_data) {
+<<<<<<< HEAD
+   
+            $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
+
+            
+            if (empty($absent_present_employee_data)) {
+             
+                $absent_employee_data[$key]['absentEmployeeCount'] = $absent_present_employee_data;
+=======
 
             $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
 
             if (empty($absent_employee_data)) {
 
                 $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
+>>>>>>> 870df6acf7960af758f870da279e40d65fcf8dc1
 
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
@@ -3530,13 +3546,65 @@ class VmtAttendanceService
                 if (empty($emp_bio_attendance)) {
 
                     $absent_count++;
+                  
                 }
+            }
+            if (!empty($absent_present_employee_data)) {
+             
+                $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
+
+                $present_count++;  
+            }else{
+                $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+             
+                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+
+                if (!empty($emp_bio_attendance)) {
+                   
+                    $present_count++;
+                
+                }
+
+            }
+            // dd( $present_employee_data);
+
+            $user_data = User::where('id', $single_user_data['id'])->first();
+           
+            $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Approved")->get()->toarray();
+            dd($emp_leave_data);
+            if (!empty($emp_leave_data)) {
+
+                $start_Date = Carbon::parse($emp_leave_data['0']['start_date'])->format('Y-m-d');
+                $end_Date = Carbon::parse($emp_leave_data['0']['end_date'])->format('Y-m-d');
+
+                $dateRange = CarbonPeriod::create($start_Date, $end_Date);
+
+                foreach ($dateRange as $single_date) {
+
+                    $leave_date = $single_date->format('Y-m-d');
+
+                    if ($leave_date == $current_date) {
+                        $leave_employee_count[$i]['id'] =  $single_user_data['id'];
+                        $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
+                        $leave_employee_count[$i]['user_name'] =  $user_data->name;
+                        $leave_employee_count[$i]['leave_date'] = $leave_date;
+                        $i++;
+                    }
+                }
+            }
+            dd();
             }
         }
 
+<<<<<<< HEAD
+     
+       
+    
+=======
         $pending_request_count['employee_absent_count'] =  $absent_count;
 
     }
+>>>>>>> 870df6acf7960af758f870da279e40d65fcf8dc1
 
 
 
