@@ -406,8 +406,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     {
 
       try{
-            $approver_record_id = $request->record_id;
-            foreach ($approver_record_id as $single_record_ids) {
+            $approver_record_id[] = $request->record_id;
+        foreach ($approver_record_id as $single_record_ids) {
 
         //Fetch the data
         $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
