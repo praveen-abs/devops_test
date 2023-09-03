@@ -557,23 +557,19 @@ class VmtAttendanceService
                 'leave_request_date' => $leave_request_date,
                 'start_date' => $start_date,
                 'end_date' => $end_date,
-                'hours_diff' => $hours_diff,
-                'compensatory_work_days_ids' => $compensatory_work_days_ids,
-                'leave_session' => $leave_session,
                 'leave_type_name' => $leave_type_name,
                 'leave_reason' => $leave_reason,
                 'notifications_users_id' => $notifications_users_id,
+                'user_type' => $user_type,
             ],
             $rules = [
                 'user_code' => 'required|exists:users,user_code',
                 'leave_request_date' => 'required|date',
                 'start_date' => "required|date",
                 'end_date' => 'required|date',
-                'hours_diff' => 'required',
-                'compensatory_work_days_ids' => 'required',
-                'leave_session' => 'required',
                 'leave_type_name' => 'required',
-                'notifications_users_id' => 'required',
+                'notifications_users_id' => 'nullable',
+                'user_type' => ['required', Rule::in(['Employee', 'Admin'])],
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -838,33 +834,34 @@ class VmtAttendanceService
             $mail_status="";
             $res_notification="";
 
-            if (!empty($user_type) && $user_type != "Admin"){
-            $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
-                uEmployeeName: $query_user->name,
-                uEmpCode: $query_user->user_code,
-                //uEmpAvatar: $emp_avatar,
-                uManagerName: $manager_name,
-                uLeaveRequestDate: Carbon::parse($leave_request_date)->format('M jS Y'),
-                uStartDate: Carbon::parse($start_date)->format('M jS Y'),
-                uEndDate: Carbon::parse($end_date)->format('M jS Y'),
-                uReason: $leave_reason,
-                uLeaveType: $leave_type_name,
-                uTotal_leave_datetime: $mailtext_total_leave,
-                //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
-                loginLink: request()->getSchemeAndHttpHost(),
-                image_view: $image_view,
-                emp_image: $emp_avatar,
-                manager_image: $manager_avatar,
-                emp_designation: $emp_designation
-            ));
+            if ($user_type == "Employee")
+            {
+                $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
+                    uEmployeeName: $query_user->name,
+                    uEmpCode: $query_user->user_code,
+                    //uEmpAvatar: $emp_avatar,
+                    uManagerName: $manager_name,
+                    uLeaveRequestDate: Carbon::parse($leave_request_date)->format('M jS Y'),
+                    uStartDate: Carbon::parse($start_date)->format('M jS Y'),
+                    uEndDate: Carbon::parse($end_date)->format('M jS Y'),
+                    uReason: $leave_reason,
+                    uLeaveType: $leave_type_name,
+                    uTotal_leave_datetime: $mailtext_total_leave,
+                    //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
+                    loginLink: request()->getSchemeAndHttpHost(),
+                    image_view: $image_view,
+                    emp_image: $emp_avatar,
+                    manager_image: $manager_avatar,
+                    emp_designation: $emp_designation
+                ));
 
 
-            if ($isSent) {
-                $mail_status = "success";
-            } else {
-                $mail_status = "failure";
+                if ($isSent) {
+                    $mail_status = "success";
+                } else {
+                    $mail_status = "failure";
+                }
             }
-        }
 
             $response = [
                 'status' => 'success',

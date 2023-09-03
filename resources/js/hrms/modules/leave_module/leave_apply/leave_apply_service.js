@@ -423,6 +423,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
                 "compensatory_work_days_ids": leave_Request_data.compensatory_leave_id,
                 "notify_to": leave_Request_data.notify_to,
                 "leave_reason": leave_Request_data.leave_reason,
+                "user_type" : 'Employee'
             }).then(res => {
                 data_checking.value = false
                 console.log(res.data.messege);
