@@ -43,7 +43,6 @@ class VmtAttendanceService
 
 
     public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
-    public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
     {
 
         $validator = Validator::make(
@@ -3381,14 +3380,14 @@ class VmtAttendanceService
         $absent_count = 0;
 
         $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
-        dd($employees_data);
+       
      
         foreach ($employees_data as $key => $single_user_data) {
-         
+   
             $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
-           
+        
             if (empty($absent_employee_data)) {
-
+             
                 $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
 
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
@@ -3396,12 +3395,14 @@ class VmtAttendanceService
                 $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
 
                 if (empty($emp_bio_attendance)) {
+                   
                     $absent_count++;
                 }
             }
         }
 
         $pending_request_count['employee_absent_count'] =  $absent_count;
+       
     }
 
 
