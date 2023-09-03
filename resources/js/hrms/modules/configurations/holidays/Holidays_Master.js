@@ -29,6 +29,7 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
 import DialogService from 'primevue/dialogservice';
+import Sidebar from 'primevue/sidebar';
 
 
 
@@ -69,6 +70,7 @@ app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
 app.component('FileUpload',FileUpload);
+app.component('Sidebar',Sidebar);
 app.use(PrimeVue, { ripple: true });
 app.use(DialogService)
 app.use(ToastService)

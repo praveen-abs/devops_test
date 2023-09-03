@@ -18,7 +18,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
     const activeHolidaysPage = ref(1);
     const arrayHolidaysList = ref();
     const CreateNewListDialog = ref(false);
-    const editHoliday = ref(false);
+    const updateHolidays = ref(false);
     const storeeditID= ref();
 
     const addNewHoliday = reactive({
@@ -179,8 +179,9 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
     }
 
      function editHolidaylist(data){
-        editHoliday.value = true
+        updateHolidays.value = true;
         console.log(data);
+        console.log("testing data ",   updateHolidays.value );
 
         storeeditID.value = data.id
         addNewHoliday.FestivalTitle = data.holiday_name
@@ -238,7 +239,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
 
         getHolidaysMaster,getHolidaylist,getHolidayName,
         ChooseTheHolidays,FestivalPhoto,sumbitAddNewHoliday,
-        avatar,getCreateNewList,editHolidaylist,editHoliday,
+        avatar,getCreateNewList,editHolidaylist,updateHolidays,
         sumbiteditHoliday,RemoveHolidayList
 
     };

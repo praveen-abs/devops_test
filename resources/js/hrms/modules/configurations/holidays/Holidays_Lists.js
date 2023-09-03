@@ -1,11 +1,12 @@
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+
+
+import { createApp } from "vue";
 import PrimeVue from "primevue/config";
-
-
-// Primevue Components
 import BadgeDirective from "primevue/badgedirective";
+import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -15,37 +16,29 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
-import Dialog from 'primevue/dialog';
+import Dialog from 'primevue/dialog'; 
 import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
-import InputText from 'primevue/inputtext'
-import Row from 'primevue/row'
-import ColumnGroup from 'primevue/columngroup'
-import InputNumber from 'primevue/inputnumber'
-import FileUpload from 'primevue/fileupload';
-import Calendar from 'primevue/calendar'
-import Textarea from 'primevue/textarea'
-import Chips from 'primevue/chips';
-import DialogService from 'primevue/dialogservice';
+import InputText from "primevue/inputtext";
+import Calendar from "primevue/calendar";
+import OverlayPanel from 'primevue/overlaypanel';
+import Sidebar from 'primevue/sidebar';
 
 
-
-
-
-
-// Primevue Services
-
-
-import Holidays_Lists from './Holidays_Lists.vue'
-
-import { createApp } from "vue";
 import { createPinia } from "pinia";
 
+import Holidays_List from './Holidays_List.vue';
+import MyGlobalComponent from './employee_holidays/';
 
-const app = createApp(Holidays_Lists);
+const app = createApp(Holidays_List);
 const pinia=createPinia()
+
+app.use(PrimeVue, { ripple: true });
+app.use(ConfirmationService);
+app.use(ToastService);
+app.use(pinia)
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
@@ -56,23 +49,15 @@ app.directive('focustrap', FocusTrap);
 app.component('Button', Button);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
-app.component('ColumnGroup', ColumnGroup)
-app.component('Row', Row)
-app.component('Toast', Toast);
 app.component('ConfirmDialog',ConfirmDialog);
+app.component('Toast',Toast);
+app.component('Dialog',Dialog);
 app.component('Dropdown',Dropdown);
-app.component('InputText', InputText);
-app.component('Dialog', Dialog);
-app.component('ProgressSpinner', ProgressSpinner)
+app.component('ProgressSpinner',ProgressSpinner);
+app.component('InputText', InputText)
 app.component('Calendar', Calendar)
-app.component('Textarea', Textarea)
-app.component('Chips', Chips)
-app.component('InputNumber', InputNumber)
-app.component('FileUpload',FileUpload);
-app.use(PrimeVue, { ripple: true });
-app.use(DialogService)
-app.use(ToastService)
-app.use(pinia)
+app.component('OverlayPanel' ,OverlayPanel)
+app.component('Sidebar' ,Sidebar)
 
 app.mount("#VJS_holiday_list");
 

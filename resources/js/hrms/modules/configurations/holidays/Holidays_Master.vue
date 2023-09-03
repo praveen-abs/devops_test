@@ -5,12 +5,12 @@
 
     <div class="card" v-if="useStore.activeHolidaysPage === 2">
         <div class="px-3">
-            <div class="w-full  d-flex justify-between my-4">
+            <div class="justify-between w-full my-4 d-flex">
                 <Calendar v-model="date" />
                 <div class="">
-                    <button @click="useStore.activeHolidaysPage = 2" class="btn bg-blue-900 text-light fw-bold">View All
+                    <button @click="useStore.activeHolidaysPage = 2" class="bg-blue-900 btn text-light fw-bold">View All
                         Hoildays</button>
-                    <button class="btn btn-orange ml-3 fw-bold" @click="canshowAddNewLocation = true"><i
+                    <button class="ml-3 btn btn-orange fw-bold" @click="canshowAddNewLocation = true"><i
                             class="pi pi-plus-circle "></i><span class="pl-2 fw-bold fs-6">Add New Location</span> </button>
                 </div>
             </div>
@@ -53,15 +53,15 @@
                 style="border-top:5px solid #002f56" class="popup_card">
                 <template #header>
                     <div>
-                        <h1 class="border-l-4 border-orange-400 fs-5 fw-bold pl-3">Assign To Location</h1>
+                        <h1 class="pl-3 border-l-4 border-orange-400 fs-5 fw-bold">Assign To Location</h1>
                     </div>
                 </template>
-                <div class="flex-column my-3 mx-5">
-                    <div style="" class="w-full border h-48 "></div>
+                <div class="mx-5 my-3 flex-column">
+                    <div style="" class="w-full h-48 border "></div>
                     <!-- d-flex justify-content-between align-content-center -->
-                    <div class="row d-flex align-items-center mt-4">
+                    <div class="mt-4 row d-flex align-items-center">
                         <div class="col-5">
-                            <h1 class="text-gray-700 fs-5 font-semibold">Location</h1>
+                            <h1 class="font-semibold text-gray-700 fs-5">Location</h1>
                         </div>
 
                         <div class="col">
@@ -71,9 +71,9 @@
                         </div>
                         <!-- <input type="text" name="" id=""> -->
                     </div>
-                    <div class="row my-2 mb-4 d-flex align-items-center">
+                    <div class="my-2 mb-4 row d-flex align-items-center">
                         <div class="col-5 ">
-                            <h1 class="text-gray-700 fs-5 font-semibold">Choose Holidays List</h1>
+                            <h1 class="font-semibold text-gray-700 fs-5">Choose Holidays List</h1>
                         </div>
                         <div class="col ">
                             <!-- <MultiSelect v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="useStore.arrayHolidaysList"  optionLabel="holiday_name"
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <template #footer>
-                    <Button label="Cancel" class=" border-orange-400 text-orange-500 mr-4 bg-white"
+                    <Button label="Cancel" class="mr-4 text-orange-500 bg-white border-orange-400 "
                         @click="canshowDialog = false" text />
                     <Button label="Create" class="bg-orange-500 border-none" icon="pi pi-plus-circle"
                         @click="useStore.SubmitAddNewLocation" autofocus />
@@ -171,7 +171,7 @@ const DeleteHolidayList = (val) => {
 {
 <!--
     <template>
-        <div class="card flex justify-content-center">
+        <div class="flex card justify-content-center">
             <MultiSelect v-model="selectedCities" :options="cities" optionLabel="name" placeholder="Select Cities"
                 :maxSelectedLabels="3" class="w-full md:w-20rem" />
         </div>
@@ -194,7 +194,7 @@ const DeleteHolidayList = (val) => {
 
 
 <template>
-    <div class="card flex justify-content-center">
+    <div class="flex card justify-content-center">
         <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
     </div>
 </template>
@@ -217,15 +217,15 @@ const cities = ref([
                 style="border-top:5px solid #002f56" class="popup_card">
                 <template #header>
                     <div>
-                        <h1 class="border-l-4 border-orange-400 fs-5 fw-bold pl-3">Assign To Location</h1>
+                        <h1 class="pl-3 border-l-4 border-orange-400 fs-5 fw-bold">Assign To Location</h1>
                     </div>
                 </template>
-                <div class="flex-column my-3 mx-5">
-                    <div style="" class="w-full border h-48 "></div>
+                <div class="mx-5 my-3 flex-column">
+                    <div style="" class="w-full h-48 border "></div>
                      d-flex justify-content-between align-content-center
-                    <div class="row d-flex align-items-center mt-4">
+                    <div class="mt-4 row d-flex align-items-center">
                         <div class="col-5">
-                            <h1 class="text-gray-700 fs-5 font-semibold">Location</h1>
+                            <h1 class="font-semibold text-gray-700 fs-5">Location</h1>
                         </div>
 
                         <div class="col">
@@ -235,9 +235,9 @@ const cities = ref([
                         </div>
                          <input type="text" name="" id="">
                     </div>
-                    <div class="row my-2 mb-4 d-flex align-items-center">
+                    <div class="my-2 mb-4 row d-flex align-items-center">
                         <div class="col-5 ">
-                            <h1 class="text-gray-700 fs-5 font-semibold">Choose Holidays List</h1>
+                            <h1 class="font-semibold text-gray-700 fs-5">Choose Holidays List</h1>
                         </div>
                         <div class="col ">
                             <MultiSelect v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="cities" optionLabel="name"
@@ -246,7 +246,7 @@ const cities = ref([
                     </div>
                 </div>
                 <template #footer>
-                    <Button label="Cancel" class=" border-orange-400 text-orange-500 mr-4 bg-white"
+                    <Button label="Cancel" class="mr-4 text-orange-500 bg-white border-orange-400 "
                         @click="canshowDialog = false" text />
                     <Button label="Create" class="bg-orange-500 border-none" icon="pi pi-plus-circle"
                         @click="useStore.SubmitAddNewLocation" autofocus />
