@@ -3542,6 +3542,10 @@ class VmtAttendanceService
         $absent_count = 0;
 
         $present_count = 0;
+        $lc_count =0;
+        $eg_count = 0;
+        $mip_count =0;
+        $mop_count = 0;
 
         $leave_employee_count = array();
         $response = array();
@@ -3608,6 +3612,10 @@ class VmtAttendanceService
                     }
                 }
             }
+
+            //logics for get lc and mip
+            $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id)
+            dd($single_user_data);
            
         }
         $response['absent_count'] =$absent_count;
