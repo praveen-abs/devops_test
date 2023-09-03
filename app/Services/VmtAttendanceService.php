@@ -564,7 +564,7 @@ class VmtAttendanceService
                 'leave_request_date' => 'required|date',
                 'start_date' => "required|date",
                 'end_date' => 'required|date',
-                'leave_type_name' => 'required',
+                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
                 'notifications_users_id' => 'nullable',
                 'user_type' => ['required', Rule::in(['Employee', 'Admin'])],
             ],
@@ -3595,7 +3595,7 @@ class VmtAttendanceService
 
                 foreach ($dateRange as $single_date) {
                     $leave_date = $single_date->format('Y-m-d');
-                   
+
                     if ($leave_date == $current_date) {
                         $leave_employee_count[$i]['id'] =  $single_user_data['id'];
                         $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
@@ -3605,7 +3605,7 @@ class VmtAttendanceService
                     }
                 }
             }
-           
+
         }
         $response['absent_count'] =$absent_count;
         $response['present_count'] = $present_count;
