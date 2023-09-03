@@ -3557,22 +3557,12 @@ class VmtAttendanceService
 
 
         foreach ($employees_data as $key => $single_user_data) {
-<<<<<<< HEAD
-
-            $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
-
-
-            if (empty($absent_present_employee_data)) {
-
-                $absent_employee_data[$key]['absentEmployeeCount'] = $absent_present_employee_data;
-=======
 
             $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
 
             if (empty($absent_employee_data)) {
 
                 $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
->>>>>>> 870df6acf7960af758f870da279e40d65fcf8dc1
 
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
@@ -3627,19 +3617,12 @@ class VmtAttendanceService
                     }
                 }
             }
-            dd();
+
             }
         }
 
-<<<<<<< HEAD
 
 
-
-=======
-        $pending_request_count['employee_absent_count'] =  $absent_count;
-
-    }
->>>>>>> 870df6acf7960af758f870da279e40d65fcf8dc1
 
 
 
