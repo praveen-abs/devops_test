@@ -563,6 +563,7 @@ const v$ = useValidate(rules, service.leave_data)
 
 const submitForm = () => {
     v$.value.$validate() // checks all inputs
+
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log(service.leave_data.selected_leave);
@@ -574,6 +575,10 @@ const submitForm = () => {
             r$.value.$validate()
             if (!r$.value.$error) {
                 service.Submit()
+                r$.value.$reset()
+                cp$.value.$reset()
+                v$.value.$reset()
+
             }
 
             console.log('Form successfully submitted.')
@@ -584,11 +589,17 @@ const submitForm = () => {
 
     if (service.leave_data.radiobtn_full_day == "full_day") {
         f$.value.$validate()
+        // f$.value.$reset()
+
         if (!f$.value.$error) {
             // if ANY fail validation
             r$.value.$validate()
             if (!r$.value.$error) {
                 service.Submit()
+                r$.value.$reset()
+                f$.value.$reset()
+                v$.value.$reset()
+
             }
             console.log('Form successfully submitted.')
         } else {
@@ -603,6 +614,9 @@ const submitForm = () => {
             r$.value.$validate()
             if (!r$.value.$error) {
                 service.Submit()
+                r$.value.$reset()
+                h$.value.$reset()
+                v$.value.$reset()
             }
         } else {
             console.log('Form failed validation')
@@ -610,12 +624,17 @@ const submitForm = () => {
     }
     if (service.leave_data.radiobtn_custom == "custom") {
         c$.value.$validate()
+
         if (!c$.value.$error) {
             // if ANY fail validation
             console.log('Form successfully submitted.')
             r$.value.$validate()
             if (!r$.value.$error) {
                 service.Submit()
+                r$.value.$reset()
+                c$.value.$reset()
+                v$.value.$reset()
+
             }
         } else {
             console.log('Form failed validation')
@@ -623,10 +642,15 @@ const submitForm = () => {
     }
     if(service.leave_data.selected_leave.includes('Permission')){
         p$.value.$validate()
+
         if (!p$.value.$error) {
             r$.value.$validate()
             if (!r$.value.$error) {
              service.Submit()
+             r$.value.$reset()
+             p$.value.$reset()
+             v$.value.$reset()
+
             }
         } else {
             console.log('Form failed validation')
@@ -634,9 +658,9 @@ const submitForm = () => {
 
     }
     } else {
-
         console.log('Form failed validation')
     }
+
 }
 
 </script>

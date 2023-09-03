@@ -36,7 +36,7 @@ const chartData = ref({
                 'rgba(113, 74, 161, 1)',
                 'rgba(181, 86, 151, 1)',
             ],
-            borderWidth: 5,
+            borderWidth: 10,
             borderColor: 'white',
             data: [0, 0, 0, 0, 0, 0]
         },
@@ -77,7 +77,7 @@ const setChartOptions = () => {
 
     return {
         maintainAspectRatio: false,
-        aspectRatio: 0.5,
+        aspectRatio: 100,
         plugins: {
             title: {
                 display: false,

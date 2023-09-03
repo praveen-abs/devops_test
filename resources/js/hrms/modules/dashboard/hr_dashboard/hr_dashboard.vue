@@ -23,7 +23,7 @@
 
             <div class="col-span-4 w-[100%] !rounded-[20px] ">
                 <div>
-                    <LeaveRequest />
+                    <Analytics />
                 </div>
                 <div class="py-3">
                     <Notification />
@@ -35,6 +35,7 @@
 
 <script setup>
 import OrgEmployeeDetails from "./org_employee_details/org_employee_details.vue";
+import Analytics from "./Analytics/Analytics.vue";
 import Task from "./tasks/task.vue";
 import EmployeeStatus from "./employee_status/employee_status.vue";
 import LeaveRequest from "./leave_requests/leave_request.vue";
