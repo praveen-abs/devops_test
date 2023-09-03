@@ -523,7 +523,7 @@ class VmtAttendanceService
                 ->whereIn('status', ['Pending', 'Approved'])
                 ->get(['start_date', 'end_date', 'status']);
 
-            dd($existingLeavesRequests);
+            //dd($existingLeavesRequests);
 
             foreach ($existingLeavesRequests as $singleExistingLeaveRequest) {
 
@@ -729,7 +729,7 @@ class VmtAttendanceService
                 'mail_status' => 'failure',
                 'notification' => $res_notification ?? '',
                 'error' => $e->getMessage(),
-                'error_verbose' => $e
+                'error_verbose' => $e->getline(),
             ];
 
             return $response;
@@ -740,7 +740,7 @@ class VmtAttendanceService
                 'mail_status' => 'failure',
                 'notification' => '',
                 'error' =>  $e->getMessage(),
-                'error_verbose' => $e
+                'error_verbose' => $e->getline(),
             ];
 
             return $response;
@@ -1687,7 +1687,7 @@ class VmtAttendanceService
             $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-            if ($user_type != "Admin") {
+            if (!empty($user_type)&& $user_type != "Admin") {
                 //Check if manager's mail exists or not
                 if (!empty($manager_details)) {
                     //dd($manager_details);
@@ -1834,7 +1834,7 @@ class VmtAttendanceService
             $mail_status = "";
 
             //Get employee details
-            if ($user_type == "Admin") {
+            if (!empty($user_type) && $user_type == "Admin") {
 
                 $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
@@ -1866,6 +1866,7 @@ class VmtAttendanceService
                     $mail_status = "There was one or more failures.";
                 }
             } else {
+
                 $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
@@ -1926,14 +1927,15 @@ class VmtAttendanceService
                     'message' => 'Attendance Regularization approval successful',
                     'mail_status' => 'failure',
                     'error' => $e->getMessage(),
-                    'error_verbose' => $e
+                    'error_verbose' => $e->getline(),
                 ]
             );
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ approveRejectAttendanceRegularization() ) ] " . $e->getMessage(),
-                'data' => $e->getMessage()
+                'message' => "Error[ approveRejectAttendanceRegularization() ) ] ",
+                'data' => $e->getMessage(),
+                'error_line' => $e->getline(),
             ]);
         }
     }
