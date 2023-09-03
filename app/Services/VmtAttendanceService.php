@@ -3539,6 +3539,10 @@ class VmtAttendanceService
         $absent_count = 0;
 
         $present_count = 0;
+        $lc_count =0;
+        $eg_count = 0;
+        $mip_count =0;
+        $mop_count = 0;
 
         $leave_employee_count = array();
         $response = array();
