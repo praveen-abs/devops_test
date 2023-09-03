@@ -3,9 +3,9 @@
     <div class="bg-white p-2 rounded-lg border" v-if="useDashboard.attendanceDashboardWorkShiftSource ">
         <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Shift</span>
         <div class="grid grid-cols-6 gap-2 my-2">
-            <div class="bg-gray-50 w-[180px] h-[200px] rounded-lg cursor-pointer" @click="useDashboard.canShowShiftDetails = true , useDashboard.currentlySelectedShiftDetails = {...shift.work_shift_employee_data}"
+            <div class="bg-gray-100 w-[180px] h-[200px] rounded-lg cursor-pointer" @click="useDashboard.canShowShiftDetails = true , useDashboard.currentlySelectedShiftDetails = {...shift.work_shift_employee_data}"
                 v-for="(shift, index) in useDashboard.attendanceDashboardWorkShiftSource " :key="index">
-                <div class="w-full bg-gray-100 p-2 rounded-lg">
+                <div class="w-full bg-gray-200 p-2 rounded-lg">
                     <span class="font-semibold text-[12px] text-[#000] font-['Poppins]">{{
                         shift.work_shift_employee_data[0].shift_name }}</span>
                 </div>

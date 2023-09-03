@@ -40,7 +40,7 @@
     </div>
 
 
-    <Dialog header="Header" v-model:visible="useDashboard.canShowShiftDetails" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    <Dialog header="Shift Details" v-model:visible="useDashboard.canShowShiftDetails" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw' }" :modal="true" :closable="true" :closeOnEscape="true">
        <!-- {{ useDashboard.currentlySelectedShiftDetails }} -->
        <DataTable :value="useDashboard.currentlySelectedShiftDetails" >

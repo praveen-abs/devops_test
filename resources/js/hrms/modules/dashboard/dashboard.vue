@@ -64,7 +64,8 @@
 
         </div> -->
     <!-- </div> -->
-    <div class="col">
+    <div class="col"
+        v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3" >
         <button class="orange_btn font-semibold text-sm"
             :class="[useDashboard.currentDashboard === 1 ? 'bg-white text-slate-600 border border-black' : 'text-slate-600']"
             @click="useDashboard.currentDashboard = 0">Self-dashboard</button>
@@ -98,6 +99,7 @@ import Hr_dashboard from './hr_dashboard/hr_dashboard.vue';
 
 const useDashboard = useMainDashboardStore();
 const canShowLoadingScreen = ref();
+const service = Service()
 
 onMounted(async () => {
     canShowLoadingScreen.value = true;

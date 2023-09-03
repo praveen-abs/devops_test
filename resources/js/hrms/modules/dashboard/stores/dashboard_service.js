@@ -16,7 +16,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const canShowConfiguration = ref(false)
     const canShowCurrentEmployee = ref(false)
 
-    const currentDashboard = ref(1)
+    const currentDashboard = ref(0)
 
     const allEventSource = ref()
     const allNotificationSource = ref([])

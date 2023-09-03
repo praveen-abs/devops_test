@@ -2,7 +2,7 @@
     <div class="bg-white rounded-lg p-2 ">
         <span class="text-primary font-semibold fs-6">Events</span>
 
-        <div class="h-[500px] overflow-x-scroll">
+        <div class="min-h-min overflow-x-scroll">
             <div class="grid grid-cols-4 gap-4 ">
                 <div class=" relative  w-[180px] rounded-lg my-8 " v-for="(events, index) in useDashboard.allEventSource"
                     :key="index">
