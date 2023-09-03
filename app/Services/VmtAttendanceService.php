@@ -424,20 +424,21 @@ class VmtAttendanceService
         return $daterange;
     }
 
-    public function applyLeaveRequest_AdminRole($admin_user_code,
-                                                $user_code,
-                                                $leave_request_date,
-                                                $start_date,
-                                                $end_date,
-                                                $hours_diff,
-                                                $no_of_days,
-                                                $compensatory_work_days_ids,
-                                                $leave_session,
-                                                $leave_type_name,
-                                                $leave_reason,
-                                                $notifications_users_id,
-                                                VmtNotificationsService $serviceNotificationsService
-    ){
+    public function applyLeaveRequest_AdminRole(
+        $admin_user_code,
+        $user_code,
+        $leave_request_date,
+        $start_date,
+        $end_date,
+        $hours_diff,
+        $no_of_days,
+        $compensatory_work_days_ids,
+        $leave_session,
+        $leave_type_name,
+        $leave_reason,
+        $notifications_users_id,
+        VmtNotificationsService $serviceNotificationsService
+    ) {
 
         $validator = Validator::make(
             $data = [
@@ -461,8 +462,7 @@ class VmtAttendanceService
             ]);
         }
 
-        try
-        {
+        try {
             $is_admin = User::where('user_code', $admin_user_code)->where('org_role', "2");
 
             if ($is_admin->exists()) {
@@ -471,17 +471,17 @@ class VmtAttendanceService
 
                 $response = $this->applyLeaveRequest(
 
-                    user_code : $user_code,
-                    leave_request_date : $leave_request_date,
-                    start_date :  $start_date,
-                    end_date :  $end_date,
-                    hours_diff : $hours_diff,
-                    no_of_days : $no_of_days,
-                    compensatory_work_days_ids :  $compensatory_work_days_ids,
-                    leave_session : $leave_session,
-                    leave_type_name : $leave_type_name,
-                    leave_reason : $leave_reason,
-                    notifications_users_id : $notifications_users_id,
+                    user_code: $user_code,
+                    leave_request_date: $leave_request_date,
+                    start_date: $start_date,
+                    end_date: $end_date,
+                    hours_diff: $hours_diff,
+                    no_of_days: $no_of_days,
+                    compensatory_work_days_ids: $compensatory_work_days_ids,
+                    leave_session: $leave_session,
+                    leave_type_name: $leave_type_name,
+                    leave_reason: $leave_reason,
+                    notifications_users_id: $notifications_users_id,
                     serviceVmtNotificationsService: $serviceNotificationsService
                 );
 
@@ -501,9 +501,7 @@ class VmtAttendanceService
                     //     serviceVmtNotificationsService: $serviceVmtNotificationsService
                     // );
                 }
-            }
-            else
-            {
+            } else {
                 return response()->json([
                     'status' => 'failure',
                     'message' => $validator->errors()->all()
@@ -521,7 +519,6 @@ class VmtAttendanceService
 
             return $response;
         }
-
     }
 
     /*
@@ -592,9 +589,7 @@ class VmtAttendanceService
                     "status" => "failure",
                     "message" => "Manager not found for the given user " . $query_user->name . " . Kindly contact the admin"
                 ]);
-            }
-            else
-            {
+            } else {
                 $manager_emp_code = $manager_emp_code->l1_manager_code;
             }
 
@@ -1590,7 +1585,6 @@ class VmtAttendanceService
                         'message' => "Manager mail is not found. Kindly contact the Admin.",
                         'data' => ''
                     ]);
-
                 } else {
                     //If Manager mail is available, then send mail
                     $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAbsentMail_Regularization(
@@ -1808,7 +1802,7 @@ class VmtAttendanceService
             $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-            if (!empty($user_type)&& $user_type != "Admin") {
+            if (!empty($user_type) && $user_type != "Admin") {
                 //Check if manager's mail exists or not
                 if (!empty($manager_details)) {
                     //dd($manager_details);
@@ -3504,30 +3498,21 @@ class VmtAttendanceService
 
         $present_count = 0;
 
-        $leave_employee_count = 0;
-
+        $leave_employee_count = array();
+        $response = array();
         $i = 0;
 
         $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
 
 
         foreach ($employees_data as $key => $single_user_data) {
-<<<<<<< HEAD
-   
+
             $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
 
-            
+
             if (empty($absent_present_employee_data)) {
-             
+
                 $absent_employee_data[$key]['absentEmployeeCount'] = $absent_present_employee_data;
-=======
-
-            $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
-
-            if (empty($absent_employee_data)) {
-
-                $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
->>>>>>> 870df6acf7960af758f870da279e40d65fcf8dc1
 
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
@@ -3536,32 +3521,29 @@ class VmtAttendanceService
                 if (empty($emp_bio_attendance)) {
 
                     $absent_count++;
-                  
                 }
             }
             if (!empty($absent_present_employee_data)) {
-             
+
                 $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
 
-                $present_count++;  
-            }else{
+                $present_count++;
+            } else {
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
-             
+
                 $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
 
                 if (!empty($emp_bio_attendance)) {
-                   
-                    $present_count++;
-                
-                }
 
+                    $present_count++;
+                }
             }
-            // dd( $present_employee_data);
+
 
             $user_data = User::where('id', $single_user_data['id'])->first();
-           
+           //  dd($single_user_data['id']);
             $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Approved")->get()->toarray();
-            dd($emp_leave_data);
+            //dd( $emp_leave_data);
             if (!empty($emp_leave_data)) {
 
                 $start_Date = Carbon::parse($emp_leave_data['0']['start_date'])->format('Y-m-d');
@@ -3570,9 +3552,8 @@ class VmtAttendanceService
                 $dateRange = CarbonPeriod::create($start_Date, $end_Date);
 
                 foreach ($dateRange as $single_date) {
-
                     $leave_date = $single_date->format('Y-m-d');
-
+                   
                     if ($leave_date == $current_date) {
                         $leave_employee_count[$i]['id'] =  $single_user_data['id'];
                         $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
@@ -3582,20 +3563,13 @@ class VmtAttendanceService
                     }
                 }
             }
-            dd();
-            }
+           
         }
-
-<<<<<<< HEAD
-     
-       
-    
-=======
-        $pending_request_count['employee_absent_count'] =  $absent_count;
-
+        $response['absent_count'] =$absent_count;
+        $response['present_count'] = $present_count;
+        $response['leave_emp_count'] = count($leave_employee_count);
+        return $response ;
     }
->>>>>>> 870df6acf7960af758f870da279e40d65fcf8dc1
-
 
 
 
