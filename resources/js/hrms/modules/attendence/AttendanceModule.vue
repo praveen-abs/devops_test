@@ -156,7 +156,7 @@
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto  h-[80vh] overflow-y-scroll">
                             <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                 :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                             <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance"
@@ -165,7 +165,7 @@
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
-                        <div class="flex" v-if="teamListLength > 0">
+                        <div class="flex  h-[80vh] overflow-hidden" v-if="teamListLength > 0">
                             <div class="min-w-max">
                                 <EmployeeList :source="teamList" :is-team="true" />
                             </div>
@@ -183,11 +183,11 @@
                         </div>
                     </div>
                     <div class="tab-pane fade " id="org" role="tabpanel">
-                        <div class="flex" v-if="orgListLength > 0">
-                            <div class="min-w-max">
+                        <div class="flex h-[80vh] overflow-hidden" v-if="orgListLength > 0">
+                            <div class="min-w-max h-[100%]">
                                 <EmployeeList :source="orgList" :is-team="false" />
                             </div>
-                            <div class="overflow-x-auto ml-2 w-100 rounded-lg">
+                            <div class="overflow-x-auto ml-2 h-[100%] w-100 rounded-lg ">
                                 <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                     :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
                                 <ClassicTimesheet v-else

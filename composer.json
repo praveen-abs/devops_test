@@ -68,7 +68,6 @@
             "app/Services/VmtMobileConfigService.php",
             "app/Services/VmtAttendanceServiceV2.php"
 
-
         ]
     },
     "autoload-dev": {

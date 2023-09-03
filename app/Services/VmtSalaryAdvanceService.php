@@ -345,7 +345,7 @@ class VmtSalaryAdvanceService
 
                 return response()->json($salary_adv);
             } else {
-
+                
                 $salary_adv['eligible'] = "1";
                 return response()->json($salary_adv);
             }

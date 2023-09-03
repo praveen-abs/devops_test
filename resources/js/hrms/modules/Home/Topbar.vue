@@ -5,16 +5,16 @@
         <div class=" grid grid-cols-12 justify-between items-center">
             <!-- Organization List  -->
             <div class="relative border-1 border-x-gray-300 py-2 mx-2 px-2 col-span-4"
-                @click="useDashboard.canShowClients = !useDashboard.canShowClients">
+                >
                 <button class=" text-black rounded  focus:outline-none">
                     <p class="text-md text-gray-600 text-left">Your organization</p>
                     <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient">
 
                         <img :src="currentlySelectedClient.client_logo" alt="" class="h-6 w-12">
                         <p class="text-sm whitespace-nowrap  font-semibold px-2"
-                            v-if="currentlySelectedClient.client_fullname.length <= 13">{{
+                            v-if="currentlySelectedClient.client_fullname.length <= 13" @click="useDashboard.canShowClients = !useDashboard.canShowClients">{{
                                 currentlySelectedClient.client_fullname }}</p>
-                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-tooltip="currentlySelectedClient.client_fullname "  v-else> {{
+                        <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto" v-tooltip="currentlySelectedClient.client_fullname "  v-else @click="useDashboard.canShowClients = !useDashboard.canShowClients"> {{
                             currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
                                 13) + '..' : '' }}</p>
                     </div>
@@ -24,7 +24,7 @@
                     v-if="service.current_user_role == 2 || service.current_user_role == 4"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
-                    leave-to-class="opacity-0 translate-y-2">
+                    leave-to-class="opacity-0 translate-y-2"   @mouseleave ="useDashboard.canShowClients = false ">
                     <div v-if="useDashboard.canShowClients"
                         class="absolute top-5 left-2 mt-14 w-11/12 bg-white shadow-lg rounded z-20">
                         <!-- Dropdown content goes here -->
@@ -36,8 +36,14 @@
                                     <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
                                         style="height: 30px;width:30px">
                                         <img :src="client.client_logo" alt="" class=" mh-100 mw-100">
-                                        <p class="font-semibold whitespace-nowrap text-sm ">{{ client.client_fullname }} ({{
-                                            client.abs_client_code }})</p>
+                                        <!-- <p class="font-semibold whitespace-nowrap text-sm ">{{ client.client_fullname }} ({{
+                                            client.abs_client_code }})</p> -->
+                                            <p class="text-sm whitespace-nowrap  font-semibold px-2"
+                            v-if="client.client_fullname.length <= 40">{{
+                                client.client_fullname }} {{client.abs_client_code   }}</p>
+                        <p class="text-sm whitespace-nowrap  font-semibold px-2" v-tooltip="client.client_fullname "  v-else> {{
+                            client.client_fullname ? client.client_fullname.substring(0,
+                                40) + '..' : '' }}</p>
                                     </div>
                                 </div>
                                 <div v-if="currentlySelectedClient ? currentlySelectedClient.id == client.id : ''">
@@ -88,7 +94,7 @@
                 <transition enter-active-class="transition ease-out duration-200 transform"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
-                    leave-to-class="opacity-0 translate-y-2">
+                    leave-to-class="opacity-0 translate-y-2"  @mouseleave="useDashboard.canShowConfiguration = false">
                     <div v-if="useDashboard.canShowConfiguration"
                         @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"
                         class="absolute top-0 right-40 mt-16 w-60 bg-white shadow-lg rounded z-40 p-2 ">
@@ -114,6 +120,9 @@
                         <a href="investment_settings"
                             class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Investment setting</a>
+                        <a href="showMobileSettingsPage"
+                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Mobile setting</a>
                         <a href="showSAsettingsView"
                             class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting

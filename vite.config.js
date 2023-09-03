@@ -3,9 +3,6 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-    // build:{
-    //       'outDir':'./dist'
-    // },
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
@@ -181,6 +178,9 @@ export default defineConfig({
              'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
+
+            //  payslipPreview
+            'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
 
 
             ],

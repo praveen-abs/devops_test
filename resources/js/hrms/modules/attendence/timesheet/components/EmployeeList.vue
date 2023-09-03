@@ -1,5 +1,5 @@
 <template>
-    <div class="card h-screen overflow-x-auto">
+    <div class="card overflow-y-scroll h-[100%]">
         <div class="card-body">
             <input type="text" name="" id="" v-model="query" class="border border-gray-300 p-1 w-full rounded-lg first-letter my-2"
                 placeholder="Search Employees..">
