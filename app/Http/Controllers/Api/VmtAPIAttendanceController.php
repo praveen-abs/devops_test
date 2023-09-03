@@ -256,7 +256,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $user_id = User::where('user_code', $request->user_code)->first()->id;
 
         $response = $serviceVmtAttendanceService->applyLeaveRequest(
-            user_id: $user_id,
+            user_code: $request->user_code,
             leave_request_date: $request->leave_request_date,
             start_date: $request->start_date,
             end_date: $request->end_date,
@@ -267,6 +267,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             leave_type_name: $request->leave_type_name,
             leave_reason: $request->leave_reason,
             notifications_users_id: $request->notifications_users_id,
+            user_type:"",
             serviceNotificationsService: $serviceVmtNotificationsService
         );
 
