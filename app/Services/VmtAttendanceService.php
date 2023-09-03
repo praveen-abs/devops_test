@@ -3611,7 +3611,7 @@ class VmtAttendanceService
             }
 
             //logics for get lc and mip
-            $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id)
+            $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id);
             dd($single_user_data);
            
         }
