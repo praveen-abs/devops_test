@@ -407,7 +407,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
         // data_checking.value=true
         axios.post('/applyLeaveRequest', {
-            "user_code": Service,
+            "user_code": service.current_user_code,
             "leave_request_date": leave_Request_data.leave_Request_date,
             "leave_type_name": leave_Request_data.leave_type_name,
             "leave_session": leave_Request_data.leave_session,
