@@ -1729,7 +1729,7 @@ class VmtCorrectionController extends Controller
 
         foreach ($users as $single_users) {
 
-            $payroll_date = VmtPayroll::where('payroll_date', $payslip_month)->where('client_id', $single_client_id)->first();
+            $payroll_date = VmtPayroll::where('payroll_date', $single_months)->where('client_id', $single_client_id)->first();
             $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_users->id)->first();
             $start_date = Carbon::parse($timeperiod->start_date)->subMonth(1);
             $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
@@ -1741,7 +1741,7 @@ class VmtCorrectionController extends Controller
                 if ($start_date->lt($single_months)) {
 
                     $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-                    ->where('vmt_payroll.payroll_date', $start_date)
+                    ->where('vmt_payroll.payroll_date', $single_months)
                     ->where('vmt_emp_payroll.user_id', $single_users->id)
                     ->first([
                         'vmt_emp_payroll.id as id'

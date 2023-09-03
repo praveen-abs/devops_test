@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Mail\TestEmail;
+use App\Models\AbsSalaryProjection;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\vmtInvEmp_Fsp_Popups;
 use App\Models\VmtInvForm;
+use App\Models\VmtPayroll;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtEmployeePaySlip;
@@ -797,20 +799,39 @@ class VmtTestingController extends Controller
      public function Tesingtdsworksheet(Request $request){
 
 
-            $html = view('dynamic_payslip_templates.dynamic_payslip_v2');
+            // $html = view('dynamic_payslip_templates.dynamic_payslip_v2');
 
-            // return $html;
+            // // return $html;
 
-            $options = new Options();
-            $options->set('isHtml5ParserEnabled', true);
-            $options->set('isRemoteEnabled', true);
+            // $options = new Options();
+            // $options->set('isHtml5ParserEnabled', true);
+            // $options->set('isRemoteEnabled', true);
 
-            $pdf = new Dompdf($options);
-            $pdf->loadhtml($html, 'UTF-8');
-            $pdf->setPaper('A4', 'portrait');
-            $pdf->render();
+            // $pdf = new Dompdf($options);
+            // $pdf->loadhtml($html, 'UTF-8');
+            // $pdf->setPaper('A4', 'portrait');
+            // $pdf->render();
 
-            $docUploads =  $pdf->stream();
+            // $docUploads =  $pdf->stream();
+
+            $start_date = '2023-07-01';
+            $single_users = '194';
+
+            $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
+                    ->where('vmt_payroll.payroll_date', $start_date)
+                    ->where('vmt_emp_payroll.user_id', $single_users)
+                    ->first([
+                        'vmt_emp_payroll.id as id'
+                    ]);
+
+                    // dd($payslip_id);
+
+
+         $payslip_details  = AbsSalaryProjection::where('vmt_emp_payroll_id',$payslip_id->id)->get()->toarray();
+
+         dd($payslip_details);
+
+
 
         }
 
