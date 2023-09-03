@@ -656,7 +656,7 @@ class VmtAttendanceService
                 ->whereIn('status', ['Pending', 'Approved'])
                 ->get(['start_date', 'end_date', 'status']);
 
-            dd($existingLeavesRequests);
+            //dd($existingLeavesRequests);
 
             foreach ($existingLeavesRequests as $singleExistingLeaveRequest) {
 
@@ -862,7 +862,7 @@ class VmtAttendanceService
                 'mail_status' => 'failure',
                 'notification' => $res_notification ?? '',
                 'error' => $e->getMessage(),
-                'error_verbose' => $e
+                'error_verbose' => $e->getline(),
             ];
 
             return $response;
@@ -1808,7 +1808,7 @@ class VmtAttendanceService
             $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-            if ($user_type != "Admin") {
+            if (!empty($user_type)&& $user_type != "Admin") {
                 //Check if manager's mail exists or not
                 if (!empty($manager_details)) {
                     //dd($manager_details);
@@ -1955,7 +1955,7 @@ class VmtAttendanceService
             $mail_status = "";
 
             //Get employee details
-            if ($user_type == "Admin") {
+            if (!empty($user_type) && $user_type == "Admin") {
 
                 $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
@@ -1987,6 +1987,7 @@ class VmtAttendanceService
                     $mail_status = "There was one or more failures.";
                 }
             } else {
+
                 $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
@@ -2047,14 +2048,15 @@ class VmtAttendanceService
                     'message' => 'Attendance Regularization approval successful',
                     'mail_status' => 'failure',
                     'error' => $e->getMessage(),
-                    'error_verbose' => $e
+                    'error_verbose' => $e->getline(),
                 ]
             );
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ approveRejectAttendanceRegularization() ) ] " . $e->getMessage(),
-                'data' => $e->getMessage()
+                'message' => "Error[ approveRejectAttendanceRegularization() ) ] ",
+                'data' => $e->getMessage(),
+                'error_line' => $e->getline(),
             ]);
         }
     }
@@ -3489,6 +3491,93 @@ class VmtAttendanceService
     public function getAttendanceDashboardData()
     {
 
-        dd("simma");
+        $current_date = Carbon::now()->format('Y-m-d');
+        // $Current_month = Carbon::now()->format('m');
+
+        $user_code =  auth()->user()->user_code;
+
+        $user_data = User::where("user_code", $user_code)->first();
+
+        $employees_data = array();
+
+        $absent_count = 0;
+
+        $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
+
+
+        foreach ($employees_data as $key => $single_user_data) {
+
+            $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
+
+            if (empty($absent_employee_data)) {
+
+                $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
+
+                $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+
+                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+
+                if (empty($emp_bio_attendance)) {
+
+                    $absent_count++;
+                }
+            }
+        }
+
+        $pending_request_count['employee_absent_count'] =  $absent_count;
+
+    }
+
+
+
+
+    public function getBioMetricAttendanceData($user_code, $current_date)
+    {
+        $deviceData = array();
+        if (
+            sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
+            sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
+        ) {
+            $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                ->whereDate('date', $current_date)
+                ->where('user_Id', $user_code)
+                ->first(['check_out_time']);
+
+            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $current_date)
+                ->where('user_Id',  $user_code)
+                ->first(['check_in_time']);
+        } else {
+            $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                ->whereDate('date', $current_date)
+                ->where('direction', 'out')
+                ->where('user_Id', $user_code)
+                ->first(['check_out_time']);
+
+            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $current_date)
+                ->where('direction', 'in')
+                ->where('user_Id', $user_code)
+                ->first(['check_in_time']);
+        }
+        //dd($attendanceCheckIn);
+
+        $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+        $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+        //    dd($deviceCheckInTime);
+        if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+            $deviceData[] = ([
+                'date' => $current_date,
+                'checkin_time' => $deviceCheckInTime,
+                'checkout_time' => $deviceCheckOutTime,
+                'attendance_mode_checkin' => 'biometric',
+                'attendance_mode_checkout' => 'biometric'
+            ]);
+        }
+        return $deviceData;
     }
 }
