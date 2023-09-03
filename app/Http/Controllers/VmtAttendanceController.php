@@ -1547,6 +1547,12 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
+    public function isLeaveBalanceAvailable(Request $request, VmtAttendanceService $serviceAttendanceService){
+        return $serviceAttendanceService->isLeaveBalanceAvailable(user_code : $request->user_code,
+                                                                    leave_type_name : $request->leave_type_name,
+                                                                    current_applied_leave_count : $request->current_applied_leave_count);
+    }
+
     public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
         return $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);

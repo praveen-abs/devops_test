@@ -569,7 +569,7 @@ class VmtAttendanceService
                 'hours_diff' => 'required',
                 'compensatory_work_days_ids' => 'required',
                 'leave_session' => 'required',
-                'leave_type_name' => 'required',
+                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
                 'notifications_users_id' => 'required',
             ],
             $messages = [
@@ -893,6 +893,53 @@ class VmtAttendanceService
             ];
 
             return $response;
+        }
+    }
+
+    /*
+        Check whether leave balance available
+
+    */
+    public function isLeaveBalanceAvailable($user_code, $leave_type_name, $current_applied_leave_count){
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'leave_type_name' => $leave_type_name,
+                'current_applied_leave_count' => $current_applied_leave_count,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
+                'current_applied_leave_count' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+                dd($this->getEmployeeLeaveBalance($user_code));
+
+
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ isLeaveBalanceAvailable() ] " . $e->getMessage(),
+                'data' => $e->getMessage()
+            ]);
         }
     }
 
