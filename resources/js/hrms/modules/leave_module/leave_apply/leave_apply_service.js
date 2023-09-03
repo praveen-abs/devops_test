@@ -418,7 +418,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             if (res.data.status == 'success') {
                 Swal.fire(
                     'Success',
-                    'Leave Applied successfull!',
+                    res.data.message,
                     'success'
                 )
 
@@ -426,7 +426,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             if (res.data.status == 'failure') {
                 Swal.fire(
                     'Failure',
-                    'Leave Request already applied for this date',
+                    res.data.message,
                     'error'
                 )
             }
