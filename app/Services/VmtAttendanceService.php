@@ -424,6 +424,106 @@ class VmtAttendanceService
         return $daterange;
     }
 
+    public function applyLeaveRequest_AdminRole($admin_user_code,
+                                                $user_code,
+                                                $leave_request_date,
+                                                $start_date,
+                                                $end_date,
+                                                $hours_diff,
+                                                $no_of_days,
+                                                $compensatory_work_days_ids,
+                                                $leave_session,
+                                                $leave_type_name,
+                                                $leave_reason,
+                                                $notifications_users_id,
+                                                VmtNotificationsService $serviceNotificationsService
+    ){
+
+        $validator = Validator::make(
+            $data = [
+                'admin_user_code' => $admin_user_code,
+                'user_code' => $user_code,
+            ],
+            $rules = [
+                'admin_user_code' => 'required|exists:users,user_code',
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try
+        {
+            $is_admin = User::where('user_code', $admin_user_code)->where('org_role', "2");
+
+            if ($is_admin->exists()) {
+
+                //$is_admin = $is_admin->first();
+
+                $response = $this->applyLeaveRequest(
+
+                    user_code : $user_code,
+                    leave_request_date : $leave_request_date,
+                    start_date :  $start_date,
+                    end_date :  $end_date,
+                    hours_diff : $hours_diff,
+                    no_of_days : $no_of_days,
+                    compensatory_work_days_ids :  $compensatory_work_days_ids,
+                    leave_session : $leave_session,
+                    leave_type_name : $leave_type_name,
+                    leave_reason : $leave_reason,
+                    notifications_users_id : $notifications_users_id,
+                    serviceVmtNotificationsService: $serviceNotificationsService
+                );
+
+                if ($response['status'] == "success") {
+
+                    dd("Unimplemented ");
+                    $user_data = User::where('user_code', $user_code)->first();
+
+                    // $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->first();
+
+                    // $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
+                    //     approver_user_code: $admin_user_code,
+                    //     record_id: $record_id->id,
+                    //     status: "Approved",
+                    //     status_text: "---",
+                    //     user_type: "Admin",
+                    //     serviceVmtNotificationsService: $serviceVmtNotificationsService
+                    // );
+                }
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+                ]);
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while applying leave request',
+                'mail_status' => 'failure',
+                'notification' => '',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getTraceAsString()
+            ];
+
+            return $response;
+        }
+
+    }
+
     /*
 
         $hours_diff : For permission only
@@ -434,7 +534,7 @@ class VmtAttendanceService
 
     */
     public function  applyLeaveRequest(
-        $user_id,
+        $user_code,
         $leave_request_date,
         $start_date,
         $end_date,
@@ -448,21 +548,54 @@ class VmtAttendanceService
         VmtNotificationsService $serviceNotificationsService
     ) {
 
+        $validator = Validator::make(
+            $data = [
+                'admin_user_code' => $admin_user_code,
+                'user_code' => $user_code,
+                'approver_user_code' => $approver_user_code,
+                'status' => $status,
+                'review_comment' => $review_comment,
+            ],
+            $rules = [
+                'record_id' => 'required|exists:vmt_employee_leaves,id',
+                'approver_user_code' => 'required|exists:users,user_code',
+                'status' => ['required', Rule::in(['Approved', 'Rejected', 'Revoked'])],
+                'review_comment' => 'nullable',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
 
         try {
             //Core values needed
-            $query_user = User::where('id', $user_id)->first();
+            $query_user = User::where('user_code', $user_code)->first();
             $compensatory_leavetype_id = VmtLeaves::where('leave_type', 'LIKE', '%Compensatory%')->first()->id;
             $leave_type_id = VmtLeaves::where('leave_type', $leave_type_name)->first()->id;
 
             //Check whether this user has manager
-            $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->l1_manager_code;
+            $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first();
 
             if (empty($manager_emp_code)) {
                 return response()->json([
                     "status" => "failure",
-                    "message" => "Manager not found for the given user " . $user_id . " . Kindly contact the admin"
+                    "message" => "Manager not found for the given user " . $query_user->name . " . Kindly contact the admin"
                 ]);
+            }
+            else
+            {
+                $manager_emp_code = $manager_emp_code->l1_manager_code;
             }
 
             $query_manager = User::where('user_code', $manager_emp_code)->first();
@@ -523,7 +656,7 @@ class VmtAttendanceService
                 ->whereIn('status', ['Pending', 'Approved'])
                 ->get(['start_date', 'end_date', 'status']);
 
-            dd($existingLeavesRequests);
+            //dd($existingLeavesRequests);
 
             foreach ($existingLeavesRequests as $singleExistingLeaveRequest) {
 
@@ -729,7 +862,7 @@ class VmtAttendanceService
                 'mail_status' => 'failure',
                 'notification' => $res_notification ?? '',
                 'error' => $e->getMessage(),
-                'error_verbose' => $e
+                'error_verbose' => $e->getline(),
             ];
 
             return $response;
@@ -740,7 +873,7 @@ class VmtAttendanceService
                 'mail_status' => 'failure',
                 'notification' => '',
                 'error' =>  $e->getMessage(),
-                'error_verbose' => $e
+                'error_verbose' => $e->getTraceAsString()
             ];
 
             return $response;
@@ -748,7 +881,6 @@ class VmtAttendanceService
     }
 
     public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment, VmtNotificationsService $serviceNotificationsService)
-
     {
 
         $validator = Validator::make(
@@ -816,33 +948,22 @@ class VmtAttendanceService
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
-            try {
-                $isSent    = \Mail::to($employee_mail)->send(
-                    new ApproveRejectLeaveMail(
-                        $obj_employee->name,
-                        $obj_employee->user_code,
-                        VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                        User::find($manager_user_id)->name,
-                        User::find($manager_user_id)->user_code,
-                        request()->getSchemeAndHttpHost(),
-                        $image_view,
-                        $emp_avatar,
-                        $status
-                    )
 
-                );
-            } catch (TransportException $e) {
+            $isSent    = \Mail::to($employee_mail)->send(
+                new ApproveRejectLeaveMail(
+                    $obj_employee->name,
+                    $obj_employee->user_code,
+                    VmtLeaves::find($leave_record->leave_type_id)->leave_type,
+                    User::find($manager_user_id)->name,
+                    User::find($manager_user_id)->user_code,
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    $emp_avatar,
+                    $status
+                )
 
-                return response()->json(
-                    [
-                        'status' => 'success',
-                        'message' => 'Leave approval successful',
-                        'mail_status' => 'failure',
-                        'error' => $e->getMessage(),
-                        'error_verbose' => $e
-                    ]
-                );
-            }
+            );
+
             if ($isSent) {
                 $mail_status = "success";
             } else {
@@ -1686,7 +1807,7 @@ class VmtAttendanceService
             $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-            if ($user_type != "Admin") {
+            if (!empty($user_type)&& $user_type != "Admin") {
                 //Check if manager's mail exists or not
                 if (!empty($manager_details)) {
                     //dd($manager_details);
@@ -1833,7 +1954,7 @@ class VmtAttendanceService
             $mail_status = "";
 
             //Get employee details
-            if ($user_type == "Admin") {
+            if (!empty($user_type) && $user_type == "Admin") {
 
                 $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
@@ -1865,6 +1986,7 @@ class VmtAttendanceService
                     $mail_status = "There was one or more failures.";
                 }
             } else {
+
                 $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
@@ -1925,14 +2047,15 @@ class VmtAttendanceService
                     'message' => 'Attendance Regularization approval successful',
                     'mail_status' => 'failure',
                     'error' => $e->getMessage(),
-                    'error_verbose' => $e
+                    'error_verbose' => $e->getline(),
                 ]
             );
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ approveRejectAttendanceRegularization() ) ] " . $e->getMessage(),
-                'data' => $e->getMessage()
+                'message' => "Error[ approveRejectAttendanceRegularization() ) ] ",
+                'data' => $e->getMessage(),
+                'error_line' => $e->getline(),
             ]);
         }
     }
@@ -3379,7 +3502,7 @@ class VmtAttendanceService
         $absent_count = 0;
 
         $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
-        // dd($employees_data);
+
 
         foreach ($employees_data as $key => $single_user_data) {
 
@@ -3394,6 +3517,7 @@ class VmtAttendanceService
                 $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
 
                 if (empty($emp_bio_attendance)) {
+
                     $absent_count++;
                 }
             }
