@@ -43,6 +43,7 @@ class VmtAttendanceService
 
 
     public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
+    public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
     {
 
         $validator = Validator::make(
@@ -523,6 +524,7 @@ class VmtAttendanceService
                 ->whereIn('status', ['Pending', 'Approved'])
                 ->get(['start_date', 'end_date', 'status']);
 
+            dd($existingLeavesRequests);
 
             foreach ($existingLeavesRequests as $singleExistingLeaveRequest) {
 
@@ -1459,9 +1461,15 @@ class VmtAttendanceService
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
             $isSent = null;
-            if ($user_type != "Admin") {
+
+            if (!empty($user_type) && $user_type != "Admin") {
                 if (empty($manager_details)) {
                     //Manager mail is empty or no manager assigned. Cant send mail
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => "Manager mail is not found. Kindly contact the Admin.",
+                        'data' => ''
+                    ]);
 
                 } else {
                     //If Manager mail is available, then send mail
@@ -1485,6 +1493,7 @@ class VmtAttendanceService
                     $mail_status = "There was one or more failures.";
                 }
             }
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Absent Regularization applied successfully',

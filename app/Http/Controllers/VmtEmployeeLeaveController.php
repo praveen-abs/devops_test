@@ -7,7 +7,13 @@ use App\Services\VmtEmployeeLeaveService;
 use App\Models\User;
 use Exception;
 use App\Imports\ImportLeaveBalance;
+use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtLeaves;
+use PhpParser\Node\Stmt\Catch_;
+use App\Models\VmtOrgTimePeriod;
+use App\Models\VmtEmployeesLeavesAccrued;
+use Carbon\Carbon;
+
 
 class VmtEmployeeLeaveController extends Controller
 {
@@ -53,11 +59,80 @@ class VmtEmployeeLeaveController extends Controller
         ]);
 
         $importDataArry = \Excel::toArray(new ImportLeaveBalance, request()->file('file'))[0];
-       // dd(  $importDataArry );
-       //get Active year start month
+        // dd($importDataArry);
+        //Active year start month
+        $org_period = VmtOrgTimePeriod::where('status', 1)->first();
+        //  $start_date =  Carbon::parse($org_period->start_date);
+        // $end_date = $org_period->end_date;
         for ($i = 1; $i < count($importDataArry); $i++) {
-            $importDataArry[$i]['effective_month'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject( $importDataArry[$i]['effective_month'] )->format('Y-m-d');
-            dd($importDataArry[$i]);
-        } 
+            try {
+                $user = User::where('user_code', $importDataArry[$i]['employee_code']);
+                if ($user->exists()) {
+                    $importDataArry[$i]['effective_month'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($importDataArry[$i]['effective_month'])->format('Y-m-d');
+                    $start_date =  Carbon::parse($importDataArry[$i]['effective_month'])->subMonths($importDataArry[$i]['opening_balance'])->format('Y-m-d');
+                    $total_months = Carbon::parse($start_date)->diffInMonths(Carbon::parse($importDataArry[$i]['effective_month']));
+                    $end_date = Carbon::parse($importDataArry[$i]['effective_month'])->subMonth();
+                    $leave = VmtLeaves::where('leave_type', $importDataArry[$i]['leave_type']);
+                    if (!$leave->exists()) {
+                        return response()->json([
+                            'status' => 'failure',
+                            'message' => 'Error while uploading Excel data',
+                            'error_fields' =>  $importDataArry[$i]['leave_type'] . ' leave_type Not Exists',
+                        ]);
+                    }
+
+                    $j = 0;
+                    while ($end_date->gte(Carbon::parse($start_date)->addMonths($j))) {
+                        $temp_date =  Carbon::parse($start_date)->addMonths($j);
+                        $year =  $temp_date->format('Y');
+                        $month = $temp_date->format('m');
+                      
+                        if (!VmtEmployeesLeavesAccrued::where('user_id', $user->first()->id)
+                            ->whereYear('date', $year)
+                            ->whereMonth('date', $month)
+                            ->where('leave_type_id', $leave->first()->id)->exists()) {
+                            $leave_accrued = new VmtEmployeesLeavesAccrued;
+                            $leave_accrued->user_id = $user->first()->id;
+                            $leave_accrued->date = $year . '-' . $month . '-15';
+                            $leave_accrued->leave_type_id = $leave->first()->id;
+                            $leave_accrued->accrued_leave_count = 1;
+                            $leave_accrued->save();
+                        }
+                        $j = $j + 1;
+                    }
+                    $leave_req_year = Carbon::parse($importDataArry[$i]['effective_month'])->format('Y');
+                    $leave_req_month = Carbon::parse($importDataArry[$i]['effective_month'])->format('m');
+                    $leave_req_date = Carbon::parse($importDataArry[$i]['effective_month'])->format('d');
+                    if (!VmtEmployeeLeaves::where('user_id', $user->first()->id)
+                        ->where('total_leave_datetime', $importDataArry[$i]['availed'])
+                        ->whereYear('leaverequest_date',  $leave_req_year)
+                        ->whereMonth('leaverequest_date', $leave_req_month)
+                        ->whereDay('leaverequest_date', $leave_req_date)->exists()) {
+                        $emp_leaves = new VmtEmployeeLeaves;
+                        $emp_leaves->user_id =  $user->first()->id;
+                        $emp_leaves->leaverequest_date = $importDataArry[$i]['effective_month'];
+                        $emp_leaves->total_leave_datetime = $importDataArry[$i]['availed'];
+                        $emp_leaves->save();
+                    }
+                } else {
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Error while uploading Excel data',
+                        'error_fields' =>  $importDataArry[$i]['employee_code'] . ' Employee Code Not Exists',
+                    ]);
+                }
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Error while uploading Excel data',
+                    'error_fields' =>  $e->getMessage() . " " . $e->getline(),
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Leave Balance Uploaded Sucessfully',
+        ]);
     }
 }
