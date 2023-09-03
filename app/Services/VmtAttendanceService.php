@@ -43,6 +43,7 @@ class VmtAttendanceService
 
 
     public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
+    public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
     {
 
         $validator = Validator::make(
@@ -3370,6 +3371,91 @@ class VmtAttendanceService
     public function getAttendanceDashboardData()
     {
 
-        dd("simma");
+        $current_date = Carbon::now()->format('Y-m-d');
+        // $Current_month = Carbon::now()->format('m');
+
+        $user_code =  auth()->user()->user_code;
+
+        $user_data = User::where("user_code", $user_code)->first();
+
+        $employees_data = array();
+
+        $absent_count = 0;
+
+        $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
+        dd($employees_data);
+     
+        foreach ($employees_data as $key => $single_user_data) {
+         
+            $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
+           
+            if (empty($absent_employee_data)) {
+
+                $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
+
+                $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+
+                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+
+                if (empty($emp_bio_attendance)) {
+                    $absent_count++;
+                }
+            }
+        }
+
+        $pending_request_count['employee_absent_count'] =  $absent_count;
+    }
+
+
+
+
+    public function getBioMetricAttendanceData($user_code, $current_date)
+    {
+        $deviceData = array();
+        if (
+            sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
+            sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
+        ) {
+            $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                ->whereDate('date', $current_date)
+                ->where('user_Id', $user_code)
+                ->first(['check_out_time']);
+
+            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $current_date)
+                ->where('user_Id',  $user_code)
+                ->first(['check_in_time']);
+        } else {
+            $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                ->whereDate('date', $current_date)
+                ->where('direction', 'out')
+                ->where('user_Id', $user_code)
+                ->first(['check_out_time']);
+
+            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $current_date)
+                ->where('direction', 'in')
+                ->where('user_Id', $user_code)
+                ->first(['check_in_time']);
+        }
+        //dd($attendanceCheckIn);
+
+        $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+        $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+        //    dd($deviceCheckInTime);
+        if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+            $deviceData[] = ([
+                'date' => $current_date,
+                'checkin_time' => $deviceCheckInTime,
+                'checkout_time' => $deviceCheckOutTime,
+                'attendance_mode_checkin' => 'biometric',
+                'attendance_mode_checkout' => 'biometric'
+            ]);
+        }
+        return $deviceData;
     }
 }
