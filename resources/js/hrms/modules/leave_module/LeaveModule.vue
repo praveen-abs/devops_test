@@ -39,7 +39,7 @@
 
                 </div>
                 <a href="/attendance-leave-policydocument" id=""
-                    class="text-md  font-medium border-1 border-orange-400 rounded-lg text-center bg-orange-400 text-white my-auto p-1.5 dark:text-white"
+                    class="text-md  font-medium border-1 border-black rounded-lg text-center bg-black text-white my-auto p-1.5 dark:text-white"
                     role="button" aria-expanded="false">
                     Leave
                     Policy Explanation

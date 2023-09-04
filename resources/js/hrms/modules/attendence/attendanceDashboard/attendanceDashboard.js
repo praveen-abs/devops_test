@@ -13,14 +13,15 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
+import Dialog from 'primevue/dialog';
+import DialogService from 'primevue/dialogservice'
 
 
-import DialogService from 'primevue/dialogservice';
 
 
-import AttendanceModule from './AttendanceModule.vue'
+import AttendanceDashboard from './attendanceDashboard.vue'
 
-const app = createApp(AttendanceModule);
+const app = createApp(AttendanceDashboard);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -35,6 +36,7 @@ app.component('Column',Column)
 app.component('ColumnGroup',ColumnGroup)
 app.component('Row',Row)
 app.component('Chart',Chart)
+app.component('Dialog',Dialog)
 
-app.mount("#AttendanceModule");
+app.mount("#AttendanceDashboard");
 

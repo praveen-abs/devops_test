@@ -1,4 +1,5 @@
 <template>
+    <LoadingSpinner v-if="useDashboard.canShowLoading" class="absolute z-50 bg-white" />
     <div class="w-full">
         <p class="mb-2 text-2xl  text-black font-semibold">
             Attendance dashboard
@@ -12,9 +13,9 @@
                 </p>
             </div>
             <div class="flex justify-end gap-5 mx-4">
-                <div>1</div>
+                <!-- <div>1</div>
                 <div>2</div>
-                <div>2</div>
+                <div>2</div> -->
             </div>
         </div>
 
@@ -66,6 +67,8 @@ import Upcomings from './Upcomings/Upcomings.vue';
 import Shifts from './Shifts/Shifts.vue';
 import { onMounted } from 'vue';
 import { useAttendanceDashboardMainStore } from './stores/attendanceDashboardMainStore';
+import LoadingSpinner from '../../../components/LoadingSpinner.vue'
+
 
 const useDashboard = useAttendanceDashboardMainStore()
 

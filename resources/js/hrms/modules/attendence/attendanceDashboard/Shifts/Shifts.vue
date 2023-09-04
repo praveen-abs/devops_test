@@ -27,11 +27,11 @@
                     <div class="flex justify-between ">
                         <div>
                             <p class="font-semibold text-sm text-[#000] font-['Poppins]">Present</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">100</p>
+                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
                         </div>
                         <div class="mx-3">
                             <p class="font-semibold text-sm text-[#000] font-['Poppins]">Absent</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">56</p>
+                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
                         </div>
                     </div>
 
