@@ -3,6 +3,7 @@ import { ref, reactive, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
+import { Service } from "../../Service/Service";
 const swal = inject("$swal");
 
 
@@ -10,6 +11,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
     // Notification service
     const toast = useToast();
+    const service = Service()
 
     // Variable Declarations
     const leave_data = reactive({
@@ -83,11 +85,11 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         leave_data.radiobtn_half_day == "half_day"
             ? (half_day_format.value = true)
             : (half_day_format.value = false);
+        half_day_format.value = true;
         custom_format.value = false;
         Permission_format.value = false;
         full_day_format.value = false;
         compensatory_format.value = false;
-        half_day_format.value = true;
     };
     const custom_day = () => {
         leave_data.radiobtn_custom == "custom"
@@ -292,171 +294,157 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
     const Submit = async () => {
 
-        //get the current user code
-        let current_usercode =  "NULL";
 
-        //http://localhost:8000/currentUserCode
-       await axios.get('/currentUserCode').then(res => {
-            current_usercode  = res.data;
-            console.log("Current UserCode : " + current_usercode);
+        //Leave applying logic happens here.
 
-            //Leave applying logic happens here.
+        leave_Request_data.leave_type_name = leave_data.selected_leave
+        if (leave_data.radiobtn_full_day == "full_day") {
+            console.log("Full day leave : " + leave_data.full_day_leave_date);
+            leave_Request_data.no_of_days = 1
+            //leave_Request_data.start_date = new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
+            leave_Request_data.start_date = moment(leave_data.full_day_leave_date).format('YYYY-MM-DD');
+            leave_Request_data.end_date = leave_Request_data.start_date
+            leave_Request_data.leave_session = "";
 
-            leave_Request_data.leave_type_name = leave_data.selected_leave
-            if (leave_data.radiobtn_full_day == "full_day") {
-                console.log("Full day leave : " + leave_data.full_day_leave_date);
-                leave_Request_data.no_of_days = 1
-                //leave_Request_data.start_date = new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
-                leave_Request_data.start_date = moment(leave_data.full_day_leave_date).format('YYYY-MM-DD');
-                leave_Request_data.end_date = leave_Request_data.start_date
-                leave_Request_data.leave_session = "";
+        }
+        else
+            if (leave_data.radiobtn_half_day == "half_day") {
+                console.log("Applying half-day leave on : " + leave_data.half_day_leave_date);
+                leave_Request_data.no_of_days = 0.5;
+                console.log("half day leave date" + leave_data.half_day_leave_date);
+                leave_Request_data.start_date = moment(leave_data.half_day_leave_date).format('YYYY-MM-DD');
+                leave_Request_data.end_date = leave_Request_data.start_date;
+
+                if (leave_data.half_day_leave_session == "forenoon") {
+                    leave_Request_data.leave_session = "FN"
+                }
+                else
+                    if (leave_data.half_day_leave_session == "afternoon") {
+                        leave_Request_data.leave_session = "AN"
+                    }
+                    else {
+                        //No session selected, show error
+
+                        toast.add({
+                            severity: "info",
+                            summary: "Select Session",
+                            detail: "Select Leave Session",
+                            life: 3000,
+                        });
+
+                        return;
+                    }
 
             }
             else
-                if (leave_data.radiobtn_half_day == "half_day") {
-                    console.log("Applying half-day leave on : " + leave_data.half_day_leave_date);
-                    leave_Request_data.no_of_days = 0.5;
-                    console.log("half day leave date" + leave_data.half_day_leave_date);
-                    leave_Request_data.start_date = moment(leave_data.half_day_leave_date).format('YYYY-MM-DD');
-                    leave_Request_data.end_date = leave_Request_data.start_date;
-
-                    if (leave_data.half_day_leave_session == "forenoon") {
-                        leave_Request_data.leave_session = "FN"
-                    }
-                    else
-                        if (leave_data.half_day_leave_session == "afternoon") {
-                            leave_Request_data.leave_session = "AN"
-                        }
-                        else {
-                            //No session selected, show error
-
-                            toast.add({
-                                severity: "info",
-                                summary: "Select Session",
-                                detail: "Select Leave Session",
-                                life: 3000,
-                            });
-
-                            return;
-                        }
+                if (leave_data.radiobtn_custom == "custom") {
+                    leave_Request_data.start_date = moment(leave_data.custom_start_date).format('YYYY-MM-DD');
+                    leave_Request_data.end_date = moment(leave_data.custom_end_date).format('YYYY-MM-DD');
+                    leave_Request_data.no_of_days = leave_data.custom_total_days
+                    leave_Request_data.leave_session = "";
 
                 }
                 else
-                    if (leave_data.radiobtn_custom == "custom") {
-                        leave_Request_data.start_date = moment(leave_data.custom_start_date).format('YYYY-MM-DD');
-                        leave_Request_data.end_date = moment(leave_data.custom_end_date).format('YYYY-MM-DD');
-                        leave_Request_data.no_of_days = leave_data.custom_total_days
-                        leave_Request_data.leave_session = "";
+                    if (leave_data.selected_leave.includes('Compensatory')) {
+                        leave_Request_data.start_date = moment(leave_data.compensatory_start_date).format('YYYY-MM-DD');
+                        leave_Request_data.end_date = moment(leave_data.compensatory_end_date).format('YYYY-MM-DD');
+                        leave_Request_data.no_of_days = leave_data.compensatory_total_days;
 
-                    }
-                    else
-                        if (leave_data.selected_leave.includes('Compensatory')) {
-                            leave_Request_data.start_date = moment(leave_data.compensatory_start_date).format('YYYY-MM-DD');
-                            leave_Request_data.end_date = moment(leave_data.compensatory_end_date).format('YYYY-MM-DD');
-                            leave_Request_data.no_of_days = leave_data.compensatory_total_days;
+                        let value_selected_compensatory_leaves = Object.values(leave_data.selected_compensatory_leaves).length;
+                        console.log("Selected Compensatory No.of days : " + leave_data.compensatory_total_days);
+                        console.log("Selected Compensatory Leaves : " + value_selected_compensatory_leaves);
 
-                            let value_selected_compensatory_leaves = Object.values(leave_data.selected_compensatory_leaves).length;
-                            console.log("Selected Compensatory No.of days : " + leave_data.compensatory_total_days);
-                            console.log("Selected Compensatory Leaves : " + value_selected_compensatory_leaves);
+                        const find_compensatory_id = Object.values(leave_data.selected_compensatory_leaves);
 
-                            const find_compensatory_id = Object.values(leave_data.selected_compensatory_leaves);
+                        //if textbox comp leave count != selected comp days in dropdown
+                        //// TODO :  Need to check comp days based on 0.5 days also. Right it assumes as 1 day per comp day selected
+                        if (parseInt(leave_data.compensatory_total_days) != value_selected_compensatory_leaves) {
+                            toast.add({
+                                severity: "info",
+                                summary: "Error",
+                                detail: "Compensatory leaves doesnt match with available leave days",
+                                life: 3000,
+                            });
 
-                            //if textbox comp leave count != selected comp days in dropdown
-                            //// TODO :  Need to check comp days based on 0.5 days also. Right it assumes as 1 day per comp day selected
-                            if (parseInt(leave_data.compensatory_total_days) != value_selected_compensatory_leaves) {
-                                toast.add({
-                                    severity: "info",
-                                    summary: "Error",
-                                    detail: "Compensatory leaves doesnt match with available leave days",
-                                    life: 3000,
-                                });
+                            return
+                        }
+                        else {
 
-                                return
-                            }
-                            else {
+                            find_compensatory_id.map(data => {
+                                let id = data.emp_attendance_id
+                                leave_Request_data.compensatory_leave_id.push(id)
+                                console.log(leave_Request_data.compensatory_leave_id);
+                            })
+                        }
 
-                                find_compensatory_id.map(data => {
-                                    let id = data.emp_attendance_id
-                                    leave_Request_data.compensatory_leave_id.push(id)
-                                    console.log(leave_Request_data.compensatory_leave_id);
-                                })
-                            }
-
-                        } else
-                            if (leave_data.selected_leave.includes('Permission')) {
-                                leave_Request_data.start_date = moment(leave_data.permission_date).format('YYYY-MM-DD');
-                                leave_Request_data.end_date = leave_Request_data.start_date;
-                                leave_Request_data.hours_diff = leave_data.permission_total_time;
+                    } else
+                        if (leave_data.selected_leave.includes('Permission')) {
+                            leave_Request_data.start_date = moment(leave_data.permission_date).format('YYYY-MM-DD');
+                            leave_Request_data.end_date = leave_Request_data.start_date;
+                            leave_Request_data.hours_diff = leave_data.permission_total_time;
 
 
-                            }
-                            else {
-                                toast.add({
-                                    severity: "info",
-                                    summary: "Info Message",
-                                    detail: "Select Leave",
-                                    life: 3000,
-                                });
-                            }
+                        }
+                        else {
+                            toast.add({
+                                severity: "info",
+                                summary: "Info Message",
+                                detail: "Select Leave",
+                                life: 3000,
+                            });
+                        }
 
 
-            leave_Request_data.notify_to = leave_data.notifyTo
-            leave_Request_data.leave_reason = leave_data.leave_reason
-            RequiredField.value = true;
-            console.log(leave_Request_data);
+        leave_Request_data.notify_to = leave_data.notifyTo
+        leave_Request_data.leave_reason = leave_data.leave_reason
+        RequiredField.value = true;
+        console.log(leave_Request_data);
 
-            //show loading screen
-            data_checking.value = true;
+        //show loading screen
+        data_checking.value = true;
 
 
 
-            // data_checking.value=true
-            axios.post('/applyLeaveRequest', {
-                "user_code": current_usercode,
-                "leave_request_date": leave_Request_data.leave_Request_date,
-                "leave_type_name": leave_Request_data.leave_type_name,
-                "leave_session": leave_Request_data.leave_session,
-                "start_date": leave_Request_data.start_date,
-                "end_date": leave_Request_data.end_date,
-                "no_of_days": leave_Request_data.no_of_days,
-                "hours_diff": leave_Request_data.hours_diff,
-                "compensatory_work_days_ids": leave_Request_data.compensatory_leave_id,
-                "notify_to": leave_Request_data.notify_to,
-                "leave_reason": leave_Request_data.leave_reason,
-            }).then(res => {
-                data_checking.value = false
-                console.log(res.data.messege);
-                if (res.data.status == 'success') {
-                    Swal.fire(
-                        'Success',
-                        res.data.message,
-                        'success'
-                    )
+        // data_checking.value=true
+        axios.post('/applyLeaveRequest', {
+            "user_code": service.current_user_code,
+            "leave_request_date": leave_Request_data.leave_Request_date,
+            "leave_type_name": leave_Request_data.leave_type_name,
+            "leave_session": leave_Request_data.leave_session,
+            "start_date": leave_Request_data.start_date,
+            "end_date": leave_Request_data.end_date,
+            "no_of_days": leave_Request_data.no_of_days,
+            "hours_diff": leave_Request_data.hours_diff,
+            "compensatory_work_days_ids": leave_Request_data.compensatory_leave_id,
+            "notify_to": leave_Request_data.notify_to,
+            "leave_reason": leave_Request_data.leave_reason,
+        }).then(res => {
+            data_checking.value = false
+            console.log(res.data.messege);
+            if (res.data.status == 'success') {
+                Swal.fire(
+                    'Success',
+                    res.data.message,
+                    'success'
+                )
 
             }
             if (res.data.status == 'failure') {
                 Swal.fire(
                     'Failure',
-                    `${res.data.message}`,
+                    res.data.message,
                     'error'
                 )
             }
 
-                console.log("Email status" + res.data.status);
+            console.log("Email status" + res.data.status);
 
         }).catch(err => {
             console.log(err);
         }).finally(() => {
             leaveApplyDailog.value = false
-            restChars()
+
         })
-
-        }).catch(err => {
-            console.log(err);
-        }).finally(() => {
-            leaveApplyDailog.value = false
-
-        });
 
     };
 
