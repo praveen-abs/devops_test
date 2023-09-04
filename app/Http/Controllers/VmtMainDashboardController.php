@@ -744,7 +744,7 @@ class VmtMainDashboardController extends Controller
             if (!empty($from) && !empty($to)) {
                 $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
             }
-            $response['effective_hours'] = $effective_hours;
+            // $response['effective_hours'] = $effective_hours;
         }
         // if(!empty($response->checkin_date))
         // {

@@ -4,60 +4,56 @@
     <Toast />
     <ConfirmDialog></ConfirmDialog>
     <div class="">
-        <div class="mb-2 shadow card left-line ">
-            <div class="pt-1 pb-0 card-body">
-                <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
-                            data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Declaration</a>
+        <div>
+            <div style="position: relative;" >
+                <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
+                <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3 " id="pills-tab" role="tablist">
+                    <li class=" nav-item" role="presentation">
+                        <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            aria-selected="true" @click="activetab_btn1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            IT Declaration
+                        </a>                      
+                        <div v-if="activetab === 1" class="h-1 rounded-l-3xl " style="border: 2px solid #F9BE00 !important;" ></div>
+                        <div v-else class=" border-2 h-1 rounded-l-3xl border-gray-300"></div>
                     </li>
-                    <li class=" nav-item ember-view" role="presentation">
-                        <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                            data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Investments and Exemptions</a>
+    
+                    <li class=" nav-item position-relative  border-0" role="presentation">
+                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab_btn2"
+                            :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            Investments and Exemptions
+                        </a>
+                        <div v-if="activetab === 2"
+                            class=" h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1  border-gray-300"></div>
                     </li>
-                    <li class=" nav-item ember-view" role="presentation">
-                        <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                            data-bs-target="#investmentComputation" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Income Tax Computations</a>
+                    <li class=" nav-item position-relative  border-0" role="presentation">
+                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab_btn3"
+                            :class="[activetab === 3 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            Income tax Computations
+                        </a>
+                        <div v-if="activetab === 3"
+                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
                     </li>
-                    <!-- <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
-                            data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Form 12 BB</a>
-                    </li>
-                    <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href=""
-                            data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Tax Filling</a>
-                    </li> -->
-
+                    <div class="border-gray-300 border-b-[4px]  w-100 mt-[-7px]"></div>
                 </ul>
-            </div>
-        </div>
-        <div class="mb-0 top-line">
-            <div class="card-body">
-                <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
-                        aria-labelledby="pills-home-tab">
-                        <Declaration />
+                <!-- </div> -->
+                <!-- Tab Content -->
+                <div class="tab-content" id="">
+                    <div>
+                        <div class="card-body">
+                            <div v-if="activetab === 1">
+                                <Declaration />
+                            </div>
+                            <div v-if="activetab === 2">
+                                <!-- <EmployeeSummary /> -->
+                                <InvestmentAndExemption />
+                            </div>
+                            <div v-if="activetab === 3">
+                                <ImvestmentComputation />
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="tab-pane fade " id="exemptions" role="tabpanel">
-                        <InvestmentAndExemption />
-
-                    </div>
-                    <div class="tab-pane fade " id="investmentComputation" role="tabpanel">
-                        <ImvestmentComputation />
-
-                    </div>
-                    <!-- <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
-
-                    </div>
-                    <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="pills-home-tab">
-
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -80,7 +76,7 @@
 
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted,ref,reactive   } from 'vue'
 import Declaration from './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
 import ImvestmentComputation from './income_tax_computation/incomeTaxComputation.vue'
@@ -101,6 +97,26 @@ onMounted(async () => {
     await investmentStore.getInvestmentSource()
     // await useProfilePageStore.fetchEmployeeDetails();
 })
+
+
+const activetab = ref(1);
+
+const activetab_btn1 = ()=>{
+    activetab.value= 1;
+}
+
+const activetab_btn2 = ()=>{
+    activetab.value= 2;
+}
+const activetab_btn3 = ()=>{
+    activetab.value= 3;
+}
+
+const styleObject = reactive({
+  border: '3px solid #F9BE00 !important;'
+});
+
+
 </script>
 
 

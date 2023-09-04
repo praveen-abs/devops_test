@@ -1,17 +1,50 @@
 <template>
-    <Chart type="bar" :data="chartData" :options="chartOptions" class="h-full" />
+    <!-- {{ useDashboard.overallEmployeeCountForGraph ? data = useDashboard.overallEmployeeCountForGraph : ''  }} -->
+    <Chart type="bar" :data="chartData" :options="chartOptions" class="h-full"
+        v-if="useDashboard.overallEmployeeCountForGraph" />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUpdated } from 'vue';
+
+import { useMainDashboardStore } from '../../stores/dashboard_service';
+
+const useDashboard = useMainDashboardStore()
 
 onMounted(() => {
-    chartData.value = setChartData();
+    // chartData.value = setChartData();
     chartOptions.value = setChartOptions();
+    // chartData.value.datasets[0].data = [20, 20, 20]
+    setTimeout(() => {
+        console.log(useDashboard.overallEmployeeCountForGraph);
+        chartData.value.datasets[0].data = useDashboard.overallEmployeeCountForGraph
+
+    }, 3000);
+
 });
 
-const chartData = ref();
+
+const chartData = ref({
+    labels: ['Male', 'Female', 'Others', 'App Check-Ins', 'Active Apps', 'Inactive Apps',],
+    datasets: [
+        {
+            backgroundColor: [
+                'rgba(8, 115, 205, 1)',
+                'rgba(205, 159, 71, 1)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(80, 64, 34, 1)',
+                'rgba(113, 74, 161, 1)',
+                'rgba(181, 86, 151, 1)',
+            ],
+            borderWidth: 10,
+            borderColor: 'white',
+            data: [0, 0, 0, 0, 0, 0]
+        },
+    ],
+});
 const chartOptions = ref();
+
+const data = ref()
 
 const setChartData = () => {
     const documentStyle = getComputedStyle(document.documentElement);
@@ -26,11 +59,10 @@ const setChartData = () => {
                     'rgba(80, 64, 34, 1)',
                     'rgba(113, 74, 161, 1)',
                     'rgba(181, 86, 151, 1)',
-                    'rgba(126, 164, 79, 1)',
                 ],
                 borderWidth: 5,
                 borderColor: 'white',
-                data: [65, 59, 80, 81, 56, 55, 40],
+                data: [20, 20, 20]
             },
         ],
     };
@@ -45,7 +77,7 @@ const setChartOptions = () => {
 
     return {
         maintainAspectRatio: false,
-        aspectRatio: 1,
+        aspectRatio: 100,
         plugins: {
             title: {
                 display: false,

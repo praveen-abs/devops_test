@@ -95,13 +95,31 @@ class VmtEmployeePayCheckService
             'message' => 'none',
             'data' => [],
         ];
+        $corrected_data = $data;
+        foreach ($corrected_data as &$Single_data) {
 
+            if (array_key_exists('dob', $Single_data) && is_int($Single_data['dob'])) {
+
+                $Single_data['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dob'])->format('Y-m-d');
+            }
+            if (array_key_exists('doj', $Single_data) && is_int($Single_data['doj'])) {
+
+                $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
+            }
+            if (array_key_exists('payroll_month', $Single_data) && is_int($Single_data['payroll_month'])) {
+
+                $Single_data['payroll_month'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['payroll_month'])->format('Y-m-d');
+            }
+        }
+        unset($Single_data);
+dd( $corrected_data);
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
-$i=array_keys($excelRowdata_row);
+     $i=array_keys($excelRowdata_row);
 
-      foreach ($excelRowdata_row[$i[0]] as $key => $excelRowdata) {
+
+      foreach ($excelRowdata_row[$i[0]] as $key => $excelRowdata) { $corrected_data = $data;
 
             $currentRowInExcel++;
             $excelRowdata['emp_no']=trim($excelRowdata['emp_no']);
@@ -146,6 +164,9 @@ $i=array_keys($excelRowdata_row);
                             'basic_arrear' => 'required|numeric',
                             'earned_hra' => 'required|numeric',
                             'hra_arrear' => 'required|numeric',
+                            'medical_allowance' => 'required|numeric',
+                            'medical_allowance_earned' => 'required|numeric',
+                            'medical_allowance_arrear' => 'required|numeric',
                             'stats_bonus' => 'required|numeric',
                             'earned_stats_bonus' => 'required|numeric',
                             'earned_stats_arrear' => 'required|numeric',
@@ -315,6 +336,9 @@ $i=array_keys($excelRowdata_row);
             $empPaySlip->hra_arrear = $row["hra_arrear"];
             $empPaySlip->earned_child_edu_allowance = $row["earned_child_edu_allowance"];
             $empPaySlip->child_edu_allowance_arrear = $row["child_edu_allowance_arrear"];
+            $empPaySlip->medical_allowance = $row["medical_allowance"]??0;
+            $empPaySlip->medical_allowance_earned = $row["medical_allowance_earned"]??0;
+            $empPaySlip->medical_allowance_arrear = $row["medical_allowance_arrear"]??0;
             $empPaySlip->earned_spl_alw = $row["earned_spl_alw"];
             $empPaySlip->spl_alw_arrear = $row["spl_alw_arrear"];
             $empPaySlip->overtime = $row["overtime"];
