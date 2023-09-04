@@ -6,13 +6,15 @@
 
                 <ul class="flex-wrap d-flex">
                     <li>
-                        <button class=" bg-[#FFFFFF] border-[1px] border-[#DDDDDD] text-[#000]  mx-[4px] " @click="useStore.DialogAddNewHoliday = true">   <i class="pi pi-plus-circle"></i> Add New
+                        <button class=" bg-[#FFFFFF] border-[1px] border-[#DDDDDD] text-[#000]  mx-[4px] "
+                            @click="useStore.DialogAddNewHoliday = true"> <i class="pi pi-plus-circle"></i> Add New
                             Holiday</button>
                         <button class="bg-[#FFFFFF] border-[1px] border-[#DDDDDD] text-[#000]  mx-[4px] "
                             @click="useStore.CreateNewListDialog = true">
                             <i class="pi pi-plus-circle"></i> <span class="fs-6 fw-semibold">Create New List</span></button>
                     </li>
-                    <li><button class=" text-[#fff] bg-[#000] mx-[4px] " @click="useStore.activeHolidaysPage = 3">View Lists </button>
+                    <li><button class=" text-[#fff] bg-[#000] mx-[4px] " @click="useStore.activeHolidaysPage = 3">View Lists
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -27,10 +29,13 @@
                         style="width:100%; height:100%;" class=" rounded-[12px] shadow-md cd-img" />
                     <div class="overlay rounded-[12px] ">
                         <div class="hover_btn_div d-ard">
-                            <button label="Edit" @click="useStore.updateHolidays = true , useStore.editHolidaylist(holiday),openPosition('right')" class="w-[100px] fs-6 border-[2px] border-[#fff]">
+                            <button label="Edit"
+                                @click="useStore.updateHolidays = true, useStore.editHolidaylist(holiday), openPosition('right')"
+                                class="w-[100px] fs-6 border-[2px] border-[#fff]">
                                 Edit
                             </button>
-                            <button @click="holidaylistRemoveDialog(holiday)" class=" mx-4 fs-6 w-[100px] border-[2px] border-[#fff]">Remove</button>
+                            <button @click="holidaylistRemoveDialog(holiday)"
+                                class=" mx-4 fs-6 w-[100px] border-[2px] border-[#fff]">Remove</button>
                         </div>
                     </div>
                 </div>
@@ -49,7 +54,7 @@
 
             </div>
         </div>
-        
+
         <Dialog v-model:visible="useStore.CreateNewListDialog" modal header="Holiday " :style="{ width: '38vw' }"
             style="border-top:5px solid #002f56" class="popup_card">
             <template #header>
@@ -82,16 +87,17 @@
                 </div>
             </div>
             <template #footer>
-                <button class="px-5 py-2 border-[2px] border-[#000] btn fw-semibold"
-                    style="padding:9px 20px !important ;" @click="useStore.CreateNewListDialog = false"> Close</button>
+                <button class="px-5 py-2 border-[2px] border-[#000] btn fw-semibold" style="padding:9px 20px !important ;"
+                    @click="useStore.CreateNewListDialog = false"> Close</button>
                 <!-- <Button label="Cancel" class="mr-4 text-orange-500 bg-white border-orange-400 "
                         @click="useStore.CreateNewListDialog = false" text /> -->
                 <!-- <button class="mr-4 text-orange-500 bg-white border-orange-400" @click="useStore.CreateNewListDialog = false" >Cancel</button> -->
                 <button label="Create" class=" bg-[#000] text-[#fff]" icon="pi pi-plus-circle"
-                    @click="useStore.SubmitCreateNewList"  />
+                    @click="useStore.SubmitCreateNewList" />
             </template>
         </Dialog>
 
+        <!-- Add new Holiday -->
         <Dialog v-model:visible="useStore.DialogAddNewHoliday" modal header="Holiday " :style="{ width: '25vw' }"
             class="popup_card">
             <div class="w-full h-48 rounded-lg card upload_img" style="height: 150px;min-width: 200px;">
@@ -136,71 +142,69 @@
             </template>
         </Dialog>
 
-        <!-- <Sidebar v-model:visible="visible" position="right">
-    <h2>Right Sidebar</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</Sidebar> -->
- 
-        <Dialog v-model:visible="visible"  header="Header" :style="{ width: '20vw' , height:'200vh'}" :position="position" :modal="true" :draggable="false" >
+
+        <Sidebar v-model:visible="visible" position="right" class="w-full">
+            <template #header>
+                <p class="absolute left-0 mx-4 font-semibold fs-5 ">
+                    Notification
+                </p>
+            </template>
             <div class="h-[100%] bg-[#000]">
 
-            <div class="rounded-lg img_container upload_img position-relative"
-                style="height: 150px;min-width: 200px;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; ">
+                <div class="rounded-lg img_container upload_img position-relative"
+                    style="height: 150px;min-width: 200px;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; ">
 
-                <img v-if="useStore.addNewHoliday.Holiday_Photo" class="rounded-lg card-img-top"
-                    :src="`data:image/png;base64,${useStore.addNewHoliday.Holiday_Photo}`" srcset="" alt="" />
-                <img v-if="useStore.avatar" class="top-0 left-0 z-0 rounded-lg position-absolute" :src="useStore.avatar"
-                    alt="" style="height: 150px;min-width: 100%; ">
-                <div class="bottom-0 z-10 w-full h-full rounded-lg img_overlay position-absolute">
-                    <label
-                        class="z-50 h-10 text-orange-500 cursor-pointer position-absolute d-flex justify-items-center align-items-end fs-5"
-                        id="" for="uploadFestivalPhoto" style="bottom: 10px;right: 10px;">
+                    <img v-if="useStore.addNewHoliday.Holiday_Photo" class="rounded-lg card-img-top"
+                        :src="`data:image/png;base64,${useStore.addNewHoliday.Holiday_Photo}`" srcset="" alt="" />
+                    <img v-if="useStore.avatar" class="top-0 left-0 z-0 rounded-lg position-absolute" :src="useStore.avatar"
+                        alt="" style="height: 150px;min-width: 100%; ">
+                    <div class="bottom-0 z-10 w-full h-full rounded-lg img_overlay position-absolute">
+                        <label
+                            class="z-50 h-10 text-orange-500 cursor-pointer position-absolute d-flex justify-items-center align-items-end fs-5"
+                            id="" for="uploadFestivalPhoto" style="bottom: 10px;right: 10px;">
 
-                        <i class="pi pi-upload"></i>
-                        <h1 class="pl-2 text-orange-500">upload</h1>
+                            <i class="pi pi-upload"></i>
+                            <h1 class="pl-2 text-orange-500">upload</h1>
 
-                    </label>
-                    <input type="file" name="" id="uploadFestivalPhoto" hidden @change="useStore.FestivalPhoto($event)" />
+                        </label>
+                        <input type="file" name="" id="uploadFestivalPhoto" hidden
+                            @change="useStore.FestivalPhoto($event)" />
+                    </div>
                 </div>
-            </div>
-            <div class="card-title">
-                <div class="flex gap-2 mt-5 flex-column">
-                    <label for="username">Festival Title</label>
-                    <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.FestivalTitle"
-                        aria-describedby="username-help" />
-                </div>
-                <div class="flex gap-2 mt-5 flex-column">
-                    <label for="username">Description</label>
-                    <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.Description"
-                        aria-describedby="username-help" />
-                </div>
-                <div class="flex gap-2 mt-5 flex-column">
-                    <label for="date">Date</label>
-                    <Calendar class="h-10 form-selects" v-model="useStore.addNewHoliday.date" showIcon
-                        dateFormat="dd-mm-yy" />
+                <div class="card-title">
+                    <div class="flex gap-2 mt-5 flex-column">
+                        <label for="username">Festival Title</label>
+                        <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.FestivalTitle"
+                            aria-describedby="username-help" />
+                    </div>
+                    <div class="flex gap-2 mt-5 flex-column">
+                        <label for="username">Description</label>
+                        <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.Description"
+                            aria-describedby="username-help" />
+                    </div>
+                    <div class="flex gap-2 mt-5 flex-column">
+                        <label for="date">Date</label>
+                        <Calendar class="h-10 form-selects" v-model="useStore.addNewHoliday.date" showIcon
+                            dateFormat="dd-mm-yy" />
+                    </div>
+
                 </div>
 
-            </div>
+                <div class="">
 
-            <div class="">
-
-                <button class="px-5 py-2 text-black-500 border-black-400 btn fw-semibold"
-                    style="padding:9px 20px !important ;" @click="useStore.updateHolidays = true"> Close</button>
-                <!-- <Button label="Close" class="text-blue-900 border-orange-400 btn" autofocus
+                    <button class="px-5 py-2 text-black-500 border-black-400 btn fw-semibold"
+                        style="padding:9px 20px !important ;" @click="useStore.updateHolidays = true"> Close</button>
+                    <!-- <Button label="Close" class="text-blue-900 border-orange-400 btn" autofocus
                     style="color: orange !important;"  /> -->
-                <Button label="Submit" class="bg-black-500 border-none btn" icon="pi pi-check"
-                    @click="useStore.sumbiteditHoliday(useStore.holidayData)" autofocus />
+                    <Button label="Submit" class="bg-black-500 border-none btn" icon="pi pi-check"
+                        @click="useStore.sumbiteditHoliday(useStore.holidayData)" autofocus />
+
+                </div>
 
             </div>
-
-            </div>
-
-               
+        </Sidebar>
 
 
-        </Dialog>
-
-        
 
 
 
@@ -238,6 +242,11 @@
         <!--  -->
     </div>
 
+    <button @click="visibleRight = true">chdcek</button>
+
+    <Sidebar v-model:visible="visibleRight" position="right" class="w-full">
+        asdasd
+    </Sidebar>
 </template>
 
 
@@ -335,11 +344,13 @@ async function removeholidaylist() {
 
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css2?family=Petrona&family=Poppins&display=swap');
-*{
-font-family: 'Petrona', serif;
-font-family: 'Poppins', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Petrona&family=Poppins&display=swap');
+
+* {
+    font-family: 'Petrona', serif;
+    font-family: 'Poppins', sans-serif;
 }
+
 .bg-orange {
     background: var(--clr-orange);
 }
@@ -480,7 +491,7 @@ li {
     position: absolute;
     width: 100% !important;
     height: 100% !important;
-    top:0;
+    top: 0;
     // border: 4px solid yellow;
 }
 

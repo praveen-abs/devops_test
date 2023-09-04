@@ -31,6 +31,7 @@ import Calendar from 'primevue/calendar';
 import Checkbox from 'primevue/checkbox';
 import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber';
+import Sidebar from 'primevue/sidebar';
 
 
 import Attendance_master from './Attendance_setting_Master.vue'
@@ -67,6 +68,7 @@ app.component('Calendar', Calendar)
 app.component('Checkbox', Checkbox)
 app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
+app.component('Sidebar', Sidebar)
 
 app.mount("#vjs_attendance_master");
 
