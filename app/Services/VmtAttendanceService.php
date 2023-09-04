@@ -15,6 +15,7 @@ use App\Models\VmtWorkShifts;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\Department;
+use App\Models\VmtStaffAttendanceDevice;
 use App\Mail\VmtAbsentMail_Regularization;
 use App\Services\VmtNotificationsService;
 
@@ -829,8 +830,7 @@ class VmtAttendanceService
             $mail_status = "";
             $res_notification = "";
 
-            if ($user_type == "Employee")
-            {
+            if ($user_type == "Employee") {
                 $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                     uEmployeeName: $query_user->name,
                     uEmpCode: $query_user->user_code,
@@ -3577,6 +3577,8 @@ class VmtAttendanceService
 
         $current_date = Carbon::now()->format('Y-m-d');
         $Current_month = Carbon::now()->format('m');
+        $curent_year =  Carbon::now()->format('Y');
+        $current_day =  Carbon::now()->format('d');
 
         $user_code =  auth()->user()->user_code;
 
@@ -3587,9 +3589,9 @@ class VmtAttendanceService
         $absent_count = 0;
 
         $present_count = 0;
-        $lc_count =0;
+        $lc_count = 0;
         $eg_count = 0;
-        $mip_count =0;
+        $mip_count = 0;
         $mop_count = 0;
 
         $leave_employee_count = array();
@@ -3600,9 +3602,9 @@ class VmtAttendanceService
 
 
         foreach ($employees_data as $key => $single_user_data) {
-
+            $user_code = User::where('id', $single_user_data->id)->first()->user_code;
             $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
-
+            $emp_bio_attendance = $this->getBioMetricAttendanceData($user_code, $current_date);
 
             if (empty($absent_present_employee_data)) {
 
@@ -3610,7 +3612,7 @@ class VmtAttendanceService
 
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
-                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $current_date);
 
                 if (empty($emp_bio_attendance)) {
 
@@ -3625,7 +3627,7 @@ class VmtAttendanceService
             } else {
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
-                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $current_date);
 
                 if (!empty($emp_bio_attendance)) {
 
@@ -3662,9 +3664,14 @@ class VmtAttendanceService
             $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id);
 
         }
+
         $attendanceOverview['absent_count'] =$absent_count;
         $attendanceOverview['present_count'] = $present_count;
         $attendanceOverview['leave_emp_count'] = count($leave_employee_count);
+        $attendanceOverview['lg_count'] = $lc_count;
+        $attendanceOverview['eg_count'] = $eg_count;
+        $attendanceOverview['mop_count'] = $mop_count;
+        $attendanceOverview['mip_count'] = $mip_count;
 
 
         $shifts = $this->getWorkShiftDetails();
@@ -3677,11 +3684,14 @@ class VmtAttendanceService
 
     public function getBioMetricAttendanceData($user_code, $current_date)
     {
+
+
         $deviceData = array();
         if (
             sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
             sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
         ) {
+
             $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                 ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
                 ->whereDate('date', $current_date)
@@ -3708,21 +3718,21 @@ class VmtAttendanceService
                 ->where('user_Id', $user_code)
                 ->first(['check_in_time']);
         }
-        //dd($attendanceCheckIn);
+        // dd($attendanceCheckIn);
 
         $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
         $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-        //    dd($deviceCheckInTime);
+        //dd($deviceCheckInTime);
         if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
             $deviceData[] = ([
                 'date' => $current_date,
+                'user_code' => $user_code,
                 'checkin_time' => $deviceCheckInTime,
                 'checkout_time' => $deviceCheckOutTime,
                 'attendance_mode_checkin' => 'biometric',
                 'attendance_mode_checkout' => 'biometric'
             ]);
         }
-
         return $deviceData;
     }
 

@@ -531,6 +531,5 @@ class VmtPayRunService
         $data['headers'] =$heading_dates;
         $data['rows'] =  $reportresponse;
         return $data;
-
     }
 }
