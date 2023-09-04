@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Models\vmtHolidays;
-use App\Models\VmtHolidayList;
+use App\Models\vmtHolidaylist;
+use App\Models\vmtHolidayslist;
+use App\Models\vmtHolidayslistHolidays;
+use App\Models\vmtLocationsHoliday;
 use App\Models\VmtAssingedHolidays;
 use App\Models\VmtEmployeeAssingedHolidaysList;
 use App\Models\vmtLocations;
@@ -76,7 +79,6 @@ class VmtHolidaysController extends Controller
                 $path = '/holidays/' . $fileName;
                 $file_path = '/holidays/';
                 $file_exists_status = Storage::disk('private1')->exists($path);
-
                 if (empty($file_exists_status)) {
 
                     $filePath = $uploadedFile->storeAs($file_path, $fileName, 'private1');
@@ -221,7 +223,7 @@ class VmtHolidaysController extends Controller
     public function holidaysListDetails(Request $request)
     {
         $holidays_list_name = array();
-        $holidays_list = vmtHolidayslist::all();
+    $holidays_list = vmtHolidayslist::all();
         $i = 0;
         foreach ($holidays_list as $key => $singlelist) {
             $holidayslist_data = vmtHolidayslistHolidays::where('holiday_list_id', $singlelist['id'])->pluck('holiday_id');
@@ -235,8 +237,8 @@ class VmtHolidaysController extends Controller
 
     //createholidays list
     public function createHolidayList(Request $request)
-    {
-
+    { 
+     
         $validator = Validator::make(
             $request->all(),
             $rules = [
@@ -263,11 +265,8 @@ class VmtHolidaysController extends Controller
             $holiday_name = $vmt_holidays_list_data->name = $request['name'];
             $vmt_holidays_list_data->save();
             $holiday_id = vmtHolidayslist::where('name', $holiday_name)->first()->id;
-
-
             // store the holiday list id
             $holiday_list_id = $request['holiday_list_id'];
-            // dd($holiday_list_id);
             foreach ($holiday_list_id as $single_id) {
                 $vmt_holidayslist_holidays = new vmtHolidayslistHolidays;
                 $vmt_holidayslist_holidays->holiday_id = $single_id['id'];
@@ -315,15 +314,15 @@ class VmtHolidaysController extends Controller
     //         return redirect()->action([VmtHolidaysController::class, 'showHolidaysListPage']);
     //     }
 
-    //  //delete holidayslist
-    //     public function deleteHolidayList(Request $request,$id){
-    //         $vmt_holiday_delete=vmtHolidayslist::find($request->id);
-    //         $vmt_holidayslist_holidays= DB::table('vmt_holidayslist_holidays')->where('holiday_list_id',$id );
-    //         $vmt_holiday_delete->delete();
-    //         $vmt_holidayslist_holidays->delete();
-    //         return redirect()-> back();
+     //delete holidayslist
+        // public function deleteHolidayList(Request $request,$id){
+        //     $vmt_holiday_delete=vmtHolidayslist::find($request->id);
+        //     $vmt_holidayslist_holidays= DB::table('vmt_holidayslist_holidays')->where('holiday_list_id',$id );
+        //     $vmt_holiday_delete->delete();
+        //     $vmt_holidayslist_holidays->delete();
+        //     return redirect()-> back();
 
-    //     }
+        // }
 
     //fetch the location
     public function fetchlocation(Request $request)
@@ -416,5 +415,7 @@ class VmtHolidaysController extends Controller
     //Assign holiday list to a location. Handles both assign/unassign logic
     public function assignUnAssign_HolidayList(Request $request)
     {
+        // $assign_holidaylist = array();
+        // $aasign_holidaylist = vmt.::
     }
 }
