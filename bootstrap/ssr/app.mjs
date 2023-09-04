@@ -99,7 +99,7 @@ import VirtualScroller from "primevue/virtualscroller";
 import { r as router } from "./assets/router-68750eaf.mjs";
 import Chart from "primevue/chart";
 import { ssrRenderComponent } from "vue/server-renderer";
-import { _ as _sfc_main$1 } from "./assets/attendanceDashboard-fac151c6.mjs";
+import { _ as _sfc_main$1 } from "./assets/attendanceDashboard-97f9ddb3.mjs";
 import "vue-router";
 import "axios";
 import "primevue/usetoast";

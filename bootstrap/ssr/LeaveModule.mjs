@@ -182,7 +182,7 @@ const _sfc_main$4 = {
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[--><div class="mb-3 card"><div class="card-body"><div class="mb-2 row"><div class="col-sm-6 col-xl-6 col-md-6 col-lg-6"><span class="font-semibold text-[14px] text-[#000] font-[&#39;Poppins]">Leave balance</span></div><div class="col-6 justify-content-end d-flex">`);
       _push(ssrRenderComponent(_sfc_main$5, null, null, _parent));
-      _push(`</div></div><div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
+      _push(`</div></div><div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-5" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
       ssrRenderList(unref(useLeaveStore).array_employeeLeaveBalance, (leave_balance) => {
         _push(`<div class="p-1 my-2 rounded-lg border bg-gray-100 hover:bg-slate-100 cursor-pointer"><p class="my-1 lg:text-[12px] font-semibold text-center md:text-[10px] xl:text-[13px]">${ssrInterpolate(leave_balance.leave_type)}</p><p class="my-1 text-xl font-semibold text-center">`);
         if (leave_balance.leave_balance == "") {
@@ -192,7 +192,7 @@ const _sfc_main$4 = {
         }
         _push(`</p></div>`);
       });
-      _push(`<!--]--></div></div></div><div class="card"><div class="card-body"><span class="font-semibold text-[14px] text-[#000] font-[&#39;Poppins]">Leave Availed</span><div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
+      _push(`<!--]--></div></div></div><div class="card"><div class="card-body"><span class="font-semibold text-[14px] text-[#000] font-[&#39;Poppins]">Leave Availed</span><div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-5" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
       ssrRenderList(unref(useLeaveStore).array_employeeLeaveBalance, (leave_balance) => {
         _push(`<div class="bg-gray-100 border-l-4 border-indigo-300 p-1 rounded-lg border my-2 cursor-pointer hover:bg-slate-100"><div class="text-center"><p class="my-1 lg:text-[12px] font-semibold text-center md:text-[10px] xl:text-[13px]">${ssrInterpolate(leave_balance.leave_type)}</p><p class="my-1 text-xl font-semibold text-center">`);
         if (leave_balance.avalied_leaves == "") {
@@ -2099,18 +2099,24 @@ const _sfc_main = {
       } else {
         _push(`<!---->`);
       }
-      _push(`<div class="w-full"><div class="p-2 bg-white rounded-lg shadow tw-card left-line" style="${ssrRenderStyle({ "background-color": "white" })}"><div class="flex justify-between"><ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist"><li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true" role="tab"> Leave Balance</a></li>`);
-      if (unref(service).current_user_role == 2 || unref(service).current_user_role == 4) {
-        _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false" tabindex="-1" role="tab"> Team Leave Balance</a></li>`);
+      _push(`<div class="w-full"><div>`);
+      if (unref(service).current_user_role == 5) {
+        _push(`<div><p class="font-semibold text-2xl text-[#000] font-[&#39;Poppins]">Leave</p><p class="font-semibold text-sm">Here you can apply Leave,<a><span class="underline cursor-pointer hover:text-indigo-500"> Company&#39;s Leave Policy</span></a>.</p></div>`);
       } else {
-        _push(`<!---->`);
+        _push(`<div class="flex justify-between"><ul class="divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist"><li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true" role="tab"> Leave Balance</a></li>`);
+        if (unref(service).current_user_role == 1 || unref(service).current_user_role == 2 || unref(service).current_user_role == 3 || unref(service).current_user_role == 4) {
+          _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false" tabindex="-1" role="tab"> Team Leave Balance</a></li>`);
+        } else {
+          _push(`<!---->`);
+        }
+        if (unref(service).current_user_role == 1 || unref(service).current_user_role == 2 || unref(service).current_user_role == 3) {
+          _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false" tabindex="-1" role="tab"> Org Leave Balance</a></li>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</ul><div class="flex items-center"><div class="mr-3"></div><a href="/attendance-leave-policydocument" id="" class="text-md font-medium border-1 border-black rounded-lg text-center bg-black text-white my-auto p-1.5 dark:text-white" role="button" aria-expanded="false"> Leave Policy Explanation </a></div></div>`);
       }
-      if (unref(service).current_user_role == 2) {
-        _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false" tabindex="-1" role="tab"> Org Leave Balance</a></li>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</ul><div class="flex items-center"><div class="mr-3"></div><a href="/attendance-leave-policydocument" id="" class="text-md font-medium border-1 border-black rounded-lg text-center bg-black text-white my-auto p-1.5 dark:text-white" role="button" aria-expanded="false"> Leave Policy Explanation </a></div></div></div><div class="tab-content py-2" id="pills-tabContent"><div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">`);
+      _push(`<div></div></div><div class="tab-content py-2" id="pills-tabContent"><div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">`);
       _push(ssrRenderComponent(_sfc_main$3, null, null, _parent));
       _push(`</div><div class="tab-pane fade show" id="team_leaveBalance" role="tabpanel" aria-labelledby="pills-profile-tab">`);
       _push(ssrRenderComponent(_sfc_main$1, null, null, _parent));

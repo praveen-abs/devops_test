@@ -111,7 +111,7 @@ const _sfc_main = {
           _push(`<!---->`);
         }
         _push(`</button>`);
-        if (unref(service).current_user_role == 2 || unref(service).current_user_role == 4) {
+        if (unref(service).current_user_role == 1 || unref(service).current_user_role == 2 || unref(service).current_user_role == 3 || unref(service).current_user_role == 4) {
           if (unref(useDashboard).canShowClients) {
             _push(`<div class="absolute z-20 w-11/12 bg-white rounded shadow-lg top-5 left-2 mt-14"><!--[-->`);
             ssrRenderList(clientList.value, (client) => {
