@@ -264,16 +264,25 @@
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
-                        <td colspan="2">
+                        <td colspan="2" >
                             <p style="font-size:11px; marign-top:-11px"><b>10) Deduction under Chapter VI-A</b></p>
-                            <p style="font-size:11px; marign-top:-11px"><b>80C</b></p>
-                           <?php
-                        //    $i=0;
-                        //     foreach($Decuction_Under_chapter_6a["10) Decuction Under chapter VI - A"][0]["particular"][0] as $key => $value){
-                        //         echo  $key;
-                        //     $i++;
-                            // }
-                           ?>
+
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0] as $key => $value)
+                             <p style="font-size:11px; marign-top:-11px"><b>{{  $key }}</b> </p>
+                             @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0][$key] as $key => $value)
+                             <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ $value['dec_amount'] }}</span></p>
+                            @endforeach
+                            @endforeach
+                            <p style="font-size:11px; marign-top:-11px"><b>{{ ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1]) }}</b> </p>
+
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][2] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px"><b>{{  $key }}</b> </p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][2][$key] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ $value['dec_amount'] }}</span></p>
+                           @endforeach
+                           <p style="font-size:11px; marign-top:-11px"><b>{{'Total'}}</b></p>
+                           @endforeach
+                           <p style="font-size:11px; marign-top:-11px"><b>{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][3] }}</b></p>
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
@@ -285,6 +294,34 @@
                             <p style="font-size:11px; marign-top:-11px"> {{ $Gross_Total_income["9) Gross Total income"][0]["total"] }}</p>
                         </td>
                     </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>11) Total Income (Round By 10 Rupees) (9-10)</b></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"> {{ $Total_income["11) Total income (Round By 10 Rupees) (9 - 10)"][0]["total"]}}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>12) Tax Calculation</b></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{ '---' }}</p>
+                        </td>
+                    </tr>
                     <tr style="border-top:0px !important; height:20px !important; background-color:rgba(128, 128, 128, 0.629)">
                         <td colspan="2" style="border-top:0px !important">
                             <p style="font-size:11px">TDS for March</p>
@@ -293,7 +330,6 @@
 
                         </td>
                         <td colspan="1" >
-
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px">₹ 99898</p>
@@ -319,6 +355,7 @@
                 </table>
             </td>
         </tr>
+
         <tr style="height:20px !important">
             <td colspan="4"><p style="font-size: 12px;">HRA exemption calculation under Section 10</p></td>
         </tr>

@@ -29,6 +29,7 @@ use App\Models\VmtEmployeeDocuments;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 
@@ -97,6 +98,8 @@ public function getEmpCompValues(){
                 'vmt_employee_details.dob',
             ]
         )->toArray();
+
+        $template_value = $v_form_template;
 
         // dd($v_form_template);
 
@@ -284,26 +287,39 @@ public function getEmpCompValues(){
         $gorsstotalincome['total'] = $income_charge_head_salaries['total'] + $other_income_report['total'];
         array_push($res["Gross_Total_income"]["9) Gross Total income"],$gorsstotalincome);
 
-        $section =[];
-        $particulars =[];
+        $count =0;
         foreach ($v_form_template as $dec_amt) {
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
-                       $section[] = [$dec_amt['section'], $dec_amt['particular'],$dec_amt['max_amount'],$dec_amt['dec_amount']];
-                    //    $particulars[] = $dec_amt['particular'];
-                $sumof80s += $dec_amt['dec_amount'];
-                $dec = $dec_amt;
-
-                if ($sumof80s > 150000) {
-                    $chapter80s = 150000;
+          if (!array_key_exists($dec_amt["section"], $v_form_template)) {
+                    $v_form_template[$dec_amt["section"]] = array();
+                    array_push($v_form_template[$dec_amt["section"]], $dec_amt);
                 } else {
-                    $chapter80s = $sumof80s;
+                    array_push($v_form_template[$dec_amt["section"]], $dec_amt);
                 }
             }
-    }
+              //remove from outer json
+              unset($v_form_template[$count]);
+              $count++;
+        }
+
+        $count =0;
+        foreach ($template_value as $dec_amt) {
+            if ($dec_amt['section_group'] == "Other Excemptions ") {
+          if (!array_key_exists($dec_amt["section"], $template_value)) {
+                    $template_value[$dec_amt["section"]] = array();
+                    array_push($template_value[$dec_amt["section"]], $dec_amt);
+                } else {
+                    array_push($template_value[$dec_amt["section"]], $dec_amt);
+                }
+            }
+              //remove from outer json
+              unset($template_value[$count]);
+              $count++;
+        }
 
         // 10) Decuction Under chapter VI - A
 
-        $deductablecapterVIA['particular']  =  [$section , "Total(80C+80CCC+80CCD)"];
+        $deductablecapterVIA['particular']  =  [$v_form_template , "Total(80C+80CCC+80CCD)",$template_value,'Total of Deduction under Chapter VI-A'];
         $deductablecapterVIA['actual']    = ["qualifying","0",1500000, 30000000];
         $deductablecapterVIA['projection']    = ["Decuctible","0",1500000, 30000000];
         $deductablecapterVIA['total']    = 0;
@@ -357,7 +373,7 @@ public function getEmpCompValues(){
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
 
-        $docUploads =  $pdf->stream();
+        $pdf->stream('tds_pdf');
 
         }
 
