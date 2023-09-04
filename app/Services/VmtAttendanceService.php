@@ -554,23 +554,19 @@ class VmtAttendanceService
                 'leave_request_date' => $leave_request_date,
                 'start_date' => $start_date,
                 'end_date' => $end_date,
-                'hours_diff' => $hours_diff,
-                'compensatory_work_days_ids' => $compensatory_work_days_ids,
-                'leave_session' => $leave_session,
                 'leave_type_name' => $leave_type_name,
                 'leave_reason' => $leave_reason,
                 'notifications_users_id' => $notifications_users_id,
+                'user_type' => $user_type,
             ],
             $rules = [
                 'user_code' => 'required|exists:users,user_code',
                 'leave_request_date' => 'required|date',
                 'start_date' => "required|date",
                 'end_date' => 'required|date',
-                'hours_diff' => 'required',
-                'compensatory_work_days_ids' => 'required',
-                'leave_session' => 'required',
                 'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
-                'notifications_users_id' => 'required',
+                'notifications_users_id' => 'nullable',
+                'user_type' => ['required', Rule::in(['Employee', 'Admin'])],
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -833,7 +829,8 @@ class VmtAttendanceService
             $mail_status = "";
             $res_notification = "";
 
-            if (!empty($user_type) && $user_type != "Admin") {
+            if ($user_type == "Employee")
+            {
                 $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                     uEmployeeName: $query_user->name,
                     uEmpCode: $query_user->user_code,
@@ -3590,6 +3587,10 @@ class VmtAttendanceService
         $absent_count = 0;
 
         $present_count = 0;
+        $lc_count =0;
+        $eg_count = 0;
+        $mip_count =0;
+        $mop_count = 0;
 
         $leave_employee_count = array();
         $response = array();
@@ -3656,18 +3657,16 @@ class VmtAttendanceService
                     }
                 }
             }
+
+            //logics for get lc and mip
+            $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id);
+            dd($single_user_data);
+
         }
-
-
-        //     $response['absent_count'] =$absent_count;
-        //     $response['present_count'] = $present_count;
-        //     $response['leave_emp_count'] = count($leave_employee_count);
-        //     return $response ;
-        // }
-        $work_shift = $this->getWorkShiftDetails();
-        $response = ['work_shift' => $work_shift];
-
-        return $response;
+        $response['absent_count'] =$absent_count;
+        $response['present_count'] = $present_count;
+        $response['leave_emp_count'] = count($leave_employee_count);
+        return $response ;
     }
 
 

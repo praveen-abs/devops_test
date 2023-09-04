@@ -305,6 +305,7 @@ class VmtAttendanceController extends Controller
             leave_session : $request->leave_session,
             leave_type_name : $request->leave_type_name,
             leave_reason : $request->leave_reason,
+            user_type: $request->user_type,
             notifications_users_id : $request->notifications_users_id,
             serviceNotificationsService : $serviceVmtNotificationsService
         );
