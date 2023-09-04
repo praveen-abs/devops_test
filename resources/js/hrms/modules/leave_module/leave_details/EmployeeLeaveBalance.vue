@@ -10,7 +10,7 @@
                 </div>
             </div>
 
-            <div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5"
+            <div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-5"
                 style="display: grid;">
                 <div v-for="leave_balance in useLeaveStore.array_employeeLeaveBalance" :key="leave_balance"
                     class="p-1 my-2 rounded-lg border bg-gray-100 hover:bg-slate-100 cursor-pointer">
@@ -27,7 +27,7 @@
     <div class="card ">
         <div class="card-body">
             <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Leave Availed</span>
-            <div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5"
+            <div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-5"
                 style="display: grid;">
                 <div class="bg-gray-100 border-l-4 border-indigo-300 p-1 rounded-lg border my-2 cursor-pointer hover:bg-slate-100 "
                     v-for="leave_balance in useLeaveStore.array_employeeLeaveBalance" :key="leave_balance">

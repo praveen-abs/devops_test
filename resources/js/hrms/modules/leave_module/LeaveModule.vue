@@ -1,9 +1,13 @@
 <template>
     <LoadingSpinner v-if="useLeaveStore.canShowLoading" class="absolute z-50 bg-white" />
    <div class="w-full" >
-    <div class="p-2 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
-        <div class="flex justify-between">
-            <ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
+    <div >
+        <div v-if="service.current_user_role == 5">
+            <p class="font-semibold text-2xl text-[#000] font-['Poppins]">Leave</p>
+            <p class="font-semibold text-sm">Here you can apply Leave,<a ><span class="underline cursor-pointer hover:text-indigo-500"> Company's Leave Policy</span></a>.</p>
+        </div>
+        <div class="flex justify-between" v-else>
+            <ul class=" divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
                 <li class="nav-item text-muted" role="presentation">
                     <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true"
                         role="tab">
@@ -15,13 +19,13 @@
                         Current User Role == 5 ,Employee
                      -->
                 <li class="nav-item text-muted " role="presentation"
-                    v-if="service.current_user_role == 2 || service.current_user_role == 4">
+                    v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3|| service.current_user_role == 4">
                     <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false"
                         tabindex="-1" role="tab">
                         Team Leave Balance</a>
                 </li>
 
-                <li class="nav-item text-muted " role="presentation" v-if="service.current_user_role == 2">
+                <li class="nav-item text-muted " role="presentation" v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3">
                     <a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false" tabindex="-1"
                         role="tab">
                         Org Leave Balance</a>
@@ -45,6 +49,9 @@
                     Policy Explanation
                 </a>
             </div>
+
+        </div>
+        <div>
 
         </div>
     </div>
