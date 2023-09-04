@@ -3723,6 +3723,38 @@ class VmtAttendanceService
                 ->where('user_Id', $user_code)
                 ->first(['check_in_time']);
 
+
+
+        $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+        $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+        $web_attendance = VmtEmployeeAttendance::whereDate('date', $current_date)
+            ->where('user_id', $user_id)->first();
+        $all_att_data = collect();
+        if ($web_attendance->checkin_time != null) {
+            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time]);
+        }
+
+        if ($web_attendance->checkout_time != null) {
+            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time]);
+        }
+
+        if ($deviceCheckOutTime != null) {
+            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckOutTime]);
+        }
+
+        if ($deviceCheckInTime != null) {
+            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckInTime]);
+        }
+        $sortedCollection   =   $all_att_data->sortBy([
+            ['date', 'asc'],
+        ]);
+        $checking_time = $sortedCollection->first();
+        $checkout_time =  $sortedCollection->last();
+        return $response = ['checkin_time' => $checking_time, 'checkout_time' => $checkout_time, 'shift_settings' =>  $this->getShiftTimeForEmployee($user_id, $checking_time,  $checkout_time)];
+        return $response;
+    }
+    }
+
     public function getEmployeeAnalyticsExceptionData(){
 
         $current_date = Carbon::now()->format('Y-m-d');
@@ -3847,37 +3879,8 @@ class VmtAttendanceService
 
     // }
 }
-}
+
         //dd($attendanceCheckIn);
-
-        $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-        $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-        $web_attendance = VmtEmployeeAttendance::whereDate('date', $current_date)
-            ->where('user_id', $user_id)->first();
-        $all_att_data = collect();
-        if ($web_attendance->checkin_time != null) {
-            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time]);
-        }
-
-        if ($web_attendance->checkout_time != null) {
-            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time]);
-        }
-
-        if ($deviceCheckOutTime != null) {
-            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckOutTime]);
-        }
-
-        if ($deviceCheckInTime != null) {
-            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckInTime]);
-        }
-        $sortedCollection   =   $all_att_data->sortBy([
-            ['date', 'asc'],
-        ]);
-        $checking_time = $sortedCollection->first();
-        $checkout_time =  $sortedCollection->last();
-        return $response = ['checkin_time' => $checking_time, 'checkout_time' => $checkout_time, 'shift_settings' =>  $this->getShiftTimeForEmployee($user_id, $checking_time,  $checkout_time)];
-        return $response;
-    }
 
     public function getShiftTimeForEmployee($user_id, $checkin_time, $checkout_time)
     {
