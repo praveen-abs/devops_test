@@ -56,7 +56,7 @@ app.component('ProgressSpinner',ProgressSpinner);
 app.component('InputText', InputText)
 app.component('Calendar', Calendar)
 app.component('OverlayPanel' ,OverlayPanel)
-app.component('Sidebar' ,Sidebar)
+app.component('Sidebar' ,Sidebar);
 
 app.mount("#VJS_holiday_list");
 

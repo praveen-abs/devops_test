@@ -27,7 +27,7 @@
                         style="width:100%; height:100%;" class=" rounded-[12px] shadow-md cd-img" />
                     <div class="overlay rounded-[12px] ">
                         <div class="hover_btn_div d-ard">
-                            <button label="Edit" @click="useStore.updateHolidays = true,useStore.editHolidaylist(holiday)" class="w-[100px] fs-6 border-[2px] border-[#fff]">
+                            <button label="Edit" @click="useStore.updateHolidays = true , useStore.editHolidaylist(holiday),openPosition('right')" class="w-[100px] fs-6 border-[2px] border-[#fff]">
                                 Edit
                             </button>
                             <button @click="holidaylistRemoveDialog(holiday)" class=" mx-4 fs-6 w-[100px] border-[2px] border-[#fff]">Remove</button>
@@ -49,8 +49,7 @@
 
             </div>
         </div>
-
-
+        
         <Dialog v-model:visible="useStore.CreateNewListDialog" modal header="Holiday " :style="{ width: '38vw' }"
             style="border-top:5px solid #002f56" class="popup_card">
             <template #header>
@@ -58,39 +57,38 @@
                     <h1 class="pl-3 border-l-4 border-orange-400 fs-5 fw-bold">Create New List</h1>
                 </div>
             </template>
-            <div class="mx-5 my-3 flex-column">
+            <div class="mx-2 my-3 flex-column">
                 <!-- d-flex justify-content-between align-content-center -->
                 <div class="row d-flex align-items-center">
-                    <div class="col">
-                        <h1 class="font-semibold text-gray-700 fs-4">Holiday List</h1>
+                    <div class="col-12">
+                        <h1 class=" text-[16px] mb-2 text-[#000]">Holiday List Name</h1>
                     </div>
-
-                    <div class="col">
+                    <div class="col-12">
                         <InputText type="text" class="w-full h-12" v-model="useStore.CreateNewList.List_Name" />
                     </div>
                     <!-- <input type="text" name="" id=""> -->
                 </div>
                 <div class="my-2 mb-4 row d-flex align-items-center">
-                    <div class="col">
-                        <h1 class="font-semibold text-gray-700 fs-4">Choose The Holidays</h1>
+                    <div class="col-12">
+                        <h1 class=" text-[16px] text-[#000] mt-2">Choose The Holidays</h1>
                     </div>
-                    <div class="col ">
+                    <div class="col-12 ">
                         <!-- {{ useStore.arrayHolidaysList }} -->
                         <!-- {{ useStore.CreateNewList.ChooseTheHolidays }} -->
                         <MultiSelect v-model="useStore.ChooseTheHolidays" :options="useStore.arrayHolidaysList"
                             optionLabel="holiday_name" placeholder="Select Cities" :maxSelectedLabels="3"
-                            class="w-full h-12" style="width: 245px !important;" @change="useStore.getHolidayName()" />
+                            class="w-full h-12 mt-2" @change="useStore.getHolidayName()" />
                     </div>
                 </div>
             </div>
             <template #footer>
-                <button class="px-5 py-2 text-orange-500 border-orange-400 btn fw-semibold"
+                <button class="px-5 py-2 border-[2px] border-[#000] btn fw-semibold"
                     style="padding:9px 20px !important ;" @click="useStore.CreateNewListDialog = false"> Close</button>
                 <!-- <Button label="Cancel" class="mr-4 text-orange-500 bg-white border-orange-400 "
                         @click="useStore.CreateNewListDialog = false" text /> -->
                 <!-- <button class="mr-4 text-orange-500 bg-white border-orange-400" @click="useStore.CreateNewListDialog = false" >Cancel</button> -->
-                <Button label="Create" class="bg-orange-500 border-none" icon="pi pi-plus-circle"
-                    @click="useStore.SubmitCreateNewList" autofocus />
+                <button label="Create" class=" bg-[#000] text-[#fff]" icon="pi pi-plus-circle"
+                    @click="useStore.SubmitCreateNewList"  />
             </template>
         </Dialog>
 
@@ -137,9 +135,14 @@
                     @click="useStore.sumbitAddNewHoliday" autofocus />
             </template>
         </Dialog>
-        <!--  v-model:visible="useStore.updateHolidays"  -->
 
-        <Dialog header="Header" >
+        <!-- <Sidebar v-model:visible="visible" position="right">
+    <h2>Right Sidebar</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</Sidebar> -->
+ 
+        <Dialog v-model:visible="visible"  header="Header" :style="{ width: '20vw' , height:'200vh'}" :position="position" :modal="true" :draggable="false" >
+            <div class="h-[100%] bg-[#000]">
 
             <div class="rounded-lg img_container upload_img position-relative"
                 style="height: 150px;min-width: 200px;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; ">
@@ -178,17 +181,28 @@
                 </div>
 
             </div>
-            <template #footer>
-                <button class="px-5 py-2 text-orange-500 border-orange-400 btn fw-semibold"
-                    style="padding:9px 20px !important ;" @click="useStore.editHoliday = false"> Close</button>
+
+            <div class="">
+
+                <button class="px-5 py-2 text-black-500 border-black-400 btn fw-semibold"
+                    style="padding:9px 20px !important ;" @click="useStore.updateHolidays = true"> Close</button>
                 <!-- <Button label="Close" class="text-blue-900 border-orange-400 btn" autofocus
                     style="color: orange !important;"  /> -->
-                <Button label="Submit" class="bg-orange-500 border-none btn" icon="pi pi-check"
+                <Button label="Submit" class="bg-black-500 border-none btn" icon="pi pi-check"
                     @click="useStore.sumbiteditHoliday(useStore.holidayData)" autofocus />
 
-            </template>
+            </div>
+
+            </div>
+
+               
+
 
         </Dialog>
+
+        
+
+
 
 
         <Dialog header="Confirmation" v-model:visible="showconfirmationdialog"
@@ -222,39 +236,30 @@
         </Dialog>
         <!-- v-model:visible="useStore.editHoliday" -->
         <!--  -->
-       
-        <button class=" bg-black text-[#ffff]" @click="visibleRight = true">btn</button>
-
-        <Sidebar v-model:visible="visibleRight" position="right">
-            <h2>Right Sidebar</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </Sidebar>
     </div>
-    <!-- <CreateNewHolidaysList /> -->
 
-
-
-
-    <!-- {{ useStore.holidayData }} -->
-    <!-- editHolidaylist -->
 </template>
 
 
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue';
-import axios from 'axios'
+
 import { useToast } from "primevue/usetoast";
 import dayjs from 'dayjs';
 import { useHolidayStore } from "../attendance_settings/stores/HolidayStore";
-import Holidays_Master from "./Holidays_Master.vue";
-import CreateNewHolidaysList from "./CreateNewHolidaysList.vue";
+
 
 const useStore = useHolidayStore()
 
-//
-const visible = ref(false);
 
 const visibleRight = ref(false);
+const position = ref('center');
+const visible = ref(false);
+
+const openPosition = (pos) => {
+    position.value = pos;
+    visible.value = true;
+}
 
 const showconfirmationdialog = ref(false);
 const holidayremoveList = ref();
