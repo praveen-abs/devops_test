@@ -3660,12 +3660,16 @@ class VmtAttendanceService
 
             //logics for get lc and mip
             $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id);
-            dd($single_user_data);
 
         }
-        $response['absent_count'] =$absent_count;
-        $response['present_count'] = $present_count;
-        $response['leave_emp_count'] = count($leave_employee_count);
+        $attendanceOverview['absent_count'] =$absent_count;
+        $attendanceOverview['present_count'] = $present_count;
+        $attendanceOverview['leave_emp_count'] = count($leave_employee_count);
+
+
+        $shifts = $this->getWorkShiftDetails();
+
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" =>$shifts];
         return $response ;
     }
 

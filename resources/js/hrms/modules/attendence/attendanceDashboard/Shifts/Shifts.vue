@@ -7,31 +7,31 @@
                 v-for="(shift, index) in useDashboard.attendanceDashboardWorkShiftSource " :key="index">
                 <div class="w-full bg-gray-200 p-2 rounded-lg">
                     <span class="font-semibold text-[12px] text-[#000] font-['Poppins]">{{
-                        shift.work_shift_employee_data[0].shift_name }}</span>
+                        shift.work_shift_employee_data[0] ?  shift.work_shift_employee_data[0].shift_name : '-' }}</span>
                 </div>
                 <div class="p-2">
                     <div>
                         <p class="font-semibold text-sm text-[#000] font-['Poppins]">Shift Timing</p>
                         <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">
-                            {{ convertToAMPM(shift.work_shift_employee_data[0].shift_start_time) }}
+                            {{ shift.work_shift_employee_data[0] ? convertToAMPM(shift.work_shift_employee_data[0].shift_start_time) : '-' }}
                             -
-                            {{ convertToAMPM(shift.work_shift_employee_data[0].shift_end_time) }}
+                            {{ shift.work_shift_employee_data[0] ? convertToAMPM(shift.work_shift_employee_data[0].shift_end_time) : '-' }}
                         </p>
                     </div>
                     <div class="my-3">
                         <p class="font-semibold text-sm text-[#000] font-['Poppins]">Total Employees</p>
                         <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">{{
-                            shift.work_shift_assigned_employees }}
+                            shift.work_shift_assigned_employees  ? shift.work_shift_assigned_employees : '-' }}
                         </p>
                     </div>
                     <div class="flex justify-between ">
                         <div>
                             <p class="font-semibold text-sm text-[#000] font-['Poppins]">Present</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">100</p>
+                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
                         </div>
                         <div class="mx-3">
                             <p class="font-semibold text-sm text-[#000] font-['Poppins]">Absent</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">56</p>
+                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
                         </div>
                     </div>
 
