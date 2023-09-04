@@ -1,24 +1,20 @@
 <template>
     <div class="p-1">
-        <h1 class=" font-['Poppins'] ">Investments</h1>
-        <div class="flex w-[100%]">
-            <div class="row w-[100%] items-center">
-                <div class="col-8 flex items-center justify-start">
-                    <p class="font-semibold text-black text-2xl items-center flex">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new
-                        Date().getFullYear() + 1 }}<span class="text-[red] font-['Poppins'] " >! Kindly update your PAN to avoid 20$ TDS deduction (if applicable)</span></p>
-                       
-                </div>       
-                    <div style="col-4 font-weight: 600;" class="px-1 my-2 fs- flex text-lg col">
-                        <p class=" underline text-blue-400 text-right font-['Poppins'] " >Income Tax Computations</p>
-                    </div>
-            </div>
-        </div>
         <div class=" justify-content-center align-items-center">
             <div class="mx-2 ">
-
-                <div class="my-4 rounded-lg ">
+                <div class="my-3">
+                    <p class="font-semibold text-black text-2xl">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new
+                        Date().getFullYear() + 1 }}</p>
+                </div>
+                <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400">
+                    <i class="mx-2 my-2.5 pi pi-times-circle text-red-500 font-bold" style="font-size: 1.5rem"></i>
+                    <div style="font-weight: 600;" class="px-1 my-2 fs- flex text-lg">Kindly update your <span
+                            class="font-semibold text-blue-400 text-lg">PAN</span>to avoid 20$ TDS
+                        deduction (if applicable) </div>
+                </div>
+                <div class="my-4 rounded-lg card ">
                     <div class="card-body">
-                        <p class=" text-[14px] font-semibold text-gray-500 font-['Poppins']"  style="line-height: 20px;">
+                        <p class="fs-6 font-semibold text-black" style="line-height: 20px;">
                             Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
                             investment amount till last day of every month until the cutoff date of {{ new
                                 Date().toLocaleString('default', { month: 'long', }) }} 27, {{ new Date().getFullYear() }}. Last
@@ -39,26 +35,26 @@
                 </div>
                 <div class="flex justify-between gap-6 my-4">
                     <div class="">
-                        <div class="font-semibold text-[16px] font-['Poppins']">Your current chosen tax regime is <strong
-                                class="text-blue-500 underline cursor-pointer text-[16px] font-[600]"
+                        <div class="font-semibold fs-4 ">Your current chosen tax regime is <strong
+                                class="text-blue-500 underline cursor-pointer fs-4"
                                 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"
                                 v-tooltip.bottom="`Last Updated Date  ${dayjs(lastUpdated).format('dddd, MMMM D, YYYY h:mm A')}`">{{
                                     findRegime(regime) }}
                             </strong>
                             <span v-if="regime == 'old'">
                                 <span class="text-sm text-green-600"
-                                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false" >Maximum
+                                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
                                     benefit</span>
                             </span>
                             <span v-else>
                                 <span class="text-sm text-green-600"
-                                    v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false" >Maximum
+                                    v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false">Maximum
                                     benefit</span>
                             </span>
                         </div>
 
                         <!-- text-sm -->
-                        <p class="text-gray-600 font-['Poppins'] mt-[2px]">The confirmed old tax regime will be used in future payroll
+                        <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
                             calculations
                         </p>
                         <div>
@@ -67,14 +63,14 @@
                     <div>
                     </div>
                     <div class="text-end">
-                        <button class="px-4 text-[14px] p-2 text-[#fff] rounded-md bg-[#000] font-['Poppins'] " @click="switch_regime_dailog = true"
+                        <button class="px-4 text-lg btn btn-orange" @click="switch_regime_dailog = true"
                             :disabled="!investmentStore.disableRegime(lastUpdated)">Switch Regime</button>
                     </div>
                 </div>
                 <div v-if="investmentStore.disableRegime(lastUpdated)"
-                    class="flex items-center my-[8px] bg-[white] border-[1px] rounded-md border-gray-300 p-2 w-[80%]">
-                    <i class="mx-2 my-1 font-bold text-[red]  pi pi-info-circle" style="font-size: 1.5rem"></i>
-                    <p class="ml-2  text-[13px] text-[red] font-['Poppins']">
+                    class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
+                    <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
+                    <p class="ml-2 font-semibold text-black fs-5 ">
                         Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
                         investment amount till last day of every month.
                     </p>
@@ -256,30 +252,29 @@
                 </div>
             <div class="my-6">
                     <div>
-                        <p class="my-2 font-semibold font-['Poppins'] ">Month- Month Tax Deduction Details</p>
-                        <p class="my-2 font-semibold text-[13px]  font-['Poppins'] text-gray-400">Below deductions are based on your declared amount. Tax amount
+                        <p class="my-2 font-semibold fs-5">Month- Month Tax Deduction Details</p>
+                        <p class="my-2 font-semibold fs-6">Below deductions are based on your declared amount. Tax amount
                             may change based on the amount approved.</p>
                     </div>
-
-
                     <div>
                         <div class="grid gap-4 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body ">
-                            <div class=" flex rounded-lg bg-[#F6F6F6] border-[#DDDDD] items-center py-[12px] ">
-                                <p class="text-ash-medium font-['Poppins'] text-[14px] text-center text-[#000] ">Tax Paid Till Now</p>
-                                <p class="font-['Poppins'] text-center font-[600] text-[16px]">INR {{taxComputationSource ? taxComputationSource['Tax Paid Till Now']:0}}</p>
+                            <div class="text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Total Tax Payable</p>
+                                <div class="flex gap-2">
+                                    <h6 class="mb-0 font-semibold fs-4">INR {{taxComputationSource ? taxComputationSource['Total Tax Payable']:0}}</h6>
+                                </div>
                             </div>
-                            <div class=" flex rounded-lg bg-[#F6F6F6] border-[#DDDDD] items-center  py-[12px] ">
-                                <p class="text-ash-medium font-['Poppins'] text-[14px] text-center text-[#000] ">Total Tax Payable</p>
-                                <p class=" font-['Poppins'] text-[16px]  text-center font-[600]">INR {{taxComputationSource ? taxComputationSource['Total Tax Payable']:0}}</p>
+                            <div class="p-2 text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Tax Paid Till Now</p>
+                                <h6 class="mb-0 font-semibold fs-4 ">INR {{taxComputationSource ? taxComputationSource['Tax Paid Till Now']:0}}</h6>
                             </div>
-                            <div class="flex rounded-lg bg-[#F6F6F6] border-[#DDDDD] items-center  py-[12px]">
-                                <p class="text-ash-medium font-['Poppins'] text-[14px] text-center text-[#000]">Remaining Tax Amount</p>
-                                <p class="font-['Poppins'] text-[16px] text-center font-[600]">INR {{taxComputationSource ? taxComputationSource['Remaining Tax Amount']:0}}</p>
+
+                            <div class="p-2 text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Remaining Tax Amount</p>
+                                <h6 class="mb-0 font-semibold fs-4">INR {{taxComputationSource ? taxComputationSource['Remaining Tax Amount']:0}}</h6>
                             </div>
                         </div>
                     </div>
-
-
                     <div class="table-responsive">
                         <DataTable :paginator="true" :rows="1" dataKey="id" scrollable :value="monthWiseData" >
                             <template #empty> No Data Found. </template>
@@ -348,7 +343,7 @@
 
 
         <div class="mt-5 text-end">
-            <button id="confirm_switchRegime" class="px-4 py-2 text-lg text-center text-white bg-black rounded-md"
+            <button id="confirm_switchRegime" class="px-4 py-2 text-lg text-center text-white bg-orange-700 rounded-md"
                 @click="saveRegime">Confirm</button>
         </div>
 

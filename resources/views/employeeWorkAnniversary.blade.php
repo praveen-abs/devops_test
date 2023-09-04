@@ -104,7 +104,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                               <table style="width: 100%;" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr>
                                   <td>
-                                    <img src="{{ URL::asset("assets/images/happy_anniversary_mail_icon.png")}}" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; padding: 12px">
+                                    <img src="{{ URL::asset("assets\images\happy_anniversary_mail_icon.png")}}" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; padding: 12px">
                                   </td>
                                 </tr>
                               </table>

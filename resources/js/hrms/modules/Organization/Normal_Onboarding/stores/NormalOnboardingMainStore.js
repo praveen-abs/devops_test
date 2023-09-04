@@ -400,13 +400,9 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     }
 
     const isMarried = (value) => {
-        console.log("employee_onboarding.spouse_name",employee_onboarding.spouse_name);
+        console.log(employee_onboarding.marital_status);
         if (employee_onboarding.marital_status == 2) {
-            if(value){
-                return true
-            }else{
-                return false;
-            }  
+            return false
         } else {
             return true
         }
@@ -593,7 +589,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             AadharCardBack: {
-                required: helpers.withMessage('Aadhar back is required', (value) => {
+                required: helpers.withMessage('Aadhar back is required', () => {
                     if (!isMandatoryDocuments.AadharBackIsMandatory) {
                         if (!value) {
                             return isMandatoryDocuments.AadharBackIsMandatory
@@ -606,7 +602,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             PanCardDoc: {
-                required: helpers.withMessage('Pan Card is required', (value) => {
+                required: helpers.withMessage('Pan Card is required', () => {
                     if (!isMandatoryDocuments.panCardIsMandatory) {
                         if (!value) {
                             return isMandatoryDocuments.panCardIsMandatory
@@ -620,7 +616,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             DrivingLicenseDoc: {
-                required: helpers.withMessage('Driving License is required', (value) => {
+                required: helpers.withMessage('Driving License is required', () => {
                     if (!isMandatoryDocuments.DrivingLicense) {
                         if (!value) {
                             return isMandatoryDocuments.DrivingLicense
@@ -634,7 +630,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 ), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             EductionDoc: {
-                required: helpers.withMessage('Education Certificate is required', (value) => {
+                required: helpers.withMessage('Education Certificate is required', () => {
                     if (!isMandatoryDocuments.educationCertificateIsMandatory) {
                         if (!value) {
                             return isMandatoryDocuments.educationCertificateIsMandatory
@@ -647,7 +643,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             VoterIdDoc: {
-                required: helpers.withMessage('Voter Id is required', (value) => {
+                required: helpers.withMessage('Voter Id is required', () => {
                     if (!isMandatoryDocuments.voterId) {
                         if (!value) {
                             return isMandatoryDocuments.voterId
@@ -660,7 +656,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             RelievingLetterDoc: {
-                required: helpers.withMessage('Relieving Letter is required', (value) => {
+                required: helpers.withMessage('Relieving Letter is required', () => {
                     if (!isMandatoryDocuments.RelievingLetter) {
                         if (!value) {
                             return isMandatoryDocuments.RelievingLetter
@@ -673,7 +669,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 }), validateFile: helpers.withMessage('Upload Valid format', validateFile)
             },
             PassportDoc: {
-                required: helpers.withMessage('passport is required', (value) => {
+                required: helpers.withMessage('passport is required', () => {
                     if (!isMandatoryDocuments.passport) {
                         if (!value) {
                             return isMandatoryDocuments.passport

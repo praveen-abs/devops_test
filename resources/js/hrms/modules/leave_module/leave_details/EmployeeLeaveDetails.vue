@@ -6,9 +6,9 @@
                 <div class="card-body">
                     <div class="flex justify-between">
                         <div>
-                            <span class="font-semibold text-[14px] text-[#000] font-['Poppins] mb-4">
+                            <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">
                                 Leave history
-                            </span>
+                            </h6>
                         </div>
                         <div class="d-flex justify-content-end mb-2">
                             <label for="" class="my-2 text-lg font-semibold">Select Month</label>
@@ -79,7 +79,7 @@
                             <Column field="" header="Action" style="min-width: 15rem">
                                 <template #body="slotProps">
                                     <div class="flex justify-center">
-                                        <Button type="button" icon="" class=" text-white bg-black Button py-2.5 mx-auto" label="View"
+                                        <Button type="button" icon="" class=" text-white Button py-2.5 mx-auto" label="View"
                                         @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="height: 2em" />
                                     </div>
                                 </template>

@@ -3,7 +3,6 @@ import { ref, reactive, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
-import { Service } from "../../Service/Service";
 const swal = inject("$swal");
 
 
@@ -11,7 +10,6 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
     // Notification service
     const toast = useToast();
-    const service = Service()
 
     // Variable Declarations
     const leave_data = reactive({
@@ -85,11 +83,11 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         leave_data.radiobtn_half_day == "half_day"
             ? (half_day_format.value = true)
             : (half_day_format.value = false);
-        half_day_format.value = true;
         custom_format.value = false;
         Permission_format.value = false;
         full_day_format.value = false;
         compensatory_format.value = false;
+        half_day_format.value = true;
     };
     const custom_day = () => {
         leave_data.radiobtn_custom == "custom"
@@ -292,10 +290,8 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
     // write Email service and axios service here
 
-    const Submit = async () => {
+    const Submit = () => {
 
-
-        //Leave applying logic happens here.
 
         leave_Request_data.leave_type_name = leave_data.selected_leave
         if (leave_data.radiobtn_full_day == "full_day") {
@@ -404,10 +400,8 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         data_checking.value = true;
 
 
-
         // data_checking.value=true
         axios.post('/applyLeaveRequest', {
-            "user_code": service.current_user_code,
             "leave_request_date": leave_Request_data.leave_Request_date,
             "leave_type_name": leave_Request_data.leave_type_name,
             "leave_session": leave_Request_data.leave_session,
@@ -424,7 +418,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             if (res.data.status == 'success') {
                 Swal.fire(
                     'Success',
-                    res.data.message,
+                    'Leave Applied successfull!',
                     'success'
                 )
 
@@ -432,7 +426,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             if (res.data.status == 'failure') {
                 Swal.fire(
                     'Failure',
-                    res.data.message,
+                    'Leave Request already applied for this date',
                     'error'
                 )
             }
@@ -449,32 +443,6 @@ export const useLeaveService = defineStore("useLeaveService", () => {
     };
 
 
-    const restChars = () =>{
-        leave_data.current_login_user = null,
-        leave_data.selected_leave = null,
-        leave_data.full_day_leave_date = null,
-        leave_data.half_day_leave_date = null,
-        leave_data.half_day_leave_session = null,
-        leave_data.radiobtn_full_day = null,
-        leave_data.radiobtn_half_day = null,
-        leave_data.radiobtn_custom = null,
-        leave_data.custom_start_date = null,
-        leave_data.custom_end_date = null,
-        leave_data.custom_total_days = null,
-        leave_data.permission_date = null,
-        leave_data.permission_start_time = null,
-        leave_data.permission_total_time = null,
-        leave_data.permission_end_time = null,
-        leave_data.compensatory_leaves = null,
-        leave_data.compensatory_leaves_dates = null,
-        leave_data.selected_compensatory_leaves = null,//This refers to comp days selected in dropdown
-        leave_data.compensatory_start_date = null,
-        leave_data.compensatory_total_days = null, //This refers to total days UI textbox
-        leave_data.compensatory_end_date = null,
-        leave_data.notifyTo = null,
-        leave_data.leave_reason = null,
-        leave_data.leave_request_error_message = null
-    }
 
     return {
 

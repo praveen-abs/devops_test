@@ -186,68 +186,71 @@
 
                 <div class="row mt-2 py-2 border-y-[1px] border-[gray] mx-2">
                     <div class="col-7 border-r-[1.4px] border-[gray]">
-                        <div class="row">
-                            <div class="col-6">
-                                <h1 class="font-semibold ">Earnings</h1>
-                                    <h1 class="my-3 flex items-center"
+                        <table class=" w-[100%]">
+                            <tr class="w-[100%]">
+                                <td>
+                                    <h1 class="font-semibold ">Earnings</h1>
+                                    <h1 class="my-3"
                                         v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.earnings[0]"
                                         :key="index"
-                                        :class="[key == 'Total Earnings' ? `text-black font-semibold` : 'text-black']"> {{ key }}  <span v-if=" key == 'Total Earnings'" 
-                                        class="text-black font-semibold" >(A)</span>
+                                        :class="[key == 'Total Earnings' ? 'text-black text-[16px]' : 'text-black']"> {{ key }}
                                     </h1>
-                            </div>
-                            <div class="col-2" >
-                                <h1 class="font-semibold text-right" v-if="employeePayslipStore.paySlipHTMLView.data.compensatory_data[0]">Fixed</h1>
+                                </td>
+
+                                <td class="flex flex-col items-start pt-[2px]">
+                                    <h1 class="font-semibold">Fixed</h1>
                                     <h1 v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.compensatory_data[0]"
-                                        :key="index" class="mt-[12px] text-black text-right "> {{ value }}</h1>
-                            </div>
-                            <div class="col-2" >
-                                <h1 class="font-semibold text-right" v-if="employeePayslipStore.paySlipHTMLView.data.arrears[0] != ''" >Arrears</h1>
+                                        :key="index" class="mt-[12px] text-black"> {{ value }}</h1>
+                                </td>
+
+                                <td class=" flex flex-col items-start pt-[2px]"
+                                    v-if="employeePayslipStore.paySlipHTMLView.data.arrears[0] != ''">
+                                    <h1 class="font-semibold ">Arrears</h1>
                                     <h1 v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.arrears[0]"
                                         :key="index" class="mt-[12px]">{{ value }}</h1>
-                            </div>
-                            <div class="col-2">
-                                <h1 class="font-semibold text-right">Earned</h1>
+                                    <!-- <h1  v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="my-3" >&nbsp;</h1> -->
+                                </td>
+                                <td v-if="employeePayslipStore.paySlipHTMLView.data.earnings[0]">
+                                    <h1 class="font-semibold">Earned</h1>
                                     <h1 v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.earnings[0]"
-                                        :key="index" class="my-3 text-right"
-                                        :class="[key == 'Total Earnings' ? 'text-black text-[14px] font-semibold' : '']"> {{ value }}</h1>
-                            </div>
-                        </div>
+                                        :key="index" class="my-3"
+                                        :class="[key == 'Total Earnings' ? 'text-black text-[16px]' : '']"> {{ value }}</h1>
+                                    <!-- <p class="my-2"  >&nbsp;</p> -->
+                                </td>
+                            </tr>
+                        </table>
+
                     </div>
                     <div class="col">
                         <table border="2" class=" w-[100%]">
                             <tr class="w-[100%]">
                                 <td>
                                     <h1 class="font-semibold ">CONTRIBUTIONS</h1>
-                                    <p class=" my-2 text-[#000] flex"
+                                    <p class=" my-2 text-[#000]"
                                         v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.contribution[0]"
-                                        :key="index" :class="[key == 'Total Contribution' ? 'text-[14px] text-[#000] font-semibold' : ' text-black']">{{ key }}
-                                        <span v-if=" key == 'Total Contribution'" 
-                                        class="text-black font-semibold text-[14px] " > (B)</span>
-                                        </p>
+                                        :key="index">{{ key }}</p>
                                 </td>
                                 <td>
                                     <h1 class="font-semibold ">&nbsp;</h1>
-                                    <p class=" my-2 text-[#000] text-right"
+                                    <p class=" my-2 text-[#000]"
                                         v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.contribution[0]"
-                                        :key="index" :class="[key == 'Total Contribution' ? 'text-[13px] text-[#000] font-semibold' : ' text-black']">{{ value }}</p>
+                                        :key="index">{{ value }}</p>
                                 </td>
                             </tr>
                             <!-- {{ employeePayslipStore.paySlipHTMLView.data.Tax_Deduction}} -->
                             <tr class="w-[100%]">
                                 <td>
                                     <h1 class="font-semibold ">Tax Duductions</h1>
-                                    <p class=" my-2 text-[#000] flex items-center"
+                                    <p class=" my-2 text-[#000]"
                                         v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.Tax_Deduction[0]"
-                                        :key="index" :class="[key == 'Total Deduction' ? 'text-[14px] text-[#000] font-semibold' : ' text-black']">{{
-                                            key }}  <span v-if=" key == 'Total Deduction'" 
-                                        class="text-[14px] text-[#000] font-semibold" > (C)</span></p>
+                                        :key="index" :class="[key == 'Total Deduction' ? 'text-[18px] ' : ' text-black']">{{
+                                            key }}</p>
                                 </td>
                                 <td>
                                     <h1 class="font-semibold ">&nbsp;</h1>
-                                    <p class=" my-2 text-[#000] text-right"
+                                    <p class=" my-2 text-[#000]"
                                         v-for="(value, key, index) in  employeePayslipStore.paySlipHTMLView.data.Tax_Deduction[0]"
-                                        :key="index" :class="[key == 'Total Deduction' ? 'text-[14px] text-[#000] font-semibold' : ' text-black']">{{
+                                        :key="index" :class="[key == 'Total Deduction' ? 'text-[18px] ' : ' text-black']">{{
                                             value }}</p>
                                 </td>
                             </tr>
@@ -257,20 +260,17 @@
                 </div>
                 <div class="my-2 row w-[100%] "
                     v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.over_all[0]" :key="index">
-                    <div class="my-2 col-6">
-                        <p class="text-[#000]"  :class="[key == 'Net Salary Payable'|| key ==  'Net Salary in words' ? 'text-black text-[14px] font-semibold' : '']">{{ key }} 
-                            <span v-if=" key == 'Net Salary Payable'" 
-                                        class="text-black font-semibold " >(A-B-C)</span>
-                        </p>
+                    <div class="my-2 col-5">
+                        <p class="">{{ key }} </p>
                     </div>
-                    <div class="my-2 col-6">
-                        <p class="text-[16px] text-[#000]"> <span class=" text-[16px] font-semibold text-right" style=" font-family:sans-serif !important; "
-                                v-if="key == 'Net Salary Payable'" :class="[key == 'Net Salary Payable' ? 'text-black text-[14px] font-semibold' : '']">₹ </span>{{ value }}</p>
+                    <div class="my-2 col-7">
+                        <p class="text-[16px]"> <span class=" text-[16px]" style=" font-family:sans-serif !important;"
+                                v-if="key == 'Net Salary Payable'">₹ </span> {{ value }}</p>
                     </div>
                 </div>
                 <div>
-                    <p class="mt-2 font-semibold flex text-[#000]">*** Note:All <span class=" text-[16px]  text-[#000]">amounts displayed in this payslips are in</span>  INR</p>
-                    <p class="mt-[50px] font-semibold text-[#000]">**This is computer generated statement,does not require signature.</p>
+                    <p class="mt-2 ">*** Note:All amounts displayed in this payslips are in INR</p>
+                    <p class="mt-[50px]">**This is computer generated statement,does not require signature.</p>
                 </div>
                 <div class="">
                     <div class="flex items-center float-right">

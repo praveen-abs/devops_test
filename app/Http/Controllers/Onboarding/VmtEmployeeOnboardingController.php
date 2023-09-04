@@ -329,17 +329,9 @@ class VmtEmployeeOnboardingController extends Controller
 
                             $VmtClientMaster = VmtClientMaster::first();
                             $image_view = url('/') . $VmtClientMaster->client_logo;
+                            $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-                         if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS')
-                            {
-
-                              $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data,"normal");
-
-                            }else{
-
-                                $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
-
-                            }
+                           // $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data,"normal");
 
                             $message = "Employee onboarded successfully";
                         } else {
@@ -465,16 +457,16 @@ class VmtEmployeeOnboardingController extends Controller
 
                 }
             }
-            // if(!empty($existing_user_data))
-            // {
-            //     $response = [
-            //         'status' => 'failure',
-            //         'message' =>$existing_user_data ,
-            //         'data' =>""
-            //     ];
+            if(!empty($existing_user_data))
+            {
+                $response = [
+                    'status' => 'failure',
+                    'message' =>$existing_user_data ,
+                    'data' =>""
+                ];
 
-            //     return response()->json($response);
-            // }
+                return response()->json($response);
+            }
             // dd($onboard_data);
             foreach ($onboard_data  as $key => $excelRowdata) {
 
@@ -513,7 +505,6 @@ class VmtEmployeeOnboardingController extends Controller
         $mail_message = '';
         $status = 'failure';
         try {
-            $isEmailSent="";
 
             $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: 'quick');
 
@@ -524,18 +515,9 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-
-
-               if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS')
-               {
-
-                    $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"quick");
-
-               }else{
-
                 $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+               // $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"quick");
 
-               }
                 if ($isEmailSent) {
                     $mail_message = 'success';
                 } else {
@@ -670,16 +652,8 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS')
-                {
-                     $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"bulk");
-
-                }else{
-
-                    $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
-                }
-
-
+                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"bulk");
                 // $isEmailSent = new WelcomeMailJobs($row['email'],$row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code)
                 //   ->delay(Carbon::now()->addSeconds(5));
 

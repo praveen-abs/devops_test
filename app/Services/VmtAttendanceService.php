@@ -15,7 +15,6 @@ use App\Models\VmtWorkShifts;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\Department;
-use App\Models\VmtStaffAttendanceDevice;
 use App\Mail\VmtAbsentMail_Regularization;
 use App\Services\VmtNotificationsService;
 
@@ -43,7 +42,7 @@ class VmtAttendanceService
 {
 
 
-    public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
+    public function fetchAttendanceRegularizationData($month, $year,$manager_user_code = null)
     {
 
         $validator = Validator::make(
@@ -135,7 +134,7 @@ class VmtAttendanceService
 
 
 
-    public function fetchAbsentRegularizationData($month, $year, $manager_user_code = null)
+    public function fetchAbsentRegularizationData( $month, $year,$manager_user_code = null)
     {
 
 
@@ -425,105 +424,6 @@ class VmtAttendanceService
         return $daterange;
     }
 
-    public function applyLeaveRequest_AdminRole(
-        $admin_user_code,
-        $user_code,
-        $leave_request_date,
-        $start_date,
-        $end_date,
-        $hours_diff,
-        $no_of_days,
-        $compensatory_work_days_ids,
-        $leave_session,
-        $leave_type_name,
-        $leave_reason,
-        $notifications_users_id,
-        VmtNotificationsService $serviceNotificationsService
-    ) {
-
-        $validator = Validator::make(
-            $data = [
-                'admin_user_code' => $admin_user_code,
-                'user_code' => $user_code,
-            ],
-            $rules = [
-                'admin_user_code' => 'required|exists:users,user_code',
-                'user_code' => 'required|exists:users,user_code',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
-        try {
-            $is_admin = User::where('user_code', $admin_user_code)->where('org_role', "2");
-
-            if ($is_admin->exists()) {
-
-                //$is_admin = $is_admin->first();
-
-                $response = $this->applyLeaveRequest(
-
-                    user_code: $user_code,
-                    leave_request_date: $leave_request_date,
-                    start_date: $start_date,
-                    end_date: $end_date,
-                    hours_diff: $hours_diff,
-                    no_of_days: $no_of_days,
-                    compensatory_work_days_ids: $compensatory_work_days_ids,
-                    leave_session: $leave_session,
-                    leave_type_name: $leave_type_name,
-                    leave_reason: $leave_reason,
-                    notifications_users_id: $notifications_users_id,
-                    user_type: "admin",
-                    serviceVmtNotificationsService: $serviceNotificationsService
-                );
-
-                if ($response['status'] == "success") {
-
-
-                    $user_data = User::where('user_code', $user_code)->first();
-
-                    $record_id = VmtEmployeeLeaves::where('user_id', $user_data->id)->wheredate("start_date", $start_date)->wheredate("end_date", $end_date)->first();
-
-                    $response = $this->approveRejectRevokeLeaveRequest(
-                        approver_user_code: $admin_user_code,
-                        record_id: $record_id->id,
-                        status: "Approved",
-                        review_comment: "---",
-                        user_type: "admin",
-                        serviceVmtNotificationsService: $serviceVmtNotificationsService
-
-                    );
-                }
-            } else {
-                return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
-                ]);
-            }
-        } catch (\Exception $e) {
-            $response = [
-                'status' => 'failure',
-                'message' => 'Error while applying leave request',
-                'mail_status' => 'failure',
-                'notification' => '',
-                'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getTraceAsString()
-            ];
-
-            return $response;
-        }
-    }
-
     /*
 
         $hours_diff : For permission only
@@ -534,7 +434,7 @@ class VmtAttendanceService
 
     */
     public function  applyLeaveRequest(
-        $user_code,
+        $user_id,
         $leave_request_date,
         $start_date,
         $end_date,
@@ -545,62 +445,25 @@ class VmtAttendanceService
         $leave_type_name,
         $leave_reason,
         $notifications_users_id,
-        $user_type,
         VmtNotificationsService $serviceNotificationsService
     ) {
 
-        $validator = Validator::make(
-            $data = [
-                'user_code' => $user_code,
-                'leave_request_date' => $leave_request_date,
-                'start_date' => $start_date,
-                'end_date' => $end_date,
-                'leave_type_name' => $leave_type_name,
-                'leave_reason' => $leave_reason,
-                'notifications_users_id' => $notifications_users_id,
-                'user_type' => $user_type,
-            ],
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-                'leave_request_date' => 'required|date',
-                'start_date' => "required|date",
-                'end_date' => 'required|date',
-                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
-                'notifications_users_id' => 'nullable',
-                'user_type' => ['required', Rule::in(['Employee', 'Admin'])],
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-                'in' => 'Field :attribute is invalid',
-            ]
-        );
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
-
-        try {
+        try
+        {
             //Core values needed
-            $query_user = User::where('user_code', $user_code)->first();
+            $query_user = User::where('id', $user_id)->first();
             $compensatory_leavetype_id = VmtLeaves::where('leave_type', 'LIKE', '%Compensatory%')->first()->id;
             $leave_type_id = VmtLeaves::where('leave_type', $leave_type_name)->first()->id;
 
             //Check whether this user has manager
-            $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', $query_user->id)->first();
+            $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->l1_manager_code;
 
             if (empty($manager_emp_code)) {
                 return response()->json([
                     "status" => "failure",
-                    "message" => "Manager not found for the given user " . $query_user->name . " . Kindly contact the admin"
+                    "message" => "Manager not found for the given user " . $user_id . " . Kindly contact the admin"
                 ]);
-            } else {
-                $manager_emp_code = $manager_emp_code->l1_manager_code;
             }
 
             $query_manager = User::where('user_code', $manager_emp_code)->first();
@@ -656,12 +519,11 @@ class VmtAttendanceService
             $leave_month = date('m', strtotime($start_date));
 
             //get the existing Pending/Approved leaves. No need to check Rejected
-            $existingLeavesRequests = VmtEmployeeLeaves::where('user_id', $query_user->id)
+            $existingLeavesRequests = VmtEmployeeLeaves::where('user_id', $user_id)
                 ->whereMonth('start_date', '>=', $leave_month)
                 ->whereIn('status', ['Pending', 'Approved'])
                 ->get(['start_date', 'end_date', 'status']);
 
-            //dd($existingLeavesRequests);
 
             foreach ($existingLeavesRequests as $singleExistingLeaveRequest) {
 
@@ -741,7 +603,7 @@ class VmtAttendanceService
 
             //Save in DB
             $emp_leave_details =  new VmtEmployeeLeaves;
-            $emp_leave_details->user_id = $query_user->id;
+            $emp_leave_details->user_id = $user_id;
             $emp_leave_details->leave_type_id = $leave_type_id;
             $emp_leave_details->leaverequest_date = $leave_request_date;
             $emp_leave_details->start_date = $start_date;
@@ -791,7 +653,6 @@ class VmtAttendanceService
 
             //To store notif emails, if no notif emails given , then send this empty array to Mail::
             $notification_mails = array();
-            $array_notif_ids = null;
 
             if (!empty($notifications_users_id)) {
                 //Create array from CSV value
@@ -803,9 +664,8 @@ class VmtAttendanceService
                 $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id', $array_notif_ids)->pluck('officical_mail');
             }
 
-            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id), true);
-            $manager_avatar = json_decode(getEmployeeAvatarOrShortName($query_manager->id), true);
-            $emp_designation = VmtEmployeeOfficeDetails::where('user_id', $query_user->id)->first()->designation;
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id), true);
+            $emp_designation = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first()->designation;
 
             //Save in notifications table
             // $serviceNotificationsService->saveNotification(
@@ -824,38 +684,32 @@ class VmtAttendanceService
                 notif_user_id: $query_user->user_code,
                 leave_module_type: 'employee_applies_leave',
                 manager_user_code: $manager_emp_code,
-                notifications_users_id: $array_notif_ids ?? null,
+                notifications_users_id: $array_notif_ids,
             );
 
-            $mail_status = "";
-            $res_notification = "";
+            $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
+                uEmployeeName: $query_user->name,
+                uEmpCode: $query_user->user_code,
+                //uEmpAvatar: $emp_avatar,
+                uManagerName: $manager_name,
+                uLeaveRequestDate: Carbon::parse($leave_request_date)->format('M jS Y'),
+                uStartDate: Carbon::parse($start_date)->format('M jS Y'),
+                uEndDate: Carbon::parse($end_date)->format('M jS Y'),
+                uReason: $leave_reason,
+                uLeaveType: $leave_type_name,
+                uTotal_leave_datetime: $mailtext_total_leave,
+                //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
+                loginLink: request()->getSchemeAndHttpHost(),
+                image_view: $image_view,
+                emp_image: $emp_avatar,
+                manager_image:'',
+                emp_designation:$emp_designation
+            ));
 
-            if ($user_type == "Employee") {
-                $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
-                    uEmployeeName: $query_user->name,
-                    uEmpCode: $query_user->user_code,
-                    //uEmpAvatar: $emp_avatar,
-                    uManagerName: $manager_name,
-                    uLeaveRequestDate: Carbon::parse($leave_request_date)->format('M jS Y'),
-                    uStartDate: Carbon::parse($start_date)->format('M jS Y'),
-                    uEndDate: Carbon::parse($end_date)->format('M jS Y'),
-                    uReason: $leave_reason,
-                    uLeaveType: $leave_type_name,
-                    uTotal_leave_datetime: $mailtext_total_leave,
-                    //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
-                    loginLink: request()->getSchemeAndHttpHost(),
-                    image_view: $image_view,
-                    emp_image: $emp_avatar,
-                    manager_image: $manager_avatar,
-                    emp_designation: $emp_designation
-                ));
-
-
-                if ($isSent) {
-                    $mail_status = "success";
-                } else {
-                    $mail_status = "failure";
-                }
+            if ($isSent) {
+                $mail_status = "success";
+            } else {
+                $mail_status = "failure";
             }
 
             $response = [
@@ -868,79 +722,35 @@ class VmtAttendanceService
             ];
 
             return $response;
-        } catch (TransportException $e) {
+        }
+        catch(TransportException $e){
             $response = [
                 'status' => 'success',
                 'message' => 'Leave Request applied successfully',
                 'mail_status' => 'failure',
                 'notification' => $res_notification ?? '',
                 'error' => $e->getMessage(),
-                'error_verbose' => $e->getline(),
+                'error_verbose' => $e
             ];
 
             return $response;
-        } catch (\Exception $e) {
+        }
+        catch(\Exception $e){
             $response = [
                 'status' => 'failure',
                 'message' => 'Error while applying leave request',
                 'mail_status' => 'failure',
                 'notification' => '',
                 'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getTraceAsString()
+                'error_verbose' => $e
             ];
 
             return $response;
         }
     }
 
-    /*
-        Check whether leave balance available
-
-    */
-    public function isLeaveBalanceAvailable($user_code, $leave_type_name, $current_applied_leave_count){
-
-        $validator = Validator::make(
-            $data = [
-                'user_code' => $user_code,
-                'leave_type_name' => $leave_type_name,
-                'current_applied_leave_count' => $current_applied_leave_count,
-            ],
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
-                'current_applied_leave_count' => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-                'in' => 'Field :attribute is invalid',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
-
-        try {
-                dd($this->getEmployeeLeaveBalance($user_code));
-
-
-        }
-        catch (\Exception $e) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => "Error[ isLeaveBalanceAvailable() ] " . $e->getMessage(),
-                'data' => $e->getMessage()
-            ]);
-        }
-    }
-
     public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment, VmtNotificationsService $serviceNotificationsService)
+
     {
 
         $validator = Validator::make(
@@ -1008,31 +818,7 @@ class VmtAttendanceService
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
-
-            if (!empty($user_type) && $user_type == "admin") {
-
-                $isSent    = \Mail::to($employee_mail)->send(
-                    new ApproveRejectLeaveMail(
-                        $obj_employee->name,
-                        $obj_employee->user_code,
-                        VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                        User::find($manager_user_id)->name,
-                        User::find($manager_user_id)->user_code,
-                        request()->getSchemeAndHttpHost(),
-                        $image_view,
-                        $emp_avatar,
-                        $status,
-                        $user_type = "Admin",
-                    )
-                );
-
-                if ($isSent) {
-                    $mail_status = "Mail sent successfully";
-                } else {
-                    $mail_status = "There was one or more failures.";
-                }
-            } else {
-
+            try {
                 $isSent    = \Mail::to($employee_mail)->send(
                     new ApproveRejectLeaveMail(
                         $obj_employee->name,
@@ -1047,38 +833,48 @@ class VmtAttendanceService
                     )
 
                 );
+            } catch (TransportException $e) {
 
-                if ($isSent) {
-                    $mail_status = "success";
-                } else {
-                    $mail_status = "failure";
-                }
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'Leave approval successful',
+                        'mail_status' => 'failure',
+                        'error' => $e->getMessage(),
+                        'error_verbose' => $e
+                    ]
+                );
+            }
+            if ($isSent) {
+                $mail_status = "success";
+            } else {
+                $mail_status = "failure";
+            }
 
-                if ($status == "Approved") {
-                    $text_status = "approved";
-                    $leave_module_type = 'manager_approves_leave';
-                } else
+            if ($status == "Approved") {
+                $text_status = "approved";
+                $leave_module_type = 'manager_approves_leave';
+            } else
             if ($status == "Rejected") {
-                    $text_status = "rejected";
-                    $leave_module_type = 'manager_rejects_leave';
-                } else
+                $text_status = "rejected";
+                $leave_module_type = 'manager_rejects_leave';
+            } else
             if ($status == "Revoked") {
-                    $text_status = "revoked";
-                    $leave_module_type = 'manager_withdraw_leave';
-                }
+                $text_status = "revoked";
+                $leave_module_type = 'manager_withdraw_leave';
+            }
 
-                $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
+            $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
 
-                if ($users_id->exists()) {
+            if ($users_id->exists()) {
 
-                    $users_id = $users_id->first()->user_id;
+                $users_id = $users_id->first()->user_id;
 
-                    $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
-                        notif_user_id: User::where('id', $users_id)->first()->user_code,
-                        leave_module_type: $leave_module_type,
-                        manager_user_code: $approver_user_code,
-                    );
-                }
+                $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
+                    notif_user_id: User::where('id', $users_id)->first()->user_code,
+                    leave_module_type: $leave_module_type,
+                    manager_user_code: $approver_user_code,
+                );
             }
 
             $response = [
@@ -1666,38 +1462,33 @@ class VmtAttendanceService
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
             $isSent = null;
+        if($user_type != "Admin"){
+            if (empty($manager_details)) {
+                //Manager mail is empty or no manager assigned. Cant send mail
 
-            if (!empty($user_type) && $user_type != "Admin") {
-                if (empty($manager_details)) {
-                    //Manager mail is empty or no manager assigned. Cant send mail
-                    return response()->json([
-                        'status' => 'failure',
-                        'message' => "Manager mail is not found. Kindly contact the Admin.",
-                        'data' => ''
-                    ]);
-                } else {
-                    //If Manager mail is available, then send mail
-                    $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAbsentMail_Regularization(
-                        $query_user->name,
-                        $query_user->user_code,
-                        $emp_avatar,
-                        $attendance_date,
-                        $manager_details->name,
-                        $manager_details->user_code,
-                        request()->getSchemeAndHttpHost(),
-                        $image_view,
-                        $custom_reason,
-                        "Pending"
-                    ));
-                }
-
-                if ($isSent) {
-                    $mail_status = "Mail sent successfully";
-                } else {
-                    $mail_status = "There was one or more failures.";
-                }
+            } else {
+                //If Manager mail is available, then send mail
+                $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAbsentMail_Regularization(
+                    $query_user->name,
+                    $query_user->user_code,
+                    $emp_avatar,
+                    $attendance_date,
+                    $manager_details->name,
+                    $manager_details->user_code,
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    $custom_reason,
+                    "Pending"
+                ));
             }
 
+            if ($isSent) {
+                $mail_status = "Mail sent successfully";
+            } else {
+                $mail_status = "There was one or more failures.";
+            }
+
+        }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Absent Regularization applied successfully',
@@ -1892,61 +1683,62 @@ class VmtAttendanceService
             $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-            if (!empty($user_type) && $user_type != "Admin") {
-                //Check if manager's mail exists or not
-                if (!empty($manager_details)) {
-                    //dd($manager_details);
+         if($user_type != "Admin"){
+            //Check if manager's mail exists or not
+            if (!empty($manager_details)) {
+                //dd($manager_details);
 
 
-                    $VmtClientMaster = VmtClientMaster::first();
-                    $image_view = url('/') . $VmtClientMaster->client_logo;
+                $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
-                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id), true);
+                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id), true);
 
 
-                    $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                        $query_user->name,
-                        $query_user->user_code,
-                        $emp_avatar,
-                        $attendance_date,
-                        $manager_details->name,
-                        $manager_details->user_code,
-                        request()->getSchemeAndHttpHost(),
-                        $image_view,
-                        $custom_reason,
-                        "Pending",
-                        $user_type = "",
-                    ));
+                $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                    $query_user->name,
+                    $query_user->user_code,
+                    $emp_avatar,
+                    $attendance_date,
+                    $manager_details->name,
+                    $manager_details->user_code,
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    $custom_reason,
+                    "Pending",
+                    $user_type="",
+                ));
 
-                    if ($isSent) {
-                        $mail_status = "Mail sent successfully";
-                    } else {
-                        $mail_status = "There was one or more failures.";
-                    }
+                if ($isSent) {
+                    $mail_status = "Mail sent successfully";
+                } else {
+                    $mail_status = "There was one or more failures.";
                 }
-
-
-                if ($regularization_type == 'LC') {
-
-                    $attendance_regularization_type = 'employee_applies_lc';
-                } else if ($regularization_type == 'EG') {
-
-                    $attendance_regularization_type = 'employee_applies_eg';
-                } else if ($regularization_type == 'MOP') {
-
-                    $attendance_regularization_type = 'employee_applies_mop';
-                } else if ($regularization_type == 'MIP') {
-
-                    $attendance_regularization_type = 'employee_applies_mip';
-                }
-
-                $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
-                    notif_user_id: $user_id,
-                    attendance_regularization_type: $attendance_regularization_type,
-                    manager_user_code: $manager_usercode,
-                );
             }
+
+
+            if ($regularization_type == 'LC') {
+
+                $attendance_regularization_type = 'employee_applies_lc';
+            } else if ($regularization_type == 'EG') {
+
+                $attendance_regularization_type = 'employee_applies_eg';
+            } else if ($regularization_type == 'MOP') {
+
+                $attendance_regularization_type = 'employee_applies_mop';
+            } else if ($regularization_type == 'MIP') {
+
+                $attendance_regularization_type = 'employee_applies_mip';
+            }
+
+            $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+                notif_user_id: $user_id,
+                attendance_regularization_type: $attendance_regularization_type,
+                manager_user_code: $manager_usercode,
+            );
+
+        }
 
 
             return [
@@ -1976,7 +1768,7 @@ class VmtAttendanceService
         }
     }
 
-    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text, $user_type, VmtNotificationsService $serviceVmtNotificationsService)
+    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text,$user_type, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         //Validate the request
@@ -2039,83 +1831,84 @@ class VmtAttendanceService
             $mail_status = "";
 
             //Get employee details
-            if (!empty($user_type) && $user_type == "Admin") {
+        if($user_type == "Admin"){
 
-                $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                    ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+            $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                          ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-                //dd($employee_details->officical_mail);
+                    //dd($employee_details->officical_mail);
 
 
-                $VmtClientMaster = VmtClientMaster::first();
-                $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+                    $VmtClientMaster = VmtClientMaster::first();
+                    $image_view = url('/') . $VmtClientMaster->client_logo;
+                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
 
-                $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                    $employee_details->name,
-                    $employee_details->user_code,
-                    $emp_avatar,
-                    $data->attendance_date,
-                    $query_user->name,
-                    $query_user->user_code,
-                    request()->getSchemeAndHttpHost(),
-                    $image_view,
-                    $status_text,
-                    $status,
-                    $user_type = "Admin",
-                ));
+                    $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                        $employee_details->name,
+                        $employee_details->user_code,
+                        $emp_avatar,
+                        $data->attendance_date,
+                        $query_user->name,
+                        $query_user->user_code,
+                        request()->getSchemeAndHttpHost(),
+                        $image_view,
+                        $status_text,
+                        $status,
+                        $user_type="Admin",
+                   ));
 
                 if ($isSent) {
                     $mail_status = "Mail sent successfully";
                 } else {
                     $mail_status = "There was one or more failures.";
                 }
+        }
+        else
+        {
+            $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+            //dd($employee_details->officical_mail);
+
+
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+
+            $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                $employee_details->name,
+                $employee_details->user_code,
+                $emp_avatar,
+                $data->attendance_date,
+                $query_user->name,
+                $query_user->user_code,
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                $status_text,
+                $status,
+                $user_type="",
+
+            ));
+
+            if ($isSent) {
+                $mail_status = "Mail sent successfully";
             } else {
-
-                $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                    ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
-
-                //dd($employee_details->officical_mail);
-
-
-                $VmtClientMaster = VmtClientMaster::first();
-                $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
-
-                $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                    $employee_details->name,
-                    $employee_details->user_code,
-                    $emp_avatar,
-                    $data->attendance_date,
-                    $query_user->name,
-                    $query_user->user_code,
-                    request()->getSchemeAndHttpHost(),
-                    $image_view,
-                    $status_text,
-                    $status,
-                    $user_type = "",
-
-                ));
-
-                if ($isSent) {
-                    $mail_status = "Mail sent successfully";
-                } else {
-                    $mail_status = "There was one or more failures.";
-                }
-                if ($status == 'Approved') {
-
-                    $attendance_regularization_type = 'manager_approves_attendance_reg';
-                } else if ($status == 'Rejected') {
-
-                    $attendance_regularization_type = 'manager_rejects_attendance_reg';
-                }
-
-                $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
-                    notif_user_id: $data->user_id,
-                    attendance_regularization_type: $attendance_regularization_type,
-                    manager_user_code: $approver_user_code,
-                );
+                $mail_status = "There was one or more failures.";
             }
+            if ($status == 'Approved') {
+
+                $attendance_regularization_type = 'manager_approves_attendance_reg';
+            } else if ($status == 'Rejected') {
+
+                $attendance_regularization_type = 'manager_rejects_attendance_reg';
+            }
+
+            $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+                notif_user_id: $data->user_id,
+                attendance_regularization_type: $attendance_regularization_type,
+                manager_user_code: $approver_user_code,
+            );
+        }
 
             return $responseJSON = [
                 'status' => 'success',
@@ -2132,130 +1925,129 @@ class VmtAttendanceService
                     'message' => 'Attendance Regularization approval successful',
                     'mail_status' => 'failure',
                     'error' => $e->getMessage(),
-                    'error_verbose' => $e->getline(),
+                    'error_verbose' => $e
                 ]
             );
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ approveRejectAttendanceRegularization() ) ] ",
-                'data' => $e->getMessage(),
-                'error_line' => $e->getline(),
+                'message' => "Error[ approveRejectAttendanceRegularization() ) ] " . $e->getMessage(),
+                'data' => $e->getMessage()
             ]);
         }
     }
 
-    public function approveRejectAbsentRegularization($approver_user_code, $record_id, $status, $status_text, $user_type)
+    public function approveRejectAbsentRegularization($approver_user_code, $record_id, $status, $status_text,$user_type)
     {
-        try {
-            // dd($approver_user_code, $record_id, $status, $status_text);
-            //Get the user_code
-            $query_user = User::where('user_code', $approver_user_code)->first();
-            $user_id = $query_user->id;
+        try{
+        // dd($approver_user_code, $record_id, $status, $status_text);
+        //Get the user_code
+        $query_user = User::where('user_code', $approver_user_code)->first();
+        $user_id = $query_user->id;
 
-            $data = VmtEmployeeAbsentRegularization::find($record_id);
-            //dd(!empty($data) && $data->exists());
+        $data = VmtEmployeeAbsentRegularization::find($record_id);
+        //dd(!empty($data) && $data->exists());
 
-            if (!empty($data) && $data->exists()) {
-                $data->reviewer_id = $user_id;
-                $data->reviewer_reviewed_date = Carbon::today()->setTimezone('Asia/Kolkata');
-                $data->status = $status;
-                $data->reviewer_comments = $status_text ?? '---';
+        if (!empty($data) && $data->exists()) {
+            $data->reviewer_id = $user_id;
+            $data->reviewer_reviewed_date = Carbon::today()->setTimezone('Asia/Kolkata');
+            $data->status = $status;
+            $data->reviewer_comments = $status_text ?? '---';
 
-                $data->save();
-            } else {
-                return $responseJSON = [
-                    'status' => 'failure',
-                    'message' => 'Record not found',
-                    'mail_status' => '',
-                    'data' => [],
-                ];
-            }
-
-            //Send mail to Employee
-
-            $mail_status = "";
-            if ($user_type == "Admin") {
-
-                //Get employee details
-                $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                    ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
-
-                //dd($employee_details->officical_mail);
-
-
-                $VmtClientMaster = VmtClientMaster::first();
-                $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
-
-                $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
-                    $employee_details->name,
-                    $employee_details->user_code,
-                    $emp_avatar,
-                    $data->attendance_date,
-                    $query_user->name,
-                    $query_user->user_code,
-                    request()->getSchemeAndHttpHost(),
-                    $image_view,
-                    $status_text,
-                    $status
-                ));
-
-                if ($isSent) {
-                    $mail_status = "Mail sent successfully";
-                } else {
-                    $mail_status = "There was one or more failures.";
-                }
-            } else {
-                $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                    ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
-
-                //dd($employee_details->officical_mail);
-
-
-                $VmtClientMaster = VmtClientMaster::first();
-                $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
-
-                $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
-                    $employee_details->name,
-                    $employee_details->user_code,
-                    $emp_avatar,
-                    $data->attendance_date,
-                    $query_user->name,
-                    $query_user->user_code,
-                    request()->getSchemeAndHttpHost(),
-                    $image_view,
-                    $status_text,
-                    $status
-                ));
-
-                if ($isSent) {
-                    $mail_status = "Mail sent successfully";
-                } else {
-                    $mail_status = "There was one or more failures.";
-                }
-            }
-            // if ($status == 'Approved') {
-
-            //     $attendance_regularization_type = 'manager_approves_attendance_reg';
-            // } else if ($status == 'Rejected') {
-
-            //     $attendance_regularization_type = 'manager_rejects_attendance_reg';
-            // }
-
-            // $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
-            //     notif_user_id: $data->user_id,
-            //     attendance_regularization_type: $attendance_regularization_type,
-            //     manager_user_code: $approver_user_code,
-            // );
-
+            $data->save();
+        } else {
             return $responseJSON = [
-                'status' => 'success',
-                'message' => 'Regularization done successfully!',
-                'mail_status' => $mail_status,
+                'status' => 'failure',
+                'message' => 'Record not found',
+                'mail_status' => '',
                 'data' => [],
             ];
+        }
+
+        //Send mail to Employee
+
+        $mail_status = "";
+        if($user_type == "Admin"){
+
+        //Get employee details
+            $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+            //dd($employee_details->officical_mail);
+
+
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+
+            $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
+                $employee_details->name,
+                $employee_details->user_code,
+                $emp_avatar,
+                $data->attendance_date,
+                $query_user->name,
+                $query_user->user_code,
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                $status_text,
+                $status
+            ));
+
+            if ($isSent) {
+                $mail_status = "Mail sent successfully";
+            } else {
+                $mail_status = "There was one or more failures.";
+            }
+    }else{
+     $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+            //dd($employee_details->officical_mail);
+
+
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+
+            $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
+                $employee_details->name,
+                $employee_details->user_code,
+                $emp_avatar,
+                $data->attendance_date,
+                $query_user->name,
+                $query_user->user_code,
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                $status_text,
+                $status
+            ));
+
+            if ($isSent) {
+                $mail_status = "Mail sent successfully";
+            } else {
+                $mail_status = "There was one or more failures.";
+            }
+    }
+        // if ($status == 'Approved') {
+
+        //     $attendance_regularization_type = 'manager_approves_attendance_reg';
+        // } else if ($status == 'Rejected') {
+
+        //     $attendance_regularization_type = 'manager_rejects_attendance_reg';
+        // }
+
+        // $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+        //     notif_user_id: $data->user_id,
+        //     attendance_regularization_type: $attendance_regularization_type,
+        //     manager_user_code: $approver_user_code,
+        // );
+
+        return $responseJSON = [
+            'status' => 'success',
+            'message' => 'Regularization done successfully!',
+            'mail_status' => $mail_status,
+            'data' => [],
+        ];
         } catch (TransportException $e) {
 
             return response()->json(
@@ -3572,194 +3364,10 @@ class VmtAttendanceService
         }
     }
 
-    public function getAttendanceDashboardData()
-    {
+    public function getAttendanceDashboardData(){
 
-        $current_date = Carbon::now()->format('Y-m-d');
-        $Current_month = Carbon::now()->format('m');
-        $curent_year =  Carbon::now()->format('Y');
-        $current_day =  Carbon::now()->format('d');
+        dd("simma");
 
-        $user_code =  auth()->user()->user_code;
-
-        $user_data = User::where("user_code", $user_code)->first();
-
-        $employees_data = array();
-
-        $absent_count = 0;
-
-        $present_count = 0;
-        $lc_count = 0;
-        $eg_count = 0;
-        $mip_count = 0;
-        $mop_count = 0;
-
-        $leave_employee_count = array();
-        $response = array();
-        $i = 0;
-
-        $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
-
-
-        foreach ($employees_data as $key => $single_user_data) {
-            $user_code = User::where('id', $single_user_data->id)->first()->user_code;
-            $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
-            $emp_bio_attendance = $this->getBioMetricAttendanceData($user_code, $current_date);
-
-            if (empty($absent_present_employee_data)) {
-
-                $absent_employee_data[$key]['absentEmployeeCount'] = $absent_present_employee_data;
-
-                $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
-
-                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $current_date);
-
-                if (empty($emp_bio_attendance)) {
-
-                    $absent_count++;
-                }
-            }
-            if (!empty($absent_present_employee_data)) {
-
-                $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
-
-                $present_count++;
-            } else {
-                $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
-
-                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $current_date);
-
-                if (!empty($emp_bio_attendance)) {
-
-                    $present_count++;
-                }
-            }
-
-
-            $user_data = User::where('id', $single_user_data['id'])->first();
-            //  dd($single_user_data['id']);
-            $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Approved")->get()->toarray();
-            //dd( $emp_leave_data);
-            if (!empty($emp_leave_data)) {
-
-                $start_Date = Carbon::parse($emp_leave_data['0']['start_date'])->format('Y-m-d');
-                $end_Date = Carbon::parse($emp_leave_data['0']['end_date'])->format('Y-m-d');
-
-                $dateRange = CarbonPeriod::create($start_Date, $end_Date);
-
-                foreach ($dateRange as $single_date) {
-                    $leave_date = $single_date->format('Y-m-d');
-
-                    if ($leave_date == $current_date) {
-                        $leave_employee_count[$i]['id'] =  $single_user_data['id'];
-                        $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
-                        $leave_employee_count[$i]['user_name'] =  $user_data->name;
-                        $leave_employee_count[$i]['leave_date'] = $leave_date;
-                        $i++;
-                    }
-                }
-            }
-
-            //logics for get lc and mip
-            $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id);
-
-        }
-
-        $attendanceOverview['absent_count'] =$absent_count;
-        $attendanceOverview['present_count'] = $present_count;
-        $attendanceOverview['leave_emp_count'] = count($leave_employee_count);
-        $attendanceOverview['lg_count'] = $lc_count;
-        $attendanceOverview['eg_count'] = $eg_count;
-        $attendanceOverview['mop_count'] = $mop_count;
-        $attendanceOverview['mip_count'] = $mip_count;
-
-
-        $shifts = $this->getWorkShiftDetails();
-
-        $response = ["attendance_overview" => $attendanceOverview, "work_shift" =>$shifts];
-        return $response ;
     }
 
-
-
-    public function getBioMetricAttendanceData($user_code, $current_date)
-    {
-
-
-        $deviceData = array();
-        if (
-            sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
-            sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
-        ) {
-
-            $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                ->whereDate('date', $current_date)
-                ->where('user_Id', $user_code)
-                ->first(['check_out_time']);
-
-            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                ->whereDate('date', $current_date)
-                ->where('user_Id',  $user_code)
-                ->first(['check_in_time']);
-        } else {
-            $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                ->whereDate('date', $current_date)
-                ->where('direction', 'out')
-                ->where('user_Id', $user_code)
-                ->first(['check_out_time']);
-
-            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                ->whereDate('date', $current_date)
-                ->where('direction', 'in')
-                ->where('user_Id', $user_code)
-                ->first(['check_in_time']);
-        }
-        // dd($attendanceCheckIn);
-
-        $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-        $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-        //dd($deviceCheckInTime);
-        if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
-            $deviceData[] = ([
-                'date' => $current_date,
-                'user_code' => $user_code,
-                'checkin_time' => $deviceCheckInTime,
-                'checkout_time' => $deviceCheckOutTime,
-                'attendance_mode_checkin' => 'biometric',
-                'attendance_mode_checkout' => 'biometric'
-            ]);
-        }
-        return $deviceData;
-    }
-
-
-
-    public function getWorkShiftDetails()
-    {
-
-
-        $workshiftCount = array();
-        $work_shift_details = VmtWorkShifts::all()->toArray();
-
-        foreach ($work_shift_details as $key => $single_shift_id) {
-
-            $work_shift_assigned_employees = VmtWorkShifts::join('vmt_employee_workshifts', 'vmt_employee_workshifts.work_shift_id', '=', 'vmt_work_shifts.id')
-                ->join('users', 'users.id', '=', 'vmt_employee_workshifts.user_id')
-                ->where('vmt_employee_workshifts.work_shift_id', '=', $single_shift_id['id'])
-                ->where('users.active', '=', 1)
-                ->get();
-            //  $response ["work_shift_assigned_employees"][$key] = count( $work_shift_assigned_employees) ;
-            $response[$key]["work_shift_assigned_employees"] = count($work_shift_assigned_employees);
-            $response[$key]["work_shift_employee_data"] = $work_shift_assigned_employees;
-        }
-        // dd(count($workshiftCount));
-
-        return $response;
-
-        // return $work_shift->toArray();
-    }
 }

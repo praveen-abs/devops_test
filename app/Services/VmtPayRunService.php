@@ -528,8 +528,6 @@ class VmtPayRunService
             array_push($reportresponse, $arrayReport);
             unset($arrayReport);
         }
-        $data['headers'] =$heading_dates;
-        $data['rows'] =  $reportresponse;
-        return $data;
+
     }
 }

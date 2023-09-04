@@ -190,7 +190,7 @@
                                     <tr>
                                         <td colspan="8" style=" " align="right">
                                             <p class="fw-600 txt-right " style="margin-right:100px">
-                                                Date: {{ $doj }}
+                                                Date:
                                             </p>
 
                                         </td>
@@ -226,7 +226,7 @@
                                             <p class="pt-pb-5">
                                                 Your total remuneration package per annum will
                                                 consist of &nbsp;<span class="fw-600 txt-left">
-                                                    CTC Rs {{ $ctc_yearly }}- per annum ({{ $ctc_in_words }})</span>&nbsp;. The
+                                                    CTC Rs {{ $cic }}- per annum ({{ $ctc_in_words }})</span>&nbsp;. The
                                                 breakup of your compensation package shall
                                                 be as detailed in Annexure A.
 
