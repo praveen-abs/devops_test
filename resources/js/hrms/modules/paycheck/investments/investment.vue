@@ -13,8 +13,8 @@
                             aria-selected="true" @click="activetab_btn1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             IT Declaration
                         </a>                      
-                        <div v-if="activetab === 1" class="h-1 rounded-l-3xl " style="border: 3.2px solid #F9BE00 !important;" ></div>
-                        <div v-else class=" border-3 h-1 rounded-l-3xl border-gray-300"></div>
+                        <div v-if="activetab === 1" class="h-1 rounded-l-3xl " style="border: 2px solid #F9BE00 !important;" ></div>
+                        <div v-else class=" border-2 h-1 rounded-l-3xl border-gray-300"></div>
                     </li>
     
                     <li class=" nav-item position-relative  border-0" role="presentation">
@@ -23,7 +23,7 @@
                             Investments and Exemptions
                         </a>
                         <div v-if="activetab === 2"
-                            class=" h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="border: 3.2px solid #F9BE00 !important;"></div>
+                            class=" h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="border: 2px solid #F9BE00 !important;"></div>
                         <div v-else class=" border-3 h-1  border-gray-300"></div>
                     </li>
                     <li class=" nav-item position-relative  border-0" role="presentation">
@@ -32,10 +32,10 @@
                             Income tax Computations
                         </a>
                         <div v-if="activetab === 3"
-                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 3.2px solid #F9BE00 !important;"></div>
+                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
                         <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
                     </li>
-                    <div class="border-gray-300 border-b-[7px]  w-100 mt-[-7px]"></div>
+                    <div class="border-gray-300 border-b-[4px]  w-100 mt-[-7px]"></div>
                 </ul>
                 <!-- </div> -->
                 <!-- Tab Content -->
