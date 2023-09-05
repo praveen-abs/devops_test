@@ -545,7 +545,7 @@ class VmtEmployeeService
 
             $newEmployee->userid   =    $user_id;
             $newEmployee->marital_status_id = $data["marital_status"] ?? '';
-           // $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
+            $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
            // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->gender   =    $data["gender"] ?? '';
@@ -695,7 +695,7 @@ class VmtEmployeeService
             $newEmployee->gender   =    $data["gender"] ?? '';
             $newEmployee->location   =    $data["location"] ?? '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
-            $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
+           // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             // $newEmployee->location   =    $data["work_location"] ?? '';
             $newEmployee->pan_number   =  isset($data["pan_no"]) ? ($data["pan_no"]) : "PANNOTAVBL";
