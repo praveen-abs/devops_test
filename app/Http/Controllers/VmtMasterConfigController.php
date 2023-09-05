@@ -47,7 +47,7 @@ class VmtMasterConfigController extends Controller
 
         foreach($input as $key => $value)
         {
-          
+
             //Update client code
             if($key == "client_code")
             {
@@ -55,7 +55,7 @@ class VmtMasterConfigController extends Controller
             }
             else
             {
-               
+
                 $clinet_id =0;
                 $query_client = VmtClientMaster::find(session('client_id'));
                 if (!empty($query_client)){
@@ -65,9 +65,9 @@ class VmtMasterConfigController extends Controller
                  $update_client_id = VmtMasterConfig::where('config_name',"client_id")->update(['config_value' => $clinet_id]);
 
             }
-               
-            
-            
+
+
+
 
         }
 
@@ -114,10 +114,12 @@ class VmtMasterConfigController extends Controller
 
     public function fetchMobileModuleData( Request $request ,VmtMobileConfigService $serviceVmtMasterConfigService){
 
+
+
         try{
         $client_id =$request->client_id ;
 
-        $module_id =VmtAppModules::where('module_name',"Mobile App Settings")->pluck('id');
+        $module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->pluck('id');
 
         $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
                                                     ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
