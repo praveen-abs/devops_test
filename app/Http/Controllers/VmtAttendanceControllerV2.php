@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtLeaves;
+use App\Models\VmtClientMaster;
 use Carbon\CarbonInterval;
 
 class VmtAttendanceControllerV2 extends Controller
@@ -89,6 +90,11 @@ class VmtAttendanceControllerV2 extends Controller
     //     }
     // }
 
+
+    public function testing(Request $request){
+
+    }
+
     public function detailedAttendanceReport($start_date, $end_date)
     {
 
@@ -106,20 +112,6 @@ class VmtAttendanceControllerV2 extends Controller
         $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
-
-            $total_present = 0;
-            $total_absent = 0;
-            $total_weekoff = 0;
-            $total_holidays = 0;
-            $total_leave = 0;
-            $total_halfday = 0;
-            $total_OD = 0;
-            $total_OT = 0;
-            $total_LC = 0;
-            $total_LC_mins = 0;
-            $total_EG = 0;
-            $total_lop = 0;
-
 
             //dd($singleUser);
 
