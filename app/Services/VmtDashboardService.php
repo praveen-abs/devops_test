@@ -1501,7 +1501,7 @@ class VmtDashboardService
             $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
         } else if ($user_data['org_role'] == "4") {
 
-            $employees_data = VmtEmployeeOfficeDetails::whVmtReimbursementere('l1_manager_code', $user_code)->get(['user_id as id']);
+            $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id as id']);
 
             $emp_details_count['total_employee_count'] = VmtEmployeeOfficeDetails::join("users", "users.id", "=", "vmt_employee_office_details.user_id")->where('l1_manager_code', $user_code)->where('active', '!=', '-1')->get(['user_id']); //formanagertotalemployeecount
 
@@ -1526,7 +1526,7 @@ class VmtDashboardService
             $graph_chart_count['others_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'others')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
 
             // $emp_details_count['reimbursement_count'] = VmtEmployeeReimbursements::where('user_id','')
-            
+
         }
 
         $get_document_update_data = array();
@@ -1538,13 +1538,13 @@ class VmtDashboardService
         $i = 0;
 
         foreach ($employees_data as $key => $single_user_data) {
-      
+
 
 
             $user_data = User::where('id', $single_user_data['id'])->first();
 
             $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Approved")->get()->toarray();
-       
+
 
             if (!empty($emp_leave_data)) {
 
@@ -1587,7 +1587,7 @@ class VmtDashboardService
                 }
             }
         }
-       
+
         $pending_request_count['employee_absent_count'] =  $absent_count;
 
 

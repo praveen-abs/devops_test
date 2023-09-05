@@ -737,7 +737,7 @@ class VmtTestingController extends Controller
         $appoinmentPath = "";
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 //dd($client_name);
-        $html = view('dynamic_payslip_templates.dynamic_payslip_v2',$data);
+        $html = view('dynamic_payslip_templates.appointment_letter_langro_india_pvt_ltd',$data);
     //    return  $html;
                         $options = new Options();
                         $options->set('isHtml5ParserEnabled', true);

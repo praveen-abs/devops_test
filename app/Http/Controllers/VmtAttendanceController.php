@@ -305,6 +305,7 @@ class VmtAttendanceController extends Controller
             leave_session : $request->leave_session,
             leave_type_name : $request->leave_type_name,
             leave_reason : $request->leave_reason,
+            user_type: $request->user_type,
             notifications_users_id : $request->notifications_users_id,
             serviceNotificationsService : $serviceVmtNotificationsService
         );
@@ -1174,7 +1175,7 @@ class VmtAttendanceController extends Controller
 
                     $user_data = User::where('user_code', $request->user_code)->first();
 
-                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->first();
+                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->where('attendance_date',$request->attendance_date )->first();
 
                     $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
                         approver_user_code: $admin_user_code,
@@ -1242,7 +1243,7 @@ class VmtAttendanceController extends Controller
 
                     $user_data = User::where('user_code', $request->user_code)->first();
 
-                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->first();
+                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->where('attendance_date',$request->attendance_date)->first();
 
                     return $serviceVmtAttendanceService->approveRejectAbsentRegularization(
                         approver_user_code: $admin_user_code,
@@ -1555,5 +1556,9 @@ class VmtAttendanceController extends Controller
     public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
         return  $serviceVmtAttendanceService->getAttendanceDashboardData();
+    }
+    public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
+        return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
     }
 }

@@ -215,48 +215,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-                'leave_request_date' => 'required',
-                'leave_reason' => 'required',
-                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
-
-                'start_date' => 'required',
-                'end_date' => 'required',
-
-                'no_of_days' => 'required',
-
-
-                // 'start_date' => 'required',
-                // 'end_date' => 'required',
-                // 'hours_diff' => 'required',
-                // 'no_of_days' => 'required',
-                // 'compensatory_work_days_ids' => 'required',
-                // 'leave_session' => 'required',
-                // 'leave_type_name' => 'required',
-                // 'leave_reason' => 'required',
-                // 'notifications_users_id' => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
-        $user_id = User::where('user_code', $request->user_code)->first()->id;
-
         $response = $serviceVmtAttendanceService->applyLeaveRequest(
-            user_id: $user_id,
+            user_code: $request->user_code,
             leave_request_date: $request->leave_request_date,
             start_date: $request->start_date,
             end_date: $request->end_date,
@@ -266,6 +226,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             leave_session: $request->leave_session,
             leave_type_name: $request->leave_type_name,
             leave_reason: $request->leave_reason,
+            user_type: $request->user_type,
             notifications_users_id: $request->notifications_users_id,
             serviceNotificationsService: $serviceVmtNotificationsService
         );
