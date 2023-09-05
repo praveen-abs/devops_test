@@ -22,8 +22,8 @@ import Sidebar from "primevue/sidebar";
 import OverlayPanel from "primevue/overlaypanel";
 import { defineStore, createPinia } from "pinia";
 import { ssrRenderComponent, ssrRenderStyle, ssrInterpolate, ssrRenderList, ssrRenderAttr, ssrRenderClass } from "vue/server-renderer";
+import dayjs from "dayjs";
 import axios from "axios";
-import "dayjs";
 import { L as LoadingSpinner } from "./assets/LoadingSpinner-13fb7de2.mjs";
 import "./assets/_plugin-vue_export-helper-cc2b3d55.mjs";
 const useManagePayslipStore = defineStore("managePayslipStore", () => {
@@ -805,7 +805,7 @@ const _sfc_main = {
             });
             _push2(`<!--]--><div class="border-[1.5px] border-[#000] my-[12px]"${_scopeId}></div><!--[-->`);
             ssrRenderList(unref(managePayslipStore).paySlipHTMLView.data.personal_details, (item) => {
-              _push2(`<div class="mx-2 row border-b-[1px] border-[gray] py-2"${_scopeId}><div class="col-3"${_scopeId}><p class=""${_scopeId}>Employee Code</p><p class="text-[#000] text-[12px]"${_scopeId}>${ssrInterpolate(item.user_code ? item.user_code : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>Date Joining</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.doj ? _ctx.dayjs(item.doj).format("DD-MMM-YYYY") : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>Department</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.department_name ? item.department_name : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>Designation</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.designation ? item.designation : "-")}</p></div></div>`);
+              _push2(`<div class="mx-2 row border-b-[1px] border-[gray] py-2"${_scopeId}><div class="col-3"${_scopeId}><p class=""${_scopeId}>Employee Code</p><p class="text-[#000] text-[12px]"${_scopeId}>${ssrInterpolate(item.user_code ? item.user_code : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>Date Joining</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.doj ? unref(dayjs)(item.doj).format("DD-MMM-YYYY") : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>Department</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.department_name ? item.department_name : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>Designation</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.designation ? item.designation : "-")}</p></div></div>`);
             });
             _push2(`<!--]--><!--[-->`);
             ssrRenderList(unref(managePayslipStore).paySlipHTMLView.data.personal_details, (item) => {
@@ -941,7 +941,7 @@ const _sfc_main = {
                         ]),
                         createVNode("div", { class: "col-3" }, [
                           createVNode("p", null, "Date Joining"),
-                          createVNode("p", { class: "text-[#000]" }, toDisplayString(item.doj ? _ctx.dayjs(item.doj).format("DD-MMM-YYYY") : "-"), 1)
+                          createVNode("p", { class: "text-[#000]" }, toDisplayString(item.doj ? unref(dayjs)(item.doj).format("DD-MMM-YYYY") : "-"), 1)
                         ]),
                         createVNode("div", { class: "col-3" }, [
                           createVNode("p", null, "Department"),

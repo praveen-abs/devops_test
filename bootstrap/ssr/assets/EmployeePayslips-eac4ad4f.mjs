@@ -325,60 +325,85 @@ const _sfc_main = {
             ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.salary_details, (item) => {
               _push2(`<div class="py-2 mx-2 row"${_scopeId}><div class="col-3"${_scopeId}><p${_scopeId}>ACTUAL PAYABLE DAYS</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.month_days ? item.month_days : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>TOTAL WORKING DAYS</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.worked_Days ? item.worked_Days : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>LOSS OF PAY DAYS</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.lop ? item.lop : "-")}</p></div><div class="col-3"${_scopeId}><p${_scopeId}>ARREAR DAYS PAYABLE</p><p class="text-[#000]"${_scopeId}>${ssrInterpolate(item.arrears_Days ? item.arrears_Days : "-")}</p></div></div>`);
             });
-            _push2(`<!--]--></div><div class="row mt-2 py-2 border-y-[1px] border-[gray] mx-2"${_scopeId}><div class="col-7 border-r-[1.4px] border-[gray]"${_scopeId}><table class="w-[100%]"${_scopeId}><tr class="w-[100%]"${_scopeId}><td${_scopeId}><h1 class="font-semibold"${_scopeId}>Earnings</h1><!--[-->`);
+            _push2(`<!--]--></div><div class="row mt-2 py-2 border-y-[1px] border-[gray] mx-2"${_scopeId}><div class="col-7 border-r-[1.4px] border-[gray]"${_scopeId}><div class="row"${_scopeId}><div class="col-6"${_scopeId}><h1 class="font-semibold"${_scopeId}>Earnings</h1><!--[-->`);
             ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.earnings[0], (value, key, index) => {
-              _push2(`<h1 class="${ssrRenderClass([[key == "Total Earnings" ? "text-black text-[16px]" : "text-black"], "my-3"])}"${_scopeId}>${ssrInterpolate(key)}</h1>`);
-            });
-            _push2(`<!--]--></td><td class="flex flex-col items-start pt-[2px]"${_scopeId}><h1 class="font-semibold"${_scopeId}>Fixed</h1><!--[-->`);
-            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.compensatory_data[0], (value, key, index) => {
-              _push2(`<h1 class="mt-[12px] text-black"${_scopeId}>${ssrInterpolate(value)}</h1>`);
-            });
-            _push2(`<!--]--></td>`);
-            if (unref(employeePayslipStore).paySlipHTMLView.data.arrears[0] != "") {
-              _push2(`<td class="flex flex-col items-start pt-[2px]"${_scopeId}><h1 class="font-semibold"${_scopeId}>Arrears</h1><!--[-->`);
-              ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.arrears[0], (value, key, index) => {
-                _push2(`<h1 class="mt-[12px]"${_scopeId}>${ssrInterpolate(value)}</h1>`);
-              });
-              _push2(`<!--]--></td>`);
-            } else {
-              _push2(`<!---->`);
-            }
-            if (unref(employeePayslipStore).paySlipHTMLView.data.earnings[0]) {
-              _push2(`<td${_scopeId}><h1 class="font-semibold"${_scopeId}>Earned</h1><!--[-->`);
-              ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.earnings[0], (value, key, index) => {
-                _push2(`<h1 class="${ssrRenderClass([[key == "Total Earnings" ? "text-black text-[16px]" : ""], "my-3"])}"${_scopeId}>${ssrInterpolate(value)}</h1>`);
-              });
-              _push2(`<!--]--></td>`);
-            } else {
-              _push2(`<!---->`);
-            }
-            _push2(`</tr></table></div><div class="col"${_scopeId}><table border="2" class="w-[100%]"${_scopeId}><tr class="w-[100%]"${_scopeId}><td${_scopeId}><h1 class="font-semibold"${_scopeId}>CONTRIBUTIONS</h1><!--[-->`);
-            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.contribution[0], (value, key, index) => {
-              _push2(`<p class="my-2 text-[#000]"${_scopeId}>${ssrInterpolate(key)}</p>`);
-            });
-            _push2(`<!--]--></td><td${_scopeId}><h1 class="font-semibold"${_scopeId}> </h1><!--[-->`);
-            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.contribution[0], (value, key, index) => {
-              _push2(`<p class="my-2 text-[#000]"${_scopeId}>${ssrInterpolate(value)}</p>`);
-            });
-            _push2(`<!--]--></td></tr><tr class="w-[100%]"${_scopeId}><td${_scopeId}><h1 class="font-semibold"${_scopeId}>Tax Duductions</h1><!--[-->`);
-            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.Tax_Deduction[0], (value, key, index) => {
-              _push2(`<p class="${ssrRenderClass([[key == "Total Deduction" ? "text-[18px] " : " text-black"], "my-2 text-[#000]"])}"${_scopeId}>${ssrInterpolate(key)}</p>`);
-            });
-            _push2(`<!--]--></td><td${_scopeId}><h1 class="font-semibold"${_scopeId}> </h1><!--[-->`);
-            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.Tax_Deduction[0], (value, key, index) => {
-              _push2(`<p class="${ssrRenderClass([[key == "Total Deduction" ? "text-[18px] " : " text-black"], "my-2 text-[#000]"])}"${_scopeId}>${ssrInterpolate(value)}</p>`);
-            });
-            _push2(`<!--]--></td></tr></table></div></div><!--[-->`);
-            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.over_all[0], (value, key, index) => {
-              _push2(`<div class="my-2 row w-[100%]"${_scopeId}><div class="my-2 col-5"${_scopeId}><p class=""${_scopeId}>${ssrInterpolate(key)}</p></div><div class="my-2 col-7"${_scopeId}><p class="text-[16px]"${_scopeId}>`);
-              if (key == "Net Salary Payable") {
-                _push2(`<span class="text-[16px]" style="${ssrRenderStyle({ "font-family": "sans-serif !important" })}"${_scopeId}>₹ </span>`);
+              _push2(`<h1 class="${ssrRenderClass([[key == "Total Earnings" ? `text-black font-semibold` : "text-black"], "my-3 flex items-center"])}"${_scopeId}>${ssrInterpolate(key)} `);
+              if (key == "Total Earnings") {
+                _push2(`<span class="text-black font-semibold"${_scopeId}>(A)</span>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(` ${ssrInterpolate(value)}</p></div></div>`);
+              _push2(`</h1>`);
             });
-            _push2(`<!--]--><div${_scopeId}><p class="mt-2"${_scopeId}>*** Note:All amounts displayed in this payslips are in INR</p><p class="mt-[50px]"${_scopeId}>**This is computer generated statement,does not require signature.</p></div><div class=""${_scopeId}><div class="flex items-center float-right"${_scopeId}><p class="mx-2"${_scopeId}>Powered by </p><img${ssrRenderAttr("src", `${unref(employeePayslipStore).paySlipHTMLView.data.date_month.abs_logo}`)} alt="" class="w-[140px] h-[50px]"${_scopeId}></div></div></div></div>`);
+            _push2(`<!--]--></div><div class="col-2"${_scopeId}>`);
+            if (unref(employeePayslipStore).paySlipHTMLView.data.compensatory_data[0]) {
+              _push2(`<h1 class="font-semibold text-right"${_scopeId}>Fixed</h1>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`<!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.compensatory_data[0], (value, key, index) => {
+              _push2(`<h1 class="mt-[12px] text-black text-right"${_scopeId}>${ssrInterpolate(value)}</h1>`);
+            });
+            _push2(`<!--]--></div><div class="col-2"${_scopeId}>`);
+            if (unref(employeePayslipStore).paySlipHTMLView.data.arrears[0] != "") {
+              _push2(`<h1 class="font-semibold text-right"${_scopeId}>Arrears</h1>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`<!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.arrears[0], (value, key, index) => {
+              _push2(`<h1 class="mt-[12px]"${_scopeId}>${ssrInterpolate(value)}</h1>`);
+            });
+            _push2(`<!--]--></div><div class="col-2"${_scopeId}><h1 class="font-semibold text-right"${_scopeId}>Earned</h1><!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.earnings[0], (value, key, index) => {
+              _push2(`<h1 class="${ssrRenderClass([[key == "Total Earnings" ? "text-black text-[14px] font-semibold" : ""], "my-3 text-right"])}"${_scopeId}>${ssrInterpolate(value)}</h1>`);
+            });
+            _push2(`<!--]--></div></div></div><div class="col"${_scopeId}><table border="2" class="w-[100%]"${_scopeId}><tr class="w-[100%]"${_scopeId}><td${_scopeId}><h1 class="font-semibold"${_scopeId}>CONTRIBUTIONS</h1><!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.contribution[0], (value, key, index) => {
+              _push2(`<p class="${ssrRenderClass([[key == "Total Contribution" ? "text-[14px] text-[#000] font-semibold" : " text-black"], "my-2 text-[#000] flex"])}"${_scopeId}>${ssrInterpolate(key)} `);
+              if (key == "Total Contribution") {
+                _push2(`<span class="text-black font-semibold text-[14px]"${_scopeId}> (B)</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</p>`);
+            });
+            _push2(`<!--]--></td><td${_scopeId}><h1 class="font-semibold"${_scopeId}> </h1><!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.contribution[0], (value, key, index) => {
+              _push2(`<p class="${ssrRenderClass([[key == "Total Contribution" ? "text-[13px] text-[#000] font-semibold" : " text-black"], "my-2 text-[#000] text-right"])}"${_scopeId}>${ssrInterpolate(value)}</p>`);
+            });
+            _push2(`<!--]--></td></tr><tr class="w-[100%]"${_scopeId}><td${_scopeId}><h1 class="font-semibold"${_scopeId}>Tax Duductions</h1><!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.Tax_Deduction[0], (value, key, index) => {
+              _push2(`<p class="${ssrRenderClass([[key == "Total Deduction" ? "text-[14px] text-[#000] font-semibold" : " text-black"], "my-2 text-[#000] flex items-center"])}"${_scopeId}>${ssrInterpolate(key)} `);
+              if (key == "Total Deduction") {
+                _push2(`<span class="text-[14px] text-[#000] font-semibold"${_scopeId}> (C)</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</p>`);
+            });
+            _push2(`<!--]--></td><td${_scopeId}><h1 class="font-semibold"${_scopeId}> </h1><!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.Tax_Deduction[0], (value, key, index) => {
+              _push2(`<p class="${ssrRenderClass([[key == "Total Deduction" ? "text-[14px] text-[#000] font-semibold" : " text-black"], "my-2 text-[#000] text-right"])}"${_scopeId}>${ssrInterpolate(value)}</p>`);
+            });
+            _push2(`<!--]--></td></tr></table></div></div><!--[-->`);
+            ssrRenderList(unref(employeePayslipStore).paySlipHTMLView.data.over_all[0], (value, key, index) => {
+              _push2(`<div class="my-2 row w-[100%]"${_scopeId}><div class="my-2 col-6"${_scopeId}><p class="${ssrRenderClass([[key == "Net Salary Payable" || key == "Net Salary in words" ? "text-black text-[14px] font-semibold" : ""], "text-[#000]"])}"${_scopeId}>${ssrInterpolate(key)} `);
+              if (key == "Net Salary Payable") {
+                _push2(`<span class="text-black font-semibold"${_scopeId}>(A-B-C)</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</p></div><div class="my-2 col-6"${_scopeId}><p class="text-[16px] text-[#000]"${_scopeId}>`);
+              if (key == "Net Salary Payable") {
+                _push2(`<span style="${ssrRenderStyle({ "font-family": "sans-serif !important" })}" class="${ssrRenderClass([[key == "Net Salary Payable" ? "text-black text-[14px] font-semibold" : ""], "text-[16px] font-semibold text-right"])}"${_scopeId}>₹ </span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`${ssrInterpolate(value)}</p></div></div>`);
+            });
+            _push2(`<!--]--><div${_scopeId}><p class="mt-2 font-semibold flex text-[#000]"${_scopeId}>*** Note:All <span class="text-[16px] text-[#000]"${_scopeId}>amounts displayed in this payslips are in</span> INR</p><p class="mt-[50px] font-semibold text-[#000]"${_scopeId}>**This is computer generated statement,does not require signature.</p></div><div class=""${_scopeId}><div class="flex items-center float-right"${_scopeId}><p class="mx-2"${_scopeId}>Powered by </p><img${ssrRenderAttr("src", `${unref(employeePayslipStore).paySlipHTMLView.data.date_month.abs_logo}`)} alt="" class="w-[140px] h-[50px]"${_scopeId}></div></div></div></div>`);
           } else {
             return [
               createVNode("div", { class: "flex justify-center w-[100%] my-3 rounded-lg" }, [
@@ -562,47 +587,54 @@ const _sfc_main = {
                   ]),
                   createVNode("div", { class: "row mt-2 py-2 border-y-[1px] border-[gray] mx-2" }, [
                     createVNode("div", { class: "col-7 border-r-[1.4px] border-[gray]" }, [
-                      createVNode("table", { class: "w-[100%]" }, [
-                        createVNode("tr", { class: "w-[100%]" }, [
-                          createVNode("td", null, [
-                            createVNode("h1", { class: "font-semibold" }, "Earnings"),
-                            (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.earnings[0], (value, key, index) => {
-                              return openBlock(), createBlock("h1", {
-                                class: ["my-3", [key == "Total Earnings" ? "text-black text-[16px]" : "text-black"]],
-                                key: index
-                              }, toDisplayString(key), 3);
-                            }), 128))
-                          ]),
-                          createVNode("td", { class: "flex flex-col items-start pt-[2px]" }, [
-                            createVNode("h1", { class: "font-semibold" }, "Fixed"),
-                            (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.compensatory_data[0], (value, key, index) => {
-                              return openBlock(), createBlock("h1", {
-                                key: index,
-                                class: "mt-[12px] text-black"
-                              }, toDisplayString(value), 1);
-                            }), 128))
-                          ]),
-                          unref(employeePayslipStore).paySlipHTMLView.data.arrears[0] != "" ? (openBlock(), createBlock("td", {
+                      createVNode("div", { class: "row" }, [
+                        createVNode("div", { class: "col-6" }, [
+                          createVNode("h1", { class: "font-semibold" }, "Earnings"),
+                          (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.earnings[0], (value, key, index) => {
+                            return openBlock(), createBlock("h1", {
+                              class: ["my-3 flex items-center", [key == "Total Earnings" ? `text-black font-semibold` : "text-black"]],
+                              key: index
+                            }, [
+                              createTextVNode(toDisplayString(key) + " ", 1),
+                              key == "Total Earnings" ? (openBlock(), createBlock("span", {
+                                key: 0,
+                                class: "text-black font-semibold"
+                              }, "(A)")) : createCommentVNode("", true)
+                            ], 2);
+                          }), 128))
+                        ]),
+                        createVNode("div", { class: "col-2" }, [
+                          unref(employeePayslipStore).paySlipHTMLView.data.compensatory_data[0] ? (openBlock(), createBlock("h1", {
                             key: 0,
-                            class: "flex flex-col items-start pt-[2px]"
-                          }, [
-                            createVNode("h1", { class: "font-semibold" }, "Arrears"),
-                            (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.arrears[0], (value, key, index) => {
-                              return openBlock(), createBlock("h1", {
-                                key: index,
-                                class: "mt-[12px]"
-                              }, toDisplayString(value), 1);
-                            }), 128))
-                          ])) : createCommentVNode("", true),
-                          unref(employeePayslipStore).paySlipHTMLView.data.earnings[0] ? (openBlock(), createBlock("td", { key: 1 }, [
-                            createVNode("h1", { class: "font-semibold" }, "Earned"),
-                            (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.earnings[0], (value, key, index) => {
-                              return openBlock(), createBlock("h1", {
-                                key: index,
-                                class: ["my-3", [key == "Total Earnings" ? "text-black text-[16px]" : ""]]
-                              }, toDisplayString(value), 3);
-                            }), 128))
-                          ])) : createCommentVNode("", true)
+                            class: "font-semibold text-right"
+                          }, "Fixed")) : createCommentVNode("", true),
+                          (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.compensatory_data[0], (value, key, index) => {
+                            return openBlock(), createBlock("h1", {
+                              key: index,
+                              class: "mt-[12px] text-black text-right"
+                            }, toDisplayString(value), 1);
+                          }), 128))
+                        ]),
+                        createVNode("div", { class: "col-2" }, [
+                          unref(employeePayslipStore).paySlipHTMLView.data.arrears[0] != "" ? (openBlock(), createBlock("h1", {
+                            key: 0,
+                            class: "font-semibold text-right"
+                          }, "Arrears")) : createCommentVNode("", true),
+                          (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.arrears[0], (value, key, index) => {
+                            return openBlock(), createBlock("h1", {
+                              key: index,
+                              class: "mt-[12px]"
+                            }, toDisplayString(value), 1);
+                          }), 128))
+                        ]),
+                        createVNode("div", { class: "col-2" }, [
+                          createVNode("h1", { class: "font-semibold text-right" }, "Earned"),
+                          (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.earnings[0], (value, key, index) => {
+                            return openBlock(), createBlock("h1", {
+                              key: index,
+                              class: ["my-3 text-right", [key == "Total Earnings" ? "text-black text-[14px] font-semibold" : ""]]
+                            }, toDisplayString(value), 3);
+                          }), 128))
                         ])
                       ])
                     ]),
@@ -616,18 +648,24 @@ const _sfc_main = {
                             createVNode("h1", { class: "font-semibold" }, "CONTRIBUTIONS"),
                             (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.contribution[0], (value, key, index) => {
                               return openBlock(), createBlock("p", {
-                                class: "my-2 text-[#000]",
+                                class: ["my-2 text-[#000] flex", [key == "Total Contribution" ? "text-[14px] text-[#000] font-semibold" : " text-black"]],
                                 key: index
-                              }, toDisplayString(key), 1);
+                              }, [
+                                createTextVNode(toDisplayString(key) + " ", 1),
+                                key == "Total Contribution" ? (openBlock(), createBlock("span", {
+                                  key: 0,
+                                  class: "text-black font-semibold text-[14px]"
+                                }, " (B)")) : createCommentVNode("", true)
+                              ], 2);
                             }), 128))
                           ]),
                           createVNode("td", null, [
                             createVNode("h1", { class: "font-semibold" }, " "),
                             (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.contribution[0], (value, key, index) => {
                               return openBlock(), createBlock("p", {
-                                class: "my-2 text-[#000]",
+                                class: ["my-2 text-[#000] text-right", [key == "Total Contribution" ? "text-[13px] text-[#000] font-semibold" : " text-black"]],
                                 key: index
-                              }, toDisplayString(value), 1);
+                              }, toDisplayString(value), 3);
                             }), 128))
                           ])
                         ]),
@@ -636,16 +674,22 @@ const _sfc_main = {
                             createVNode("h1", { class: "font-semibold" }, "Tax Duductions"),
                             (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.Tax_Deduction[0], (value, key, index) => {
                               return openBlock(), createBlock("p", {
-                                class: ["my-2 text-[#000]", [key == "Total Deduction" ? "text-[18px] " : " text-black"]],
+                                class: ["my-2 text-[#000] flex items-center", [key == "Total Deduction" ? "text-[14px] text-[#000] font-semibold" : " text-black"]],
                                 key: index
-                              }, toDisplayString(key), 3);
+                              }, [
+                                createTextVNode(toDisplayString(key) + " ", 1),
+                                key == "Total Deduction" ? (openBlock(), createBlock("span", {
+                                  key: 0,
+                                  class: "text-[14px] text-[#000] font-semibold"
+                                }, " (C)")) : createCommentVNode("", true)
+                              ], 2);
                             }), 128))
                           ]),
                           createVNode("td", null, [
                             createVNode("h1", { class: "font-semibold" }, " "),
                             (openBlock(true), createBlock(Fragment, null, renderList(unref(employeePayslipStore).paySlipHTMLView.data.Tax_Deduction[0], (value, key, index) => {
                               return openBlock(), createBlock("p", {
-                                class: ["my-2 text-[#000]", [key == "Total Deduction" ? "text-[18px] " : " text-black"]],
+                                class: ["my-2 text-[#000] text-right", [key == "Total Deduction" ? "text-[14px] text-[#000] font-semibold" : " text-black"]],
                                 key: index
                               }, toDisplayString(value), 3);
                             }), 128))
@@ -659,24 +703,36 @@ const _sfc_main = {
                       class: "my-2 row w-[100%]",
                       key: index
                     }, [
-                      createVNode("div", { class: "my-2 col-5" }, [
-                        createVNode("p", { class: "" }, toDisplayString(key), 1)
-                      ]),
-                      createVNode("div", { class: "my-2 col-7" }, [
-                        createVNode("p", { class: "text-[16px]" }, [
+                      createVNode("div", { class: "my-2 col-6" }, [
+                        createVNode("p", {
+                          class: ["text-[#000]", [key == "Net Salary Payable" || key == "Net Salary in words" ? "text-black text-[14px] font-semibold" : ""]]
+                        }, [
+                          createTextVNode(toDisplayString(key) + " ", 1),
                           key == "Net Salary Payable" ? (openBlock(), createBlock("span", {
                             key: 0,
-                            class: "text-[16px]",
+                            class: "text-black font-semibold"
+                          }, "(A-B-C)")) : createCommentVNode("", true)
+                        ], 2)
+                      ]),
+                      createVNode("div", { class: "my-2 col-6" }, [
+                        createVNode("p", { class: "text-[16px] text-[#000]" }, [
+                          key == "Net Salary Payable" ? (openBlock(), createBlock("span", {
+                            key: 0,
+                            class: ["text-[16px] font-semibold text-right", [key == "Net Salary Payable" ? "text-black text-[14px] font-semibold" : ""]],
                             style: { "font-family": "sans-serif !important" }
-                          }, "₹ ")) : createCommentVNode("", true),
-                          createTextVNode(" " + toDisplayString(value), 1)
+                          }, "₹ ", 2)) : createCommentVNode("", true),
+                          createTextVNode(toDisplayString(value), 1)
                         ])
                       ])
                     ]);
                   }), 128)),
                   createVNode("div", null, [
-                    createVNode("p", { class: "mt-2" }, "*** Note:All amounts displayed in this payslips are in INR"),
-                    createVNode("p", { class: "mt-[50px]" }, "**This is computer generated statement,does not require signature.")
+                    createVNode("p", { class: "mt-2 font-semibold flex text-[#000]" }, [
+                      createTextVNode("*** Note:All "),
+                      createVNode("span", { class: "text-[16px] text-[#000]" }, "amounts displayed in this payslips are in"),
+                      createTextVNode(" INR")
+                    ]),
+                    createVNode("p", { class: "mt-[50px] font-semibold text-[#000]" }, "**This is computer generated statement,does not require signature.")
                   ]),
                   createVNode("div", { class: "" }, [
                     createVNode("div", { class: "flex items-center float-right" }, [
