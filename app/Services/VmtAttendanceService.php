@@ -3674,29 +3674,19 @@ class VmtAttendanceService
                 $mop_count++;
             }
         }
-        $response['absent_count'] =$absent_count;
+        $response['absent_count'] = $absent_count;
         $response['absent_count'] = $absent_count;
         $response['present_count'] = $present_count;
         $response['leave_emp_count'] = count($leave_employee_count);
-        return $response ;
         $response['lg_count'] = $lc_count;
         $response['eg_count'] = $eg_count;
         $response['mop_count'] = $mop_count;
         $response['mip_count'] = $mip_count;
         return $response;
     }
-            
 
-        }
-        $response['absent_count'] =$absent_count;
-        $response['present_count'] = $present_count;
-        $response['leave_emp_count'] = count($leave_employee_count);
-        $response['lg_count'] = $lc_count;
-        $response['eg_count'] = $eg_count;
-        $response['mop_count'] = $mop_count;
-        $response['mip_count'] = $mip_count;
-        return $response;
-    }
+
+
 
 
 
@@ -3795,37 +3785,38 @@ class VmtAttendanceService
 
 
 
-        $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-        $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-        $web_attendance = VmtEmployeeAttendance::whereDate('date', $current_date)
-            ->where('user_id', $user_id)->first();
-        $all_att_data = collect();
-        if ($web_attendance->checkin_time != null) {
-            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time]);
-        }
+            $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+            $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+            $web_attendance = VmtEmployeeAttendance::whereDate('date', $current_date)
+                ->where('user_id', $user_id)->first();
+            $all_att_data = collect();
+            if ($web_attendance->checkin_time != null) {
+                $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time]);
+            }
 
-        if ($web_attendance->checkout_time != null) {
-            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time]);
-        }
+            if ($web_attendance->checkout_time != null) {
+                $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time]);
+            }
 
-        if ($deviceCheckOutTime != null) {
-            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckOutTime]);
-        }
+            if ($deviceCheckOutTime != null) {
+                $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckOutTime]);
+            }
 
-        if ($deviceCheckInTime != null) {
-            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckInTime]);
+            if ($deviceCheckInTime != null) {
+                $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckInTime]);
+            }
+            $sortedCollection   =   $all_att_data->sortBy([
+                ['date', 'asc'],
+            ]);
+            $checking_time = $sortedCollection->first();
+            $checkout_time =  $sortedCollection->last();
+            return $response = ['checkin_time' => $checking_time, 'checkout_time' => $checkout_time, 'shift_settings' =>  $this->getShiftTimeForEmployee($user_id, $checking_time,  $checkout_time)];
+            return $response;
         }
-        $sortedCollection   =   $all_att_data->sortBy([
-            ['date', 'asc'],
-        ]);
-        $checking_time = $sortedCollection->first();
-        $checkout_time =  $sortedCollection->last();
-        return $response = ['checkin_time' => $checking_time, 'checkout_time' => $checkout_time, 'shift_settings' =>  $this->getShiftTimeForEmployee($user_id, $checking_time,  $checkout_time)];
-        return $response;
     }
-    }
 
-    public function getEmployeeAnalyticsExceptionData(){
+    public function getEmployeeAnalyticsExceptionData()
+    {
 
         $current_date = Carbon::now()->format('Y-m-d');
         $Current_month = Carbon::now()->format('m');
@@ -3848,20 +3839,18 @@ class VmtAttendanceService
         $response = array();
 
         $i = 0;
-        $j=0;
+        $j = 0;
 
         if ($user_data['org_role'] == "2" || $user_data['org_role'] == "3" || $user_data['org_role'] == "1") {
 
-        $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
-
+            $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
         } else if ($user_data['org_role'] == "4") {
 
-         $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id as id']);
-
+            $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id as id']);
         }
 
 
-    foreach ($employees_data as $key => $single_user_data) {
+        foreach ($employees_data as $key => $single_user_data) {
 
             //  if(count($present_employee_data)>count($most_present_count)){
 
@@ -3885,72 +3874,71 @@ class VmtAttendanceService
 
                     $present_employee_data[$i] = $most_att_employee_data;
                     $i++;
-
                 } else {
 
 
                     $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
-                    $emp_bio_attendance = VmtStaffAttendanceDevice::where('user_Id',$emp_user_code['user_code'])->wheredate("date",$date);
+                    $emp_bio_attendance = VmtStaffAttendanceDevice::where('user_Id', $emp_user_code['user_code'])->wheredate("date", $date);
 
                     if ($emp_bio_attendance->exists()) {
 
-                        $present_employee_data[$i]= $emp_bio_attendance;
+                        $present_employee_data[$i] = $emp_bio_attendance;
                         $i++;
                     }
                 }
 
-            if (empty($most_att_employee_data)) {
+                if (empty($most_att_employee_data)) {
 
-                $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+                    $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
-                $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $date);
+                    $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $date);
 
-                if (empty($emp_bio_attendance)) {
+                    if (empty($emp_bio_attendance)) {
 
-                    $absent_employee_data[$j]['absentEmployeeCount'] = $emp_bio_attendance;
-                    $j++;
+                        $absent_employee_data[$j]['absentEmployeeCount'] = $emp_bio_attendance;
+                        $j++;
+                    }
                 }
-            }
             }
             dd($present_employee_data);
         }
 
 
 
-    //         if (empty($most_att_employee_data)) {
+        //         if (empty($most_att_employee_data)) {
 
-    //             $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+        //             $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
-    //             $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+        //             $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
 
-    //             if (empty($emp_bio_attendance)) {
+        //             if (empty($emp_bio_attendance)) {
 
-    //                 $most_absent_count++;
-    //             }
-    //         }
-    //         if (!empty($absent_present_employee_data)) {
+        //                 $most_absent_count++;
+        //             }
+        //         }
+        //         if (!empty($absent_present_employee_data)) {
 
-    //             $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
+        //             $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
 
-    //             $present_count++;
-    //         } else {
-    //             $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+        //             $present_count++;
+        //         } else {
+        //             $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
-    //             $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+        //             $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
 
-    //             if (!empty($emp_bio_attendance)) {
+        //             if (!empty($emp_bio_attendance)) {
 
-    //                 $present_count++;
-    //             }
-    //         }
+        //                 $present_count++;
+        //             }
+        //         }
 
 
 
-    // }
-}
+        // }
+    }
 
-        //dd($attendanceCheckIn);
+    //dd($attendanceCheckIn);
 
     public function getShiftTimeForEmployee($user_id, $checkin_time, $checkout_time)
     {
