@@ -1155,6 +1155,7 @@ Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtSta
 //// SASS TESTING
 
 Route::get('TestingMail', [App\Http\Controllers\VmtTestingController::class, 'TestingMail']);
+Route::get('test_getAppointmentTemplates', [App\Http\Controllers\VmtTestingController::class, 'test_getAppointmentTemplates']);
 
 Route::get('/testing_sass', function () {
 

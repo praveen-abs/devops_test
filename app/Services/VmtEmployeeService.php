@@ -254,7 +254,10 @@ class VmtEmployeeService
                 $newUser->client_id = $client_data['config_value'];
             }else{
                 $emp_client_code = trim($data['legal_entity']);
+                
                 $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
+
+
                
             }
 
@@ -892,7 +895,7 @@ class VmtEmployeeService
             return $response = ([
                 'status' => 'failure',
                 'message' => 'Error while saving record ',
-                'data' => $e->getMessage() . " " . $e->getFile()
+                'data' => $e->getMessage(). " " .$e->getline() . " " . $e->getFile()
 
             ]);
         }
