@@ -3651,6 +3651,7 @@ class VmtAttendanceService
             }
 
             //Code For Check EG
+            $emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, Carbon::parse($current_date)->subDay()->format('Y-m-d'));
             if (!empty($emp_shift_settings['checkout_time'])) {
                 $parsedCheckOut_time  = Carbon::parse($emp_shift_settings['checkout_time']['date']);
                 //Check whether checkin out on-time
