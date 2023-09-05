@@ -34,13 +34,13 @@ return new class extends Migration
             $table->text('attendance_mode_checkout')->nullable(); #web,mobile,bio
             $table->text('checkin_lat_long')->nullable();
             $table->text('checkout_lat_long')->nullable();
-            $table->integer('overtime')->nullable(); # can be calculated from current shifttime and checkout time + limit 
+            //$table->integer('overtime')->nullable(); # can be calculated from current shifttime and checkout time + limit 
 
             #only during approvals
-            $table->integer('lc_status')->nullable();
-            $table->integer('eg_status')->nullable();
-            $table->integer('lc_minutes')->nullable(); # can be calculated from current shifttime and regularized time
-            $table->integer('eg_minutes')->nullable(); # can be calculated from current shifttime and regularized time
+           // $table->integer('lc_status')->nullable();
+          //  $table->integer('eg_status')->nullable();
+           // $table->integer('lc_minutes')->nullable(); # can be calculated from current shifttime and regularized time
+           // $table->integer('eg_minutes')->nullable(); # can be calculated from current shifttime and regularized time
             
             #MIP status , mip time , 
             #MOP status , mop time , 
