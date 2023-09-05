@@ -3546,6 +3546,10 @@ class VmtAttendanceService
         $eg_count = 0;
         $mip_count = 0;
         $mop_count = 0;
+        $isLC = null;
+        $isMIP = null;
+        $isMOP = null;
+        $isEG = null;
 
         $leave_employee_count = array();
         $response = array();
@@ -3617,7 +3621,8 @@ class VmtAttendanceService
             $emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, $current_date);
             //Code For Check LC
             if (!empty($emp_shift_settings['checkin_time'])) {
-                $parsedCheckIn_time  = Carbon::parse($emp_shift_settings['checkin_time']);
+               // dd($emp_shift_settings['checkin_time']);
+                $parsedCheckIn_time  = Carbon::parse($emp_shift_settings['checkin_time']['date']);
                 //Check whether checkin done on-time
                 $isCheckin_done_ontime = $parsedCheckIn_time->lte(Carbon::parse($emp_shift_settings['shift_settings']['shift_start_time']));
                 if ($isCheckin_done_ontime) {
@@ -3625,7 +3630,7 @@ class VmtAttendanceService
                 } else {
                     //dd("Checkin NOT on-time");
                     //check whether regularization applied.
-                    $regularization_status =  $this->RegularizationRequestStatus($user_id, $current_date, 'LC');
+                    $regularization_status =  $this->RegularizationRequestStatus($single_user_data->id, $current_date, 'LC');
                     $isLC = $regularization_status['sts'];
                     $checkinRegId = $regularization_status['id'];
                     $reged_checkin_time = $regularization_status['time'];
@@ -3647,9 +3652,9 @@ class VmtAttendanceService
 
             //Code For Check EG
             if (!empty($emp_shift_settings['checkout_time'])) {
-                $parsedCheckOut_time  = Carbon::parse($emp_shift_settings['checkout_time']);
+                $parsedCheckOut_time  = Carbon::parse($emp_shift_settings['checkout_time']['date']);
                 //Check whether checkin out on-time
-                $isCheckout_done_ontime = $parsedCheckOut_time->lte(Carbon::parse($emp_shift_settings['checkin_time']));
+                $isCheckout_done_ontime = $parsedCheckOut_time->lte(Carbon::parse($emp_shift_settings['shift_settings']['shift_end_time']));
                 if ($isCheckout_done_ontime) {
                     //employee left early on time....
                     $regularization_status =   $this->RegularizationRequestStatus($single_user_data->id, $current_date, 'EG');
@@ -3747,10 +3752,10 @@ class VmtAttendanceService
 
     public function getEmpAttendanceAndWorkshift($user_id, $user_code, $current_date)
     {
-        $user_id = 562;
-        $user_code = 'NAT0014';
-        $current_date = '2023-09-04';
-        $deviceData = array();
+        // $user_id = 562;
+        // $user_code = 'NAT0014';
+        // $current_date = '2023-09-04';
+        // $deviceData = array();
         if (
             sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
             sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
@@ -3790,11 +3795,17 @@ class VmtAttendanceService
             $web_attendance = VmtEmployeeAttendance::whereDate('date', $current_date)
                 ->where('user_id', $user_id)->first();
             $all_att_data = collect();
-            if ($web_attendance->checkin_time != null) {
+            $web_checkin_time = null;
+            $web_checkout_time = null;
+            if (!empty($web_attendance)) {
+                $web_checkin_time = $web_attendance->checkin_time;
+                $web_checkout_time = $web_attendance->checkout_time;
+            }
+            if ($web_checkin_time != null) {
                 $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time]);
             }
 
-            if ($web_attendance->checkout_time != null) {
+            if ($web_checkout_time != null) {
                 $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time]);
             }
 
