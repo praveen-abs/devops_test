@@ -182,12 +182,13 @@ class VmtMobileConfigService
             $i = 0;
             foreach ($sub_module_data as $key => $single_module_data) {
 
-                // $module_name =VmtAppModules::where("id",$single_module_data['module_id'])->first();
+                $module_name =VmtAppModules::where("id",$single_module_data['module_id'])->first();
                 $sub_module_name = VmtAppSubModules::where("id", $single_module_data['sub_module_id'])->first();
                 $client_module_status = VmtClientSubModules::where('client_id', $user_date->client_id)->where('app_sub_module_link_id', $single_module_data['id'])->first();
 
                 if ($client_module_status->exists()) {
-                    $mobile_settings_data[$i]['sub_module_name'] = $sub_module_name->internal_name;
+                    $mobile_settings_data[$i]['module_name'] = $module_name->title;
+                    $mobile_settings_data[$i]['sub_module_name'] = $sub_module_name->title;
                     $mobile_settings_data[$i]['sub_module_status'] = $client_module_status->status;
                     $emp_module_status = VmtEmpSubModules::where('client_id', $user_date->client_id)->where('user_id', $user_date->id)->where('app_sub_module_link_id', $single_module_data['id']);
                     if ($emp_module_status->exists()) {
