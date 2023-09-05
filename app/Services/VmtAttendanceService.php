@@ -3614,8 +3614,78 @@ class VmtAttendanceService
             }
 
             //logics for get lc and mip
-            $web_mobile_att = VmtEmployeeAttendance::where('user_id',$single_user_data->id);
-            dd($single_user_data);
+            $emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, $current_date);
+            //Code For Check LC
+            if (!empty($emp_shift_settings['checkin_time'])) {
+                $parsedCheckIn_time  = Carbon::parse($emp_shift_settings['checkin_time']);
+                //Check whether checkin done on-time
+                $isCheckin_done_ontime = $parsedCheckIn_time->lte(Carbon::parse($emp_shift_settings['shift_settings']['shift_start_time']));
+                if ($isCheckin_done_ontime) {
+                    //employee came on time....
+                } else {
+                    //dd("Checkin NOT on-time");
+                    //check whether regularization applied.
+                    $regularization_status =  $this->RegularizationRequestStatus($user_id, $current_date, 'LC');
+                    $isLC = $regularization_status['sts'];
+                    $checkinRegId = $regularization_status['id'];
+                    $reged_checkin_time = $regularization_status['time'];
+                }
+            } else if (empty($emp_shift_settings['checkin_time']) && !empty($emp_shift_settings['checkout_time'])) {
+                $regularization_status =  $this->RegularizationRequestStatus($single_user_data->id, $current_date, 'MIP');
+                $isMIP = $regularization_status['sts'];
+                $checkinRegId = $regularization_status['id'];
+                $reged_checkin_time = $regularization_status['time'];
+            }
+
+            if ($isLC == 'Not Applied' || $isLC == 'Pending' || $isLC == 'Rejected') {
+                $lc_count++;
+            }
+
+            if ($isMIP == 'Not Applied' ||  $isMIP == 'Pending' ||  $isMIP == 'Rejected') {
+                $mip_count++;
+            }
+
+            //Code For Check EG
+            if (!empty($emp_shift_settings['checkout_time'])) {
+                $parsedCheckOut_time  = Carbon::parse($emp_shift_settings['checkout_time']);
+                //Check whether checkin out on-time
+                $isCheckout_done_ontime = $parsedCheckOut_time->lte(Carbon::parse($emp_shift_settings['checkin_time']));
+                if ($isCheckout_done_ontime) {
+                    //employee left early on time....
+                    $regularization_status =   $this->RegularizationRequestStatus($single_user_data->id, $current_date, 'EG');
+                    $isEG = $regularization_status['sts'];
+                    $checkoutRegId = $regularization_status['id'];
+                    $reged_checkout_time = $regularization_status['time'];
+                } else if (!empty($checkin_time) && empty($checkout_time)) {
+                    $regularization_status =   $this->RegularizationRequestStatus($single_user_data->id, $current_date, 'MOP');
+                    $isMOP = $regularization_status['sts'];
+                    $checkoutRegId = $regularization_status['id'];
+                    $checkoutRegId = $regularization_status['time'];
+                } else {
+                    //employee left late....
+                }
+            }
+
+            if ($isEG == 'Not Applied' || $isEG == 'Pending' || $isEG == 'Rejected') {
+                $eg_count++;
+            }
+
+            if ($isMOP == 'Not Applied' ||  $isMOP == 'Pending' ||  $isMOP == 'Rejected') {
+                $mop_count++;
+            }
+        }
+        $response['absent_count'] =$absent_count;
+        $response['absent_count'] = $absent_count;
+        $response['present_count'] = $present_count;
+        $response['leave_emp_count'] = count($leave_employee_count);
+        return $response ;
+        $response['lg_count'] = $lc_count;
+        $response['eg_count'] = $eg_count;
+        $response['mop_count'] = $mop_count;
+        $response['mip_count'] = $mip_count;
+        return $response;
+    }
+            
 
         }
         $response['absent_count'] =$absent_count;
