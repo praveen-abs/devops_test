@@ -61,7 +61,7 @@ class VmtEmployeeDocumentsService {
             //         ->get();
 
 
-             $query_document =VmtDocuments::all();
+             $query_document =VmtDocuments::where('is_mandatory',1)->get();
              $query_doc_id = array();
           foreach ($query_document as $key => $Singledocid)
             {
