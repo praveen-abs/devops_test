@@ -28,30 +28,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function performAttendanceCheckIn(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                "user_code" => 'required|exists:users,user_code',
-                "date" => "required",
-                "checkin_time" => "required",
-                "work_mode" => "required", //office, work
-                "attendance_mode_checkin" => "required", //mobile, web
-                "checkin_lat_long" => "nullable", //stores in lat , long
-            ],
-            $messages = [
-                "required" => "Field :attribute is missing",
-                "exists" => "Field :attribute is invalid"
-            ]
-        );
-
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
         $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin, $request->checkin_lat_long);
 
         return $response;
