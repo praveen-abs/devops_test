@@ -4,7 +4,7 @@
         @mouseenter="open = true, isActive = true" @mouseleave="open = false, isActive = false, subMenuDisable = false">
         <div class="w-full">
             <button class="mx-4 my-3" @click="toggleSwitch">
-                <img src="./assests/images/ABS_small_logo_yellow.png" class="px-auto h-6 w-8 animate-bounce" alt=""
+                <img src="./assests/images/ABS_small_logo_yellow.png" class="w-8 h-6 px-auto animate-bounce" alt=""
                     v-if="!isActive">
                 <img src="./assests/images/ABS_logo_Yellow.png" class="h-8 w-[180px]" alt="" v-if="isActive">
             </button>
@@ -15,7 +15,7 @@
                     :class="{
                         'bg-yellow-400 text-[001820] ': isOpen(index),
                     }"
-                    class=" flex items-center rounded-l-md my-2 p-2  w-full  relative left-3 transition ease-in-out delay-75 hover:-translate-y-1 hover:scale-110 hover: duration-300 hover:bg-yellow-400">
+                    class="relative flex items-center w-full p-2 my-2 transition duration-300 ease-in-out delay-75 rounded-l-md left-3 hover:-translate-y-1 hover:scale-110 hover: hover:bg-yellow-400">
                     <span>
                         <svg width="14" height="14" class="mx-2" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@
                     </span>
                     <span class="font-semibold text-white text-[12px] " :class="[open ? '' : 'hidden']">
                         {{ menu.label }}</span>
-                    <i :class="menu.arrow_icon" class=" text-white  absolute  right-4"></i>
+                    <i :class="menu.arrow_icon" class="absolute text-white right-4"></i>
                 </a>
 
                 <a role="button" v-else @click="toggleMenu(index)" :href="menu.to" :class="{
@@ -47,12 +47,12 @@
                 </a>
 
                 <!-- sub menu -->
-                <transition v-if="menu.subItems" enter-active-class="transition ease-out duration-200 transform delay-150 "
-                    enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
-                    leave-active-class="transition ease-in duration-200  delay-150  transform"
-                    leave-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
+                <transition v-if="menu.subItems" enter-active-class="transition duration-200 ease-out delay-150 transform "
+                    enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
+                    leave-active-class="transition duration-200 ease-in delay-150 transform"
+                    leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
                     <div v-if="subMenuDisable">
-                        <div v-if="isOpen(index)" class="text-white w-full  rounded shadow-lg p-2 ">
+                        <div v-if="isOpen(index)" class="w-full p-2 text-white rounded shadow-lg ">
                             <a v-for="(item, subIndex) in menu.subItems" :key="subIndex" @click="subMenuDisable = false"
                                 :href="item.to"
                                 class="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover: duration-300 text-sm font-semibold whitespace-nowrap  cursor-pointer text-white w-full block  hover:bg-gray-600 focus:bg-gray-600 p-2.5 rounded-lg">
@@ -175,7 +175,9 @@ onMounted(() => {
                 {
                     label: 'Organization',
                     subItems: [{ label: 'Manage Employees', to: 'manageEmployees' }, { label: 'ORG structure', to: 'employee-hierarchy' }, { label: 'Onboarding', to: 'employee-onboarding' },
-                    { label: 'Onboarding Bulk Upload', to: 'bulkEmployeeOnboarding' }, { label: 'Onboarding Quick Upload', to: 'quickEmployeeOnboarding' }, { label: 'Manage WelcomeMail Status', to: 'manage_welcome_mails_status' }, { label: 'Roles & Permissions', to: 'roles_permissions' },],
+                    { label: 'Onboarding Bulk Upload', to: 'bulkEmployeeOnboarding' }, { label: 'Onboarding Quick Upload', to: 'quickEmployeeOnboarding' }, { label: 'Manage WelcomeMail Status', to: 'manage_welcome_mails_status' }
+                    //  { label: 'Roles & Permissions', to: 'roles_permissions' }
+                     ,],
                     arrow_icon: 'pi pi-angle-right',
                     icon: 'M8.66797 2.57179C8.66797 2.23358 8.71986 1.8987 8.82067 1.58631C8.92148 1.27393 9.06924 0.990165 9.25548 0.75128C9.44172 0.512395 9.66278 0.323075 9.90601 0.194161C10.1492 0.0652469 10.4099 -0.000730326 10.673 6.09743e-06H13.3401C13.8707 6.09743e-06 14.3796 0.270959 14.7548 0.753261C15.13 1.23556 15.3407 1.88971 15.3407 2.57179V6.00035C15.3407 6.33808 15.289 6.67251 15.1885 6.98453C15.0879 7.29656 14.9405 7.58006 14.7548 7.81887C14.569 8.05768 14.3484 8.24712 14.1057 8.37637C13.863 8.50561 13.6028 8.57213 13.3401 8.57213H13.0069V10.7155H19.3409C19.96 10.7166 20.5534 11.0337 20.9907 11.5971C21.4279 12.1605 21.6732 12.9241 21.6726 13.7199V15.4279H21.9994C22.2621 15.4279 22.5222 15.4944 22.765 15.6236C23.0077 15.7529 23.2282 15.9423 23.414 16.1811C23.5998 16.4199 23.7472 16.7035 23.8477 17.0155C23.9483 17.3275 24 17.6619 24 17.9996V21.4282C23.9997 22.1101 23.7888 22.7638 23.4136 23.2458C23.0385 23.7278 22.5298 23.9986 21.9994 23.9986H19.3355C18.8049 23.9986 18.296 23.7276 17.9208 23.2453C17.5456 22.763 17.3348 22.1089 17.3348 21.4268V17.9982C17.3348 17.3162 17.5456 16.662 17.9208 16.1797C18.296 15.6974 18.8049 15.4265 19.3355 15.4265H19.6687V13.7199C19.6684 13.6064 19.6332 13.4976 19.5708 13.4174C19.5084 13.3371 19.4238 13.2919 19.3355 13.2915H13.0014V15.4279H13.3347C13.5974 15.4279 13.8575 15.4944 14.1003 15.6236C14.343 15.7529 14.5635 15.9423 14.7493 16.1811C14.9351 16.4199 15.0825 16.7035 15.183 17.0155C15.2836 17.3275 15.3353 17.6619 15.3353 17.9996V21.4282C15.3353 22.1103 15.1245 22.7644 14.7493 23.2467C14.3741 23.729 13.8653 24 13.3347 24H10.673C10.1424 24 9.63349 23.729 9.2583 23.2467C8.8831 22.7644 8.67232 22.1103 8.67232 21.4282V17.9982C8.67261 17.3164 8.88352 16.6626 9.25868 16.1806C9.63384 15.6986 10.1425 15.4279 10.673 15.4279H10.9997V13.2845H4.6667C4.5784 13.2849 4.4938 13.3301 4.43137 13.4104C4.36893 13.4906 4.33373 13.5994 4.33344 13.7129V15.4279H4.6667C4.92942 15.4279 5.18958 15.4944 5.43231 15.6236C5.67503 15.7529 5.89558 15.9423 6.08136 16.1811C6.26714 16.4199 6.4145 16.7035 6.51504 17.0155C6.61558 17.3275 6.66733 17.6619 6.66733 17.9996V21.4282C6.66733 22.1103 6.45655 22.7644 6.08136 23.2467C5.70617 23.729 5.1973 24 4.6667 24H2.00064C1.73782 24 1.47757 23.9334 1.23477 23.8041C0.991975 23.6748 0.771378 23.4852 0.585588 23.2463C0.399797 23.0073 0.252454 22.7236 0.151977 22.4114C0.0514996 22.0992 -0.000142773 21.7647 2.96455e-07 21.4268V17.9982C0.000289035 17.3164 0.211197 16.6626 0.586358 16.1806C0.961518 15.6986 1.47022 15.4279 2.00064 15.4279H2.33389V13.7199C2.33389 12.9242 2.57978 12.1611 3.01747 11.5984C3.45516 11.0358 4.0488 10.7197 4.66779 10.7197H10.9997V8.57073H10.673C10.4102 8.57073 10.1501 8.50421 9.90735 8.37497C9.66462 8.24572 9.44407 8.05629 9.2583 7.81747C9.07252 7.57866 8.92515 7.29516 8.82461 6.98313C8.72407 6.67111 8.67232 6.33668 8.67232 5.99895L8.66797 2.57179Z',
 
@@ -185,7 +187,11 @@ onMounted(() => {
                 ClientName.value != "MANJULADEVI KAILASAM DEEPIKA" ?
                 {
                     label: 'Approvals',
-                    subItems: [{ label: 'Onboarding', to: 'approvals-documents' }, { label: 'Leaves', to: 'attendance-leave-approvals' }, { label: 'Attendance Regularization', to: 'attendance-regularization-approvals' }, { label: 'Reimbursement', to: 'approval_reimbursements' }, { label: 'Taxations ', to: '' }, { label: 'Employee Details', to: 'Employee-Details-approvals' }, { label: 'Loan And Salary Advance ', to: 'showSAapprovalView' }],
+                    subItems: [{ label: 'Onboarding', to: 'approvals-documents' }, { label: 'Leaves', to: 'attendance-leave-approvals' }, { label: 'Attendance Regularization', to: 'attendance-regularization-approvals' }, 
+                    // { label: 'Reimbursement', to: 'approval_reimbursements' },
+                     { label: 'Taxations ', to: '' }, { label: 'Employee Details', to: 'Employee-Details-approvals' },
+                    //  { label: 'Loan And Salary Advance ', to: 'showSAapprovalView' }
+                    ],
                     arrow_icon: 'pi pi-angle-right',
                     icon: '',
                     icon1: 'M8.60439 7.98128C11.0399 7.98128 13.0213 6.19106 13.0213 3.99064C13.0214 1.79015 11.0399 0 8.60439 0C6.16886 0 4.1875 1.79015 4.1875 3.99064C4.1875 6.19114 6.16895 7.98128 8.60439 7.98128Z',
@@ -228,7 +234,10 @@ onMounted(() => {
                  ,
             {
                 label: 'Paycheck',
-                subItems: [{ label: 'Salary Details', to: 'salary_details' }, { label: 'Investments', to: 'investments_details' }, { label: 'Form 16', to: 'form16_details' }, { label: 'Loan And Salary Advance', to: 'showSAemployeeView' }],
+                subItems: [{ label: 'Salary Details', to: 'salary_details' }, { label: 'Investments', to: 'investments_details' }, { label: 'Form 16', to: 'form16_details' }, 
+                // { label: 'Loan And Salary Advance', to: 'showSAemployeeView' }
+            ]
+                ,
                 // { label: 'Investment Form Mgmt', to: 'showInvestmentsFormMgmtPage' }
                 arrow_icon: 'pi pi-angle-right',
                 icon: 'M21 24H3C2.33061 23.9997 1.68054 23.7756 1.15323 23.3633C0.625918 22.9509 0.251657 22.3741 0.09 21.7245L12 15.108L23.9115 21.726C23.7495 22.3755 23.3749 22.9522 22.8473 23.3643C22.3197 23.7764 21.6694 24.0002 21 24ZM24 20.0595L15.4605 15.315L24 10.3095V20.0595ZM1.50058e-08 20.0595V10.3095L8.5395 15.315L1.50058e-08 20.0565V20.0595ZM9.75 14.25L4.5 11.25V2.25C4.5 1.65326 4.73705 1.08097 5.15901 0.65901C5.58097 0.237053 6.15326 0 6.75 0L17.25 0C17.8467 0 18.419 0.237053 18.841 0.65901C19.2629 1.08097 19.5 1.65326 19.5 2.25V11.25L14.25 14.25L12 13.125L9.75 14.25ZM10.0245 7.3725V8.241L12.0315 10.248H13.05L10.8915 8.0925H11.2815C11.6953 8.09169 12.0961 7.94836 12.4166 7.68663C12.737 7.4249 12.9576 7.06076 13.041 6.6555H13.9755V5.937H13.041C12.9859 5.67562 12.8726 5.43002 12.7095 5.2185H13.9755V4.5H10.023V5.22H11.2815C11.5034 5.22138 11.7195 5.29109 11.9004 5.41965C12.0813 5.54821 12.2182 5.72937 12.2925 5.9385H10.023V6.657H12.3C12.2261 6.86637 12.0893 7.04778 11.9083 7.17639C11.7273 7.30501 11.511 7.37455 11.289 7.3755L10.0245 7.3725ZM21 10.329V4.6995L22.4115 5.4495C22.8918 5.70561 23.2934 6.08759 23.5732 6.5545C23.8531 7.02141 24.0006 7.55566 24 8.1V8.5695L21 10.329ZM3 10.329L1.50058e-08 8.5695V8.1C-5.437e-05 7.55617 0.147721 7.02255 0.427521 6.55621C0.707321 6.08988 1.10862 5.70837 1.5885 5.4525L3 4.6995V10.329Z',
@@ -237,16 +246,16 @@ onMounted(() => {
                 icon3: '',
                 icon4: '',
             },
-            {
-                label: 'Claim',
-                subItems: [{ label: 'Reimbursements', to: 'employee_reimbursements' }],
-                arrow_icon: 'pi pi-angle-right',
-                icon: 'M14.5859 0H4.00043C2.93945 0 1.92193 0.316096 1.1717 0.878751C0.421473 1.44141 0 2.20453 0 3.00024V20.9998C0 21.7955 0.421473 22.5586 1.1717 23.1212C1.92193 23.6839 2.93945 24 4.00043 24H19.9996C20.5249 24 21.0451 23.9224 21.5305 23.7716C22.0158 23.6208 22.4568 23.3998 22.8283 23.1212C23.1998 22.8426 23.4944 22.5119 23.6955 22.1479C23.8965 21.7839 24 21.3938 24 20.9998V7.06037C24 6.66289 23.7896 6.28167 23.415 6.00049L16.0043 0.442675C15.8185 0.302396 15.5975 0.191066 15.3541 0.115094C15.1106 0.0391214 14.8496 6.30485e-06 14.5859 0ZM14.9994 5.2497V2.24945L20.9994 6.74933H17.0002C16.7375 6.74946 16.4774 6.71076 16.2346 6.63546C15.9919 6.56015 15.7713 6.44971 15.5855 6.31044C15.3997 6.17118 15.2523 6.00581 15.1517 5.82381C15.0511 5.6418 14.9994 5.44671 14.9994 5.2497ZM4.99892 15.0002H14.9994C15.2645 15.0002 15.5188 15.0792 15.7063 15.2199C15.8938 15.3605 15.9991 15.5512 15.9991 15.7501C15.9991 15.9489 15.8938 16.1396 15.7063 16.2803C15.5188 16.4209 15.2645 16.4999 14.9994 16.4999H5.00022C4.73506 16.4999 4.48076 16.4209 4.29326 16.2803C4.10577 16.1396 4.00043 15.9489 4.00043 15.7501C4.00043 15.5512 4.10577 15.3605 4.29326 15.2199C4.48076 15.0792 4.73506 15.0002 5.00022 15.0002H4.99892ZM4.99892 18.0005H14.9994C15.2645 18.0005 15.5188 18.0795 15.7063 18.2201C15.8938 18.3607 15.9991 18.5514 15.9991 18.7503C15.9991 18.9492 15.8938 19.1399 15.7063 19.2805C15.5188 19.4211 15.2645 19.5001 14.9994 19.5001H5.00022C4.73506 19.5001 4.48076 19.4211 4.29326 19.2805C4.10577 19.1399 4.00043 18.9492 4.00043 18.7503C4.00043 18.5514 4.10577 18.3607 4.29326 18.2201C4.48076 18.0795 4.73506 18.0005 5.00022 18.0005H4.99892Z',
-                icon1: '',
-                icon2: '',
-                icon3: '',
-                icon4: '',
-            },
+            // {
+            //     label: 'Claim',
+            //     subItems: [{ label: 'Reimbursements', to: 'employee_reimbursements' }],
+            //     arrow_icon: 'pi pi-angle-right',
+            //     icon: 'M14.5859 0H4.00043C2.93945 0 1.92193 0.316096 1.1717 0.878751C0.421473 1.44141 0 2.20453 0 3.00024V20.9998C0 21.7955 0.421473 22.5586 1.1717 23.1212C1.92193 23.6839 2.93945 24 4.00043 24H19.9996C20.5249 24 21.0451 23.9224 21.5305 23.7716C22.0158 23.6208 22.4568 23.3998 22.8283 23.1212C23.1998 22.8426 23.4944 22.5119 23.6955 22.1479C23.8965 21.7839 24 21.3938 24 20.9998V7.06037C24 6.66289 23.7896 6.28167 23.415 6.00049L16.0043 0.442675C15.8185 0.302396 15.5975 0.191066 15.3541 0.115094C15.1106 0.0391214 14.8496 6.30485e-06 14.5859 0ZM14.9994 5.2497V2.24945L20.9994 6.74933H17.0002C16.7375 6.74946 16.4774 6.71076 16.2346 6.63546C15.9919 6.56015 15.7713 6.44971 15.5855 6.31044C15.3997 6.17118 15.2523 6.00581 15.1517 5.82381C15.0511 5.6418 14.9994 5.44671 14.9994 5.2497ZM4.99892 15.0002H14.9994C15.2645 15.0002 15.5188 15.0792 15.7063 15.2199C15.8938 15.3605 15.9991 15.5512 15.9991 15.7501C15.9991 15.9489 15.8938 16.1396 15.7063 16.2803C15.5188 16.4209 15.2645 16.4999 14.9994 16.4999H5.00022C4.73506 16.4999 4.48076 16.4209 4.29326 16.2803C4.10577 16.1396 4.00043 15.9489 4.00043 15.7501C4.00043 15.5512 4.10577 15.3605 4.29326 15.2199C4.48076 15.0792 4.73506 15.0002 5.00022 15.0002H4.99892ZM4.99892 18.0005H14.9994C15.2645 18.0005 15.5188 18.0795 15.7063 18.2201C15.8938 18.3607 15.9991 18.5514 15.9991 18.7503C15.9991 18.9492 15.8938 19.1399 15.7063 19.2805C15.5188 19.4211 15.2645 19.5001 14.9994 19.5001H5.00022C4.73506 19.5001 4.48076 19.4211 4.29326 19.2805C4.10577 19.1399 4.00043 18.9492 4.00043 18.7503C4.00043 18.5514 4.10577 18.3607 4.29326 18.2201C4.48076 18.0795 4.73506 18.0005 5.00022 18.0005H4.99892Z',
+            //     icon1: '',
+            //     icon2: '',
+            //     icon3: '',
+            //     icon4: '',
+            // },
             ClientName.value != "MANJULADEVI KAILASAM DEEPIKA" ?
                 {
                     label: 'Report',

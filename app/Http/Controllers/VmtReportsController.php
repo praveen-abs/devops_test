@@ -25,6 +25,7 @@ use App\Exports\ManagerReimbursementsExport;
 use App\Exports\EmployeeReimbursementsExport;
 use App\Exports\AnnualEarnedExport;
 use App\Models\VmtEmployeeAttendance;
+use App\Exports\EmployeeBasicCtcExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -619,5 +620,23 @@ class VmtReportsController extends Controller
         }
 
         return Excel::download(new AnnualEarnedExport($response, $headings), 'Annual Earned Report.xlsx');
+    }
+
+    public function getEmployeesCTCDetails(Request $request, VmtReportsservice $reportsService)
+    {
+        $date = Carbon::now();
+        $client_id = array(1);
+        $Category = 'All';
+
+        return $reportsService->getEmployeesCTCDetails();
+    }
+
+    public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
+    {
+        $date = Carbon::now();
+        $client_id = array(1);
+        $Category = 'All';
+
+        return Excel::download(new EmployeeBasicCtcExport($reportsService->getEmployeesCTCDetails()), 'Employees CTC Report.xlsx');
     }
 }
