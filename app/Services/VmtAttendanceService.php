@@ -1,8 +1,3 @@
-diff --git a/app/Services/VmtAttendanceService.php b/app/Services/VmtAttendanceService.php
-index 700034881..42dea45a8 100644
---- a/app/Services/VmtAttendanceService.php
-+++ b/app/Services/VmtAttendanceService.php
-@@ -1,4003 +1,4004 @@
 <?php
 
 namespace App\Services;
