@@ -141,7 +141,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
 
 
-    //Attendance
+    //AttendanceF
     Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
     Route::get('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData'])->name('getAttendanceDashboardData');
     Route::get('/attendance-leave', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePage'])->name('attendance-leave');
@@ -799,7 +799,10 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
     //employeectcreports
-    Route::get('/fetch_employee_ctc_report',[App\Http\Controllers\VmtReportsController::class,'fetchEmployeesCTCReportData'])->name('fetchEmployeesCTCReportData');
+    Route::get('/fetch-employee-ctc-report',[App\Http\Controllers\VmtReportsController::class,'fetchEmployeesCTCReportData'])->name('fetchEmployeesCTCReportData');
+    Route::get('/download-employee-ctc-report',[App\Http\Controllers\VmtReportsController::class,'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+
+   
     //Ajax For Fetch Month For Given Year for payroll
     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
