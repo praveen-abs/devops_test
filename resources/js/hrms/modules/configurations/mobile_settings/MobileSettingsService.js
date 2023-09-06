@@ -18,7 +18,7 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
     async function getMobileSettings(){
         canshowloading.value = true;
-        console.log("testings ",client_details.value.id);
+ 
             await axios.post('/fetchMobileModuleData',{
                 client_id:client_details.value.id
             }).then((res)=>{

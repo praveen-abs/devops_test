@@ -27,6 +27,11 @@
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2" @mouseleave="useDashboard.canShowClients = false">
+                <transition enter-active-class="transition duration-200 ease-out transform"
+                    v-if="service.current_user_role == 2 || service.current_user_role == 4"
+                    enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
+                    leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
+                    leave-to-class="translate-y-2 opacity-0"   @mouseleave ="useDashboard.canShowClients = false ">
                     <div v-if="useDashboard.canShowClients"
                         class="absolute z-20 w-11/12 bg-white rounded shadow-lg top-5 left-2 mt-14">
                         <!-- Dropdown content goes here -->
@@ -35,10 +40,10 @@
                             <div class="flex items-center justify-between p-2 hover:bg-gray-200"
                                 @click="submitSelectedClient(client.id), useDashboard.canShowClients = false">
                                 <div class="cursor-pointer flex mx-2 align-center justify-between rounded-lg p-0.5 ">
-                                    <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
+                                    <div class="flex items-center justify-between gap-4 p-1 mx-2 border rounded"
                                         style="height: 30px;width:30px">
                                         <img :src="client.client_logo" alt="" class=" mh-100 mw-100">
-                                        <!-- <p class="font-semibold whitespace-nowrap text-sm ">{{ client.client_fullname }} ({{
+                                        <!-- <p class="text-sm font-semibold whitespace-nowrap ">{{ client.client_fullname }} ({{
                                             client.abs_client_code }})</p> -->
                                         <p class="text-sm whitespace-nowrap  font-semibold px-2"
                                             v-if="client.client_fullname.length <= 40">{{
@@ -124,13 +129,13 @@
                         <a href="investment_settings"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Investment setting</a>
-                        <a href="showMobileSettingsPage"
-                            class="p-2 block text-black  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                        <!-- <a href="showMobileSettingsPage"
+                            class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Mobile setting</a>
                         <a href="showSAsettingsView"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting
-                        </a>
+                        </a> -->
                     </div>
                 </transition>
 
@@ -232,7 +237,7 @@
         <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75"></div>
 
         <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">ba
+            <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
                 <!--
               Modal panel, show/hide based on modal state.bas
 

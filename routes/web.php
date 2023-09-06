@@ -138,14 +138,12 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
         Route::post('/employee-documents-details', 'getEmployeeAllDocumentDetails')->name('employee-documents-details');
     });
 
-    //employee attendance data count
 
-    Route::get('/get-Employee-Analytics-Exception', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeAnalyticsExceptionData'])->name('getEmployeeAnalyticsExceptionData');
 
-    //Attendance
+
+    //AttendanceF
     Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
     Route::get('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData'])->name('getAttendanceDashboardData');
-
     Route::get('/attendance-leave', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePage'])->name('attendance-leave');
 
     Route::get('/attendance-leavesettings', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveSettings'])->name('attendance-leavesettings');
@@ -160,7 +158,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
     Route::get('/getAttendanceStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceStatus'])->name('getAttendanceStatus');
 
-
+ 
     Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');
     Route::get('/fetch-assigned-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAllAssignedPMSForms'])->name('fetch-assigned-pmsforms');
     Route::get('/fetchAssignmentPeriodForGivenYear', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAssignmentPeriodForGivenYear'])->name('fetchAssignmentPeriodForGivenYear');
@@ -792,6 +790,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     ////Reports
     //payroll reports
+
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
     })->name('reports-page');
@@ -800,6 +799,11 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports/generatePayrollReports', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
+    //employeectcreports
+    Route::get('/fetch-employee-ctc-report',[App\Http\Controllers\VmtReportsController::class,'fetchEmployeesCTCReportData'])->name('fetchEmployeesCTCReportData');
+    Route::get('/download-employee-ctc-report',[App\Http\Controllers\VmtReportsController::class,'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+
+   
     //Ajax For Fetch Month For Given Year for payroll
     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
@@ -928,7 +932,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/holiday/edit_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'editHoliday'])->name('edit-holiday');
     Route::post('holidays/update_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
     Route::post('holidays/delete_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
-
     Route::get('/holidays/add_holidays', function () {
         return view('holidays.test_ui.add_holidays');
     })->name('add-holidays');
