@@ -1,3 +1,8 @@
+diff --git a/app/Services/VmtAttendanceService.php b/app/Services/VmtAttendanceService.php
+index 700034881..42dea45a8 100644
+--- a/app/Services/VmtAttendanceService.php
++++ b/app/Services/VmtAttendanceService.php
+@@ -1,4003 +1,4004 @@
 <?php
 
 namespace App\Services;
@@ -200,9 +205,9 @@ class VmtAttendanceService
 
 
     /*
-        Get the employee's compensatory work days (Worked on holidays and also in leave days(Eg: Sun , Sat))
-        This wont check whether these comp days are used by emps
-    */
+         Get the employee's compensatory work days (Worked on holidays and also in leave days(Eg: Sun , Sat))
+         This wont check whether these comp days are used by emps
+     */
     private function fetchEmployeeCompensatoryOffDays($user_id)
     {
 
@@ -237,14 +242,14 @@ class VmtAttendanceService
 
             //Test : Checking whether emp worked in work_leave_days
             /*
-                    if(in_array($day, $work_leave_days)){
-                     dd("Worked in leave days : ".$singleAttendanceDate);
-                    }else
-                    {
-                       dd("Not Worked in leave days : ".$singleAttendanceDate);
-
-                    }
-                */
+                     if(in_array($day, $work_leave_days)){
+                      dd("Worked in leave days : ".$singleAttendanceDate);
+                     }else
+                     {
+                        dd("Not Worked in leave days : ".$singleAttendanceDate);
+ 
+                     }
+                 */
             //Test : End
 
             $trimmed_date = substr($singleAttendanceDate, 5);
@@ -263,16 +268,16 @@ class VmtAttendanceService
     }
 
     /*
-        Returns the unused comp off days for the given emp
-
-        Returns a map.
-
-        Eg : {
-               "247"                    :  "2023-08-15"
-               //("employee_attendance_id" :  "employee_attendance_date")
-             }
-
-    */
+         Returns the unused comp off days for the given emp
+ 
+         Returns a map.
+ 
+         Eg : {
+                "247"                    :  "2023-08-15"
+                //("employee_attendance_id" :  "employee_attendance_date")
+              }
+ 
+     */
     public function fetchUnusedCompensatoryOffDays($user_id)
     {
 
@@ -370,19 +375,19 @@ class VmtAttendanceService
 
             //convert current json response to older JSON structure
             /*
-                    Old structure :
-                    {
-                        "status": "success",
-                        "message": "",
-                        "data" :{
-                            "Earned Leave" : 1,
-                            "Permission" : 0,
-                            "Maternity Leave" : 0,
-                            "Paternity Leave" : 0,
-                        }
-
-                    }
-                */
+                     Old structure :
+                     {
+                         "status": "success",
+                         "message": "",
+                         "data" :{
+                             "Earned Leave" : 1,
+                             "Permission" : 0,
+                             "Maternity Leave" : 0,
+                             "Paternity Leave" : 0,
+                         }
+ 
+                     }
+                 */
             // dd($leave_balance_details);
             $final_json = array();
 
@@ -408,11 +413,11 @@ class VmtAttendanceService
     }
 
     /*
-        For VJS Leave Approvals table
-
-        Returns all leave status types
-
-    */
+         For VJS Leave Approvals table
+ 
+         Returns all leave status types
+ 
+     */
     private function createLeaveRange($start_date, $end_date)
     {
         $start_date = new DateTime($start_date);
@@ -525,14 +530,14 @@ class VmtAttendanceService
     }
 
     /*
-
-        $hours_diff : For permission only
-        $no_of_days, $leave_session : For 0.5 and full day leave types
-
-            // compensatory leaves
-            $compensatory_work_days_ids
-
-    */
+ 
+         $hours_diff : For permission only
+         $no_of_days, $leave_session : For 0.5 and full day leave types
+ 
+             // compensatory leaves
+             $compensatory_work_days_ids
+ 
+     */
     public function  applyLeaveRequest(
         $user_code,
         $leave_request_date,
@@ -627,7 +632,7 @@ class VmtAttendanceService
                     ]);
                 }
             } else
-            if ($leave_type_id == $compensatory_leavetype_id) {
+             if ($leave_type_id == $compensatory_leavetype_id) {
                 if (empty($compensatory_work_days_ids)) {
                     return response()->json([
                         "status" => "failure",
@@ -726,7 +731,7 @@ class VmtAttendanceService
                     if ($leave_session == "FN") {
                         $text_content = "Fore-noon";
                     } else
-                    if ($leave_session == "AN") {
+                     if ($leave_session == "AN") {
                         $text_content = "After-noon";
                     }
                 } else {
@@ -893,53 +898,6 @@ class VmtAttendanceService
         }
     }
 
-    /*
-        Check whether leave balance available
-
-    */
-    public function isLeaveBalanceAvailable($user_code, $leave_type_name, $current_applied_leave_count){
-
-        $validator = Validator::make(
-            $data = [
-                'user_code' => $user_code,
-                'leave_type_name' => $leave_type_name,
-                'current_applied_leave_count' => $current_applied_leave_count,
-            ],
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
-                'current_applied_leave_count' => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-                'in' => 'Field :attribute is invalid',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
-
-        try {
-                dd($this->getEmployeeLeaveBalance($user_code));
-
-
-        }
-        catch (\Exception $e) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => "Error[ isLeaveBalanceAvailable() ] " . $e->getMessage(),
-                'data' => $e->getMessage()
-            ]);
-        }
-    }
-
     public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment, VmtNotificationsService $serviceNotificationsService)
     {
 
@@ -1058,11 +1016,11 @@ class VmtAttendanceService
                     $text_status = "approved";
                     $leave_module_type = 'manager_approves_leave';
                 } else
-            if ($status == "Rejected") {
+             if ($status == "Rejected") {
                     $text_status = "rejected";
                     $leave_module_type = 'manager_rejects_leave';
                 } else
-            if ($status == "Revoked") {
+             if ($status == "Revoked") {
                     $text_status = "revoked";
                     $leave_module_type = 'manager_withdraw_leave';
                 }
@@ -1271,23 +1229,23 @@ class VmtAttendanceService
             // dd($value[0]);
 
             /*
-                    Here $key is the date. i.e : 2022-10-01
-
-                    $value is ::
-
-                        [
-                            date=>2022-11-05
-                            checkin_time=18:06:00
-                            checkout_time=18:06:00
-                            attendance_mode="web"
-                        ],
-                        [
-                            ....
-                            attendance_mode="biometric"
-
-                        ]
-
-                */
+                     Here $key is the date. i.e : 2022-10-01
+ 
+                     $value is ::
+ 
+                         [
+                             date=>2022-11-05
+                             checkin_time=18:06:00
+                             checkout_time=18:06:00
+                             attendance_mode="web"
+                         ],
+                         [
+                             ....
+                             attendance_mode="biometric"
+ 
+                         ]
+ 
+                 */
             //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
 
             $checkin_min = null;
@@ -1302,7 +1260,7 @@ class VmtAttendanceService
                     $checkin_min = $singleValue["checkin_time"];
                     $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
                 } else
-                    if ($checkin_min > $singleValue["checkin_time"]) {
+                     if ($checkin_min > $singleValue["checkin_time"]) {
                     $checkin_min = $singleValue["checkin_time"];
                     $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
                 }
@@ -1314,7 +1272,7 @@ class VmtAttendanceService
                     $checkout_max = $singleValue["checkout_time"];
                     $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
                 } else
-                    if ($checkout_max < $singleValue["checkout_time"]) {
+                     if ($checkout_max < $singleValue["checkout_time"]) {
                     $checkout_max = $singleValue["checkout_time"];
                     $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
                 }
@@ -1460,9 +1418,9 @@ class VmtAttendanceService
     }
 
     /*
-        Get attendance stats data for single month
-
-    */
+         Get attendance stats data for single month
+ 
+     */
     public function fetchAttendanceMonthStatsReport($user_code, $year, $month)
     {
 
@@ -1792,7 +1750,7 @@ class VmtAttendanceService
                     ];
                 }
             } else
-            if (Str::contains($regularization_type, ['Absent Regularization'])) {
+             if (Str::contains($regularization_type, ['Absent Regularization'])) {
             }
 
             //,'Absent Regularization'
@@ -2278,10 +2236,10 @@ class VmtAttendanceService
 
 
     /*
-        Get attendance status for the given date
-
-
-    */
+         Get attendance status for the given date
+ 
+ 
+     */
     public function fetchAttendanceStatus($user_code, $date)
     {
         $response = null;
@@ -2357,7 +2315,7 @@ class VmtAttendanceService
         } else if (!empty($bio_attendanceCheckIn->check_in_time) && !empty($bio_attendanceCheckOut->check_out_time)) {
 
             /*original  date data split into date and time in biometric and assign the time to checkin and checkout ,
-                then date to date and attedance mode.*/
+                 then date to date and attedance mode.*/
             $query_biometric_response->date = $date;
             $query_biometric_response->checkin_time = date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
             $query_biometric_response->checkout_time = date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
@@ -2407,10 +2365,10 @@ class VmtAttendanceService
     }
 
     /*
-        Get the last attendance date status of the given user_code.
-        If checkout was not done, then checkout date will be NULL.
-
-    */
+         Get the last attendance date status of the given user_code.
+         If checkout was not done, then checkout date will be NULL.
+ 
+     */
     public function getLastAttendanceStatus($user_code)
     {
 
@@ -2561,7 +2519,7 @@ class VmtAttendanceService
 
                 if (!empty($bio_attendanceCheckIn->check_in_time) && !empty($bio_attendanceCheckOut->check_out_time)) {
                     /*original  data split into date and time in biometric and assign the time to checkin and checkout ,
-                then date to Checkin checkout date */
+                 then date to Checkin checkout date */
                     $query_biometric_response->date = $recent_attedance_data;
                     $query_biometric_response->checkin_time = date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
                     $query_biometric_response->checkout_time = date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
@@ -2608,9 +2566,9 @@ class VmtAttendanceService
         $user_id = User::where('user_code', $user_code)->first()->id;
 
         /*
-        1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
-        2,then check wheather the user have workshiftid or not.
-        */
+         1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
+         2,then check wheather the user have workshiftid or not.
+         */
 
         //Check if user already checked-in
         $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
@@ -2840,10 +2798,10 @@ class VmtAttendanceService
     }
 
     /*
-        Get the Leave information for the selected leave record_id.
-        Used in Leave module ...
-
-    */
+         Get the Leave information for the selected leave record_id.
+         Used in Leave module ...
+ 
+     */
     public function getLeaveInformation($record_id)
     {
 
@@ -3256,11 +3214,11 @@ class VmtAttendanceService
         return $leave_details;
     }
     /*
-
-        Get the leave details based on the employee roles.
-
-
-    */
+ 
+         Get the leave details based on the employee roles.
+ 
+ 
+     */
     public function getLeaveRequestDetailsBasedOnCurrentRole()
     {
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
@@ -3488,7 +3446,7 @@ class VmtAttendanceService
                 if ($response[$i]['leave_type'] == 'Maternity Leave')
                     unset($response[$i]);
             } else
-            if ($getcurrentusergender == 'female') {
+             if ($getcurrentusergender == 'female') {
                 if ($response[$i]['leave_type'] == 'Paternity Leave')
                     unset($response[$i]);
             }
@@ -3668,7 +3626,7 @@ class VmtAttendanceService
             $emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, $current_date);
             //Code For Check LC
             if (!empty($emp_shift_settings['checkin_time'])) {
-               // dd($emp_shift_settings['checkin_time']);
+                // dd($emp_shift_settings['checkin_time']);
                 $parsedCheckIn_time  = Carbon::parse($emp_shift_settings['checkin_time']['date']);
                 //Check whether checkin done on-time
                 $isCheckin_done_ontime = $parsedCheckIn_time->lte(Carbon::parse($emp_shift_settings['shift_settings']['shift_start_time']));
@@ -3698,7 +3656,7 @@ class VmtAttendanceService
             }
 
             //Code For Check EG
-            $emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, Carbon::parse($current_date)->subDay()->format('Y-m-d'));
+            +$emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, Carbon::parse($current_date)->subDay()->format('Y-m-d'));
             if (!empty($emp_shift_settings['checkout_time'])) {
                 $parsedCheckOut_time  = Carbon::parse($emp_shift_settings['checkout_time']['date']);
                 //Check whether checkin out on-time
@@ -3794,6 +3752,7 @@ class VmtAttendanceService
                 'attendance_mode_checkout' => 'biometric'
             ]);
         }
+
         return $deviceData;
     }
 
@@ -3813,15 +3772,29 @@ class VmtAttendanceService
                 ->whereDate('date', $current_date)
                 ->where('user_Id', $user_code)
                 ->first(['check_out_time']);
-        }
-    }
 
-    public function getWorkShiftDetails()
-    {
+            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $current_date)
+                ->where('user_Id',  $user_code)
+                ->first(['check_in_time']);
+            // dd($attendanceCheckOut);
+        } else {
+            $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                ->whereDate('date', $current_date)
+                ->where('direction', 'out')
+                ->where('user_Id', $user_code)
+                ->first(['check_out_time']);
+
+            $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $current_date)
+                ->where('direction', 'in')
+                ->where('user_Id', $user_code)
+                ->first(['check_in_time']);
 
 
-        $workshiftCount = array();
-        $work_shift_details = VmtWorkShifts::all()->toArray();
 
             $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
             $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
