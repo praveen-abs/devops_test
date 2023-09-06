@@ -34,11 +34,12 @@ class VmtReportsservice
                     //$singleEmployee->$key=$value;
                 }
             }
-            array_push($response,$singleEmployee->toArray());
-
-
+            array_push($response, $singleEmployee->toArray());
         }
-      return $response;
+        return $response;
+    }
 
+    public function employeesCTCReport()
+    {
     }
 }
