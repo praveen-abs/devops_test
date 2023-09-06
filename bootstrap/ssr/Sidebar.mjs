@@ -32,7 +32,7 @@ import Tag from "primevue/tag";
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
 import SelectButton from "primevue/selectbutton";
-import { _ as _sfc_main } from "./assets/Sidebar-10b816a6.mjs";
+import { _ as _sfc_main } from "./assets/Sidebar-79253f5e.mjs";
 import "vue/server-renderer";
 import "./assets/Service-c5131e0f.mjs";
 import "axios";
