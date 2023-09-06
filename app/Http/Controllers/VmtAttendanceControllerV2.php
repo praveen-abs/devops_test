@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceReport;
 use Carbon\Carbon;
+use App\Services\VmtAttendanceServiceV2;
 use App\Models\vmtHolidays;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
@@ -22,88 +23,24 @@ use Carbon\CarbonInterval;
 
 class VmtAttendanceControllerV2 extends Controller
 {
-    //
-    // public function testing(Request $request)
-    // {
-    //     $user_code = 'DM019';
-    //     $user_id = '192';
-    //     $attendance_report_query = VmtEmployeeAttendanceReport::orderBy('id', 'DESC')->first();
-    //     // $start_date =   Carbon::parse($attendance_report_query->date)->subDays(2);
-    //     $start_date = Carbon::parse('2023-08-15');
-    //     $end_date = Carbon::now();
-    //     $total_days = $start_date->diffInDays($end_date);
-    //     $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
-    //     while ($start_date->lte($end_date)) {
-    //         for ($i = 0; $i <= $total_days; $i++) {
-    //             $current_date = $start_date->format('Y-m-d');
-    //             $day = Carbon::parse($current_date)->addDay($i)->format('l');
 
-    //             if (
-    //                 sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-    //                 || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
-    //             ) {
-    //                 $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-    //                     ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-    //                     ->whereDate('date',  $current_date)
-    //                     ->where('user_Id', $user_code)
-    //                     ->first(['check_out_time']);
-
-
-
-    //                 $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-    //                     ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-    //                     ->whereDate('date', $current_date)
-    //                     ->where('user_Id',  $user_code)
-    //                     ->first(['check_in_time']);
-
-    //                 // dd($attendanceCheckIn);
-    //                 // if ($attendanceCheckOut->check_out_time ==  $attendanceCheckIn->check_in_time) {
-    //                 //     $attendanceCheckOut = null;
-    //                 // }
-    //             } else {
-    //                 $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-    //                     ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-    //                     ->whereDate('date', $current_date)
-    //                     ->where('direction', 'out')
-    //                     ->where('user_Id', $user_code)
-    //                     ->first(['check_out_time']);
-
-    //                 $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-    //                     ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-    //                     ->whereDate('date', $current_date)
-    //                     ->where('direction', 'in')
-    //                     ->where('user_Id', $user_code)
-    //                     ->first(['check_in_time']);
-    //             }
-    //             //dd($attendanceCheckIn);
-
-    //             $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-    //             $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-    //             //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
-    //             if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
-    //                 $deviceData[] = array(
-    //                     'date' =>   $current_date,
-    //                     'checkin_time' => $deviceCheckInTime,
-    //                     'checkout_time' => $deviceCheckOutTime,
-    //                     'attendance_mode_checkin' => 'biometric',
-    //                     'attendance_mode_checkout' => 'biometric'
-    //                 );
-    //             }
-    //         }
-    //     }
-    // }
-
-
-    public function testing(Request $request)
+    public function testing(Request $request, VmtAttendanceServiceV2 $attendance_services)
     {
         $task_sheduler = TrackTaskScheduler::where('job', 'vmt_staff_attenndance_device');
         if ($task_sheduler->exists()) {
-            $start_date = Carbon::parse(VmtStaffAttendanceDevice::where('id',$task_sheduler->first()->last_id)->first()->date)->format('Y-m-d');
-        }else{
-           $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id','asc');
-           //dd('working');
-           dd( $staff_attendance_query->first()->date );
+            $start_date = Carbon::parse(VmtStaffAttendanceDevice::where('id', $task_sheduler->first()->last_id)->first()->date)->format('Y-m-d');
+        } else {
+            $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id', 'asc')->first();
+            //dd('working');
+            if (Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->lte(Carbon::parse($staff_attendance_query->date))) {
+                $start_date = Carbon::parse($staff_attendance_query->date)->format('Y-m-d');
+            } else {
+                $start_date = Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->format('Y-m-d');
+            }
         }
+        $end_date = Carbon::now()->format('Y-m-d');
+        return $attendance_services->attendanceJobs($start_date,$end_date);
+
     }
 
     public function detailedAttendanceReport($start_date, $end_date)
