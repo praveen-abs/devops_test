@@ -1,4 +1,4 @@
-G3818<?php
+<?php
 
 namespace App\Services;
 
@@ -3856,7 +3856,7 @@ class VmtAttendanceService
             $checkout_time =  $sortedCollection->last();
             return $response = ['checkin_time' => $checking_time, 'checkout_time' => $checkout_time, 'shift_settings' =>  $this->getShiftTimeForEmployee($user_id, $checking_time,  $checkout_time)];
             return $response;
-        
+        }
     }
 
     public function getEmployeeAnalyticsExceptionData()
