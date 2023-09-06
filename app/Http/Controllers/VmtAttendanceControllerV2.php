@@ -14,7 +14,10 @@ use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtLeaves;
+use App\Models\TrackTaskScheduler;
+use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtClientMaster;
+use App\Models\VmtOrgTimePeriod;
 use Carbon\CarbonInterval;
 
 class VmtAttendanceControllerV2 extends Controller
@@ -91,8 +94,16 @@ class VmtAttendanceControllerV2 extends Controller
     // }
 
 
-    public function testing(Request $request){
-
+    public function testing(Request $request)
+    {
+        $task_sheduler = TrackTaskScheduler::where('job', 'vmt_staff_attenndance_device');
+        if ($task_sheduler->exists()) {
+            $start_date = Carbon::parse(VmtStaffAttendanceDevice::where('id',$task_sheduler->first()->last_id)->first()->date)->format('Y-m-d');
+        }else{
+           $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id','asc');
+           //dd('working');
+           dd( $staff_attendance_query->first()->date );
+        }
     }
 
     public function detailedAttendanceReport($start_date, $end_date)
