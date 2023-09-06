@@ -1,4 +1,4 @@
-<?php
+G3818<?php
 
 namespace App\Services;
 
@@ -3813,7 +3813,8 @@ class VmtAttendanceService
                 ->whereDate('date', $current_date)
                 ->where('user_Id', $user_code)
                 ->first(['check_out_time']);
-
+        }
+    }
 
     public function getWorkShiftDetails()
     {
