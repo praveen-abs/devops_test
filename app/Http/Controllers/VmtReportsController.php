@@ -621,11 +621,13 @@ class VmtReportsController extends Controller
         return Excel::download(new AnnualEarnedExport($response, $headings), 'Annual Earned Report.xlsx');
     }
 
-    public function fetchEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
+    public function getEmployeesCTCDetails(Request $request, VmtReportsservice $reportsService)
     {
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
+     
+    return $reportsService->getEmployeesCTCDetails();
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
