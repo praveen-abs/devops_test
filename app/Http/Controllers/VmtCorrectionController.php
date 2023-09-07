@@ -610,7 +610,7 @@ class VmtCorrectionController extends Controller
                 "user_id": "DM189"
                }
            ]';
-           
+
 
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '', $dunamis);
@@ -1504,7 +1504,7 @@ class VmtCorrectionController extends Controller
                         $financial_year_date[] = $fin_year_date;
                     }
                     //dd($previous_month_payslip_date, $financial_year_date);
-
+                        $exists_month_data = array();
                     foreach ($previous_month_payslip_date as $key => $single_month) {
 
                         foreach ($financial_year_date as $key => $single_fin_month) {
@@ -1518,9 +1518,9 @@ class VmtCorrectionController extends Controller
                             }
 
 
-                            $res = array();
+                            if ($single_fin_month == $single_month ||in_array($single_month, $exists_month_data)) {
 
-                            if ($single_fin_month == $single_month) {
+                                array_push($exists_month_data,$single_fin_month);
 
                                 $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
                                     ->where('vmt_payroll.payroll_date',  $single_month)
@@ -1599,7 +1599,7 @@ class VmtCorrectionController extends Controller
                                     return 'no payslip data found for ' . $single_users['id'] . 'user'  . " " . $single_month . " " . $single_fin_month;
                                 }
 
-                                array_push($res, $payslip_details);
+                                //array_push($res, $payslip_details);
                             } else {
 
                                 $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')->where('user_id', $single_users['id'])->first();
