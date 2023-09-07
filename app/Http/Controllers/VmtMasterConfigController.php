@@ -12,9 +12,7 @@ use App\Models\VmtAppModules;
 use App\Models\VmtEmpSubModules;
 use App\Models\VmtClientSubModules;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
-
-
-use App\Services\VmtMasterConfigService;
+use App\Services\VmtMobileConfigService;
 use Illuminate\Http\Request;
 
 class VmtMasterConfigController extends Controller
@@ -49,7 +47,6 @@ class VmtMasterConfigController extends Controller
 
         foreach($input as $key => $value)
         {
-            //dd($key);
 
             //Update client code
             if($key == "client_code")
@@ -58,8 +55,19 @@ class VmtMasterConfigController extends Controller
             }
             else
             {
-                $temp = VmtMasterConfig::where('config_name',$key)->update(['config_value' => $value]);
+
+                $clinet_id =0;
+                $query_client = VmtClientMaster::find(session('client_id'));
+                if (!empty($query_client)){
+                    $clinet_id = $query_client->id;
+                 }
+                 $temp = VmtMasterConfig::where('config_name',$key)->update(['config_value' => $value]);
+                 $update_client_id = VmtMasterConfig::where('config_name',"client_id")->update(['config_value' => $clinet_id]);
+
             }
+
+
+
 
         }
 
@@ -86,7 +94,7 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function  saveAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function  saveAppConfigStatus(Request $request,VmtMobileConfigService $serviceVmtMasterConfigService){
 
         $response = $serviceVmtMasterConfigService->saveAppConfigStatus($request->module_id,$request->status);
 
@@ -94,22 +102,24 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function SaveEmployeeAppConfigStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function SaveEmployeeAppConfigStatus(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
 
 
-        $response = $serviceVmtMasterConfigService->SaveEmployeeAppConfigStatus($request->app_sub_modules_link_id ,$request->selected_employees_user_code);
+        $response = $serviceVmtMobileConfigService->SaveEmployeeAppConfigStatus($request->app_sub_modules_link_id,$request->selected_employees_user_code);
 
 
         return $response;
 
     }
 
-    public function fetchMobileModuleData( Request $request ,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function fetchMobileModuleData( Request $request ,VmtMobileConfigService $serviceVmtMasterConfigService){
+
+
 
         try{
         $client_id =$request->client_id ;
 
-        $module_id =VmtAppModules::where('module_name',"Mobile App Settings")->pluck('id');
+        $module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->pluck('id');
 
         $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
                                                     ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
@@ -161,13 +171,13 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function getAllDropdownFilterSetting(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function getAllDropdownFilterSetting(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
 
-        return  $serviceVmtMasterConfigService->getAllDropdownFilterSetting();
+        return  $serviceVmtMobileConfigService->getAllDropdownFilterSetting();
 
     }
 
-    public function getEmployeesFilterData(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function getEmployeesFilterData(Request $request){
 
         $filtered_data = $this->employees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);
 
@@ -231,9 +241,9 @@ class VmtMasterConfigController extends Controller
             ]);
         }
     }
-    public function GetAllEmpModuleActiveStatus(Request $request,VmtMasterConfigService $serviceVmtMasterConfigService){
+    public function GetAllEmpModuleActiveStatus(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
 
-        $response = $serviceVmtMasterConfigService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
+        $response = $serviceVmtMobileConfigService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
 
 
         return $response;

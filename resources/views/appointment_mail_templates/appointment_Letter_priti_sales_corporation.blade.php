@@ -195,7 +195,7 @@
                                     <tr>
                                         <td colspan="12" style=" " align="right">
                                             <p class="fw-600 txt-right " style="margin-right:100px">
-                                                Date:
+                                                Date:  {{ $doj }}
                                             </p>
 
                                         </td>
@@ -235,7 +235,7 @@
                                                 will
                                                 consist of &nbsp;<span
                                                     class="fw-600 txt-left">
-                                                    CTC Rs{{ $cic }}- per annum
+                                                    CTC Rs{{ $ctc_yearly }}- per annum
                                                     ({{ $ctc_in_words }})</span>&nbsp;.
                                                 The
                                                 breakup of your compensation package shall

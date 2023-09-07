@@ -1,11 +1,17 @@
 <template>
-    <div class="d-flex justify-content-end">
-        <label for="" class="my-2 text-lg font-semibold">Select Month</label>
-        <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="managePayslipStore.selectedPayRollDate"
-            style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
-        <Button class="h-10 mb-2 btn btn-orange" label="Generate"
-            @click="managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())" />
-        <!-- {{ managePayslipStore.array_employees_list.user_code.data.data }} -->
+    <LoadingSpinner v-if="managePayslipStore.loading" class=" absolute z-50 bg-white" />
+    <div class="flex justify-between ">
+        <div>
+            <h6 class="mb-2 font-semibold text-lg">Manage Employee Payslips</h6>
+        </div>
+        <div class="d-flex justify-content-end">
+            <label for="" class="my-2 text-lg font-semibold">Select Month</label>
+            <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="managePayslipStore.selectedPayRollDate"
+                style=" border-radius: 7px; height: 38px;"
+                @date-select="managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())" />
+            <!-- <Button class="h-10 mb-2 btn btn-orange" label="Generate" /> -->
+            <!-- {{ managePayslipStore.array_employees_list.user_code.data.data }} -->
+        </div>
     </div>
     <div class="my-4">
 
@@ -23,44 +29,59 @@
                 <template #body="slotProps">
                     <div class="d-flex flex-column">
 
-                        <button class="z-0 btn" style="border:1px solid navy ;" v-if="slotProps.data.is_payslip_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
+                        <button class="btn z-0 border-[1px solid ] border-black "
+                            v-if="slotProps.data.is_payslip_released == 1"
+                            @click="showWithdraw_confimationDialog(slotProps.data.user_code)">withdraw</button>
 
-                    <button class="z-0 rounded btn-primary" v-else style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                        <button class="bg-[#000] text-[white] rounded z-0" v-else style="padding: 4px 0 !important; margin-top: 10px;"
+                            @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
 
-                     <!-- {{slotProps.data.is_payslip_released}} -->
-                     <h1 v-if="slotProps.data.is_payslip_released == 1"  class="mt-2 text-success">
-                        Released
-                     </h1>
-                     <h1 v-if="slotProps.data.is_payslip_released == 0 || slotProps.data.is_payslip_released == null"  class="mt-2 text-danger">
-                       Not Released
-                     </h1>
-                     <!-- {{is_payslip_released}} -->
-            </div>
+                        <!-- {{slotProps.data.is_payslip_released}} -->
+                        <h1 v-if="slotProps.data.is_payslip_released == 1" class="text-success mt-2">
+                            Released
+                        </h1>
+                        <h1 v-if="slotProps.data.is_payslip_released == 0 || slotProps.data.is_payslip_released == null"
+                            class="text-danger mt-2">
+                            Not Released
+                        </h1>
+                        <!-- {{is_payslip_released}} -->
+                    </div>
 
                 </template>
 
             </Column>
+
             <Column field="is_payslip_mail_sent" header="Mail Status">
-              <template #body="slotProps">
-                <div v-if="slotProps.data.is_payslip_mail_sent == 1" >
-                   <h1> Payslip sent</h1>
-                </div>
-                <div v-else>
-                    <button class="z-0 rounded btn-primary" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
-                </div>
+                <template #body="slotProps">
+                    <div v-if="slotProps.data.is_payslip_mail_sent == 1">
+                        <h1> Payslip sent</h1>
+                    </div>
+                    <div v-else>
+                        <button class="bg-[#f9be00] text-white rounded p-2 z-0"
+                            @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
+                    </div>
                 </template>
+            </Column>
+            <Column header="Action">
+                <template #body="slotProps">
+                            <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v" @click="saveusercode(slotProps.data.user_code)"></i>
+                            </button>
+                            <OverlayPanel ref="op"
+                                style="width: 160px;margin-top:12px !important;margin-right: 20px !important; "
+                                class="p-0 m-0 !z-0 ">
+                                <div class=" d-flex flex-column p-0 m-0 ">
+                                    <!-- bg-green-200 -->
+                                    <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
+                                    @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)">Download</button>
+                                    <!-- bg-blue-500 -->
+                                    <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
+                                    @click="showPaySlipHTMLView(slotProps.data.user_code)">View</button>
+                                </div>
+                            </OverlayPanel>
+                        </template>
             </Column>
 
-            <Column header="Download">
-                <template #body="slotProps">
-                    <Button class="z-0 btn-primary" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code,slotProps.data.payroll_date,slotProps.data.name)" />
-                </template>
-            </Column>
-            <Column header="View Payslip">
-                <template #body="slotProps">
-                    <Button class="z-0 btn-primary" style="" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
-                </template>
-            </Column>
+
 
             <!-- <Column header="Action">
                 <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
@@ -84,15 +105,15 @@
             <span>Are you sure you want to send Mail ?</span>
         </div>
 
-            <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
+        <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
-                    @click="sendMail(selectedUserCode)"
-                    autofocus />
+            <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check" @click="sendMail(selectedUserCode)"
+                autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="py-2 p-button-text" autofocus />
+            <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text py-2"
+                autofocus />
 
-            </div>
+        </div>
 
     </Dialog>
 
@@ -106,15 +127,15 @@
             <span>Are you sure you want to send Mail ?</span>
         </div>
 
-            <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
+        <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
-                    @click="UpdateWithDrawStatus(selectedUserCode)"
-                    autofocus />
+            <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check"
+                @click="UpdateWithDrawStatus(selectedUserCode)" autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_withdraw_dialogConfirmation = false" class="py-2 p-button-text" autofocus />
+            <Button label="No" icon="pi pi-times" @click="show_withdraw_dialogConfirmation = false"
+                class="p-button-text py-2" autofocus />
 
-            </div>
+        </div>
 
     </Dialog>
 
@@ -122,17 +143,17 @@
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
         <div class="confirmation-content">
 
-                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to release payslip? {{ managePayslipStore.name }} </span>
-            </div>
+            <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+            <span>Are you sure you want to release payslip? {{ managePayslipStore.name }} </span>
+        </div>
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
-                    @click="updatePayslipReleaseStatus(selectedUserCode)"
-                    autofocus />
+            <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
+                @click="updatePayslipReleaseStatus(selectedUserCode)" autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false" class="py-2 p-button-text" autofocus />
+            <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false"
+                class="p-button-text  py-2" autofocus />
 
         </div>
 
@@ -141,43 +162,25 @@
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
         <div class="confirmation-content">
 
-                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to download payslip? {{ managePayslipStore.name }} </span>
-            </div>
+            <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+            <span>Are you sure you want to download payslip? {{ managePayslipStore.name }} </span>
+        </div>
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
-                    @click="downloadPayslip(selectedUserCode,selectedUsername)"
-                    autofocus />
+            <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
+                @click="downloadPayslip(selectedUserCode, selectedUsername)" autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false" class="py-2 p-button-text" autofocus />
+            <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false"
+                class="p-button-text  py-2" autofocus />
 
         </div>
 
     </Dialog>
 
-
-
-    <div class="flex inline-flex card justify-content-center">
-        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :breakpoints="{ '960px': '75vw', '640px': '90vw' }">
-            <!-- <div v-html="managePayslipStore.paySlipHTMLView" ></div> -->
-        </Dialog>
-    </div>
-    <Dialog header="Header" v-model:visible="managePayslipStore.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
-
-
-    <Dialog v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
-        <div class="w-[100%] h-[100]%">
+    <Sidebar position="right" v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
+        <div class=" flex justify-center w-[100%] my-3 rounded-lg">
+        <div class="w-[95%] h-[90%] shadow-lg p-4 ">
             <div class="w-[100%] flex justify-between">
                 <div class="flex flex-col">
                     <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">MAR 2023</span></h1>
@@ -198,7 +201,7 @@
                     </div>
                     <div class="col-3">
                         <p>Date Joining</p>
-                        <p class=" text-[#000]">{{  item.doj? item.doj : '-' }}</p>
+                        <p class=" text-[#000]">{{  item.doj? dayjs(item.doj).format('DD-MMM-YYYY')  : '-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Department</p>
@@ -281,7 +284,7 @@
                     <div class="col-3">
                         <p>ACTUAL PAYABLE DAYS</p>
                         <p class=" text-[#000]">{{item.month_days  ? item.month_days : '-'}}</p>
-                      
+
                     </div>
                     <div class="col-3">
                         <p>TOTAL WORKING DAYS</p>
@@ -312,7 +315,7 @@
                             <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="mt-[12px] text-black" > {{ value }}</h1>
                             </td>
 
-                            <td class=" flex flex-col items-start pt-[2px]" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">              
+                            <td class=" flex flex-col items-start pt-[2px]" v-if=" managePayslipStore.paySlipHTMLView.data.arrears[0] != '' ">
                                 <h1 class="font-semibold " >Arrears</h1>
                                 <h1 v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.arrears[0]" :key="index" class="mt-[12px]">{{ value }}</h1>
                                 <!-- <h1  v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.compensatory_data[0]" :key="index" class="my-3" >&nbsp;</h1> -->
@@ -371,15 +374,17 @@
 
 
         </div>
-    </Dialog>
+       </div>
+    </Sidebar>
 
     <!-- <dynamicPayslipv2 :source="payslipSource ? payslipSource : {}"/> -->
 </template>
 
 <script setup>
+import dayjs from 'dayjs';
 import { ref, onMounted, reactive, computed } from "vue";
 import { useManagePayslipStore } from './ManagePayslipService';
-import dynamicPayslipv2 from "./dynamicPayslipv2.vue";
+import LoadingSpinner from '../../components/LoadingSpinner.vue'
 
 const managePayslipStore = useManagePayslipStore();
 
@@ -391,20 +396,20 @@ const show_downloadPayslip_dialogconfirmation = ref(false);
 const show_withdraw_dialogConfirmation = ref(false);
 
 const selectedPayRollDate = ref();
-
+const op = ref();
+const toggle = (event) => {
+    op.value.toggle(event);
+}
 const selectedUserCode = ref();
 const selectedUsername = ref();
-const selectedMonth = ref();
-
 const viewpayslip = ref(false);
-
 const payslipSource = ref()
 
-let list= ref([]);
+onMounted(() => {
+    managePayslipStore.selectedPayRollDate = new Date()
+    managePayslipStore.selectedPayRollDate = new Date()
+    managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())
 
-onMounted( () => {
-   managePayslipStore.selectedPayRollDate = new Date();
-   managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
 });
 
 
@@ -413,12 +418,8 @@ async function showPaySlipHTMLView(selected_user_code) {
     console.log("Showing payslip html for (user_code, month): " + selected_user_code + " , " + parseInt(managePayslipStore.selectedPayRollDate.getMonth() + 1));
 
     await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
-
-    // canShowPayslipHTMLView.value = true;
     viewpayslip.value = true;
-
-    // console.log(viewpayslip.value);
-
+    toggle()
 
 }
 
@@ -433,10 +434,20 @@ function showReleasePayslipConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
 
     show_releasePayslip_dialogconfirmation.value = true;
+    toggle()
 }
-function showdownloadPayslipConfirmationDialog(selected_user_code,selected_user_name) {
+
+function saveusercode(selected_user_code){
+    console.log("selected_user_code",selected_user_code);
     selectedUserCode.value = selected_user_code;
-    selectedUsername.value = selected_user_name
+
+}
+
+
+function showdownloadPayslipConfirmationDialog(selected_user_code) {
+    // console.log("selected_user_code",selected_user_code);
+    // selectedUserCode.value = selected_user_code;
+
     show_downloadPayslip_dialogconfirmation.value = true;
 }
 
@@ -452,7 +463,7 @@ async function updatePayslipReleaseStatus(selectedUserCode) {
     show_releasePayslip_dialogconfirmation.value = false;
 
 }
-async function showWithdraw_confimationDialog(selected_user_code){
+async function showWithdraw_confimationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
     show_withdraw_dialogConfirmation.value = true;
 }
@@ -462,14 +473,10 @@ async function UpdateWithDrawStatus(selectedUserCode) {
 
 }
 
-// async function downloadPayslip(selectedUserCode) {
-//     await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
-//     show_downloadPayslip_dialogconfirmation.value = false;
-
-// }
-async function downloadPayslip(selectedUserCode,selectedUsername) {
-    await managePayslipStore.downloadEmployeePaySlipPdf(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(),selectedUsername);
+async function downloadPayslip(selectedUserCode) {
     show_downloadPayslip_dialogconfirmation.value = false;
+    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+    toggle()
 
 }
 
@@ -658,6 +665,15 @@ async function downloadPayslip(selectedUserCode,selectedUsername) {
     content: "\e9a2";
     color: white;
 }
+.dropdown:hover .dropdown-content {
+    display: block !important;
+}
+
+.p-overlaypanel .p-overlaypanel-content {
+    padding: 0;
+    z-index: 0 !important;
+}
+
 </style>
 
 

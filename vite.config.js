@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue';
+import {hash} from './functions';
 
 export default defineConfig({
     plugins: [
@@ -8,10 +9,17 @@ export default defineConfig({
         vue(),
         laravel({
             input: [
+
                 'resources/scss/main.scss',
                 'resources/scss/views/main_dashboard.scss',
 
                 'resources/js/app.js',
+
+                // Home
+                'resources/js/hrms/modules/Home/Home.js',
+                'resources/js/hrms/modules/Home/Sidebar.js',
+                'resources/js/hrms/modules/Home/Topbar.js',
+
 
                 //Main dashboard
                 'resources/js/hrms/modules/dashboard/dashboard.js',
@@ -27,8 +35,6 @@ export default defineConfig({
                 // Leaves
 
                 'resources/js/hrms/modules/leave_module/LeaveModule.js',
-                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
-                'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
                 //Reports
                 'resources/js/hrms/modules/reports/ReportsModule.js',
@@ -38,10 +44,8 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js',
                 'resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js',
                 'resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js',
-                'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js',
-
-                //Attendance Detailed Report
                 'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
+                'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
@@ -90,7 +94,6 @@ export default defineConfig({
 
                 // Investment Setting
 
-                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
 
                 // Paycheck
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
@@ -122,21 +125,6 @@ export default defineConfig({
                 //Investments Form Mgmt
                 'resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js',
 
-                //// Profile pages
-                // familyinfo_table_page
-                'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
-
-                // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
-
-                // // Experience page
-                // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
-
-                // // financeDetails page
-                // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
-                // // Documents Review
-
-                // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
-
 
                 // Payslip Template
 
@@ -149,9 +137,9 @@ export default defineConfig({
                 'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
 
                 // super Admin screen
-              'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
-               // Admin screen roles And Permission
-              'resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js',
+                'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
+                // Admin screen roles And Permission
+                'resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js',
 
 
                 //PMS forms management
@@ -169,7 +157,6 @@ export default defineConfig({
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
                 // 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
                 'resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js',
-                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
                 // Onboarding From management
                 'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js',
@@ -181,13 +168,17 @@ export default defineConfig({
                 //approvals_salary_advance
                 'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js',
 
-                // salary Revision
-               'resources/js/hrms/modules/payroll/salary_Revision/salary_Revision.js',
+                // login page
+                'resources/js/hrms/modules/login_Page/login_Page.js',
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
             //    Exit approval
-            'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
-         //Mobile Settings
+            // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
+              //Mobile Settings
              'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
+                // Employee Payables Details
+                'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
 
             //  payslipPreview
             'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
@@ -198,17 +189,18 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+
+    build: {
+        rollupOptions: {
+          output: {
+            entryFileNames: `[name]` + hash + `.js`,
+            chunkFileNames: `[name]` + hash + `.js`,
+            assetFileNames: `[name]` + hash + `.[ext]`
+          }
+        }
+      },
+
     resolve: {
         dedupe: ['vue', 'vue-router'],
     },
-    // css: {
-    //     preprocessorOptions: {
-    //       scss: {
-    //         additionalData: `
-    //           @import "./resources/scss/views/main_dashboard.scss";
-    //           @import "./resources/scss/main.scss";
-    //         `
-    //       }
-    //     }
-    //   }
 });

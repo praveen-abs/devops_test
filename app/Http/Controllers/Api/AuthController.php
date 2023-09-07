@@ -131,7 +131,6 @@ class AuthController extends Controller
         // }
     }
 
-
     public function sendPasswordResetLink(Request $request, VmtLoginService $serviceVmtLoginService){
         return $serviceVmtLoginService->sendPasswordResetLink($request->user_code, $request->email);
     }

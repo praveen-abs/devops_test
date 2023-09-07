@@ -19,17 +19,17 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
      * @return void
      */
 
-    protected $approverName;
-    protected $employeeName;
-    protected $requestID;
-    protected $loanType;
-    protected $borrowed_Amount;
-    protected $requested_date;
-    protected $tenure_month;
-    protected $link;
-    protected $emp_image;
+     protected $approverName;
+     protected $employeeName;
+     protected $requestID;
+     protected $loanType;
+     protected $borrowed_Amount;
+     protected $requested_date;
+     protected $tenure_month;
+     protected $link;
+     protected $emp_image;
 
-    public function __construct($approverName, $employeeName, $requestID, $loanType, $borrowed_Amount, $requested_date, $tenure_month, $link, $emp_image)
+    public function __construct($approverName,$employeeName,$requestID,$loanType,$borrowed_Amount,$requested_date, $tenure_month ,$link,$emp_image)
     {
         $this->approverName = $approverName;
 
@@ -48,26 +48,28 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
         $this->link = $link;
 
         $this->emp_image = $emp_image;
+
     }
 
     public function build()
     {
 
-        $subject = $this->loanType . " Requested by " . $this->employeeName . " - Request ID: " . $this->requestID;
+         $subject = " Loan Requested by " . $this->employeeName . " - Request ID: " . $this->requestID ;
 
         $output = $this->view('vmt_approveRejectSalaryAdv_Email')
-            ->subject($subject)
-            ->with('approverName', $this->approverName)
-            ->with('employeeName', $this->employeeName)
-            ->with('requestID', $this->requestID)
-            ->with('loanType', $this->loanType)
-            ->with('borrowed_Amount', $this->borrowed_Amount)
-            ->with('requested_date', $this->requested_date)
-            ->with('tenure_month', $this->tenure_month)
-            ->with('link',  $this->link)
-            ->with('emp_image',  $this->emp_image);
+                    ->subject($subject)
+                    ->with('approverName', $this->approverName)
+                    ->with('employeeName',$this->employeeName)
+                    ->with('requestID',$this->requestID)
+                    ->with('loanType', $this->loanType)
+                    ->with('borrowed_Amount', $this->borrowed_Amount)
+                    ->with('requested_date', $this->requested_date)
+                    ->with('tenure_month', $this->tenure_month)
+                    ->with('link',  $this->link)
+                    ->with('emp_image',  $this->emp_image);
 
 
         return $output;
     }
+
 }

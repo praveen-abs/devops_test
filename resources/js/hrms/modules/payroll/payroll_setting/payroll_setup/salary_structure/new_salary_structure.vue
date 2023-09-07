@@ -12,9 +12,9 @@
                 calculation </p>
         </div>
         <div class="flex">
-            <div class="w-[40%] ">
+            <div class="w-5">
                 <p class="text-gray-700 font-semibold fs-5 mx-6">Structure Details</p>
-                <div class="py-[19px] pl-[12px] pr-[9px] my-2 mx-6 bg-[#F7F7F7] border-[1px] border-[#C2C2C2] rounded-lg shadow-md border-1">
+                <div class="p-4 my-2 mx-6 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                     <div class="">
                         <label for="metro_city" class="block mb-2  text-gray-700 font-semibold fs-6">Structure
                             Name</label>
@@ -28,9 +28,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="my-4 border-[#C2C2C2] ">
+                <div class="my-4">
                     <p class="text-gray-700 font-semibold fs-5 mx-6">PF & ESI Setting</p>
-                    <div class="p-4 my-2 mx-6 border-[1px] bg-[#F7F7F7] border-[#C2C2C2] rounded-lg shadow-md border-1">
+                    <div class="p-4 my-2 mx-6 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
 
                         <div class="flex my-5">
                             <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input"
@@ -68,7 +68,7 @@
             <div class="w-full mr-4">
                 <div class="flex justify-between">
                     <p class="text-gray-700 font-semibold fs-6">Salary Components</p>
-                    <button @click="addSalaryComponents = true" class="w-[200px] btn btn-orange ">Add Components</button>
+                    <button @click="addSalaryComponents = true" class="btn btn-orange w-4">Add Components</button>
                 </div>
                 <div class="my-2 ">
                     <DataTable :value="usePayroll.salaryStructure.selectedComponents">

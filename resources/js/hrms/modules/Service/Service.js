@@ -69,6 +69,35 @@ export const Service = defineStore("Service", () => {
         return axios.get(`/get-all-employees`);
     }
 
+
+
+    // Helper
+
+    function capitalizeFLetter(name) {
+        let result = name.charAt(0).toUpperCase() +
+            name.slice(1)
+            return result
+    }
+
+    const colors = [
+        'bg-orange-400',
+        'bg-emerald-400',
+        'bg-yellow-400',
+        'bg-rose-400',
+        'bg-cyan-400',
+        'bg-amber-400',
+        'bg-red-400',
+        'bg-blue-400',
+        'bg-pink-400',
+        'bg-green-400',
+        'bg-fuchsia-400',
+    ];
+
+    const getBackgroundColor = (index) => {
+        console.log(index);
+        return colors[index % colors.length];
+    };
+
     return {
 
         // varaible Declarations
@@ -87,6 +116,9 @@ export const Service = defineStore("Service", () => {
         DepartmentDetails,
         getMaritalStatus,
         getAllEmployees,
+
+        capitalizeFLetter,
+        getBackgroundColor
 
 
 

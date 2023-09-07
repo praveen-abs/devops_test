@@ -11,16 +11,13 @@ use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Http\Request;
 use App\Models\VmtSalaryAdvanceMasterModel;
-use App\Models\VmtEmployee;
 use App\Models\VmtSalaryAdvSettings;
 use App\Models\VmtEmpSalAdvDetails;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
 use App\Models\VmtInterestFreeLoanSettings;
-use App\Models\VmtLoanInterestSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
 use App\Services\VmtSalaryAdvanceService;
 use Illuminate\Support\Facades\Validator;
-use App\imports\VmtLoanExcel;
 use Carbon\Carbon;
 use Exception;
 
@@ -42,32 +39,6 @@ class VmtSalaryAdvanceController extends Controller
     public function showSAsettingsView()
     {
         return view('salaryAndLoanAdvance.SA_settings_view');
-    }
-    public function empLoanAndAdvUploads()
-    {
-
-        return view('salaryAndLoanAdvance.employees_previous_loan_adv');
-    }
-    public function inmportLoanAdvExcelData(Request $request)
-    {
-      //  dd(request()->file('file'));
-
-        $validator = Validator::make(
-            $request->all(),
-            ['file' => 'required|file|mimes:xls,xlsx'],
-            ['required' => 'The :attribute is required.']
-        );
-
-
-        if ($validator->passes()) {
-
-            $importDataArry = \Excel::toArray(new VmtLoanExcel, request()->file('file'));
-            DD($importDataArry );
-            return $this->storeMasterdEmployeesData($importDataArry);
-        } else {
-            $data['failed'] = $validator->errors()->all();
-            return response()->json($data);
-        }
     }
 
     public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
@@ -381,7 +352,7 @@ class VmtSalaryAdvanceController extends Controller
     public function interestAndInterestfreeLoanSettingsDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         $loan_type = $request->Status;
-        //  $loan_type = 'InterestFreeLoan';
+      //  $loan_type = 'InterestFreeLoan';
         $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanSettingsDetails($loan_type);
         return  $response;
     }
@@ -390,7 +361,7 @@ class VmtSalaryAdvanceController extends Controller
     {
         //$loan_type = $request->loan_type;
         $loan_type = 'InterestFreeLoan';
-        $loan_details_id = 3;
+        $loan_details_id = 2;
         $response = $vmtSalaryAdvanceService->loanTransectionRecord($loan_type, $loan_details_id);
     }
 
@@ -401,28 +372,15 @@ class VmtSalaryAdvanceController extends Controller
         $loan_id = $request->loan_ID;
         // dd($request->all());
         // $loan_id=6;
-        $response = $vmtSalaryAdvanceService->enableOrDisableLoanSettings($loan_type, $loan_id, $status);
+        $response = $vmtSalaryAdvanceService->enableOrDisableLoanSettings($loan_type, $loan_id,$status);
         return $response;
     }
-    public function getApprovedRequestedForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
-        $response = $vmtSalaryAdvanceService->getApprovedRequestedForLoanAndAdvance();
-        return $response;
+    public function getApprovedRequestedForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+           $response = $vmtSalaryAdvanceService->getApprovedRequestedForLoanAndAdvance();
+           return $response;
     }
 
-    public function testingKarthi(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
-        $emp_image = json_decode(newgetEmployeeAvatarOrShortName(144), true);
-        $status = 'Approved';
-        $emp_id = 144;
-        $approver_user_id = auth()->user()->id;
-        $loan_details_id = 1;
-        $loan_type = 'Interest Free Loan';
-        $cmds = 'Tesitngn';
-        //dd( $emp_image);
-        $response = $vmtSalaryAdvanceService->approveOrRejectLoan($status, $loan_type, $approver_user_id, $loan_details_id, $cmds, $emp_image);
-        return $response;
-    }
+
 
     public function isEligibleForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
@@ -436,7 +394,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function employeeDashboardLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $loan_type = "sal_adv";
+        $loan_type = $request->loan_type;
         $user_id = auth()->user()->id;
         $response = $vmtSalaryAdvanceService->employeeDashboardLoanAndAdvance($loan_type, $user_id);
         return   $response;

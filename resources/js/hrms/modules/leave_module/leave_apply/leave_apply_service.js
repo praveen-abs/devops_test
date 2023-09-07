@@ -3,6 +3,7 @@ import { ref, reactive, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
+import { Service } from "../../Service/Service";
 const swal = inject("$swal");
 
 
@@ -10,6 +11,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
     // Notification service
     const toast = useToast();
+    const service = Service()
 
     // Variable Declarations
     const leave_data = reactive({
@@ -83,11 +85,11 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         leave_data.radiobtn_half_day == "half_day"
             ? (half_day_format.value = true)
             : (half_day_format.value = false);
+        half_day_format.value = true;
         custom_format.value = false;
         Permission_format.value = false;
         full_day_format.value = false;
         compensatory_format.value = false;
-        half_day_format.value = true;
     };
     const custom_day = () => {
         leave_data.radiobtn_custom == "custom"
@@ -290,8 +292,10 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
     // write Email service and axios service here
 
-    const Submit = () => {
+    const Submit = async () => {
 
+
+        //Leave applying logic happens here.
 
         leave_Request_data.leave_type_name = leave_data.selected_leave
         if (leave_data.radiobtn_full_day == "full_day") {
@@ -400,8 +404,10 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         data_checking.value = true;
 
 
+
         // data_checking.value=true
         axios.post('/applyLeaveRequest', {
+            "user_code": service.current_user_code,
             "leave_request_date": leave_Request_data.leave_Request_date,
             "leave_type_name": leave_Request_data.leave_type_name,
             "leave_session": leave_Request_data.leave_session,
@@ -418,7 +424,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             if (res.data.status == 'success') {
                 Swal.fire(
                     'Success',
-                    'Leave Applied successfull!',
+                    res.data.message,
                     'success'
                 )
 
@@ -426,7 +432,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             if (res.data.status == 'failure') {
                 Swal.fire(
                     'Failure',
-                    'Leave Request already applied for this date',
+                    res.data.message,
                     'error'
                 )
             }

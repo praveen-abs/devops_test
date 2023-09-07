@@ -1,61 +1,22 @@
 <template>
-          <div class="card">
-            <div class="px-3 card-body d-flex align-items-center">
-              <div class="me-2">
-                <div class="icons bg-blue-lighten">
-                  <i class="fas fa-users blue-darken"></i>
+    <div class="w-full">
+        <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
+            Current month - <span class="mb-2 text-xl font-semibold">{{ dayjs(new
+                Date()).format('MMMM') }}</span>
+        </p>
+        <div class="grid grid-cols-4 gap-3 my-2">
+            <div class=" bg-[#F6F6F6] rounded-lg p-2">
+                <div class="px-auto flex justify-center">
+                    <span class=" text-3xl font-semibold text-center">
+                        100
+                    </span>
                 </div>
-              </div>
-
-              <div class="">
-                <p class="mb-1 text-center fs-13 text-muted">Total Employees</p>
-                <p class="text-center text-primary fs-17">0</p>
-              </div>
+                <p class=" text-lg font-semibold text-center text-gray-500">Total Employees</p>
             </div>
-          </div>
-
-          <div class="card">
-            <div class="px-2 card-body d-flex align-items-center">
-              <div class="me-2">
-                <div class="icons bg-green-lighten">
-                  <i class="fas fa-user-plus green-median"></i>
-                </div>
-              </div>
-
-              <div class="">
-                <p class="mb-1 text-center fs-13 text-muted">New Employees</p>
-                <p class="text-center text-primary fs-17">0</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="px-2 card-body d-flex align-items-center">
-              <div class="me-2">
-                <div class="icons bg-pink-lighten">
-                  <i class="fas fa-user-check pink-median"></i>
-                </div>
-              </div>
-
-              <div class="">
-                <p class="mb-1 text-center fs-13 text-muted">Employees Present</p>
-                <p class="text-center text-primary fs-17">0</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="px-2 card-body d-flex align-items-center">
-              <div class="me-2">
-                <div class="icons bg-sky-lighten">
-                  <i class="fas fa-user-minus sky-median"></i>
-                </div>
-              </div>
-
-              <div class="">
-                <p class="mb-1 text-center fs-13 text-muted">Employees On Leave</p>
-                <p class="text-center text-primary fs-17">0</p>
-              </div>
-            </div>
-          </div>
+        </div>
+    </div>
 </template>
+
+<script setup>
+import dayjs from 'dayjs'
+</script>

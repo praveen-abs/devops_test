@@ -24,6 +24,7 @@ export const useCalendarStore = defineStore("calendar", () => {
         year.value = year.value - val;
     }
     function incrementMonth(val) {
+        useTimesheet.canShowLoading = true
         if (month.value == 11) {
             incrementYear(1);
             month.value = 0;
@@ -40,7 +41,7 @@ export const useCalendarStore = defineStore("calendar", () => {
 
     }
     function decrementMonth(val) {
-        console.log(useTimesheet.isTeamOrg);
+        useTimesheet.canShowLoading = true
 
         if (month.value == 0) {
             decrementYear(1);

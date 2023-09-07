@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/css/assign_goals.css') }}">
 
+<style>
+    .modal-backdrop {
+        width: 0;
+    }
+</style>
+
 @endsection
 
 

@@ -135,7 +135,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td>
                               <p class="sm-text-sm" style="margin: 0 0 16px; color: #334155; -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto">
-                                We are excited to inform you that your {{$loan_type}} request with the Request ID - {{ $requestID }} has been approved!
+                                We are excited to inform you that your loan request with the Request ID - {{ $requestID }} has been approved!
                                 Congratulations!
                               </p>
                             </td>
@@ -143,7 +143,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td>
                               <p class="sm-text-sm" style="margin: 0 0 16px; color: #334155">
-                                Your {{ $current_approver }} has reviewed and {{ $result }} your loan application, and we have now forwarded it to respective team for further processing.
+                                Your {{ $current_approver }} has reviewed and {{ $result }} your loan application, and we have now forwarded it to {{ $next_approver }} for further processing.
                               </p>
                             </td>
                           </tr>

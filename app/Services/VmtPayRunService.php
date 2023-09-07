@@ -17,7 +17,7 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function fetch_attendance_data($start_date, $end_date)
+    public function fetch_attendance_data($start_date, $end_date, $department)
     {
         ini_set('max_execution_time', 300);
         $reportresponse = array();
@@ -25,9 +25,16 @@ class VmtPayRunService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        // print($user);exit;
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
+
+        if (sessionGetSelectedClientid() != 1) {
+            $user = $user->where('client_id', sessionGetSelectedClientid());
+        }
+        if ($department) {
+            $user = $user->where('vmt_employee_office_details.department_id', '=', $department);
+        }
+        $user = $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+        // pr
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -135,7 +142,7 @@ class VmtPayRunService
             //dd($totalDays );
             //For Excel Sheet Headers
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
-            
+
 
             for ($i = 0; $i <= $totalDays; $i++) {
                 $fulldate = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
@@ -149,7 +156,7 @@ class VmtPayRunService
                     "user_id" => $singleUser->id, "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false,
                     "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false,
                     "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null,
-                    "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null,'date_day'=>$date_day
+                    "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null, 'date_day' => $date_day
                 );
 
                 //echo "Date is ".$fulldate."\n";
@@ -299,10 +306,17 @@ class VmtPayRunService
                     $attendanceResponseArray[$key]["checkout_time"] == null &&
                     $attendanceResponseArray[$key]['is_weekoff'] == false
                 ) {
-                    $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id'])
-                        ->whereBetween('start_date', [$start_date, $end_date])
-                        ->orWhereBetween('end_date', [$start_date, $end_date])
-                        ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                    $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id']);
+
+                    if (empty($leave_Details)) {
+                        $leave_Details =   $leave_Details->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                    } else {
+                        $leave_Details =   $leave_Details->WhereBetween('start_date', [$start_date, $end_date]);
+                        $leave_Details =   $leave_Details->WhereBetween('end_date', [$start_date, $end_date])
+                            ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
+                        // if ($key == '2023-08-12')
+                        // dd($leave_Details);
+                    }
                     if ($leave_Details->count() == 0) {
                         // dd( $leave_Details->count());
                         $attendanceResponseArray[$key]['isAbsent'] = true;
@@ -514,11 +528,8 @@ class VmtPayRunService
             array_push($reportresponse, $arrayReport);
             unset($arrayReport);
         }
-
-        // $data = array($heading_dates, $reportresponse);
-      //  dd($heading_dates);
-        $data['header'] = $heading_dates;
-        $data['rows'] = $reportresponse;
+        $data['headers'] =$heading_dates;
+        $data['rows'] =  $reportresponse;
         return $data;
     }
 }
