@@ -45,14 +45,28 @@
             margin-top: -6px !important;
         }
 
+        @page{
+            size: A4 portrait;
+        }
+
+        table {
+          page-break-inside: avoid;
+        }
+        tr {
+          break-inside: avoid;
+        }
+
         .p-2 {
             padding: 0 4px !important;
         }
+
+
     </style>
 </head>
 
 <body>
     <table style="width: 100%; border-collapse: collapse;">
+        <tbody>
         <tr>
             <td colspan="3">
                 <h1 style="font-size:14px; color:rgba(0, 0, 0, 0.833)">ARDENS BUSINESS SOLUTIONS PRIVATE LIMITED</h1>
@@ -178,8 +192,12 @@
                             @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
+                            <p style="font-size:11px; marign-top:-11px"><b>{{ $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["projection"] }}</b></p>
                         </td>
                         <td colspan="1">
+                            @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["actual"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            @endforeach
                         </td>
                         <td colspan="1">
                         </td>
@@ -203,17 +221,19 @@
                         <td colspan="2">
                             <p style="font-size:11px; marign-top:-11px"><b>6) Under Section 16</b></p>
                             @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $key }}</p>
+                            @endforeach
+                            <p style="font-size:11px; marign-top:-11px"><b>{{ 'Total Under Section 16' }}</b></p>
+                        </td>
+                        <td colspan="1">
+                            @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["actual"]}}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["projection"]}}</p>
-                        </td>
-                        <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["total"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["total"] }}</p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -233,14 +253,16 @@
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
                             <p style="font-size:11px; marign-top:-11px"><b>8) Any other income reported by the employee</b></p>
-                           @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["particular"][0] as $key => $value)
+                           @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["particular"] as $key => $value)
                            <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
                            @endforeach
                            <p style="font-size:11px; marign-top:-11px"><b>Total Income From Other Sources</b></p>
                            <p style="font-size:11px; marign-top:-11px">Note: A maximum of 12,00,000.000 is allowed as exemption for housing loan interest on Self Occupied House Property and Let Out Property</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"> {{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["actual"]}}</p>
+                            @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["actual"] as $key => $value)
+                             <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                            @endforeach
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"> {{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["projection"]}}</p>
@@ -251,7 +273,7 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px; marign-top:-11px"><b>9) Gross Total Income (7 -8)</b></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>9) Gross Total Income (7 + 8)</b></p>
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
@@ -273,25 +295,41 @@
                              <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ $value['dec_amount'] }}</span></p>
                             @endforeach
                             @endforeach
-                            <p style="font-size:11px; marign-top:-11px"><b>{{ ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1]) }}</b> </p>
+                            <p style="font-size:11px; marign-top:-11px"><b>{{ 'Total(80C+80CCC+80CCD)' }}</b></p>
 
-                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][2] as $key => $value)
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
                             <p style="font-size:11px; marign-top:-11px"><b>{{  $key }}</b> </p>
-                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][2][$key] as $key => $value)
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1][$key] as $key => $value)
                             <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ $value['dec_amount'] }}</span></p>
                            @endforeach
-                           <p style="font-size:11px; marign-top:-11px"><b>{{'Total'}}</b></p>
+                           <p style="font-size:11px; marign-top:-11px"><b>{{ 'Total' }}</b></p>
                            @endforeach
-                           <p style="font-size:11px; marign-top:-11px"><b>{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][3] }}</b></p>
+                           <p style="font-size:11px; marign-top:-11px"><b>{{ 'Total of Deductions under Chapter VI-A' }}</b></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>Qualifying</b></p>
+                            <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'] }}</p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
+                                @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['projection'] as $key1 => $value)
+                                @if ($key == $key1)
+                                <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                                @endif
+                                @endforeach
+                           @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"></p>
+                            <p style="font-size:11px; marign-top:-11px"><b>Deductible</b></p>
+                            <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'] }}</p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['projection'] as $key1 => $value)
+                            @if ($key == $key1)
+                            <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                            @endif
+                            @endforeach
+                             @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"> {{ $Gross_Total_income["9) Gross Total income"][0]["total"] }}</p>
+                            <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['total_of_chapterVIa'] }} </p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -311,9 +349,82 @@
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
                             <p style="font-size:11px; marign-top:-11px"><b>12) Tax Calculation</b></p>
+                            {{-- @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] = 0 && $Tax_Calculation["12) Tax Calculation"][0]["particular"] ) --}}
+                            @foreach ( $Tax_Calculation["12) Tax Calculation"][0]["particular"] as $key => $value)
+
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $key }} <span style="text-align: right;  float: right; padding-right:12px">₹ {{ $value }}</span></p>
+
+                            @endforeach
+                            {{-- @endif --}}
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{ '---' }}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>13) Total Tax on Income</b></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">{{ $Total_Tax_on_income['13) Total Tax on income'][0]['total'] }}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                             @foreach ($Surcharge_amt[0] as $key => $value)
+                                <p style="font-size:11px; marign-top:-11px">{{ $key }}</p>
+                                @endforeach
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            @foreach ($Surcharge_amt[0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">₹{{ $value }}</p>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>14) Tax Payable including Education Cess minus of Relief Under Section 89</b></p>
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px"></p>
+                        </td>
+                        <td colspan="1">
+                            <p style="font-size:11px; marign-top:-11px">₹{{ $Relief_Under_Section_89["14) Tax Payable including Education Cess minus of Relief Under Section 89"][0]["total"] }}</p>
+                        </td>
+                    </tr>
+                    <tr style="border-top:0px !important;">
+                        <td colspan="2">
+                            <p style="font-size:11px; marign-top:-11px"><b>15) Tax Deduction at Source u/s 192</b></p>
+                            @foreach ($Source_us_192['15) Tax Deduction at Source u/s 192'][0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">{{ $key }}</p>
+                            @endforeach
+                        </td>
+                        <td colspan="1">
+                            @foreach ($Source_us_192['15) Tax Deduction at Source u/s 192'][0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                            @endforeach
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
@@ -338,7 +449,7 @@
                 </table>
             </td>
         </tr>
-        <tr style="">
+        {{-- <tr style="">
             <td colspan="4">
                 <table style="width: 100%;">
                     <tr style=" height:20px !important;">
@@ -455,7 +566,8 @@
                     </tr>
                 </table>
             </td>
-        </tr>
+        </tr> --}}
+    </tbody>
     </table>
 </body>
 
