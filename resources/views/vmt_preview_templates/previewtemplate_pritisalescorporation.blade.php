@@ -6,7 +6,7 @@
     <link href="{{ URL::asset('assets/css/preview_template.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-    <div class="template-wrapper mt-30">
+    <div class="template-wrapper">
         <div class="card  left-line mb-2 ">
             <div class="card-body pb-0 pt-1">
 

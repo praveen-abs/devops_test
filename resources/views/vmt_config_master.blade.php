@@ -9,7 +9,7 @@
 {{-- @component('components.configuration_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent --}}
-    <div class="master-config-wrapper mt-30">
+    <div class="master-config-wrapper w-full">
         <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                         <div id="msform">

@@ -1,31 +1,30 @@
 <template>
     <Toast />
-    <div class="" v-if="route.params.module == 'quickOnboarding'">
-        <ImportQuickOnboarding />
-    </div>
-    <Transition name="fade" v-else>
-        <div class="w-full h-screen">
-            <div class="flex">
-                <div class="w-6 px-2">
-                    <p class="text-2xl font-bold">Employee Quick Onboarding</p>
-                    <ul class="p-2 my-3 list-disc">
+
+    <Transition name="fade" v-if="route.params.module == null">
+        <div class="h-screen w-full">
+            <div class="grid grid-cols-12">
+                <div class="px-2 col-span-5">
+                    <p class="font-bold text-2xl">Employee Quick Onboarding</p>
+                    <ul class="list-disc p-2 my-3">
                         <li class="font-semibold fs-6">Download the <a href="/assets//ABSQuickOnboarding.xlsx"
                                 class="font-semibold text-blue-300 cursor-pointer fs-6">Sample</a>
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
                     </ul>
-                    <div class="grid grid-cols-12 p-2 mr-3 border-gray-500 divide-x-2 divide-gray-600 rounded-lg border-1">
-                        <label class="w-full col-span-3 font-semibold cursor-pointer fs-6"
-                            for="file"><i class="px-2 pi pi-folder" style="font-size: 1rem"></i>Browse</label>
+                    <div class="grid grid-cols-12 divide-x-2 divide-gray-600 border-gray-500 rounded-lg border p-2  mr-3">
+                        <div @click="openFileInput" class="col-span-3 font-semibold fs-6  cursor-pointer w-full" for="file">
+                            <i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse
+                        </div>
                         <span class="col-span-9 px-4">
                             {{ useStore.selectedFile ? useStore.selectedFile.name : '' }}</span>
                     </div>
-                    <input type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
+                    <input ref="fileInput" type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
                         accept=".xls, .xlsx">
                     <button class="float-right mx-5 mt-4 btn btn-orange"
                         @click="useStore.convertExcelIntoArray('quick')">Upload</button>
                 </div>
-                <div>
+                <div class="col-span-7">
                     <div class="col-form-label">
                         <!-- <p class="font-semibold fs-4"> Upload Instructions</p> -->
                         <div class="py-2 font-semibold bg-red-100 rounded-lg f-12 alert-warning fs-6"><i
@@ -72,7 +71,10 @@
             </DataTable>
         </div>
     </Transition>
-    <Transition name="fade"  mode="out-in">
+    <div class="" v-else>
+        <ImportQuickOnboarding />
+    </div>
+    <Transition name="fade" mode="out-in">
         <Dialog header="Header" v-model:visible="useStore.canShowloading"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
             :closeOnEscape="false">
@@ -91,7 +93,7 @@
 <script setup>
 
 import { onMounted, onUpdated, ref } from 'vue';
-import ImportQuickOnboarding from './ImportQuickOnboarding.vue';
+import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
 import { useRoute } from "vue-router";
 import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
 import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore';
@@ -101,10 +103,25 @@ const useStore = useOnboardingMainStore()
 const useNormalOnboardingStore = useNormalOnboardingMainStore()
 
 
+
+const fileInput = ref(null);
+
+const openFileInput = () => {
+    fileInput.value.click();
+};
+
+
+
 onMounted(() => {
     useStore.getExistingOnboardingDocuments()
     useNormalOnboardingStore.getBasicDeps()
+    // change().prevent()
 })
+
+
+const change = () => {
+    window.location.replace(window.location.origin + '/quickEmployeeOnboarding')
+}
 
 onUpdated(() => {
     if (useStore.initialUpdate) {
@@ -121,17 +138,23 @@ const route = useRoute();
 </script>
 
 <style>
-.page-content {
+.page-content
+{
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 </style>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
+.fade-enter-active,
+.fade-leave-active
+{
+    transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+
+.fade-enter,
+.fade-leave-to
+{
+    opacity: 0;
 }
 </style>
 

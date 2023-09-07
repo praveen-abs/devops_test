@@ -592,28 +592,30 @@ class VmtCorrectionController extends Controller
             {
              "attendance_id": "DMC078",
              "user_id": "DM185"
-            }
+            },
             {
-             "attendance_id": "DMC084",
-             "user_id": "DM190"
-            }
-            {
-             "attendance_id": "DMC079",
-             "user_id": "DM188"
-            }
-            {
-             "attendance_id": "DMC077",
-             "user_id": "DM187"
-            }
-            {
-             "attendance_id": "DMC083",
-             "user_id": "DM189"
-            }
+                "attendance_id": "DMC084",
+                "user_id": "DM190"
+               },
+               {
+                "attendance_id": "DMC079",
+                "user_id": "DM188"
+               },
+               {
+                "attendance_id": "DMC077",
+                "user_id": "DM187"
+               },
+               {
+                "attendance_id": "DMC083",
+                "user_id": "DM189"
+               }
            ]';
+
 
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '', $dunamis);
         $dunamis = json_decode($dunamis, true);
+
         $not_existed_user = array('The Give User IDS Does Not Exists In DataBase Please Check Ur Json data');
         $not_existed_attedance_id = array('The Give Attendance IDS Does Not Exists In DataBase Please Check Ur Json data');
         $update_ids = array('Scuessfully Updated');
@@ -1502,7 +1504,7 @@ class VmtCorrectionController extends Controller
                         $financial_year_date[] = $fin_year_date;
                     }
                     //dd($previous_month_payslip_date, $financial_year_date);
-
+                        $exists_month_data = array();
                     foreach ($previous_month_payslip_date as $key => $single_month) {
 
                         foreach ($financial_year_date as $key => $single_fin_month) {
@@ -1516,9 +1518,9 @@ class VmtCorrectionController extends Controller
                             }
 
 
-                            $res = array();
+                            if ($single_fin_month == $single_month ||in_array($single_month, $exists_month_data)) {
 
-                            if ($single_fin_month == $single_month) {
+                                array_push($exists_month_data,$single_fin_month);
 
                                 $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
                                     ->where('vmt_payroll.payroll_date',  $single_month)
@@ -1597,7 +1599,7 @@ class VmtCorrectionController extends Controller
                                     return 'no payslip data found for ' . $single_users['id'] . 'user'  . " " . $single_month . " " . $single_fin_month;
                                 }
 
-                                array_push($res, $payslip_details);
+                                //array_push($res, $payslip_details);
                             } else {
 
                                 $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')->where('user_id', $single_users['id'])->first();

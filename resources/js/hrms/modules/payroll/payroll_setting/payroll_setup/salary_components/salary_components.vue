@@ -1,7 +1,6 @@
 <template>
-    <div class="mb-1 left-line">
-        <div class="card ">
-            <div class="card-body">
+        <div class=" w-full">
+            <div class="p-3">
                 <ul class="my-4 nav nav-pills nav-tabs-dashed " role="tablist">
                     <li class="nav-item text-muted" role="presentation">
                         <button class="pb-2 nav-link active" id="pills-offer-pending-tab" data-bs-toggle="pill"
@@ -67,7 +66,6 @@
                 </div>
 
             </div>
-        </div>
         <div class="my-3 text-end">
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
                 @click="uesPayroll.activeTab--">Previous</button>
@@ -76,7 +74,7 @@
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="uesPayroll.activeTab++">Next</button>
         </div>
-    </div>
+      </div>
 </template>
 
 

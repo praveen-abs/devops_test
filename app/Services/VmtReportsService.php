@@ -34,11 +34,19 @@ class VmtReportsservice
                     //$singleEmployee->$key=$value;
                 }
             }
-            array_push($response,$singleEmployee->toArray());
-
-
+            array_push($response, $singleEmployee->toArray());
         }
-      return $response;
+        return $response;
+    }
 
+    public function getEmployeesCTCDetails()
+    {
+
+        $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+            ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+            ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+            ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')->get();
+        return $emp_ctc_detail;
     }
 }

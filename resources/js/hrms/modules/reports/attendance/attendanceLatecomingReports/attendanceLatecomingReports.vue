@@ -30,9 +30,9 @@
             </div>
         </div>
         <div class="col-span-6 flex justify-end gap-4">
-            <button><img src="../../assests/printer.svg" alt="" srcset=""
+            <button><img src="../../../../assests/printer.svg" alt="" srcset=""
                     class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
-            <button><img src="../../assests/download.svg" alt="" srcset="" @click="downloadLatecomingReports"
+            <button><img src="../../../../assests/download.svg" alt="" srcset="" @click="downloadLatecomingReports"
                     class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
             <!-- <button class="bg-gray-100 rounded-full p-2 text-sm flex">
                 <p class="bg-orange-400 p-1 h-6 w-6 rounded-full text-xs">A</p>

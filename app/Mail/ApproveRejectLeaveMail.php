@@ -27,8 +27,9 @@ class ApproveRejectLeaveMail extends Mailable
     protected $request_status;
     protected $empAvatar;
     protected $leave_status;
+    protected $user_type;
 
-    public function __construct($uEmployeeName, $uEmpCode, $uLeaveType, $managerName , $managerCode, $loginLink, $image_view ,$uEmpAvatar, $leave_status)
+    public function __construct($uEmployeeName, $uEmpCode, $uLeaveType, $managerName , $managerCode, $loginLink, $image_view ,$uEmpAvatar, $leave_status,$user_type)
     {
         //
         $this->employeeName  = $uEmployeeName;
@@ -40,6 +41,7 @@ class ApproveRejectLeaveMail extends Mailable
         $this->image_view   = $image_view;
         $this->empAvatar=$uEmpAvatar;
         $this->leave_status   = $leave_status;
+        $this->user_type   = $user_type;
 
     }
 

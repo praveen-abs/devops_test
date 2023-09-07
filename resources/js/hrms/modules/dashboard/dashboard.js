@@ -1,14 +1,11 @@
-import "primeflex/primeflex.css";
-import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../../../../public/assets/css/hr_dashboard.css'
+import '../../assests/tailwind.css'
 
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
-import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';

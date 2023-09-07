@@ -57,7 +57,7 @@
     <table style="width: 100%;  border-collapse: collapse; background:#fff;  ">
             <tr>
                 <td colspan="3" style="margin-top:-10px" >
-                    <h3 style="color:#000; ">PAYSLIP <span style="color:gray; font-weight:500;   font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
+                    <h3 style="color:#000; ">PAYSLIP <span style="color:#383838; font-weight:500;   font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
                     <p style="color:#000;font-size:10px; margin-top:-10px;">{{$client_details[0]['client_fullname']}}</p>
                     <div style=" text-align: justify; width:200px;">
                         <p style="color:#000; font-size:9px;  text-align:left; margin-top:-10px;">{{ $client_details[0]['address'] }}</p>
@@ -80,20 +80,20 @@
         </tr>
         <tr class="td" style="height: 30px">
             <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:gray;margin-top:-4px">Employee Number</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code']}}</p>
+                <p style="font-size:10px;color:#383838;margin-top:-2px;">Employee Number</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code'] ?? "-"}}</p>
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:gray; margin-top:-4px">Date Joined</p>
                 <p style="font-size:11px; margin-top:-8px">{{ $doj ?? " - "}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray; margin-top:-4px">Department</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['department_name'] ?? " - "}}</p>
+                <p style="font-size:10px;color:#383838; margin-top:-2px">Department</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['department_name'] ?? "-"}}</p>
             </td>
             <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:gray; margin-top:-4px">Designation </p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838; margin-top:-2px">Designation </p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['designation'] ?? "-"}}</p>
             </td>
 
         </tr>
@@ -105,21 +105,21 @@
         <tr class="td" style="height: 30px">
 
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray; margin-top:-4px">Payment Mode</p>
-                <p style="font-size:11px; margin-top:-8px"> {{ empty($personal_details[0]['bank_account_number']) ? "Cheque" : "Bank" }}</p>
+                <p style="font-size:10px;color:#383838; margin-top:-4px">Payment Mode</p>
+                <p style="font-size:11px; margin-top:-8px"> {{ $personal_details[0]['bank_account_number'] ? "Bank" : "Cheque" }}</p>
             </td>
 
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray; margin-top:-4px">Bank Name</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_name'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838; margin-top:-4px">Bank Name</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_name'] ?? "-"}}</p>
             </td>
             <td class="" style="height: 30px;width:25%;">
-                <p style="font-size:10px;color:gray;margin-top:-4px">Bank Account</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_account_number'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;margin-top:-4px">Bank Account</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_account_number'] ?? "-"}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;margin-top:-4px">Bank IFSC</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_ifsc_code'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;margin-top:-4px">Bank IFSC</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['bank_ifsc_code'] ?? "-"}}</p>
             </td>
 
         </tr>
@@ -131,20 +131,20 @@
         <tr class="td" style="height: 30px">
 
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;margin-top:-4px">PAN</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['pan_number'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;margin-top:-4px">PAN</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['pan_number'] ?? "-" }}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;margin-top:-4px">ESIC</p>
+                <p style="font-size:10px;color:#383838;margin-top:-4px">ESIC</p>
                 <p style="font-size:11px; margin-top:-8px">{{ "-" }}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;margin-top:-4px">UAN</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['uan_number'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;margin-top:-4px">UAN</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['uan_number'] ?? "-" }}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;margin-top:-4px">EPF Number</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['epf_number'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;margin-top:-4px">EPF Number</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['epf_number'] ?? "-"}}</p>
             </td>
 
 
@@ -168,25 +168,25 @@
         <tr class="td" style="height: 20px">
 
             <td class="" style="height: 20px;width:25%;">
-                <p style="font-size:10px;color:gray; ">Leave Type</p>
+                <p style="font-size:10px;color:#383838; ">Leave Type</p>
                 @for ($i=0; $i<count($leave_data); $i++)
                 <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['leave_type']}}</p>
                 @endfor
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Opening Balance</p>
+                <p style="font-size:10px;color:#383838;">Opening Balance</p>
                 @for ($i=0; $i<count($leave_data); $i++)
                 <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['opening_balance'] }}</p>
                 @endfor
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Avalied</p>
+                <p style="font-size:10px;color:#383838;">Avalied</p>
                 @for ($i=0; $i<count($leave_data); $i++)
                 <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['avalied'] }}</p>
                 @endfor
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">Closing Balance</p>
+                <p style="font-size:10px;color:#383838;">Closing Balance</p>
                 @for ($i=0; $i<count($leave_data); $i++)
                 <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['closing_balance'] }}</p>
                 @endfor
@@ -213,20 +213,20 @@
         </tr>
         <tr class="td" style="height: 20px">
             <td class="" style="height: 20px;width:25%;">
-                <p style="font-size:10px;color:gray;">ACTUAL PAYABLE DAYS</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;">ACTUAL PAYABLE DAYS</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['month_days']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">TOTAL WORKING DAYS</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;">TOTAL WORKING DAYS</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['worked_Days']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">LOSS OF PAY DAYS</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;">LOSS OF PAY DAYS</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['lop']}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:gray;">ARREAR DAYS PAYABLE</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days'] ?? " - " }}</p>
+                <p style="font-size:10px;color:#383838;">DAYS PAYABLE</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $salary_details[0]['arrears_Days']}}</p>
             </td>
 
         </tr>
@@ -426,7 +426,7 @@
         <tr style="width: 100%">
             <td colspan="4" style="height: 0px">
                 <img src="data:image/png;base64,{{ $abs_logo }}" style=" Width:100px; height:40px; float:right; margin-top:-20px">
-                <p style="font-size: 12px; float:right; color:gray;margin-right:10px; margin-top:-10px">Generated by</p>
+                <p style="font-size: 12px; float:right; color:#383838;margin-right:10px; margin-top:-10px">Generated by</p>
             </td>
         </tr>
 

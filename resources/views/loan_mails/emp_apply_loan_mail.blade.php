@@ -150,7 +150,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                                                 <tr>
                                                                                     <td
                                                                                         style="height: 64px !important;
-                                            width: 70px !important;border-radius: 50%;background:rgb(96, 255, 96);color:#ffffff;font-size:20px;font-weight:600;marign-top:10px !important">
+                                            width: 64px !important;border-radius: 50%;background:#002f56;color:#ffffff;font-size:20px;font-weight:600;marign-top:10px !important">
                                                                                         <p class=""
                                                                                             style="text-align: center !important">
                                                                                             {{ $emp_image['data'] }}
@@ -182,7 +182,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                             <p class="sm-text-sm"
                                                                 style="margin: 0 0 16px; color: #334155; -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto">
                                                                 This is to acknowledge the {{$loanType}} request you submitted to
-                                                                your manager. We understand that financial needs can
+                                                                your manager.We understand that financial needs can
                                                                 arise
                                                                 unexpectedy, and we are here to support our employees in
                                                                 times of need.

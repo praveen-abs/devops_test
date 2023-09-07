@@ -9,19 +9,21 @@
     use Dompdf\Dompdf;
      use Dompdf\Options;
      use Carbon\Carbon;
-     use App\jobs\WelcomeMailJobs;
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtMaritalStatus;
+
     use App\Models\VmtMasterConfig;
     use App\Models\VmtEmployeeLeaves;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
     use App\Mail\VmtPMSMail_Assignee;
+    use App\Mail\VmtAttendanceMail_Regularization;
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
+    use App\Models\vmtHolidays;
     use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -452,59 +454,59 @@
 
 
 
-//        $gross =50000;
+       $gross =50000;
 
-//        $basic =$gross/100*60;
+       $basic =$gross/100*60;
 
-//        $hra =$basic/100*50;
+       $hra =$basic/100*50;
 
-//        $communication_allowance = 0;
+       $communication_allowance = 0;
 
-//        $food_allowance = 0;
+       $food_allowance = 0;
 
-//        if($gross > 40000){
-//         $communication_allowance =2000;
-//        }
+       if($gross > 40000){
+        $communication_allowance =2000;
+       }
 
-//        $leave_travel_allowance = 0;
+       $leave_travel_allowance = 0;
 
-//        if($gross > 50000){
-//         $leave_travel_allowance =2000;
-//        }
+       if($gross > 50000){
+        $leave_travel_allowance =2000;
+       }
 
-//        $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
+       $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
 
 
-//        $epf_employer = 0;
-//        $epf_employee = 0;
+       $epf_employer = 0;
+       $epf_employee = 0;
 
-//        if(($gross - $hra) > 15000){
+       if(($gross - $hra) > 15000){
 
-//         $epf_employer = 15000/100*12;
-//         $epf_employee = 15000/100*12;
-//        }else{
-//         $epf_employer = ($gross - $hra)/100*12;
-//         $epf_employee =($gross - $hra)/100*12;
-//        }
+        $epf_employer = 15000/100*12;
+        $epf_employee = 15000/100*12;
+       }else{
+        $epf_employer = ($gross - $hra)/100*12;
+        $epf_employee =($gross - $hra)/100*12;
+       }
 
-//        $esi_employer = 0;
-//        $esi_employee = 0;
+       $esi_employer = 0;
+       $esi_employee = 0;
 
-//        if($gross > 21000){
-//         $esi_employer = 0;
-//        $esi_employee = 0;
+       if($gross > 21000){
+        $esi_employer = 0;
+       $esi_employee = 0;
 
-//        }else{
-//         $esi_employer = $gross/100*3.25;
-//         $esi_employee = $gross/100*0.75;
-//        }
-//        $insurance =0;
+       }else{
+        $esi_employer = $gross/100*3.25;
+        $esi_employee = $gross/100*0.75;
+       }
+       $insurance =0;
 
-//        $professional_tax = 208;
+       $professional_tax = 208;
 
-//        $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+       $ctc = $gross + $epf_employer +$esi_employer + $insurance;
 
-//        $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+       $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
 
 
 
@@ -677,97 +679,121 @@
         // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         // return $isSent;
-
-
-
-
         //  }
-$comp_data = ['Basic',
-'Dearness Allowance',
-'Variable Dearness Allowance',
-'House Rent Allowance',
-'Child Education Allowance',
-'Communication Allowance',
-'Statutory Bonus',
-'Food Allowance',
-'Leave Travel Allowance',
-'Special Allowance',
-'Other Allowance',
-'Washing Allowance',
-'Uniform Allowance',
-'Vehicle Reimbursement',
-'Driver Salary',
-'Fuel Reimbursement',
-'Telephone Reimbursement',
-'Overtime',
-'Incentive',
-'Other Earnings',
-'Leave Encashment',
-'Referral Bonus',
-'Statutory Bonus',
-'Ex-Gratia',
-'Gift Payment',
-'Attendance Bonus',
-'Daily Allowance',
-'EPF_Employer',
-'Employer ESIC',
-'Employer LWF',
-'EPF_Employee',
-'VPF_Employee',
-'Employee ESIC',
-'Professional Tax',
-'Income Tax',
-'Salary Advance',
-'Medical Deductions',
-'Canteen Deduction',
-'Uniform Deduction',
-'Loan Deductions',
-'Other Deductions'];
+// $comp_data = ['Basic',
+// 'Dearness Allowance',
+// 'Variable Dearness Allowance',
+// 'House Rent Allowance',
+// 'Child Education Allowance',
+// 'Communication Allowance',
+// 'Statutory Bonus',
+// 'Food Allowance',
+// 'Leave Travel Allowance',
+// 'Special Allowance',
+// 'Other Allowance',
+// 'Washing Allowance',
+// 'Uniform Allowance',
+// 'Vehicle Reimbursement',
+// 'Driver Salary',
+// 'Fuel Reimbursement',
+// 'Telephone Reimbursement',
+// 'Overtime',
+// 'Incentive',
+// 'Other Earnings',
+// 'Leave Encashment',
+// 'Referral Bonus',
+// 'Statutory Bonus',
+// 'Ex-Gratia',
+// 'Gift Payment',
+// 'Attendance Bonus',
+// 'Daily Allowance',
+// 'EPF_Employer',
+// 'Employer ESIC',
+// 'Employer LWF',
+// 'EPF_Employee',
+// 'VPF_Employee',
+// 'Employee ESIC',
+// 'Professional Tax',
+// 'Income Tax',
+// 'Salary Advance',
+// 'Medical Deductions',
+// 'Canteen Deduction',
+// 'Uniform Deduction',
+// 'Loan Deductions',
+// 'Other Deductions'];
 
-$comp_data = str_replace(" ","_",array_map('strtolower', $comp_data));
+// $comp_data = str_replace(" ","_",array_map('strtolower', $comp_data));
 
-     $data =   [" 50% from CTC ",
-      "50% from Gross",
-"Based on MW Table",
-"Based on MW Table",
-"50% from Basic Salary",
-"200 Maximum, if the person married",
-"3000 Max",
-"If the Basic is Less then 21K then we can give this",
-"2200 Max",
-"10% from Basic Salary",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"2400 Max",
-"900 Max",
-"3000 Max",
-"3000 Max",
-"Gross/Month Days/8*Overtime Hours*2 or Gross/Month Days/8*Overtime Hours*2 or Basic/Month Days/8*Overtime Hours*2 or Formula can be typed",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"From Table",
-"From Table",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",];
+// $data =   [" 50% from CTC ",
+//       "50% from Gross",
+// "Based on MW Table",
+// "Based on MW Table",
+// "50% from Basic Salary",
+// "200 Maximum, if the person married",
+// "3000 Max",
+// "If the Basic is Less then 21K then we can give this",
+// "2200 Max",
+// "10% from Basic Salary",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "2400 Max",
+// "900 Max",
+// "3000 Max",
+// "3000 Max",
+// "Gross/Month Days/8*Overtime Hours*2 or Gross/Month Days/8*Overtime Hours*2 or Basic/Month Days/8*Overtime Hours*2 or Formula can be typed",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "From Table",
+// "From Table",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",];
+
+//  $array_data =array();
+//  $i=1;
+// foreach ($data as $key => $value) {
+//     if(strpos($value, '%') !== false){
+//         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
+//         foreach ($calci_data as $key => $single_calci_data) {
+//             $array_data[$i]['value'] = $single_calci_data[1];
+//             $array_data[$i]['action'] = $single_calci_data[2];
+//             $array_data[$i]['comp_name'] =$comp_data[$i] ;
+//            $i++;
+//         }
+//      }
+//      else{
+//         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
+//          foreach ($calci_data as $key => $single_calci_data) {
+//             $array_data[$i]['value'] = $single_calci_data[1];
+//             $array_data[$i]['action'] = $single_calci_data[2];
+//             $array_data[$i]['comp_name'] =$comp_data[$i] ;
+//            $i++;
+//         }
+//      }
+
+// }
+
+// //dd($array_data);
+
+// // $inputSentence = "50% from Basic Salary";
 
  $array_data =array();
  $i=0;
@@ -794,40 +820,66 @@ foreach ($data as $key => $value) {
         }
      }
 
-}
+// // foreach ($matches as $match) {
+// //     $percentage = $match[1]."_".$match[2];
+// // }
+// // dd($matches);
 
  dd($array_data);
 
-// $inputSentence = "50% from Basic Salary";
+// // $pattern = '/\bBasic\s*(?:is)?\s*(Less\s*than|<)\s*(\d+K)\b/i';
+// // preg_match($pattern, $input, $matches);
 
-//   preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $inputSentence, $matches, PREG_SET_ORDER);
+// // if (count($matches) > 0) {
+// //     $condition = "basic " . $matches[1] . " " . $matches[2];
+// //     echo $condition;
+// // } else {
+// //     echo "Pattern not found.";
+// // }
+// // $input = "50% from CTC or 50% from Gross";
 
-// foreach ($matches as $match) {
-//     $percentage = $match[1]."_".$match[2];
-// }
-// dd($matches);
+// // $pattern = '/\(([^)]+)\s*<\s*(\d+)\)/';
+// // preg_match_all($pattern, $input, $matches, PREG_SET_ORDER);
 
-// $input = "If the Basic is Less then 21K then we can give this";
+// // foreach ($matches as $match) {
+// //     $condition = $match[1];
+// //     $value = $match[2];
+// //     echo "Condition: $condition Value: $value" . PHP_EOL;
+// // }
 
-// $pattern = '/\bBasic\s*(?:is)?\s*(Less\s*than|<)\s*(\d+K)\b/i';
-// preg_match($pattern, $input, $matches);
 
-// if (count($matches) > 0) {
-//     $condition = "basic " . $matches[1] . " " . $matches[2];
-//     echo $condition;
+// $inputSentence = "200 Max, if the person married";
+// $pattern = '/(\d+)(?:\s*(?:from\s*)?)\s*(?:|Max|Maximum)./i';
+
+// preg_match_all('/(\d+%)(?:\s*(?:Max\s*)?)(Maximum|Max)/i', $inputSentence, $calci_data, PREG_SET_ORDER);
+
+
+// if (isset($matches[1])) {
+//     $maxValue = (int)$matches[1];
+//     echo  $maxValue;
 // } else {
+//     echo "No max value found.";
+// }
+
+
+// $sentence = "200 Maximum, if the person married";
+
+// // Extract the maximum value using regular expression
+// if (preg_match('/(\d+)\s*Maximum/', $sentence, $matches)) {
+//     $maxValue = (int)$matches[1];
+//     if ($maxValue <= 200) {
+//         // Do something with the maximum value
+//         echo "Maximum value is: " . $maxValue;
+//     } else {
+//         // Handle the case when the value is greater than 200
+//         echo "Maximum value exceeds 200.";
+//     }
+// } else {
+//     // Handle the case when the pattern is not found in the sentence
 //     echo "Pattern not found.";
 // }
-// $input = "50% from CTC or 50% from Gross";
 
-// $pattern = '/\(([^)]+)\s*<\s*(\d+)\)/';
-// preg_match_all($pattern, $input, $matches, PREG_SET_ORDER);
 
-// foreach ($matches as $match) {
-//     $condition = $match[1];
-//     $value = $match[2];
-//     echo "Condition: $condition Value: $value" . PHP_EOL;
-// }
 
 
 // $sentence = "30000 Maximum, if the person married";
@@ -862,10 +914,14 @@ foreach ($data as $key => $value) {
 
 
 
+   $appointment_letter_name ="appointment_mail_templates.appointment_Letter_priti_sales_corporation";
 
+}
+if($client_name == "ardens_business_solutions_private_limited"){
 
+   $appointment_letter_name ="appointment_mail_templates.appointmentletter_ardensbusinesssolutionsprivatelimited";
 
-//    $leave_data =VmtEmployeeLeaves::where('user_id',"334")->whereBetween('start_date', ["2023-08-30", "2023-08-30"])->get();
+}
 
 
 

@@ -10,8 +10,8 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     const arraySalaryAdvance = ref();
     const currentlySelectedStatus = ref();
     const canShowLoadingScreen = ref(false);
-    const swal = inject("$swal");
 
+    const swal = inject('$swal')
 
     const Request_comments = ref();
 
@@ -46,8 +46,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
                         ? "Rejected"
                         : currentlySelectedStatus,
             reviewer_comments: "",
-        }).then((res)=>{
-            swalFunction(res.data);
+        }).then(() => {
         }).finally(()=>{
             canShowLoadingScreen.value = false;
         })
@@ -110,9 +109,6 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
                         ? -1
                         : status,
             reviewer_comments: reviewer_comments,
-        }).then((res)=>{
-            swalFunction(res.data);
-            console.log();
         }).finally(()=>{
             canShowLoadingScreen.value = false;
         })
@@ -176,29 +172,6 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
 
     }
 
-    function swalFunction(val){
-        let res = val;
-        if(res.status == "Success"){
-            Swal.fire({
-                title: res.status = "success",
-                text: res.message,
-                icon: "success",
-            }).then((res)=>{
-                getSalaryDetails();
-            })
-        }
-        else if(res.status == "failure"){
-            Swal.fire({
-                title: res.status = "failure",
-                text: res.message,
-                icon: "error",
-                showCancelButton: false,
-            }).then((res)=>{
-            })
-        }
-
-    }
-
 
 
 
@@ -229,9 +202,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
         // interest with loan function and variables
         arrayIWL,
         getInterestWithLoanDetails,
-        IWL_ApproveAndReject,
-
-        swalFunction
+        IWL_ApproveAndReject
 
 
     }

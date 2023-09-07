@@ -25,6 +25,7 @@ use App\Exports\BasicAttendanceExport;
 use App\Exports\DetailedAttendanceExport;
 use App\Exports\OverTimeReportExport;
 use App\Exports\EarlyGoingReportExport;
+use App\Exports\HalfDayReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -167,6 +168,21 @@ class VmtEmployeeAttendanceController extends Controller
         $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
         return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date)['rows']), 'Early Going Report.xlsx');
     }
+    public function fetchHalfDayReportData(Request $request, VmtAttendanceReportsService $attendance_report_service){
+        $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
+        $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
+        // $start_date = '2023-07-25';
+        // $end_date = '2023-07-28';
+        $response = $attendance_report_service->fetchHalfDayReportData($start_date, $end_date);
+        return $response;
+
+    }
+    public function downloadHalfDayReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
+        $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
+        return Excel::download(new HalfDayReportExport($attendance_report_service->fetchHalfDayReportData($start_date, $end_date)['rows']), 'Half Day Report.xlsx');
+    }
 
     public function fetchOvertimeReportData(Request $request, VmtAttendanceReportsService $attendance_report_service)
     {
@@ -187,6 +203,15 @@ class VmtEmployeeAttendanceController extends Controller
         return Excel::download(new OverTimeReportExport($attendance_report_service->fetchOvertimeReportData($start_date, $end_date)['rows']), 'Over Time Report.xlsx');
     }
 
+    public function shiftTimeForEmployee(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+        $start_date = "2022-07-15";
+         $end_date = "2022-11-02";
+          $client_domain = "";
+        $response = $attendance_report_service->shiftTimeForEmployee($start_date, $end_date, $client_domain);
+        return $response;
+    }
+
 
     public function showLateComingReport(Request $request)
     {
@@ -204,4 +229,19 @@ class VmtEmployeeAttendanceController extends Controller
     {
         return view('reports.attendance_overtime_reports');
     }
+    public function showHalfdayAbsentReport(Request $request)
+    {
+        return view('reports.attendance_halfday_absent_reports');
+    }
+
+
+    public function fetchMIPReportData(Request $request, VmtAttendanceReportsService $serviceVmtAttendanceReportsService)
+    {
+        return $serviceVmtAttendanceReportsService->fetchMIPReportData($date ="2023-08-01",);
+    }
+    public function fetchSandwidchReportData(Request $request, VmtAttendanceReportsService $serviceVmtAttendanceReportsService)
+    {
+        return $serviceVmtAttendanceReportsService->fetchSandwidchReportData($start_date ="2023-08-01",$end_date ="2023-08-20");
+    }
+
 }

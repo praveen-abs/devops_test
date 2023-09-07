@@ -8,7 +8,7 @@
 
 @section('content')
 
- <div class="mb-0 card approvals_wrapper mt-30">
+ <div class="mb-0 card approvals_wrapper">
     <div class="card-body ">
         <div class="filter-content">
             <div class="row">

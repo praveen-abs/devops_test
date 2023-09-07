@@ -635,7 +635,7 @@ class HomeController extends Controller
         {
             //get the client name from client table
             $client_name = str_replace(' ', '', sessionGetSelectedClientName());
-            //dd($client_name);
+      ;
         }
 
         $viewfile = 'vmt_preview_templates.previewtemplate_'.strtolower($client_name);
@@ -644,7 +644,7 @@ class HomeController extends Controller
         if (view()->exists($viewfile))
             return view($viewfile);
         else
-            return view('vmt_preview_templates.previewtemplate_vasa');
+        return view("vmt_preview_templates.previewtemplate_nodata");
 
     }
 

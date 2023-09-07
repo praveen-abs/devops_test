@@ -3,18 +3,18 @@
         <div class=" justify-content-center align-items-center">
             <div class="mx-2 ">
                 <div class="my-3">
-                    <p class="font-semibold text-black fs-2">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new
+                    <p class="font-semibold text-black text-2xl">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new
                         Date().getFullYear() + 1 }}</p>
                 </div>
-                <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400 w-7 ">
+                <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400">
                     <i class="mx-2 my-2.5 pi pi-times-circle text-red-500 font-bold" style="font-size: 1.5rem"></i>
-                    <div style="font-weight: 600;" class="px-1 my-2 fs-5 d-flex ">Kindly update your <span
-                            class="font-semibold text-blue-400 fs-5">PAN</span>to avoid 20$ TDS
+                    <div style="font-weight: 600;" class="px-1 my-2 fs- flex text-lg">Kindly update your <span
+                            class="font-semibold text-blue-400 text-lg">PAN</span>to avoid 20$ TDS
                         deduction (if applicable) </div>
                 </div>
                 <div class="my-4 rounded-lg card ">
                     <div class="card-body">
-                        <p class="text-lg font-semibold text-black" style="line-height: 25px;">
+                        <p class="fs-6 font-semibold text-black" style="line-height: 20px;">
                             Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
                             investment amount till last day of every month until the cutoff date of {{ new
                                 Date().toLocaleString('default', { month: 'long', }) }} 27, {{ new Date().getFullYear() }}. Last
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="flex justify-between gap-6 my-4">
-                    <div class="w-9">
+                    <div class="">
                         <div class="font-semibold fs-4 ">Your current chosen tax regime is <strong
                                 class="text-blue-500 underline cursor-pointer fs-4"
                                 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"

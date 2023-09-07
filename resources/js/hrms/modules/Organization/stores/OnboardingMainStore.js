@@ -551,6 +551,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                                     if (isExistsOrNot(existingMartialStatus.value, data['Marital Status'])) {
                                                         errorRecordsCount.value.push('invalid')
                                                     }
+
                                                     else
                                                         if (isValidBankIfsc(data['Bank ifsc'])) {
                                                             errorRecordsCount.value.push('invalid')

@@ -125,9 +125,9 @@ $bank_names = \DB::table('vmt_banks')->get();
                                 <tr>
                                     <table style="width: 100%;" cellpadding="0" cellspacing="0" role="presentation">
                                         <tr>
-                                            @if($emp_image['type'] == "avatar")
-                                            <img src="data:image/png;base64,{{ $emp_image['data'] }}" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; border-radius: 9999px; padding: 12px">
-                                            @elseif($emp_image['type'] == "shortname")
+                                            @if($manager_image['type'] == "avatar")
+                                            <img src="data:image/png;base64,{{ $manager_image['data'] }}" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; border-radius: 9999px; padding: 12px">
+                                            @elseif($manager_image['type'] == "shortname")
                                             <td align="center"
                                             style="">
                                             <table class="" style="margin-top: 10px !important ;">
@@ -135,7 +135,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                                                     <td style="height: 64px !important;
                                                     width: 64px !important;border-radius: 50%;background:#002f56;color:#ffffff;font-size:20px;font-weight:600;marign-top:10px !important">
                                                         <p class="" style="text-align: center !important">
-                                              {{ $emp_image['data'] }} </p>
+                                              {{ $manager_image['data'] }} </p>
                                                     </td>
                                                 </tr>
                                             </table>

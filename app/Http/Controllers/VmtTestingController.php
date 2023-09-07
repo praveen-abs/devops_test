@@ -41,6 +41,7 @@ use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
 use Carbon\Carbon;
+use App\Http\Controllers\VmtEmployeeBirthdayController;
 use Carbon\CarbonPeriod;
 use App\Models\VmtEmployeePaySlipV2;
 
@@ -425,67 +426,35 @@ class VmtTestingController extends Controller
                 $words  = array( );
                 $num    = str_replace( array( ',' , ' ' ) , '' , trim( $num ) );
 
-                $list1  = array('','one','two','three','four','five','six','seven',
-                    'eight','nine','ten','eleven','twelve','thirteen','fourteen',
-                    'fifteen','sixteen','seventeen','eighteen','nineteen');
+        // dd($request->all());
 
-                $list2  = array('','ten','twenty','thirty','forty','fifty','sixty',
-                    'seventy','eighty','ninety','hundred');
+        //   $simma = new vmtInvEmp_Fsp_Popups;
+        //   $simma->user_id = ('141');
+        //   $simma->fsp_popups_id = ('2');
+        //   $simma->popup_value = $request->input('from_month');
+        //   $simma->popup_value = $request->input('to_month');
+        //   $simma->save();
 
-                $list3  = array('','thousand','million','billion','trillion',
-                    'quadrillion','quintillion','sextillion','septillion',
-                    'octillion','nonillion','decillion','undecillion',
-                    'duodecillion','tredecillion','quattuordecillion',
-                    'quindecillion','sexdecillion','septendecillion',
-                    'octodecillion','novemdecillion','vigintillion');
+        $createMultipleUsers = [
+            ['user_id' => '141', 'fsp_popups_id' => '1', 'popup_value' => $request->input('from_month')],
+            ['user_id' => '141', 'fsp_popups_id' => '2', 'popup_value' => $request->input('to_month')],
+            ['user_id' => '141', 'fsp_popups_id' => '5', 'popup_value' => $request->input('city')],
+            ['user_id' => '141', 'fsp_popups_id' => '6', 'popup_value' => $request->input('totalRent')],
+            ['user_id' => '141', 'fsp_popups_id' => '7', 'popup_value' => $request->input('land_lard')],
+            ['user_id' => '141', 'fsp_popups_id' => '8', 'popup_value' => $request->input('landpan')],
+            ['user_id' => '141', 'fsp_popups_id' => '9', 'popup_value' => $request->input('address')],
 
-                $num_length = strlen( $num );
+        ];
 
-                $levels = ( int ) ( ( $num_length + 2 ) / 3 );
-
-                $max_length = $levels * 3;
-
-                $num    = substr( '00'.$num , -$max_length );
-
-                $num_levels = str_split( $num , 3 );
-
-                foreach( $num_levels as $num_part )
-
-                {
-                    $levels--;
-
-                    $hundreds   = ( int ) ( $num_part / 100 );
-
-                    $hundreds   = ( $hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ( $hundreds == 1 ? '' : 's' ) . ' ' : '' );
-
-                    $tens       = ( int ) ( $num_part % 100 );
-
-                    $singles    = '';
-
-                    if( $tens < 20 ) { $tens = ( $tens ? ' ' . $list1[$tens] . ' ' : '' ); } else { $tens = ( int ) ( $tens / 10 ); $tens = ' ' . $list2[$tens] . ' '; $singles = ( int ) ( $num_part % 10 ); $singles = ' ' . $list1[$singles] . ' '; } $words[] = $hundreds . $tens . $singles . ( ( $levels && ( int ) ( $num_part ) ) ? ' ' . $list3[$levels] . ' ' : '' ); } $commas = count( $words ); if( $commas > 1 )
-
-                {
-                    $commas = $commas - 1;
-                }
-
-                $words  = implode( ', ' , $words );
-
-                $words  = trim( str_replace( ' ,' , ',' , ucwords( $words ) )  , ', ' );
-
-                if( $commas )
-                {
-                    $words  = str_replace( ',' , ' ' , $words );
-                }
-                return $words;
-            }
-            else if( ! ( ( int ) $num ) )
-            {
-                return 'Zero';
-            }
-            return '';
-        }
+        vmtInvEmp_Fsp_Popups::insert($createMultipleUsers);
 
 
+
+
+
+        return 'save successfully';
+    }
+}
 
 
     public function importexcell(Request $request)
@@ -773,7 +742,7 @@ class VmtTestingController extends Controller
         $appoinmentPath = "";
         $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
 //dd($client_name);
-        $html = view('dynamic_payslip_templates.dynamic_payslip_v2',$data);
+        $html = view('dynamic_payslip_templates.appointment_letter_langro_india_pvt_ltd',$data);
     //    return  $html;
                         $options = new Options();
                         $options->set('isHtml5ParserEnabled', true);

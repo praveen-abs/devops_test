@@ -7,7 +7,7 @@
 @endsection
 @section('content')
 
-    <div class="cotainer-fluid mt-30">
+    <div class="cotainer-fluid ">
         <div class="card top-line mb-0">
             <div class="card-body">
                 <h6 class="mb-3">Payroll Progress</h6>

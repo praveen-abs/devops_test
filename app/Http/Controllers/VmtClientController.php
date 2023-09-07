@@ -148,6 +148,8 @@ class VmtClientController extends Controller
         }
     }
 
+
+
     public function showAllClients()
     {
         return view('vmt_client');
