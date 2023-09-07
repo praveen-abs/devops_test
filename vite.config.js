@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
@@ -189,8 +190,7 @@ export default defineConfig({
 
 
             ],
-
-            refresh: true,
+            refresh: ['resources/views/**'],
         }),
     ],
     resolve: {
