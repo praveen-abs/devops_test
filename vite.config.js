@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import {hash} from './functions';
 
 export default defineConfig({
+
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
@@ -190,8 +191,7 @@ export default defineConfig({
 
 
             ],
-
-            refresh: true,
+            refresh: ['resources/views/**'],
         }),
     ],
 
