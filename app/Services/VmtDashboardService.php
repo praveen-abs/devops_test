@@ -1483,22 +1483,27 @@ class VmtDashboardService
             $emp_details_count['new_employee_count'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
 
             // dd( $emp_details_count['newEmpCount']);
-
-            $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
-
-            $graph_chart_count['female_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Female')->where('users.active', '1')->get()->count();
-
             $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->get()->count();
 
             $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->get()->count();
 
             $emp_details_count['exit_employee_count'] = User::where('active', '-1')->get()->count();
 
+            $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
+
+            $graph_chart_count['female_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Female')->where('users.active', '1')->get()->count();
+
             $graph_chart_count['others_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'others')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
 
+            $graph_chart_count['app-checkin-ins'] = 0;
+
+            $graph_chart_count['active_apps'] =  0;
+
+            $graph_chart_count['inactive_apps'] = 0;
 
 
-            $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
+
+            // $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
         } else if ($user_data['org_role'] == "4") {
 
             $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id as id']);
@@ -1507,24 +1512,25 @@ class VmtDashboardService
 
             $emp_details_count['new_employee_count'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
 
-
-            $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
-
-
-            $graph_chart_count['female_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Female')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
-
-
-
             $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->whereIn('id', $employees_data)->get()->count();
 
             $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->whereIn('id', $employees_data)->get()->count();
 
             $emp_details_count['exit_employee_count'] = User::where('active', '-1')->whereIn('id', $employees_data)->get()->count();
 
-            $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
+            // $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
+
+            $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
+
+            $graph_chart_count['female_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Female')->where('users.active', '1')->get()->count();
 
             $graph_chart_count['others_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'others')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
 
+            $graph_chart_count['app-checkin-ins'] = 0;
+
+            $graph_chart_count['active_apps'] =  0;
+
+            $graph_chart_count['inactive_apps'] = 0;
             // $emp_details_count['reimbursement_count'] = VmtEmployeeReimbursements::where('user_id','')
 
         }
@@ -1568,7 +1574,7 @@ class VmtDashboardService
             }
         }
 
-        $pending_request_count['emp_leave_count'] = count($leave_employee_count);
+        $pending_request_count['Leave Requests'] = count($leave_employee_count);
 
         foreach ($employees_data as $key => $single_user_data) {
 
@@ -1604,8 +1610,8 @@ class VmtDashboardService
                 $reg_count++;
             }
         }
-        $pending_request_count['employee_doc_pending_count'] = $doc_count;
-        $pending_request_count['employee_att_reg_count'] = $reg_count;
+        $pending_request_count['Document Approvals'] = $doc_count;
+        $pending_request_count['Attendance Regularization'] = $reg_count;
 
         $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count,'graph_chart_count'=>$graph_chart_count];
 

@@ -35,17 +35,19 @@
                 <template #body="slotProps">
                     <div v-if="slotProps.data.doc_id">
                     <div v-if="slotProps.data.status =='Rejected'">
-                     <input type="file" name="" id="file" hidden @change="uploadDocument($event)">
+                     <input type="file" name=""  id="file" hidden @change="uploadDocument($event)">
                         <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="file"
                                 class="cursor-pointer"><i class="pi pi-upload"></i> Upload
                                 file</label></button>
                                 <p class="" v-if="slotProps.data.document_name == fileName" > {{ upload_ref.name.name}}</p>
 
                     </div>
+
                     <div v-else>
                            <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
                             @click="showDocument(slotProps.data)" style="height: 2em" />
                     </div>
+
 
                     </div>
 
@@ -56,6 +58,7 @@
                                 file</label></button>
                                 <p class="" v-if="slotProps.data.document_name == fileName" > {{ upload_ref.name.name}}</p>
                     </div>
+
                 </template>
             </Column>
         </DataTable>
@@ -117,7 +120,8 @@ const EmployeeDocumentManagerService = UseEmployeeDocumentManagerService();
 
 // Loading
 const toast = useToast();
-const visible = ref(false)
+const visible = ref(false);
+
 
 // View Documents
 const view_document = ref({});
@@ -171,9 +175,13 @@ const uploadDocument = (e) => {
         upload_ref.name =  uploadDocs.value ;
 
         console.log(formdata);
-        // console.log("testing", fileName.value);
+        upload_ref.name =  uploadDocs.value ;
+        console.log("testing name", fileName.value);
 
-        let val = Object.keys(formdata)[0]
+        let val = Object.keys(formdata)[0];
+          console.log("testing",val);
+
+          console.log( );
 
         // console.log();
     }
