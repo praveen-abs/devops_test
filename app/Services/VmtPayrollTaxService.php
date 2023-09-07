@@ -127,25 +127,42 @@ class VmtPayrollTaxService
 
         // 1) Gross Earnings
 
-        // $total_sum = 0;
+        $start_date = '2023-04-01';
+        $single_users = $user_id;
+
+
+        $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
+                ->where('vmt_payroll.payroll_date', $start_date)
+                ->where('vmt_emp_payroll.user_id', $single_users)
+                ->first([
+                    'vmt_emp_payroll.id as id'
+                ]);
+
+     $payslip_details  = AbsSalaryProjection::where('vmt_emp_payroll_id',$payslip_id->id)->get()->toarray();
+
+
+     $getpersonal = [];
+     foreach ($payslip_details as $single_payslip) {
+         foreach ($single_payslip as $key => $single_details) {
+
+             if ($single_details == "0" || $single_details == null || $single_details == "") {
+                 unset($single_payslip[$key]);
+             }
+         }
+         array_push($getpersonal, $single_payslip);
+     }
+
+     dd($getpersonal);
 
 
 
-        // for($i=0; $i<count($get_emp_value); $i++){
+    //         $Gross_earnings['particulars']    = 0;
+    //         $Gross_earnings['actual']    =  0;
+    //         $Gross_earnings['projection']    = 0;
+    //         $Gross_earnings['total']    = 0;
 
-        //     // dd($get_emp_value);
+    //         array_push($res["Gross_Earnings"]["1) Gross Earnings"],$Gross_earnings);
 
-        //         $total_sum = 1 + $get_emp_value[$i]['value'];
-
-
-        //     $Gross_earnings['particulars']    = $get_emp_value[$i]['comp_name'];
-        //     $Gross_earnings['actual']    =    0;
-        //     $Gross_earnings['projection']    = $get_emp_value[$i]['value'];
-        //     $Gross_earnings['total']    = $total_sum;
-
-        //     array_push($res["Gross_Earnings"]["1) Gross Earnings"],$Gross_earnings);
-
-        //      }
 
         //  2) Allowance to the extent exampt under section 10
 
@@ -504,7 +521,7 @@ class VmtPayrollTaxService
 
         $html = view('investmentTdsWorkSheet.TDS_work_sheet', $res);
 
-        // return $html;
+        return $html;
 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
