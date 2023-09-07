@@ -1489,7 +1489,7 @@ class VmtCorrectionController extends Controller
 
                     $previous_month_payslip_date = array();
                     $financial_year_date = array();
-
+                    $exists_month_data = array();
 
                     foreach ($date_range  as $key => $single_date) {
 
@@ -1497,6 +1497,7 @@ class VmtCorrectionController extends Controller
 
                         $previous_month_payslip_date[] = $payroll_date;
 
+                        array_push($exists_month_data,$previous_month_payslip_date);
 
                     }
 
@@ -1507,11 +1508,11 @@ class VmtCorrectionController extends Controller
                         $financial_year_date[] = $fin_year_date;
                     }
 
-                    $exists_month_data = array();
-                    array_push($exists_month_data,$previous_month_payslip_date);
+
+
                     //dd($previous_month_payslip_date, $financial_year_date);
 
-                    foreach ($previous_month_payslip_date as $key => $single_month) {
+                    foreach ($previous_month_payslip_date as $month_key => $single_month) {
 
                         foreach ($financial_year_date as $key => $single_fin_month) {
 
@@ -1524,7 +1525,7 @@ class VmtCorrectionController extends Controller
                             }
 
 
-                            if (in_array($single_fin_month, $exists_month_data[0])) {
+                            if(in_array($single_fin_month, $exists_month_data[$month_key])) {
 
 
                                 $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
@@ -1678,7 +1679,7 @@ class VmtCorrectionController extends Controller
                             }
                         }
                     }
-                   
+
                 }
             }
             return $response = ([
@@ -1691,7 +1692,7 @@ class VmtCorrectionController extends Controller
                 "status" => "failure",
                 "user_data" =>  $single_users['id'] . " " . $single_month,
                 "user_month" => $single_users['id'] . " " . $single_month,
-                "data" => $e->getmessage() . "" . $e->getline()
+                "data" => $e->getmessage() . "line" . $e->getline()
             ]);
         }
     }
