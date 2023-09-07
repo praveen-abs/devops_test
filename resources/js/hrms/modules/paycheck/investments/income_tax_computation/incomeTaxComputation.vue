@@ -7,31 +7,31 @@
         </div>
         <div class="card">
             <div class="grid gap-4 my-1 md:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 card-body">
-                <div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400">
-                    <p class="my-2 font-semibold fs-6 ">Net Taxable Income</p>
-                    <h6 class="text-lg font-bold ">INR 4,82,246 </h6>
+                <div class="p-2 text-center font-['poppins'] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD] ">
+                    <p class="my-2 font-semibold text-[14px] text-[#000]">Net Taxable Income</p>
+                    <h6 class="text-lg font-bold text-[#000] ">INR 4,82,246 </h6>
                 </div>
-                <div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400">
-                    <p class="my-2 font-semibold fs-6 ">Gross Income Tax</p>
-                    <h6 class="text-lg font-bold">INR 0</h6>
-                </div>
-
-                <div class="p-2 text-left bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400 ">
-                    <p class="my-2 font-semibold fs-6">Total Surcharge & Cess</p>
-                    <h6 class="text-lg font-bold">INR 0</h6>
-                </div>
-                <div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400">
-                    <p class="my-2 font-semibold fs-6">Net Income Tax payable</p>
-                    <h6 class="text-lg font-bold ">INR 4,82,246 </h6>
-                </div>
-                <div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400">
-                    <p class="my-2 font-semibold fs-6">Tax Paid Till Now</p>
-                    <h6 class="text-lg font-bold">INR 0</h6>
+                <div class="p-2 text-center font-['poppins'] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]">
+                    <p class="my-2 font-semibold text-[14px] text-[#000]">Gross Income Tax</p>
+                    <h6 class="text-lg font-bold text-[#000]">INR 0</h6>
                 </div>
 
-                <div class="p-2 text-left bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400 ">
-                    <p class="my-2 font-semibold fs-6">Remaining Tax To Be Paid</p>
-                    <h6 class="text-lg font-bold">INR 0</h6>
+                <div class="p-2 text-center font-['poppins'] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD] ">
+                    <p class="my-2 font-semibold text-[14px] text-[#000] ">Total Surcharge & Cess</p>
+                    <h6 class="text-lg font-bold text-[#000]">INR 0</h6>
+                </div>
+                <div class="p-2 text-center font-['poppins'] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]">
+                    <p class="my-2 font-semibold text-[14px] text-[#000] ">Net Income Tax payable</p>
+                    <h6 class="text-lg font-bold text-[#000]">INR 4,82,246 </h6>
+                </div>
+                <div class="p-2 text-center font-['poppins'] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]">
+                    <p class="my-2 font-semibold text-[14px] text-[#000] ">Tax Paid Till Now</p>
+                    <h6 class="text-lg font-bold text-[#000]">INR 0</h6>
+                </div>
+
+                <div class="p-2 text-center font-['poppins'] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]">
+                    <p class="my-2 font-semibold text-[14px] text-[#000] ">Remaining Tax To Be Paid</p>
+                    <h6 class="text-lg font-bold text-[#000]">INR 0</h6>
                 </div>
             </div>
         </div>
