@@ -1490,11 +1490,14 @@ class VmtCorrectionController extends Controller
                     $previous_month_payslip_date = array();
                     $financial_year_date = array();
 
+
                     foreach ($date_range  as $key => $single_date) {
 
                         $payroll_date = $single_date->format('Y-m-d');
 
                         $previous_month_payslip_date[] = $payroll_date;
+
+
                     }
 
                     foreach ($finyear_date_range  as $key => $single_fin_date) {
@@ -1503,8 +1506,11 @@ class VmtCorrectionController extends Controller
 
                         $financial_year_date[] = $fin_year_date;
                     }
+
+                    $exists_month_data = array();
+                    array_push($exists_month_data,$previous_month_payslip_date);
                     //dd($previous_month_payslip_date, $financial_year_date);
-                        $exists_month_data = array();
+
                     foreach ($previous_month_payslip_date as $key => $single_month) {
 
                         foreach ($financial_year_date as $key => $single_fin_month) {
@@ -1518,9 +1524,8 @@ class VmtCorrectionController extends Controller
                             }
 
 
-                            if ($single_fin_month == $single_month ||in_array($single_month, $exists_month_data)) {
+                            if (in_array($single_fin_month, $exists_month_data[0])) {
 
-                                array_push($exists_month_data,$single_fin_month);
 
                                 $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
                                     ->where('vmt_payroll.payroll_date',  $single_month)
@@ -1669,10 +1674,11 @@ class VmtCorrectionController extends Controller
                                 }
 
 
-                                array_push($res, $compensatory_details);
+                                //array_push($res, $compensatory_details);
                             }
                         }
                     }
+                   
                 }
             }
             return $response = ([
