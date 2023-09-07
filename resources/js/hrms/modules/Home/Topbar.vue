@@ -1,6 +1,6 @@
 <template>
     <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
-    <div class=" bg-white h-[60px]" v-if="canShowLoading"
+    <div class=" bg-white h-[60px]"
         @mouseleave="useDashboard.canShowConfiguration = false, useDashboard.canShowClients = false">
         <div class="grid items-center justify-between grid-cols-12 ">
             <!-- Organization List  -->
