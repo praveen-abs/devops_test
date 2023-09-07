@@ -158,7 +158,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
     Route::get('/getAttendanceStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceStatus'])->name('getAttendanceStatus');
 
- 
+
     Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');
     Route::get('/fetch-assigned-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAllAssignedPMSForms'])->name('fetch-assigned-pmsforms');
     Route::get('/fetchAssignmentPeriodForGivenYear', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAssignmentPeriodForGivenYear'])->name('fetchAssignmentPeriodForGivenYear');
@@ -816,6 +816,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports-absent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showAbsentReport'])->name('showAbsentReport');
     Route::get('/reports-attendane-overtime-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showOvertimeReport'])->name('showOvertimeReport');
     Route::get('/reports-half-dayabsent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showHalfdayAbsentReport'])->name('showHalfdayAbsentReport');
+    Route::get('/reports-investment-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadInvestmentReport'])->name('downloadInvestmentReport');
 
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
     Route::post('/fetch-detailed-attendance-data', [

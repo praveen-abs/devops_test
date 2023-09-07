@@ -26,6 +26,7 @@ use App\Exports\DetailedAttendanceExport;
 use App\Exports\OverTimeReportExport;
 use App\Exports\EarlyGoingReportExport;
 use App\Exports\HalfDayReportExport;
+use App\Exports\InvestmentsReportsController;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -210,6 +211,12 @@ class VmtEmployeeAttendanceController extends Controller
           $client_domain = "";
         $response = $attendance_report_service->shiftTimeForEmployee($start_date, $end_date, $client_domain);
         return $response;
+    }
+
+    public function downloadInvestmentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+
+        return Excel::download(new InvestmentsReportsController(''),'Investments Report.xlsx');
     }
 
 
