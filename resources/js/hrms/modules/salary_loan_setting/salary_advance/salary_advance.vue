@@ -1,5 +1,5 @@
 <template>
- 
+
     <div class="px-1">
         <div class="row d-flex justify-content-start align-items-center">
             <div class="d-flex " v-if="salaryStore.create_new_from == '1'">
@@ -185,7 +185,7 @@
                             <DataTable class="mt-[8px]" ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                                 :value="salaryStore.eligbleEmployeeSource"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                :rowsPerPageOptions="[5, 10, 25]" :filters="filters" 
+                                :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
                                 v-model:selection="salaryStore.sa.eligibleEmployee"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
@@ -201,11 +201,11 @@
                                 <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
                                 <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
                             </DataTable>
-                            
+
                             <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
-                            :value="salaryStore.SalaryEmpDetails" v-if="view_details" 
+                            :value="salaryStore.SalaryEmpDetails" v-if="view_details"
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 25]" 
+                            :rowsPerPageOptions="[5, 10, 25]"
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                             responsiveLayout="scroll">
                             <!-- <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column> -->
@@ -575,7 +575,7 @@ function viewDetails(val) {
     salaryStore.sa.perOfSalAdvance = val.settings.view_details.percent_salary_adv;
     salaryStore.sa.cusPerOfSalAdvance = val.settings.view_details
     salaryStore.sa.payroll_cycle = val.settings.view_details.can_borrowed_multiple;
-    salaryStore.SalaryEmpDetails = val.settings.view_details.assigned_emp ; 
+    salaryStore.SalaryEmpDetails = val.settings.view_details.assigned_emp ;
 
     val.settings.view_details.approver_flow.forEach(element => {
 
@@ -625,7 +625,7 @@ function sendEmpDetails(val,id){
     }
     setEligibleEmployee.value.push(id);
     console.log();
-  
+
 }
 
 function EnableDisable(val){

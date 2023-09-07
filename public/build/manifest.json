@@ -1,5 +1,6 @@
 {
   "node_modules/primevue/resources/images/hue.png": {
+<<<<<<< HEAD
     "file": "hue78544.png",
     "src": "node_modules/primevue/resources/images/hue.png"
   },
@@ -13,10 +14,37 @@
   },
   "node_modules/primeicons/fonts/primeicons.woff2": {
     "file": "primeicons78544.woff2",
+=======
+    "file": "hue81077.png",
+    "src": "node_modules/primevue/resources/images/hue.png"
+  },
+  "node_modules/primevue/resources/images/color.png": {
+    "file": "color81077.png",
+    "src": "node_modules/primevue/resources/images/color.png"
+  },
+  "node_modules/primeicons/fonts/primeicons.eot": {
+    "file": "primeicons81077.eot",
+    "src": "node_modules/primeicons/fonts/primeicons.eot"
+  },
+  "node_modules/primeicons/fonts/primeicons.woff2": {
+    "file": "primeicons81077.woff2",
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
     "src": "node_modules/primeicons/fonts/primeicons.woff2"
   },
+  "node_modules/primeicons/fonts/primeicons.woff": {
+    "file": "primeicons81077.woff",
+    "src": "node_modules/primeicons/fonts/primeicons.woff"
+  },
+  "node_modules/primeicons/fonts/primeicons.ttf": {
+    "file": "primeicons81077.ttf",
+    "src": "node_modules/primeicons/fonts/primeicons.ttf"
+  },
   "resources/js/hrms/modules/Home/assests/images/ABS_small_logo_yellow.png": {
+<<<<<<< HEAD
     "file": "ABS_small_logo_yellow78544.png",
+=======
+    "file": "ABS_small_logo_yellow81077.png",
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
     "src": "resources/js/hrms/modules/Home/assests/images/ABS_small_logo_yellow.png"
   },
   "node_modules/primeicons/fonts/primeicons.woff": {
@@ -24,6 +52,7 @@
     "src": "node_modules/primeicons/fonts/primeicons.woff"
   },
   "resources/js/hrms/modules/Home/assests/images/ABS_logo_Yellow.png": {
+<<<<<<< HEAD
     "file": "ABS_logo_Yellow78544.png",
     "src": "resources/js/hrms/modules/Home/assests/images/ABS_logo_Yellow.png"
   },
@@ -61,9 +90,45 @@
   },
   "node_modules/primeicons/fonts/primeicons.svg": {
     "file": "primeicons78544.svg",
+=======
+    "file": "ABS_logo_Yellow81077.png",
+    "src": "resources/js/hrms/modules/Home/assests/images/ABS_logo_Yellow.png"
+  },
+  "resources/js/hrms/modules/Home/assests/icons/setting.svg": {
+    "file": "setting81077.svg",
+    "src": "resources/js/hrms/modules/Home/assests/icons/setting.svg"
+  },
+  "resources/js/hrms/modules/Home/assests/icons/notification.svg": {
+    "file": "notification81077.svg",
+    "src": "resources/js/hrms/modules/Home/assests/icons/notification.svg"
+  },
+  "resources/js/hrms/modules/Home/assests/icons/exit.svg": {
+    "file": "exit81077.svg",
+    "src": "resources/js/hrms/modules/Home/assests/icons/exit.svg"
+  },
+  "node_modules/primeicons/fonts/primeicons.svg": {
+    "file": "primeicons81077.svg",
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
     "src": "node_modules/primeicons/fonts/primeicons.svg"
   },
+  "resources/js/hrms/assests/images/svg_oops.svg": {
+    "file": "svg_oops81077.svg",
+    "src": "resources/js/hrms/assests/images/svg_oops.svg"
+  },
+  "resources/js/hrms/assests/download.svg": {
+    "file": "download81077.svg",
+    "src": "resources/js/hrms/assests/download.svg"
+  },
+  "resources/js/hrms/assests/printer.svg": {
+    "file": "printer81077.svg",
+    "src": "resources/js/hrms/assests/printer.svg"
+  },
+  "resources/js/hrms/assests/images/no-data.svg": {
+    "file": "no-data81077.svg",
+    "src": "resources/js/hrms/assests/images/no-data.svg"
+  },
   "resources/js/hrms/assests/images/requirement.png": {
+<<<<<<< HEAD
     "file": "requirement78544.png",
     "src": "resources/js/hrms/assests/images/requirement.png"
   },
@@ -89,6 +154,37 @@
   },
   "resources/js/hrms/assests/images/App_Store_Logo.png": {
     "file": "App_Store_Logo78544.png",
+=======
+    "file": "requirement81077.png",
+    "src": "resources/js/hrms/assests/images/requirement.png"
+  },
+  "resources/js/hrms/assests/images/evangelist.png": {
+    "file": "evangelist81077.png",
+    "src": "resources/js/hrms/assests/images/evangelist.png"
+  },
+  "resources/js/hrms/assests/images/Google_logo.png": {
+    "file": "Google_logo81077.png",
+    "src": "resources/js/hrms/assests/images/Google_logo.png"
+  },
+  "resources/js/hrms/assests/images/login-page-img.png": {
+    "file": "login-page-img81077.png",
+    "src": "resources/js/hrms/assests/images/login-page-img.png"
+  },
+  "resources/js/hrms/assests/images/Linkedin_logo.png": {
+    "file": "Linkedin_logo81077.png",
+    "src": "resources/js/hrms/assests/images/Linkedin_logo.png"
+  },
+  "resources/js/hrms/assests/images/Microsoft_logo.png": {
+    "file": "Microsoft_logo81077.png",
+    "src": "resources/js/hrms/assests/images/Microsoft_logo.png"
+  },
+  "resources/js/hrms/assests/images/Playstore_Logo.png": {
+    "file": "Playstore_Logo81077.png",
+    "src": "resources/js/hrms/assests/images/Playstore_Logo.png"
+  },
+  "resources/js/hrms/assests/images/App_Store_Logo.png": {
+    "file": "App_Store_Logo81077.png",
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
     "src": "resources/js/hrms/assests/images/App_Store_Logo.png"
   },
   "resources/js/hrms/assests/images/login-page-img.png": {
@@ -96,6 +192,7 @@
     "src": "resources/js/hrms/assests/images/login-page-img.png"
   },
   "resources/js/hrms/assests/icons/edit.svg": {
+<<<<<<< HEAD
     "file": "edit78544.svg",
     "src": "resources/js/hrms/assests/icons/edit.svg"
   },
@@ -117,6 +214,33 @@
   },
   "resources/js/hrms/components/logo.jpg": {
     "file": "logo78544.jpg",
+=======
+    "file": "edit81077.svg",
+    "src": "resources/js/hrms/assests/icons/edit.svg"
+  },
+  "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg": {
+    "file": "noData81077.svg",
+    "src": "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg"
+  },
+  "resources/js/hrms/assests/images/family.png": {
+    "file": "family81077.png",
+    "src": "resources/js/hrms/assests/images/family.png"
+  },
+  "resources/js/hrms/modules/payroll/assests/calendar.svg": {
+    "file": "calendar81077.svg",
+    "src": "resources/js/hrms/modules/payroll/assests/calendar.svg"
+  },
+  "resources/js/hrms/assests/images/payslipv1.png": {
+    "file": "payslipv181077.png",
+    "src": "resources/js/hrms/assests/images/payslipv1.png"
+  },
+  "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg": {
+    "file": "femaleDashboardImage81077.svg",
+    "src": "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg"
+  },
+  "resources/js/hrms/components/logo.jpg": {
+    "file": "logo81077.jpg",
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
     "src": "resources/js/hrms/components/logo.jpg"
   },
   "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg": {
@@ -124,6 +248,7 @@
     "src": "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg"
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
     "file": "app78544.js",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -2590,10 +2715,2638 @@
   },
   "resources/scss/main.scss": {
     "file": "main78544.css",
+=======
+    "file": "app81077.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_dynamicdialog.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_badge.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_calendar.esm81077.js",
+      "_galleria.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_chips.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_inputswitch.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_organizationchart.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_password.esm81077.js",
+      "_progressbar.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_row.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_treetable.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_steps.esm81077.js",
+      "_textarea.esm81077.js",
+      "_tag.esm81077.js",
+      "_router81077.js",
+      "_chart.esm81077.js",
+      "_attendanceDashboard810772.js",
+      "_index81077.js",
+      "_NormalOnboardingMainStore81077.js",
+      "_vue-router81077.js",
+      "_Service81077.js",
+      "_xlsx81077.js",
+      "_dayjs.min81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_LoadingSpinner81077.js",
+      "_index.esm81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Home/Home.js": {
+    "file": "Home81077.js",
+    "src": "resources/js/hrms/modules/Home/Home.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_Topbar810772.js",
+      "_Sidebar810772.js",
+      "_dashboard810772.js",
+      "_index81077.js",
+      "_dashboard_service81077.js",
+      "_Service81077.js",
+      "_autoprefixer81077.js",
+      "_dayjs.min81077.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang81077.js",
+      "_moment81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "Home81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Home/Sidebar.js": {
+    "file": "Sidebar81077.js",
+    "src": "resources/js/hrms/modules/Home/Sidebar.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_Sidebar810772.js",
+      "_Service81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Home/Topbar.js": {
+    "file": "Topbar81077.js",
+    "src": "resources/js/hrms/modules/Home/Topbar.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_Topbar810772.js",
+      "_index81077.js",
+      "_dashboard_service81077.js",
+      "_Service81077.js",
+      "_autoprefixer81077.js"
+    ],
+    "css": [
+      "primevue81077.css",
+      "primeicons81077.css",
+      "theme81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/dashboard/dashboard.js": {
+    "file": "dashboard81077.js",
+    "src": "resources/js/hrms/modules/dashboard/dashboard.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_badge.esm81077.js",
+      "_galleria.esm81077.js",
+      "_chart.esm81077.js",
+      "_dashboard810772.js",
+      "_Service81077.js",
+      "_index81077.js",
+      "_dashboard_service81077.js",
+      "_autoprefixer81077.js",
+      "_dayjs.min81077.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang81077.js",
+      "_moment81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/profile_pages/ProfilePageNew.js": {
+    "file": "ProfilePageNew81077.js",
+    "src": "resources/js/hrms/modules/profile_pages/ProfilePageNew.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_progressbar.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_lodash81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_ProfilePagesStore81077.js",
+      "_index.esm81077.js",
+      "_dayjs.min81077.js",
+      "_moment81077.js",
+      "_EmployeePayslips810772.js",
+      "_EmployeeDocumentsManagerService81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "ProfilePageNew81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ],
+    "assets": [
+      "edit81077.svg"
+    ]
+  },
+  "resources/js/hrms/modules/attendence/AttendanceModule.js": {
+    "file": "AttendanceModule81077.js",
+    "src": "resources/js/hrms/modules/attendence/AttendanceModule.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_svg_oops81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_dayjs.min81077.js",
+      "_moment81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang81077.js",
+      "_LeaveApply81077.js",
+      "_LoadingSpinner81077.js",
+      "_index.esm81077.js"
+    ],
+    "css": [
+      "AttendanceModule81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ],
+    "assets": [
+      "noData81077.svg"
+    ]
+  },
+  "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.js": {
+    "file": "attendanceDashboard81077.js",
+    "src": "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_sidebar.esm81077.js",
+      "_chart.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_row.esm81077.js",
+      "_attendanceDashboard810772.js",
+      "_dayjs.min81077.js",
+      "_index81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_LoadingSpinner81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/leave_module/LeaveModule.js": {
+    "file": "LeaveModule81077.js",
+    "src": "resources/js/hrms/modules/leave_module/LeaveModule.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_textarea.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_Service81077.js",
+      "_moment81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_LeaveApply81077.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang81077.js",
+      "_LoadingSpinner81077.js",
+      "_index.esm81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/ReportsModule.js": {
+    "file": "ReportsModule81077.js",
+    "src": "resources/js/hrms/modules/reports/ReportsModule.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_printer81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "ReportsModule81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ],
+    "assets": [
+      "download81077.svg"
+    ]
+  },
+  "resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js": {
+    "file": "PMSFormsDownloadTable81077.js",
+    "src": "resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js": {
+    "file": "attendanceBasicReports81077.js",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_printer810772.js",
+      "_download81077.js",
+      "_no-data81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_Service81077.js",
+      "_LoadingSpinner81077.js",
+      "_pinia81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "attendanceBasicReports81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js": {
+    "file": "attendanceAbsentReports81077.js",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_printer810772.js",
+      "_download81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "attendanceEarlygoingReports81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js": {
+    "file": "attendanceLatecomingReports81077.js",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_printer810772.js",
+      "_download81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "attendanceEarlygoingReports81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js": {
+    "file": "attendanceEarlygoingReports81077.js",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_printer810772.js",
+      "_download81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "attendanceEarlygoingReports81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js": {
+    "file": "attendanceOvertimeReports81077.js",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_printer810772.js",
+      "_download81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "attendanceEarlygoingReports81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js": {
+    "file": "AttendanceReport_Detailed81077.js",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_printer810772.js",
+      "_download81077.js",
+      "_index81077.js",
+      "_moment81077.js",
+      "_dayjs.min81077.js"
+    ],
+    "css": [
+      "AttendanceReport_Detailed81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js": {
+    "file": "HalfDayAbsentReport81077.js",
+    "src": "resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_printer81077.js",
+      "_download81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "attendanceEarlygoingReports81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js": {
+    "file": "ManageEmployee81077.js",
+    "src": "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_progressbar.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_dayjs.min81077.js",
+      "_ProfilePagesStore81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "ManageEmployee81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js": {
+    "file": "NormalOnboarding81077.js",
+    "src": "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_dynamicdialog.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_calendar.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_inputswitch.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_textarea.esm81077.js",
+      "_NormalOnboardingMainStore81077.js",
+      "_index.esm81077.js",
+      "_index81077.js",
+      "_Service81077.js"
+    ],
+    "css": [
+      "NormalOnboarding81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ],
+    "assets": [
+      "requirement81077.png",
+      "family81077.png"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js": {
+    "file": "EmployeeDocsUpload81077.js",
+    "src": "resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_progressbar.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.js": {
+    "file": "QuickOnboarding81077.js",
+    "src": "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_textarea.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_router81077.js",
+      "_vue-router81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_xlsx81077.js",
+      "_NormalOnboardingMainStore81077.js",
+      "_index.esm81077.js",
+      "_dayjs.min81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.js": {
+    "file": "BulkOnboarding81077.js",
+    "src": "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_textarea.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_router81077.js",
+      "_vue-router81077.js",
+      "_NormalOnboardingMainStore81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_xlsx81077.js",
+      "_dayjs.min81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_index.esm81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js": {
+    "file": "AttRegularizationApproval81077.js",
+    "src": "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_tag.esm81077.js",
+      "_textarea.esm81077.js",
+      "_pinia81077.js",
+      "_index81077.js",
+      "_moment81077.js",
+      "_Service81077.js",
+      "_dayjs.min81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "AttRegularizationApproval81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js": {
+    "file": "ReimbursementsApproval81077.js",
+    "src": "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_moment81077.js",
+      "_checkbox.esm81077.js",
+      "_index81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "ReimbursementsApproval81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/onboarding/review_document.js": {
+    "file": "review_document81077.js",
+    "src": "resources/js/hrms/modules/approvals/onboarding/review_document.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_moment81077.js",
+      "_checkbox.esm81077.js",
+      "_tag.esm81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_map81077.js",
+      "_LoadingSpinner81077.js",
+      "__baseToString81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/leaves/LeaveApproval.js": {
+    "file": "LeaveApproval81077.js",
+    "src": "resources/js/hrms/modules/approvals/leaves/LeaveApproval.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_tag.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_LoadingSpinner81077.js",
+      "_pinia81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js": {
+    "file": "PMSApprovalTable81077.js",
+    "src": "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "PMSApprovalTable81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js": {
+    "file": "EmployeeDocumentsManager81077.js",
+    "src": "resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_progressbar.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_index81077.js",
+      "_EmployeeDocumentsManagerService81077.js",
+      "_Service81077.js",
+      "_ProfilePagesStore81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/reimbursements/EmployeeReimbursements.js": {
+    "file": "EmployeeReimbursements81077.js",
+    "src": "resources/js/hrms/modules/reimbursements/EmployeeReimbursements.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_moment81077.js",
+      "_index.esm81077.js",
+      "_LoadingSpinner81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js": {
+    "file": "Attendance_setting_master81077.js",
+    "src": "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_index81077.js",
+      "_moment81077.js",
+      "_lodash81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_Holidays_Lists810772.js",
+      "_dayjs.min81077.js",
+      "_Holidays_Lists.vue_vue_type_style_index_0_lang81077.js",
+      "_Holidays_Master810772.js"
+    ],
+    "css": [
+      "Attendance_setting_master81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js": {
+    "file": "GeneralShift81077.js",
+    "src": "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js"
+    ],
+    "css": [
+      "GeneralShift81077.css",
+      "primeflex81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js": {
+    "file": "client_onboarding_master81077.js",
+    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_index81077.js",
+      "_client_onboarding81077.js",
+      "_index.esm81077.js"
+    ],
+    "css": [
+      "client_onboarding_master81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js": {
+    "file": "on_run_client_onboarding81077.js",
+    "src": "resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_client_onboarding81077.js",
+      "_index81077.js",
+      "_index.esm81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js": {
+    "file": "Holidays_Lists81077.js",
+    "src": "resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_Holidays_Lists810772.js",
+      "_pinia81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_Holidays_Lists.vue_vue_type_style_index_0_lang81077.js",
+      "_moment81077.js",
+      "_Holidays_Master810772.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/holidays/Holidays_Master.js": {
+    "file": "Holidays_Master81077.js",
+    "src": "resources/js/hrms/modules/configurations/holidays/Holidays_Master.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_Holidays_Master810772.js",
+      "_pinia81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_Holidays_Lists.vue_vue_type_style_index_0_lang81077.js",
+      "_moment81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/holidays/CreateNewHolidaysList.js": {
+    "file": "CreateNewHolidaysList81077.js",
+    "src": "resources/js/hrms/modules/configurations/holidays/CreateNewHolidaysList.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_Holidays_Lists.vue_vue_type_style_index_0_lang81077.js",
+      "_pinia81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_moment81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/investments/investment.js": {
+    "file": "investment81077.js",
+    "src": "resources/js/hrms/modules/paycheck/investments/investment.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js",
+      "_declaration810772.js",
+      "_investments_and_exemption810772.js",
+      "_index81077.js",
+      "_LoadingSpinner81077.js",
+      "_investmentMainStore81077.js",
+      "_Service81077.js",
+      "_dayjs.min81077.js",
+      "_ProfilePagesStore81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_index.esm81077.js",
+      "_moment81077.js",
+      "_autoprefixer81077.js"
+    ],
+    "css": [
+      "investment81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/manage_payslips/ManagePayslips.js": {
+    "file": "ManagePayslips81077.js",
+    "src": "resources/js/hrms/modules/manage_payslips/ManagePayslips.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_calendar.esm81077.js",
+      "_sidebar.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_pinia81077.js",
+      "_dayjs.min81077.js",
+      "_index81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "ManagePayslips81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/payroll/payRun/payRun.js": {
+    "file": "payRun81077.js",
+    "src": "resources/js/hrms/modules/payroll/payRun/payRun.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_vue-router81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_index81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_inputmask.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js"
+    ],
+    "css": [
+      "payRun81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ],
+    "assets": [
+      "calendar81077.svg"
+    ]
+  },
+  "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js": {
+    "file": "payroll_setup81077.js",
+    "src": "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_steps.esm81077.js",
+      "_inputswitch.esm81077.js",
+      "_vue-router81077.js",
+      "_payroll_setting810772.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_salaryAdvanceSettingMainStore81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js"
+    ],
+    "css": [
+      "payroll_setup81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js": {
+    "file": "salary_loan_setting81077.js",
+    "src": "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_organizationchart.esm81077.js",
+      "_salaryAdvanceSettingMainStore81077.js",
+      "_index.esm81077.js",
+      "_index81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "salary_loan_setting81077.css",
+      "theme81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/investments/declaration/declaration.js": {
+    "file": "declaration81077.js",
+    "src": "resources/js/hrms/modules/paycheck/investments/declaration/declaration.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_declaration810772.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_investmentMainStore81077.js",
+      "_Service81077.js",
+      "_autoprefixer81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js": {
+    "file": "investments_and_exemption81077.js",
+    "src": "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_investments_and_exemption810772.js",
+      "_investmentMainStore81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_autoprefixer81077.js",
+      "_dayjs.min81077.js",
+      "_index.esm81077.js",
+      "_moment81077.js",
+      "_ProfilePagesStore81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js": {
+    "file": "employee_salary_loan81077.js",
+    "src": "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_svg_oops81077.js",
+      "_index.esm81077.js",
+      "_index81077.js",
+      "_lodash81077.js",
+      "_dayjs.min81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "employee_salary_loan81077.css",
+      "theme81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js": {
+    "file": "InvFormsMgmt81077.js",
+    "src": "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_pinia81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "AttendanceReport_Detailed81077.css",
+      "primeflex81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/roles_permission/RolesPermission.js": {
+    "file": "RolesPermission81077.js",
+    "src": "resources/js/hrms/modules/roles_permission/RolesPermission.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_treetable.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_index81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js"
+    ],
+    "css": [
+      "RolesPermission81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js": {
+    "file": "payroll_setting81077.js",
+    "src": "resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_inputswitch.esm81077.js",
+      "_payroll_setting810772.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js",
+      "_index81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js": {
+    "file": "RolesAndPermission81077.js",
+    "src": "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_treetable.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_index81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js"
+    ],
+    "css": [
+      "RolesAndPermission81077.css",
+      "primeflex81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js": {
+    "file": "AdminRolesPermission81077.js",
+    "src": "resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_fileupload.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_accordion.esm81077.js",
+      "_accordiontab.esm81077.js",
+      "_treetable.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_index81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js"
+    ],
+    "css": [
+      "primeflex81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.js": {
+    "file": "PMSFormsMgmt81077.js",
+    "src": "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_pinia81077.js",
+      "_dayjs.min81077.js",
+      "_index81077.js",
+      "_Service81077.js"
+    ],
+    "css": [
+      "AttRegularizationApproval81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js": {
+    "file": "ManageWelcomeMailStatus81077.js",
+    "src": "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_calendar.esm81077.js",
+      "_pinia81077.js",
+      "_index81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "ManageWelcomeMailStatus81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/exit/exit.js": {
+    "file": "exit81077.js",
+    "src": "resources/js/hrms/modules/exit/exit.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_tag.esm81077.js",
+      "_no-data81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "exit81077.css",
+      "primeflex81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js": {
+    "file": "testing_table81077.js",
+    "src": "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_index81077.js",
+      "__baseToString81077.js"
+    ],
+    "css": [
+      "primeflex81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js": {
+    "file": "DocumentsSettings81077.js",
+    "src": "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_calendar.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_pinia81077.js",
+      "_index81077.js",
+      "_Service81077.js"
+    ],
+    "css": [
+      "DocumentsSettings81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js": {
+    "file": "OnboardingFormMgmt81077.js",
+    "src": "resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_progressbar.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js": {
+    "file": "EmpDetails_approvals81077.js",
+    "src": "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_moment81077.js",
+      "_checkbox.esm81077.js",
+      "_tag.esm81077.js",
+      "_index81077.js",
+      "_map81077.js",
+      "_Service81077.js",
+      "_LoadingSpinner81077.js",
+      "__baseToString81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js": {
+    "file": "approvals_salary_advance81077.js",
+    "src": "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_index81077.js",
+      "_index.esm81077.js",
+      "_dayjs.min81077.js",
+      "_LoadingSpinner81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "approvals_salary_advance81077.css",
+      "theme81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/login_Page/login_Page.js": {
+    "file": "login_Page81077.js",
+    "src": "resources/js/hrms/modules/login_Page/login_Page.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_calendar.esm81077.js",
+      "_password.esm81077.js",
+      "_pinia81077.js"
+    ],
+    "css": [
+      "login_Page81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ],
+    "assets": [
+      "login-page-img81077.png",
+      "evangelist81077.png",
+      "Google_logo81077.png",
+      "Linkedin_logo81077.png",
+      "Microsoft_logo81077.png",
+      "Playstore_Logo81077.png",
+      "App_Store_Logo81077.png"
+    ]
+  },
+  "resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js": {
+    "file": "EmployeePayslips81077.js",
+    "src": "resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_overlaypanel.esm81077.js",
+      "_EmployeePayslips810772.js",
+      "_dayjs.min81077.js",
+      "_index81077.js",
+      "_EmployeeDocumentsManagerService81077.js",
+      "_Service81077.js",
+      "_ProfilePagesStore81077.js"
+    ],
+    "css": [
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js": {
+    "file": "MobileSettings81077.js",
+    "src": "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_calendar.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_pinia81077.js",
+      "_index81077.js",
+      "_Service81077.js"
+    ],
+    "css": [
+      "MobileSettings81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js": {
+    "file": "EmployeePayablesDetails81077.js",
+    "src": "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_organizationchart.esm81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_index81077.js"
+    ],
+    "css": [
+      "EmployeePayablesDetails81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js": {
+    "file": "salary_advance_excel_import81077.js",
+    "src": "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_organizationchart.esm81077.js",
+      "_vue-router81077.js",
+      "_index81077.js",
+      "_xlsx81077.js",
+      "_dayjs.min81077.js",
+      "_Service81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "salary_advance_excel_import81077.css",
+      "theme81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js": {
+    "file": "payslipPreview81077.js",
+    "src": "resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js",
+    "isEntry": true,
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_blockui.esm81077.js",
+      "_datatable.esm81077.js",
+      "_dialogservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_progressspinner.esm81077.js",
+      "_row.esm81077.js",
+      "_calendar.esm81077.js",
+      "_textarea.esm81077.js",
+      "_chips.esm81077.js",
+      "_multiselect.esm81077.js",
+      "_selectbutton.esm81077.js",
+      "_radiobutton.esm81077.js",
+      "_checkbox.esm81077.js",
+      "_organizationchart.esm81077.js"
+    ],
+    "css": [
+      "payslipPreview81077.css",
+      "theme81077.css",
+      "primevue81077.css",
+      "primeicons81077.css",
+      "tailwind81077.css",
+      "primeflex81077.css"
+    ],
+    "assets": [
+      "payslipv181077.png"
+    ]
+  },
+  "_inputnumber.esm81077.js": {
+    "file": "inputnumber.esm81077.js"
+  },
+  "_pinia81077.js": {
+    "file": "pinia81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_dynamicdialog.esm81077.js": {
+    "file": "dynamicdialog.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_dialogservice.esm81077.js"
+    ]
+  },
+  "_accordiontab.esm81077.js": {
+    "file": "accordiontab.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_badge.esm81077.js": {
+    "file": "badge.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_toastservice.esm81077.js": {
+    "file": "toastservice.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_blockui.esm81077.js": {
+    "file": "blockui.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_calendar.esm81077.js": {
+    "file": "calendar.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_galleria.esm81077.js": {
+    "file": "galleria.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_checkbox.esm81077.js": {
+    "file": "checkbox.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_chips.esm81077.js": {
+    "file": "chips.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_dialogservice.esm81077.js": {
+    "file": "dialogservice.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_confirmationservice.esm81077.js": {
+    "file": "confirmationservice.esm81077.js",
+    "imports": [
+      "_toastservice.esm81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_datatable.esm81077.js": {
+    "file": "datatable.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_fileupload.esm81077.js": {
+    "file": "fileupload.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_progressbar.esm81077.js",
+      "_badge.esm81077.js"
+    ]
+  },
+  "_inputswitch.esm81077.js": {
+    "file": "inputswitch.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_inputmask.esm81077.js": {
+    "file": "inputmask.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_multiselect.esm81077.js": {
+    "file": "multiselect.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_organizationchart.esm81077.js": {
+    "file": "organizationchart.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_overlaypanel.esm81077.js": {
+    "file": "overlaypanel.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_password.esm81077.js": {
+    "file": "password.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_progressbar.esm81077.js": {
+    "file": "progressbar.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_progressspinner.esm81077.js": {
+    "file": "progressspinner.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_radiobutton.esm81077.js": {
+    "file": "radiobutton.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_row.esm81077.js": {
+    "file": "row.esm81077.js"
+  },
+  "_selectbutton.esm81077.js": {
+    "file": "selectbutton.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_treetable.esm81077.js": {
+    "file": "treetable.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_datatable.esm81077.js"
+    ]
+  },
+  "_sidebar.esm81077.js": {
+    "file": "sidebar.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_steps.esm81077.js": {
+    "file": "steps.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_textarea.esm81077.js": {
+    "file": "textarea.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_tag.esm81077.js": {
+    "file": "tag.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_router81077.js": {
+    "file": "router81077.js",
+    "imports": [
+      "_vue-router81077.js",
+      "_inputnumber.esm81077.js",
+      "_index81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_Service81077.js",
+      "_xlsx81077.js",
+      "_NormalOnboardingMainStore81077.js",
+      "_dayjs.min81077.js",
+      "__plugin-vue_export-helper81077.js"
+    ],
+    "css": [
+      "router81077.css"
+    ]
+  },
+  "_chart.esm81077.js": {
+    "file": "chart.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ],
+    "dynamicImports": [
+      "node_modules/chart.js/auto/auto.mjs"
+    ]
+  },
+  "_attendanceDashboard810772.js": {
+    "file": "attendanceDashboard810772.js",
+    "imports": [
+      "_dayjs.min81077.js",
+      "_index81077.js",
+      "_pinia81077.js",
+      "_inputnumber.esm81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_LoadingSpinner81077.js"
+    ],
+    "css": [
+      "attendanceDashboard81077.css"
+    ]
+  },
+  "_index81077.js": {
+    "file": "index81077.js"
+  },
+  "_NormalOnboardingMainStore81077.js": {
+    "file": "NormalOnboardingMainStore81077.js",
+    "imports": [
+      "_pinia81077.js",
+      "_Service81077.js",
+      "_index.esm81077.js",
+      "_index81077.js",
+      "_toastservice.esm81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_vue-router81077.js": {
+    "file": "vue-router81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_Service81077.js": {
+    "file": "Service81077.js",
+    "imports": [
+      "_pinia81077.js",
+      "_index81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_xlsx81077.js": {
+    "file": "xlsx81077.js"
+  },
+  "_dayjs.min81077.js": {
+    "file": "dayjs.min81077.js",
+    "imports": [
+      "_index81077.js"
+    ]
+  },
+  "__plugin-vue_export-helper81077.js": {
+    "file": "_plugin-vue_export-helper81077.js"
+  },
+  "_LoadingSpinner81077.js": {
+    "file": "LoadingSpinner81077.js",
+    "imports": [
+      "__plugin-vue_export-helper81077.js",
+      "_inputnumber.esm81077.js"
+    ],
+    "css": [
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "_index.esm81077.js": {
+    "file": "index.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "node_modules/chart.js/auto/auto.mjs": {
+    "file": "auto81077.js",
+    "src": "node_modules/chart.js/auto/auto.mjs",
+    "isDynamicEntry": true
+  },
+  "_accordion.esm81077.js": {
+    "file": "accordion.esm81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_Topbar810772.js": {
+    "file": "Topbar810772.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_index81077.js",
+      "_dashboard_service81077.js",
+      "_Service81077.js"
+    ],
+    "css": [
+      "Topbar81077.css"
+    ],
+    "assets": [
+      "setting81077.svg",
+      "notification81077.svg",
+      "exit81077.svg"
+    ]
+  },
+  "_Sidebar810772.js": {
+    "file": "Sidebar810772.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_Service81077.js",
+      "_index81077.js"
+    ],
+    "assets": [
+      "ABS_small_logo_yellow81077.png",
+      "ABS_logo_Yellow81077.png"
+    ]
+  },
+  "_dashboard810772.js": {
+    "file": "dashboard810772.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_Service81077.js",
+      "_dashboard_service81077.js",
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang81077.js",
+      "_LoadingSpinner81077.js"
+    ],
+    "css": [
+      "dashboard81077.css"
+    ],
+    "assets": [
+      "femaleDashboardImage81077.svg"
+    ]
+  },
+  "_dashboard_service81077.js": {
+    "file": "dashboard_service81077.js",
+    "imports": [
+      "_pinia81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_autoprefixer81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_autoprefixer81077.js": {
+    "file": "autoprefixer81077.js",
+    "imports": [
+      "_index81077.js"
+    ]
+  },
+  "_LeaveApply.vue_vue_type_style_index_0_lang81077.js": {
+    "file": "LeaveApply.vue_vue_type_style_index_0_lang81077.js",
+    "imports": [
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_index81077.js",
+      "_moment81077.js",
+      "_Service81077.js",
+      "_inputnumber.esm81077.js"
+    ],
+    "css": [
+      "LeaveApply81077.css"
+    ],
+    "assets": [
+      "logo81077.jpg"
+    ]
+  },
+  "_moment81077.js": {
+    "file": "moment81077.js"
+  },
+  "_lodash81077.js": {
+    "file": "lodash81077.js",
+    "imports": [
+      "_index81077.js"
+    ]
+  },
+  "_ProfilePagesStore81077.js": {
+    "file": "ProfilePagesStore81077.js",
+    "imports": [
+      "_index81077.js",
+      "_pinia81077.js",
+      "_Service81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_EmployeePayslips810772.js": {
+    "file": "EmployeePayslips810772.js",
+    "imports": [
+      "_dayjs.min81077.js",
+      "_index81077.js",
+      "_inputnumber.esm81077.js",
+      "_pinia81077.js",
+      "_EmployeeDocumentsManagerService81077.js"
+    ],
+    "css": [
+      "EmployeePayslips81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "_EmployeeDocumentsManagerService81077.js": {
+    "file": "EmployeeDocumentsManagerService81077.js",
+    "imports": [
+      "_index81077.js",
+      "_pinia81077.js",
+      "_Service81077.js",
+      "_ProfilePagesStore81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_svg_oops81077.js": {
+    "file": "svg_oops81077.js",
+    "assets": [
+      "svg_oops81077.svg"
+    ]
+  },
+  "_LeaveApply81077.js": {
+    "file": "LeaveApply81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang81077.js",
+      "_index81077.js",
+      "_index.esm81077.js"
+    ]
+  },
+  "_printer81077.js": {
+    "file": "printer81077.js",
+    "assets": [
+      "printer81077.svg"
+    ]
+  },
+  "_printer810772.js": {
+    "file": "printer810772.js",
+    "assets": [
+      "printer81077.svg"
+    ]
+  },
+  "_download81077.js": {
+    "file": "download81077.js",
+    "assets": [
+      "download81077.svg"
+    ]
+  },
+  "_no-data81077.js": {
+    "file": "no-data81077.js",
+    "assets": [
+      "no-data81077.svg"
+    ]
+  },
+  "_map81077.js": {
+    "file": "map81077.js",
+    "imports": [
+      "__baseToString81077.js"
+    ]
+  },
+  "__baseToString81077.js": {
+    "file": "_baseToString81077.js",
+    "imports": [
+      "_index81077.js"
+    ]
+  },
+  "_Holidays_Lists810772.js": {
+    "file": "Holidays_Lists810772.js",
+    "imports": [
+      "_index81077.js",
+      "_toastservice.esm81077.js",
+      "_dayjs.min81077.js",
+      "_Holidays_Lists.vue_vue_type_style_index_0_lang81077.js",
+      "_Holidays_Master810772.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_Holidays_Lists.vue_vue_type_style_index_0_lang81077.js": {
+    "file": "Holidays_Lists.vue_vue_type_style_index_0_lang81077.js",
+    "imports": [
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_pinia81077.js",
+      "_toastservice.esm81077.js",
+      "_moment81077.js",
+      "_inputnumber.esm81077.js"
+    ],
+    "css": [
+      "Holidays_Lists81077.css"
+    ]
+  },
+  "_Holidays_Master810772.js": {
+    "file": "Holidays_Master810772.js",
+    "imports": [
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_Holidays_Lists.vue_vue_type_style_index_0_lang81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "_client_onboarding81077.js": {
+    "file": "client_onboarding81077.js",
+    "imports": [
+      "_inputnumber.esm81077.js",
+      "_index81077.js",
+      "_index.esm81077.js"
+    ],
+    "css": [
+      "client_onboarding81077.css"
+    ]
+  },
+  "_declaration810772.js": {
+    "file": "declaration810772.js",
+    "imports": [
+      "_index81077.js",
+      "_dayjs.min81077.js",
+      "_investmentMainStore81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_inputnumber.esm81077.js"
+    ],
+    "css": [
+      "declaration81077.css"
+    ]
+  },
+  "_investments_and_exemption810772.js": {
+    "file": "investments_and_exemption810772.js",
+    "imports": [
+      "_investmentMainStore81077.js",
+      "_inputnumber.esm81077.js",
+      "_index.esm81077.js",
+      "_moment81077.js",
+      "_ProfilePagesStore81077.js",
+      "_index81077.js",
+      "_Service81077.js",
+      "_dayjs.min81077.js"
+    ],
+    "css": [
+      "investments_and_exemption81077.css",
+      "LoadingSpinner81077.css"
+    ]
+  },
+  "_investmentMainStore81077.js": {
+    "file": "investmentMainStore81077.js",
+    "imports": [
+      "_index81077.js",
+      "_pinia81077.js",
+      "_inputnumber.esm81077.js",
+      "_toastservice.esm81077.js",
+      "_confirmationservice.esm81077.js",
+      "_Service81077.js",
+      "_autoprefixer81077.js",
+      "_dayjs.min81077.js"
+    ]
+  },
+  "_payroll_setting810772.js": {
+    "file": "payroll_setting810772.js",
+    "imports": [
+      "_index81077.js",
+      "__plugin-vue_export-helper81077.js",
+      "_inputnumber.esm81077.js"
+    ],
+    "css": [
+      "payroll_setting81077.css"
+    ]
+  },
+  "_salaryAdvanceSettingMainStore81077.js": {
+    "file": "salaryAdvanceSettingMainStore81077.js",
+    "imports": [
+      "_index81077.js",
+      "_pinia81077.js",
+      "_inputnumber.esm81077.js"
+    ]
+  },
+  "resources/scss/main.scss": {
+    "file": "main81077.css",
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
     "src": "resources/scss/main.scss",
     "isEntry": true
   },
   "router.css": {
+<<<<<<< HEAD
     "file": "router78544.css",
     "src": "router.css"
   },
@@ -2629,8 +5382,194 @@
   "resources/js/hrms/modules/Home/Home.css": {
     "file": "Home78544.css",
     "src": "resources/js/hrms/modules/Home/Home.css"
+=======
+    "file": "router81077.css",
+    "src": "router.css"
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.css": {
+    "file": "attendanceEarlygoingReports81077.css",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.css"
+  },
+  "primevue.css": {
+    "file": "primevue81077.css",
+    "src": "primevue.css"
+  },
+  "resources/scss/views/main_dashboard.scss": {
+    "file": "main_dashboard81077.css",
+    "src": "resources/scss/views/main_dashboard.scss",
+    "isEntry": true
+  },
+  "LeaveApply.css": {
+    "file": "LeaveApply81077.css",
+    "src": "LeaveApply.css"
+  },
+  "primeicons.css": {
+    "file": "primeicons81077.css",
+    "src": "primeicons.css"
+  },
+  "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.css": {
+    "file": "NormalOnboarding81077.css",
+    "src": "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.css"
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.css": {
+    "file": "attendanceBasicReports81077.css",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.css"
+  },
+  "Holidays_Lists.css": {
+    "file": "Holidays_Lists81077.css",
+    "src": "Holidays_Lists.css"
+  },
+  "resources/js/hrms/modules/reports/ReportsModule.css": {
+    "file": "ReportsModule81077.css",
+    "src": "resources/js/hrms/modules/reports/ReportsModule.css"
+  },
+  "resources/js/hrms/modules/attendence/AttendanceModule.css": {
+    "file": "AttendanceModule81077.css",
+    "src": "resources/js/hrms/modules/attendence/AttendanceModule.css"
+  },
+  "resources/js/hrms/modules/Home/Home.css": {
+    "file": "Home81077.css",
+    "src": "resources/js/hrms/modules/Home/Home.css"
+  },
+  "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.css": {
+    "file": "ManageEmployee81077.css",
+    "src": "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.css"
+  },
+  "LoadingSpinner.css": {
+    "file": "LoadingSpinner81077.css",
+    "src": "LoadingSpinner.css"
+  },
+  "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.css": {
+    "file": "ReimbursementsApproval81077.css",
+    "src": "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.css"
+  },
+  "attendanceDashboard.css": {
+    "file": "attendanceDashboard81077.css",
+    "src": "attendanceDashboard.css"
+  },
+  "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.css": {
+    "file": "AttRegularizationApproval81077.css",
+    "src": "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.css"
+  },
+  "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.css": {
+    "file": "GeneralShift81077.css",
+    "src": "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.css"
+  },
+  "Topbar.css": {
+    "file": "Topbar81077.css",
+    "src": "Topbar.css"
+  },
+  "resources/js/hrms/modules/profile_pages/ProfilePageNew.css": {
+    "file": "ProfilePageNew81077.css",
+    "src": "resources/js/hrms/modules/profile_pages/ProfilePageNew.css"
+  },
+  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.css": {
+    "file": "ManageWelcomeMailStatus81077.css",
+    "src": "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.css"
+  },
+  "resources/js/hrms/modules/login_Page/login_Page.css": {
+    "file": "login_Page81077.css",
+    "src": "resources/js/hrms/modules/login_Page/login_Page.css"
+  },
+  "resources/js/hrms/modules/payroll/payRun/payRun.css": {
+    "file": "payRun81077.css",
+    "src": "resources/js/hrms/modules/payroll/payRun/payRun.css"
+  },
+  "client_onboarding.css": {
+    "file": "client_onboarding81077.css",
+    "src": "client_onboarding.css"
+  },
+  "declaration.css": {
+    "file": "declaration81077.css",
+    "src": "declaration.css"
+  },
+  "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.css": {
+    "file": "employee_salary_loan81077.css",
+    "src": "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.css"
+  },
+  "resources/js/hrms/modules/roles_permission/RolesPermission.css": {
+    "file": "RolesPermission81077.css",
+    "src": "resources/js/hrms/modules/roles_permission/RolesPermission.css"
+  },
+  "theme.css": {
+    "file": "theme81077.css",
+    "src": "theme.css"
+  },
+  "investments_and_exemption.css": {
+    "file": "investments_and_exemption81077.css",
+    "src": "investments_and_exemption.css"
+  },
+  "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.css": {
+    "file": "EmployeePayablesDetails81077.css",
+    "src": "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.css"
+  },
+  "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.css": {
+    "file": "salary_advance_excel_import81077.css",
+    "src": "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.css"
+  },
+  "dashboard.css": {
+    "file": "dashboard81077.css",
+    "src": "dashboard.css"
+  },
+  "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.css": {
+    "file": "AttendanceReport_Detailed81077.css",
+    "src": "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.css"
+  },
+  "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.css": {
+    "file": "PMSApprovalTable81077.css",
+    "src": "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.css"
+  },
+  "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.css": {
+    "file": "Attendance_setting_master81077.css",
+    "src": "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.css"
+  },
+  "primeflex.css": {
+    "file": "primeflex81077.css",
+    "src": "primeflex.css"
+  },
+  "resources/js/hrms/modules/manage_payslips/ManagePayslips.css": {
+    "file": "ManagePayslips81077.css",
+    "src": "resources/js/hrms/modules/manage_payslips/ManagePayslips.css"
+  },
+  "resources/js/hrms/modules/exit/exit.css": {
+    "file": "exit81077.css",
+    "src": "resources/js/hrms/modules/exit/exit.css"
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
+  },
+  "resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.css": {
+    "file": "payslipPreview81077.css",
+    "src": "resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.css"
+  },
+  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css": {
+    "file": "client_onboarding_master81077.css",
+    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css"
+  },
+  "EmployeePayslips.css": {
+    "file": "EmployeePayslips81077.css",
+    "src": "EmployeePayslips.css"
+  },
+  "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.css": {
+    "file": "payroll_setup81077.css",
+    "src": "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.css"
+  },
+  "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.css": {
+    "file": "MobileSettings81077.css",
+    "src": "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.css"
+  },
+  "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.css": {
+    "file": "salary_loan_setting81077.css",
+    "src": "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.css"
+  },
+  "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.css": {
+    "file": "approvals_salary_advance81077.css",
+    "src": "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.css"
+  },
+  "tailwind.css": {
+    "file": "tailwind81077.css",
+    "src": "tailwind.css"
   },
   "payroll_setting.css": {
+<<<<<<< HEAD
     "file": "payroll_setting78544.css",
     "src": "payroll_setting.css"
   },
@@ -2821,5 +5760,53 @@
   "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.css": {
     "file": "InvFormsMgmt78544.css",
     "src": "resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.css"
+=======
+    "file": "payroll_setting81077.css",
+    "src": "payroll_setting.css"
+  },
+  "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.css": {
+    "file": "RolesAndPermission81077.css",
+    "src": "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.css"
+  },
+  "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.css": {
+    "file": "DocumentsSettings81077.css",
+    "src": "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.css"
+  },
+  "resources/js/hrms/modules/paycheck/investments/investment.css": {
+    "file": "investment81077.css",
+    "src": "resources/js/hrms/modules/paycheck/investments/investment.css"
+  },
+  "resources/js/hrms/assests/icons/download.svg": {
+    "file": "download81077.svg",
+    "src": "resources/js/hrms/assests/download.svg"
+  },
+  "resources/js/hrms/assests/icons/printer.svg": {
+    "file": "printer81077.svg",
+    "src": "resources/js/hrms/assests/printer.svg"
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.css": {
+    "file": "attendanceEarlygoingReports81077.css",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.css"
+  },
+  "resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.css": {
+    "file": "attendanceEarlygoingReports81077.css",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.css"
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.css": {
+    "file": "attendanceEarlygoingReports81077.css",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.css"
+  },
+  "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.css": {
+    "file": "AttRegularizationApproval81077.css",
+    "src": "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.css"
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.css": {
+    "file": "attendanceEarlygoingReports81077.css",
+    "src": "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.css"
+  },
+  "resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.css": {
+    "file": "AttendanceReport_Detailed81077.css",
+    "src": "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.css"
+>>>>>>> 3d11572c6ee7fb534efc658b88a39b370fca8e71
   }
 }
