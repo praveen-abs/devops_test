@@ -28,7 +28,7 @@
                             {{ investmentStore.formatCurrency(investmentStore.sumOfTotalRentPaid) }}
                         </div>
                         <div v-else>
-                            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                            <button class="px-4 py-2 text-center text-white bg-black rounded-md me-4"
                              :disabled="!investmentStore.isSubmitted"
                                 @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2"
                                     aria-hidden="true"></i>
@@ -134,10 +134,10 @@
 
     </div>
     <div class="my-3 text-end">
-        <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+        <button class="px-4 py-2 text-center text-white bg-black border-[2px] border-[#000] rounded-md me-4"
             @click="investmentStore.saveHRA">Save</button>
         <button @click="investmentStore.investment_exemption_steps++"
-            class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
+            class="px-4 py-2 text-center text-[#000] bg-transparent border-[2px] border-[#000] rounded-md">Next</button>
     </div>
 
 

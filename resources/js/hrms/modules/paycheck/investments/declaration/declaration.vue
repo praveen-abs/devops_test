@@ -1,6 +1,6 @@
 <template>
     <div class="p-1">
-        <h1 class=" font-['Poppins'] ">Investments</h1>
+
         <div class="flex w-[100%]">
             <div class="row w-[100%] items-center">
                 <div class="col-8 flex items-center justify-start">
@@ -147,11 +147,11 @@
 
         </DataTable>
 
-        <div class="my-3">
+        <!-- <div class="my-3">
             <p class="font-semibold text-black fs-2">Declaration</p>
-        </div>
+        </div> -->
 
-        <div class="my-3 card">
+        <!-- <div class="my-3 card">
             <div class="grid gap-4 my-1 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body">
                 <div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400">
                     <p class="font-semibold fs-6 ">Net Taxable Income</p>
@@ -175,11 +175,11 @@
                     <h6 class="text-lg font-bold">{{ investmentStore.formatCurrency(0) }}</h6>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="my-3">
             <div>
-                <p class="text-2xl font-semibold ">Important!</p>
+                <p class="text-2xl font-semibold ">Declaration</p>
                 <div class="mx-2">
                     <ul class="font-semibold f-13">
                         <li class="my-2 text-lg font-semibold">

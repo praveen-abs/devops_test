@@ -5,6 +5,7 @@
     <ConfirmDialog></ConfirmDialog>
     <div class="">
         <div>
+            <h1 class=" font-['Poppins'] text-[28px]  text-[#000]">Investments</h1>
             <div style="position: relative;" >
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
                 <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3 " id="pills-tab" role="tablist">
@@ -121,6 +122,8 @@ const styleObject = reactive({
 
 
 <style >
+@import url('https://fonts.googleapis.com/css2?family=Petrona&family=Poppins&display=swap');
+
 .p-dropdown {
     display: inline-flex;
     cursor: pointer;
