@@ -17,13 +17,13 @@ return new class extends Migration
             //
 
             if (!Schema::hasColumn('vmt_employee_payslip_v2', 'medical_allowance')) {
-                $table->text('medical_allowance')->after('child_edu_allowance_arrear');
+                $table->text('medical_allowance')->nullable()->after('child_edu_allowance_arrear');
             }
             if (!Schema::hasColumn('vmt_employee_payslip_v2', 'medical_allowance_earned')) {
-                $table->text('medical_allowance_earned')->after('medical_allowance');
+                $table->text('medical_allowance_earned')->nullable()->after('medical_allowance');
             }
             if (!Schema::hasColumn('vmt_employee_payslip_v2', 'medical_allowance_arrear')) {
-                $table->text('medical_allowance_arrear')->after('medical_allowance_earned');
+                $table->text('medical_allowance_arrear')->nullable()->after('medical_allowance_earned');
             }
         });
     }
