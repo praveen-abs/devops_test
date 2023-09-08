@@ -243,7 +243,7 @@ class VmtAttendanceService
                      }else
                      {
                         dd("Not Worked in leave days : ".$singleAttendanceDate);
- 
+
                      }
                  */
             //Test : End
@@ -265,14 +265,14 @@ class VmtAttendanceService
 
     /*
          Returns the unused comp off days for the given emp
- 
+
          Returns a map.
- 
+
          Eg : {
                 "247"                    :  "2023-08-15"
                 //("employee_attendance_id" :  "employee_attendance_date")
               }
- 
+
      */
     public function fetchUnusedCompensatoryOffDays($user_id)
     {
@@ -381,7 +381,7 @@ class VmtAttendanceService
                              "Maternity Leave" : 0,
                              "Paternity Leave" : 0,
                          }
- 
+
                      }
                  */
             // dd($leave_balance_details);
@@ -410,9 +410,9 @@ class VmtAttendanceService
 
     /*
          For VJS Leave Approvals table
- 
+
          Returns all leave status types
- 
+
      */
     private function createLeaveRange($start_date, $end_date)
     {
@@ -526,13 +526,13 @@ class VmtAttendanceService
     }
 
     /*
- 
+
          $hours_diff : For permission only
          $no_of_days, $leave_session : For 0.5 and full day leave types
- 
+
              // compensatory leaves
              $compensatory_work_days_ids
- 
+
      */
     public function  applyLeaveRequest(
         $user_code,
@@ -1226,9 +1226,9 @@ class VmtAttendanceService
 
             /*
                      Here $key is the date. i.e : 2022-10-01
- 
+
                      $value is ::
- 
+
                          [
                              date=>2022-11-05
                              checkin_time=18:06:00
@@ -1238,9 +1238,9 @@ class VmtAttendanceService
                          [
                              ....
                              attendance_mode="biometric"
- 
+
                          ]
- 
+
                  */
             //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
 
@@ -1415,7 +1415,7 @@ class VmtAttendanceService
 
     /*
          Get attendance stats data for single month
- 
+
      */
     public function fetchAttendanceMonthStatsReport($user_code, $year, $month)
     {
@@ -1777,7 +1777,7 @@ class VmtAttendanceService
                 'user_code' => 'required|exists:users,user_code',
                 "attendance_date" => "required",
                 'regularization_type' => ['required', Rule::in(['LC', 'EG', 'MIP', 'MOP'])],
-                "user_time" => "required",
+                "user_time" => "nullable",
                 "regularize_time" => "required",
                 "reason" => "required", //
                 "custom_reason" => "nullable",
@@ -2233,8 +2233,8 @@ class VmtAttendanceService
 
     /*
          Get attendance status for the given date
- 
- 
+
+
      */
     public function fetchAttendanceStatus($user_code, $date)
     {
@@ -2363,7 +2363,7 @@ class VmtAttendanceService
     /*
          Get the last attendance date status of the given user_code.
          If checkout was not done, then checkout date will be NULL.
- 
+
      */
     public function getLastAttendanceStatus($user_code)
     {
@@ -2999,7 +2999,7 @@ class VmtAttendanceService
     /*
          Get the Leave information for the selected leave record_id.
          Used in Leave module ...
- 
+
      */
     public function getLeaveInformation($record_id)
     {
@@ -3413,10 +3413,10 @@ class VmtAttendanceService
         return $leave_details;
     }
     /*
- 
+
          Get the leave details based on the employee roles.
- 
- 
+
+
      */
     public function getLeaveRequestDetailsBasedOnCurrentRole()
     {
