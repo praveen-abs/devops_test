@@ -11,6 +11,9 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeePayroll;
+use App\Models\VmtPayroll;
+use App\Models\AbsSalaryProjection;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
@@ -2489,18 +2492,19 @@ class VmtAttendanceReportsService
         return $response;
     }
     public function fetchMIPReportData($date)
-   {
-    try{
-               $client_id =sessionGetSelectedClientid();
+    {
+        try {
+            $client_id = sessionGetSelectedClientid();
 
-               $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
+            $user_data = User::where('client_id', $client_id)->get(["id", "name", "user_code", "client_id", "email"])->toarray();
 
-               $dateString  = Carbon::parse($date)->format('Y-m-d');
+            $dateString  = Carbon::parse($date)->format('Y-m-d');
 
-     foreach($user_data as $key =>$single_user_data){
+            foreach ($user_data as $key => $single_user_data) {
 
-      if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-            || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                if (
+                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
                 ) {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -2542,27 +2546,24 @@ class VmtAttendanceReportsService
                 if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
                     $deviceData[] = array(
                         'date' => $dateString,
-                        'user_code'=>$single_user_data['user_code'],
-                        'user_code'=>$single_user_data['name'],
+                        'user_code' => $single_user_data['user_code'],
+                        'user_code' => $single_user_data['name'],
                         'checkin_time' => $deviceCheckInTime,
                         'checkout_time' => $deviceCheckOutTime,
                         'attendance_mode_checkin' => 'biometric',
                         'attendance_mode_checkout' => 'biometric'
                     );
                 }
-
             }
-                  return $deviceData;
-
-            }catch(\Exception $e){
-                return response()->json([
-                     'status'=>"failure",
-                     'message'=>"",
-                     'data'=>$e->getmessage(),
-                ]);
-            }
-
-   }
+            return $deviceData;
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => "failure",
+                'message' => "",
+                'data' => $e->getmessage(),
+            ]);
+        }
+    }
 
     public function fetchOvertimeReportData($start_date, $end_date)
     {
@@ -2654,21 +2655,46 @@ class VmtAttendanceReportsService
     }
     public function fetchInvestmentTaxReports()
     {
-       $reportsdata = array();
+        $reportsdata = array();
 
-       $Employee_details = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-                               ->leftjoin('vmt_employee_statutory_details','vmt_employee_statutory_details.user_id','=','users.id')
-                               ->where("users.active","1")
-                               ->get(['users.id as user_id',
-                                       'users.user_code as Employee Code',
-                                       'users.name as Employee Name',
-                                       'vmt_employee_details.gender as Gender',
-                                       'vmt_employee_details.pan_number as PAN Number',
-                                       'vmt_employee_details.dob as Date Of Birth',
-                                       'vmt_employee_details.doj as Date Of Joining',
-                                       'vmt_employee_statutory_details.tax_regime as Tax Regime']);
+        $client_id = "2";
 
-                   dd($Employee_details->toarray());
+        $payroll_month = "2023-06-01";
+
+        $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+            ->where("users.active", "1")
+            ->where("users.client_id", $client_id)
+            ->get([
+                'users.id as user_id',
+                'users.user_code as Employee Code',
+                'users.name as Employee Name',
+                'vmt_employee_details.gender as Gender',
+                'vmt_employee_details.pan_number as PAN Number',
+                'vmt_employee_details.dob as Date Of Birth',
+                'vmt_employee_details.doj as Date Of Joining',
+                'vmt_employee_statutory_details.tax_regime as Tax Regime'
+            ]);
+
+     $employee_salary_details = array();
+
+        foreach ($Employee_details as $key => $single_user) {
+
+            $payroll_date = VmtPayroll::where('payroll_date',  $payroll_month)->where('client_id', $client_id)->first();
+
+            if (!empty($payroll_date)) {
+
+                $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_user['user_id'])->first();
+            }
+
+            $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
+
+            if ($employee_projected_salary->exists()) {
+
+                $employee_salary_details[$key]["user_id"] = $employee_projected_salary->get()->toarray();
+
+            }
+        }
 
     }
 }
