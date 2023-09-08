@@ -620,4 +620,38 @@ class VmtReportsController extends Controller
 
         return Excel::download(new AnnualEarnedExport($response, $headings), 'Annual Earned Report.xlsx');
     }
+    public function getEmployeesCTCDetails(Request $request, VmtReportsservice $reportsService)
+    {
+        $date = Carbon::now();
+        $client_id = array(1);
+        $Category = 'All';
+        $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
+        $headers = array();
+        foreach ($emp_ctc_data[0] as $key => $value) {
+            $headings = $key;
+            array_push($headers, $headings);
+        }
+        $response['headers'] =   $headers;
+        $response['rows'] = $emp_ctc_data;
+
+        return $response ;
+    }
+
+    public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
+    {
+        $date = Carbon::now();
+        $client_id = array(1);
+        $Category = 'All';
+        $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
+        $headers = array();
+        foreach ($emp_ctc_data as $key => $value) {
+            $headings = $key;
+            array_push($headers, $headings);
+        }
+        $client_name = sessionGetSelectedClientName();
+        $client_logo_path = session()->get('client_logo_url');
+        $public_client_logo_path = public_path($client_logo_path);
+        return Excel::download(new EmployeeBasicCtcExport($emp_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
+    }
+
 }
