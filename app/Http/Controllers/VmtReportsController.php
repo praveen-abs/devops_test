@@ -629,7 +629,7 @@ class VmtReportsController extends Controller
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
-        $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
+        $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type);
         $headers = array();
         foreach ($emp_ctc_data[0] as $key => $value) {
             $headings = $key;
@@ -673,10 +673,7 @@ class VmtReportsController extends Controller
 
     public function filterClient()
     {
-        if (VmtClientMaster::count() == 1) {
-            return VmtClientMaster::all();
-        } else {
-            return VmtClientMaster::where('id', sessionGetSelectedClientid());
-        }
+     return VmtClientMaster::all(['id','abs_client_code','client_fullname']);
     }
+
 }
