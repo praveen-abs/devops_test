@@ -105,7 +105,7 @@ class VmtReportsservice
         }
 
         return $response;
-        dd($response);
+       // dd($response);
     }
 }
 

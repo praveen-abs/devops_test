@@ -622,6 +622,7 @@ class VmtReportsController extends Controller
     }
     public function getEmployeesCTCDetails(Request $request, VmtReportsservice $reportsService)
     {
+       
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
