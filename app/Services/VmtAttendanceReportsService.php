@@ -2652,4 +2652,23 @@ class VmtAttendanceReportsService
         $response['rows'] = $otData;
         return $response;
     }
+    public function fetchInvestmentTaxReports()
+    {
+       $reportsdata = array();
+
+       $Employee_details = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                               ->leftjoin('vmt_employee_statutory_details','vmt_employee_statutory_details.user_id','=','users.id')
+                               ->where("users.active","1")
+                               ->get(['users.id as user_id',
+                                       'users.user_code as Employee Code',
+                                       'users.name as Employee Name',
+                                       'vmt_employee_details.gender as Gender',
+                                       'vmt_employee_details.pan_number as PAN Number',
+                                       'vmt_employee_details.dob as Date Of Birth',
+                                       'vmt_employee_details.doj as Date Of Joining',
+                                       'vmt_employee_statutory_details.tax_regime as Tax Regime']);
+
+                   dd($Employee_details->toarray());
+
+    }
 }

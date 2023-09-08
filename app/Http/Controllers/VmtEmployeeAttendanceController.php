@@ -216,7 +216,8 @@ class VmtEmployeeAttendanceController extends Controller
     public function downloadInvestmentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
     {
 
-        return Excel::download(new InvestmentsReportsController(''),'Investments Report.xlsx');
+        return $attendance_report_service->fetchInvestmentTaxReports();
+        //return Excel::download(new InvestmentsReportsController(''),'Investments Report.xlsx');
     }
 
 
