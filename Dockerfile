@@ -32,4 +32,5 @@ EXPOSE 8000
 # Start Laravel development server
 CMD php artisan migrate
 CMD php artisan cache:clear
+CMD php artisan make:middleware ForceSSL
 CMD php artisan serve --host=0.0.0.0 --port=8000
