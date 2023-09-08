@@ -12,8 +12,9 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtClientMaster;
+use App\Models\VmtOrgTimePeriod;
 use Carbon\Carbon;
-
+use Carbon\CarbonPeriod;
 
 class VmtReportsservice
 {
@@ -74,7 +75,7 @@ class VmtReportsservice
                 $temp_ar['Employee Status'] = 'Not Yet Active';
             }
 
-            $temp_ar['DOJ (DD/MM/YYYY)'] = carbon::parse($singleemployeedata->dob)->format('d-M-Y');
+            $temp_ar['DOJ (DD/MM/YYYY)'] = carbon::parse($singleemployeedata->doj)->format('d-M-Y');
 
             if ($type == 'detailed') {
                 $temp_ar['DOB (DD/MM/YYYY)'] = carbon::parse($singleemployeedata->dob)->format('d-M-Y');
@@ -114,12 +115,6 @@ class VmtReportsservice
         return $response;
       
     }
-    public function filterClient()
-    {
-        if (VmtClientMaster::count() == 1) {
-            return VmtClientMaster::all();
-        } else {
-            return VmtClientMaster::where('id', sessionGetSelectedClientid());
-        }
-    }
+  
+   
 }

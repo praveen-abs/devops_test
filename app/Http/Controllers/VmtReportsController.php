@@ -32,6 +32,9 @@ use App\Models\VmtEmployeeReimbursements;
 use App\Services\VmtReimbursementsService;
 use App\Services\VmtReportsservice;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use App\Models\VmtClientMaster;
+use App\Models\VmtOrgTimePeriod;
 
 class VmtReportsController extends Controller
 {
@@ -634,7 +637,7 @@ class VmtReportsController extends Controller
         $response['headers'] =   $headers;
         $response['rows'] = $emp_ctc_data;
 
-        return $response ;
+        return $response;
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -654,4 +657,25 @@ class VmtReportsController extends Controller
         return Excel::download(new EmployeeBasicCtcExport($emp_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
     }
 
+    public function getCurrentFinancialYear()
+    {
+       // dd('sjfdbvd');
+        $current_year = VmtOrgTimePeriod::where('status', 1)->first();
+       // dd($current_year->start_date);
+       
+       $response = array();
+        foreach(CarbonPeriod::create($current_year->start_date, '1 month', Carbon::now()->format('Y').'-'.Carbon::now()->format('m').'-01') as $single_month){
+            $response[$single_month->format('Y-m-d')] = $single_month->format('M-Y');
+        }
+        return $response;
+    }
+
+    public function filterClient()
+    {
+        if (VmtClientMaster::count() == 1) {
+            return VmtClientMaster::all();
+        } else {
+            return VmtClientMaster::where('id', sessionGetSelectedClientid());
+        }
+    }
 }
