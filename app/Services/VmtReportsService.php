@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeePaySlip;
+use App\Models\VmtClientMaster;
 use Carbon\Carbon;
 
 
@@ -36,12 +37,9 @@ class VmtReportsservice
                     //$singleEmployee->$key=$value;
                 }
             }
-            array_push($response,$singleEmployee->toArray());
-
-
+            array_push($response, $singleEmployee->toArray());
         }
-      return $response;
-
+        return $response;
     }
     public function getEmployeesCTCDetails()
     {
@@ -57,8 +55,10 @@ class VmtReportsservice
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
             ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-            ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')->get();
-
+            ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+            ->where('vmt_employee_details.doj','<',$date)
+            ->wherIn('users.client_id',$client_id)
+            ->get();
 
         foreach ($emp_ctc_detail as $singleemployeedata) {
 
@@ -66,7 +66,14 @@ class VmtReportsservice
             $temp_ar['Employee Name'] = $singleemployeedata->name;
             $temp_ar['Gender'] = $singleemployeedata->Gender;
             $temp_ar['Designation'] = $singleemployeedata->designation;
-            $temp_ar['Employee Status'] = $singleemployeedata->active;
+            if ($singleemployeedata->active == 1) {
+                $temp_ar['Employee Status'] = "Active";
+            } else if ($singleemployeedata->active == -1) {
+                $temp_ar['Employee Status'] = "Exit";
+            } else if ($singleemployeedata->active == 0) {
+                $temp_ar['Employee Status'] = 'Not Yet Active';
+            }
+
             $temp_ar['DOJ (DD/MM/YYYY)'] = carbon::parse($singleemployeedata->dob)->format('d-M-Y');
 
             if ($type == 'detailed') {
@@ -105,9 +112,14 @@ class VmtReportsservice
         }
 
         return $response;
-        dd($response);
+      
+    }
+    public function filterClient()
+    {
+        if (VmtClientMaster::count() == 1) {
+            return VmtClientMaster::all();
+        } else {
+            return VmtClientMaster::where('id', sessionGetSelectedClientid());
+        }
     }
 }
-
-
-
