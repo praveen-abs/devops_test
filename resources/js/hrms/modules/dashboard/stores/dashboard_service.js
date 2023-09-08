@@ -16,11 +16,14 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const canShowConfiguration = ref(false)
     const canShowCurrentEmployee = ref(false)
 
+    const currentDashboard = ref(0)
+
     const allEventSource = ref()
     const allNotificationSource = ref([])
     const leaveBalancePerMonthSource = ref([])
     const attenanceReportPerMonth = ref([])
     const canShowLoading = ref(true)
+
 
     // Subscribe Main DashBoard Data Source
     // const getMainDashboardSource = (async () => {
@@ -39,6 +42,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     // })
 
     async function getMainDashboardData(month, year) {
+        canShowLoading.value = true
         await axios.get('/getAllNewDashboardDetails').then((response) => {
             allEventSource.value = response.data.all_events;
             // allNotificationSource.value = response.data.all_notification.array_notifications;
@@ -50,16 +54,16 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
         });
     }
 
-    async function getHRDashboardData(){
+    async function getHRDashboardData() {
 
     }
 
-    async function getAttendanceStatus(user_code, date){
-        await axios.get('/getAttendanceStatus',{
-            user_code : 'PLIPL068',
-            date : '2023-06-26',
+    async function getAttendanceStatus(user_code, date) {
+        await axios.get('/getAttendanceStatus', {
+            user_code: 'PLIPL068',
+            date: '2023-06-26',
         }).then((response) => {
-            console.log("getAttendanceStatus() : "+response.data);
+            console.log("getAttendanceStatus() : " + response.data);
         }).finally(() => {
 
         });
@@ -76,6 +80,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const updateCheckin_out = (data) => {
         return axios.post("/performAttendanceCheckIn", data);
     };
+
 
 
     // async function getMainDashboardData() {
@@ -115,12 +120,52 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
         );
     };
 
+
+    const hrDashboardSource = ref()
+
+    const orgEmployeeDetailCount = ref()
+    const hrPendingRequestCount = ref()
+    const overallEmployeeCount = ref()
+    const overallEmployeeCountForGraph = ref([])
+
+
+
+    const getHrDashboardMainSource = () => {
+        canShowLoading.value = true
+        axios.get('/get-employees_count-detail').then(res => {
+            console.log(res.data.pending_request_count);
+            orgEmployeeDetailCount.value = res.data.employee_details_count
+            // hrPendingRequestCount.value.push(res.data.pending_request_count)
+            let obj = Object.entries(res.data.pending_request_count).map(item => {
+                return {
+                    title: item[0],
+                    value: item[1]
+                }
+            })
+            hrPendingRequestCount.value = obj
+            let graph = Object.entries(res.data.graph_chart_count).map(item => {
+                return {
+                    title: item[0],
+                    value: item[1]
+                }
+            })
+            overallEmployeeCount.value = graph
+
+            overallEmployeeCount.value.forEach(element => {
+                overallEmployeeCountForGraph.value.push(element.value)
+            });
+
+        }).finally(() => {
+            canShowLoading.value = false
+        })
+    }
+
     return {
         // varaible Declarations
-        service,canShowLoading,open,
-        canShowClients,canShowConfiguration,canShowCurrentEmployee,canShowOrganization,canShowTopbar,
+        service, canShowLoading, open,
+        canShowClients, canShowConfiguration, canShowCurrentEmployee, canShowOrganization, canShowTopbar,
 
-      // Welcome Card
+        // Welcome Card
         getCurrentlyLoginUser,
         getAttendanceStatus,
         //getMainDashboardData,
@@ -140,7 +185,12 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         // Attendance report Per Month
 
-        attenanceReportPerMonth
+        attenanceReportPerMonth,
+        currentDashboard,
+
+        // hr Dashboard source
+
+        getHrDashboardMainSource, hrDashboardSource, orgEmployeeDetailCount, hrPendingRequestCount, overallEmployeeCount, overallEmployeeCountForGraph
 
     };
 });

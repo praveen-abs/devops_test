@@ -449,6 +449,32 @@ export const useLeaveService = defineStore("useLeaveService", () => {
     };
 
 
+    const restChars = () =>{
+        leave_data.current_login_user = null,
+        leave_data.selected_leave = null,
+        leave_data.full_day_leave_date = null,
+        leave_data.half_day_leave_date = null,
+        leave_data.half_day_leave_session = null,
+        leave_data.radiobtn_full_day = null,
+        leave_data.radiobtn_half_day = null,
+        leave_data.radiobtn_custom = null,
+        leave_data.custom_start_date = null,
+        leave_data.custom_end_date = null,
+        leave_data.custom_total_days = null,
+        leave_data.permission_date = null,
+        leave_data.permission_start_time = null,
+        leave_data.permission_total_time = null,
+        leave_data.permission_end_time = null,
+        leave_data.compensatory_leaves = null,
+        leave_data.compensatory_leaves_dates = null,
+        leave_data.selected_compensatory_leaves = null,//This refers to comp days selected in dropdown
+        leave_data.compensatory_start_date = null,
+        leave_data.compensatory_total_days = null, //This refers to total days UI textbox
+        leave_data.compensatory_end_date = null,
+        leave_data.notifyTo = null,
+        leave_data.leave_reason = null,
+        leave_data.leave_request_error_message = null
+    }
 
     return {
 
