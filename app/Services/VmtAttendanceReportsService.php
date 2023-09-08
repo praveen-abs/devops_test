@@ -2691,9 +2691,65 @@ class VmtAttendanceReportsService
 
             if ($employee_projected_salary->exists()) {
 
-                $employee_salary_details[$key]["user_id"] = $employee_projected_salary->get()->toarray();
+                $employee_salary_details[$key]["user_id"] =$single_user['user_id'] ;
+                $employee_salary_details[$key]["Employee Code"] =$single_user['Employee Code'] ;
+                $employee_salary_details[$key]["Employee Name"] =$single_user['Employee Name'] ;
+                $employee_salary_details[$key]["Gender"] =$single_user['Gender'];
+                $employee_salary_details[$key]["PAN Number"] =$single_user['PAN Number'];
+                $employee_salary_details[$key]["Date Of Birth"] =$single_user['Date Of Birth'];
+                $employee_salary_details[$key]["Date Of Joining"] =$single_user['Date Of Joining'];
+                $employee_salary_details[$key]["Tax Regime"] =$single_user['Tax Regime'];
+                $employee_salary_details[$key]["Basic"] =$employee_projected_salary->sum('earned_basic');
+                $employee_salary_details[$key]["Basic Arrears"] =$employee_projected_salary->sum('basic_arrear');
+                $employee_salary_details[$key]["Dearness Allowance"] =0;
+                $employee_salary_details[$key]["Dearness Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Variable Dearness Allowance"] =0;
+                $employee_salary_details[$key]["Vairable Dearness Allowance Arrears"] =0;
+                $employee_salary_details[$key]["HRA"] =$employee_projected_salary->sum('earned_hra');
+                $employee_salary_details[$key]["HRA Arrears"] =$employee_projected_salary->sum('hra_arrear');
+                $employee_salary_details[$key]["Child Education Allowance"] =$employee_projected_salary->sum('earned_child_edu_allowance');
+                $employee_salary_details[$key]["Child Education Allowance Arrears"] =$employee_projected_salary->sum('child_edu_allowance_arrear');
+                $employee_salary_details[$key]["Statutory Bonus"] =$employee_projected_salary->sum('earned_stats_bonus');
+                $employee_salary_details[$key]["Statutory Bonus Arrears"] =$employee_projected_salary->sum('earned_stats_arrear');
+                $employee_salary_details[$key]["Medical Allowance"] =0;
+                $employee_salary_details[$key]["Medical Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Communicaton Allowance"] =0;
+                $employee_salary_details[$key]["Communication Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Leave Travel Allowance"] =0;
+                $employee_salary_details[$key]["Leave Travel Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Food Allowance"] =0;
+                $employee_salary_details[$key]["Food Allowance Arrear"] =0;
+                $employee_salary_details[$key]["Special Allowance"] =$employee_projected_salary->sum('earned_spl_alw');
+                $employee_salary_details[$key]["Special Allowance Arrears"] =$employee_projected_salary->sum('spl_alw_arrear');
+                $employee_salary_details[$key]["Other Allowance"] =0;
+                $employee_salary_details[$key]["Washing Allowance"] =0;
+                $employee_salary_details[$key]["Washing Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Uniform Allowance"] =0;
+                $employee_salary_details[$key]["Uniform Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Vehicle Reimbursement"] =0;
+                $employee_salary_details[$key]["Vehicle Reimbursement Arrears"] =0;
+                $employee_salary_details[$key]["Driver Salary Reimbursment"] =0;
+                $employee_salary_details[$key]["Driver Salary Reimbursment Arrears"] =0;
+                $employee_salary_details[$key]["Arrears"] =$employee_projected_salary->sum('basic_arrear','basic_arrear')+ 0 + 0 + $employee_projected_salary->sum('hra_arrear')+$employee_projected_salary->sum('hra_arrear') +
+                                                            $employee_projected_salary->sum('child_edu_allowance_arrear') + $employee_projected_salary->sum('earned_stats_arrear') + 0
+                                                            + 0 + 0 + 0 + $employee_projected_salary->sum('spl_alw_arrear') + 0 + 0 + 0 + 0 ;
+
+                $employee_salary_details[$key]["Overtime"] =$employee_projected_salary->sum('overtime');
+                $employee_salary_details[$key]["Overtime Arrears"] =0;
+                $employee_salary_details[$key]["Incentive"] =0;
+                $employee_salary_details[$key]["Other Earnings"] =$employee_projected_salary->sum('other_earnings');
+                $employee_salary_details[$key]["Referral Bonus"] =0;
+                $employee_salary_details[$key]["Annual Statutory Bonus"] =$employee_projected_salary->sum('earned_stats_bonus');
+                $employee_salary_details[$key]["Ex-Gratia"] =0;
+                $employee_salary_details[$key]["Attendance Bonus"] =0;
+                $employee_salary_details[$key]["Leave Encashments"] =0;
+                $employee_salary_details[$key]["Gift"] =0;
+                $employee_salary_details[$key]["Annual Gross Salary"] =0;
+
+
 
             }
+            dd($employee_salary_details);
         }
 
     }

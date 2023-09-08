@@ -15,7 +15,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
 
-class InvestmentsReportsController implements ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles
+class InvestmentsReportsExport implements ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles
 {
     protected $report;
 
@@ -46,7 +46,8 @@ class InvestmentsReportsController implements ShouldAutoSize, WithHeadings, With
             'PAN Number',
             'Date Of Birth',
             'Date Of Joining',
-            'Tax Regime	Basic',
+            'Tax Regime',
+            'Basic',
             'Basic Arrears',
             'Dearness Allowance',
             'Dearness Allowance Arrears',
