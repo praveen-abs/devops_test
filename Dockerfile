@@ -22,7 +22,7 @@ WORKDIR /var/www/html
 # Copy Laravel application files
 COPY . .
 # Install PHP dependencies
-RUN composer install
+RUN composer update
 RUN composer dump-autoload
 # Set permissions for Laravel
 RUN mkdir -p /var/www/html/storage/framework/views
