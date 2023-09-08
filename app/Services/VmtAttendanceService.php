@@ -1819,6 +1819,19 @@ class VmtAttendanceService
 
                 //dd("Request not applied");
 
+                //For LC, EG : user_time is mandatory , So check it
+                if (($regularization_type == 'LC' || $regularization_type == 'EG') && empty($user_time))
+                {
+                    //if user_time is null, then throw error
+                    return $responseJSON = [
+                        'status' => 'failure',
+                        'message' => 'User Time is missing',
+                        'mail_status' => '',
+                        'data' => [],
+                    ];
+
+                }
+                else
                 if ($regularization_type == 'MIP' || $regularization_type == 'MOP')
                     $user_time = null;
 
