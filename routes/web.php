@@ -52,7 +52,7 @@ Route::get('/create-holiday', function () {
 Route::get('/employee_profile', [App\Http\Controllers\VmtAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
 
 
-Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
+Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //Basic DB data
     Route::get('/db/getBankDetails', [App\Http\Controllers\VmtBankController::class, 'getBankDetails'])->name('vmt_getBankDetails');
@@ -107,8 +107,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     })->name('isEmailExists');
 
     // Profile Page
-    Route::get('/profile-pages/saveDocumentDetails',[App\Http\Controllers\VmtProfilePagesController::class, 'saveDocumentDetails']);
-    Route::get('/profile-pages/getDocumentDetails',[App\Http\Controllers\VmtProfilePagesController::class, 'getDocumentDetails']);
+    Route::get('/profile-pages/saveDocumentDetails', [App\Http\Controllers\VmtProfilePagesController::class, 'saveDocumentDetails']);
+    Route::get('/profile-pages/getDocumentDetails', [App\Http\Controllers\VmtProfilePagesController::class, 'getDocumentDetails']);
     Route::post('/profile-pages/getProfilePicture', [App\Http\Controllers\VmtProfilePagesController::class, 'getProfilePicture']);
     Route::post('/profile-pages/updateProfilePicture', [App\Http\Controllers\VmtProfilePagesController::class, 'updateProfilePicture']);
     Route::post('/profile-pages/updateReportingManager', [App\Http\Controllers\VmtProfilePagesController::class, 'updateReportingManager'])->name('profile-pages-update-reporting-mgr');
@@ -165,8 +165,8 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/report-download-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'downloadPMSForm'])->name('downloadPMSForm'); //Leave Balance Calculation
     Route::get('/process-employee-leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'processEmployeeLeaveBalance'])->name('processEmployeeLeaveBalance');
 
-    Route::get('/upload/leave-balance',[App\Http\Controllers\VmtEmployeeLeaveController::class,'showLeaveBalanceUpload']);
-    Route::post('/import-leave-balance',[App\Http\Controllers\VmtEmployeeLeaveController::class,'importLeaveBalanceData']);
+    Route::get('/upload/leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'showLeaveBalanceUpload']);
+    Route::post('/import-leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'importLeaveBalanceData']);
 
     //PMS forms management
     //Route::get('/pms-forms-mgmt/getAssignedPMSFormTemplates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAssignedPMSFormTemplates'])->name('getAssignedPMSFormTemplates');
@@ -280,10 +280,10 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/profile-page/pdfview/{emp_code?}/{selectedPaySlipMonth?}', [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_PDFView'])->name('vmt_employee_payslip_pdf');
     Route::post('/profile-page/uploadEmployeeDocs', [App\Http\Controllers\VmtProfilePagesController::class, 'uploadEmployeeDocument'])->name('uploadEmployeeDocument');
 
-//save profile page documents
-   Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
-//save profile page documents
-   Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
+    //save profile page documents
+    Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
+    //save profile page documents
+    Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
 
 
 
@@ -636,7 +636,7 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('/documents', [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
     // Route::get('/employee-documents',  [App\Http\Controllers\VmtEmployeeController::class, 'fetchDocsForUser'])->name('vmt-documents-routes');
-     Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
+    Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
 
     Route::post('/onboarding/updateEmployeeActive', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'updateEmployeeActiveStatus'])->name('updateEmployeeActiveStatus');
 
@@ -789,9 +789,12 @@ Route::middleware(['auth','EnsureDefaultPasswordUpdated'])->group(function () {
 
 
     ////Reports
-
-///basic report
-Route::get('/fetch-employee-ctc-report',[App\Http\Controllers\VmtReportsController::class,'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    ///for current year
+    Route::get('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
+    //filter client
+    Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
+    ///basic report
+    Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
     //payroll reports
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
@@ -831,7 +834,7 @@ Route::get('/fetch-employee-ctc-report',[App\Http\Controllers\VmtReportsControll
         App\Http\Controllers\VmtEmployeeAttendanceController::class,
         'fetchLCReportData'
     ]);
-    Route::post('/fetch-half-day-report',[\App\Http\Controllers\VmtEmployeeAttendanceController::class,'fetchHalfDayReportData']);
+    Route::post('/fetch-half-day-report', [\App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchHalfDayReportData']);
     Route::post('/report/download-early-going-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadEGReport']);
     Route::post('/report/download-late-coming-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadLCReport']);
     Route::post('/report/download-over-time-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadOvertimeReport']);
@@ -890,13 +893,13 @@ Route::get('/fetch-employee-ctc-report',[App\Http\Controllers\VmtReportsControll
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
 
-       Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
-       Route::post('/saveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'saveAppConfigStatus'])->name('saveAppConfigStatus');
-       Route::post('/getEmployeesFilterData', [App\Http\Controllers\VmtMasterConfigController::class, 'getEmployeesFilterData'])->name('getEmployeesFilterData');
-       Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
-       Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
-       Route::post('/fetchMobileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMobileModuleData'])->name('fetchMobileModuleData');
-       Route::get('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
+    Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
+    Route::post('/saveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'saveAppConfigStatus'])->name('saveAppConfigStatus');
+    Route::post('/getEmployeesFilterData', [App\Http\Controllers\VmtMasterConfigController::class, 'getEmployeesFilterData'])->name('getEmployeesFilterData');
+    Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
+    Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
+    Route::post('/fetchMobileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMobileModuleData'])->name('fetchMobileModuleData');
+    Route::get('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
 
     //Configrations
     ////Attendance Settings
@@ -1005,9 +1008,9 @@ Route::get('/fetch-employee-ctc-report',[App\Http\Controllers\VmtReportsControll
 
     Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
 
-   Route::get('/can-edit-profile-page',[\App\Http\Controllers\VmtProfilePagesController::class,'canEditProfilePage'])->name('canEditProfilePage');
+    Route::get('/can-edit-profile-page', [\App\Http\Controllers\VmtProfilePagesController::class, 'canEditProfilePage'])->name('canEditProfilePage');
     //Testing Excel Download
-    Route::get('/download-quick-onbaord-excel',[App\Http\Controllers\VmtExcelGeneratorController::class,'downloadQuickOnbaordExcel'])->name('downloadQuickOnbaordExcel');
+    Route::get('/download-quick-onbaord-excel', [App\Http\Controllers\VmtExcelGeneratorController::class, 'downloadQuickOnbaordExcel'])->name('downloadQuickOnbaordExcel');
     Route::get('/download-bulk-onbaord-excel', [App\Http\Controllers\VmtExcelGeneratorController::class, 'downloadBulkOnbaordExcel'])->name('downloadBulkOnbaordExcel');
     //interest free loan
     Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
@@ -1094,14 +1097,14 @@ Route::get('/fetch-employee-ctc-report',[App\Http\Controllers\VmtReportsControll
     Route::post('/paycheck/employee_payslip/downloadPayslip', [App\Http\Controllers\VmtTestingController::class, 'downloadPaySlip_pdfView'])->name('downloadPaySlip_pdfView');
     Route::get('users/export', [App\Http\Controllers\VmtTestingController::class, 'exportattenance']);
 
-    Route::view('/testing_simma','testing_narasimman');
+    Route::view('/testing_simma', 'testing_narasimman');
 
 
     Route::get('/testing_shelly', function () {
         return view('testing_shelly');
     });
 
-    Route::get('/tds_work_sheet',[App\Http\Controllers\VmtTestingController::class, 'Tesingtdsworksheet']);
+    Route::get('/tds_work_sheet', [App\Http\Controllers\VmtTestingController::class, 'Tesingtdsworksheet']);
 
 
 
@@ -1147,7 +1150,7 @@ Route::post('/send-passwordresetlink', [App\Http\Controllers\Auth\LoginControlle
 Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@processSignedPasswordResetLink')->name('vmt-signed-passwordresetlink');
 
 //login page v3
-Route::get('/showLoginPage', [App\Http\Controllers\Auth\LoginController::class,'showLoginPage'])->name('showLoginPage');
+Route::get('/showLoginPage', [App\Http\Controllers\Auth\LoginController::class, 'showLoginPage'])->name('showLoginPage');
 
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
