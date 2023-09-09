@@ -1529,7 +1529,7 @@ class VmtCorrectionController extends Controller
 
 
                                 $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
-                                    ->where('vmt_payroll.payroll_date',  $single_month)
+                                    ->where('vmt_payroll.payroll_date',  $single_fin_month)
                                     ->where('vmt_emp_payroll.user_id', $single_users['id'])
                                     ->first(['vmt_emp_payroll.id as id']);
                                 if (!empty($payslip_id)) {
@@ -1616,61 +1616,59 @@ class VmtCorrectionController extends Controller
 
                                     $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
                                     $salary_project_data->payroll_months = $single_fin_month;
-                                    $salary_project_data->basic = $payslip_details['basic'] ?? 0;
-                                    $salary_project_data->hra = $payslip_details['hra'] ?? 0;
-                                    $salary_project_data->child_edu_allowance = $payslip_details['child_education_allowance'] ?? 0;
-                                    $salary_project_data->spl_alw = $payslip_details['spl_alw'] ?? 0;
-                                    $salary_project_data->total_fixed_gross = $payslip_details['gross'] ?? 0;
-                                    $salary_project_data->month_days = $payslip_details['month_days'] ?? 0;
-                                    $salary_project_data->worked_Days = $payslip_details['worked_Days'] ?? 0;
-                                    $salary_project_data->arrears_Days = $payslip_details['arrears_Days'] ?? 0;
-                                    $salary_project_data->lop = $payslip_details['lop'] ?? 0;
-                                    $salary_project_data->earned_basic = $payslip_details['basic'] ?? 0;
-                                    $salary_project_data->basic_arrear = $payslip_details['basic_arrear'] ?? 0;
-                                    $salary_project_data->earned_hra = $payslip_details['hra'] ?? 0;
-                                    $salary_project_data->hra_arrear = $payslip_details['hra_arrear'] ?? 0;
-                                    $salary_project_data->earned_child_edu_allowance = $payslip_details['child_education_allowance'] ?? 0;
-                                    $salary_project_data->earned_child_edu_allowance = $payslip_details['child_edu_allowance_arrear'] ?? 0;
-                                    $salary_project_data->earned_spl_alw = $payslip_details['special_allowance'] ?? 0;
-                                    $salary_project_data->earned_spl_alw = $payslip_details['spl_alw_arrear'] ?? 0;
-                                    $salary_project_data->overtime = $payslip_details['overtime'] ?? 0;
-                                    $salary_project_data->total_earned_gross = $payslip_details['gross'] ?? 0;
-                                    $salary_project_data->pf_wages = $payslip_details['pf_wages'] ?? 0;
-                                    $salary_project_data->pf_wages_arrear_epfr = $payslip_details['pf_wages_arrear_epfr'] ?? 0;
-                                    $salary_project_data->epfr = $payslip_details['epfr'] ?? 0;
-                                    $salary_project_data->epfr_arrear = $payslip_details['epfr_arrear'] ?? 0;
-                                    $salary_project_data->edli_charges = $payslip_details['edli_charges'] ?? 0;
-                                    $salary_project_data->edli_charges_arrears = $payslip_details['edli_charges_arrears'] ?? 0;
-                                    $salary_project_data->pf_admin_charges = $payslip_details['pf_admin_charges'] ?? 0;
-                                    $salary_project_data->pf_admin_charges_arrears = $payslip_details['pf_admin_charges_arrears'] ?? 0;
-                                    $salary_project_data->employer_esi = $payslip_details['esic_employer_contribution'] ?? 0;
-                                    $salary_project_data->employer_lwf = $payslip_details['employer_lwf'] ?? 0;
-                                    $salary_project_data->ctc = $payslip_details['cic'] ?? 0;
-                                    $salary_project_data->epf_ee = $payslip_details['epf_employee'] ?? 0;
-                                    $salary_project_data->employee_esic = $payslip_details['esic_employee'] ?? 0;
-                                    $salary_project_data->prof_tax = $payslip_details['professional_tax'] ?? 0;
-                                    $salary_project_data->income_tax = $payslip_details['income_tax'] ?? 0;
-                                    $salary_project_data->sal_adv = $payslip_details['sal_adv'] ?? 0;
-                                    $salary_project_data->canteen_dedn = $payslip_details['canteen_dedn'] ?? 0;
-                                    $salary_project_data->other_deduc = $payslip_details['other_deduc'] ?? 0;
-                                    $salary_project_data->lwf = $payslip_details['lwf'] ?? 0;
-                                    $salary_project_data->total_deductions = $payslip_details['total_deductions'] ?? 0;
-                                    $salary_project_data->net_take_home = $payslip_details['net_income'] ?? 0;
-                                    $salary_project_data->rupees = $payslip_details['rupees'] ?? 0;
-                                    $salary_project_data->el_opn_bal = $payslip_details['el_opn_bal'] ?? 0;
-                                    $salary_project_data->availed_el = $payslip_details['availed_el'] ?? 0;
-                                    $salary_project_data->balance_el = $payslip_details['balance_el'] ?? 0;
-                                    $salary_project_data->sl_opn_bal = $payslip_details['sl_opn_bal'] ?? 0;
-                                    $salary_project_data->availed_sl = $payslip_details['availed_sl'] ?? 0;
-                                    $salary_project_data->balance_sl = $payslip_details['balance_sl'] ?? 0;
-                                    $salary_project_data->rename = $payslip_details['rename'] ?? 0;
-                                    $salary_project_data->greetings = $payslip_details['greetings'] ?? 0;
-                                    $salary_project_data->stats_bonus = $payslip_details['stats_bonus'] ?? 0;
-                                    $salary_project_data->email = $payslip_details['email'] ?? 0;
-                                    $salary_project_data->earned_stats_bonus = $payslip_details['Statutory_bonus'] ?? 0;
-                                    $salary_project_data->earned_stats_arrear = $payslip_details['earned_stats_arrear'] ?? 0;
-                                    $salary_project_data->travel_conveyance = $payslip_details['travel_conveyance'] ?? 0;
-                                    $salary_project_data->other_earnings = $payslip_details['other_earnings'] ?? 0;
+                                    $salary_project_data->basic = $compensatory_details['basic'] ?? 0;
+                                    $salary_project_data->hra = $compensatory_details['hra'] ?? 0;
+                                    $salary_project_data->child_edu_allowance = $compensatory_details['child_education_allowance'] ?? 0;
+                                    $salary_project_data->spl_alw = $compensatory_details['spl_alw'] ?? 0;
+                                    $salary_project_data->total_fixed_gross = $compensatory_details['gross'] ?? 0;
+                                    $salary_project_data->month_days = $compensatory_details['month_days'] ?? 0;
+                                    $salary_project_data->worked_Days = $compensatory_details['worked_Days'] ?? 0;
+                                    $salary_project_data->arrears_Days = $compensatory_details['arrears_Days'] ?? 0;
+                                    $salary_project_data->lop = $compensatory_details['lop'] ?? 0;
+                                    $salary_project_data->earned_basic = $compensatory_details['basic'] ?? 0;
+                                    $salary_project_data->basic_arrear = $compensatory_details['basic_arrear'] ?? 0;
+                                    $salary_project_data->earned_hra = $compensatory_details['hra'] ?? 0;
+                                    $salary_project_data->hra_arrear = $compensatory_details['hra_arrear'] ?? 0;
+                                    $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'] ?? 0;
+                                    $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'] ?? 0;
+                                    $salary_project_data->overtime = $compensatory_details['overtime'] ?? 0;
+                                    $salary_project_data->total_earned_gross = $compensatory_details['gross'] ?? 0;
+                                    $salary_project_data->pf_wages = $compensatory_details['pf_wages'] ?? 0;
+                                    $salary_project_data->pf_wages_arrear_epfr = $compensatory_details['pf_wages_arrear_epfr'] ?? 0;
+                                    $salary_project_data->epfr = $compensatory_details['epfr'] ?? 0;
+                                    $salary_project_data->epfr_arrear = $compensatory_details['epfr_arrear'] ?? 0;
+                                    $salary_project_data->edli_charges = $compensatory_details['edli_charges'] ?? 0;
+                                    $salary_project_data->edli_charges_arrears = $compensatory_details['edli_charges_arrears'] ?? 0;
+                                    $salary_project_data->pf_admin_charges = $compensatory_details['pf_admin_charges'] ?? 0;
+                                    $salary_project_data->pf_admin_charges_arrears = $compensatory_details['pf_admin_charges_arrears'] ?? 0;
+                                    $salary_project_data->employer_esi = $compensatory_details['esic_employer_contribution'] ?? 0;
+                                    $salary_project_data->employer_lwf = $compensatory_details['employer_lwf'] ?? 0;
+                                    $salary_project_data->ctc = $compensatory_details['cic'] ?? 0;
+                                    $salary_project_data->epf_ee = $compensatory_details['epf_employee'] ?? 0;
+                                    $salary_project_data->employee_esic = $compensatory_details['esic_employee'] ?? 0;
+                                    $salary_project_data->prof_tax = $compensatory_details['professional_tax'] ?? 0;
+                                    $salary_project_data->income_tax = $compensatory_details['income_tax'] ?? 0;
+                                    $salary_project_data->sal_adv = $compensatory_details['sal_adv'] ?? 0;
+                                    $salary_project_data->canteen_dedn = $compensatory_details['canteen_dedn'] ?? 0;
+                                    $salary_project_data->other_deduc = $compensatory_details['other_deduc'] ?? 0;
+                                    $salary_project_data->lwf = $compensatory_details['lwf'] ?? 0;
+                                    $salary_project_data->total_deductions = $compensatory_details['total_deductions'] ?? 0;
+                                    $salary_project_data->net_take_home = $compensatory_details['net_income'] ?? 0;
+                                    $salary_project_data->rupees = $compensatory_details['rupees'] ?? 0;
+                                    $salary_project_data->el_opn_bal = $compensatory_details['el_opn_bal'] ?? 0;
+                                    $salary_project_data->availed_el = $compensatory_details['availed_el'] ?? 0;
+                                    $salary_project_data->balance_el = $compensatory_details['balance_el'] ?? 0;
+                                    $salary_project_data->sl_opn_bal = $compensatory_details['sl_opn_bal'] ?? 0;
+                                    $salary_project_data->availed_sl = $compensatory_details['availed_sl'] ?? 0;
+                                    $salary_project_data->balance_sl = $compensatory_details['balance_sl'] ?? 0;
+                                    $salary_project_data->rename = $compensatory_details['rename'] ?? 0;
+                                    $salary_project_data->greetings = $compensatory_details['greetings'] ?? 0;
+                                    $salary_project_data->stats_bonus = $compensatory_details['stats_bonus'] ?? 0;
+                                    $salary_project_data->email = $compensatory_details['email'] ?? 0;
+                                    $salary_project_data->earned_stats_bonus = $compensatory_details['Statutory_bonus'] ?? 0;
+                                    $salary_project_data->earned_stats_arrear = $compensatory_details['earned_stats_arrear'] ?? 0;
+                                    $salary_project_data->travel_conveyance = $compensatory_details['travel_conveyance'] ?? 0;
+                                    $salary_project_data->other_earnings = $compensatory_details['other_earnings'] ?? 0;
                                     $salary_project_data->save();
                                 }
 

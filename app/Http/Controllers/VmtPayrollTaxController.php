@@ -15,7 +15,7 @@ public function getEmpCompValues(Request $request, VmtPayrollTaxService $vmtPayr
 }
 public function annualProjection(Request $request, VmtPayrollTaxService $vmtPayrollTaxService){
 
-    return $vmtPayrollTaxService->annualProjection();
+    return $vmtPayrollTaxService->getAnnualProjection();
 
 }
 
