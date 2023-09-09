@@ -627,8 +627,16 @@ class VmtReportsController extends Controller
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
+        $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
+        $headers = array();
+        foreach ($emp_ctc_data[0] as $key => $value) {
+            $headings = $key;
+            array_push($headers, $headings);
+        }
+        $response['headers'] =   $headers;
+        $response['rows'] = $emp_ctc_data;
 
-        return $reportsService->getEmployeesCTCDetails();
+        return $response ;
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -636,57 +644,15 @@ class VmtReportsController extends Controller
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
-        $response = array();
-        $headings = array();
         $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
-        $temp_ar = array();
-        foreach ($emp_ctc_data as $singleemployeedata) {
-
-            $temp_ar['Employee Code'] = $singleemployeedata->user_code;
-            $temp_ar['Employee Name'] = $singleemployeedata->name;
-            $temp_ar['Gender'] = $singleemployeedata->Gender;
-            $temp_ar['Designation'] = $singleemployeedata->designation;
-            $temp_ar['Emplpoyee_Status'] = $singleemployeedata->active;
-            $temp_ar['DOB (DD/MM/YYYY)'] =  $singleemployeedata->dob;
-            $temp_ar['DOJ (DD/MM/YYYY)'] =  $singleemployeedata->doj;
-            $temp_ar['PAN Number'] =  $singleemployeedata->pan_number;
-            $temp_ar['Aadhar Number'] =  $singleemployeedata->aadhar_number;
-            $temp_ar['Mobile Number'] =  $singleemployeedata->mobile_number;
-            $temp_ar['Email ID'] =  $singleemployeedata->email;
-            $temp_ar['UAN NO'] =  $singleemployeedata->uan_number;
-            $temp_ar['EPF Number'] =  $singleemployeedata->epf_number;
-            $temp_ar['ESIC Number'] =  $singleemployeedata->esic_number;
-            $temp_ar['Bank Name'] =  $singleemployeedata->bank_name;
-            $temp_ar['Bank Account No'] =  $singleemployeedata->bank_account_number;
-            $temp_ar['IFSC Code'] =  $singleemployeedata->bank_ifsc_code;
-            $temp_ar['Basic'] =  $singleemployeedata->basic;
-            $temp_ar['House Rent Allowance'] =  $singleemployeedata->hra;
-            $temp_ar['Special Allowance'] =  $singleemployeedata->special_allowance;
-            $temp_ar['Fixed Gross'] =  $singleemployeedata->gross;
-            $temp_ar['EPFER'] =  $singleemployeedata->epf_employer_contribution;
-            $temp_ar['EDLI Charges'] =  $singleemployeedata->epf_employer_contribution;
-            $temp_ar['PF ADMIN Charges'] =  $singleemployeedata->pf_admin_charges;
-            $temp_ar['ESICER'] =  $singleemployeedata->esic_employer_contribution;
-            $temp_ar['Insurance'] =  $singleemployeedata->insurance;
-            $temp_ar['LWFER'] =  $singleemployeedata->labour_welfare_fund;
-            $temp_ar['CTC'] =  $singleemployeedata->cic;
-            $temp_ar['EPFEE'] =  $singleemployeedata->epf_employee;
-            $temp_ar['ESICEE'] =  $singleemployeedata->esic_employee;
-            $temp_ar['Income Tax'] =  $singleemployeedata->Income_tax;
-            $temp_ar['Professional Tax'] =  $singleemployeedata->professional_tax;
-            $temp_ar['LWFEE '] =  $singleemployeedata->lwfee;
-            $temp_ar['totaldeduction'] =   (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE '];
-            $temp_ar['NET Pay '] =  $singleemployeedata->net_income;
-            array_push($response, $temp_ar);
-            // unset( $temp_ar);
-        }
-            // array_push($response, $temp_ar);
         $headers = array();
-        foreach ($temp_ar as $key => $value) {
+        foreach ($emp_ctc_data as $key => $value) {
             $headings = $key;
             array_push($headers, $headings);
         }
-
-        return Excel::download(new EmployeeBasicCtcExport($response,$headers), 'Employees CTC Report.xlsx');
+        $client_name = sessionGetSelectedClientName();
+        $client_logo_path = session()->get('client_logo_url');
+        $public_client_logo_path = public_path($client_logo_path);
+        return Excel::download(new EmployeeBasicCtcExport($emp_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
     }
 }

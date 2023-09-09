@@ -5,74 +5,78 @@
 
         <!-- Navigation Bar -->
 
-        <div class="p-2 pb-0 mb-3 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
-
-            <ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
-                <li class="nav-item " role="presentation">
-                    <a class="mx-3 nav-link" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
-                        aria-selected="true" @click="investmentStore.investment_exemption_steps = 1"
-                        :class="[investmentStore.investment_exemption_steps === 1 ? 'active' : '']">
-                        HRA
-                    </a>
-                </li>
-
-                <li class=" nav-item" role="presentation">
-                    <a class="mx-3 nav-link " id="" data-bs-toggle="pill" href=""
-                        @click="investmentStore.investment_exemption_steps = 2"
-                        :class="[investmentStore.investment_exemption_steps === 2 ? 'active' : '']" role="tab"
-                        aria-controls="" aria-selected="true">
-                        Section 80C & 80CCC
-                    </a>
-                </li>
-                <li class="nav-item " role="presentation">
-                    <a class="mx-2 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""
-                        @click="investmentStore.investment_exemption_steps = 3"
-                        :class="[investmentStore.investment_exemption_steps === 3 ? 'active' : '']" role="tab"
-                        aria-controls="" aria-selected="true">
-
-                        Other Exemptions
-                    </a>
-                </li>
-                <li class=" nav-item" role="presentation">
-                    <a class="mx-3 nav-link " id="" data-bs-toggle="pill" href=""
-                        @click="investmentStore.investment_exemption_steps = 4"
-                        :class="[investmentStore.investment_exemption_steps === 4 ? 'active' : '']" role="tab"
-                        aria-controls="" aria-selected="true">
-                        House Property
-                    </a>
-                </li>
-
-
-                <li class="nav-item " role="presentation"  v-if="investmentStore.reimbursmentSource">
-                    <a class="mx-2 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""
-                        @click="investmentStore.investment_exemption_steps = 5"
-                        :class="[investmentStore.investment_exemption_steps === 5 ? 'active' : '']" role="tab"
-                        aria-controls="" aria-selected="true">
-                        Reimbursement
-                    </a>
-                </li>
-                <li class=" nav-item" role="presentation" v-if="investmentStore.previousEmployeerIncomeSource">
-                    <a class="mx-3 nav-link" id="" data-bs-toggle="pill" href=""
-                        @click="investmentStore.investment_exemption_steps = 6"
-                        :class="[investmentStore.investment_exemption_steps === 6 ? 'active' : '']" role="tab"
-                        aria-controls="" aria-selected="true">
-                        Previous Employer Income
-                    </a>
-                </li>
-
-
-                <li class="nav-item " role="presentation">
-                    <a class="mx-2 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""
-                        @click="investmentStore.investment_exemption_steps = 7"
-                        :class="[investmentStore.investment_exemption_steps === 7 ? 'active' : '']" role="tab"
-                        aria-controls="" aria-selected="true">
-                        Other Source Of Income
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
+        <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3 " id="pills-tab" role="tablist">
+            <!-- hra -->
+                    <li class=" nav-item" role="presentation">
+                        <a class="px-2 position-relati3e border-0 font-['poppins'] text-[12px]  text-[#001820]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            aria-selected="true" @click="investmentStore.investment_exemption_steps = 1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            HRA
+                        </a>                      
+                        <div v-if="investmentStore.investment_exemption_steps === 1" class="h-1 rounded-l-3xl " style="border: 2px solid #F9BE00 !important;" ></div>
+                        <div v-else class=" border-2 h-1 rounded-l-3xl border-gray-300"></div>
+                    </li>
+           <!--   Section 80C & 80CCC -->
+                    <li class=" nav-item position-relative  border-0" role="presentation">
+                        <a class=" text-center px-3  border-0 font-['poppins'] text-[12px]  text-[#001820]" id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 2"
+                            :class="[investmentStore.investment_exemption_steps === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            Section 80C & 80CCC
+                        </a>
+                        <div v-if="investmentStore.investment_exemption_steps === 2"
+                            class=" h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1  border-gray-300"></div>
+                    </li>
+                      <!--   Other Exemptions -->
+                    <li class=" nav-item position-relative  border-0" role="presentation">
+                        <a class=" text-center px-3  border-0 font-['poppins'] text-[12px]  text-[#001820]" id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 3"
+                            :class="[investmentStore.investment_exemption_steps === 3 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            Other Exemptions
+                        </a>
+                        <div v-if="investmentStore.investment_exemption_steps === 3"
+                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
+                    </li>
+                    <!--  House Property -->
+                    <li class=" nav-item position-relative  border-0" role="presentation">
+                        <a class=" text-center px-3  border-0 font-['poppins'] text-[12px]  text-[#001820]" id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 4"
+                            :class="[investmentStore.investment_exemption_steps === 4 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            House Property
+                        </a>
+                        <div v-if="investmentStore.investment_exemption_steps === 4"
+                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
+                    </li>
+                    <!-- Reimbursement -->
+                    <li class=" nav-item position-relative  border-0" role="presentation" v-if="investmentStore.reimbursmentSource">
+                        <a class=" text-center px-3  border-0 font-['poppins'] text-[12px]  text-[#001820]" id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 5"
+                            :class="[investmentStore.investment_exemption_steps === 5 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            Reimbursement
+                        </a>
+                        <div v-if="investmentStore.investment_exemption_steps === 5" 
+                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
+                    </li>
+                     <!--   Previous Employer Income -->
+                    <li class=" nav-item position-relative  border-0" role="presentation" v-if="investmentStore.previousEmployeerIncomeSource" >
+                        <a class=" text-center px-3  border-0 font-['poppins'] text-[12px]  text-[#001820]" id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 6"
+                            :class="[investmentStore.investment_exemption_steps === 6 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            Previous Employer Income
+                        </a>
+                        <div v-if="investmentStore.investment_exemption_steps === 6"
+                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
+                    </li>
+                    <!-- Other Source Of Income -->
+                    <li class=" nav-item position-relative  border-0" role="presentation">
+                        <a class=" text-center px-3  border-0 font-['poppins'] text-[12px]  text-[#001820]" id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 7"
+                            :class="[investmentStore.investment_exemption_steps === 7 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                            Other Source Of Income
+                        </a>
+                        <div v-if="investmentStore.investment_exemption_steps === 7"
+                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                        <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
+                    </li>
+                    <div class="border-gray-300 border-b-[4px]  w-100 mt-[-7px]"></div>
+        </ul>
 
 
         <!-- Tab Content -->
@@ -102,6 +106,11 @@
             </div>
 
         </div>
+
+
+
+
+
     </div>
 </template>
 

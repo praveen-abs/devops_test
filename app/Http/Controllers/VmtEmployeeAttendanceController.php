@@ -26,6 +26,7 @@ use App\Exports\DetailedAttendanceExport;
 use App\Exports\OverTimeReportExport;
 use App\Exports\EarlyGoingReportExport;
 use App\Exports\HalfDayReportExport;
+use App\Exports\InvestmentsReportsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -171,8 +172,8 @@ class VmtEmployeeAttendanceController extends Controller
     public function fetchHalfDayReportData(Request $request, VmtAttendanceReportsService $attendance_report_service){
         $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
         $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
-        // $start_date = '2023-07-25';
-        // $end_date = '2023-07-28';
+        $start_date = '2023-07-25';
+        $end_date = '2023-07-28';
         $response = $attendance_report_service->fetchHalfDayReportData($start_date, $end_date);
         return $response;
 
@@ -207,10 +208,18 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $start_date = "2022-07-15";
          $end_date = "2022-11-02";
-          $client_domain = "";
+        $client_domain = "";
         $response = $attendance_report_service->shiftTimeForEmployee($start_date, $end_date, $client_domain);
         return $response;
     }
+
+    public function downloadInvestmentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+
+
+        return Excel::download(new InvestmentsReportsExport($attendance_report_service->fetchInvestmentTaxReports()),'Investments Report.xlsx');
+    }
+
 
 
     public function showLateComingReport(Request $request)

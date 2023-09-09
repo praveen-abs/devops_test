@@ -8,8 +8,8 @@
         <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Leave Balance</span>
         <div class="h-full overflow-x-scroll bg-white rounded-lg">
             <div class="px-auto">
-                <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type"
-                    class="p-2 mx-2 my-2 transition duration-700 ease-in-out bg-[#E4ECFF] rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100 ">
+                <a href="attendance-leave" v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type"
+                    class="p-2 block mx-2 my-2 transition duration-700 ease-in-out bg-[#E4ECFF] rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100 ">
                     <div class="flex px-2 ">
                             <div class="">
                                 <span class="text-3xl font-semibold text-black">{{ leaveBalance.leave_balance }}</span>
@@ -20,7 +20,7 @@
                             <p class=" font-semibold text-primary text-[14px] align-bottom  py-2">{{ leaveBalance.leave_type }}</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

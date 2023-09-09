@@ -9,7 +9,7 @@
                 <img src="./assests/images/ABS_logo_Yellow.png" class="h-8 w-[180px]" alt="" v-if="isActive">
             </button>
         </div>
-        <template v-for="(menu, index) in menuItems" :key="index" class="relative" >
+        <template v-for="(menu, index) in menuItems" :key="index" >
             <div class="" v-if="menu">
                 <a v-if="open" role="button" @click="toggleMenu(index), menu.subItems ? ' ' : redirectModule(menu.to)"
                     :class="{

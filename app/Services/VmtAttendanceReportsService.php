@@ -11,6 +11,9 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeePayroll;
+use App\Models\VmtPayroll;
+use App\Models\AbsSalaryProjection;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
@@ -2489,18 +2492,19 @@ class VmtAttendanceReportsService
         return $response;
     }
     public function fetchMIPReportData($date)
-   {
-    try{
-               $client_id =sessionGetSelectedClientid();
+    {
+        try {
+            $client_id = sessionGetSelectedClientid();
 
-               $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
+            $user_data = User::where('client_id', $client_id)->get(["id", "name", "user_code", "client_id", "email"])->toarray();
 
-               $dateString  = Carbon::parse($date)->format('Y-m-d');
+            $dateString  = Carbon::parse($date)->format('Y-m-d');
 
-     foreach($user_data as $key =>$single_user_data){
+            foreach ($user_data as $key => $single_user_data) {
 
-      if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-            || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                if (
+                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
                 ) {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -2542,27 +2546,24 @@ class VmtAttendanceReportsService
                 if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
                     $deviceData[] = array(
                         'date' => $dateString,
-                        'user_code'=>$single_user_data['user_code'],
-                        'user_code'=>$single_user_data['name'],
+                        'user_code' => $single_user_data['user_code'],
+                        'user_code' => $single_user_data['name'],
                         'checkin_time' => $deviceCheckInTime,
                         'checkout_time' => $deviceCheckOutTime,
                         'attendance_mode_checkin' => 'biometric',
                         'attendance_mode_checkout' => 'biometric'
                     );
                 }
-
             }
-                  return $deviceData;
-
-            }catch(\Exception $e){
-                return response()->json([
-                     'status'=>"failure",
-                     'message'=>"",
-                     'data'=>$e->getmessage(),
-                ]);
-            }
-
-   }
+            return $deviceData;
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => "failure",
+                'message' => "",
+                'data' => $e->getmessage(),
+            ]);
+        }
+    }
 
     public function fetchOvertimeReportData($start_date, $end_date)
     {
@@ -2651,5 +2652,125 @@ class VmtAttendanceReportsService
         $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
         $response['rows'] = $otData;
         return $response;
+    }
+    public function fetchInvestmentTaxReports()
+    {
+        $reportsdata = array();
+
+        $client_id = "2";
+
+        $payroll_month = "2023-06-01";
+
+        $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+            ->where("users.active", "1")
+            ->where("users.client_id", $client_id)
+            ->get([
+                'users.id as user_id',
+                'users.user_code as Employee Code',
+                'users.name as Employee Name',
+                'vmt_employee_details.gender as Gender',
+                'vmt_employee_details.pan_number as PAN Number',
+                'vmt_employee_details.dob as Date Of Birth',
+                'vmt_employee_details.doj as Date Of Joining',
+                'vmt_employee_statutory_details.tax_regime as Tax Regime'
+            ]);
+
+     $employee_salary_details = array();
+
+        foreach ($Employee_details as $key => $single_user) {
+
+            $payroll_date = VmtPayroll::where('payroll_date',  $payroll_month)->where('client_id', $client_id)->first();
+
+            if (!empty($payroll_date)) {
+
+                $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_user['user_id'])->first();
+            }
+
+            $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
+
+            if ($employee_projected_salary->exists()) {
+
+                $employee_salary_details[$key]["Employee Code"] =$single_user['Employee Code'] ;
+                $employee_salary_details[$key]["Employee Name"] =$single_user['Employee Name'] ;
+                $employee_salary_details[$key]["Gender"] =$single_user['Gender'];
+                $employee_salary_details[$key]["PAN Number"] =$single_user['PAN Number'];
+                $employee_salary_details[$key]["Date Of Birth"] =$single_user['Date Of Birth'];
+                $employee_salary_details[$key]["Date Of Joining"] =$single_user['Date Of Joining'];
+                $employee_salary_details[$key]["Tax Regime"] =$single_user['Tax Regime'];
+                $employee_salary_details[$key]["Basic"] =$employee_projected_salary->sum('earned_basic');
+                $employee_salary_details[$key]["Basic Arrears"] =$employee_projected_salary->sum('basic_arrear');
+                $employee_salary_details[$key]["Dearness Allowance"] =0;
+                $employee_salary_details[$key]["Dearness Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Variable Dearness Allowance"] =0;
+                $employee_salary_details[$key]["Vairable Dearness Allowance Arrears"] =0;
+                $employee_salary_details[$key]["HRA"] =$employee_projected_salary->sum('earned_hra');
+                $employee_salary_details[$key]["HRA Arrears"] =$employee_projected_salary->sum('hra_arrear');
+                $employee_salary_details[$key]["Child Education Allowance"] =$employee_projected_salary->sum('earned_child_edu_allowance');
+                $employee_salary_details[$key]["Child Education Allowance Arrears"] =$employee_projected_salary->sum('child_edu_allowance_arrear');
+                $employee_salary_details[$key]["Statutory Bonus"] =$employee_projected_salary->sum('earned_stats_bonus');
+                $employee_salary_details[$key]["Statutory Bonus Arrears"] =$employee_projected_salary->sum('earned_stats_arrear');
+                $employee_salary_details[$key]["Medical Allowance"] =0;
+                $employee_salary_details[$key]["Medical Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Communicaton Allowance"] =0;
+                $employee_salary_details[$key]["Communication Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Leave Travel Allowance"] =0;
+                $employee_salary_details[$key]["Leave Travel Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Food Allowance"] =0;
+                $employee_salary_details[$key]["Food Allowance Arrear"] =0;
+                $employee_salary_details[$key]["Special Allowance"] =$employee_projected_salary->sum('earned_spl_alw');
+                $employee_salary_details[$key]["Special Allowance Arrears"] =$employee_projected_salary->sum('spl_alw_arrear');
+                $employee_salary_details[$key]["Other Allowance"] =0;
+                $employee_salary_details[$key]["Washing Allowance"] =0;
+                $employee_salary_details[$key]["Washing Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Uniform Allowance"] =0;
+                $employee_salary_details[$key]["Uniform Allowance Arrears"] =0;
+                $employee_salary_details[$key]["Vehicle Reimbursement"] =0;
+                $employee_salary_details[$key]["Vehicle Reimbursement Arrears"] =0;
+                $employee_salary_details[$key]["Driver Salary Reimbursment"] =0;
+                $employee_salary_details[$key]["Driver Salary Reimbursment Arrears"] =0;
+                $employee_salary_details[$key]["Arrears"] =$employee_projected_salary->sum('basic_arrear','basic_arrear')+ 0 + 0 + $employee_projected_salary->sum('hra_arrear')+$employee_projected_salary->sum('hra_arrear') +
+                                                            $employee_projected_salary->sum('child_edu_allowance_arrear') + $employee_projected_salary->sum('earned_stats_arrear') + 0
+                                                            + 0 + 0 + 0 + $employee_projected_salary->sum('spl_alw_arrear') + 0 + 0 + 0 + 0 ;
+
+                $employee_salary_details[$key]["Overtime"] =$employee_projected_salary->sum('overtime');
+                $employee_salary_details[$key]["Overtime Arrears"] =0;
+                $employee_salary_details[$key]["Incentive"] =0;
+                $employee_salary_details[$key]["Other Earnings"] =$employee_projected_salary->sum('other_earnings');
+                $employee_salary_details[$key]["Referral Bonus"] =0;
+                $employee_salary_details[$key]["Annual Statutory Bonus"] =$employee_projected_salary->sum('earned_stats_bonus');
+                $employee_salary_details[$key]["Ex-Gratia"] =0;
+                $employee_salary_details[$key]["Attendance Bonus"] =0;
+                $employee_salary_details[$key]["Leave Encashments"] =0;
+                $employee_salary_details[$key]["Gift"] =0;
+                $employee_salary_details[$key]["Annual Gross Salary"] =0;
+
+
+
+            }
+
+        }
+
+        $salary_data['headers'] = array('Employee Code','Employee Name','Gender','PAN Number','Date Of Birth','Date Of Joining','Tax Regime','Basic','Basic Arrears',
+        'Dearness Allowance','Dearness Allowance Arrears','Variable Dearness Allowance','Vairable Dearness Allowance Arrears','HRA','HRA Arrears','Child Education Allowance',
+        'Child Education Allowance Arrears','Statutory Bonus','Statutory Bonus Arrears','Medical Allowance','Medical Allowance Arrears','Communicaton Allowance','Communication Allowance Arrears', 'Leave Travel Allowance',
+        'Leave Travel Allowance Arrears','Food Allowance','Food Allowance Arrears','Special Allowance','Special Allowance Arrears','Other Allowance','Other Allowance Arrears',
+        'Washing Allowance','Washing Allowance Arrears','Uniform Allowance','Uniform Allowance Arrears','Vehicle Reimbursement','Vehicle Reimbursement Arrears','Driver Salary Reimbursment',
+        'Driver Salary Reimbursment Arrears','Arrears','Overtime','Overtime Arrears','Incentive','Other Earnings','Referral Bonus','Annual Statutory Bonus','Ex-Gratia','Attendance Bonus',
+        // 'Daily Allowance','Leave Encashments','Gift','Annual Gross Salary','HRA - Exemptions','CEA - Exemptions','LTA Exemptions','Previous Employer Income','Previous Employer PT',
+        // 'Previous Standard Deduction u/s 16(ia)','Gross Total Income','(a) Salary as per provisions contained in sec.17(1)','(b) Value of perquisites u/s 17(2)','(c) Profits in lieu of salary under section 17(3)',
+        // '(d) Total','2. Less: Allowance to the extent exempt u/s 10','3. Balance (1-2)','(a) Standard Deduction u/s 16(ia)','(b) Entertainment allowance u/s 16(ii)','(c) Tax on employment u/s 16(iii)',
+        // '5. Aggregate of 4(a), (b) and (c)', '6. Income chargeable under head salaries(3-5)','(a) Deductions u/s 24 - Interest','(b) Other Source Of Income','(c) 80EE Additional interest on House property','8. Gross total income (6+7)',
+        // 'i) Provident Fund','(ii) Voluntary Provident Fund','(iii) National Savings Certificate','(iv) Children Tuition Fees','(v) Mutual Fund / ELSS / ULIP / SIP','(vi) Housing Loan Principal repayment',
+        // '(vii) Life Insurance Premium','(viii) Sukanya Samriddhi Scheme','(ix) Others / Fixed Deposit (5 years) & Term Deposit','(x) NSC Accrued Interest / Approved Superannuation','(xi) Public Provident Fund',
+        // '(xii) Life Insurance Pension Scheme (section 80CCC)','(xiii) Employee Contribution NPS (section 80CCD) (1)','(xiv) Employee Contribution NPS (section 80CCD) (2)','Section 80CCE Total','(a) 80D Mediclaim-Self', '(b) 80D Mediclaim -Parents','(c) 80DD Handicapped Dependents',
+        // '(d) 80DDB Medical Expenses - Chronic Diseases','(e) 80E Interest on Loan taken for Higher Education','(f) 80U Permanent Physical disability','(g) 80G Donation','(h) 80GG Rent paid (HRA not received)', '(i) 80TTA Deduction of interest on savings account',
+        // '(j) 80EEA interest on certain house property','(k) 80EEB Purchase of electric vehicle','10. Aggregate of deductible amount under Chapter VI-A','11.Total Income (8-10)','12.Tax on total income','13. Rebate u/s 87A (Taxable Income below Rs.5,00,000',
+        // '14.Total Income Tax	15.Surcharge','16.Education Cess @4% (On Tax computed at (14 & 15)','17.Tax Payable (14+15+16)','18.Less: Relief under section 89','19.Tax Payable (17-18)','20.Tax Deducted Till Date', '21.Previous Employer TDS','22.Tax Due (19-20-21)','23.Tax Deduction Per Month'
+         );
+        $salary_data['rows'] = $employee_salary_details;
+        array_push($reportsdata,$salary_data['headers'],$salary_data['rows']);
+
+        return $reportsdata;
     }
 }
