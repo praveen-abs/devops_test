@@ -5,7 +5,7 @@
             <div>
                 <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color " style="height: 3em; "  />
 
-                <Dropdown optionLabel="name" :options="dropdown" placeholder="Select Category" class="w-[200px] mx-2" />
+                <Dropdown optionLabel="name"  optionValue="id" :options="dropdown" v-model="selectCategory" @change="UseEmployeeMaster.sentcategory(selectCategory)" placeholder="Select Category" class="w-[200px] mx-2" />
 
                 <button class=" px-3 py-2 bg-black text-white rounded-lg hover:bg-sky-700 " @click="UseEmployeeMaster.getEmployeeCTC" >Clear All</button>
 
@@ -49,6 +49,8 @@ onMounted(()=>{
     UseEmployeeMaster.getEmployeeCTC();
     // fetchFilterClientIds();
 });
+
+const selectCategory = ref();
 
 const dropdown = ref([
     {name: "Active" , id:1},

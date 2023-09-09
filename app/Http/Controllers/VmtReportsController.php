@@ -626,7 +626,8 @@ class VmtReportsController extends Controller
     public function getEmployeesCTCDetails(Request $request, VmtReportsservice $reportsService)
     {
 
-        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id);
+
+        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status);
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)

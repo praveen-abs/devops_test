@@ -42,7 +42,7 @@ class VmtReportsservice
         }
         return $response;
     }
-    public function getEmployeesCTCDetails($type,$client_id)
+    public function getEmployeesCTCDetails($type, $client_id, $active_status)
     {
 
         $validator = Validator::make(
@@ -72,9 +72,17 @@ class VmtReportsservice
                 if(empty($client_id)){
                     $client_id = VmtClientMaster::pluck('id');
                 }else{
-                    $client_id = VmtClientMaster::where('id', $client_id)->get(['id']);
+                    $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
                 }
              
+
+                if(empty($active_status)){
+                    $active_status = ['1','0','-1'];
+                }else{
+                    $active_status = [$active_status];
+                }
+        
+               
 
                 $date = Carbon::now()->format('M-Y');
                 $Category = 'All';
@@ -91,6 +99,7 @@ class VmtReportsservice
                     ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                     // ->where('vmt_employee_details.doj','<',$date)
                     ->whereIn('users.client_id',$client_id)
+                    ->whereIn('users.active',$active_status)
                     ->get();
 
                 foreach ($emp_ctc_detail as $singleemployeedata) {
