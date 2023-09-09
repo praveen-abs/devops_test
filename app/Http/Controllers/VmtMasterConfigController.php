@@ -14,6 +14,7 @@ use App\Models\VmtClientSubModules;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
 use App\Services\VmtMobileConfigService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class VmtMasterConfigController extends Controller
 {
@@ -112,68 +113,15 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function fetchMobileModuleData( Request $request ,VmtMobileConfigService $serviceVmtMasterConfigService){
+    public function getAppModules( Request $request ,VmtMobileConfigService $serviceVmtMobileConfigService){
 
-
-
-        try{
-        $client_id =$request->client_id ;
-
-        $module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->pluck('id');
-
-        $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
-                                                    ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
-                                                    ->join("vmt_client_sub_modules","vmt_client_sub_modules.app_sub_module_link_id","=","vmt_app_sub_modules_links.id")
-                                                    ->where("vmt_app_sub_modules_links.module_id","=",$module_id)
-                                                    ->where("vmt_client_sub_modules.client_id","=",$client_id)
-                                                    ->get(["vmt_client_sub_modules.app_sub_module_link_id as id",
-                                                                    "vmt_app_sub_modules_links.module_id",
-                                                                    "vmt_app_sub_modules_links.sub_module_id",
-                                                                    "vmt_app_modules.module_name",
-                                                                    "vmt_app_sub_modules.sub_module_name",
-                                                                    "vmt_client_sub_modules.status",
-                                                                    "vmt_client_sub_modules.client_id"]);
-
-
-        foreach ($mobile_settings_data as $key => $single_value) {
-
-             $emp_data =VmtEmpSubModules::where("client_id",$single_value['client_id'])->where("app_sub_module_link_id",$single_value['id'])->pluck('user_id');
-             $emp_data=$emp_data->toarray();
-
-             if(!empty($emp_data)){
-
-                $emp_count =count($emp_data);
-             }else{
-                $emp_count=0;
-             }
-            $mobile_settings_data[$key]['employee_count'] =  $emp_count;
-        }
-
-
- // $employee_count =
-
-         return response()->json([
-                "status" => "success",
-                "message" => "Data fetch successfully",
-                "data" => $mobile_settings_data,
-            ]);
-
-        }catch(\Exception $e){
-
-            return response()->json([
-                "status" => "failure",
-                "message" => "error while fetching data",
-                "data" => $e->getmessage(),
-
-            ]);
-
-        }
-
+        return  $serviceVmtMobileConfigService->getAppModules($request->client_id);
     }
 
     public function getAllDropdownFilterSetting(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
 
         return  $serviceVmtMobileConfigService->getAllDropdownFilterSetting();
+
 
     }
 

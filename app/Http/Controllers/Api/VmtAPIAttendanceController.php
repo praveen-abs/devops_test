@@ -305,32 +305,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
-        //Validate the request
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-                'attendance_date' => 'required',
-                'regularization_type' => 'required',
-                'user_time' => 'nullable', //For MIP,MOP : its null
-                'regularize_time' => 'required',
-                'reason' => 'required',
-                'custom_reason' => 'nullable', //Send empty string even if no custom reason needed
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                //'integer' => 'Field :attribute should be integer',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
         //Fetch the data
         $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason,"manager",serviceVmtNotificationsService: $serviceVmtNotificationsService);
 
