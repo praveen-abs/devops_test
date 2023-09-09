@@ -13,7 +13,10 @@ class VmtSalaryRevisionController extends Controller
         return  $vmtSalaryRevisionService->getAllEmployeeData();
     }
     
+    public function getAllEmployeeData(Request $request, VmtSalaryRevisionService $vmtSalaryRevisionService){
 
+        return  $vmtSalaryRevisionService->getAllEmployeeData();
+    }
 
 
 
