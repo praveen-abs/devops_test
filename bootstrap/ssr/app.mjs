@@ -1,4 +1,4 @@
-/* empty css                        *//* empty css                               *//* empty css                             *//* empty css                           */import { mergeProps, unref, useSSRContext, createApp } from "vue";
+/* empty css                        *//* empty css                               *//* empty css                             *//* empty css                           */import { useSSRContext, createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import AutoComplete from "primevue/autocomplete";
@@ -97,11 +97,9 @@ import TreeTable from "primevue/treetable";
 import TriStateCheckbox from "primevue/tristatecheckbox";
 import VirtualScroller from "primevue/virtualscroller";
 import { r as router } from "./assets/router-68750eaf.mjs";
-import { ssrRenderAttrs, ssrInterpolate, ssrRenderComponent } from "vue/server-renderer";
-import dayjs from "dayjs";
-import { _ as _export_sfc } from "./assets/_plugin-vue_export-helper-cc2b3d55.mjs";
-import { _ as _sfc_main$7, a as _sfc_main$8 } from "./assets/events-a633ed8d.mjs";
-import "./assets/dashboard_service-cf4be887.mjs";
+import Chart from "primevue/chart";
+import { ssrRenderComponent } from "vue/server-renderer";
+import { _ as _sfc_main$1 } from "./assets/attendanceDashboard-ef8ee2a2.mjs";
 import "vue-router";
 import "axios";
 import "primevue/usetoast";
@@ -110,82 +108,9 @@ import "xlsx";
 import "./assets/NormalOnboardingMainStore-4efea4c0.mjs";
 import "@vuelidate/core";
 import "@vuelidate/validators";
-import "autoprefixer";
-const _sfc_main$6 = {
-  __name: "org_employee_details",
-  __ssrInlineRender: true,
-  setup(__props) {
-    return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full" }, _attrs))}><p class="font-[14px] font-[&#39;Poppins&#39;] text-gray-500"> Current month - <span class="mb-2 text-xl font-semibold">${ssrInterpolate(unref(dayjs)(new Date()).format("MMMM"))}</span></p><div class="grid grid-cols-4 gap-3 my-2"><div class="bg-[#F6F6F6] rounded-lg p-2"><div class="px-auto flex justify-center"><span class="text-3xl font-semibold text-center"> 100 </span></div><p class="text-lg font-semibold text-center text-gray-500">Total Employees</p></div></div></div>`);
-    };
-  }
-};
-const _sfc_setup$6 = _sfc_main$6.setup;
-_sfc_main$6.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/hrms/modules/dashboard/hr_dashboard/org_employee_details/org_employee_details.vue");
-  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
-};
-const _sfc_main$5 = {};
-const _sfc_setup$5 = _sfc_main$5.setup;
-_sfc_main$5.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/hrms/modules/dashboard/hr_dashboard/tasks/task.vue");
-  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
-};
-const _sfc_main$4 = {};
-const _sfc_setup$4 = _sfc_main$4.setup;
-_sfc_main$4.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/hrms/modules/dashboard/hr_dashboard/employee_status/employee_status.vue");
-  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
-};
-const _sfc_main$3 = {};
-function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
-  _push(`<div${ssrRenderAttrs(mergeProps({
-    class: "p-2 overflow-hidden bg-white rounded-lg",
-    style: { "height": "200px" }
-  }, _attrs))}><span class="font-semibold text-[14px] text-[#000] font-[&#39;Poppins]">Leave Balance</span><div class="h-full overflow-x-scroll bg-white rounded-lg"><div class="px-auto"><div class="p-2 my-2 transition duration-700 ease-in-out bg-[#E4ECFF] rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100"><div class="flex px-2 justify-between items-center"><div><span class="text-[14px] font-semibold">Document update</span></div><div class="flex items-center gap-6"><span class="text-xl font-semibold text-black">1</span><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></div></div></div></div></div></div>`);
-}
-const _sfc_setup$3 = _sfc_main$3.setup;
-_sfc_main$3.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/hrms/modules/dashboard/hr_dashboard/leave_requests/leave_request.vue");
-  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
-};
-const LeaveRequest = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender]]);
-const _sfc_main$2 = {};
-const _sfc_setup$2 = _sfc_main$2.setup;
-_sfc_main$2.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/hrms/modules/dashboard/hr_dashboard/overall_employees/overall_employee.vue");
-  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
-};
-const _sfc_main$1 = {
-  __name: "hr_dashboard",
-  __ssrInlineRender: true,
-  setup(__props) {
-    return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "h-screen p-3 overflow-auto" }, _attrs))}><div class="grid grid-cols-12 gap-4"><div class="col-span-8"><div class="col-span-12 w-[100%] !rounded-[20px] bg-white p-2">`);
-      _push(ssrRenderComponent(_sfc_main$6, null, null, _parent));
-      _push(`</div><div class="col-span-12 !rounded-[20px]"><div class="grid grid-cols-12 gap-4 my-2"><div class="!rounded-[20px] overflow-hidden bg-red-100 col-span-5">`);
-      _push(ssrRenderComponent(LeaveRequest, null, null, _parent));
-      _push(`</div><div class="!rounded-[20px] overflow-hidden bg-white col-span-7"><p class="text-center">Employee count in graph</p></div></div></div><div class="col-span-12">`);
-      _push(ssrRenderComponent(_sfc_main$7, null, null, _parent));
-      _push(`</div></div><div class="col-span-4 w-[100%] !rounded-[20px]"><div>`);
-      _push(ssrRenderComponent(LeaveRequest, null, null, _parent));
-      _push(`</div><div class="py-3">`);
-      _push(ssrRenderComponent(_sfc_main$8, null, null, _parent));
-      _push(`</div></div></div></div>`);
-    };
-  }
-};
-const _sfc_setup$1 = _sfc_main$1.setup;
-_sfc_main$1.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/hrms/modules/dashboard/hr_dashboard/hr_dashboard.vue");
-  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
-};
+import "dayjs";
+import "./assets/_plugin-vue_export-helper-cc2b3d55.mjs";
+import "./assets/LoadingSpinner-13fb7de2.mjs";
 const _sfc_main = {
   __name: "second",
   __ssrInlineRender: true,
@@ -301,4 +226,5 @@ app.component("TreeSelect", TreeSelect);
 app.component("TreeTable", TreeTable);
 app.component("TriStateCheckbox", TriStateCheckbox);
 app.component("VirtualScroller", VirtualScroller);
+app.component("Chart", Chart);
 app.mount("#app");

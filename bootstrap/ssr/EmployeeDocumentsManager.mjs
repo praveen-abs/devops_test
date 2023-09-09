@@ -1,4 +1,4 @@
-/* empty css                        *//* empty css                               *//* empty css                             */import { onMounted, ref, resolveComponent, mergeProps, unref, withCtx, createTextVNode, toDisplayString, openBlock, createBlock, createVNode, createCommentVNode, useSSRContext, createApp } from "vue";
+/* empty css                        *//* empty css                               *//* empty css                             */import { onMounted, ref, reactive, resolveComponent, mergeProps, unref, withCtx, createTextVNode, toDisplayString, openBlock, createBlock, createVNode, createCommentVNode, useSSRContext, createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
@@ -48,6 +48,9 @@ const _sfc_main = {
     const documentPath = ref();
     ref();
     const uploadDocs = ref();
+    const upload_ref = reactive({
+      name: ""
+    });
     const fileName = ref();
     const formdata = new FormData();
     ref();
@@ -72,8 +75,13 @@ const _sfc_main = {
       if (e.target.files && e.target.files[0]) {
         uploadDocs.value = e.target.files[0];
         formdata.append(`${fileName.value}`, uploadDocs.value);
+        upload_ref.name = uploadDocs.value;
         console.log(formdata);
-        Object.keys(formdata)[0];
+        upload_ref.name = uploadDocs.value;
+        console.log("testing name", fileName.value);
+        let val = Object.keys(formdata)[0];
+        console.log("testing", val);
+        console.log();
       }
     };
     return (_ctx, _push, _parent, _attrs) => {
@@ -82,10 +90,7 @@ const _sfc_main = {
       const _component_Button = resolveComponent("Button");
       const _component_Dialog = resolveComponent("Dialog");
       const _component_ProgressSpinner = resolveComponent("ProgressSpinner");
-      _push(`<div${ssrRenderAttrs(mergeProps({
-        class: "card p-3",
-        style: { "margin-top": "-25px" }
-      }, _attrs))}><h2 class="font-semibold text-2xl my-4 mx-3">Employee Documents</h2><div class="w-full">`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "card p-3" }, _attrs))}><h2 class="font-semibold text-2xl my-4 mx-3">Employee Documents</h2><div class="w-full">`);
       _push(ssrRenderComponent(_component_DataTable, {
         ref: "dt",
         value: unref(EmployeeDocumentManagerService).getEmployeeDoc,
@@ -171,7 +176,13 @@ const _sfc_main = {
                   if (slotProps.data.doc_id) {
                     _push3(`<div${_scopeId2}>`);
                     if (slotProps.data.status == "Rejected") {
-                      _push3(`<div${_scopeId2}><input type="file" name="" id="file" hidden${_scopeId2}><button class="btn btn-success"${_scopeId2}><label for="file" class="cursor-pointer"${_scopeId2}><i class="pi pi-upload"${_scopeId2}></i> Upload file</label></button></div>`);
+                      _push3(`<div${_scopeId2}><input type="file" name="" id="file" hidden${_scopeId2}><button class="btn btn-success"${_scopeId2}><label for="file" class="cursor-pointer"${_scopeId2}><i class="pi pi-upload"${_scopeId2}></i> Upload file</label></button>`);
+                      if (slotProps.data.document_name == fileName.value) {
+                        _push3(`<p class=""${_scopeId2}>${ssrInterpolate(upload_ref.name.name)}</p>`);
+                      } else {
+                        _push3(`<!---->`);
+                      }
+                      _push3(`</div>`);
                     } else {
                       _push3(`<div${_scopeId2}>`);
                       _push3(ssrRenderComponent(_component_Button, {
@@ -186,7 +197,13 @@ const _sfc_main = {
                     }
                     _push3(`</div>`);
                   } else {
-                    _push3(`<div${_scopeId2}><input type="file" name="" id="file" hidden${_scopeId2}><button class="btn btn-success"${_scopeId2}><label for="file" class="cursor-pointer"${_scopeId2}><i class="pi pi-upload"${_scopeId2}></i> Upload file</label></button></div>`);
+                    _push3(`<div${_scopeId2}><input type="file" name="" id="file" hidden${_scopeId2}><button class="btn btn-success"${_scopeId2}><label for="file" class="cursor-pointer"${_scopeId2}><i class="pi pi-upload"${_scopeId2}></i> Upload file</label></button>`);
+                    if (slotProps.data.document_name == fileName.value) {
+                      _push3(`<p class=""${_scopeId2}>${ssrInterpolate(upload_ref.name.name)}</p>`);
+                    } else {
+                      _push3(`<!---->`);
+                    }
+                    _push3(`</div>`);
                   }
                 } else {
                   return [
@@ -210,7 +227,11 @@ const _sfc_main = {
                             createVNode("i", { class: "pi pi-upload" }),
                             createTextVNode(" Upload file")
                           ])
-                        ], 8, ["onClick"])
+                        ], 8, ["onClick"]),
+                        slotProps.data.document_name == fileName.value ? (openBlock(), createBlock("p", {
+                          key: 0,
+                          class: ""
+                        }, toDisplayString(upload_ref.name.name), 1)) : createCommentVNode("", true)
                       ])) : (openBlock(), createBlock("div", { key: 1 }, [
                         createVNode(_component_Button, {
                           type: "button",
@@ -240,7 +261,11 @@ const _sfc_main = {
                           createVNode("i", { class: "pi pi-upload" }),
                           createTextVNode(" Upload file")
                         ])
-                      ], 8, ["onClick"])
+                      ], 8, ["onClick"]),
+                      slotProps.data.document_name == fileName.value ? (openBlock(), createBlock("p", {
+                        key: 0,
+                        class: ""
+                      }, toDisplayString(upload_ref.name.name), 1)) : createCommentVNode("", true)
                     ]))
                   ];
                 }
@@ -306,7 +331,11 @@ const _sfc_main = {
                           createVNode("i", { class: "pi pi-upload" }),
                           createTextVNode(" Upload file")
                         ])
-                      ], 8, ["onClick"])
+                      ], 8, ["onClick"]),
+                      slotProps.data.document_name == fileName.value ? (openBlock(), createBlock("p", {
+                        key: 0,
+                        class: ""
+                      }, toDisplayString(upload_ref.name.name), 1)) : createCommentVNode("", true)
                     ])) : (openBlock(), createBlock("div", { key: 1 }, [
                       createVNode(_component_Button, {
                         type: "button",
@@ -336,7 +365,11 @@ const _sfc_main = {
                         createVNode("i", { class: "pi pi-upload" }),
                         createTextVNode(" Upload file")
                       ])
-                    ], 8, ["onClick"])
+                    ], 8, ["onClick"]),
+                    slotProps.data.document_name == fileName.value ? (openBlock(), createBlock("p", {
+                      key: 0,
+                      class: ""
+                    }, toDisplayString(upload_ref.name.name), 1)) : createCommentVNode("", true)
                   ]))
                 ]),
                 _: 1

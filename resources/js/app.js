@@ -104,6 +104,8 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 import router from "./hrms/modules/Organization/router/router";
+import Chart from 'primevue/chart';
+
 
 
 import second from './testings/second.vue'
@@ -212,6 +214,7 @@ app.component('TreeSelect', TreeSelect);
 app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
+app.component('Chart', Chart);
 
 //globally registering component
 //app.component('Counter',mycounter );

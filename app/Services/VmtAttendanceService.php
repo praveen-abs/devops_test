@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\ApproveRejectLeaveMail;
+use App\Mail\AttendanceCheckinCheckoutNotifyMail;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtEmployeeLeaves;
@@ -200,9 +201,9 @@ class VmtAttendanceService
 
 
     /*
-        Get the employee's compensatory work days (Worked on holidays and also in leave days(Eg: Sun , Sat))
-        This wont check whether these comp days are used by emps
-    */
+         Get the employee's compensatory work days (Worked on holidays and also in leave days(Eg: Sun , Sat))
+         This wont check whether these comp days are used by emps
+     */
     private function fetchEmployeeCompensatoryOffDays($user_id)
     {
 
@@ -237,14 +238,14 @@ class VmtAttendanceService
 
             //Test : Checking whether emp worked in work_leave_days
             /*
-                    if(in_array($day, $work_leave_days)){
-                     dd("Worked in leave days : ".$singleAttendanceDate);
-                    }else
-                    {
-                       dd("Not Worked in leave days : ".$singleAttendanceDate);
+                     if(in_array($day, $work_leave_days)){
+                      dd("Worked in leave days : ".$singleAttendanceDate);
+                     }else
+                     {
+                        dd("Not Worked in leave days : ".$singleAttendanceDate);
 
-                    }
-                */
+                     }
+                 */
             //Test : End
 
             $trimmed_date = substr($singleAttendanceDate, 5);
@@ -263,16 +264,16 @@ class VmtAttendanceService
     }
 
     /*
-        Returns the unused comp off days for the given emp
+         Returns the unused comp off days for the given emp
 
-        Returns a map.
+         Returns a map.
 
-        Eg : {
-               "247"                    :  "2023-08-15"
-               //("employee_attendance_id" :  "employee_attendance_date")
-             }
+         Eg : {
+                "247"                    :  "2023-08-15"
+                //("employee_attendance_id" :  "employee_attendance_date")
+              }
 
-    */
+     */
     public function fetchUnusedCompensatoryOffDays($user_id)
     {
 
@@ -370,19 +371,19 @@ class VmtAttendanceService
 
             //convert current json response to older JSON structure
             /*
-                    Old structure :
-                    {
-                        "status": "success",
-                        "message": "",
-                        "data" :{
-                            "Earned Leave" : 1,
-                            "Permission" : 0,
-                            "Maternity Leave" : 0,
-                            "Paternity Leave" : 0,
-                        }
+                     Old structure :
+                     {
+                         "status": "success",
+                         "message": "",
+                         "data" :{
+                             "Earned Leave" : 1,
+                             "Permission" : 0,
+                             "Maternity Leave" : 0,
+                             "Paternity Leave" : 0,
+                         }
 
-                    }
-                */
+                     }
+                 */
             // dd($leave_balance_details);
             $final_json = array();
 
@@ -408,11 +409,11 @@ class VmtAttendanceService
     }
 
     /*
-        For VJS Leave Approvals table
+         For VJS Leave Approvals table
 
-        Returns all leave status types
+         Returns all leave status types
 
-    */
+     */
     private function createLeaveRange($start_date, $end_date)
     {
         $start_date = new DateTime($start_date);
@@ -526,13 +527,13 @@ class VmtAttendanceService
 
     /*
 
-        $hours_diff : For permission only
-        $no_of_days, $leave_session : For 0.5 and full day leave types
+         $hours_diff : For permission only
+         $no_of_days, $leave_session : For 0.5 and full day leave types
 
-            // compensatory leaves
-            $compensatory_work_days_ids
+             // compensatory leaves
+             $compensatory_work_days_ids
 
-    */
+     */
     public function  applyLeaveRequest(
         $user_code,
         $leave_request_date,
@@ -627,7 +628,7 @@ class VmtAttendanceService
                     ]);
                 }
             } else
-            if ($leave_type_id == $compensatory_leavetype_id) {
+             if ($leave_type_id == $compensatory_leavetype_id) {
                 if (empty($compensatory_work_days_ids)) {
                     return response()->json([
                         "status" => "failure",
@@ -726,7 +727,7 @@ class VmtAttendanceService
                     if ($leave_session == "FN") {
                         $text_content = "Fore-noon";
                     } else
-                    if ($leave_session == "AN") {
+                     if ($leave_session == "AN") {
                         $text_content = "After-noon";
                     }
                 } else {
@@ -1011,11 +1012,11 @@ class VmtAttendanceService
                     $text_status = "approved";
                     $leave_module_type = 'manager_approves_leave';
                 } else
-            if ($status == "Rejected") {
+             if ($status == "Rejected") {
                     $text_status = "rejected";
                     $leave_module_type = 'manager_rejects_leave';
                 } else
-            if ($status == "Revoked") {
+             if ($status == "Revoked") {
                     $text_status = "revoked";
                     $leave_module_type = 'manager_withdraw_leave';
                 }
@@ -1224,23 +1225,23 @@ class VmtAttendanceService
             // dd($value[0]);
 
             /*
-                    Here $key is the date. i.e : 2022-10-01
+                     Here $key is the date. i.e : 2022-10-01
 
-                    $value is ::
+                     $value is ::
 
-                        [
-                            date=>2022-11-05
-                            checkin_time=18:06:00
-                            checkout_time=18:06:00
-                            attendance_mode="web"
-                        ],
-                        [
-                            ....
-                            attendance_mode="biometric"
+                         [
+                             date=>2022-11-05
+                             checkin_time=18:06:00
+                             checkout_time=18:06:00
+                             attendance_mode="web"
+                         ],
+                         [
+                             ....
+                             attendance_mode="biometric"
 
-                        ]
+                         ]
 
-                */
+                 */
             //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
 
             $checkin_min = null;
@@ -1255,7 +1256,7 @@ class VmtAttendanceService
                     $checkin_min = $singleValue["checkin_time"];
                     $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
                 } else
-                    if ($checkin_min > $singleValue["checkin_time"]) {
+                     if ($checkin_min > $singleValue["checkin_time"]) {
                     $checkin_min = $singleValue["checkin_time"];
                     $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
                 }
@@ -1267,7 +1268,7 @@ class VmtAttendanceService
                     $checkout_max = $singleValue["checkout_time"];
                     $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
                 } else
-                    if ($checkout_max < $singleValue["checkout_time"]) {
+                     if ($checkout_max < $singleValue["checkout_time"]) {
                     $checkout_max = $singleValue["checkout_time"];
                     $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
                 }
@@ -1413,9 +1414,9 @@ class VmtAttendanceService
     }
 
     /*
-        Get attendance stats data for single month
+         Get attendance stats data for single month
 
-    */
+     */
     public function fetchAttendanceMonthStatsReport($user_code, $year, $month)
     {
 
@@ -1745,7 +1746,7 @@ class VmtAttendanceService
                     ];
                 }
             } else
-            if (Str::contains($regularization_type, ['Absent Regularization'])) {
+             if (Str::contains($regularization_type, ['Absent Regularization'])) {
             }
 
             //,'Absent Regularization'
@@ -1776,7 +1777,7 @@ class VmtAttendanceService
                 'user_code' => 'required|exists:users,user_code',
                 "attendance_date" => "required",
                 'regularization_type' => ['required', Rule::in(['LC', 'EG', 'MIP', 'MOP'])],
-                "user_time" => "required",
+                "user_time" => "nullable",
                 "regularize_time" => "required",
                 "reason" => "required", //
                 "custom_reason" => "nullable",
@@ -1818,6 +1819,19 @@ class VmtAttendanceService
 
                 //dd("Request not applied");
 
+                //For LC, EG : user_time is mandatory , So check it
+                if (($regularization_type == 'LC' || $regularization_type == 'EG') && empty($user_time))
+                {
+                    //if user_time is null, then throw error
+                    return $responseJSON = [
+                        'status' => 'failure',
+                        'message' => 'User Time is missing',
+                        'mail_status' => '',
+                        'data' => [],
+                    ];
+
+                }
+                else
                 if ($regularization_type == 'MIP' || $regularization_type == 'MOP')
                     $user_time = null;
 
@@ -2231,10 +2245,10 @@ class VmtAttendanceService
 
 
     /*
-        Get attendance status for the given date
+         Get attendance status for the given date
 
 
-    */
+     */
     public function fetchAttendanceStatus($user_code, $date)
     {
         $response = null;
@@ -2310,7 +2324,7 @@ class VmtAttendanceService
         } else if (!empty($bio_attendanceCheckIn->check_in_time) && !empty($bio_attendanceCheckOut->check_out_time)) {
 
             /*original  date data split into date and time in biometric and assign the time to checkin and checkout ,
-                then date to date and attedance mode.*/
+                 then date to date and attedance mode.*/
             $query_biometric_response->date = $date;
             $query_biometric_response->checkin_time = date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
             $query_biometric_response->checkout_time = date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
@@ -2360,10 +2374,10 @@ class VmtAttendanceService
     }
 
     /*
-        Get the last attendance date status of the given user_code.
-        If checkout was not done, then checkout date will be NULL.
+         Get the last attendance date status of the given user_code.
+         If checkout was not done, then checkout date will be NULL.
 
-    */
+     */
     public function getLastAttendanceStatus($user_code)
     {
 
@@ -2514,7 +2528,7 @@ class VmtAttendanceService
 
                 if (!empty($bio_attendanceCheckIn->check_in_time) && !empty($bio_attendanceCheckOut->check_out_time)) {
                     /*original  data split into date and time in biometric and assign the time to checkin and checkout ,
-                then date to Checkin checkout date */
+                 then date to Checkin checkout date */
                     $query_biometric_response->date = $recent_attedance_data;
                     $query_biometric_response->checkin_time = date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
                     $query_biometric_response->checkout_time = date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
@@ -2558,187 +2572,390 @@ class VmtAttendanceService
     public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
     {
 
-        $user_id = User::where('user_code', $user_code)->first()->id;
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "date" => $date,
+                "checkin_time" => $checkin_time,
+                "selfie_checkin" => $selfie_checkin,
+                "work_mode" => $work_mode,
+                "attendance_mode_checkin" => $attendance_mode_checkin,
+                "checkin_lat_long" => $checkin_lat_long,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => "required",
+                "checkin_time" => "required",
+                "selfie_checkin" => "required",
+                "work_mode" => "required", //office, work
+                "attendance_mode_checkin" => "required", //mobile, web
+                "checkin_lat_long" => "nullable", //stores in lat , long
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try
+        {
+
+            $query_user = User::where('user_code', $user_code)->first();
+            $user_id = $query_user->id;
 
         /*
-        1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
-        2,then check wheather the user have workshiftid or not.
-        */
+         1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
+         2,then check wheather the user have workshiftid or not.
+         */
 
-        //Check if user already checked-in
-        $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
+            //Check if user already checked-in
+            $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
 
-        if ($attendanceCheckin) {
+            if ($attendanceCheckin) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Check-in already done',
+                    'data'   => ""
+                ]);
+            }
+
+            $vmt_employee_workshift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->first();
+
+            if (empty($vmt_employee_workshift->work_shift_id)) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'No shift has been assigned',
+                    'data'   => ""
+                ]);
+            }
+
+            //If check-in not done already , then create new record
+
+            $attendanceCheckin           = new VmtEmployeeAttendance;
+            $attendanceCheckin->date          = $date;
+            $attendanceCheckin->checkin_time  = $checkin_time;
+            $attendanceCheckin->user_id       = $user_id;
+            //$attendanceCheckin->shift_type    = $shift_type; Todo : Need to remove in table
+            $attendanceCheckin->work_mode = $work_mode; //office, home
+            $attendanceCheckin->checkin_comments = "";
+            $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
+            $attendanceCheckin->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->save();
+            // processing and storing base64 files in public/selfies folder
+            if (!empty('selfie_checkin')) {
+
+                $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
+
+                // dd($emp_document_path);
+                if (!File::isDirectory($emp_selfiedir_path))
+                    File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                $selfieFileEncoded  =  $selfie_checkin;
+
+                $fileName = $attendanceCheckin->id . '_checkin.png';
+
+                \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
+
+                $attendanceCheckin->selfie_checkin = $fileName;
+            }
+
+            $attendanceCheckin->save();
+
+            //Check whether check-in time is LC...
+
+            $current_workshift_timings = Carbon::parse(VmtWorkShifts::find($vmt_employee_workshift->work_shift_id)->shift_start_time);
+            $parsed_checkin_time = Carbon::parse($checkin_time);
+            $isSent = "NA";
+
+            //If its LC, then send mail
+            if($parsed_checkin_time->gt($current_workshift_timings))
+            {
+                //Send notification mail
+                $user_mail = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first()->officical_mail;
+
+                $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
+                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
+
+                $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                    $query_user->name,
+                    $query_user->user_code,
+                    Carbon::parse($date)->format('M jS, Y'),
+                    Carbon::parse($checkin_time)->format('h:i:s A'),
+                    $image_view,
+                    $emp_avatar,
+                    request()->getSchemeAndHttpHost(),
+                    "LC"
+                ));
+
+            }
+
+
+            if ($isSent) {
+                $mail_status = "success";
+            } else {
+                $mail_status = "failure";
+            }
+
             return response()->json([
-                'status' => 'failure',
-                'message' => 'Check-in already done',
-                'data'   => ""
+                'status' => 'success',
+                'message' => 'Check-in success',
+                'mail_status' => $mail_status,
+                'data'   => ''
             ]);
+
         }
+        catch (TransportException $e) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Check-in success.',
+                'mail_status' => 'failure',
+                'notification' => '',
+                'error' => $e->getMessage(),
+                'error_verbose' => $e->getline(),
+            ];
 
-        $vmt_employee_workshift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->first();
-
-        if (empty($vmt_employee_workshift->work_shift_id)) {
-            return response()->json([
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
                 'status' => 'failure',
-                'message' => 'No shift has been assigned',
-                'data'   => ""
-            ]);
+                'message' => 'Error while check-in',
+                'mail_status' => 'failure',
+                'notification' => '',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getTraceAsString()
+            ];
+
+            return $response;
         }
-
-
-        //If check-in not done already , then create new record
-
-        $attendanceCheckin           = new VmtEmployeeAttendance;
-        $attendanceCheckin->date          = $date;
-        $attendanceCheckin->checkin_time  = $checkin_time;
-        $attendanceCheckin->user_id       = $user_id;
-        //$attendanceCheckin->shift_type    = $shift_type; Todo : Need to remove in table
-        $attendanceCheckin->work_mode = $work_mode; //office, home
-        $attendanceCheckin->checkin_comments = "";
-        $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
-        $attendanceCheckin->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id; //TODO : Need to fetch from 'vmt_employee_workshifts'
-        $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
-        $attendanceCheckin->save();
-        // processing and storing base64 files in public/selfies folder
-        if (!empty('selfie_checkin')) {
-
-            $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
-
-            // dd($emp_document_path);
-            if (!File::isDirectory($emp_selfiedir_path))
-                File::makeDirectory($emp_selfiedir_path, 0777, true, true);
-
-
-            $selfieFileEncoded  =  $selfie_checkin;
-
-            $fileName = $attendanceCheckin->id . '_checkin.png';
-
-            \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
-
-            $attendanceCheckin->selfie_checkin = $fileName;
-        }
-
-        $attendanceCheckin->save();
-
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Check-in success',
-            'data'   => ''
-        ]);
     }
 
     public function performAttendanceCheckOut($user_code, $existing_check_in_date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
     {
 
-        $user_id = User::where('user_code', $user_code)->first()->id;
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "existing_check_in_date" => $existing_check_in_date,
+                "checkout_time" => $checkout_time,
+                "selfie_checkout" => $selfie_checkout,
+                "work_mode" => $work_mode,
+                "attendance_mode_checkout" => $attendance_mode_checkout,
+                "checkout_lat_long" => $checkout_lat_long,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "existing_check_in_date" => "required",
+                "checkout_time" => "required",
+                "selfie_checkout" => "required",
+                "work_mode" => "required", //office, work
+                "attendance_mode_checkout" => "required", //mobile, web
+                "checkout_lat_long" => "nullable", //stores in lat , long
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
 
-        //Check if user already checked-out
-        $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $existing_check_in_date)->first();
 
-        //Check if workshift assigned for user
-        $vmt_employee_workshift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->first();
-
-        if (empty($vmt_employee_workshift->work_shift_id)) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
-                'message' => 'No shift has been assigned',
-                'data'   => ""
+                'message' => $validator->errors()->all()
             ]);
         }
 
-        //Check if user checked-in or not
-        $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-            ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-            ->whereDate('date', $existing_check_in_date)
-            ->where('direction', 'in')
-            ->where('user_Id', $user_code)
-            ->first(['check_in_time']);
 
+        try
+        {
 
-        if (!empty($attendanceCheckout) && empty($attendanceCheckout->checkout_time)) {
+            $query_user = User::where('user_code', $user_code)->first();
+            $user_id = $query_user->id;
 
-            //TODO : Need to return if check-out is already done
+            //Check if workshift assigned for user
+            $vmt_employee_workshift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->first();
 
-            //Update existing record
-            $attendanceCheckout->checkout_time = $checkout_time;
-            $attendanceCheckout->checkout_date = date("Y-m-d");
-            $attendanceCheckout->checkout_comments = "";
-            $attendanceCheckout->attendance_mode_checkout = $attendance_mode_checkout;
-            $attendanceCheckout->checkout_lat_long = $checkout_lat_long ?? '';
-            $attendanceCheckout->save();
-            // processing and storing base64 files in public/selfies folder
-            if (!empty('selfie_checkout')) {
-
-                $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
-
-                // dd($emp_document_path);
-                if (!File::isDirectory($emp_selfiedir_path))
-                    File::makeDirectory($emp_selfiedir_path, 0777, true, true);
-
-
-                $selfieFileEncoded  =  $selfie_checkout;
-
-                $fileName = $attendanceCheckout->id . '_checkout.png';
-
-                \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
-
-                $attendanceCheckout->selfie_checkout = $fileName;
+            if (empty($vmt_employee_workshift->work_shift_id)) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'No shift has been assigned',
+                    'data'   => ""
+                ]);
             }
 
-            $attendanceCheckout->save();
+            //Check if user already checked-out
+            $existing_att_details  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $existing_check_in_date)->first();
+
+            //Check if user checked-in or not
+            $bio_attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $existing_check_in_date)
+                ->where('direction', 'in')
+                ->where('user_Id', $user_code)
+                ->first(['check_in_time']);
+
+            //Checkout date will be current date...
+            $t_checkout_date = date("Y-m-d");
+
+                //If check-in exists and checkout doesnt exist, then its normal checkout
+            if (!empty($existing_att_details) && empty($existing_att_details->checkout_time)) {
+
+
+                //TODO : Need to return if check-out is already done
+
+                //Update existing record
+                $existing_att_details->checkout_time = $checkout_time;
+                $existing_att_details->checkout_date = $t_checkout_date;
+                $existing_att_details->checkout_comments = "";
+                $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
+                $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
+                $existing_att_details->save();
+                // processing and storing base64 files in public/selfies folder
+                if (!empty('selfie_checkout')) {
+
+                    $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
+
+                    // dd($emp_document_path);
+                    if (!File::isDirectory($emp_selfiedir_path))
+                        File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                    $selfieFileEncoded  =  $selfie_checkout;
+
+                    $fileName = $existing_att_details->id . '_checkout.png';
+
+                    \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
+
+                    $existing_att_details->selfie_checkout = $fileName;
+                }
+
+                $existing_att_details->save();
+
+            }
+            else // If existing record not in emp-att table but available in Biometric table, then add new entry in emp-att table
+            if (empty($existing_att_details) && !empty($bio_attendanceCheckIn->check_in_time)) {
+
+                $existing_att_details = new VmtEmployeeAttendance;
+                $existing_att_details->date = $existing_check_in_date;
+                $existing_att_details->checkout_time = $checkout_time;
+                $existing_att_details->user_id = $user_id;
+                $existing_att_details->work_mode = $work_mode;
+                $existing_att_details->checkout_date = $t_checkout_date;
+                $existing_att_details->checkout_comments = "";
+                $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
+                $existing_att_details->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
+                $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
+                $existing_att_details->save();
+
+                // processing and storing base64 files in public/selfies folder
+                if (!empty('selfie_checkout')) {
+
+                    $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
+
+                    // dd($emp_document_path);
+                    if (!File::isDirectory($emp_selfiedir_path))
+                        File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                    $selfieFileEncoded  =  $selfie_checkout;
+
+                    $fileName = $existing_att_details->id . '_checkout.png';
+
+                    \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
+
+                    $existing_att_details->selfie_checkout = $fileName;
+                }
+
+                $existing_att_details->save();
+            }
+            else // If record doesnt exist in emp_table and biometric table, then its error
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Unable to check-out since Check-in is not done for the given date or Check-out is already done',
+                    'data'   => ""
+                ]);
+            }
+
+            //Check whether check-in time is EG...
+
+            $current_workshift_timings = Carbon::parse(VmtWorkShifts::find($vmt_employee_workshift->work_shift_id)->shift_end_time);
+            $parsed_checkout_time = Carbon::parse($checkout_time);
+            $isSent = "NA";
+
+            //If its EG, then send mail
+            if($parsed_checkout_time->lt($current_workshift_timings))
+            {
+                //Send notification mail
+                $user_mail = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first()->officical_mail;
+
+                $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
+                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
+
+                $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                    $query_user->name,
+                    $query_user->user_code,
+                    Carbon::parse($t_checkout_date)->format('M jS, Y'),
+                    Carbon::parse($checkout_time)->format('h:i:s A'),
+                    $image_view,
+                    $emp_avatar,
+                    request()->getSchemeAndHttpHost(),
+                    "EG"
+                ));
+
+            }
+
+            if ($isSent) {
+                $mail_status = "success";
+            } else {
+                $mail_status = "failure";
+            }
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Check-out success for the check-in date : ' . $existing_check_in_date,
-                'data'   => ''
-            ]);
-        } else if (empty($attendanceCheckout) && !empty($attendanceCheckIn->check_in_time)) {
-
-            $attendanceCheckout = new VmtEmployeeAttendance;
-            $attendanceCheckout->date = $existing_check_in_date;
-            $attendanceCheckout->checkout_time = $checkout_time;
-            $attendanceCheckout->user_id = $user_id;
-            $attendanceCheckout->work_mode = $work_mode;
-            $attendanceCheckout->checkout_date = date("Y-m-d");
-            $attendanceCheckout->checkout_comments = "";
-            $attendanceCheckout->attendance_mode_checkout = $attendance_mode_checkout;
-            $attendanceCheckout->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
-            $attendanceCheckout->checkout_lat_long = $checkout_lat_long ?? '';
-            $attendanceCheckout->save();
-
-            // processing and storing base64 files in public/selfies folder
-            if (!empty('selfie_checkout')) {
-
-                $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
-
-                // dd($emp_document_path);
-                if (!File::isDirectory($emp_selfiedir_path))
-                    File::makeDirectory($emp_selfiedir_path, 0777, true, true);
-
-
-                $selfieFileEncoded  =  $selfie_checkout;
-
-                $fileName = $attendanceCheckout->id . '_checkout.png';
-
-                \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
-
-                $attendanceCheckout->selfie_checkout = $fileName;
-            }
-
-            $attendanceCheckout->save();
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Check-out success for the check-in date : ' . $existing_check_in_date,
-                'data'   => ''
-            ]);
-        } else {
-            return response()->json([
-                'status' => 'failure',
-                'message' => 'Unable to check-out since Check-in is not done for the given date or Check-out is already done',
-                'data'   => ""
+                'data'   => '',
+                'mail_status' => $mail_status
             ]);
         }
+        catch (TransportException $e) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Check-out success.',
+                'mail_status' => 'failure',
+                'notification' => '',
+                'error' => $e->getMessage(),
+                'error_verbose' => $e->getline(),
+            ];
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while check-out',
+                'mail_status' => 'failure',
+                'notification' => '',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getTraceAsString()
+            ];
+
+            return $response;
+        }
+
+
     }
 
 
@@ -2793,10 +3010,10 @@ class VmtAttendanceService
     }
 
     /*
-        Get the Leave information for the selected leave record_id.
-        Used in Leave module ...
+         Get the Leave information for the selected leave record_id.
+         Used in Leave module ...
 
-    */
+     */
     public function getLeaveInformation($record_id)
     {
 
@@ -3210,10 +3427,10 @@ class VmtAttendanceService
     }
     /*
 
-        Get the leave details based on the employee roles.
+         Get the leave details based on the employee roles.
 
 
-    */
+     */
     public function getLeaveRequestDetailsBasedOnCurrentRole()
     {
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
@@ -3441,7 +3658,7 @@ class VmtAttendanceService
                 if ($response[$i]['leave_type'] == 'Maternity Leave')
                     unset($response[$i]);
             } else
-            if ($getcurrentusergender == 'female') {
+             if ($getcurrentusergender == 'female') {
                 if ($response[$i]['leave_type'] == 'Paternity Leave')
                     unset($response[$i]);
             }
@@ -3621,7 +3838,7 @@ class VmtAttendanceService
             $emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, $current_date);
             //Code For Check LC
             if (!empty($emp_shift_settings['checkin_time'])) {
-               // dd($emp_shift_settings['checkin_time']);
+                // dd($emp_shift_settings['checkin_time']);
                 $parsedCheckIn_time  = Carbon::parse($emp_shift_settings['checkin_time']['date']);
                 //Check whether checkin done on-time
                 $isCheckin_done_ontime = $parsedCheckIn_time->lte(Carbon::parse($emp_shift_settings['shift_settings']['shift_start_time']));
@@ -3651,7 +3868,7 @@ class VmtAttendanceService
             }
 
             //Code For Check EG
-            $emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, Carbon::parse($current_date)->subDay()->format('Y-m-d'));
+            +$emp_shift_settings =  $this->getEmpAttendanceAndWorkshift($single_user_data->id, $user_code, Carbon::parse($current_date)->subDay()->format('Y-m-d'));
             if (!empty($emp_shift_settings['checkout_time'])) {
                 $parsedCheckOut_time  = Carbon::parse($emp_shift_settings['checkout_time']['date']);
                 //Check whether checkin out on-time

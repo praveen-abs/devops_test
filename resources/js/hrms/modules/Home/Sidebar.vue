@@ -4,18 +4,18 @@
         @mouseenter="open = true, isActive = true" @mouseleave="open = false, isActive = false, subMenuDisable = false">
         <div class="w-full">
             <button class="mx-4 my-3" @click="toggleSwitch">
-                <img src="./assests/images/ABS_small_logo_yellow.png" class="px-auto h-6 w-8 animate-bounce" alt=""
+                <img src="./assests/images/ABS_small_logo_yellow.png" class="w-8 h-6 px-auto animate-bounce" alt=""
                     v-if="!isActive">
                 <img src="./assests/images/ABS_logo_Yellow.png" class="h-8 w-[180px]" alt="" v-if="isActive">
             </button>
         </div>
-        <template v-for="(menu, index) in menuItems" :key="index" class="relative" >
+        <template v-for="(menu, index) in menuItems" :key="index" >
             <div class="" v-if="menu">
                 <a v-if="open" role="button" @click="toggleMenu(index), menu.subItems ? ' ' : redirectModule(menu.to)"
                     :class="{
                         'bg-yellow-400 text-[001820] ': isOpen(index),
                     }"
-                    class=" flex items-center rounded-l-md my-2 p-2  w-full  relative left-3 transition ease-in-out delay-75 hover:-translate-y-1 hover:scale-110 hover: duration-300 hover:bg-yellow-400">
+                    class="relative flex items-center w-full p-2 my-2 transition duration-300 ease-in-out delay-75 rounded-l-md left-3 hover:-translate-y-1 hover:scale-110 hover: hover:bg-yellow-400">
                     <span>
                         <svg width="14" height="14" class="mx-2" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@
                     </span>
                     <span class="font-semibold text-white text-[12px] " :class="[open ? '' : 'hidden']">
                         {{ menu.label }}</span>
-                    <i :class="menu.arrow_icon" class=" text-white  absolute  right-4"></i>
+                    <i :class="menu.arrow_icon" class="absolute text-white right-4"></i>
                 </a>
 
                 <a role="button" v-else @click="toggleMenu(index)" :href="menu.to" :class="{
@@ -47,12 +47,12 @@
                 </a>
 
                 <!-- sub menu -->
-                <transition v-if="menu.subItems" enter-active-class="transition ease-out duration-200 transform delay-150 "
-                    enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
-                    leave-active-class="transition ease-in duration-200  delay-150  transform"
-                    leave-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
+                <transition v-if="menu.subItems" enter-active-class="transition duration-200 ease-out delay-150 transform "
+                    enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
+                    leave-active-class="transition duration-200 ease-in delay-150 transform"
+                    leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
                     <div v-if="subMenuDisable">
-                        <div v-if="isOpen(index)" class="text-white w-full  rounded shadow-lg p-2 ">
+                        <div v-if="isOpen(index)" class="w-full p-2 text-white rounded shadow-lg ">
                             <a v-for="(item, subIndex) in menu.subItems" :key="subIndex" @click="subMenuDisable = false"
                                 :href="item.to"
                                 class="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover: duration-300 text-sm font-semibold whitespace-nowrap  cursor-pointer text-white w-full block  hover:bg-gray-600 focus:bg-gray-600 p-2.5 rounded-lg">
@@ -84,7 +84,8 @@ const right = ref(false)
 
 const isMenuOpen = ref(false)
 
-const menuItems = ref()
+const menuItems = ref();
+const ClientName =  ref();
 
 // Add more menu items as needed);
 
@@ -128,6 +129,9 @@ const redirectModule = (link) => {
 const url = ref()
 
 onMounted(() => {
+
+    getclientname();
+
     url.value = window.location.origin
     console.log(window.location.origin)
     axios.get('/currentUserRole').then(res => {
@@ -138,7 +142,7 @@ onMounted(() => {
                 to: './',
                 icon: 'M0 2.57143C0 1.88944 0.270918 1.23539 0.753154 0.753154C1.23539 0.270918 1.88944 0 2.57143 0H7.71429C8.39627 0 9.05032 0.270918 9.53256 0.753154C10.0148 1.23539 10.2857 1.88944 10.2857 2.57143V7.71429C10.2857 8.39627 10.0148 9.05032 9.53256 9.53256C9.05032 10.0148 8.39627 10.2857 7.71429 10.2857H2.57143C1.88944 10.2857 1.23539 10.0148 0.753154 9.53256C0.270918 9.05032 0 8.39627 0 7.71429V2.57143ZM13.7143 2.57143C13.7143 1.88944 13.9852 1.23539 14.4674 0.753154C14.9497 0.270918 15.6037 0 16.2857 0H21.4286C22.1106 0 22.7646 0.270918 23.2468 0.753154C23.7291 1.23539 24 1.88944 24 2.57143V7.71429C24 8.39627 23.7291 9.05032 23.2468 9.53256C22.7646 10.0148 22.1106 10.2857 21.4286 10.2857H16.2857C15.6037 10.2857 14.9497 10.0148 14.4674 9.53256C13.9852 9.05032 13.7143 8.39627 13.7143 7.71429V2.57143ZM0 16.2857C0 15.6037 0.270918 14.9497 0.753154 14.4674C1.23539 13.9852 1.88944 13.7143 2.57143 13.7143H7.71429C8.39627 13.7143 9.05032 13.9852 9.53256 14.4674C10.0148 14.9497 10.2857 15.6037 10.2857 16.2857V21.4286C10.2857 22.1106 10.0148 22.7646 9.53256 23.2468C9.05032 23.7291 8.39627 24 7.71429 24H2.57143C1.88944 24 1.23539 23.7291 0.753154 23.2468C0.270918 22.7646 0 22.1106 0 21.4286V16.2857ZM13.7143 16.2857C13.7143 15.6037 13.9852 14.9497 14.4674 14.4674C14.9497 13.9852 15.6037 13.7143 16.2857 13.7143H21.4286C22.1106 13.7143 22.7646 13.9852 23.2468 14.4674C23.7291 14.9497 24 15.6037 24 16.2857V21.4286C24 22.1106 23.7291 22.7646 23.2468 23.2468C22.7646 23.7291 22.1106 24 21.4286 24H16.2857C15.6037 24 14.9497 23.7291 14.4674 23.2468C13.9852 22.7646 13.7143 22.1106 13.7143 21.4286V16.2857Z'
             },
-            res.data == 2 || res.data == 4 ?
+            // ClientName.value != "MANJULADEVI KAILASAM DEEPIKA" ?
                 {
                     label: 'CRM',
                     subItems: [{ label: 'Vendor', to: '' }, { label: 'Client', to: '' },],
@@ -146,7 +150,9 @@ onMounted(() => {
                     , arrow_icon: 'pi pi-angle-right'
 
 
-                } : null,
+                } 
+                // : null
+                ,
             {
                 label: 'Attendance',
                 to: 'attendance-timesheet',
@@ -165,29 +171,43 @@ onMounted(() => {
                 icon3: 'M0.00781811 14.8259C0.00781811 22.5296 0.0029341 22.267 0.281322 22.7921C0.462031 23.1438 0.955315 23.5986 1.3265 23.7674C1.49256 23.8424 1.77583 23.9268 1.95165 23.9596C2.18608 23.9925 5.12626 24.0065 12.1934 23.9971C21.7661 23.9831 22.1177 23.9784 22.3473 23.894C22.7429 23.7486 23.0115 23.5798 23.285 23.3173C23.5536 23.0594 23.6806 22.8625 23.8613 22.4123L23.9639 22.1545L23.9785 14.9431L23.9932 7.73649H11.998H0.00781811V14.8259ZM12.926 9.73391C15.1727 10.1043 16.97 11.6844 17.5414 13.785C18.4889 17.2641 15.7343 20.6775 11.9785 20.6775C9.89793 20.6775 8.02247 19.6178 6.97241 17.8408C6.50843 17.0671 6.25934 16.1341 6.25934 15.201C6.25934 13.6631 6.821 12.3502 7.94433 11.2765C8.85275 10.4044 9.92235 9.89802 11.2899 9.69171C11.6073 9.64013 12.5304 9.66827 12.926 9.73391Z',
                 icon4: 'M11.0715 11.1405C10.3535 11.2906 9.62095 11.6657 9.06417 12.1627C8.0776 13.0395 7.5599 14.3805 7.72595 15.637C8.01899 17.8783 10.0898 19.4912 12.3951 19.2662C12.9811 19.2099 13.3474 19.1114 13.8651 18.8723C14.9347 18.3753 15.7553 17.4516 16.1069 16.3404C16.229 15.9606 16.2437 15.848 16.2437 15.1916C16.2485 14.568 16.2339 14.4133 16.1362 14.0898C15.7308 12.7347 14.6808 11.6844 13.2937 11.2437C12.8786 11.1124 12.7565 11.0983 12.1216 11.0842C11.6136 11.0702 11.3157 11.0889 11.0715 11.1405ZM14.4268 13.3677C14.6954 13.5552 14.798 13.9632 14.6417 14.2445C14.6026 14.3148 13.9384 14.9759 13.1619 15.7168C11.9604 16.8655 11.7308 17.0624 11.5746 17.0906C11.2278 17.1515 11.0764 17.0577 10.2266 16.2513C9.44024 15.5058 9.24 15.2619 9.24 15.0322C9.24 14.7368 9.48908 14.4227 9.77724 14.3476C10.1191 14.2585 10.2852 14.3429 10.8713 14.9056L11.4134 15.4261L12.4634 14.418C13.0544 13.8506 13.6014 13.3677 13.7089 13.3114C13.9384 13.1989 14.207 13.2223 14.4268 13.3677Z'
             },
-            res.data == 2 || res.data == 4 ?
+            // ClientName.value != "MANJULADEVI KAILASAM DEEPIKA"  ?
                 {
                     label: 'Organization',
                     subItems: [{ label: 'Manage Employees', to: 'manageEmployees' }, { label: 'ORG structure', to: 'employee-hierarchy' }, { label: 'Onboarding', to: 'employee-onboarding' },
-                    { label: 'Onboarding Bulk Upload', to: 'bulkEmployeeOnboarding' }, { label: 'Onboarding Quick Upload', to: 'quickEmployeeOnboarding' }, { label: 'Manage WelcomeMail Status', to: 'manage_welcome_mails_status' }, { label: 'Roles & Permissions', to: 'roles_permissions' },],
+                    { label: 'Onboarding Bulk Upload', to: 'bulkEmployeeOnboarding' }, { label: 'Onboarding Quick Upload', to: 'quickEmployeeOnboarding' }, { label: 'Manage WelcomeMail Status', to: 'manage_welcome_mails_status' },
+                     { label: 'Roles & Permissions', to: 'roles_permissions' }
+                     ,],
                     arrow_icon: 'pi pi-angle-right',
                     icon: 'M8.66797 2.57179C8.66797 2.23358 8.71986 1.8987 8.82067 1.58631C8.92148 1.27393 9.06924 0.990165 9.25548 0.75128C9.44172 0.512395 9.66278 0.323075 9.90601 0.194161C10.1492 0.0652469 10.4099 -0.000730326 10.673 6.09743e-06H13.3401C13.8707 6.09743e-06 14.3796 0.270959 14.7548 0.753261C15.13 1.23556 15.3407 1.88971 15.3407 2.57179V6.00035C15.3407 6.33808 15.289 6.67251 15.1885 6.98453C15.0879 7.29656 14.9405 7.58006 14.7548 7.81887C14.569 8.05768 14.3484 8.24712 14.1057 8.37637C13.863 8.50561 13.6028 8.57213 13.3401 8.57213H13.0069V10.7155H19.3409C19.96 10.7166 20.5534 11.0337 20.9907 11.5971C21.4279 12.1605 21.6732 12.9241 21.6726 13.7199V15.4279H21.9994C22.2621 15.4279 22.5222 15.4944 22.765 15.6236C23.0077 15.7529 23.2282 15.9423 23.414 16.1811C23.5998 16.4199 23.7472 16.7035 23.8477 17.0155C23.9483 17.3275 24 17.6619 24 17.9996V21.4282C23.9997 22.1101 23.7888 22.7638 23.4136 23.2458C23.0385 23.7278 22.5298 23.9986 21.9994 23.9986H19.3355C18.8049 23.9986 18.296 23.7276 17.9208 23.2453C17.5456 22.763 17.3348 22.1089 17.3348 21.4268V17.9982C17.3348 17.3162 17.5456 16.662 17.9208 16.1797C18.296 15.6974 18.8049 15.4265 19.3355 15.4265H19.6687V13.7199C19.6684 13.6064 19.6332 13.4976 19.5708 13.4174C19.5084 13.3371 19.4238 13.2919 19.3355 13.2915H13.0014V15.4279H13.3347C13.5974 15.4279 13.8575 15.4944 14.1003 15.6236C14.343 15.7529 14.5635 15.9423 14.7493 16.1811C14.9351 16.4199 15.0825 16.7035 15.183 17.0155C15.2836 17.3275 15.3353 17.6619 15.3353 17.9996V21.4282C15.3353 22.1103 15.1245 22.7644 14.7493 23.2467C14.3741 23.729 13.8653 24 13.3347 24H10.673C10.1424 24 9.63349 23.729 9.2583 23.2467C8.8831 22.7644 8.67232 22.1103 8.67232 21.4282V17.9982C8.67261 17.3164 8.88352 16.6626 9.25868 16.1806C9.63384 15.6986 10.1425 15.4279 10.673 15.4279H10.9997V13.2845H4.6667C4.5784 13.2849 4.4938 13.3301 4.43137 13.4104C4.36893 13.4906 4.33373 13.5994 4.33344 13.7129V15.4279H4.6667C4.92942 15.4279 5.18958 15.4944 5.43231 15.6236C5.67503 15.7529 5.89558 15.9423 6.08136 16.1811C6.26714 16.4199 6.4145 16.7035 6.51504 17.0155C6.61558 17.3275 6.66733 17.6619 6.66733 17.9996V21.4282C6.66733 22.1103 6.45655 22.7644 6.08136 23.2467C5.70617 23.729 5.1973 24 4.6667 24H2.00064C1.73782 24 1.47757 23.9334 1.23477 23.8041C0.991975 23.6748 0.771378 23.4852 0.585588 23.2463C0.399797 23.0073 0.252454 22.7236 0.151977 22.4114C0.0514996 22.0992 -0.000142773 21.7647 2.96455e-07 21.4268V17.9982C0.000289035 17.3164 0.211197 16.6626 0.586358 16.1806C0.961518 15.6986 1.47022 15.4279 2.00064 15.4279H2.33389V13.7199C2.33389 12.9242 2.57978 12.1611 3.01747 11.5984C3.45516 11.0358 4.0488 10.7197 4.66779 10.7197H10.9997V8.57073H10.673C10.4102 8.57073 10.1501 8.50421 9.90735 8.37497C9.66462 8.24572 9.44407 8.05629 9.2583 7.81747C9.07252 7.57866 8.92515 7.29516 8.82461 6.98313C8.72407 6.67111 8.67232 6.33668 8.67232 5.99895L8.66797 2.57179Z',
 
-                } : null,
-            res.data == 2 || res.data == 4 ?
+                } 
+                // : null
+                ,
+                // ClientName.value != "MANJULADEVI KAILASAM DEEPIKA" ?
                 {
                     label: 'Approvals',
-                    subItems: [{ label: 'Onboarding', to: 'approvals-documents' }, { label: 'Leaves', to: 'attendance-leave-approvals' }, { label: 'Attendance Regularization', to: 'attendance-regularization-approvals' }, { label: 'Reimbursement', to: 'approval_reimbursements' }, { label: 'Taxations ', to: '' }, { label: 'Employee Details', to: 'Employee-Details-approvals' }, { label: 'Loan And Salary Advance ', to: 'showSAapprovalView' }],
+                    subItems: [{ label: 'Onboarding', to: 'approvals-documents' }, { label: 'Leaves', to: 'attendance-leave-approvals' }, { label: 'Attendance Regularization', to: 'attendance-regularization-approvals' }, 
+                    { label: 'Reimbursement', to: 'approval_reimbursements' },
+                     { label: 'Taxations ', to: '' }, { label: 'Employee Details', to: 'Employee-Details-approvals' },
+                     { label: 'Loan And Salary Advance ', to: 'showSAapprovalView' }
+                    ],
                     arrow_icon: 'pi pi-angle-right',
                     icon: '',
                     icon1: 'M8.60439 7.98128C11.0399 7.98128 13.0213 6.19106 13.0213 3.99064C13.0214 1.79015 11.0399 0 8.60439 0C6.16886 0 4.1875 1.79015 4.1875 3.99064C4.1875 6.19114 6.16895 7.98128 8.60439 7.98128Z',
                     icon2: 'M19.0027 14.9746C16.2485 14.9746 14.0078 16.9991 14.0078 19.4874C14.0078 21.9758 16.2485 24.0003 19.0027 24.0003C21.7568 24.0003 23.9975 21.9758 23.9975 19.4874C23.9975 16.9991 21.7569 14.9746 19.0027 14.9746ZM22.0451 18.5501L18.7811 21.4992C18.6169 21.6474 18.4018 21.7216 18.1866 21.7216C17.9714 21.7216 17.7563 21.6474 17.5921 21.4992L15.9601 20.0246C15.6318 19.728 15.6318 19.247 15.9601 18.9504C16.2885 18.6538 16.8207 18.6538 17.1491 18.9504L18.1866 19.8878L20.8561 17.4759C21.1845 17.1793 21.7167 17.1793 22.0451 17.4759C22.3735 17.7725 22.3735 18.2535 22.0451 18.5501Z',
                     icon3: 'M17.2101 13.9563V13.2523C17.2101 11.7336 16.1299 10.387 14.5327 9.91431L14.5253 9.91213L12.189 9.56263C11.9902 9.50736 11.7777 9.60247 11.7062 9.77968L9.05541 16.3509C8.90247 16.73 8.30904 16.73 8.1561 16.3509L5.50528 9.77968C5.4475 9.63657 5.29805 9.54688 5.13786 9.54688C5.09985 9.54688 2.68632 9.91164 2.68632 9.91164C1.07596 10.3965 0 11.7453 0 13.2704V18.7383C0 19.5577 0.735194 20.2219 1.64211 20.2219H12.6794C12.6453 19.9808 12.6257 19.7357 12.6257 19.4863C12.6258 16.8713 14.5639 14.6588 17.2101 13.9563Z',
                     icon4: 'M9.58139 9.1629C9.47791 9.06108 9.32667 9.00977 9.17373 9.00977H8.03257C7.87953 9.00977 7.72829 9.061 7.6249 9.1629C7.46471 9.32055 7.44146 9.54827 7.55523 9.72629L8.1652 10.5572L7.87962 12.7337L8.44193 14.0852C8.49676 14.2211 8.70953 14.2211 8.76436 14.0852L9.32667 12.7337L9.04109 10.5572L9.65107 9.72629C9.76483 9.54827 9.74158 9.32055 9.58139 9.1629Z',
-                } : null,
-            false ? {
+                }
+                // : null
+                ,
+            // false ? 
+            // ClientName.value != "MANJULADEVI KAILASAM DEEPIKA" ? 
+            {
                 label: 'Performance',
-                subItems: res.data == 2 || res.data == 4 ? [{ label: 'Self Appraisal', to: 'employee-appraisal' }, { label: 'Team Appraisal', to: 'team-appraisal' }, { label: 'Org Appraisal', to: 'pms' }, { label: 'PMS Config', to: 'config-pms' }, { label: 'PMS Forms Management', to: 'pms-forms-mgmt' }] : [{ label: 'Self Appraisal', to: 'employee-appraisal' }],
+                subItems:[{ label: 'Self Appraisal', to: 'employee-appraisal' }, { label: 'Team Appraisal', to: 'team-appraisal' }, { label: 'Org Appraisal', to: 'pms' }, { label: 'PMS Config', to: 'config-pms' }, { label: 'PMS Forms Management', to: 'pms-forms-mgmt' }]
+                //  : [{ label: 'Self Appraisal', to: 'employee-appraisal' }]
+                 ,
                 arrow_icon: 'pi pi-angle-right',
                 icon: 'M23 1L13.5 10.5L8.5 5.5L1 13',
                 icon1: '1.71429',
@@ -195,9 +215,11 @@ onMounted(() => {
                 icon3: '',
                 icon4: '',
                 stroke_width: '1.71429'
-            } : null,
+            }
+            //  : null
+             ,
 
-            res.data == 2 || res.data == 4 ?
+            //  ClientName.value == "MANJULADEVI KAILASAM DEEPIKA" ?
                 {
                     label: 'Payroll',
                     subItems: [{ label: 'Analytics', to: 'payroll-analytics' }, { label: 'Pay Run', to: 'payRun' }, { label: 'Manage Payslip', to: 'showManagePayslipsPage' }, { label: 'Claim', to: 'payroll-claims' }, { label: 'Reports', to: 'reports-payroll' }],
@@ -207,10 +229,15 @@ onMounted(() => {
                     icon2: '',
                     icon3: '',
                     icon4: '',
-                } : null,
+                }
+                //  : null
+                 ,
             {
                 label: 'Paycheck',
-                subItems: [{ label: 'Salary Details', to: 'salary_details' }, { label: 'Investments', to: 'investments_details' }, { label: 'Form 16', to: 'form16_details' }, { label: 'Loan And Salary Advance', to: 'showSAemployeeView' }],
+                subItems: [{ label: 'Salary Details', to: 'salary_details' }, { label: 'Investments', to: 'investments_details' }, { label: 'Form 16', to: 'form16_details' }, 
+                { label: 'Loan And Salary Advance', to: 'showSAemployeeView' }
+            ]
+                ,
                 // { label: 'Investment Form Mgmt', to: 'showInvestmentsFormMgmtPage' }
                 arrow_icon: 'pi pi-angle-right',
                 icon: 'M21 24H3C2.33061 23.9997 1.68054 23.7756 1.15323 23.3633C0.625918 22.9509 0.251657 22.3741 0.09 21.7245L12 15.108L23.9115 21.726C23.7495 22.3755 23.3749 22.9522 22.8473 23.3643C22.3197 23.7764 21.6694 24.0002 21 24ZM24 20.0595L15.4605 15.315L24 10.3095V20.0595ZM1.50058e-08 20.0595V10.3095L8.5395 15.315L1.50058e-08 20.0565V20.0595ZM9.75 14.25L4.5 11.25V2.25C4.5 1.65326 4.73705 1.08097 5.15901 0.65901C5.58097 0.237053 6.15326 0 6.75 0L17.25 0C17.8467 0 18.419 0.237053 18.841 0.65901C19.2629 1.08097 19.5 1.65326 19.5 2.25V11.25L14.25 14.25L12 13.125L9.75 14.25ZM10.0245 7.3725V8.241L12.0315 10.248H13.05L10.8915 8.0925H11.2815C11.6953 8.09169 12.0961 7.94836 12.4166 7.68663C12.737 7.4249 12.9576 7.06076 13.041 6.6555H13.9755V5.937H13.041C12.9859 5.67562 12.8726 5.43002 12.7095 5.2185H13.9755V4.5H10.023V5.22H11.2815C11.5034 5.22138 11.7195 5.29109 11.9004 5.41965C12.0813 5.54821 12.2182 5.72937 12.2925 5.9385H10.023V6.657H12.3C12.2261 6.86637 12.0893 7.04778 11.9083 7.17639C11.7273 7.30501 11.511 7.37455 11.289 7.3755L10.0245 7.3725ZM21 10.329V4.6995L22.4115 5.4495C22.8918 5.70561 23.2934 6.08759 23.5732 6.5545C23.8531 7.02141 24.0006 7.55566 24 8.1V8.5695L21 10.329ZM3 10.329L1.50058e-08 8.5695V8.1C-5.437e-05 7.55617 0.147721 7.02255 0.427521 6.55621C0.707321 6.08988 1.10862 5.70837 1.5885 5.4525L3 4.6995V10.329Z',
@@ -229,7 +256,7 @@ onMounted(() => {
                 icon3: '',
                 icon4: '',
             },
-            res.data == 2 || res.data == 4 ?
+            // ClientName.value != "MANJULADEVI KAILASAM DEEPIKA" ?
                 {
                     label: 'Report',
                     to: 'reports',
@@ -238,10 +265,22 @@ onMounted(() => {
                     icon2: '',
                     icon3: '',
                     icon4: '',
-                } : null
+                }
+                
+                // : null
         ]
 
     })
 })
+
+
+ async function getclientname(){
+
+    await axios.get('/getClientName').then((res)=>{
+        ClientName.value = res.data;
+        console.log(ClientName.value);
+    })
+
+}
 
 </script>

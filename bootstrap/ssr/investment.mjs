@@ -1,4 +1,4 @@
-/* empty css                        *//* empty css                               *//* empty css                             *//* empty css                           */import { ref, onMounted, resolveComponent, mergeProps, withCtx, createTextVNode, toDisplayString, openBlock, createBlock, Fragment, renderList, createVNode, useSSRContext, unref, createApp } from "vue";
+/* empty css                        *//* empty css                               *//* empty css                             *//* empty css                           */import { ref, onMounted, resolveComponent, mergeProps, withCtx, createTextVNode, toDisplayString, openBlock, createBlock, Fragment, renderList, createVNode, useSSRContext, reactive, unref, createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
@@ -29,9 +29,9 @@ import InputNumber from "primevue/inputnumber";
 import InputMask from "primevue/inputmask";
 import OverlayPanel from "primevue/overlaypanel";
 import Tag from "primevue/tag";
-import { ssrRenderAttrs, ssrRenderComponent, ssrRenderList, ssrInterpolate } from "vue/server-renderer";
-import { d as declaration } from "./assets/declaration-f1c7892d.mjs";
-import { _ as _sfc_main$2 } from "./assets/investments_and_exemption-e1dbcce3.mjs";
+import { ssrRenderAttrs, ssrRenderComponent, ssrRenderList, ssrInterpolate, ssrRenderStyle, ssrRenderClass } from "vue/server-renderer";
+import { d as declaration } from "./assets/declaration-2506d3cd.mjs";
+import { _ as _sfc_main$2 } from "./assets/investments_and_exemption-bfe6f688.mjs";
 import "axios";
 import { L as LoadingSpinner } from "./assets/LoadingSpinner-13fb7de2.mjs";
 import { i as investmentMainStore } from "./assets/investmentMainStore-4fa751b4.mjs";
@@ -57,7 +57,7 @@ const _sfc_main$1 = {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_DataTable = resolveComponent("DataTable");
       const _component_Column = resolveComponent("Column");
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "p-2" }, _attrs))}><div class="my-3"><p class="font-semibold fs-6">View complete breakup of payments, deductions and declarations. You can analyse how income tax is being calculated and what is the TDS every month.</p></div><div class="card"><div class="grid gap-4 my-1 md:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 card-body"><div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400"><p class="my-2 font-semibold fs-6">Net Taxable Income</p><h6 class="text-lg font-bold">INR 4,82,246 </h6></div><div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400"><p class="my-2 font-semibold fs-6">Gross Income Tax</p><h6 class="text-lg font-bold">INR 0</h6></div><div class="p-2 text-left bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400"><p class="my-2 font-semibold fs-6">Total Surcharge &amp; Cess</p><h6 class="text-lg font-bold">INR 0</h6></div><div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400"><p class="my-2 font-semibold fs-6">Net Income Tax payable</p><h6 class="text-lg font-bold">INR 4,82,246 </h6></div><div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400"><p class="my-2 font-semibold fs-6">Tax Paid Till Now</p><h6 class="text-lg font-bold">INR 0</h6></div><div class="p-2 text-left bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400"><p class="my-2 font-semibold fs-6">Remaining Tax To Be Paid</p><h6 class="text-lg font-bold">INR 0</h6></div></div></div><div class="my-4 card"><div class="card-body"><div class="flex"><p class="font-semibold fs-5"> A. Gross Earnings from Employment </p><div> Income from Previous Employer </div></div><div class=""><div class="table-responsive">`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "p-2" }, _attrs))}><div class="my-3"><p class="font-semibold fs-6">View complete breakup of payments, deductions and declarations. You can analyse how income tax is being calculated and what is the TDS every month.</p></div><div class="card"><div class="grid gap-4 my-1 md:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 card-body"><div class="p-2 text-center font-[&#39;poppins&#39;] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]"><p class="my-2 font-semibold text-[14px] text-[#000]">Net Taxable Income</p><h6 class="text-lg font-bold text-[#000]">INR 4,82,246 </h6></div><div class="p-2 text-center font-[&#39;poppins&#39;] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]"><p class="my-2 font-semibold text-[14px] text-[#000]">Gross Income Tax</p><h6 class="text-lg font-bold text-[#000]">INR 0</h6></div><div class="p-2 text-center font-[&#39;poppins&#39;] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]"><p class="my-2 font-semibold text-[14px] text-[#000]">Total Surcharge &amp; Cess</p><h6 class="text-lg font-bold text-[#000]">INR 0</h6></div><div class="p-2 text-center font-[&#39;poppins&#39;] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]"><p class="my-2 font-semibold text-[14px] text-[#000]">Net Income Tax payable</p><h6 class="text-lg font-bold text-[#000]">INR 4,82,246 </h6></div><div class="p-2 text-center font-[&#39;poppins&#39;] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]"><p class="my-2 font-semibold text-[14px] text-[#000]">Tax Paid Till Now</p><h6 class="text-lg font-bold text-[#000]">INR 0</h6></div><div class="p-2 text-center font-[&#39;poppins&#39;] border-[1px] rounded-lg tw-card bg-[#F6F6F6] border-[#DDDD]"><p class="my-2 font-semibold text-[14px] text-[#000]">Remaining Tax To Be Paid</p><h6 class="text-lg font-bold text-[#000]">INR 0</h6></div></div></div><div class="my-4 card"><div class="card-body"><div class="flex"><p class="font-semibold fs-5"> A. Gross Earnings from Employment </p><div> Income from Previous Employer </div></div><div class=""><div class="table-responsive">`);
       _push(ssrRenderComponent(_component_DataTable, {
         rows: 1,
         dataKey: "id",
@@ -480,6 +480,10 @@ const _sfc_main = {
     onMounted(async () => {
       await investmentStore.getInvestmentSource();
     });
+    const activetab = ref(1);
+    reactive({
+      border: "3px solid #F9BE00 !important;"
+    });
     return (_ctx, _push, _parent, _attrs) => {
       const _component_Toast = resolveComponent("Toast");
       const _component_ConfirmDialog = resolveComponent("ConfirmDialog");
@@ -491,13 +495,47 @@ const _sfc_main = {
       }
       _push(ssrRenderComponent(_component_Toast, null, null, _parent));
       _push(ssrRenderComponent(_component_ConfirmDialog, null, null, _parent));
-      _push(`<div class=""><div class="mb-2 shadow card left-line"><div class="pt-1 pb-0 card-body"><ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist"><li class="mx-4 nav-item ember-view" role="presentation"><a class="nav-link active ember-view" id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true"> Declaration</a></li><li class="nav-item ember-view" role="presentation"><a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true"> Investments and Exemptions</a></li><li class="nav-item ember-view" role="presentation"><a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#investmentComputation" role="tab" aria-controls="pills-home" aria-selected="true"> Income Tax Computations</a></li></ul></div></div><div class="mb-0 top-line"><div class="card-body"><div class="tab-content" id="pills-tabContent"><div class="tab-pane fade active show" id="investment_dec" role="tabpanel" aria-labelledby="pills-home-tab">`);
-      _push(ssrRenderComponent(declaration, null, null, _parent));
-      _push(`</div><div class="tab-pane fade" id="exemptions" role="tabpanel">`);
-      _push(ssrRenderComponent(_sfc_main$2, null, null, _parent));
-      _push(`</div><div class="tab-pane fade" id="investmentComputation" role="tabpanel">`);
-      _push(ssrRenderComponent(_sfc_main$1, null, null, _parent));
-      _push(`</div></div></div></div></div><!--]-->`);
+      _push(`<div class=""><div><h1 class="font-[&#39;Poppins&#39;] text-[28px] text-[#000]">Investments</h1><div style="${ssrRenderStyle({ "position": "relative" })}"><ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3" id="pills-tab" role="tablist"><li class="nav-item" role="presentation"><a id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true" class="${ssrRenderClass([[activetab.value === 1 ? "active font-semibold" : "font-medium !text-[#8B8B8B]"], "px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]"])}"> IT Declaration </a>`);
+      if (activetab.value === 1) {
+        _push(`<div class="h-1 rounded-l-3xl" style="${ssrRenderStyle({ "border": "2px solid #F9BE00 !important" })}"></div>`);
+      } else {
+        _push(`<div class="border-2 h-1 rounded-l-3xl border-gray-300"></div>`);
+      }
+      _push(`</li><li class="nav-item position-relative border-0" role="presentation"><a id="" data-bs-toggle="pill" href="" class="${ssrRenderClass([[activetab.value === 2 ? "active font-semibold" : "font-medium !text-[#8B8B8B]"], "text-center px-4 border-0 font-['poppins'] text-[14px] text-[#001820]"])}" role="tab" aria-controls="" aria-selected="true"> Investments and Exemptions </a>`);
+      if (activetab.value === 2) {
+        _push(`<div class="h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="${ssrRenderStyle({ "border": "2px solid #F9BE00 !important" })}"></div>`);
+      } else {
+        _push(`<div class="border-3 h-1 border-gray-300"></div>`);
+      }
+      _push(`</li><li class="nav-item position-relative border-0" role="presentation"><a id="" data-bs-toggle="pill" href="" class="${ssrRenderClass([[activetab.value === 3 ? "active font-semibold " : "font-medium !text-[#8B8B8B]"], "text-center px-4 border-0 font-['poppins'] text-[14px] text-[#001820]"])}" role="tab" aria-controls="" aria-selected="true"> Income tax Computations </a>`);
+      if (activetab.value === 3) {
+        _push(`<div class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0" style="${ssrRenderStyle({ "border": "2px solid #F9BE00 !important" })}"></div>`);
+      } else {
+        _push(`<div class="border-3 h-1 rounded-r-3xl border-gray-300"></div>`);
+      }
+      _push(`</li><div class="border-gray-300 border-b-[4px] w-100 mt-[-7px]"></div></ul><div class="tab-content" id=""><div><div class="card-body">`);
+      if (activetab.value === 1) {
+        _push(`<div>`);
+        _push(ssrRenderComponent(declaration, null, null, _parent));
+        _push(`</div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      if (activetab.value === 2) {
+        _push(`<div>`);
+        _push(ssrRenderComponent(_sfc_main$2, null, null, _parent));
+        _push(`</div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      if (activetab.value === 3) {
+        _push(`<div>`);
+        _push(ssrRenderComponent(_sfc_main$1, null, null, _parent));
+        _push(`</div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></div></div></div></div></div><!--]-->`);
     };
   }
 };

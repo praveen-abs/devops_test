@@ -34,7 +34,7 @@ import { FilterMatchMode } from "primevue/api";
 import "moment";
 import axios from "axios";
 import dayjs from "dayjs";
-import { _ as _sfc_main$5 } from "./assets/LeaveApply-0ca99139.mjs";
+import { _ as _sfc_main$5 } from "./assets/LeaveApply-94239469.mjs";
 import { L as LoadingSpinner } from "./assets/LoadingSpinner-13fb7de2.mjs";
 import "@vuelidate/core";
 import "@vuelidate/validators";
@@ -180,21 +180,27 @@ const _sfc_main$4 = {
   setup(__props) {
     const useLeaveStore = useLeaveModuleStore();
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<!--[--><div class="mb-3 card"><div class="card-body"><div class="mb-2 row"><div class="col-sm-6 col-xl-6 col-md-6 col-lg-6"><h6 class="text-lg font-semibold text-gray-900 modal-title">Leave Balance</h6></div><div class="col-6 justify-content-end d-flex">`);
+      _push(`<!--[--><div class="mb-3 card"><div class="card-body"><div class="mb-2 row"><div class="col-sm-6 col-xl-6 col-md-6 col-lg-6"><span class="font-semibold text-[14px] text-[#000] font-[&#39;Poppins]">Leave balance</span></div><div class="col-6 justify-content-end d-flex">`);
       _push(ssrRenderComponent(_sfc_main$5, null, null, _parent));
-      _push(`</div></div><div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
+      _push(`</div></div><div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-5" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
       ssrRenderList(unref(useLeaveStore).array_employeeLeaveBalance, (leave_balance) => {
-        _push(`<div class="p-1 my-4 rounded-lg shadow-md tw-card dynamic-card hover:bg-slate-100"><p class="text-lg font-semibold text-center">${ssrInterpolate(leave_balance.leave_type)}</p><p class="my-3 text-xl font-bold text-center">`);
+        _push(`<div class="p-1 my-2 rounded-lg border bg-gray-100 hover:bg-slate-100 cursor-pointer"><p class="my-1 lg:text-[12px] font-semibold text-center md:text-[10px] xl:text-[13px]">${ssrInterpolate(leave_balance.leave_type)}</p><p class="my-1 text-xl font-semibold text-center">`);
         if (leave_balance.leave_balance == "") {
-          _push(`<span>0</span>`);
+          _push(`<span class="text-lg font-semibold">0</span>`);
         } else {
-          _push(`<span>${ssrInterpolate(leave_balance.leave_balance)}</span>`);
+          _push(`<span class="text-lg font-semibold">${ssrInterpolate(leave_balance.leave_balance)}</span>`);
         }
         _push(`</p></div>`);
       });
-      _push(`<!--]--></div></div></div><div class="card"><div class="card-body"><h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Leave Availed</h6><div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
+      _push(`<!--]--></div></div></div><div class="card"><div class="card-body"><span class="font-semibold text-[14px] text-[#000] font-[&#39;Poppins]">Leave Availed</span><div class="grid gap-4 md:grid-cols-4 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-5" style="${ssrRenderStyle({ "display": "grid" })}"><!--[-->`);
       ssrRenderList(unref(useLeaveStore).array_employeeLeaveBalance, (leave_balance) => {
-        _push(`<div class="bg-indigo-100 border-l-4 border-indigo-300 p-3 rounded-lg tw-card dynamic-card"><div class="text-center"><p class="mb-2 text-base font-semibold">${ssrInterpolate(leave_balance.leave_type)}</p><h6 class="mb-0 text-base font-semibold">${ssrInterpolate(leave_balance.avalied_leaves)}</h6></div></div>`);
+        _push(`<div class="bg-gray-100 border-l-4 border-indigo-300 p-1 rounded-lg border my-2 cursor-pointer hover:bg-slate-100"><div class="text-center"><p class="my-1 lg:text-[12px] font-semibold text-center md:text-[10px] xl:text-[13px]">${ssrInterpolate(leave_balance.leave_type)}</p><p class="my-1 text-xl font-semibold text-center">`);
+        if (leave_balance.avalied_leaves == "") {
+          _push(`<span class="text-lg font-semibold">0</span>`);
+        } else {
+          _push(`<span class="text-lg font-semibold">${ssrInterpolate(leave_balance.avalied_leaves)}</span>`);
+        }
+        _push(`</p></div></div>`);
       });
       _push(`<!--]--></div></div></div><!--]-->`);
     };
@@ -246,7 +252,7 @@ const _sfc_main$3 = {
       const _component_Textarea = resolveComponent("Textarea");
       _push(`<!--[-->`);
       _push(ssrRenderComponent(_sfc_main$4, null, null, _parent));
-      _push(`<div class="mt-3 row"><div class="col-sm-12 col-xl-12 col-md-12 col-lg-12"><div class="mb-0 card leave-history"><div class="card-body"><div class="flex justify-between"><div><h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title"> Leave history </h6></div><div class="d-flex justify-content-end mb-2"><label for="" class="my-2 text-lg font-semibold">Select Month</label>`);
+      _push(`<div class="mt-3 row"><div class="col-sm-12 col-xl-12 col-md-12 col-lg-12"><div class="mb-0 card leave-history"><div class="card-body"><div class="flex justify-between"><div><span class="font-semibold text-[14px] text-[#000] font-[&#39;Poppins] mb-4"> Leave history </span></div><div class="d-flex justify-content-end mb-2"><label for="" class="my-2 text-lg font-semibold">Select Month</label>`);
       _push(ssrRenderComponent(_component_Calendar, {
         view: "month",
         dateFormat: "mm/yy",
@@ -476,7 +482,7 @@ const _sfc_main$3 = {
                   _push3(ssrRenderComponent(_component_Button, {
                     type: "button",
                     icon: "",
-                    class: "text-white Button py-2.5 mx-auto",
+                    class: "text-white bg-black Button py-2.5 mx-auto",
                     label: "View",
                     onClick: ($event) => unref(leaveModuleStore).getLeaveDetails(slotProps.data),
                     style: { "height": "2em" }
@@ -488,7 +494,7 @@ const _sfc_main$3 = {
                       createVNode(_component_Button, {
                         type: "button",
                         icon: "",
-                        class: "text-white Button py-2.5 mx-auto",
+                        class: "text-white bg-black Button py-2.5 mx-auto",
                         label: "View",
                         onClick: ($event) => unref(leaveModuleStore).getLeaveDetails(slotProps.data),
                         style: { "height": "2em" }
@@ -606,7 +612,7 @@ const _sfc_main$3 = {
                     createVNode(_component_Button, {
                       type: "button",
                       icon: "",
-                      class: "text-white Button py-2.5 mx-auto",
+                      class: "text-white bg-black Button py-2.5 mx-auto",
                       label: "View",
                       onClick: ($event) => unref(leaveModuleStore).getLeaveDetails(slotProps.data),
                       style: { "height": "2em" }
@@ -2093,18 +2099,24 @@ const _sfc_main = {
       } else {
         _push(`<!---->`);
       }
-      _push(`<div class="w-full"><div class="p-2 bg-white rounded-lg shadow tw-card left-line" style="${ssrRenderStyle({ "background-color": "white" })}"><div class="flex justify-between"><ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist"><li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true" role="tab"> Leave Balance</a></li>`);
-      if (unref(service).current_user_role == 2 || unref(service).current_user_role == 4) {
-        _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false" tabindex="-1" role="tab"> Team Leave Balance</a></li>`);
+      _push(`<div class="w-full"><div>`);
+      if (unref(service).current_user_role == 5) {
+        _push(`<div><p class="font-semibold text-2xl text-[#000] font-[&#39;Poppins]">Leave</p><p class="font-semibold text-sm">Here you can apply Leave,<a><span class="underline cursor-pointer hover:text-indigo-500"> Company&#39;s Leave Policy</span></a>.</p></div>`);
       } else {
-        _push(`<!---->`);
+        _push(`<div class="flex justify-between"><ul class="divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist"><li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true" role="tab"> Leave Balance</a></li>`);
+        if (unref(service).current_user_role == 1 || unref(service).current_user_role == 2 || unref(service).current_user_role == 3 || unref(service).current_user_role == 4) {
+          _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false" tabindex="-1" role="tab"> Team Leave Balance</a></li>`);
+        } else {
+          _push(`<!---->`);
+        }
+        if (unref(service).current_user_role == 1 || unref(service).current_user_role == 2 || unref(service).current_user_role == 3) {
+          _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false" tabindex="-1" role="tab"> Org Leave Balance</a></li>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</ul><div class="flex items-center"><div class="mr-3"></div><a href="/attendance-leave-policydocument" id="" class="text-md font-medium border-1 border-black rounded-lg text-center bg-black text-white my-auto p-1.5 dark:text-white" role="button" aria-expanded="false"> Leave Policy Explanation </a></div></div>`);
       }
-      if (unref(service).current_user_role == 2) {
-        _push(`<li class="nav-item text-muted" role="presentation"><a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false" tabindex="-1" role="tab"> Org Leave Balance</a></li>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</ul><div class="flex items-center"><div class="mr-3"></div><a href="/attendance-leave-policydocument" id="" class="text-md font-medium border-1 border-orange-400 rounded-lg text-center bg-orange-400 text-white my-auto p-1.5 dark:text-white" role="button" aria-expanded="false"> Leave Policy Explanation </a></div></div></div><div class="tab-content py-2" id="pills-tabContent"><div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">`);
+      _push(`<div></div></div><div class="tab-content py-2" id="pills-tabContent"><div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">`);
       _push(ssrRenderComponent(_sfc_main$3, null, null, _parent));
       _push(`</div><div class="tab-pane fade show" id="team_leaveBalance" role="tabpanel" aria-labelledby="pills-profile-tab">`);
       _push(ssrRenderComponent(_sfc_main$1, null, null, _parent));

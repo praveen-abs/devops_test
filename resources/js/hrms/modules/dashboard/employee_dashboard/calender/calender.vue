@@ -9,9 +9,9 @@
        </div>
 
         <div class="py-8">
-            <p class="text-[#d1814c] font-semibold text-[44px] mb-2 font-['Petrona']" style="">{{ dayjs(new Date()).format('D, MMMM YYYY') }}
+            <p class="text-[#d1814c] font-semibold text-[36px] mb-2 font-['Petrona']" style="">{{ dayjs(new Date()).format('D, MMMM YYYY') }}
             </p>
-            <p class="mb-2 font-semibold text-gray-900 text-[20px]">{{ dayjs(new Date()).format('dddd') }}</p>
+            <p class="mb-2 font-semibold text-gray-900 text-[16px]">{{ dayjs(new Date()).format('dddd') }}</p>
         </div>
     </div>
 </template>

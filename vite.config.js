@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue';
+import {hash} from './functions';
 
 export default defineConfig({
+
     plugins: [
         { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
@@ -30,6 +32,7 @@ export default defineConfig({
                 // Attendance
 
                 'resources/js/hrms/modules/attendence/AttendanceModule.js',
+                'resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.js',
 
                 // Leaves
 
@@ -172,22 +175,26 @@ export default defineConfig({
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
                 'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
-            //    Exit approval
-            // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
-              //Mobile Settings
-             'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
+                //    Exit approval
+                // 'resources/js/hrms/modules/approvals/exit_approval/resignation_approval.js',
+                //Mobile Settings
+                'resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js',
                 // Employee Payables Details
                 'resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js',
+
+                // salary advance existing data
+
+                'resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js',
 
             //  payslipPreview
             'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
 
 
             ],
-
-            refresh: true,
+            refresh: ['resources/views/**'],
         }),
     ],
+
     resolve: {
         dedupe: ['vue', 'vue-router'],
     },

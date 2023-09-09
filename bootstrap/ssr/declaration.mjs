@@ -25,7 +25,7 @@ import "primevue/fileupload";
 import Calendar from "primevue/calendar";
 import Textarea from "primevue/textarea";
 import Chips from "primevue/chips";
-import { d as declaration } from "./assets/declaration-f1c7892d.mjs";
+import { d as declaration } from "./assets/declaration-2506d3cd.mjs";
 import "vue/server-renderer";
 import "axios";
 import "dayjs";
