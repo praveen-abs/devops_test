@@ -625,19 +625,8 @@ class VmtReportsController extends Controller
     }
     public function getEmployeesCTCDetails(Request $request, VmtReportsservice $reportsService)
     {
-        $date = Carbon::now();
-        $client_id = array(1);
-        $Category = 'All';
-        $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
-        $headers = array();
-        foreach ($emp_ctc_data[0] as $key => $value) {
-            $headings = $key;
-            array_push($headers, $headings);
-        }
-        $response['headers'] =   $headers;
-        $response['rows'] = $emp_ctc_data;
 
-        return $response;
+        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id);
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -672,10 +661,11 @@ class VmtReportsController extends Controller
 
     public function filterClient()
     {
-        if (VmtClientMaster::count() == 1) {
-            return VmtClientMaster::all();
-        } else {
-            return VmtClientMaster::where('id', sessionGetSelectedClientid());
+        // dd(sessionGetSelectedClientName());
+        if(sessionGetSelectedClientName() == 'VASA'){
+            return VmtClientMaster::where('client_fullname','<>','All')->get(['id','abs_client_code','client_fullname']);
+        }else{
+           return VmtClientMaster::where('client_fullname',sessionGetSelectedClientName())->get(['id','abs_client_code','client_fullname']);
         }
     }
     public function getEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
