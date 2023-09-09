@@ -2691,7 +2691,6 @@ class VmtAttendanceReportsService
 
             if ($employee_projected_salary->exists()) {
 
-                $employee_salary_details[$key]["user_id"] =$single_user['user_id'] ;
                 $employee_salary_details[$key]["Employee Code"] =$single_user['Employee Code'] ;
                 $employee_salary_details[$key]["Employee Name"] =$single_user['Employee Name'] ;
                 $employee_salary_details[$key]["Gender"] =$single_user['Gender'];
@@ -2751,25 +2750,27 @@ class VmtAttendanceReportsService
             }
 
         }
-       
-        $response['headers'] = array('Employee Code','Employee Name','Gender','PAN Number','Date Of Birth','Date Of Joining','Tax Regime','Basic','Basic Arrears',
+
+        $salary_data['headers'] = array('Employee Code','Employee Name','Gender','PAN Number','Date Of Birth','Date Of Joining','Tax Regime','Basic','Basic Arrears',
         'Dearness Allowance','Dearness Allowance Arrears','Variable Dearness Allowance','Vairable Dearness Allowance Arrears','HRA','HRA Arrears','Child Education Allowance',
         'Child Education Allowance Arrears','Statutory Bonus','Statutory Bonus Arrears','Medical Allowance','Medical Allowance Arrears','Communicaton Allowance','Communication Allowance Arrears', 'Leave Travel Allowance',
         'Leave Travel Allowance Arrears','Food Allowance','Food Allowance Arrears','Special Allowance','Special Allowance Arrears','Other Allowance','Other Allowance Arrears',
         'Washing Allowance','Washing Allowance Arrears','Uniform Allowance','Uniform Allowance Arrears','Vehicle Reimbursement','Vehicle Reimbursement Arrears','Driver Salary Reimbursment',
         'Driver Salary Reimbursment Arrears','Arrears','Overtime','Overtime Arrears','Incentive','Other Earnings','Referral Bonus','Annual Statutory Bonus','Ex-Gratia','Attendance Bonus',
-        'Daily Allowance','Leave Encashments','Gift','Annual Gross Salary','HRA - Exemptions','CEA - Exemptions','LTA Exemptions','Previous Employer Income','Previous Employer PT',
-        'Previous Standard Deduction u/s 16(ia)','Gross Total Income','(a) Salary as per provisions contained in sec.17(1)','(b) Value of perquisites u/s 17(2)','(c) Profits in lieu of salary under section 17(3)',
-        '(d) Total','2. Less: Allowance to the extent exempt u/s 10','3. Balance (1-2)','(a) Standard Deduction u/s 16(ia)','(b) Entertainment allowance u/s 16(ii)','(c) Tax on employment u/s 16(iii)',
-        '5. Aggregate of 4(a), (b) and (c)', '6. Income chargeable under head salaries(3-5)','(a) Deductions u/s 24 - Interest','(b) Other Source Of Income','(c) 80EE Additional interest on House property','8. Gross total income (6+7)',
-        'i) Provident Fund','(ii) Voluntary Provident Fund','(iii) National Savings Certificate','(iv) Children Tuition Fees','(v) Mutual Fund / ELSS / ULIP / SIP','(vi) Housing Loan Principal repayment',
-        '(vii) Life Insurance Premium','(viii) Sukanya Samriddhi Scheme','(ix) Others / Fixed Deposit (5 years) & Term Deposit','(x) NSC Accrued Interest / Approved Superannuation','(xi) Public Provident Fund',
-        '(xii) Life Insurance Pension Scheme (section 80CCC)','(xiii) Employee Contribution NPS (section 80CCD) (1)','(xiv) Employee Contribution NPS (section 80CCD) (2)','Section 80CCE Total','(a) 80D Mediclaim-Self', '(b) 80D Mediclaim -Parents','(c) 80DD Handicapped Dependents',
-        '(d) 80DDB Medical Expenses - Chronic Diseases','(e) 80E Interest on Loan taken for Higher Education','(f) 80U Permanent Physical disability','(g) 80G Donation','(h) 80GG Rent paid (HRA not received)', '(i) 80TTA Deduction of interest on savings account',
-        '(j) 80EEA interest on certain house property','(k) 80EEB Purchase of electric vehicle','10. Aggregate of deductible amount under Chapter VI-A','11.Total Income (8-10)','12.Tax on total income','13. Rebate u/s 87A (Taxable Income below Rs.5,00,000',
-        '14.Total Income Tax	15.Surcharge','16.Education Cess @4% (On Tax computed at (14 & 15)','17.Tax Payable (14+15+16)','18.Less: Relief under section 89','19.Tax Payable (17-18)','20.Tax Deducted Till Date', '21.Previous Employer TDS','22.Tax Due (19-20-21)','23.Tax Deduction Per Month'
-        );
-        $response['rows'] = $employee_salary_details;
-        return $response;
+        // 'Daily Allowance','Leave Encashments','Gift','Annual Gross Salary','HRA - Exemptions','CEA - Exemptions','LTA Exemptions','Previous Employer Income','Previous Employer PT',
+        // 'Previous Standard Deduction u/s 16(ia)','Gross Total Income','(a) Salary as per provisions contained in sec.17(1)','(b) Value of perquisites u/s 17(2)','(c) Profits in lieu of salary under section 17(3)',
+        // '(d) Total','2. Less: Allowance to the extent exempt u/s 10','3. Balance (1-2)','(a) Standard Deduction u/s 16(ia)','(b) Entertainment allowance u/s 16(ii)','(c) Tax on employment u/s 16(iii)',
+        // '5. Aggregate of 4(a), (b) and (c)', '6. Income chargeable under head salaries(3-5)','(a) Deductions u/s 24 - Interest','(b) Other Source Of Income','(c) 80EE Additional interest on House property','8. Gross total income (6+7)',
+        // 'i) Provident Fund','(ii) Voluntary Provident Fund','(iii) National Savings Certificate','(iv) Children Tuition Fees','(v) Mutual Fund / ELSS / ULIP / SIP','(vi) Housing Loan Principal repayment',
+        // '(vii) Life Insurance Premium','(viii) Sukanya Samriddhi Scheme','(ix) Others / Fixed Deposit (5 years) & Term Deposit','(x) NSC Accrued Interest / Approved Superannuation','(xi) Public Provident Fund',
+        // '(xii) Life Insurance Pension Scheme (section 80CCC)','(xiii) Employee Contribution NPS (section 80CCD) (1)','(xiv) Employee Contribution NPS (section 80CCD) (2)','Section 80CCE Total','(a) 80D Mediclaim-Self', '(b) 80D Mediclaim -Parents','(c) 80DD Handicapped Dependents',
+        // '(d) 80DDB Medical Expenses - Chronic Diseases','(e) 80E Interest on Loan taken for Higher Education','(f) 80U Permanent Physical disability','(g) 80G Donation','(h) 80GG Rent paid (HRA not received)', '(i) 80TTA Deduction of interest on savings account',
+        // '(j) 80EEA interest on certain house property','(k) 80EEB Purchase of electric vehicle','10. Aggregate of deductible amount under Chapter VI-A','11.Total Income (8-10)','12.Tax on total income','13. Rebate u/s 87A (Taxable Income below Rs.5,00,000',
+        // '14.Total Income Tax	15.Surcharge','16.Education Cess @4% (On Tax computed at (14 & 15)','17.Tax Payable (14+15+16)','18.Less: Relief under section 89','19.Tax Payable (17-18)','20.Tax Deducted Till Date', '21.Previous Employer TDS','22.Tax Due (19-20-21)','23.Tax Deduction Per Month'
+         );
+        $salary_data['rows'] = $employee_salary_details;
+        array_push($reportsdata,$salary_data['headers'],$salary_data['rows']);
+
+        return $reportsdata;
     }
 }

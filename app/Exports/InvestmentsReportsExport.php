@@ -13,10 +13,14 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 
 
-class InvestmentsReportsExport implements ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles
+
+class InvestmentsReportsExport implements FromArray,ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles,WithEvents,WithStrictNullComparison
 {
 
     private $heading_dates;
@@ -24,6 +28,7 @@ class InvestmentsReportsExport implements ShouldAutoSize, WithHeadings, WithCust
 
     public function __construct($data)
     {
+
           $this->heading_dates=$data[0];
           $this->total_column = num2alpha(count($data[0])-1);
           $this->reportresponse=$data[1];
@@ -36,7 +41,7 @@ class InvestmentsReportsExport implements ShouldAutoSize, WithHeadings, WithCust
      }
     public function startCell(): string
     {
-        return 'A2';
+        return 'A1';
     }
     public function styles(Worksheet $sheet)
     {
@@ -168,36 +173,26 @@ class InvestmentsReportsExport implements ShouldAutoSize, WithHeadings, WithCust
     //     ];
     //  }
 
-    // public function registerEvents(): array {
-    //     return [
-    //         AfterSheet::class => function(AfterSheet $event) {
-    //             /** @var Sheet $sheet */
-    //             $sheet = $event->sheet;
-    //             // $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
-    //             // $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
-    //             $styleArray = [
-    //                 'alignment' => [
-    //                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-    //                 ],
-    //                 'borders' => [
-    //                     'outline' => [
-    //                         'borderStyle' => Border::BORDER_THICK,
-    //                         'color' => array('argb' => '00000000'),
-    //                     ],
-    //                 ],
-    //                 'fill' => [
-    //                     'fillType' => Fill::FILL_SOLID,
-    //                     'startColor' => array('argb' => 'ffff31')
-    //                     ]
+    public function registerEvents(): array {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                /** @var Sheet $sheet */
+                $sheet = $event->sheet;
+                // $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
+                // $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
+                $styleArray = [
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
 
-    //             ];
-    //             $cellRange = 'A2:'.$this->total_column.'2'; // All headers
-    //             $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
+                ];
+                $cellRange = 'A2:'.$this->total_column.'2'; // All headers
+                $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
 
 
-    //         },
-    //     ];
-    // }
+            },
+        ];
+    }
 
     public function array(): array
     {
@@ -205,6 +200,7 @@ class InvestmentsReportsExport implements ShouldAutoSize, WithHeadings, WithCust
 
 
         for($i=0;$i<count($this->reportresponse);$i++){
+
             array_push($single_employee,$this->reportresponse[$i]);
         }
 
