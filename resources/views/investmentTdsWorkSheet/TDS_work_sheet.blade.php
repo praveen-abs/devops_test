@@ -49,9 +49,6 @@
             size: A4 portrait;
         }
 
-        table {
-          page-break-inside: avoid;
-        }
         tr {
           break-inside: avoid;
         }
@@ -95,19 +92,19 @@
         <tr>
             <td style="width: 25%;">
                 <p style="font-size:11px">EMPLOYEE NAME</p>
-                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">AUGUSTIN RAJ A, AR1005</h1>
+                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">{{ $User_details[0]['name'] }}</h1>
             </td>
             <td style="width: 25%;">
                 <p style="font-size:11px">PAN</p>
-                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">AJUPA5100C</h1>
+                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">{{ $User_details[0]['Pan Number'] }}</h1>
             </td>
             <td style="width: 25%;">
                 <p style="font-size:11px">DESIGNATION</p>
-                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">MD and CEO</h1>
+                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">{{ $User_details[0]['Designation'] }}</h1>
             </td>
             <td style="width: 25%;">
                 <p style="font-size:11px">TAX REGIME</p>
-                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">Old Regime</h1>
+                <h1 style="font-size:11px; margin-top:-6px;color:rgba(0, 0, 0, 0.833)">{{ $User_details[0]['regime'] }}</h1>
             </td>
         </tr>
         <tr>
@@ -141,19 +138,35 @@
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
                             <p style="font-size:11px; " class="p-2 m-11"><b>1) Gross Earnings</b></p>
-                            @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
-                            <p style="font-size:11px; " class="p-2 m-11">{{" -- "}}</p>
+                            @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Actual"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $key }}</p>
+                            @endforeach
+                            <p style="font-size:11px; " class="p-2 m-11"><b>{{ "Total income" }}</b></p>
+                        </td>
+                        <td colspan="1">
+                            @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Actual"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11"></p>
+                            @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Actual"] as $key => $single_value)
+                                @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Projection"] as $key1 => $value)
+                                    @if($key == $key1 )
+                                        <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                                    @endif
+                                @endforeach
+                            @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11"></p>
-                        </td>
-                        <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11"></p>
-
+                            <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
+                            @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Actual"] as $key => $single_value)
+                                @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Total"] as $key1 => $value)
+                                    @if($key == $key1 )
+                                        <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                            <p style="font-size:11px; " class="p-2 m-11"><b>₹{{ $Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Total Income"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -170,7 +183,10 @@
 
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">{{ $under_section_10["2) Allowance to the extent exampt under section 10"][0]["total"]}}</p>
+                            @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
+                            @endforeach
+                            <p style="font-size:11px; " class="p-2 m-11"><b>₹{{ $under_section_10["2) Allowance to the extent exampt under section 10"][0]["total"]}}</b></p>
 
                         </td>
                     </tr>
@@ -183,7 +199,7 @@
                         <td colspan="1">
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{ $Total_after_excemption["3) Total after excemption (1 - 2)"][0]["total"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $Total_after_excemption["3) Total after excemption (1 - 2)"][0]["total"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -202,7 +218,11 @@
                         <td colspan="1">
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{  $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["total"]}}</p>
+                            <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
+                            @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
+                            @endforeach
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["total"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -214,7 +234,7 @@
                         <td colspan="1">
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{  $Gross_Total["5) Gross Total (3 - 4)"][0]["total"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Gross_Total["5) Gross Total (3 - 4)"][0]["total"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -233,7 +253,11 @@
                         <td colspan="1">
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{  $Under_section_16["6) Under section 16"][0]["total"] }}</p>
+                            <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
+                            @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
+                            <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
+                            @endforeach
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Under_section_16["6) Under section 16"][0]["total"] }}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -247,7 +271,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{  $Under_the_Head_Salaries["7) Income Chargeable Under the Head Salaries (5 - 6)"][0]["total"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Under_the_Head_Salaries["7) Income Chargeable Under the Head Salaries (5 - 6)"][0]["total"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -265,10 +289,14 @@
                             @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"> {{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["projection"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"> {{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["total"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["particular"] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @endforeach
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["total"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -282,7 +310,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"> {{ $Gross_Total_income["9) Gross Total income"][0]["total"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px"><b> ₹{{ $Gross_Total_income["9) Gross Total income"][0]["total"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -308,10 +336,21 @@
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"><b>Qualifying</b></p>
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0][$key] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">&nbsp;<span style="text-align: right;  float: right; padding-right:12px">&nbsp;</span></p>
+                           @endforeach
+                           @endforeach
+
+
                             <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'] }}</p>
                             @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
                                 @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['projection'] as $key1 => $value)
                                 @if ($key == $key1)
+                                <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
                                 <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
                                 @endif
                                 @endforeach
@@ -319,17 +358,48 @@
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"><b>Deductible</b></p>
-                            <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'] }}</p>
-                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
-                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['projection'] as $key1 => $value)
-                            @if ($key == $key1)
-                            <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
-                            @endif
-                            @endforeach
-                             @endforeach
+
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0][$key] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">&nbsp;<span style="text-align: right;  float: right; padding-right:12px">&nbsp;</span></p>
+                           @endforeach
+                           @endforeach
+
+
+
+                           <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'] }}</p>
+                           @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
+                           <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                               @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['projection'] as $key1 => $value)
+                               @if ($key == $key1)
+                               <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                               <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                               @endif
+                               @endforeach
+                          @endforeach
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['total_of_chapterVIa'] }} </p>
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px"><b>&nbsp;</b> </p>
+                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0][$key] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">&nbsp;<span style="text-align: right;  float: right; padding-right:12px">&nbsp;</span></p>
+                           @endforeach
+                           @endforeach
+                           <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+
+                           @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
+                           <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                           @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1][$key] as $key => $value)
+                           <p style="font-size:11px; marign-top:-11px;  width:100%; ">&nbsp;<span style="text-align: right;  float: right; padding-right:12px">&nbsp;</span></p>
+                          @endforeach
+                          <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                          @endforeach
+
+
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['total_of_chapterVIa'] }} </b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -343,7 +413,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"> {{ $Total_income["11) Total income (Round By 10 Rupees) (9 - 10)"][0]["total"]}}</p>
+                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $Total_income["11) Total income (Round By 10 Rupees) (9 - 10)"][0]["total"]}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -449,7 +519,7 @@
                 </table>
             </td>
         </tr>
-        {{-- <tr style="">
+        <tr style="">
             <td colspan="4">
                 <table style="width: 100%;">
                     <tr style=" height:20px !important;">
@@ -566,7 +636,7 @@
                     </tr>
                 </table>
             </td>
-        </tr> --}}
+        </tr>
     </tbody>
     </table>
 </body>
