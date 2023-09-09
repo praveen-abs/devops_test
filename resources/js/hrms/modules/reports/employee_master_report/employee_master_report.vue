@@ -40,11 +40,11 @@
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2 font-semibold font-['poppins']">Department : </h1>
-                        <Dropdown  optionLabel="name" placeholder="IT" class="w-[200px]" />
+                        <Dropdown  optionLabel="name" placeholder="IT" class="w-[200px]"/>
                     </li>
                     <li class="flex items-center">
-                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']">Legal Entity : </h1>
-                        <Dropdown  optionLabel="name" placeholder="ABS" class="w-[200px] font-['poppins']" />
+                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']" >Legal Entity : </h1>
+                        <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] font-['poppins']"  />
                     </li>
                 </ul>
 
@@ -70,11 +70,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
 import Employee_Master from './Employee_Master.vue';
+import { EmployeeMasterStore } from "./employee_master_reportsStore"
+
+
+
+const useEmployeeReport = EmployeeMasterStore();
+
+onMounted(()=>{
+    useEmployeeReport.fetchFilterClientIds();
+    legalEntity.value = "legal Entity";
+})
+
+
 
 const activetab = ref(1);
+
+const legalEntity = ref();
+
+
+
+
+
+
 </script>
 
 <style></style>
