@@ -18,6 +18,7 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
     const employeeCTCReportSource = ref([]);
     const Employee_CTCReportDynamicHeaders =  ref([]);
     const department = ref();
+    const PeriodMonth = ref();
 
 
 const getEmployeeCTC = () => {
@@ -141,9 +142,50 @@ const getEmployeeCTC = () => {
         let departmentId = departmentID;
         axios.post('/fetch-employee-ctc-report',{
             department_id : departmentId
-        }).finally(()=>{
-
+        }).then(res => {
+            console.log(res.data.rows,"get value ");
+            employeeCTCReportSource.value = res.data.rows
+            console.log(employeeCTCReportSource.value," testings data");
+            res.data.headers.forEach(element => {
+                let format = {
+                    title: element
+                }
+                Employee_CTCReportDynamicHeaders.value.push(format)
+                console.log(element);
+            });
+            console.log(Employee_CTCReportDynamicHeaders.value);
+    
         })
+    };
+
+    function getPeriodMonth(){
+        // let date = Date;
+        axios.post('/get-filter-months-for-reports').then((res)=>{
+            PeriodMonth.value= res.data;
+        })
+
+    }
+
+    function updateEmployee_Basic_CTC(Date){
+       let date = Date;
+       axios.post('/fetch-employee-ctc-report',{
+        date : date
+    }).then(res => {
+        console.log(res.data.rows,"get value ");
+        employeeCTCReportSource.value = res.data.rows
+        console.log(employeeCTCReportSource.value," testings data");
+        res.data.headers.forEach(element => {
+            let format = {
+                title: element
+            }
+            Employee_CTCReportDynamicHeaders.value.push(format)
+            console.log(element);
+        });
+        console.log(Employee_CTCReportDynamicHeaders.value);
+
+    });
+
+
     }
 
     // function testings(val){
@@ -165,6 +207,7 @@ const getEmployeeCTC = () => {
          personalDetail,
          selectCategory,
          department,
+         PeriodMonth,
 
         // functions
         fetchFilterClientIds,
@@ -179,6 +222,12 @@ const getEmployeeCTC = () => {
         // getALLdepartment
         getALLdepartment,
         getEmployeeCTCReports,
+
+
+        // get Period Month
+
+        getPeriodMonth,
+     
 
         // testings
 
