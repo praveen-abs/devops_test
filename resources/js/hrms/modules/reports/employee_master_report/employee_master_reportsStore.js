@@ -227,6 +227,7 @@ const getEmployeeCTC = () => {
         // get Period Month
 
         getPeriodMonth,
+        updateEmployee_Basic_CTC
      
 
         // testings

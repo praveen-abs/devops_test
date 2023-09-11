@@ -794,7 +794,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
 
-    Route::get('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
+    Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
     ///basic report
