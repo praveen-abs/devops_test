@@ -26,6 +26,7 @@ use App\Exports\EmployeeReimbursementsExport;
 use App\Exports\AnnualEarnedExport;
 use App\Models\VmtEmployeeAttendance;
 use App\Exports\EmployeeBasicCtcExport;
+use App\Exports\EmployeeMasterExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -693,7 +694,7 @@ class VmtReportsController extends Controller
 
 
     }
-    public function generategetEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
+    public function generateEmployeesMasterDetails(Request $request, VmtReportsservice $reportsService)
     {
         $date = Carbon::now();
         $client_id = array(1);
@@ -707,9 +708,8 @@ class VmtReportsController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
-        return Excel::download(new EmployeeBasicCtcExport($emp_mas_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
+        return Excel::download(new EmployeeMasterExport($emp_mas_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees Master Report.xlsx');
     }
-
     public function department(){
 
       $get_department =   Department::all(['id','name']);

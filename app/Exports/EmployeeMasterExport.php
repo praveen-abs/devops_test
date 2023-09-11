@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class EmployeeMasterBasicCtcExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithDrawings, WithCustomStartCell
+class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithDrawings, WithCustomStartCell
 {
     protected $data;
     protected $headers;
