@@ -628,7 +628,7 @@ class VmtReportsController extends Controller
     {
 
 
-        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id);
+        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id,$request->date);
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -636,7 +636,7 @@ class VmtReportsController extends Controller
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
-        $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
+        $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id,$request->date);
         $headers = array();
         foreach ($emp_ctc_data as $key => $value) {
             $headings = $key;
@@ -663,12 +663,13 @@ class VmtReportsController extends Controller
 
     public function filterClient()
     {
-        // dd(sessionGetSelectedClientName());
-        if(sessionGetSelectedClientName() == 'VASA'){
+        //dd(sessionGetSelectedClientName());
+        if(sessionGetSelectedClientName() == 'VASA' || sessionGetSelectedClientName() == 'All'){
             return VmtClientMaster::where('client_fullname','<>','All')->get(['id','abs_client_code','client_fullname']);
         }else{
            return VmtClientMaster::where('client_fullname',sessionGetSelectedClientName())->get(['id','abs_client_code','client_fullname']);
         }
+      //  return VmtClientMaster::where();
     }
     public function getEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
     {
