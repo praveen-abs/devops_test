@@ -11,6 +11,7 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
     // functions
 
     const client_ids = ref();
+    const selectCategory = ref();
     const personalDetail =  ref();
     const show = ref(true);
     const employeeCTCReportSource = ref([]);
@@ -107,6 +108,26 @@ const getEmployeeCTC = () => {
         })
     };
 
+    function sentcategory(selectCategory){
+
+        axios.post('/fetch-employee-ctc-report',{
+            active_status:selectCategory
+        }).then(res => {
+            console.log(res.data.rows,"get value ");
+            employeeCTCReportSource.value = res.data.rows
+            console.log(employeeCTCReportSource.value," testings data");
+            res.data.headers.forEach(element => {
+                let format = {
+                    title: element
+                }
+                Employee_CTCReportDynamicHeaders.value.push(format)
+                console.log(element);
+            });
+            console.log(Employee_CTCReportDynamicHeaders.value);
+    
+        })
+    }
+
      
 
 
@@ -118,11 +139,13 @@ const getEmployeeCTC = () => {
         // variables
          show,client_ids, employeeCTCReportSource, Employee_CTCReportDynamicHeaders,
          personalDetail,
+         selectCategory,
 
         // functions
         fetchFilterClientIds,
         getEmployeeCTC,
         personalDetails,
+        sentcategory,
 
         // sent Person Details  basic and detailed
 
