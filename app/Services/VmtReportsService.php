@@ -245,6 +245,8 @@ public function getEmployeesMasterDetails()
             // $temp_ar['Salary Payment Mode'] = $single_details->;
             $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
             $temp_ar['NATIONALITY'] = $single_details->nationality;
+            // $temp_ar['NATIONALITY'] = $single_details->nationality;
+
             $temp_ar['Dearness Allowance'] = $single_details->dearness_allowance;
             // $temp_ar['House Rent Allowance'] = $single_details->;
             $temp_ar['Child Education Allowance'] = $single_details->child_education_allowance;
