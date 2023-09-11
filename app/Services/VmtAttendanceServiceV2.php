@@ -26,8 +26,9 @@ class VmtAttendanceServiceV2
     public function getShiftTimeForEmployee($user_id, $checkin_time, $checkout_time)
     {
 
+
         $emp_work_shift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->get();
-        //  dd($user_id);
+
         if (count($emp_work_shift) == 1) {
             $regularTime  = VmtWorkShifts::where('id', $emp_work_shift->first()->work_shift_id)->first();
             return  $regularTime;
@@ -35,8 +36,9 @@ class VmtAttendanceServiceV2
             //dd($emp_work_shift);
             for ($i = 0; $i < count($emp_work_shift); $i++) {
                 $regularTime  = VmtWorkShifts::where('id', $emp_work_shift[$i]->work_shift_id)->first();
-                $shift_start_time = Carbon::parse($regularTime->shift_start_time)->addMinutes($regularTime->grace_time);
-                $shift_end_time = Carbon::parse($regularTime->shift_end_time);
+                $date = Carbon::parse($checkin_time)->format('Y-m-d');
+                $shift_start_time = Carbon::parse($date . ' ' . $regularTime->shift_start_time)->addMinutes($regularTime->grace_time);
+                $shift_end_time = Carbon::parse($date . ' ' . $regularTime->shift_end_time);
                 $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time), false);
                 $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time), false);
                 // if ($user_id == '192' && $checkin_time == "13:56:01");
@@ -77,10 +79,32 @@ class VmtAttendanceServiceV2
         }
     }
 
+    public function findMIPOrMOP($time, $shiftStartTime, $shiftEndTime)
+    {
+        $response = array();
+
+        $date =  Carbon::parse($time)->format('Y-m-d');
+
+        $shiftStartTime = Carbon::parse($date . ' ' . Carbon::createFromFormat('Y-m-d H:i:s', $shiftStartTime)->format('H:i:s'));
+        $shift_start_time = $shiftStartTime->subHours(1)->format('Y-m-d H:i:0');
+        $first_half_end_time =  $shiftStartTime->addHours(5);
+        if (Carbon::parse($time)->between(Carbon::parse($shift_start_time), $first_half_end_time, true)) {
+            $response['checkin_time'] = $time;
+            $response['checkout_time'] = null;
+        } else {
+            $response['checkin_time'] = null;
+            $response['checkout_time'] = $time;
+        }
+        if ($time == '2023-07-31 22:00:22')
+            dd($response);
+        return $response;
+    }
+
     public function attendanceJobs($start_date, $end_date)
     {
         $user = user::get();
-        $current_date = Carbon::parse($start_date);
+        // $current_date = Carbon::parse($start_date);
+        $current_date = Carbon::parse('2023-07-31');
         try {
             while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                 $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
@@ -91,6 +115,7 @@ class VmtAttendanceServiceV2
                     // dd($single_user);
                     $doj = Carbon::parse($single_user->doj);
                     //  employee in that company on date
+
                     if ($single_user->dol == null && Carbon::parse($doj)->lte($current_date) || $current_date->between($doj, Carbon::parse($single_user->dol))) {
 
                         $client_code = VmtClientMaster::where('id', $single_user->client_id)->first()->client_code;
@@ -129,7 +154,10 @@ class VmtAttendanceServiceV2
 
                         $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                         $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-                        //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
+
+                        //dd($current_date.'----------------'.$deviceCheckOutTime.'-----------'.$deviceCheckInTime);
+                        //dd($current_date);
+
 
                         // attendance details from vmt_employee_attenndance table
                         $web_attendance = VmtEmployeeAttendance::whereDate('date', $current_date)
@@ -150,19 +178,35 @@ class VmtAttendanceServiceV2
                         }
 
                         if ($deviceCheckOutTime != null) {
-                            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckOutTime]);
+                            // if ($single_user->id == 223)
+                            // dd($current_date);
+                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckOutTime]);
                         }
 
                         if ($deviceCheckInTime != null) {
-                            $all_att_data->push(['date' => $current_date . ' ' . $deviceCheckInTime]);
+                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckInTime]);
                         }
                         $sortedCollection   =   $all_att_data->sortBy([
                             ['date', 'asc'],
                         ]);
-                        $checking_time = $sortedCollection->first();
-                        $checkout_time =  $sortedCollection->last();
-                        dd($checking_time);
+                        $checking_time = $sortedCollection->first()['date'];
+                        $checkout_time =  $sortedCollection->last()['date'];
+                        //   dd($checking_time);
+
+                        //dd( $sortedCollection->first());
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
+                        if ($single_user->id == 223)
+                       // dd(  $shift_settings );
+                        $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
+                        $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
+                        if ($checking_time != null &&  $checkout_time != null &&  $checkout_time ==  $checking_time) {
+                            $attendance_time = $this->findMIPOrMOP($checking_time, $shiftStartTime, $shiftEndTime);
+
+                            $checking_time  = $attendance_time['checkin_time'];
+                            $checkout_time = $attendance_time['checkout_time'];
+                        }
+                        if ($single_user->id == 223)
+                            dd($checkout_time);
                         $week_off =   $shift_settings->week_off_days;
                         $week_off_sts = $this->checkWeekOffStatus($current_date, $week_off, $checking_time, $checkout_time);
                         foreach ($holidays as $holiday) {
@@ -176,11 +220,11 @@ class VmtAttendanceServiceV2
                             }
                         }
 
-                       // $employee_attendance
+                        // $employee_attendance
                     } else {
                         //employee exit, or they are not in organization 
                     }
-                    dd($single_user);
+                    // dd($single_user);
                 }
                 $current_date->day();
                 dd($current_date);
