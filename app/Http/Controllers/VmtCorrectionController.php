@@ -1644,7 +1644,7 @@ class VmtCorrectionController extends Controller
                                         $salary_project_data->attendance_bonus = $payslip_details['attendance_bonus'];
                                         $salary_project_data->attendance_bonus_arrear = $payslip_details['attendance_bonus_arrear'];
                                         $salary_project_data->daily_allowance_arrear = $payslip_details['daily_allowance_arrear'];
-                                        $salary_project_data->salary_advance_arrear = $payslip_details['salary_advance_arrear'];
+                                        $salary_project_data->salary_adv_arrear = $payslip_details['salary_adv_arrear'];
                                         $salary_project_data->medical_deductions = $payslip_details['medical_deductions'];
                                         $salary_project_data->uniform_deductions = $payslip_details['uniform_deductions'];
                                         $salary_project_data->loan_deductions = $payslip_details['loan_deductions'];
@@ -1763,7 +1763,7 @@ class VmtCorrectionController extends Controller
                                     $salary_project_data->attendance_bonus = $compensatory_details['attendance_bonus'] ?? 0;
                                     $salary_project_data->attendance_bonus_arrear = $compensatory_details['attendance_bonus_arrear'] ?? 0;
                                     $salary_project_data->daily_allowance_arrear = $compensatory_details['daily_allowance_arrear'] ?? 0;
-                                    $salary_project_data->salary_advance_arrear = $compensatory_details['salary_advance_arrear'] ?? 0;
+                                    $salary_project_data->salary_adv_arrear = $compensatory_details['salary_adv_arrear'] ?? 0;
                                     $salary_project_data->medical_deductions = $compensatory_details['medical_deductions'] ?? 0;
                                     $salary_project_data->uniform_deductions = $compensatory_details['uniform_deductions'] ?? 0;
                                     $salary_project_data->loan_deductions = $compensatory_details['loan_deductions'] ?? 0;
