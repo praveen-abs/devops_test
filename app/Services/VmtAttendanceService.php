@@ -3903,8 +3903,13 @@ class VmtAttendanceService
         $attendanceOverview['mip_count'] = $mip_count;
 
         $shifts = $this->getWorkShiftDetails();
-
-        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts];
+        $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+            ->where('leave_type_id', VmtLeaves::where('leave_type', 'On Duty')->first()->id)->count();
+        $leave_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+            ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
+        $upcomings['on_duty_count'] =  $on_duty_count;
+        $upcomings['leave_count'] = $leave_count;
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings'=>$upcomings];
         return $response;
     }
 
@@ -4219,14 +4224,14 @@ class VmtAttendanceService
         }
     }
 
-    public function getEmployeeUpcomingAppliedRequested()
-    {
-        $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
-            ->where('leave_type_id', VmtLeaves::where('leave_type', 'On Duty')->first()->id)->count();
-        $leave_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
-            ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
-        return $response = array('on_duty_count' => $on_duty_count, 'leave_count' => $leave_count);
-    }
+    // public function getEmployeeUpcomingAppliedRequested()
+    // {
+    //     $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+    //         ->where('leave_type_id', VmtLeaves::where('leave_type', 'On Duty')->first()->id)->count();
+    //     $leave_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+    //         ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
+    //     return $response = array('on_duty_count' => $on_duty_count, 'leave_count' => $leave_count);
+    // }
     public function getWorkShiftDetails()
     {
         $workshiftCount = array();
