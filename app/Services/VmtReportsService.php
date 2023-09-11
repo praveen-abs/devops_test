@@ -76,6 +76,7 @@ class VmtReportsservice
             ]);
         }
 
+<<<<<<< HEAD
         try{
 
                 if(empty($client_id)){
@@ -187,11 +188,127 @@ class VmtReportsservice
                     'error' =>  $e->getMessage(),
                     'error_verbose' => $e->getTraceAsString()
                 ];
+=======
+        try {
+>>>>>>> e02772f1f67b361ecbe70d5502cc7e04d375955d
 
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id');
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
             }
 
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+
+            // if(empty($department_id)){
+            //     $get_department = Department::pluck('id');
+            // }else{
+            //     $get_department = [$department_id];
+            // }
+
+
+            $date = Carbon::now()->format('M-Y');
+            $Category = 'All';
+            $processed_array = array();
+            $response = array();
+            $headings = array();
+            $temp_ar = array();
+            $headers = array();
+
+            $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                // ->where('vmt_employee_details.doj','<',$date)
+                ->whereIn('users.client_id', $client_id);
+            // ->whereIn('users.active',$active_status)
+          //  dd($department_id != null);
+            if ($department_id != null) {
+                $emp_ctc_detail  =   $emp_ctc_detail->where('vmt_employee_office_details.department_id', $department_id);
+            }
+            $emp_ctc_detail  =   $emp_ctc_detail->get();
+            //  dd( $emp_ctc_detail [0]);
+            foreach ($emp_ctc_detail as $singleemployeedata) {
+
+                $temp_ar['Employee Code'] = $singleemployeedata->user_code;
+                $temp_ar['Employee Name'] = $singleemployeedata->name;
+                $temp_ar['Gender'] = $singleemployeedata->Gender;
+                $temp_ar['Designation'] = $singleemployeedata->designation;
+                if ($singleemployeedata->active == 1) {
+                    $temp_ar['Employee Status'] = "Active";
+                } else if ($singleemployeedata->active == -1) {
+                    $temp_ar['Employee Status'] = "Exit";
+                } else if ($singleemployeedata->active == 0) {
+                    $temp_ar['Employee Status'] = 'Not Yet Active';
+                }
+
+                $temp_ar['DOJ (DD/MM/YYYY)'] = carbon::parse($singleemployeedata->doj)->format('d-M-Y');
+
+                if ($type == 'detailed') {
+                    $temp_ar['DOB (DD/MM/YYYY)'] = carbon::parse($singleemployeedata->dob)->format('d-M-Y');
+                    $temp_ar['PAN Number'] =  $singleemployeedata->pan_number;
+                    $temp_ar['Aadhar Number'] =  $singleemployeedata->aadhar_number;
+                    $temp_ar['Mobile Number'] =  $singleemployeedata->mobile_number;
+                    $temp_ar['Email ID'] =  $singleemployeedata->email;
+                    $temp_ar['UAN NO'] =  $singleemployeedata->uan_number;
+                    $temp_ar['EPF Number'] =  $singleemployeedata->epf_number;
+                    $temp_ar['ESIC Number'] =  $singleemployeedata->esic_number;
+                    $temp_ar['Bank Name'] =  $singleemployeedata->bank_name;
+                    $temp_ar['Bank Account No'] =  $singleemployeedata->bank_account_number;
+                    $temp_ar['IFSC Code'] =  $singleemployeedata->bank_ifsc_code;
+                }
+
+                $temp_ar['Basic'] =  $singleemployeedata->basic;
+                $temp_ar['House Rent Allowance'] =  $singleemployeedata->hra;
+                $temp_ar['Special Allowance'] =  $singleemployeedata->special_allowance;
+                $temp_ar['Fixed Gross'] =  $singleemployeedata->gross;
+                $temp_ar['EPFER'] =  $singleemployeedata->epf_employer_contribution;
+                $temp_ar['EDLI Charges'] =  $singleemployeedata->epf_employer_contribution;
+                $temp_ar['PF ADMIN Charges'] =  $singleemployeedata->pf_admin_charges;
+                $temp_ar['ESICER'] =  $singleemployeedata->esic_employer_contribution;
+                $temp_ar['Insurance'] =  $singleemployeedata->insurance;
+                $temp_ar['LWFER'] =  $singleemployeedata->labour_welfare_fund;
+                $temp_ar['CTC'] =  $singleemployeedata->cic;
+                $temp_ar['EPFEE'] =  $singleemployeedata->epf_employee;
+                $temp_ar['ESICEE'] =  $singleemployeedata->esic_employee;
+                $temp_ar['Income Tax'] =  $singleemployeedata->Income_tax;
+                $temp_ar['Professional Tax'] =  $singleemployeedata->professional_tax;
+                $temp_ar['LWFEE '] =  $singleemployeedata->lwfee;
+                $temp_ar['Total Deduction'] =   (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE '];
+                $temp_ar['NET Pay '] =  $singleemployeedata->net_income;
+                array_push($processed_array, $temp_ar);
+            }
+
+            foreach ($processed_array[0] as $key => $value) {
+                $headings = $key;
+                array_push($headers, $headings);
+            }
+
+            $response['headers'] =   $headers;
+            $response['rows'] = $processed_array;
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getTraceAsString()
+            ];
+        }
     }
+<<<<<<< HEAD
 public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id)
+=======
+    public function getEmployeesMasterDetails()
+>>>>>>> e02772f1f67b361ecbe70d5502cc7e04d375955d
     {
 
 
@@ -254,11 +371,16 @@ public function getEmployeesMasterDetails($type, $client_id, $active_status, $de
             ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
             ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+<<<<<<< HEAD
             ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
+=======
+            ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+            //->join('vmt_employee_family_details','vmt_employee_family_details.user_id','=','users.id')
+>>>>>>> e02772f1f67b361ecbe70d5502cc7e04d375955d
             ->get();
         //   ->where('vmt_employee_details.doj', '<',$date)
         //  ->whereIn('users.client_id', $client_id)  
-        
+
         foreach ($emp_master_detail as $single_details) {
             $temp_ar['Employee Code'] = $single_details->user_code;
             $temp_ar['Employee Name'] = $single_details->name;
@@ -280,19 +402,71 @@ public function getEmployeesMasterDetails($type, $client_id, $active_status, $de
             $temp_ar['PAN Number'] = $single_details->pan_number;
             $temp_ar['Aadhar Number'] = $single_details->aadhar_number;
             $temp_ar['Mobile Number'] = $single_details->mobile_number;
+<<<<<<< HEAD
             $temp_ar['Official Email'] = $single_details->officical_mail;
             $temp_ar['UAN Number'] = $single_details->uan_number;
+=======
+            $temp_ar['Marriage Date (dd-mmm-yyyy)'] = $single_details->wedding_date;
+            $temp_ar['Blood Group'] = VmtBloodGroup::where('id', $single_details->blood_group_id)->first()->name ?? '';
+            // $temp_ar['Salary Payment Mode'] = $single_details->;
+            $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
+            $temp_ar['NATIONALITY'] = $single_details->nationality;
+            // $temp_ar['NATIONALITY'] = $single_details->nationality;
+
+            $temp_ar['Dearness Allowance'] = $single_details->dearness_allowance;
+            // $temp_ar['House Rent Allowance'] = $single_details->;
+            $temp_ar['Child Education Allowance'] = $single_details->child_education_allowance;
+            $temp_ar['Communication Allowance'] = $single_details->communication_allowance;
+            $temp_ar['Food Allowance'] = $single_details->food_allowance;
+            $temp_ar['Travel Reimbursement (LTA)'] = $single_details->lta;
+            $temp_ar['Special Allowance'] = $single_details->special_allowance;
+            $temp_ar['STATUTORY BONUS'] = $single_details->Statutory_bonus;
+            $temp_ar['Other Allowance'] = $single_details->other_allowance;
+            $temp_ar['Physically Handicapped'] = $single_details->physically_challenged;
+            $temp_ar['Driver Salary'] = $single_details->driver_salary;
+            // $temp_ar['Employer EPF'] = $single_details->washing_allowance; 
+            $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
+            $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution;
+            $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution;
+            $temp_ar['Email ID'] = $single_details->email;
+            $temp_ar['UAN NO'] = $single_details->uan_number;
+>>>>>>> e02772f1f67b361ecbe70d5502cc7e04d375955d
             $temp_ar['EPF Number'] = $single_details->epf_number;
             $temp_ar['ESICEE'] = $single_details->esic_employee;
             $temp_ar['Bank Name'] = $single_details->bank_name;
             $temp_ar['Bank Account No'] = $single_details->bank_account_number;
             $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
+<<<<<<< HEAD
             //for father  mother name
             $user_id = User::where('user_code',$single_details->user_code)->first()->id;
+=======
+            $temp_ar['Present Address'] = $single_details->present_address;
+            $temp_ar['Permanent Address'] = $single_details->permanent_address;
+            $temp_ar['Basic'] = $single_details->basic;
+            $temp_ar['House Rent Allowance'] = $single_details->hra;
+            $temp_ar['Special Allowance'] = $single_details->special_allowance;
+            $temp_ar['Fixed Gross'] = $single_details->gross;
+            $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution;
+            $temp_ar['EDLI Charges'] = $single_details->edli_charges;
+            $temp_ar['PF ADMIN Charges'] = $single_details->pf_admin_charges;
+            $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution;
+            $temp_ar['Insurance'] = $single_details->insurance;
+            $temp_ar['LWFER'] = $single_details->labour_welfare_fund;
+            $temp_ar['CTC'] = $single_details->cic;
+            $temp_ar['EPFEE'] = $single_details->epf_employee;
+            $temp_ar['ESICEE'] = $single_details->esic_employee;
+            $temp_ar['Income Tax'] = $single_details->Income_tax;
+            $temp_ar['Professional Tax'] = $single_details->professional_tax;
+            $temp_ar['LWFEE'] = $single_details->lwfee;
+            $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
+            $temp_ar['NET Pay '] =  $single_details->net_income;
+
+            //Get family details
+            $user_id = User::where('user_code', $single_details->user_code)->first()->id;
+>>>>>>> e02772f1f67b361ecbe70d5502cc7e04d375955d
             $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
             foreach ($family_details as $singleFamilyDetails) {
-                $temp_ar[$singleFamilyDetails->relationship." Name"] = $singleFamilyDetails->name;
-             
+                $temp_ar[$singleFamilyDetails->relationship . " Name"] = $singleFamilyDetails->name;
             }
             $temp_ar['Present Address'] = $single_details->present_address;
             $temp_ar['Permanent Address'] = $single_details->permanent_address;
@@ -358,9 +532,9 @@ public function getEmployeesMasterDetails($type, $client_id, $active_status, $de
             unset($temp_ar);
 
             return $response;
-
         }
     }
+<<<<<<< HEAD
         catch(\Exception $e){
             $response = [
                 'status' => 'failure',
@@ -373,3 +547,6 @@ public function getEmployeesMasterDetails($type, $client_id, $active_status, $de
         
     }
 }
+=======
+}
+>>>>>>> e02772f1f67b361ecbe70d5502cc7e04d375955d
