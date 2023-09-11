@@ -190,15 +190,5 @@ class VmtMasterConfigController extends Controller
             ]);
         }
     }
-    // public function GetAllEmpModuleActiveStatus(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
-
-    //     $response = $serviceVmtAppPermissionsService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
-
-
-    //     return $response;
-
-    // }
-
-
 
 }
