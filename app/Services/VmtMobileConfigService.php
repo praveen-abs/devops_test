@@ -21,10 +21,12 @@ use App\Models\VmtEmpSubModules;
 use App\Models\VmtEmpConfigApps;
 use Illuminate\Support\Facades\Validator;
 
-class VmtMobileConfigService
+// VmtAppPermissions
+class VmtAppPermissionsService
 {
 
-    public function saveAppConfigStatus($module_id, $status)
+
+    public function updateClientModuleStatus($client_id, $module_id, $status)
     {
         $validator = Validator::make(
             $data = [
@@ -50,7 +52,7 @@ class VmtMobileConfigService
         }
 
         try {
-            $client_id = sessionGetSelectedClientid();
+
 
             $app_config_data = VmtClientSubModules::where('client_id', $client_id)->where("app_sub_module_link_id", $module_id);
 
@@ -86,9 +88,14 @@ class VmtMobileConfigService
             ]);
         }
     }
-    // public function SaveEmployeeAppConfigStatus($is_mobile_app_active,$is_checkin_active,$is_checkout_active,$is_location_capture_active,$is_checkin_selfie_active,$is_checkout_selfie_active,$is_reimbursement_checkout_active, $is_absent_regularization_active,
-    //                                      $is_attendance_regularization_active, $is_leave_apply_active,$is_salary_advance_loan_active,$is_investments_active,$is_pms_active,$is_exit_apply_active)
-    public function SaveEmployeeAppConfigStatus($app_sub_modules_link_id, $selected_employees_user_code)
+
+    /*
+        Used to update single or multiple employees permission for a given module .
+
+        $selected_employees_user_code : Contains user_code and their status values.
+    */
+
+    public function updateEmployeesPermissionStatus($client_id, $app_sub_modules_link_id, $selected_employees_user_code)
     {
         $validator = Validator::make(
             $data = [
@@ -114,13 +121,12 @@ class VmtMobileConfigService
         }
 
         try {
-            $client_id = sessionGetSelectedClientid();
+
             $drop_emp_app_config_data = VmtEmpSubModules::where("app_sub_module_link_id", $app_sub_modules_link_id)->where('client_id', $client_id);
             $drop_emp_app_config_data->delete();
 
             foreach ($selected_employees_user_code as $user_key => $single_user_code) {
 
-                $user_data = User::where('user_code', $single_user_code)->first();
                 $save_emp_app_config_data = new VmtEmpSubModules;
                 $save_emp_app_config_data->client_id = $single_user_code['client_id'];
                 $save_emp_app_config_data->user_id = $single_user_code['id'];
@@ -148,7 +154,7 @@ class VmtMobileConfigService
         }
     }
 
-    public function getEmployeesMobileSettingsData($user_code)
+    public function getEmployeeMobilePermissionsDetails($user_code)
     {
 
         $validator = Validator::make(
@@ -173,7 +179,7 @@ class VmtMobileConfigService
 
         try {
 
-            $user_date = User::where('user_code', $user_code)->first();
+            $user_data = User::where('user_code', $user_code)->first();
 
             $sub_module_data = VmtAppSubModuleslink::get();
 
@@ -184,13 +190,13 @@ class VmtMobileConfigService
 
                 $module_name =VmtAppModules::where("id",$single_module_data['module_id'])->first();
                 $sub_module_name = VmtAppSubModules::where("id", $single_module_data['sub_module_id'])->first();
-                $client_module_status = VmtClientSubModules::where('client_id', $user_date->client_id)->where('app_sub_module_link_id', $single_module_data['id'])->first();
+                $client_module_status = VmtClientSubModules::where('client_id', $user_data->client_id)->where('app_sub_module_link_id', $single_module_data['id'])->first();
 
                 if ($client_module_status->exists()) {
                     $mobile_settings_data[$i]['module_name'] = $module_name->title;
                     $mobile_settings_data[$i]['sub_module_name'] = $sub_module_name->title;
                     $mobile_settings_data[$i]['sub_module_status'] = $client_module_status->status;
-                    $emp_module_status = VmtEmpSubModules::where('client_id', $user_date->client_id)->where('user_id', $user_date->id)->where('app_sub_module_link_id', $single_module_data['id']);
+                    $emp_module_status = VmtEmpSubModules::where('client_id', $user_data->client_id)->where('user_id', $user_data->id)->where('app_sub_module_link_id', $single_module_data['id']);
                     if ($emp_module_status->exists()) {
                         $mobile_settings_data[$i]['employee_status'] = $emp_module_status->first()->status;
                     } else {
@@ -213,6 +219,9 @@ class VmtMobileConfigService
             ]);
         }
     }
+
+    /*
+
     public function GetAllEmpModuleActiveStatus($user_code, $module_type)
     {
 
@@ -268,6 +277,14 @@ class VmtMobileConfigService
             ]);
         }
     }
+
+    */
+
+    /*
+        Get all the permissions and their status for this client
+
+    */
+    //getClientPermissions
     public function getAppModules($client_id)
     {
 

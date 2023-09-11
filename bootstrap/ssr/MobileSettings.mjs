@@ -53,7 +53,7 @@ const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
   };
   const saveEnableDisableSetting = async (item, status) => {
     canshowloading.value = true;
-    await axios.post("/saveAppConfigStatus", {
+    await axios.post("/updateClientModuleStatus", {
       module_id: item.id,
       status
     }).then((res) => {
@@ -65,8 +65,8 @@ const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
       canshowloading.value = false;
     });
   };
-  const SaveEmployeeAppConfigStatus = () => {
-    axios.post("/SaveEmployeeAppConfigStatus", {
+  const updateEmployeesPermissionStatus = () => {
+    axios.post("/updateEmployeesPermissionStatus", {
       app_sub_modules_link_id,
       selected_employees_user_code
     }).then(() => {
@@ -80,7 +80,7 @@ const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
     saveEnableDisableSetting,
     canshowloading,
     client_details,
-    SaveEmployeeAppConfigStatus,
+    updateEmployeesPermissionStatus,
     getMobileSettings
   };
 });
@@ -152,7 +152,7 @@ const _sfc_main$1 = {
         }
       });
       useStore.canshowloading = true;
-      axios.post("/SaveEmployeeAppConfigStatus", {
+      axios.post("/updateEmployeesPermissionStatus", {
         "client_id": useStore.client_details.id,
         "app_sub_modules_link_id": type,
         "selected_employees_user_code": selectedUserId

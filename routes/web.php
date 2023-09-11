@@ -891,8 +891,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
 
-    Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
-    Route::post('/saveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'saveAppConfigStatus'])->name('saveAppConfigStatus');
+    Route::post('/updateEmployeesPermissionStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateEmployeesPermissionStatus'])->name('updateEmployeesPermissionStatus');
+    Route::post('/updateClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateClientModuleStatus'])->name('updateClientModuleStatus');
     Route::post('/getEmployeesFilterData', [App\Http\Controllers\VmtMasterConfigController::class, 'getEmployeesFilterData'])->name('getEmployeesFilterData');
     Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');

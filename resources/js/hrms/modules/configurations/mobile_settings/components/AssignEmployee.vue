@@ -192,7 +192,7 @@ val.forEach((element) => {
 });
 
     useStore.canshowloading = true;
-    axios.post('/SaveEmployeeAppConfigStatus', {
+    axios.post('/updateEmployeesPermissionStatus', {
         "client_id": useStore.client_details.id,
         "app_sub_modules_link_id": type,
         "selected_employees_user_code": selectedUserId
@@ -222,7 +222,7 @@ val.forEach((element) => {
     // });
     // console.log(format);
 
-    // axios.post('/SaveEmployeeAppConfigStatus', {
+    // axios.post('/updateEmployeesPermissionStatus', {
     //     is_mobile_app_active: format.is_mobile_app_active ? format.is_mobile_app_active : [],
     //     is_check_active: format.is_check_active ? format.is_check_active : []
 
