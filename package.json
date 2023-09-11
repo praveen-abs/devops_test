@@ -4,7 +4,7 @@
   "private": true,
   "author": "abs",
   "scripts": {
-    "build": "vite build" ,
+    "build": "vite build",
     "dev": "vite"
   },
   "dependencies": {
@@ -72,6 +72,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.37.1",
     "@vue/cli-plugin-router": "~5.0.0",
     "autoprefixer": "^10.4.14",
     "axios": "^0.25",

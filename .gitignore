@@ -33,3 +33,6 @@ Homestead.json
 /storage/uploads/employee/
 /storage/employees/
 /package-lock.json
+/test-results/
+/playwright-report/
+/playwright/.cache/
