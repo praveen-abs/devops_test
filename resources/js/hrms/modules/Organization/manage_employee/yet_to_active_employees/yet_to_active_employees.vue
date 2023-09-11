@@ -187,7 +187,9 @@ function showConfirmDialog(selectedRowData, status) {
     console.log(useManageEmployeesStore.emp_status);
     console.log(selectedRowData.emp_status);
 
-    manageEmployeesStore.canShowLoadingScreen =true;
+    canShowConfirmation.value = true;
+
+    // manageEmployeesStore.canShowLoadingScreen =true;
     currentlySelectedStatus = status;
     currentlySelectedRowData = selectedRowData;
     console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
@@ -195,6 +197,7 @@ function showConfirmDialog(selectedRowData, status) {
 
 function hideConfirmDialog(canClearData) {
     manageEmployeesStore.canShowLoadingScreen =false;
+    canShowConfirmation.value = false;
 
     if (canClearData) resetVars();
 }
@@ -268,6 +271,7 @@ function processApproveReject() {
             manageEmployeesStore.ajax_yet_to_active_employees_data();
             manageEmployeesStore.getActiveEmployees();
             manageEmployeesStore.canShowLoadingScreen =false;
+            canShowConfirmation.value = false;
         });
 }
 </script>

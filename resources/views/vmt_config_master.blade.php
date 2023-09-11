@@ -1,9 +1,7 @@
 @extends('layouts.master')
 @section('css')
-
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 @endsection
-
 @section('content')
 
 {{-- @component('components.configuration_breadcrumb')
@@ -134,10 +132,15 @@
                                                 <label class="" for="selected_head">Select Organization HR</label>
                                             </div>
                                             <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
-                                                <select placeholder="Select HR" name="hr_userid" id="hr_userid"
+                                                <select placeholder="Select HR" name="hr_userid"
                                                     class="onboard-form form-control">
                                                     <option value="">Select</option>
+                                                    @foreach ($employees_hr as $singleHr)
+                                                            <option value="{{ $singleHr->id}}" @if( $singleHr->id == $data['hr_userid']) selected @endif>{{ $singleHr->name}}</option>
+
+                                                    @endforeach
                                                 </select>
+
                                             </div>
                                         </div>
                                         <div class="row mt-1">

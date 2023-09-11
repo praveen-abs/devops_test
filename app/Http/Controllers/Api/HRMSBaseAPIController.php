@@ -9,7 +9,7 @@ use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Services\VmtMobileConfigService;
+use App\Services\VmtAppPermissionsService;
 use App\Services\VmtEmployeeService;
 use App\Services\VmtCoreService;
 
@@ -25,9 +25,9 @@ class HRMSBaseAPIController extends Controller
     }
 
 
-    public function getAppConfig(Request $request, VmtMobileConfigService $serviceVmtMobileConfigService){
+    public function getEmployeeMobilePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $response = $serviceVmtMobileConfigService->getEmployeesMobileSettingsData($request->user_code);
+        $response = $serviceVmtAppPermissionsService->getEmployeeMobilePermissionsDetails($request->user_code);
 
         return $response;
     }

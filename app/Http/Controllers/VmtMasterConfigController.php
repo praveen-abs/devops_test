@@ -12,7 +12,7 @@ use App\Models\VmtAppModules;
 use App\Models\VmtEmpSubModules;
 use App\Models\VmtClientSubModules;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
-use App\Services\VmtMobileConfigService;
+use App\Services\VmtAppPermissionsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,8 +21,10 @@ class VmtMasterConfigController extends Controller
     public function index(Request $request) {
         //Fetch all master configs
         $masterData = VmtMasterConfig::all(['config_name','config_value']);
-        $employees_hr = User::where('is_ssa','0')->whereIn('org_role',['3','2'])->
-                        select('id','name','user_code')
+        $employees_hr = User::where('is_ssa','0')
+                        ->where('active','1')
+                        ->whereIn('org_role',['3','2'])
+                        ->select('id','name','user_code')
                         ->get();
 
         //$employees_hr = json_encode($employees_hr);
@@ -33,8 +35,6 @@ class VmtMasterConfigController extends Controller
             return [$item['config_name'] => $item['config_value']];
         });
 
-
-        //dd($data);
 
         return view('vmt_config_master', compact('data','employees_hr'));
     }
@@ -95,32 +95,33 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function  saveAppConfigStatus(Request $request,VmtMobileConfigService $serviceVmtMasterConfigService){
+    public function  updateClientModuleStatus(Request $request,VmtAppPermissionsService $serviceVmtMasterConfigService){
+         $client_id = sessionGetSelectedClientid();
 
-        $response = $serviceVmtMasterConfigService->saveAppConfigStatus($request->module_id,$request->status);
+        $response = $serviceVmtMasterConfigService->updateClientModuleStatus( $client_id,$request->module_id,$request->status);
 
         return response()->json($response);
 
     }
 
-    public function SaveEmployeeAppConfigStatus(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
+    public function updateEmployeesPermissionStatus(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-
-        $response = $serviceVmtMobileConfigService->SaveEmployeeAppConfigStatus($request->app_sub_modules_link_id,$request->selected_employees_user_code);
+        $client_id = sessionGetSelectedClientid();
+        $response = $serviceVmtAppPermissionsService->updateEmployeesPermissionStatus($client_id,$request->app_sub_modules_link_id,$request->selected_employees_user_code);
 
 
         return $response;
 
     }
 
-    public function getAppModules( Request $request ,VmtMobileConfigService $serviceVmtMobileConfigService){
+    public function getAppModules( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        return  $serviceVmtMobileConfigService->getAppModules($request->client_id);
+        return  $serviceVmtAppPermissionsService->getAppModules($request->client_id);
     }
 
-    public function getAllDropdownFilterSetting(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
+    public function getAllDropdownFilterSetting(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        return  $serviceVmtMobileConfigService->getAllDropdownFilterSetting();
+        return  $serviceVmtAppPermissionsService->getAllDropdownFilterSetting();
 
 
     }
@@ -189,14 +190,14 @@ class VmtMasterConfigController extends Controller
             ]);
         }
     }
-    public function GetAllEmpModuleActiveStatus(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
+    // public function GetAllEmpModuleActiveStatus(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $response = $serviceVmtMobileConfigService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
+    //     $response = $serviceVmtAppPermissionsService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
 
 
-        return $response;
+    //     return $response;
 
-    }
+    // }
 
 
 

@@ -44,7 +44,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                                             alt="" class="" style="width:140px;height:30px;">
                                     </div>
                                     <div class=" float-right">
-                                        <img class=" border-orange-300 float-right" src="{{ URL::asset($client_logo) }}" alt=""
+                                        <img class=" border-orange-300 float-right" src="{{ URL::asset($image_view) }}" alt=""
                                             style="width:120px;height:30px;">
                                     </div>
 

@@ -13,14 +13,15 @@ use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeOfficeDetails;
 
 use App\Models\VmtPayroll;
+use App\Models\Department;
 use App\Models\VmtEmployeePayslipV2;
 use App\Models\User;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use Illuminate\Support\Facades\DB;
-use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
+use App\Exports\EmployeeBasicCtcExport;
 use App\Exports\ManagerReimbursementsExport;
 use App\Exports\EmployeeReimbursementsExport;
 use App\Exports\AnnualEarnedExport;
@@ -33,6 +34,9 @@ use App\Models\VmtEmployeeReimbursements;
 use App\Services\VmtReimbursementsService;
 use App\Services\VmtReportsservice;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use App\Models\VmtClientMaster;
+use App\Models\VmtOrgTimePeriod;
 
 class VmtReportsController extends Controller
 {
@@ -621,22 +625,11 @@ class VmtReportsController extends Controller
 
         return Excel::download(new AnnualEarnedExport($response, $headings), 'Annual Earned Report.xlsx');
     }
-
     public function getEmployeesCTCDetails(Request $request, VmtReportsservice $reportsService)
     {
-        $date = Carbon::now();
-        $client_id = array(1);
-        $Category = 'All';
-        $emp_ctc_data = $reportsService->getEmployeesCTCDetails();
-        $headers = array();
-        foreach ($emp_ctc_data[0] as $key => $value) {
-            $headings = $key;
-            array_push($headers, $headings);
-        }
-        $response['headers'] =   $headers;
-        $response['rows'] = $emp_ctc_data;
 
-        return $response ;
+
+        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id);
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -655,4 +648,69 @@ class VmtReportsController extends Controller
         $public_client_logo_path = public_path($client_logo_path);
         return Excel::download(new EmployeeBasicCtcExport($emp_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
     }
+
+    public function getCurrentFinancialYear()
+    {
+       // dd('sjfdbvd');
+        $current_year = VmtOrgTimePeriod::where('status', 1)->first();
+       // dd($current_year->start_date);
+
+       $response = array();
+        foreach(CarbonPeriod::create($current_year->start_date, '1 month', Carbon::now()->format('Y').'-'.Carbon::now()->format('m').'-01') as $single_month){
+            $response[$single_month->format('Y-m-d')] = $single_month->format('M-Y');
+        }
+        return $response;
+    }
+
+    public function filterClient()
+    {
+        // dd(sessionGetSelectedClientName());
+        if(sessionGetSelectedClientName() == 'VASA'){
+            return VmtClientMaster::where('client_fullname','<>','All')->get(['id','abs_client_code','client_fullname']);
+        }else{
+           return VmtClientMaster::where('client_fullname',sessionGetSelectedClientName())->get(['id','abs_client_code','client_fullname']);
+        }
+    }
+    public function getEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
+    {
+        // $date = Carbon::now();
+        // $client_id = array(1);
+        // $Category = 'All';
+        // $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails();
+        // $headers = array();
+        // foreach ($emp_mas_ctc_data[0] as $key => $value) {
+        //     $headings = $key;
+        //     array_push($headers, $headings);
+        // }
+        // $response['headers'] =   $headers;
+        // $response['rows'] = $emp_mas_ctc_data;
+ // return $response;
+ return  $reportsService->getEmployeesMasterDetails();
+
+
+    }
+    public function generategetEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
+    {
+        $date = Carbon::now();
+        $client_id = array(1);
+        $Category = 'All';
+        $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails();
+        $headers = array();
+        foreach ($emp_mas_ctc_data as $key => $value) {
+            $headings = $key;
+            array_push($headers, $headings);
+        }
+        $client_name = sessionGetSelectedClientName();
+        $client_logo_path = session()->get('client_logo_url');
+        $public_client_logo_path = public_path($client_logo_path);
+        return Excel::download(new EmployeeBasicCtcExport($emp_mas_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
+    }
+
+    public function department(){
+
+      $get_department =   Department::all(['id','name']);
+      return $get_department;
+
+    }
+
 }

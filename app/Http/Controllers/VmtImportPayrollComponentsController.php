@@ -146,59 +146,59 @@ $i=array_keys($excelRowdata_row);
     {
 
 
-        try{
-            $component_type =VmtPayrollCompTypes::where('name',strtolower($row["componant_type"]))->first();
-            $paygroup_components =VmtPayrollComponents::where('comp_name',$row["component_name"])->where('comp_type_id',$component_type->id)->first();
+        // try{
+        //     $component_type =VmtPayrollCompTypes::where('name',strtolower($row["componant_type"]))->first();
+        //     $paygroup_components =VmtPayrollComponents::where('comp_name',$row["component_name"])->where('comp_type_id',$component_type->id)->first();
 
-            if(empty($paygroup_components)){
-                $fin_components = new VmtPayrollComponents;
-                $fin_components->comp_name =$row["component_name"];
-                $fin_components->comp_type_id =  $component_type->id;
-                $component_nature =VmtPayrollCompNature::where('name',strtolower($row["component_nature"]))->first();
-                $fin_components->comp_nature_id =$component_nature->id;
-                $component_category =VmtPayrollCompCategory::where('name',strtolower($row["category"]))->first();
-                $fin_components->category_id =$component_category->id;
-                $calculation_method_id =VmtPayrollCalculatiomMethod::where('name',strtolower($row["calculation_method"]))->first();
-                $fin_components->calculation_method_id =$calculation_method_id->id;
-                $fin_components->calculation_desc = ;
-                $fin_components->calculation_amount = ;
-                $fin_components->epf =$row["epf"];
-                $fin_components->esi =$row["esi"];
-                $fin_components->pt =$row["pt"];
-                $fin_components->lwf =$row["lwf"];
-                $fin_components->impact_on_gross =$row["impact_on_gross"];
-                $fin_components->is_part_of_empsal_structure =$row["is_part_of_empsal_structure"];
-                $fin_components->is_taxable =$row["is_taxable"];
-                $fin_components->calculate_on_prorate_basis =$row["calculate_on_prorate_basis"];
-                $fin_components->can_show_inpayslip =$row["can_show_inpayslip"];
-                $fin_components->status =$row["status"];
-                $fin_components->comp_identifier =$row[""];
-                $fin_components->is_default =$row["is_default"];
-                $fin_components->save();
+        //     if(empty($paygroup_components)){
+        //         $fin_components = new VmtPayrollComponents;
+        //         $fin_components->comp_name =$row["component_name"];
+        //         $fin_components->comp_type_id =  $component_type->id;
+        //         $component_nature =VmtPayrollCompNature::where('name',strtolower($row["component_nature"]))->first();
+        //         $fin_components->comp_nature_id =$component_nature->id;
+        //         $component_category =VmtPayrollCompCategory::where('name',strtolower($row["category"]))->first();
+        //         $fin_components->category_id =$component_category->id;
+        //         $calculation_method_id =VmtPayrollCalculatiomMethod::where('name',strtolower($row["calculation_method"]))->first();
+        //         $fin_components->calculation_method_id =$calculation_method_id->id;
+        //         $fin_components->calculation_desc = ;
+        //         $fin_components->calculation_amount = ;
+        //         $fin_components->epf =$row["epf"];
+        //         $fin_components->esi =$row["esi"];
+        //         $fin_components->pt =$row["pt"];
+        //         $fin_components->lwf =$row["lwf"];
+        //         $fin_components->impact_on_gross =$row["impact_on_gross"];
+        //         $fin_components->is_part_of_empsal_structure =$row["is_part_of_empsal_structure"];
+        //         $fin_components->is_taxable =$row["is_taxable"];
+        //         $fin_components->calculate_on_prorate_basis =$row["calculate_on_prorate_basis"];
+        //         $fin_components->can_show_inpayslip =$row["can_show_inpayslip"];
+        //         $fin_components->status =$row["status"];
+        //         $fin_components->comp_identifier =$row[""];
+        //         $fin_components->is_default =$row["is_default"];
+        //         $fin_components->save();
 
-            return $rowdata_response = [
+        //     return $rowdata_response = [
 
-                'status' => 'success',
-                'error_fields' => [],
-            ];
-        }else{
-            return $rowdata_response = [
+        //         'status' => 'success',
+        //         'error_fields' => [],
+        //     ];
+        // }else{
+        //     return $rowdata_response = [
 
-                'status' => 'SUCCESS',
-                'message'=>'given data is already added',
-                'error_fields' => [],
-            ];
-        }
-        } catch (\Exception $e) {
-            //$this->deleteUser($user->id);
+        //         'status' => 'SUCCESS',
+        //         'message'=>'given data is already added',
+        //         'error_fields' => [],
+        //     ];
+        // }
+        // } catch (\Exception $e) {
+        //     //$this->deleteUser($user->id);
 
-            //dd("For Usercode : ".$row['emp_no']."  -----  ".$e);
-            return $rowdata_response = [
-                'row_number' => '',
-                'status' => 'failure',
-                'error_fields' => json_encode(['error' =>$e->getMessage()]),
-                'stack_trace' => $e->getTraceAsString()
-            ];
-        }
+        //     //dd("For Usercode : ".$row['emp_no']."  -----  ".$e);
+        //     return $rowdata_response = [
+        //         'row_number' => '',
+        //         'status' => 'failure',
+        //         'error_fields' => json_encode(['error' =>$e->getMessage()]),
+        //         'stack_trace' => $e->getTraceAsString()
+        //     ];
+        // }
     }
 }

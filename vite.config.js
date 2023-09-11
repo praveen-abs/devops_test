@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import {hash} from './functions';
 
 export default defineConfig({
 
     plugins: [
-        { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
         laravel({
             input: [
@@ -48,6 +46,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js',
                 'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
                 'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js',
+                'resources/js/hrms/modules/reports/employee_master_report/employee_master_report.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
