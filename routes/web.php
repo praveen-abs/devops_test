@@ -909,7 +909,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
     Route::post('/getEmployeeMobilePermissionsDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getEmployeeMobilePermissionsDetails'])->name('getEmployeeMobilePermissionsDetails');
-    Route::post('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
+    Route::get('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
     Route::get('/getClient_AllModulePermissionDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModulePermissionDetails'])->name('getClient_AllModulePermissionDetails');
 
 

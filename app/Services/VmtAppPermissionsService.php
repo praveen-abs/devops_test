@@ -257,25 +257,18 @@ class VmtAppPermissionsService
             $mobile_settings_data =array();
             $i=0;
             foreach ($module_id as $key => $single_module_id) {
-                $module_name = VmtAppModules::Where('id',$single_module_id['id'])->first();
-                $mobile_settings_data[$i]['module_name']= $module_name->module_name;
-                $mobile_settings_data[$i]['sub_module_name'] =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
-                ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
-                ->join("vmt_client_sub_modules","vmt_client_sub_modules.app_sub_module_link_id","=","vmt_app_sub_modules_links.id")
-                ->where("vmt_app_sub_modules_links.module_id","=",$single_module_id['id'])
-                ->where("vmt_client_sub_modules.client_id","=",$client_id)
-                ->get([ "vmt_app_sub_modules.sub_module_name",
-                        "vmt_client_sub_modules.status as sub_module_status",
-                                ])->toarray();
-
+                 $mobile_settings_data[] = VmtAppModules::join("vmt_client_modules","vmt_client_modules.module_id","=","vmt_app_modules.id")->Where('vmt_app_modules.id',$single_module_id['id'])->first(["vmt_app_modules.module_name",
+                                                    "vmt_client_modules.status as module_status"])->toarray();
                    $i++;
 
             }
 
 
+// dd($mobile_settings_data );
              return response()->json([
                     "status" => "success",
                     "message" => "Data fetch successfully",
+                    "role" => auth()->user()->org_role,
                     "data" => $mobile_settings_data,
                 ]);
 
