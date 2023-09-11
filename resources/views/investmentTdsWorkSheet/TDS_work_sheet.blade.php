@@ -605,10 +605,10 @@
                             <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_hrareceived'] }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Excess_of_rentpaid'] }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Total</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_exception_amt'] }}</p>
                         </td>
                     </tr>
 
@@ -620,7 +620,7 @@
                             <p  style="font-size:11px; margin-top:-10px;">Least amount of the three columns will be considered for tax exemption under HRA</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">$12920</p>
+                            <p style="font-size:11px; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_exception_amt'] }}</p>
                         </td>
                     </tr>
                 </table>

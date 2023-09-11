@@ -185,7 +185,7 @@ class VmtPayrollTaxService
 
         // 3) Total after excemption (1 - 2);
 
-        $total_after_exemption['total'] = $allowance_under_sec_10['total'];
+        $total_after_exemption['total'] = $allowance_under_sec_10['total'] + $Gross_earnings['particulars']['Total Income'];
         array_push($res["Total_after_excemption"]["3) Total after excemption (1 - 2)"], $total_after_exemption);
 
 
@@ -1021,21 +1021,31 @@ class VmtPayrollTaxService
          }
 
 
-
         if(isset($annual['Total']['arrear_basic'])){
-           $annual_basic =  $annual['Total']['arrear_basic'] + $annual['Total']['Basic'] ;
+           $annual_basic =  $annual['Total']['arrear_basic'] + $annual['Total']['Basic'];
         }else{
             $annual_basic = $annual['Total']['Basic'];
         }
 
         $annual_basic = $annual_basic * 0.5;
 
-        $res = ["total_earnedbasic" => $annual_basic , "total_hrareceived" => $annual_Hra];
+        $annual_basic10per  = $annual_basic * 0.10;
+
+        $excessOfRentPaid = $annual_basic10per - $annual_Hra;
+
+
+        $res11 = ["total_earnedbasic" => $annual_basic , "total_hrareceived" => $annual_Hra , "Excess_of_rentpaid" => $excessOfRentPaid ];
+
+        $total_excep  = min(array_values($res11));
+
+        $res = ["total_earnedbasic" => $annual_basic , "total_hrareceived" => $annual_Hra , "Excess_of_rentpaid" => $excessOfRentPaid , "total_exception_amt" => $total_excep ];
+
+
         foreach($date as $single_date){
             $HraException['month'] = $single_date;
             $HraException['Earned_basic'] = $annual_basic / 12;
             $HraException['Hra_received'] =  round($annual_Hra / 12);
-            $HraException['rent_paid_over_10per'] = 0;
+            $HraException['rent_paid_over_10per'] = round(($annual_basic10per - $annual_Hra) / 12);
 
             array_push($res,$HraException);
         }
