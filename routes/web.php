@@ -796,7 +796,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     ///basic report
     Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
     //for master detail
-    Route::get('/fetch-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterCTCData');
+    Route::get('/fetch-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterDetails');
     //payroll reports
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
