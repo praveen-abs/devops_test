@@ -21,9 +21,9 @@
             <div class="">
                 <button
                     class="text-[12px] w-[100px] rounded-l-[8px] h-[26px] bg-[rgba(0,0,0,0.95)] hover:bg-[#000] text-[#fff]"
-                    @click="EnableAllAndDisableAll(selectedEmployee)">Enable All</button>
+                    @click="EnableAllAndDisableAll(filteredSource,type,1)">Enable All</button>
                 <button class="text-[12px] w-[100px] rounded-r-[8px] h-[26px] border-[2px] border-[#000] text-[#000]"
-                    @click="EnableAllAndDisableAll(selectedEmployee.values = '')">Disable All</button>
+                    @click="EnableAllAndDisableAll(filteredSource,type,2)">Disable All</button>
             </div>
         </div>
         <div class="grid grid-cols-12 gap-2 mt-3">
@@ -168,8 +168,55 @@ function EnableDisable(user, EnableOrDisable, data, client_id) {
 
 }
 
-function EnableAllAndDisableAll() {
-    filteredSource.value.forEach(element => selectedUserId.push(element.user_code));
+const selectedUserid = reactive([]);
+
+function EnableAllAndDisableAll(data,type,btnType) {
+    // filteredSource.value.forEach(element => selectedUserId.push(element.id));
+    // console.log(selectedUserid.value);
+
+    let btn = btnType;
+
+    if(btnType==1){
+
+        let val = data;
+val.forEach((element) => {
+
+    if(element.status==0){
+        let format = {
+        id:element.id ,
+        isEnabled:1,
+        client_id: useStore.client_details.id
+    }
+    selectedUserId.push(format);
+    console.log(" testing data Enable All",selectedUserId.value);
+    }else{
+        console.log(console.log(element.id,"else ::"));
+    }
+});
+
+    }
+
+    if(btnType==2){
+        selectedUserId.splice(0, selectedUserId.length);
+    }
+
+
+
+    useStore.canshowloading = true;
+    axios.post('/SaveEmployeeAppConfigStatus', {
+        "client_id": useStore.client_details.id,
+        "app_sub_modules_link_id": type,
+        "selected_employees_user_code": selectedUserId
+    }).then((res) => {
+        // console.log(res);
+    }).finally(() => {
+        selectedUserId.splice(0, selectedUserId.length);
+        filteredSource.value ? filteredSource.value.splice(0, filteredSource.value.length) : []
+        useStore.employeeAssignDialog = false;
+        useStore.getMobileSettings();
+        useStore.canshowloading = false;
+    });
+
 }
 
 
