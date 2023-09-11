@@ -114,9 +114,9 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function getEmployeeMobilePermissionsDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+    public function getClientMobilePermissionsDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        return  $serviceVmtAppPermissionsService->getEmployeeMobilePermissionsDetails($request->client_id);
+        return  $serviceVmtAppPermissionsService->getClientMobilePermissionsDetails($request->client_id);
     }
     public function getClient_AllModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 

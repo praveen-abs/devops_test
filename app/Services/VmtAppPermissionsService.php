@@ -156,7 +156,6 @@ class VmtAppPermissionsService
 
     public function getEmployeeAllModulePermissionsDetails($user_code)
     {
-        $user_code = "PSC0068";
 
         $validator = Validator::make(
             $data = [
@@ -184,6 +183,7 @@ class VmtAppPermissionsService
 
             $sub_module_data = VmtAppSubModuleslink::get();
 
+            //dd($sub_module_data->toArray());
 
             $mobile_settings_data = array();
             $i = 0;
@@ -191,12 +191,14 @@ class VmtAppPermissionsService
 
                 $module_name =VmtAppModules::where("id",$single_module_data['module_id'])->first();
                 $sub_module_name = VmtAppSubModules::where("id", $single_module_data['sub_module_id'])->first();
-                $client_module_status = VmtClientSubModules::where('client_id', $user_data->client_id)->where('app_sub_module_link_id', $single_module_data['id'])->first();
+                $client_module_status = VmtClientSubModules::where('client_id', $user_data->client_id)->where('app_sub_module_link_id', $single_module_data['id']);
 
                 if ($client_module_status->exists()) {
-                    $mobile_settings_data[$i]['module_name'] = $module_name->title;
-                    $mobile_settings_data[$i]['sub_module_name'] = $sub_module_name->title;
+                    $client_module_status = $client_module_status->first();
+                    $mobile_settings_data[$i]['module_name'] = $module_name->module_name;
+                    $mobile_settings_data[$i]['sub_module_name'] = $sub_module_name->sub_module_name;
                     $mobile_settings_data[$i]['sub_module_status'] = $client_module_status->status;
+
                     $emp_module_status = VmtEmpSubModules::where('client_id', $user_data->client_id)->where('user_id', $user_data->id)->where('app_sub_module_link_id', $single_module_data['id']);
                     if ($emp_module_status->exists()) {
                         $mobile_settings_data[$i]['employee_status'] = $emp_module_status->first()->status;
@@ -204,6 +206,12 @@ class VmtAppPermissionsService
                         $mobile_settings_data[$i]['employee_status'] = 0;
                     }
                 }
+                else
+                {
+                    //Use to print which module is not assigned to this user
+                   // dd("Module not assigned ". $single_module_data['id']. " for client ". $user_data->client_id);
+                }
+
                 $i++;
             }
 
@@ -292,9 +300,6 @@ class VmtAppPermissionsService
                 Currently used in Web (Mobile Settings page)
 
     */
-    public function getClient_MobilePermissionsDetails($client_id){
-
-    }
 
     /*
         Get all the permissions and their status for this client
@@ -303,7 +308,7 @@ class VmtAppPermissionsService
 
     */
     //getClientPermissions
-    public function getEmployeeMobilePermissionsDetails($client_id)
+    public function getClientMobilePermissionsDetails($client_id)
     {
 
         $validator = Validator::make(

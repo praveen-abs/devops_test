@@ -162,6 +162,11 @@ class HRMSBaseAPIController extends Controller
         return $serviceVmtEmployeeService->getEmployeeRole($request->user_code);
     }
 
+    public function getClientMobilePermissionsDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+
+        return  $serviceVmtAppPermissionsService->getClientMobilePermissionsDetails($request->client_id);
+    }
+
     public function getEmployeePermissions(Request $request){
 
         //$permissions_list = auth()->user()->getPermissionsViaRoles();
