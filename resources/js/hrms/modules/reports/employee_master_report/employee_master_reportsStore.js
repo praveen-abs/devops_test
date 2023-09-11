@@ -197,7 +197,7 @@ const getEmployeeCTC = () => {
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(response.data);
         // ${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}
-        link.download = `Attendance Early Going Report_.xlsx`;
+        link.download = `Employee CTC Report_.xlsx`;
         link.click();
     }).finally(() => {
         // canShowLoading.value = false
