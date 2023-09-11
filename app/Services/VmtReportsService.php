@@ -82,11 +82,11 @@ class VmtReportsservice
         try {
 
             if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id');
+                $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
             }
-
+         // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
@@ -113,10 +113,10 @@ class VmtReportsservice
             $headers = array();
 
             $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 ->where('vmt_employee_details.doj','<',$date_req)
                 ->whereIn('users.client_id', $client_id)
                 ->whereIn('users.active',$active_status)

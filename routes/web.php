@@ -813,7 +813,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //employeectcreports
     Route::get('/fetch_employee_ctc_report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
-    Route::get('/generate-employees-ctc-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+    Route::post('/generate-employees-ctc-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
     //Ajax For Fetch Month For Given Year for payroll
     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
