@@ -26,7 +26,6 @@ use App\Exports\ManagerReimbursementsExport;
 use App\Exports\EmployeeReimbursementsExport;
 use App\Exports\AnnualEarnedExport;
 use App\Models\VmtEmployeeAttendance;
-use App\Exports\EmployeeBasicCtcExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
