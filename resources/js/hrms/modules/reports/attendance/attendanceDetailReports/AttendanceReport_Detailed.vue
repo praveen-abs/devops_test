@@ -141,7 +141,7 @@ const getEmployeeAttendanceReports = async () => {
     }).then(res => {
         console.log(res.data.rows);
         AttendanceReportSource.value = res.data.rows
-        res.data.header.forEach(element => {
+        res.data.headers.forEach(element => {
             let format = {
                 title: element
             }
