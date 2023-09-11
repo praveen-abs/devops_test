@@ -791,11 +791,14 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     ////Reports
     ///for current year
+
+    Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
+
     Route::get('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
     ///basic report
-    Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
     //for master detail
     Route::get('/fetch-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterDetails');
     //payroll reports

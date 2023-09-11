@@ -2,7 +2,7 @@
     <div>
         <div class="bg-white p-2 flex  justify-between">
             <!-- v-model="filters['global'].value" -->
-            <div>
+            <div class="  ">
                 <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color " style="height: 3em; "  />
 
                 <Dropdown optionLabel="name"  optionValue="id" :options="dropdown" v-model="selectCategory" @change="UseEmployeeMaster.sentcategory(selectCategory)" placeholder="Select Category" class="w-[200px] mx-2" />

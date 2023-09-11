@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="px-4">
         <h1 class=" text-black text-[24px]">Employee Master Report</h1>
 
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-            <div class="row flex w-[100%]">
+            <div class="row flex w-[100%] ">
 
                 <ul class="col-4 divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3 "  id="pills-tab" role="tablist">
                     <li class=" nav-item" role="presentation">
@@ -40,7 +40,7 @@
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2 font-semibold font-['poppins']">Department : </h1>
-                        <Dropdown  optionLabel="name" placeholder="IT" class="w-[200px]"/>
+                        <Dropdown v-model="department"  optionLabel="name" placeholder="Department" class="w-[200px]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']" >Legal Entity : </h1>
@@ -82,6 +82,7 @@ const useEmployeeReport = EmployeeMasterStore();
 
 onMounted(()=>{
     useEmployeeReport.fetchFilterClientIds();
+    useEmployeeReport.getALLdepartment();
     legalEntity.value = "legal Entity";
 })
 
@@ -90,6 +91,8 @@ onMounted(()=>{
 const activetab = ref(1);
 
 const legalEntity = ref();
+
+const department = ref();
 
 
 

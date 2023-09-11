@@ -1,4 +1,5 @@
 import axios from "axios";
+import { mixin } from "lodash";
 import { defineStore } from "pinia";
 import { useToast } from "primevue/usetoast";
 import { inject, reactive, ref } from "vue";
@@ -16,6 +17,8 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
     const show = ref(true);
     const employeeCTCReportSource = ref([]);
     const Employee_CTCReportDynamicHeaders =  ref([]);
+    const department = ref();
+
 
 const getEmployeeCTC = () => {
     // Absent Reports
@@ -128,6 +131,27 @@ const getEmployeeCTC = () => {
         })
     }
 
+    function getALLdepartment(){
+        axios.get('/get-department').then((res)=>{
+         department.value = res.data;
+        });
+    }
+
+    function getEmployeeCTCReports(departmentID){
+        let departmentId = departmentID;
+        axios.post('/fetch-employee-ctc-report',{
+            department_id : departmentId
+        }).finally(()=>{
+
+        })
+    }
+
+    // function testings(val){
+    //     let x;
+    //     val== 1? x = '/let': x='/const';
+
+    //     console.log(x);
+    // }
      
 
 
@@ -140,6 +164,7 @@ const getEmployeeCTC = () => {
          show,client_ids, employeeCTCReportSource, Employee_CTCReportDynamicHeaders,
          personalDetail,
          selectCategory,
+         department,
 
         // functions
         fetchFilterClientIds,
@@ -150,6 +175,12 @@ const getEmployeeCTC = () => {
         // sent Person Details  basic and detailed
 
         sentFilterClientIds,
+
+        // getALLdepartment
+        getALLdepartment,
+        getEmployeeCTCReports,
+
+        // testings
 
     }
 })
