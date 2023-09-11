@@ -13,6 +13,7 @@ use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeOfficeDetails;
 
 use App\Models\VmtPayroll;
+use App\Models\Department;
 use App\Models\VmtEmployeePayslipV2;
 use App\Models\User;
 use App\Models\VmtWorkShifts;
@@ -25,6 +26,7 @@ use App\Exports\ManagerReimbursementsExport;
 use App\Exports\EmployeeReimbursementsExport;
 use App\Exports\AnnualEarnedExport;
 use App\Models\VmtEmployeeAttendance;
+use App\Exports\EmployeeBasicCtcExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -627,7 +629,7 @@ class VmtReportsController extends Controller
     {
 
 
-        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status);
+        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id);
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -652,7 +654,7 @@ class VmtReportsController extends Controller
        // dd('sjfdbvd');
         $current_year = VmtOrgTimePeriod::where('status', 1)->first();
        // dd($current_year->start_date);
-       
+
        $response = array();
         foreach(CarbonPeriod::create($current_year->start_date, '1 month', Carbon::now()->format('Y').'-'.Carbon::now()->format('m').'-01') as $single_month){
             $response[$single_month->format('Y-m-d')] = $single_month->format('M-Y');
@@ -685,7 +687,7 @@ class VmtReportsController extends Controller
  // return $response;
  return  $reportsService->getEmployeesMasterDetails();
 
-       
+
     }
     public function generategetEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
     {
@@ -703,5 +705,12 @@ class VmtReportsController extends Controller
         $public_client_logo_path = public_path($client_logo_path);
         return Excel::download(new EmployeeBasicCtcExport($emp_mas_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
     }
+
+    public function department(){
+
+      $get_department =   Department::all(['id','name']);
+      return $get_department;
+
+    }
+
 }
-   

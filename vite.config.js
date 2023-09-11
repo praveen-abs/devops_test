@@ -1,11 +1,10 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
 
     plugins: [
-        { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
         laravel({
             input: [
@@ -194,6 +193,7 @@ export default defineConfig({
             refresh: ['resources/views/**'],
         }),
     ],
+
     resolve: {
         dedupe: ['vue', 'vue-router'],
     },

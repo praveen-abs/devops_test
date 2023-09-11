@@ -1506,7 +1506,7 @@ class VmtDashboardService
             // $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
         } else if ($user_data['org_role'] == "4") {
 
-            $employees_data = VmtEmployeeOfficeDetails::whVmtReimbursementere('l1_manager_code', $user_code)->get(['user_id as id']);
+            $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id as id']);
 
             $emp_details_count['total_employee_count'] = VmtEmployeeOfficeDetails::join("users", "users.id", "=", "vmt_employee_office_details.user_id")->where('l1_manager_code', $user_code)->where('active', '!=', '-1')->get(['user_id']); //formanagertotalemployeecount
 
@@ -1593,7 +1593,8 @@ class VmtDashboardService
                 }
             }
         }
-        // $pending_request_count['employee_absent_count'] =  $absent_count;
+
+        $pending_request_count['employee_absent_count'] =  $absent_count;
 
 
         foreach ($employees_data as $key => $single_user_data) {

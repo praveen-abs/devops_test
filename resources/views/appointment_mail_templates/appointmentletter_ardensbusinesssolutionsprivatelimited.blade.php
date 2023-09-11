@@ -457,7 +457,7 @@
                                             <p class="pt-pb-20 txt-justify ">
                                                 <b> Remuneration:</b>
                                                 Your total remuneration package (CTC) per annum
-                                                is Rs. {{ $cic }}/- per annum (Rupees
+                                                is Rs. {{ $ctc_yearly }}/- per annum (Rupees
                                                  {{ $ctc_in_words }} Only). The
                                                 break-up of your compensation package shall be
                                                 as

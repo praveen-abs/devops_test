@@ -443,7 +443,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal');
     Route::post('/quicktesting', [App\Http\Controllers\VmtOnboardingTestingController::class, 'storeBulkOnboardEmployees']);
 
-    Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
+    Route::get('bulkEmployeeOnboarding', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'showBulkOnboardUploadPage'])->name('bulkEmployeeOnboarding');
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
     //onboarding data version2
 
@@ -790,14 +790,18 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     ////Reports
     ///for current year
+
+    Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
+
     Route::get('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
     ///basic report
-    Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
     //for master detail
     Route::get('/fetch-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterDetails');
     //payroll reports
+
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
     })->name('reports-page');
@@ -806,6 +810,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports/generatePayrollReports', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
+    //employeectcreports
+    Route::get('/fetch_employee_ctc_report',[App\Http\Controllers\VmtReportsController::class,'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    Route::get('/generate-employees-ctc-report-data',[App\Http\Controllers\VmtReportsController::class,'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
     //Ajax For Fetch Month For Given Year for payroll
     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
@@ -895,12 +902,12 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
 
-    Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
-    Route::post('/saveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'saveAppConfigStatus'])->name('saveAppConfigStatus');
+    Route::post('/updateEmployeesPermissionStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateEmployeesPermissionStatus'])->name('updateEmployeesPermissionStatus');
+    Route::post('/updateClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateClientModuleStatus'])->name('updateClientModuleStatus');
     Route::post('/getEmployeesFilterData', [App\Http\Controllers\VmtMasterConfigController::class, 'getEmployeesFilterData'])->name('getEmployeesFilterData');
     Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
-    Route::post('/fetchMobileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'fetchMobileModuleData'])->name('fetchMobileModuleData');
+    Route::post('/fetchMobileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'getAppModules'])->name('getAppModules');
     Route::get('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
 
     //Configrations
@@ -934,7 +941,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/holiday/edit_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'editHoliday'])->name('edit-holiday');
     Route::post('holidays/update_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
     Route::post('holidays/delete_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
-
     Route::get('/holidays/add_holidays', function () {
         return view('holidays.test_ui.add_holidays');
     })->name('add-holidays');

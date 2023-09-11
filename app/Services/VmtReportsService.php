@@ -47,17 +47,21 @@ class VmtReportsservice
         }
         return $response;
     }
-    public function getEmployeesCTCDetails($type, $client_id, $active_status)
+    public function getEmployeesCTCDetails($type, $client_id, $active_status, $department_id)
     {
 
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
                 'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
                 'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -73,21 +77,26 @@ class VmtReportsservice
         }
 
         try{
-        
+
                 if(empty($client_id)){
                     $client_id = VmtClientMaster::pluck('id');
                 }else{
                     $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
                 }
-             
+
 
                 if(empty($active_status)){
                     $active_status = ['1','0','-1'];
                 }else{
                     $active_status = [$active_status];
                 }
-        
-               
+
+                if(empty($department_id)){
+                    $get_department = Department::pluck('id');
+                }else{
+                    $get_department = [$department_id];
+                }
+
 
                 $date = Carbon::now()->format('M-Y');
                 $Category = 'All';
@@ -96,19 +105,20 @@ class VmtReportsservice
                 $headings = array();
                 $temp_ar = array();
                 $headers = array();
-                
+
                 $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                     ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                     ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                     ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                     // ->where('vmt_employee_details.doj','<',$date)
-                    ->whereIn('users.client_id',$client_id)
-                    ->whereIn('users.active',$active_status)
+                     ->whereIn('users.client_id',$client_id)
+                    // ->whereIn('users.active',$active_status)
+                    ->whereIn('vmt_employee_office_details.department_id',$get_department)
                     ->get();
 
                 foreach ($emp_ctc_detail as $singleemployeedata) {
-                    
+
                     $temp_ar['Employee Code'] = $singleemployeedata->user_code;
                     $temp_ar['Employee Name'] = $singleemployeedata->name;
                     $temp_ar['Gender'] = $singleemployeedata->Gender;
@@ -177,13 +187,13 @@ class VmtReportsservice
                     'error' =>  $e->getMessage(),
                     'error_verbose' => $e->getTraceAsString()
                 ];
-    
+
             }
-      
+
     }
 public function getEmployeesMasterDetails()
     {
-       
+
         $date = Carbon::now()->format('M-Y');
         $client_id = array(1);
         $Category = 'All';
@@ -289,9 +299,9 @@ public function getEmployeesMasterDetails()
             unset($temp_ar);
 
             return $response;
-           
+
         }
     }
-  
-   
+
+
 }

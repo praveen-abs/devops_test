@@ -72,9 +72,8 @@ class VmtEmployeeMailNotifMgmtService {
 
 
         try{
-            $user_mail = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-            ->where('users.user_code',$user_code)
-            ->first()->email;
+            $user_mail = User::where('user_code',$user_code)
+            ->first();
 
             $client_id=User::where('user_code',$user_code)->first();
             $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
@@ -82,7 +81,7 @@ class VmtEmployeeMailNotifMgmtService {
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
-            $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+            $isSent = \Mail::to($user_mail->email)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
             //Store the sent status in ' vmt_user_mail_status'
 

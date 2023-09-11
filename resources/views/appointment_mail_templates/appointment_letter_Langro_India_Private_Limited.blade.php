@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    
+
     <style>
         .main-page {
             width: 210mm;
@@ -202,7 +202,7 @@
                                     <tr>
                                         <td colspan="12" style=" " align="right">
                                             <p class="fw-600 txt-right " style="">
-                                                Date:
+                                                Date: {{ $doj }}
                                             </p>
 
                                         </td>
@@ -1966,7 +1966,7 @@
             </table>
         </div>
     </div>
-    
+
     <div class="main-page appointment-letter">
         <div class="sub-page" style="text-align: justify;font-size: 15px;">
             <table class="letter-format" style="padding:0;">

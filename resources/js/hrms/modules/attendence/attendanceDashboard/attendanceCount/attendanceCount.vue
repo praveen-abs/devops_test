@@ -27,7 +27,7 @@
         <div class=" bg-white rounded-lg p-2 border">
             <div class="px-auto flex justify-center">
                 <span class=" text-2xl font-semibold text-center">
-                   0
+                   {{ useDashboard.attendanceOverview.lg_count }}
                 </span>
             </div>
             <p class=" text-sm underline font-semibold text-center text-gray-500">Late coming</p>
@@ -35,7 +35,7 @@
         <div class=" bg-white rounded-lg p-2 border">
             <div class="px-auto flex justify-center">
                 <span class=" text-2xl font-semibold text-center">
-                   0
+                   {{ useDashboard.attendanceOverview.eg_count }}
                 </span>
             </div>
             <p class=" text-sm underline font-semibold text-center text-gray-500">Early going</p>
@@ -43,7 +43,7 @@
         <div class=" bg-white rounded-lg p-2 border">
             <div class="px-auto flex justify-center">
                 <span class=" text-2xl font-semibold text-center">
-                   0
+                   {{ useDashboard.attendanceOverview.mip_count }}
                 </span>
             </div>
             <p class=" text-sm underline font-semibold text-center text-gray-500">Missed in punch</p>
@@ -51,7 +51,7 @@
         <div class=" bg-white rounded-lg p-2 border">
             <div class="px-auto flex justify-center">
                 <span class=" text-2xl font-semibold text-center">
-                   0
+                   {{ useDashboard.attendanceOverview.mop_count }}
                 </span>
             </div>
             <p class=" text-sm underline font-semibold text-center text-gray-500">Missed out punch</p>
