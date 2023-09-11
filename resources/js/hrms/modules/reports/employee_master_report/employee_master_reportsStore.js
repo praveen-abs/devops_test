@@ -61,11 +61,9 @@ const getEmployeeCTC = () => {
 
     function sentFilterClientIds(legalEntity){
         selectedfilters.legal_entity = legalEntity;
-        let legalEntityID =  legalEntity;
+        // let legalEntityID =  legalEntity;
         console.log(legalEntityID, " legal entity :: ");
-        axios.post('/fetch-employee-ctc-report',{
-            client_id: legalEntityID
-        }).then(res => {
+        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
             console.log(employeeCTCReportSource.value," testings data");
