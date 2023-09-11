@@ -180,14 +180,14 @@ class InvestmentsReportsExport implements FromArray,ShouldAutoSize, WithHeadings
                 $sheet = $event->sheet;
                 // $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
                 // $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
-                $styleArray = [
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    ],
+                // $styleArray = [
+                //     'alignment' => [
+                //         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                //     ],
 
-                ];
-                $cellRange = 'A2:'.$this->total_column.'2'; // All headers
-                $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
+                // ];
+                // $cellRange = 'A2:'.$this->total_column.'2'; // All headers
+                // $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
 
 
             },
