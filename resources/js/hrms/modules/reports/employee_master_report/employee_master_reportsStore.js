@@ -187,6 +187,23 @@ const getEmployeeCTC = () => {
 
     }
 
+    // 
+
+    const downloadEmployeeCTC = () => {
+    let url = '/generate-employees-ctc-report-data'
+    // canShowLoading.value = true
+    axios.post(url,selectedfilters, { responseType: 'blob' }).then((response) => {
+        console.log(response.data);
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(response.data);
+        // ${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}
+        link.download = `Attendance Early Going Report_.xlsx`;
+        link.click();
+    }).finally(() => {
+        // canShowLoading.value = false
+    })
+}
+
     // function testings(val){
     //     let x;
     //     val== 1? x = '/let': x='/const';
@@ -226,7 +243,11 @@ const getEmployeeCTC = () => {
         // get Period Month
 
         getPeriodMonth,
-        updateEmployee_Basic_CTC
+        updateEmployee_Basic_CTC,
+
+        // DownloadEmployee CTC
+
+        downloadEmployeeCTC
      
 
         // testings

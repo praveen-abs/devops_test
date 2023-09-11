@@ -14,7 +14,7 @@
                 <h1 class="text-[12px] text-black font-semibold  font-['poppins']">Personal Details -</h1>
                 <button class="bg-[#E6E6E6] px-3 p-2 rounded-md mx-2 "  @click="UseEmployeeMaster.personalDetails()" >
                     <i class="pi pi-eye" v-if="UseEmployeeMaster.show" ></i> <i v-else-if="!UseEmployeeMaster.show" class="pi pi-eye-slash"></i></button>
-                <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md"><i class="pi pi-download"></i> Download</button>
+                <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md" @click="UseEmployeeMaster.downloadEmployeeCTC()"><i class="pi pi-download"></i> Download</button>
             </div>
 
 
