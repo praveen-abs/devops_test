@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div class="bg-white p-2 flex  justify-between">
+        <div class="flex justify-between p-2 bg-white">
             <!-- v-model="filters['global'].value" -->
-            <div class="  ">
+            <div class="">
                 <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color " style="height: 3em; "  />
 
-                <Dropdown optionLabel="name"  optionValue="id" :options="dropdown" v-model="selectCategory" @change="UseEmployeeMaster.sentcategory(selectCategory)" placeholder="Select Category" class="w-[200px] mx-2" />
+                <Dropdown optionLabel="name"  optionValue="id" :options="dropdown" v-model="selectCategory" @change="UseEmployeeMaster.sentcategory(selectCategory)" placeholder="Select Category" class="w-[200px] mx-2 h-[3rem] min-w-[100px]  !font-semibold !font-['poppins'] text-[#000]" />
 
-                <button class=" px-3 py-2 bg-black text-white rounded-lg hover:bg-sky-700 " @click="UseEmployeeMaster.getEmployeeCTC" >Clear All</button>
+                <button class="px-3 py-2 text-white bg-black rounded-lg hover:bg-sky-700" @click="UseEmployeeMaster.getEmployeeCTC" >Clear All</button>
 
             </div>
             <div class="flex items-center ">
-                <h1 class=" font-semibold font-['poppins]">Personal Details -</h1>
+                <h1 class="text-[12px] text-black font-semibold  font-['poppins']">Personal Details -</h1>
                 <button class="bg-[#E6E6E6] px-3 p-2 rounded-md mx-2 "  @click="UseEmployeeMaster.personalDetails()" >
                     <i class="pi pi-eye" v-if="UseEmployeeMaster.show" ></i> <i v-else-if="!UseEmployeeMaster.show" class="pi pi-eye-slash"></i></button>
                 <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md"><i class="pi pi-download"></i> Download</button>
@@ -112,3 +112,9 @@ const filters = ref({
 
 
 </script>
+
+<style >
+.p-dropdown-item{
+    
+}
+</style>
