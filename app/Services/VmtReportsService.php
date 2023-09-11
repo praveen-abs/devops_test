@@ -13,6 +13,8 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
+use App\Models\vmt_employee_details;
+use App\Models\VmtBloodGroup;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtOrgTimePeriod;
@@ -205,14 +207,11 @@ public function getEmployeesMasterDetails()
             ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
-            ->join('vmt_employee_family_details','vmt_employee_family_details.user_id','=','users.id')
-            ->get()->toarray();
-            dd( $emp_master_detail);
+            //->join('vmt_employee_family_details','vmt_employee_family_details.user_id','=','users.id')
+            ->get();
         //   ->where('vmt_employee_details.doj', '<',$date)
-        //  ->whereIn('users.client_id', $client_id)
-
-
-
+        //  ->whereIn('users.client_id', $client_id)  
+        
         foreach ($emp_master_detail as $single_details) {
             $temp_ar['Employee Code'] = $single_details->user_code;
             $temp_ar['Employee Name'] = $single_details->name;
@@ -242,12 +241,12 @@ public function getEmployeesMasterDetails()
             $temp_ar['Aadhar Number'] = $single_details->aadhar_number;
             $temp_ar['Mobile Number'] = $single_details->mobile_number;
             $temp_ar['Marriage Date (dd-mmm-yyyy)'] = $single_details->wedding_date;
-            // $temp_ar['Blood Group'] = $single_details->physically_challenged;
-            // $temp_ar['Salary Payment Mode'] = $single_details->physically_challenged;
+            $temp_ar['Blood Group'] = VmtBloodGroup::where('id', $single_details->blood_group_id)->first()->name ?? '';
+            // $temp_ar['Salary Payment Mode'] = $single_details->;
             $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
             $temp_ar['NATIONALITY'] = $single_details->nationality;
             $temp_ar['Dearness Allowance'] = $single_details->dearness_allowance;
-            // $temp_ar['House Rent Allowance'] = $single_details->dearness_allowance;
+            // $temp_ar['House Rent Allowance'] = $single_details->;
             $temp_ar['Child Education Allowance'] = $single_details->child_education_allowance;
             $temp_ar['Communication Allowance'] = $single_details->communication_allowance;
             $temp_ar['Food Allowance'] = $single_details->food_allowance;
@@ -255,7 +254,12 @@ public function getEmployeesMasterDetails()
             $temp_ar['Special Allowance'] = $single_details->special_allowance;
             $temp_ar['STATUTORY BONUS'] = $single_details->Statutory_bonus;
             $temp_ar['Other Allowance'] = $single_details->other_allowance;
-
+            $temp_ar['Physically Handicapped'] = $single_details->physically_challenged;
+            $temp_ar['Driver Salary'] = $single_details->driver_salary;
+            // $temp_ar['Employer EPF'] = $single_details->washing_allowance; 
+            $temp_ar['Washing Allowance'] = $single_details->washing_allowance; 
+            $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution; 
+            $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution; 
             $temp_ar['Email ID'] = $single_details->email;
             $temp_ar['UAN NO'] = $single_details->uan_number;
             $temp_ar['EPF Number'] = $single_details->epf_number;
@@ -269,10 +273,10 @@ public function getEmployeesMasterDetails()
             $temp_ar['House Rent Allowance'] = $single_details->hra;
             $temp_ar['Special Allowance'] = $single_details->special_allowance;
             $temp_ar['Fixed Gross'] = $single_details->gross;
-            $temp_ar['EPFER'] = $single_details->epf_employer_contribution;
+            $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution; 
             $temp_ar['EDLI Charges'] = $single_details->edli_charges;
             $temp_ar['PF ADMIN Charges'] = $single_details->pf_admin_charges;
-            $temp_ar['ESICER'] = $single_details->esic_employer_contribution;
+            $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution; 
             $temp_ar['Insurance'] = $single_details->insurance;
             $temp_ar['LWFER'] = $single_details->labour_welfare_fund;
             $temp_ar['CTC'] = $single_details->cic;
@@ -285,10 +289,11 @@ public function getEmployeesMasterDetails()
             $temp_ar['NET Pay '] =  $single_details->net_income;
 
             //Get family details
-            $family_details =  VmtEmployeeFamilyDetails::where('user_id', $single_details->id)->get(['name', 'relationship']);
-
+            $user_id = User::where('user_code',$single_details->user_code)->first()->id;
+            $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
             foreach ($family_details as $singleFamilyDetails) {
                 $temp_ar[$singleFamilyDetails->relationship." Name"] = $singleFamilyDetails->name;
+             
             }
             array_push($response, $temp_ar);
             unset($temp_ar);
