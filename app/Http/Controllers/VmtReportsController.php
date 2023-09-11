@@ -655,8 +655,12 @@ class VmtReportsController extends Controller
        // dd($current_year->start_date);
 
        $response = array();
+       $temp_ar = array();
         foreach(CarbonPeriod::create($current_year->start_date, '1 month', Carbon::now()->format('Y').'-'.Carbon::now()->format('m').'-01') as $single_month){
-            $response[$single_month->format('Y-m-d')] = $single_month->format('M-Y');
+            $temp_ar['date'] = $single_month->format('Y-m-d');
+            $temp_ar['month']=$single_month->format('M-Y');
+            array_push($response,$temp_ar);
+            unset($temp_ar);
         }
         return $response;
     }
