@@ -127,7 +127,7 @@ class VmtReportsservice
 
                 $temp_ar['Employee Code'] = $singleemployeedata->user_code;
                 $temp_ar['Employee Name'] = $singleemployeedata->name;
-                $temp_ar['Gender'] = $singleemployeedata->Gender;
+                $temp_ar['Gender'] = $singleemployeedata->gender;
                 $temp_ar['Designation'] = $singleemployeedata->designation;
                 if ($singleemployeedata->active == 1) {
                     $temp_ar['Employee Status'] = "Active";
