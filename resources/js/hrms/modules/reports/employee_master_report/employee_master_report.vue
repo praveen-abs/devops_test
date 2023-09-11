@@ -36,7 +36,7 @@
                 <ul class="flex justify-between col-8 ">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
-                         <Dropdown  optionLabel="name" v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" placeholder="Select period" class="h-[3rem] min-w-[100px] w-[114px] font-['poppins']" />
+                         <Dropdown  optionLabel="month" v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" optionValue="date" placeholder="Select period" class="h-[3rem] min-w-[100px] w-[114px] font-['poppins']" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2 font-semibold font-['poppins']">Department : </h1>
