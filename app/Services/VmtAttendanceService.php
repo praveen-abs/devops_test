@@ -2994,7 +2994,7 @@ class VmtAttendanceService
             $response = VmtEmployeeWorkShifts::join('users', 'users.id', '=', 'vmt_employee_workshifts.user_id')
                 ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_workshifts.work_shift_id')
                 ->where('users.id', $user_id)
-                ->get(['vmt_work_shifts.shift_type', 'vmt_work_shifts.shift_start_time', 'vmt_work_shifts.shift_end_time'])
+                ->get(['vmt_work_shifts.shift_name', 'vmt_work_shifts.shift_start_time', 'vmt_work_shifts.shift_end_time'])
                 ->first();
 
 
