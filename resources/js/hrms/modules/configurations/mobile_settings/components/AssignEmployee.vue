@@ -203,7 +203,7 @@ val.forEach((element) => {
 
 
     useStore.canshowloading = true;
-    axios.post('/SaveEmployeeAppConfigStatus', {
+    axios.post('/updateEmployeesPermissionStatus', {
         "client_id": useStore.client_details.id,
         "app_sub_modules_link_id": type,
         "selected_employees_user_code": selectedUserId

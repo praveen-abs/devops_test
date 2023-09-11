@@ -104,7 +104,7 @@ class VmtAppPermissionsService
             ],
             $rules = [
                 'app_sub_modules_link_id' => 'required',
-                'selected_employees_user_code' => 'required',
+                'selected_employees_user_code' => 'nullable',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
