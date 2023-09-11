@@ -59,9 +59,13 @@
 
 
     </style>
+
 </head>
 
 <body>
+
+    <div class="main-page">
+
     <table style="width: 100%; border-collapse: collapse;">
         <tbody>
         <tr>
@@ -562,58 +566,43 @@
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="1" style=" text-align: right;">
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align:right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align:right; " class="p-2 m-11">Basic</p>
+
+                            @for ($i=0; $i< 12; $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">{{ $Hra_exception_calc[0][$i]['month'] }}</p>
+                            @endfor
+                        </td>
+                        <td colspan="1">
+                            @for ($i=0; $i<12; $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['Earned_basic'] }}</p>
+                            @endfor
 
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; text-align: right;  " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-
+                            @for ($i=0; $i<12; $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['Hra_received'] }}</p>
+                            @endfor
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px;text-align: right;" class="p-2 m-11">Basic</p>
+                           @for ($i=0; $i<12; $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['rent_paid_over_10per'] }}</p>
+                            @endfor
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                        </td>
-                        <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            @for ($i=0; $i<12; $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['Exception_amt'] }}</p>
+                            @endfor
                         </td>
                     </tr>
 
                     <tr style="border-top:0px !important;">
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Basic</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Total</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_earnedbasic'] }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">Actual</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_hrareceived'] }}</p>
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px;text-align: right; " class="p-2 m-11">Actual</p>
@@ -623,7 +612,7 @@
                         </td>
                     </tr>
 
-                    <tr style="border-top:0px !important;">
+                    <tr style="border-top:0px !important; border-top:0px !important; height:20px !important; background-color:rgba(128, 128, 128, 0.629)">
                         <td colspan="4">
                             <p style="font-size:11px;" class="p-2 m-11">
                             Total House Rent Allowance Exemption Amount
@@ -639,6 +628,7 @@
         </tr>
     </tbody>
     </table>
+</div>
 </body>
 
 </html>

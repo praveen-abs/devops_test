@@ -135,6 +135,7 @@ class VmtPayrollTaxService
             "Surcharge_amt" => [],
             "Relief_Under_Section_89" => ["14) Tax Payable including Education Cess minus of Relief Under Section 89" => []],
             "Source_us_192" => ["15) Tax Deduction at Source u/s 192" => []],
+            "Hra_exception_calc" => [],
         ];
 
         // User Details
@@ -502,6 +503,10 @@ class VmtPayrollTaxService
         $tax_deduction_192['Tax Payable / Refundable (14 - 15(A))'] = 0;
 
         array_push($res["Source_us_192"]["15) Tax Deduction at Source u/s 192"], $tax_deduction_192);
+
+        // hra exception calcuation
+
+        array_push($res["Hra_exception_calc"],$this->HraExceptionCalc());
 
 
         // return dd($res);
@@ -987,8 +992,66 @@ class VmtPayrollTaxService
 
     //  $payroll_value, $compensatory_value, $res ,;
 
+    }
 
+
+    public function HraExceptionCalc(){
+
+        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
+        $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
+
+        $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
+        $end_date = Carbon::parse($end_date)->format('Y-m-d');
+
+        $date_range = CarbonPeriod::create($start_date, '1 month', $end_date);
+
+
+        $date = [];
+        foreach($date_range as $key => $value){
+           $date[] = $value->format('M Y');
+        }
+
+        $annual =  $this->getAnnualProjection();
+
+
+        if(isset($annual['Total']['arrear_Hra'])){
+            $annual_Hra =  $annual['Total']['arrear_Hra'] + $annual['Total']['Hra'] ;
+         }else{
+             $annual_Hra = $annual['Total']['Hra'];
+         }
+
+
+
+        if(isset($annual['Total']['arrear_basic'])){
+           $annual_basic =  $annual['Total']['arrear_basic'] + $annual['Total']['Basic'] ;
+        }else{
+            $annual_basic = $annual['Total']['Basic'];
+        }
+
+        $annual_basic = $annual_basic * 0.5;
+
+        $res = ["total_earnedbasic" => $annual_basic , "total_hrareceived" => $annual_Hra];
+        foreach($date as $single_date){
+            $HraException['month'] = $single_date;
+            $HraException['Earned_basic'] = $annual_basic / 12;
+            $HraException['Hra_received'] =  round($annual_Hra / 12);
+            $HraException['rent_paid_over_10per'] = 0;
+
+            array_push($res,$HraException);
+        }
+
+
+       foreach($res as $key => $value){
+        if(is_int($key)){
+          $min_value  =  min(array_values($res[$key]));
+          $res[$key]['Exception_amt'] = $min_value;
+         }
+       }
+
+    return($res);
 
     }
+
+
 
 }
