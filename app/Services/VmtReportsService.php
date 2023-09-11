@@ -47,7 +47,7 @@ class VmtReportsservice
         }
         return $response;
     }
-    public function getEmployeesCTCDetails($type, $client_id, $active_status, $department_id, $date)
+    public function getEmployeesCTCDetails($type, $client_id, $active_status, $department_id,  $date_req)
     {
 
         $validator = Validator::make(
@@ -56,7 +56,7 @@ class VmtReportsservice
                 'type' => $type,
                 'active_status' => $active_status,
                 'department_id' => $department_id,
-                'date' => $date,
+                'date' => $date_req,
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
@@ -93,8 +93,8 @@ class VmtReportsservice
             } else {
                 $active_status = [$active_status];
             }
-            if (empty($date)) {
-                $date = Carbon::now()->format('Y-m-d');
+            if (empty( $date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
             }
 
             if (empty($department_id)) {
@@ -105,7 +105,7 @@ class VmtReportsservice
 
 
             $date = Carbon::now()->format('M-Y');
-            $Category = 'All';
+            // $Category = 'All';
             $processed_array = array();
             $response = array();
             $headings = array();
@@ -117,7 +117,7 @@ class VmtReportsservice
                 ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                 ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                 ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
-                // ->where('vmt_employee_details.doj','<',$date)
+                ->where('vmt_employee_details.doj','<',$date_req)
                 ->whereIn('users.client_id', $client_id)
                 ->whereIn('users.active',$active_status)
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
