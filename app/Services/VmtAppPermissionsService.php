@@ -154,8 +154,9 @@ class VmtAppPermissionsService
         }
     }
 
-    public function getEmployeeMobilePermissionsDetails($user_code)
+    public function getEmployeeAllModulePermissionsDetails($user_code)
     {
+        $user_code = "PSC0068";
 
         $validator = Validator::make(
             $data = [
@@ -221,18 +222,20 @@ class VmtAppPermissionsService
     }
 
     /*
+        Get all the module permissions for the given client.
+        Dont fetch the employee level data
 
-    public function GetAllEmpModuleActiveStatus($user_code, $module_type)
-    {
+        Currently used in Web
+
+    */
+    public function getClient_AllModulePermissionDetails($client_id){
 
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_code,
-                'module_type' => $module_type,
+                'client_id' => $client_id,
             ],
             $rules = [
-                'user_code' => 'required',
-                'module_type' => 'required',
+                'client_id' => 'required',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -246,46 +249,151 @@ class VmtAppPermissionsService
                 'message' => $validator->errors()->all()
             ]);
         }
+        try{
 
-        try {
 
-            $user_data = User::where('user_code', $user_code)->first();
+            $module_id =VmtAppModules::get('id')->toarray();
 
-            $module_active_status = VmtConfigApps::where('client_id', $user_data->client_id)->where($module_type, '1')->first();
+            $mobile_settings_data =array();
+            $i=0;
+            foreach ($module_id as $key => $single_module_id) {
+                $module_name = VmtAppModules::Where('id',$single_module_id['id'])->first();
+                $mobile_settings_data[$i]['module_name']= $module_name->module_name;
+                $mobile_settings_data[$i]['sub_module_name'] =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
+                ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
+                ->join("vmt_client_sub_modules","vmt_client_sub_modules.app_sub_module_link_id","=","vmt_app_sub_modules_links.id")
+                ->where("vmt_app_sub_modules_links.module_id","=",$single_module_id['id'])
+                ->where("vmt_client_sub_modules.client_id","=",$client_id)
+                ->get([ "vmt_app_sub_modules.sub_module_name",
+                        "vmt_client_sub_modules.status as sub_module_status",
+                                ])->toarray();
 
-            if (!empty($module_active_status)) {
+                   $i++;
 
-                $config_user = VmtEmpConfigApps::where('user_id', $user_data->id)->where($module_type, '1')->first();
-
-                if (!empty($config_user)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-
-                return false;
             }
-        } catch (\Exception $e) {
 
-            return response()->json([
 
-                "status" => "failure",
-                "message" => "error while getData",
-                "data" => $e->getmessage() . " line " . $e->getline(),
+             return response()->json([
+                    "status" => "success",
+                    "message" => "Data fetch successfully",
+                    "data" => $mobile_settings_data,
+                ]);
 
-            ]);
-        }
+            }catch(\Exception $e){
+
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "error while fetching data",
+                    "data" => $e->getmessage(),
+
+                ]);
+
+            }
+
     }
 
+    /*
+        Used to show in Mobile Settings page.
+        Fetch only the MOBILE_SETTINGS module sub-module details.
+
+                Currently used in Web (Mobile Settings page)
+
     */
+    public function getClient_MobilePermissionsDetails($client_id){
+
+    }
 
     /*
         Get all the permissions and their status for this client
 
+        Used in mobile only
+
     */
     //getClientPermissions
-    public function getAppModules($client_id)
+    public function getEmployeeMobilePermissionsDetails($client_id)
+    {
+
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+            ],
+            $rules = [
+                'client_id' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+        try{
+
+
+        $module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->pluck('id');
+
+        $mobile_settings_data =VmtAppSubModuleslink::join("vmt_app_sub_modules","vmt_app_sub_modules.id","=","vmt_app_sub_modules_links.sub_module_id")
+                                                    ->join("vmt_app_modules","vmt_app_modules.id","=","vmt_app_sub_modules_links.module_id")
+                                                    ->join("vmt_client_sub_modules","vmt_client_sub_modules.app_sub_module_link_id","=","vmt_app_sub_modules_links.id")
+                                                    ->where("vmt_app_sub_modules_links.module_id","=",$module_id)
+                                                    ->where("vmt_client_sub_modules.client_id","=",$client_id)
+                                                    ->get(["vmt_client_sub_modules.app_sub_module_link_id as id",
+                                                                    "vmt_app_sub_modules_links.module_id",
+                                                                    "vmt_app_sub_modules_links.sub_module_id",
+                                                                    "vmt_app_modules.module_name",
+                                                                    "vmt_app_sub_modules.sub_module_name",
+                                                                    "vmt_client_sub_modules.status",
+                                                                    "vmt_client_sub_modules.client_id"]);
+
+
+        foreach ($mobile_settings_data as $key => $single_value) {
+
+             $emp_data =VmtEmpSubModules::where("client_id",$single_value['client_id'])->where("app_sub_module_link_id",$single_value['id'])->pluck('user_id');
+             $emp_data=$emp_data->toarray();
+
+             if(!empty($emp_data)){
+
+                $emp_count =count($emp_data);
+             }else{
+                $emp_count=0;
+             }
+            $mobile_settings_data[$key]['employee_count'] =  $emp_count;
+        }
+
+
+ // $employee_count =
+
+         return response()->json([
+                "status" => "success",
+                "message" => "Data fetch successfully",
+                "data" => $mobile_settings_data,
+            ]);
+
+        }catch(\Exception $e){
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "error while fetching data",
+                "data" => $e->getmessage(),
+
+            ]);
+
+        }
+
+    }
+
+
+    /*
+
+
+
+    */
+    public function getEmployeeSubModulePermissions($client_id)
     {
 
         $validator = Validator::make(

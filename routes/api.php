@@ -46,13 +46,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllBloodgroups', [HRMSBaseAPIController::class, 'getAllBloodgroups']);
     Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
     Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
-    Route::post('/getEmployeeMobilePermissionsDetails', [HRMSBaseAPIController::class, 'getEmployeeMobilePermissionsDetails']);
+    Route::post('/getEmployeeAllModulePermissionsDetails', [HRMSBaseAPIController::class, 'getEmployeeAllModulePermissionsDetails']);
     Route::post('/getEmployeeRole', [HRMSBaseAPIController::class, 'getEmployeeRole']);
     Route::post('/getOrgTimePeriod', [HRMSBaseAPIController::class, 'getOrgTimePeriod']);
 
     Route::get('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
     Route::get('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
     Route::post('/getEmployeePermissions', [HRMSBaseAPIController::class, 'getEmployeePermissions']);
+    Route::post('/getAppConfig', [HRMSBaseAPIController::class, 'getAppConfig']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
