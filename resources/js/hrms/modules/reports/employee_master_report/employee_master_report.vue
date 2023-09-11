@@ -36,15 +36,15 @@
                 <ul class="flex justify-between col-8 ">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
-                         <Dropdown  optionLabel="name" v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" placeholder="Select period" class="h-[3rem] min-w-[100px] w-[114px] font-['poppins']" />
+                         <Dropdown  optionLabel="month" editable v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" optionValue="date" placeholder="Select period" class="h-[3rem] min-w-[100px] w-[114px] !font-semibold !font-['poppins'] text-[#000] " />
                     </li>
                     <li class="flex items-center">
-                        <h1 class="text-[12px] text-black px-2 font-semibold font-['poppins']">Department : </h1>
-                        <Dropdown v-model="department"  optionLabel="name" placeholder="Department" class="w-[200px]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
+                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']">Department : </h1>
+                        <Dropdown v-model="department" editable  optionLabel="name" placeholder="Department" class="w-[200px] !font-semibold !font-['poppins'] text-[#000]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
                     </li>
                     <li class="flex items-center">
-                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']" >Legal Entity : </h1>
-                        <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] font-['poppins']"  />
+                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins'] " >Legal Entity : </h1>
+                        <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] !font-semibold !font-['poppins'] text-[#000]"  />
                     </li>
                 </ul>
 
@@ -84,8 +84,9 @@ onMounted(()=>{
     useEmployeeReport.fetchFilterClientIds();
     useEmployeeReport.getALLdepartment();
     useEmployeeReport.getPeriodMonth();
-
     legalEntity.value = "legal Entity";
+    department.value = "Department";
+    periodDate.value = "Select period";
 })
 
 

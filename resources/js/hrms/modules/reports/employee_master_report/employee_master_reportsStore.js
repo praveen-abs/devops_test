@@ -19,6 +19,12 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
     const Employee_CTCReportDynamicHeaders =  ref([]);
     const department = ref();
     const PeriodMonth = ref();
+    const selectedfilters = reactive({
+        date:"",
+        department_id:"",
+        legal_entity:"",
+        active_status:""
+    });
 
 
 const getEmployeeCTC = () => {
@@ -54,12 +60,9 @@ const getEmployeeCTC = () => {
     }
 
     function sentFilterClientIds(legalEntity){
-
-        let legalEntityID =  legalEntity;
-        console.log(legalEntityID, " legal entity :: ");
-        axios.post('/fetch-employee-ctc-report',{
-            client_id: legalEntityID
-        }).then(res => {
+        selectedfilters.legal_entity = legalEntity;
+        // let legalEntityID =  legalEntity;
+        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
             console.log(employeeCTCReportSource.value," testings data");
@@ -113,10 +116,8 @@ const getEmployeeCTC = () => {
     };
 
     function sentcategory(selectCategory){
-
-        axios.post('/fetch-employee-ctc-report',{
-            active_status:selectCategory
-        }).then(res => {
+        selectedfilters.active_status = selectCategory;
+        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
             console.log(employeeCTCReportSource.value," testings data");
@@ -138,11 +139,10 @@ const getEmployeeCTC = () => {
         });
     }
 
-    function getEmployeeCTCReports(departmentID){
-        let departmentId = departmentID;
-        axios.post('/fetch-employee-ctc-report',{
-            department_id : departmentId
-        }).then(res => {
+    function getEmployeeCTCReports(department_id){
+        selectedfilters.department_id = department_id;
+        let departmentId = department_id;
+        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
             console.log(employeeCTCReportSource.value," testings data");
@@ -167,10 +167,9 @@ const getEmployeeCTC = () => {
     }
 
     function updateEmployee_Basic_CTC(Date){
-       let date = Date;
-       axios.post('/fetch-employee-ctc-report',{
-        date : date
-    }).then(res => {
+        selectedfilters.date = Date;
+    //    let date = Date;
+       axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
         console.log(res.data.rows,"get value ");
         employeeCTCReportSource.value = res.data.rows
         console.log(employeeCTCReportSource.value," testings data");
