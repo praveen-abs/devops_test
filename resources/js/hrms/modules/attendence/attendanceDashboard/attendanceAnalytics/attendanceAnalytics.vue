@@ -44,7 +44,7 @@ const setChartData = () => {
         labels: ['Bio-Metric', 'Mobile', 'Web'],
         datasets: [
             {
-                data: [540, 325, 702],
+                data: [1, 1, 1],
                 backgroundColor: [
                     'rgba(122, 94, 162, 1)',
                     'rgba(255, 177, 184, 1)',
