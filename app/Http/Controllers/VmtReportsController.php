@@ -13,6 +13,7 @@ use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeOfficeDetails;
 
 use App\Models\VmtPayroll;
+use App\Models\Department;
 use App\Models\VmtEmployeePayslipV2;
 use App\Models\User;
 use App\Models\VmtWorkShifts;
@@ -628,7 +629,7 @@ class VmtReportsController extends Controller
     {
 
 
-        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status);
+        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id);
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -704,4 +705,12 @@ class VmtReportsController extends Controller
         $public_client_logo_path = public_path($client_logo_path);
         return Excel::download(new EmployeeBasicCtcExport($emp_mas_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
     }
+
+    public function department(){
+
+      $get_department =   Department::all(['id','name']);
+      return $get_department;
+
+    }
+
 }
