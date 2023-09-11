@@ -368,21 +368,19 @@ class VmtReportsservice
                 ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                 ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                 ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
-
                 ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-
                 ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                //->join('vmt_employee_family_details','vmt_employee_family_details.user_id','=','users.id')
+                ->whereIn('users.client_id', $client_id)
+                ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
-            //   ->where('vmt_employee_details.doj', '<',$date)
-            //  ->whereIn('users.client_id', $client_id)  
+
 
             foreach ($emp_master_detail as $single_details) {
                 $temp_ar['Employee Code'] = $single_details->user_code;
                 $temp_ar['Employee Name'] = $single_details->name;
                 $temp_ar['Gender'] = $single_details->gender;
                 $temp_ar['Designation'] = $single_details->designation;
-                $temp_ar['DOB (D-M-Y)'] = Carbon::parse($single_details->dob)->format('Y-M-d');
+                $temp_ar['DOB (D-M-Y)'] = Carbon::parse($single_details->dob)->format('d-M-Y');
                 $temp_ar['DOJ (D-M-Y)'] = carbon::parse($single_details->doj)->format('d-M-Y');
                 if ($single_details->active == 1) {
                     $temp_ar['Employee Status'] = "Active";
@@ -398,66 +396,15 @@ class VmtReportsservice
                 $temp_ar['PAN Number'] = $single_details->pan_number;
                 $temp_ar['Aadhar Number'] = $single_details->aadhar_number;
                 $temp_ar['Mobile Number'] = $single_details->mobile_number;
-
                 $temp_ar['Official Email'] = $single_details->officical_mail;
                 $temp_ar['UAN Number'] = $single_details->uan_number;
-                $temp_ar['Marriage Date (dd-mmm-yyyy)'] = $single_details->wedding_date;
-                $temp_ar['Blood Group'] = VmtBloodGroup::where('id', $single_details->blood_group_id)->first()->name ?? '';
-                // $temp_ar['Salary Payment Mode'] = $single_details->;
-                $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
-                $temp_ar['NATIONALITY'] = $single_details->nationality;
-                // $temp_ar['NATIONALITY'] = $single_details->nationality;
-
-                $temp_ar['Dearness Allowance'] = $single_details->dearness_allowance;
-                // $temp_ar['House Rent Allowance'] = $single_details->;
-                $temp_ar['Child Education Allowance'] = $single_details->child_education_allowance;
-                $temp_ar['Communication Allowance'] = $single_details->communication_allowance;
-                $temp_ar['Food Allowance'] = $single_details->food_allowance;
-                $temp_ar['Travel Reimbursement (LTA)'] = $single_details->lta;
-                $temp_ar['Special Allowance'] = $single_details->special_allowance;
-                $temp_ar['STATUTORY BONUS'] = $single_details->Statutory_bonus;
-                $temp_ar['Other Allowance'] = $single_details->other_allowance;
-                $temp_ar['Physically Handicapped'] = $single_details->physically_challenged;
-                $temp_ar['Driver Salary'] = $single_details->driver_salary;
-                // $temp_ar['Employer EPF'] = $single_details->washing_allowance; 
-                $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
-                $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution;
-                $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution;
-                $temp_ar['Email ID'] = $single_details->email;
-                $temp_ar['UAN NO'] = $single_details->uan_number;
                 $temp_ar['EPF Number'] = $single_details->epf_number;
-                $temp_ar['ESICEE'] = $single_details->esic_employee;
+                $temp_ar['ESIC Number'] = $single_details->esic_number;
                 $temp_ar['Bank Name'] = $single_details->bank_name;
                 $temp_ar['Bank Account No'] = $single_details->bank_account_number;
                 $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
-
-                //for father  mother name
+                //for father mother detail
                 $user_id = User::where('user_code', $single_details->user_code)->first()->id;
-
-                $temp_ar['Present Address'] = $single_details->present_address;
-                $temp_ar['Permanent Address'] = $single_details->permanent_address;
-                $temp_ar['Basic'] = $single_details->basic;
-                $temp_ar['House Rent Allowance'] = $single_details->hra;
-                $temp_ar['Special Allowance'] = $single_details->special_allowance;
-                $temp_ar['Fixed Gross'] = $single_details->gross;
-                $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution;
-                $temp_ar['EDLI Charges'] = $single_details->edli_charges;
-                $temp_ar['PF ADMIN Charges'] = $single_details->pf_admin_charges;
-                $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution;
-                $temp_ar['Insurance'] = $single_details->insurance;
-                $temp_ar['LWFER'] = $single_details->labour_welfare_fund;
-                $temp_ar['CTC'] = $single_details->cic;
-                $temp_ar['EPFEE'] = $single_details->epf_employee;
-                $temp_ar['ESICEE'] = $single_details->esic_employee;
-                $temp_ar['Income Tax'] = $single_details->Income_tax;
-                $temp_ar['Professional Tax'] = $single_details->professional_tax;
-                $temp_ar['LWFEE'] = $single_details->lwfee;
-                $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
-                $temp_ar['NET Pay '] =  $single_details->net_income;
-
-                //Get family details
-                $user_id = User::where('user_code', $single_details->user_code)->first()->id;
-
                 $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
                 foreach ($family_details as $singleFamilyDetails) {
                     $temp_ar[$singleFamilyDetails->relationship . " Name"] = $singleFamilyDetails->name;
@@ -465,7 +412,7 @@ class VmtReportsservice
                 $temp_ar['Present Address'] = $single_details->present_address;
                 $temp_ar['Permanent Address'] = $single_details->permanent_address;
                 $temp_ar['Basic'] = $single_details->basic;
-                // $temp_ar['House Rent Allowance'] = $single_details->;
+                $temp_ar['House Rent Allowance'] = $single_details->hra;
                 $temp_ar['Special Allowance'] = $single_details->special_allowance;
                 $temp_ar['Fixed Gross'] = $single_details->gross;
                 $temp_ar['EPFER'] = $single_details->epf_employer_contribution;
@@ -476,11 +423,64 @@ class VmtReportsservice
                 $temp_ar['LWFER'] = $single_details->labour_welfare_fund;
                 $temp_ar['CTC'] = $single_details->cic;
                 $temp_ar['EPFEE'] = $single_details->epf_employee;
+                $temp_ar['ESICEE'] = $single_details->esic_employee;
                 $temp_ar['Income Tax'] = $single_details->Income_tax;
                 $temp_ar['Professional Tax'] = $single_details->professional_tax;
                 $temp_ar['LWFEE'] = $single_details->lwfee;
                 $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
                 $temp_ar['NET Pay '] =  $single_details->net_income;
+
+
+
+                // $temp_ar['Marriage Date (dd-mmm-yyyy)'] = $single_details->wedding_date;
+                // $temp_ar['Blood Group'] = VmtBloodGroup::where('id', $single_details->blood_group_id)->first()->name ?? '';
+                // $temp_ar['NATIONALITY'] = $single_details->nationality;
+
+                // $temp_ar['Dearness Allowance'] = $single_details->dearness_allowance;
+                // // $temp_ar['House Rent Allowance'] = $single_details->;
+                // $temp_ar['Child Education Allowance'] = $single_details->child_education_allowance;
+                // $temp_ar['Communication Allowance'] = $single_details->communication_allowance;
+                // $temp_ar['Food Allowance'] = $single_details->food_allowance;
+                // $temp_ar['Travel Reimbursement (LTA)'] = $single_details->lta;
+                // $temp_ar['STATUTORY BONUS'] = $single_details->Statutory_bonus;
+                // $temp_ar['Other Allowance'] = $single_details->other_allowance;
+                // $temp_ar['Physically Handicapped'] = $single_details->physically_challenged;
+                // $temp_ar['Driver Salary'] = $single_details->driver_salary;
+                // $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
+                // $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution;
+                // $temp_ar['Email ID'] = $single_details->email;
+                // $temp_ar['UAN NO'] = $single_details->uan_number;
+                // $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
+
+                // //for father  mother name
+                // $user_id = User::where('user_code', $single_details->user_code)->first()->id;
+
+               
+                // $temp_ar['Special Allowance'] = $single_details->special_allowance;
+                // $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution;
+               
+                // $temp_ar['ESICEE'] = $single_details->esic_employee;
+                // $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
+                // $temp_ar['NET Pay '] =  $single_details->net_income;
+
+                // //Get family details
+               
+                // $temp_ar['Present Address'] = $single_details->present_address;
+                // $temp_ar['Permanent Address'] = $single_details->permanent_address;
+                // $temp_ar['Basic'] = $single_details->basic;
+                // $temp_ar['Special Allowance'] = $single_details->special_allowance;
+                // $temp_ar['Fixed Gross'] = $single_details->gross;
+                // $temp_ar['EPFER'] = $single_details->epf_employer_contribution;
+                // $temp_ar['EDLI Charges'] = $single_details->edli_charges;
+                // $temp_ar['PF ADMIN Charges'] = $single_details->pf_admin_charges;
+                // $temp_ar['ESICR'] = $single_details->esic_employer_contribution;
+                // $temp_ar['Insurance'] = $single_details->insurance;
+                // $temp_ar['LWFER'] = $single_details->labour_welfare_fund;
+                // $temp_ar['CTC'] = $single_details->cic;
+                // $temp_ar['EPFEE'] = $single_details->epf_employee;
+                // $temp_ar['Income Tax'] = $single_details->Income_tax;
+                // $temp_ar['Professional Tax'] = $single_details->professional_tax;
+                // $temp_ar['LWFEE'] = $single_details->lwfee;
 
 
 
@@ -508,7 +508,6 @@ class VmtReportsservice
                 // $temp_ar['Driver Salary'] = $single_details->driver_salary;
                 // $temp_ar['Employer EPF'] = $single_details->washing_allowance; 
                 // $temp_ar['Washing Allowance'] = $single_details->washing_allowance; 
-                // $temp_ar['Prev ESI Number'] = $single_details->esic_number;
                 // if ($single_details->esic_number =='NOT APPLICABLE' ) {
                 //     $temp_ar['ESI Eligible'] = "Yes";
                 // } else if ($single_details->esic_number != 'NOT APPLICABLE') {
