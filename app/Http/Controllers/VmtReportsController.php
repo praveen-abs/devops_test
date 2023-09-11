@@ -25,6 +25,7 @@ use App\Exports\ManagerReimbursementsExport;
 use App\Exports\EmployeeReimbursementsExport;
 use App\Exports\AnnualEarnedExport;
 use App\Models\VmtEmployeeAttendance;
+use App\Exports\EmployeeBasicCtcExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -683,7 +684,7 @@ class VmtReportsController extends Controller
         // $response['headers'] =   $headers;
         // $response['rows'] = $emp_mas_ctc_data;
  // return $response;
- return  $reportsService->getEmployeesMasterDetails();
+ return  $reportsService->getEmployeesMasterDetails($request->type , $request->client_id, $request->active_status, $request->department_id);
 
 
     }
@@ -692,7 +693,7 @@ class VmtReportsController extends Controller
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
-        $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails();
+        $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails($request->type , $request->client_id, $request->active_status, $request->department_id);
         $headers = array();
         foreach ($emp_mas_ctc_data as $key => $value) {
             $headings = $key;
