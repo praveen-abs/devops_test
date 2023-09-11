@@ -47,7 +47,7 @@ class VmtReportsservice
         }
         return $response;
     }
-    public function getEmployeesCTCDetails($type, $client_id, $active_status, $department_id)
+    public function getEmployeesCTCDetails($type, $client_id, $active_status, $department_id, $date)
     {
 
         $validator = Validator::make(
@@ -56,12 +56,14 @@ class VmtReportsservice
                 'type' => $type,
                 'active_status' => $active_status,
                 'department_id' => $department_id,
+                'date' => $date,
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
                 'type' => 'nullable',
                 'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -91,6 +93,9 @@ class VmtReportsservice
             } else {
                 $active_status = [$active_status];
             }
+            if (empty($date)) {
+                $date = Carbon::now()->format('Y-m-d');
+            }
 
             if (empty($department_id)) {
                 $get_department = Department::pluck('id');
@@ -114,7 +119,7 @@ class VmtReportsservice
                 ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 // ->where('vmt_employee_details.doj','<',$date)
                 ->whereIn('users.client_id', $client_id)
-                // ->whereIn('users.active',$active_status)
+                ->whereIn('users.active',$active_status)
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
