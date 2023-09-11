@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import {hash} from './functions';
 
 export default defineConfig({
 
     plugins: [
-        { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
         laravel({
             input: [
