@@ -10,6 +10,7 @@ use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\vmtHolidays;
 use App\Models\VmtEmployeeAttendance;
+use Exception;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
@@ -3511,28 +3512,37 @@ class VmtAttendanceService
         $response = array();
         $all_active_user = User::leftJoin('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->leftJoin('vmt_employee_office_details', 'users.id', '=', 'vmt_employee_office_details.user_id')
             ->where('active', 1)->where('is_ssa', 0)->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_details.location', 'vmt_employee_office_details.department_id']);
-        //  dd( $all_active_user);
-        foreach ($all_active_user as $single_user) {
-            $total_leave_balance = 0;
-            $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
-            // dd($overall_leave_balance);
-            $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
-            //dd($leavetypeAndBalanceDetails);
-            $each_user['user_code'] = $single_user->user_code;
-            $each_user['name'] = $single_user->name;
-            $each_user['location'] = $single_user->location;
-            if ($single_user->department_id == null) {
-                $each_user['department'] = $single_user->department_id;
-            } else {
-                $each_user['department'] =  Department::where('id', $single_user->department_id)->first()->name;
-            }
+        // dd( $all_active_user);
+        try{
+            foreach ($all_active_user as $single_user) {
+                $total_leave_balance = 0;
+                $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
+                // dd($overall_leave_balance);
+                $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
+                //dd($leavetypeAndBalanceDetails);
+                $each_user['user_code'] = $single_user->user_code;
+                $each_user['name'] = $single_user->name;
+                $each_user['location'] = $single_user->location;
+                if ($single_user->department_id == null) {
+                    $each_user['department'] = $single_user->department_id;
+                } else {
+                    $each_user['department'] =  Department::where('id', $single_user->department_id)->first()->name;
+                }
 
-            foreach ($overall_leave_balance as $single_leave_balance) {
-                $total_leave_balance =  $total_leave_balance + $single_leave_balance['leave_balance'];
+                foreach ($overall_leave_balance as $single_leave_balance) {
+                    $total_leave_balance =  $total_leave_balance + $single_leave_balance['leave_balance'];
+                }
+                $each_user['total_leave_balance'] =  $total_leave_balance;
+                $each_user['leave_balance_details'] =  $leavetypeAndBalanceDetails;
+              //  dd( $each_user);
+                array_push($response, $each_user);
             }
-            $each_user['total_leave_balance'] =  $total_leave_balance;
-            $each_user['leave_balance_details'] =  $leavetypeAndBalanceDetails;
-            array_push($response, $each_user);
+        }catch (Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "fetchOrgLeaveBalance",
+                'data' => $e->getTraceAsString(),
+            ]);
         }
         return $response;
     }
@@ -3575,7 +3585,7 @@ class VmtAttendanceService
         $response = array();
         $accrued_leave_types = VmtLeaves::get();
         $temp_leave = array();
-
+      // dd($accrued_leave_types);
         foreach ($accrued_leave_types as $single_leave_types) {
             if ($single_leave_types->is_finite == 1) {
                 if ($single_leave_types->is_accrued != 1) {
@@ -3589,6 +3599,7 @@ class VmtAttendanceService
                     $temp_leave['leave_balance'] = (int)$single_leave_types->days_annual;
                     $temp_leave['avalied_leaves'] = $total_avalied_leaves;
                 } else {
+
                     if ($single_leave_types->is_carry_forward != 1) {
                         $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                             ->whereBetween('start_date', [$start_time_period, $end_time_period])
@@ -3632,6 +3643,7 @@ class VmtAttendanceService
                     }
                 }
             } else {
+               // dd($single_leave_types);
                 $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                     ->whereBetween('start_date', [$start_time_period, $end_time_period])
                     ->where('leave_type_id', $single_leave_types->id)
@@ -3646,23 +3658,24 @@ class VmtAttendanceService
             unset($temp_leave);
         }
         $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'Avalied Leaves' => $avalied_leaves);
-
+        //dd($response);
         //Based on gender, remove Maternity/Paternity leave type
 
-        $getcurrentusergender = getCurrentUserGender();
+        // $getcurrentusergender = getCurrentUserGender();
 
-        for ($i = 0; $i < count($response); $i++) {
-            $singleLeaveType = $response[$i];
 
-            if ($getcurrentusergender == 'male') {
-                if ($response[$i]['leave_type'] == 'Maternity Leave')
-                    unset($response[$i]);
-            } else
-             if ($getcurrentusergender == 'female') {
-                if ($response[$i]['leave_type'] == 'Paternity Leave')
-                    unset($response[$i]);
-            }
-        }
+
+        // for ($i = 0; $i < count($response); $i++) {
+        //     $singleLeaveType = $response[$i];
+        //     if ($getcurrentusergender == 'male') {
+        //         if ($response[$i]['leave_type'] == 'Maternity Leave')
+        //             unset($response[$i]);
+        //     } else
+        //     if ($getcurrentusergender == 'female') {
+        //         if ($response[$i]['leave_type'] == 'Paternity Leave')
+        //             unset($response[$i]);
+        //     }
+        // }
 
 
         return $response;
