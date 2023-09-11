@@ -628,7 +628,7 @@ class VmtReportsController extends Controller
     {
 
 
-        return  $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id,$request->date);
+        return  $reportsService->getEmployeesCTCDetails($request->type , $request->legal_entity, $request->active_status, $request->department_id,$request->date);
     }
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
@@ -636,7 +636,7 @@ class VmtReportsController extends Controller
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
-        $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type , $request->client_id, $request->active_status, $request->department_id,$request->date);
+        $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type , $request->legal_entity, $request->active_status, $request->department_id,$request->date);
         $headers = array();
         foreach ($emp_ctc_data as $key => $value) {
             $headings = $key;
