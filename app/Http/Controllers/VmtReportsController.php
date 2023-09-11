@@ -633,9 +633,9 @@ class VmtReportsController extends Controller
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
     {
-        $date = Carbon::now();
-        $client_id = array(1);
-        $Category = 'All';
+        // $date = Carbon::now();
+        // $client_id = array(1);
+        // $Category = 'All';
         $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type , $request->legal_entity, $request->active_status, $request->department_id,$request->date);
         $headers = array();
         foreach ($emp_ctc_data as $key => $value) {
