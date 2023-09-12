@@ -47,6 +47,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
                 'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js',
                 'resources/js/hrms/modules/reports/employee_master_report/employee_master_report.js',
+                'resources/js/hrms/modules/reports/ReportsMaster.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',

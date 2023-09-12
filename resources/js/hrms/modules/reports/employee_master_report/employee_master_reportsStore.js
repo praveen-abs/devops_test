@@ -13,12 +13,13 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
 
     const client_ids = ref();
     const selectCategory = ref();
+    const btn_download = ref(false);
     const personalDetail =  ref();
-    const show = ref(true);
+    const show = ref(false);
     const employeeCTCReportSource = ref([]);
     const Employee_CTCReportDynamicHeaders =  ref([]);
     const department = ref();
-    const PeriodMonth = ref();
+    const PeriodMonth = ref("");
     const selectedfilters = reactive({
         date:"",
         department_id:"",
@@ -87,12 +88,12 @@ const getEmployeeCTC = () => {
         if(show.value == true){
             console.log(show);
             show.value = false;
-            personalDetail.value = "detailed";
+            personalDetail.value = "";
             console.log(personalDetail.value);
         }
         else if(show.value == false){
             show.value = true;
-            personalDetail.value = "";
+            personalDetail.value = "detailed";
             console.log(personalDetail.value);
         };
     
@@ -200,6 +201,7 @@ const getEmployeeCTC = () => {
         link.download = `Employee CTC Report_.xlsx`;
         link.click();
     }).finally(() => {
+        btn_download.value = false;
         // canShowLoading.value = false
     })
 }
@@ -247,7 +249,11 @@ const getEmployeeCTC = () => {
 
         // DownloadEmployee CTC
 
-        downloadEmployeeCTC
+        downloadEmployeeCTC,
+
+
+        // download animation btn
+        btn_download
      
 
         // testings
