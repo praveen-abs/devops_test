@@ -123,6 +123,10 @@ class VmtReportsservice
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
+                if(!isset($emp_ctc_detail)){
+                    return ['status' => 'Employee not found'];
+                }
+
             foreach ($emp_ctc_detail as $singleemployeedata) {
 
                 $temp_ar['Employee Code'] = $singleemployeedata->user_code;
@@ -174,6 +178,7 @@ class VmtReportsservice
                 array_push($processed_array, $temp_ar);
             }
 
+            if($processed_array){
             foreach ($processed_array[0] as $key => $value) {
                 $headings = $key;
                 array_push($headers, $headings);
@@ -182,12 +187,16 @@ class VmtReportsservice
             $response['headers'] =   $headers;
             $response['rows'] = $processed_array;
 
+        }else{
+            $response['status'] =  'Employee Not Found';
+        }
+
         } catch (\Exception $e) {
             $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getTraceAsString()
+                'error_verbose' => $e->getLine()
             ];
         }
         return $response;

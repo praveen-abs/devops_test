@@ -5,10 +5,12 @@
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
                 <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3 " id="pills-tab" role="tablist">
                     <li class=" nav-item" role="presentation">
-                        <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                        <!-- <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
                             aria-selected="true" @click="activetab=1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
-                            EMPLOYEE REPORTS
-                        </a>                      
+                        </a>  -->
+                        <router-link to="/testing_pradeesh" class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" @click="activetab=1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']"> EMPLOYEE REPORTS</router-link>           
+                       
+          
                         <div v-if="activetab === 1" class="h-1 rounded-l-3xl " style="border: 2px solid #F9BE00 !important;" ></div>
                         <div v-else class=" border-2 h-1 rounded-l-3xl border-gray-300"></div>
                     </li>
@@ -32,10 +34,11 @@
                         <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
                     </li>
                     <li class=" nav-item position-relative  border-0" role="presentation">
-                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab = 4"
+                        <!-- <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab = 4"
                             :class="[activetab === 4 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
-                            ATTENDANCE 
-                        </a>
+                        </a> -->
+                        <router-link to="basicReport" @click="activetab = 4" class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" :class="[activetab === 4 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">ATTENDANCE</router-link>
+                  
                         <div v-if="activetab === 4"
                             class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
                         <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
@@ -62,22 +65,9 @@
                 </ul>
                 <!-- </div> -->
                 <!-- Tab Content -->
-                <div class="tab-content" id="">
-                    <div>
-                        <div class="card-body">
-                            <div v-if="activetab === 1">
-                                <employee_master_report />
-                            </div>
-                            <div v-if="activetab === 2">
-                                <!-- <EmployeeSummary /> -->
-                                <!-- <InvestmentAndExemption /> -->
-                            </div>
-                            <div v-if="activetab === 3">
-                                <!-- <ImvestmentComputation /> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               <div>
+                <router-view></router-view>
+               </div>
             </div>
     </div>
 </template>

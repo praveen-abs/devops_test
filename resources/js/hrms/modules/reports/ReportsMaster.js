@@ -39,7 +39,9 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import SelectButton from 'primevue/selectbutton';
 
+
 import ReportsMaster from './ReportsMaster.vue'
+import router from "./router";
 
 const app = createApp(ReportsMaster);
 const pinia=createPinia()
@@ -49,6 +51,7 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(pinia);
+app.use(router);
 
 
 app.directive('tooltip', Tooltip);
