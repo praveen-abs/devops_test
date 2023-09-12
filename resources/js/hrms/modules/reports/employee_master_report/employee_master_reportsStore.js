@@ -118,6 +118,8 @@ const getEmployeeCTC = () => {
 
     function sentcategory(selectCategory){
         selectedfilters.active_status = selectCategory;
+        employeeCTCReportSource.value.splice(0);
+        Employee_CTCReportDynamicHeaders.value.splice(0);
         axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
@@ -141,6 +143,10 @@ const getEmployeeCTC = () => {
     }
 
     function getEmployeeCTCReports(department_id){
+
+        employeeCTCReportSource.value.splice(0);
+        Employee_CTCReportDynamicHeaders.value.splice(0);
+
         selectedfilters.department_id = department_id;
         let departmentId = department_id;
         axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
@@ -168,6 +174,10 @@ const getEmployeeCTC = () => {
     }
 
     function updateEmployee_Basic_CTC(Date){
+
+        employeeCTCReportSource.value.splice(0);
+        Employee_CTCReportDynamicHeaders.value.splice(0);
+
         selectedfilters.date = Date;
     //    let date = Date;
        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {

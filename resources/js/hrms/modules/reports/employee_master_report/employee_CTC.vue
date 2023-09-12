@@ -143,8 +143,8 @@ const toggleClass = ref('downloaded');
     z-index: 0 !important;
 }
 .p-dropdown-label, .p-inputtext{
-    position: relative;
-    top:-2px;
+    /* position: relative; */
+    /* top:-0px; */
 }
 .p-dropdown-item{
     color:black !important;
