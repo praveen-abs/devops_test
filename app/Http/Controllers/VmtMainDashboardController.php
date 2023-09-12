@@ -628,13 +628,9 @@ class VmtMainDashboardController extends Controller
     {
 
         //Fetch the data
-        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
+        return $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '',
-            'data' => $response
-        ]);
+
     }
 
 
