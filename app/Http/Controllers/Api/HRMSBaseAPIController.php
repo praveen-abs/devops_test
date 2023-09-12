@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
+use App\Services\VmtConfigAppService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Services\VmtAppPermissionsService;
@@ -25,12 +26,17 @@ class HRMSBaseAPIController extends Controller
     }
 
 
-    public function getEmployeeMobilePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
+    public function getEmployeeAllModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $response = $serviceVmtAppPermissionsService->getEmployeeMobilePermissionsDetails($request->user_code);
+        $response = $serviceVmtAppPermissionsService->getEmployeeAllModulePermissionsDetails($request->user_code);
 
         return $response;
     }
+
+    public function getAppConfig(Request $request, VmtConfigAppService $serviceVmtConfigAppService){
+        return $serviceVmtConfigAppService->getAppConfig();
+    }
+
 
     public function getFCMToken(Request $request){
 
@@ -154,6 +160,11 @@ class HRMSBaseAPIController extends Controller
 
     public function getEmployeeRole(Request $request, VmtEmployeeService $serviceVmtEmployeeService){
         return $serviceVmtEmployeeService->getEmployeeRole($request->user_code);
+    }
+
+    public function getClientMobilePermissionsDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+
+        return  $serviceVmtAppPermissionsService->getClientMobilePermissionsDetails($request->client_id);
     }
 
     public function getEmployeePermissions(Request $request){

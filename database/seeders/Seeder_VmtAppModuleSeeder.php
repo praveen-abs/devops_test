@@ -30,6 +30,9 @@ class Seeder_VmtAppModuleSeeder extends Seeder
             ['id'=>'4','module_name'=>'LEAVE',"title"=>'leave'],
             ['id'=>'5','module_name'=>'PMS',"title"=>'pms'],
             ['id'=>'6','module_name'=>'PAYROLL',"title"=>'payroll'],
+            ['id'=>'7','module_name'=>'PAYCHECK',"title"=>'paycheck'],
+            ['id'=>'8','module_name'=>'CLAIM',"title"=>'claim'],
+            ['id'=>'9','module_name'=>'REPORT',"title"=>'reports'],
         ]);
         DB::table('vmt_app_sub_modules')->truncate();
 
@@ -72,6 +75,10 @@ class Seeder_VmtAppModuleSeeder extends Seeder
             ['id'=>'17','module_id'=>'4','sub_module_id'=>'15'],
             ['id'=>'18','module_id'=>'5','sub_module_id'=>'15'],
             ['id'=>'19','module_id'=>'6','sub_module_id'=>'15'],
+            ['id'=>'20','module_id'=>'7','sub_module_id'=>'15'],
+            ['id'=>'21','module_id'=>'8','sub_module_id'=>'15'],
+            ['id'=>'22','module_id'=>'9','sub_module_id'=>'15'],
+
 
         ]);
 
