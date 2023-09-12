@@ -37,7 +37,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 class VmtPayrollTaxService
 {
 
-    public function getEmpCompValues()
+    public function getEmpCompValues($user_id,$month)
     {
 
 
@@ -70,7 +70,7 @@ class VmtPayrollTaxService
         // dd($get_emp_value);
 
 
-        $user_id = 144;
+        // $user_id = 144;
 
         $inv_users = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                         ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
@@ -144,7 +144,7 @@ class VmtPayrollTaxService
 
         // 1) Gross Earnings
 
-            $Gross_earnings['particulars']    = $this->getAnnualProjection();
+            $Gross_earnings['particulars']    = $this->getAnnualProjection($user_id,$month);
             $Gross_earnings['actual']    =  0;
             $Gross_earnings['projection']    = 0;
             $Gross_earnings['total']    = 0;
@@ -465,7 +465,7 @@ class VmtPayrollTaxService
         // dd($total_income_9_10);
         // 12) Tax Calculation
 
-        $tax_calculation['particular'] = $this->getTaxCalculation(100000000000,40);
+        $tax_calculation['particular'] = $this->getTaxCalculation($total_income_9_10['total'],40);
         $tax_calculation['actual'] = 0;
         $tax_calculation['projection'] = 0;
         $tax_calculation['total'] = 0;
@@ -506,25 +506,30 @@ class VmtPayrollTaxService
 
         // hra exception calcuation
 
-        array_push($res["Hra_exception_calc"],$this->HraExceptionCalc());
+        array_push($res["Hra_exception_calc"],$this->HraExceptionCalc($user_id,$month));
 
 
         // return dd($res);
 
         $html = view('investmentTdsWorkSheet.TDS_work_sheet', $res);
 
-        return $html;
+        // return $html;
 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);
+        $options->set(['isPhpEnabled' => true]);
 
         $pdf = new Dompdf($options);
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
+       // $pdf->set_option('margin-bottom', 2000);
         $pdf->render();
-
+        $pdf->set_option('page-range', '1-5');
         $pdf->stream('tds_pdf');
+
+
+
 
     }
 
@@ -715,11 +720,11 @@ class VmtPayrollTaxService
         dd("saved");
     }
 
-    public function getAnnualProjection(){
+    public function getAnnualProjection($user_id,$month){
 
-        $user_id = User::where('user_code', 'PSC0057')->first()->id;
+        // $user_id = User::where('user_code', 'PSC0057')->first()->id;
 
-        $start_date = '2023-04-01';
+        $start_date = $month;
         $single_users = $user_id;
 
 
@@ -729,6 +734,7 @@ class VmtPayrollTaxService
                 ->first([
                     'vmt_emp_payroll.id as id'
                 ]);
+
 
      $payslip_details  = AbsSalaryProjection::where('vmt_emp_payroll_id',$payslip_id->id)->get()->toarray();
 
@@ -995,7 +1001,7 @@ class VmtPayrollTaxService
     }
 
 
-    public function HraExceptionCalc(){
+    public function HraExceptionCalc($user_id,$month){
 
         $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
         $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
@@ -1011,7 +1017,7 @@ class VmtPayrollTaxService
            $date[] = $value->format('M Y');
         }
 
-        $annual =  $this->getAnnualProjection();
+        $annual =  $this->getAnnualProjection($user_id, $month);
 
 
         if(isset($annual['Total']['arrear_Hra'])){

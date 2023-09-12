@@ -49,8 +49,8 @@
             size: A4 portrait;
         }
 
-        tr {
-          break-inside: avoid;
+        table {
+          page-break-inside: avoid;
         }
 
         .p-2 {
@@ -406,6 +406,7 @@
                             <p style="font-size:11px; marign-top:-11px"><b>₹{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['total_of_chapterVIa'] }} </b></p>
                         </td>
                     </tr>
+
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
                             <p style="font-size:11px; marign-top:-11px"><b>11) Total Income (Round By 10 Rupees) (9-10)</b></p>
@@ -423,13 +424,13 @@
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
                             <p style="font-size:11px; marign-top:-11px"><b>12) Tax Calculation</b></p>
-                            {{-- @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] = 0 && $Tax_Calculation["12) Tax Calculation"][0]["particular"] ) --}}
+                            @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] = 0 && $Tax_Calculation["12) Tax Calculation"][0]["particular"] )
                             @foreach ( $Tax_Calculation["12) Tax Calculation"][0]["particular"] as $key => $value)
 
                             <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $key }} <span style="text-align: right;  float: right; padding-right:12px">₹ {{ $value }}</span></p>
 
                             @endforeach
-                            {{-- @endif --}}
+                            @endif
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
@@ -568,7 +569,7 @@
                         <td colspan="1" style=" text-align: right;">
 
                             @for ($i=0; $i< 12; $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">{{ $Hra_exception_calc[0][$i]['month'] }}</p>
+                            <p style="font-size:11px; text-align: right;white-space: nowrap " class="p-2 m-11">{{ $Hra_exception_calc[0][$i]['month'] }}</p>
                             @endfor
                         </td>
                         <td colspan="1">
