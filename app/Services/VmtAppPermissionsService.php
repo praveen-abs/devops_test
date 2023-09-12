@@ -154,7 +154,7 @@ class VmtAppPermissionsService
         }
     }
 
-    public function getEmployeeAllModulePermissionsDetails($user_code)
+    public function getEmployee_AllModulePermissionsDetails($user_code)
     {
 
         $validator = Validator::make(
@@ -181,8 +181,8 @@ class VmtAppPermissionsService
 
             $user_data = User::where('user_code', $user_code)->first();
 
-         $module_data = VmtAppModules::get('id')->toarray();
-        // $sub_module_data = VmtAppSubModuleslink::get('id')->toarray();
+            $module_data = VmtAppModules::get('id')->toarray();
+            // $sub_module_data = VmtAppSubModuleslink::get('id')->toarray();
 
 
 
@@ -216,21 +216,21 @@ class VmtAppPermissionsService
 
                     $employee_all_modules_details[$i]['module_name'] = $single_subModule_data["module_name"];
 
-                for($j=0;$j<count($single_module_data);$j++){
+                    for ($j = 0; $j < count($single_module_data); $j++) {
 
-                    $employee_all_modules_details[$i]['sub_module_details'][$j]['sub_module_name'] = $single_module_data[$j]["sub_module_name"];
+                        $employee_all_modules_details[$i]['sub_module_details'][$j]['sub_module_name'] = $single_module_data[$j]["sub_module_name"];
 
-                    $employee_all_modules_details[$i]['sub_module_details'][$j]['sub_module_status'] = $single_module_data[$j]["sub_module_status"];
+                        $employee_all_modules_details[$i]['sub_module_details'][$j]['sub_module_status'] = $single_module_data[$j]["sub_module_status"];
 
-                    $emp_module_status = VmtEmpSubModules::where('user_id', $user_data->id)->where('app_sub_module_link_id', $single_subModule_data['id']);
+                        $emp_module_status = VmtEmpSubModules::where('user_id', $user_data->id)->where('app_sub_module_link_id', $single_subModule_data['id']);
 
-                    if ($emp_module_status->exists()) {
+                        if ($emp_module_status->exists()) {
 
-                        $employee_all_modules_details[$i]['sub_module_details'][$j]['employee_status'] = $emp_module_status->first()->status;
-                    } else {
+                            $employee_all_modules_details[$i]['sub_module_details'][$j]['employee_status'] = $emp_module_status->first()->status;
+                        } else {
 
-                        $employee_all_modules_details[$i]['sub_module_details'][$j]['employee_status'] = '0';
-                    }
+                            $employee_all_modules_details[$i]['sub_module_details'][$j]['employee_status'] = '0';
+                        }
                     }
                 }
                 $i++;
@@ -242,6 +242,126 @@ class VmtAppPermissionsService
                 "message" => "Employee config data fetch successfully ",
                 "data" => $employee_all_modules_details,
             ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error fetching employee Config data",
+                "data" => $e->getmessage() . " error_line " . $e->getline(),
+            ]);
+        }
+    }
+    public function getEmployee_MobileModulePermissionsDetails($user_code, $mobile_module_id)
+    {
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'mobile_module_id' => $mobile_module_id,
+            ],
+            $rules = [
+                'user_code' => 'required',
+                'mobile_module_id' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+
+            $employee_all_modules_details = $this->getEmployee_SingleModulePermissionsDetails($user_code, $mobile_module_id);
+
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Employee config data fetch successfully ",
+                "data" => $employee_all_modules_details,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error fetching employee Config data",
+                "data" => $e->getmessage() . " error_line " . $e->getline(),
+            ]);
+        }
+    }
+    private function getEmployee_SingleModulePermissionsDetails($user_code, $mobile_module_id)
+    {
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'mobile_module_id' => $mobile_module_id,
+            ],
+            $rules = [
+                'user_code' => 'required',
+                'mobile_module_id' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+
+            $user_data = User::where('user_code', $user_code)->first();
+
+            $single_emp_config_data = VmtAppSubModuleslink::join("vmt_app_sub_modules", "vmt_app_sub_modules.id", "=", "vmt_app_sub_modules_links.sub_module_id")
+                ->join("vmt_app_modules", "vmt_app_modules.id", "=", "vmt_app_sub_modules_links.module_id")
+                ->join("vmt_client_sub_modules", "vmt_client_sub_modules.app_sub_module_link_id", "=", "vmt_app_sub_modules_links.id")
+                ->where("vmt_app_sub_modules_links.module_id", "=", $mobile_module_id)
+                ->where("vmt_client_sub_modules.client_id", "=", $user_data->client_id)
+                ->get([
+                    "vmt_app_sub_modules_links.id as id",
+                    "vmt_app_modules.module_name",
+                    "vmt_app_sub_modules.sub_module_name",
+                    "vmt_client_sub_modules.status as sub_module_status"
+                ])->toarray();
+
+
+            $employee_all_modules_details = array();
+            $i = 0;
+            foreach ($single_emp_config_data as $module_key => $single_module_data) {
+
+                $employee_all_modules_details['module_name'] = $single_module_data["module_name"];
+
+
+
+                $employee_all_modules_details[$i]['sub_module_details']['sub_module_name'] = $single_module_data["sub_module_name"];
+
+                $employee_all_modules_details[$i]['sub_module_details']['sub_module_status'] = $single_module_data["sub_module_status"];
+
+                $emp_module_status = VmtEmpSubModules::where('user_id', $user_data->id)->where('app_sub_module_link_id', $single_module_data['id']);
+
+                if ($emp_module_status->exists()) {
+
+                    $employee_all_modules_details[$i]['sub_module_details']['employee_status'] = $emp_module_status->first()->status;
+                } else {
+
+                    $employee_all_modules_details[$i]['sub_module_details']['employee_status'] = '0';
+                }
+
+
+                $i++;
+            }
+
+            return $employee_all_modules_details;
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
@@ -373,6 +493,52 @@ class VmtAppPermissionsService
 
 
 
+            $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($client_id, $module_id);
+            
+            return response()->json([
+                "status" => "success",
+                "message" => "Data fetch successfully",
+                "data" => $mobile_settings_data,
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "error while fetching data",
+                "data" => $e->getmessage(),
+
+            ]);
+        }
+    }
+    private function getClient_SingleModulePermissionDetails($client_id, $module_id)
+    {
+
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'module_id' => $module_id,
+            ],
+            $rules = [
+                'client_id' => 'required|exists:vmt_client_master,id',
+                'module_id' => 'required|exists:vmt_app_modules,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+        try {
+
+
+
+
             $mobile_settings_data = VmtAppSubModuleslink::join("vmt_app_sub_modules", "vmt_app_sub_modules.id", "=", "vmt_app_sub_modules_links.sub_module_id")
                 ->join("vmt_app_modules", "vmt_app_modules.id", "=", "vmt_app_sub_modules_links.module_id")
                 ->join("vmt_client_sub_modules", "vmt_client_sub_modules.app_sub_module_link_id", "=", "vmt_app_sub_modules_links.id")
@@ -441,11 +607,11 @@ class VmtAppPermissionsService
             $queryGetstate = State::select('id', 'state_name')->distinct()->get();
             $queryGetstate->push($option_all);
 
-            if (($current_user_role == 1 || $current_user_role == 2 ) && sessionGetSelectedClientid()=="1") {
+            if (($current_user_role == 1 || $current_user_role == 2) && sessionGetSelectedClientid() == "1") {
 
                 $queryGetlegalentity = VmtClientMaster::get(['id', 'client_name']);
-            }else{
-                $queryGetlegalentity = VmtClientMaster::where('id',sessionGetSelectedClientid())->get(['id', 'client_name']);
+            } else {
+                $queryGetlegalentity = VmtClientMaster::where('id', sessionGetSelectedClientid())->get(['id', 'client_name']);
             }
 
 

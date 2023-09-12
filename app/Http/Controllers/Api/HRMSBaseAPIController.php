@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
+use App\Models\VmtAppModules;
 use App\Services\VmtConfigAppService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -26,12 +27,21 @@ class HRMSBaseAPIController extends Controller
     }
 
 
-    public function getEmployeeAllModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
+    public function getEmployee_AllModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $response = $serviceVmtAppPermissionsService->getEmployeeAllModulePermissionsDetails($request->user_code);
+        $response = $serviceVmtAppPermissionsService->getEmployee_AllModulePermissionsDetails($request->user_code);
 
         return $response;
     }
+
+    public function getEmployee_MobileModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
+
+        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->first('id'); ;
+        $response = $serviceVmtAppPermissionsService->getEmployee_MobileModulePermissionsDetails($request->user_code,$mobile_module_id['id']);
+
+        return $response;
+    }
+
 
     public function getAppConfig(Request $request, VmtConfigAppService $serviceVmtConfigAppService){
         return $serviceVmtConfigAppService->getAppConfig();
