@@ -12,7 +12,8 @@
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="activetab = 1"
                             :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
-                            Employee Basic CTC
+                         
+                            Employee Master 
                         </a>
                         <div v-if="activetab === 1" class=" h-1 rounded-l-3xl relative top-[0px]" style="border:2px solid #F9BE00 !important">
                         </div>
@@ -24,7 +25,7 @@
                             data-bs-toggle="pill" href="" @click="activetab = 2"
                             :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab"
                             aria-controls="" aria-selected="true">
-                            Employee Master CTC
+                            Employee CTC
                         </a>
                         <div v-if="activetab === 2" class="left-0 w-full h-1 position-absolute"
                             style="border:2px solid #F9BE00 !important"></div>
@@ -36,15 +37,15 @@
                 <ul class="flex justify-between col-8 ">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
-                         <Dropdown  optionLabel="month" editable v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" optionValue="date" placeholder="Select period" class="h-[3rem] min-w-[100px] w-[114px] !font-semibold !font-['poppins'] text-[#000] " />
+                         <Dropdown  optionLabel="month" editable v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" optionValue="date" placeholder="Select period" class=" min-w-[100px] w-[114px] !font-semibold !font-['poppins'] !h-10 text-[#000] "  />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']">Department : </h1>
-                        <Dropdown v-model="department" editable  optionLabel="name" placeholder="Department" class="w-[200px] !font-semibold !font-['poppins'] text-[#000]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
+                        <Dropdown v-model="department" editable  optionLabel="name" placeholder="Department" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins'] " >Legal Entity : </h1>
-                        <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] !font-semibold !font-['poppins'] text-[#000]"  />
+                        <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10"  />
                     </li>
                 </ul>
 
@@ -73,7 +74,6 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
-import Employee_Master from './Employee_Master.vue';
 import { EmployeeMasterStore } from "./employee_master_reportsStore"
 
 
@@ -106,4 +106,6 @@ const periodDate = ref();
 
 </script>
 
-<style></style>
+<style>
+
+</style>
