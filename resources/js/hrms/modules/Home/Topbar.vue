@@ -105,7 +105,7 @@
                     leave-to-class="translate-y-2 opacity-0" @mouseleave="useDashboard.canShowConfiguration = false">
                     <div v-if="useDashboard.canShowConfiguration"
                         @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"
-                        class="absolute top-0 z-40 p-2 mt-16 bg-white rounded shadow-lg right-40 w-60 "
+                        class="absolute top-0 z-50 p-2 mt-16 bg-white rounded shadow-lg right-40 w-60 "
                         @mouseleave="useDashboard.canShowConfiguration = false">
                         <!-- Dropdown content goes here -->
                         <a href="config-master"

@@ -19,16 +19,7 @@ class VmtAPIDashboardController extends HRMSBaseAPIController
 
 
         //Fetch the data
-        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
-
-
-
-        return response()->json([
-            'status' => 'success',
-            'message' => '',
-            'data' => $response
-        ]);
-
+        return $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
 
 
         // $today_date= Carbon::now()->format('Y-m-d');

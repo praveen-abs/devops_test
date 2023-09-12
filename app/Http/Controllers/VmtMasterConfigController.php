@@ -114,9 +114,13 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function getAppModules( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+    public function getClientMobilePermissionsDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        return  $serviceVmtAppPermissionsService->getAppModules($request->client_id);
+        return  $serviceVmtAppPermissionsService->getClientMobilePermissionsDetails($request->client_id);
+    }
+    public function getClient_AllModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+
+        return  $serviceVmtAppPermissionsService->getClient_AllModulePermissionDetails($request->client_id ="2");
     }
 
     public function getAllDropdownFilterSetting(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
@@ -190,15 +194,5 @@ class VmtMasterConfigController extends Controller
             ]);
         }
     }
-    // public function GetAllEmpModuleActiveStatus(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
-
-    //     $response = $serviceVmtAppPermissionsService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
-
-
-    //     return $response;
-
-    // }
-
-
 
 }
