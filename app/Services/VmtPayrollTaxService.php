@@ -153,35 +153,35 @@ class VmtPayrollTaxService
 
 
         //  2) Allowance to the extent exampt under section 10
-
+        $hraTotalRent = [];
         $sumOfpreviousempincome = 0;
         $sumOfHradeclared = 0;
         $SumOfHousPropsInOld = 0;
         $tax_calc_new_redime = 0;
         foreach ($v_form_template as $dec_amt) {
-
             $empBasic = $dec_amt['basic'] * 12;
 
             if ($dec_amt['section_group'] == "HRA") {
-
                 $hraTotalRent = json_decode($dec_amt['json_popups_value'], true);
                 $sumOfHradeclared += $hraTotalRent['total_rent_paid'];
                 $hraexamtions = intval($sumOfHradeclared) - intval($empBasic * 10 / 100);
                 $sumofsection10 = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) * 12;
+            }
+        }
 
                 $allowance_under_sec_10['particular'] = [
-                $dec_amt['particular'],
+                "House Rent Allowance",
                 "Note: Monthly splitup of HRA exemption can be found at the end of this tds sheet.",
                 "Leave Encashment",
                 "Total of Allowance to the extent exempt under Section 10"
                 ];
-                $allowance_under_sec_10['actual'] = $sumOfHradeclared;
+                $allowance_under_sec_10['actual'] = $sumOfHradeclared ;
                 $allowance_under_sec_10['projection'] = 0;
                 $allowance_under_sec_10['total'] = $allowance_under_sec_10['actual'] + $allowance_under_sec_10['projection'];
 
                 array_push($res["under_section_10"]["2) Allowance to the extent exampt under section 10"], $allowance_under_sec_10);
-            }
-        }
+
+
 
         // 3) Total after excemption (1 - 2);
 
@@ -513,23 +513,18 @@ class VmtPayrollTaxService
 
         $html = view('investmentTdsWorkSheet.TDS_work_sheet', $res);
 
-        // return $html;
+        return $html;
 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);
-        $options->set(['isPhpEnabled' => true]);
 
         $pdf = new Dompdf($options);
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
-       // $pdf->set_option('margin-bottom', 2000);
         $pdf->render();
-        $pdf->set_option('page-range', '1-5');
+
         $pdf->stream('tds_pdf');
-
-
-
 
     }
 

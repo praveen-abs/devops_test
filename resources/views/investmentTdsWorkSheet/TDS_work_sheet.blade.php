@@ -424,7 +424,7 @@
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
                             <p style="font-size:11px; marign-top:-11px"><b>12) Tax Calculation</b></p>
-                            @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] = 0 && $Tax_Calculation["12) Tax Calculation"][0]["particular"] )
+                            @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] )
                             @foreach ( $Tax_Calculation["12) Tax Calculation"][0]["particular"] as $key => $value)
 
                             <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $key }} <span style="text-align: right;  float: right; padding-right:12px">₹ {{ $value }}</span></p>
