@@ -798,7 +798,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
     ///basic report
-    Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
     //for master detail
     Route::get('/download-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesMasterDetails'])->name('generateEmployeesMasterDetails');
     //payroll reports

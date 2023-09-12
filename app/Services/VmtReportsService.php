@@ -153,24 +153,24 @@ class VmtReportsservice
                     $temp_ar['IFSC Code'] =  $singleemployeedata->bank_ifsc_code;
                 }
 
-                $temp_ar['Basic'] = round ($singleemployeedata->basic);
-                $temp_ar['House Rent Allowance'] = round( $singleemployeedata->hra);
-                $temp_ar['Special Allowance'] = round ($singleemployeedata->special_allowance);
-                $temp_ar['Fixed Gross'] =round($singleemployeedata->gross);
-                $temp_ar['EPFER'] = round ($singleemployeedata->epf_employer_contribution);
-                $temp_ar['EDLI Charges'] = round( $singleemployeedata->epf_employer_contribution);
-                $temp_ar['PF ADMIN Charges'] =round ( $singleemployeedata->pf_admin_charges);
-                $temp_ar['ESICER'] = round($singleemployeedata->esic_employer_contribution);
-                $temp_ar['Insurance'] =  round($singleemployeedata->insurance);
-                $temp_ar['LWFER'] = round(  $singleemployeedata->labour_welfare_fund);
-                $temp_ar['CTC'] = round( $singleemployeedata->cic);
-                $temp_ar['EPFEE'] = round( $singleemployeedata->epf_employee);
-                $temp_ar['ESICEE'] = round ($singleemployeedata->esic_employee);
-                $temp_ar['Income Tax'] = round( $singleemployeedata->Income_tax);
-                $temp_ar['Professional Tax'] =round( $singleemployeedata->professional_tax);
-                $temp_ar['LWFEE '] =round ( $singleemployeedata->lwfee);
+                $temp_ar['Basic'] = round ((int) $singleemployeedata->basic);
+                $temp_ar['House Rent Allowance'] = round((int) $singleemployeedata->hra);
+                $temp_ar['Special Allowance'] = round ((int) $singleemployeedata->special_allowance);
+                $temp_ar['Fixed Gross'] =round((int) $singleemployeedata->gross);
+                $temp_ar['EPFER'] = round ((int) $singleemployeedata->epf_employer_contribution);
+                $temp_ar['EDLI Charges'] = round((int) $singleemployeedata->epf_employer_contribution);
+                $temp_ar['PF ADMIN Charges'] =round ( (int) $singleemployeedata->pf_admin_charges);
+                $temp_ar['ESICER'] = round((int) $singleemployeedata->esic_employer_contribution);
+                $temp_ar['Insurance'] =  round((int) $singleemployeedata->insurance);
+                $temp_ar['LWFER'] = round((int)$singleemployeedata->labour_welfare_fund);
+                $temp_ar['CTC'] = round((int) $singleemployeedata->cic);
+                $temp_ar['EPFEE'] = round((int)  $singleemployeedata->epf_employee);
+                $temp_ar['ESICEE'] = round ((int)$singleemployeedata->esic_employee);
+                $temp_ar['Income Tax'] = round((int)$singleemployeedata->Income_tax);
+                $temp_ar['Professional Tax'] =round((int) $singleemployeedata->professional_tax);
+                $temp_ar['LWFEE '] =round ((int)$singleemployeedata->lwfee);
                 $temp_ar['Total Deduction'] = round( (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE ']);
-                $temp_ar['NET Pay '] = round( $singleemployeedata->net_income);
+                $temp_ar['NET Pay '] = round((int)$singleemployeedata->net_income);
                 array_push($processed_array, $temp_ar);
             }
 
