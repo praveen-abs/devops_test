@@ -337,31 +337,34 @@ class VmtAppPermissionsService
 
             $employee_all_modules_details = array();
             $i = 0;
+            $sub_module_details['sub_module_details'] =array();
+
+            // ['sub_module_details']
             foreach ($single_emp_config_data as $module_key => $single_module_data) {
 
                 $employee_all_modules_details['module_name'] = $single_module_data["module_name"];
 
+                $employee_all_modules_details['sub_module_details'][$i]['sub_module_name'] = $single_module_data["sub_module_name"];
 
-
-                $employee_all_modules_details[$i]['sub_module_details']['sub_module_name'] = $single_module_data["sub_module_name"];
-
-                $employee_all_modules_details[$i]['sub_module_details']['sub_module_status'] = $single_module_data["sub_module_status"];
+                $employee_all_modules_details['sub_module_details'][$i]['sub_module_status'] = $single_module_data["sub_module_status"];
 
                 $emp_module_status = VmtEmpSubModules::where('user_id', $user_data->id)->where('app_sub_module_link_id', $single_module_data['id']);
 
                 if ($emp_module_status->exists()) {
 
-                    $employee_all_modules_details[$i]['sub_module_details']['employee_status'] = $emp_module_status->first()->status;
+                    $employee_all_modules_details['sub_module_details'][$i]['employee_status'] = $emp_module_status->first()->status;
                 } else {
 
-                    $employee_all_modules_details[$i]['sub_module_details']['employee_status'] = '0';
+                    $employee_all_modules_details['sub_module_details'][$i]['employee_status'] = 0;
                 }
 
 
                 $i++;
             }
+          // array_push($employee_all_modules_details, $sub_module_details['sub_module_details']);
 
             return $employee_all_modules_details;
+
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
@@ -494,7 +497,7 @@ class VmtAppPermissionsService
 
 
             $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($client_id, $module_id);
-            
+
             return response()->json([
                 "status" => "success",
                 "message" => "Data fetch successfully",
