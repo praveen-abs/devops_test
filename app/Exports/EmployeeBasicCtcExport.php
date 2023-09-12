@@ -68,8 +68,8 @@ class EmployeeBasicCtcExport implements FromArray, ShouldAutoSize, WithHeadings,
         $sheet->mergeCells('C3:D3')->setCellValue('C3', "Period : ".$this->date);
         $sheet->getStyle('C3:D3')->getFont()->setBold(true);
         //for fourth row
-        $sheet->mergeCells('C5:D5')->setCellValue('C4', "Category : ".'Active,'.'Resigned,'. 'Yet to activate,'. 'Draft');
-        $sheet->getStyle('C5:D5')->getFont()->setBold(true);
+        $sheet->mergeCells('C4:D4')->setCellValue('C4', "Category : ".'Active,'.'Resigned,'. 'Yet to activate,'. 'Draft');
+        $sheet->getStyle('C4:D4')->getFont()->setBold(true);
 
         $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
