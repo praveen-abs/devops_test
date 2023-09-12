@@ -22,6 +22,9 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
     protected $public_client_logo_path;
     protected $client_name;
     protected $date;
+    protected $last_row;
+
+
 
     public function __construct($data, $headers, $client_name, $public_client_logo_path,$date)
     {
@@ -32,6 +35,7 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
         $this->client_name = $client_name;
         $this->public_client_logo_path = $public_client_logo_path;
         $this->last_header_column = num2alpha(count($headers) - 1);
+        $this->last_row = count($this->data)+1;
     }
     public function startCell(): string
     {
@@ -52,6 +56,8 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
         $sheet->getParent()->getActiveSheet()->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A3);
 
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
+        
+        
 
         //For Remove Grid Lines
         $sheet->setShowGridlines(false);
@@ -76,6 +82,10 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
             ->getStartColor()->setRGB('002164');
         $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFont()->setBold(true)
             ->getColor()->setRGB('ffffff');
+
+            //last row 
+            $sheet->mergeCells('A'.$this->last_row.':G'.$this->last_row)->setCellValue('A'.$this->last_row, "Period : ".$this->date);
+            $sheet->getStyle('A'.$this->last_row.':G'.$this->last_row)->getFont()->setBold(true);
     }
 
     public function drawings()

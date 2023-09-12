@@ -35,7 +35,7 @@ class EmployeeBasicCtcExport implements FromArray, ShouldAutoSize, WithHeadings,
     }
     public function startCell(): string
     {
-        return 'A6';
+        return 'A5';
     }
     public function headings(): array
     {
@@ -71,10 +71,10 @@ class EmployeeBasicCtcExport implements FromArray, ShouldAutoSize, WithHeadings,
         $sheet->mergeCells('C5:D5')->setCellValue('C4', "Category : ".'Active,'.'Resigned,'. 'Yet to activate,'. 'Draft');
         $sheet->getStyle('C5:D5')->getFont()->setBold(true);
 
-        $sheet->getStyle('A6:' . $this->last_header_column . '6')->getFill()
+        $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002164');
-        $sheet->getStyle('A6:' . $this->last_header_column . '6')->getFont()->setBold(true)
+        $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFont()->setBold(true)
             ->getColor()->setRGB('ffffff');
     }
 
@@ -85,7 +85,7 @@ class EmployeeBasicCtcExport implements FromArray, ShouldAutoSize, WithHeadings,
         $drawing->setDescription($this->client_name);
         $drawing->setPath($this->public_client_logo_path);
         $drawing->setHeight(1200);
-        $drawing->setWidth(275);
+        $drawing->setWidth(240);
         $drawing->setCoordinates('A1');
 
         return $drawing;
