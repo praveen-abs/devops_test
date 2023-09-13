@@ -6,8 +6,8 @@
                 <!-- <button class="px-2 py-2 bg-black rounded-lg hover:bg-sky-700"
                     @click="useEmployeeReport.getEmployeeCTC();"><i class="pi pi-filter"></i></button> -->
                     
-                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(2)" v-if="useEmployeeReport.filterbtn===1" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-filter"></i> Apply Filter</button>
-                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(1)" v-if="useEmployeeReport.filterbtn===2" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-times"></i> Clear Filter</button>
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(2)" v-if="useEmployeeReport.filterbtn === 1" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-filter"></i> Apply Filter</button>
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(1)" v-if="useEmployeeReport.filterbtn === 2" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-times"></i> Clear Filter</button>
             </div>
         </div>
 
