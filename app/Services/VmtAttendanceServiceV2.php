@@ -95,8 +95,6 @@ class VmtAttendanceServiceV2
             $response['checkin_time'] = null;
             $response['checkout_time'] = $time;
         }
-        if ($time == '2023-07-31 22:00:22')
-            dd($response);
         return $response;
     }
 
@@ -118,6 +116,13 @@ class VmtAttendanceServiceV2
 
                     if ($single_user->dol == null && Carbon::parse($doj)->lte($current_date) || $current_date->between($doj, Carbon::parse($single_user->dol))) {
 
+
+
+                        $attendance_status = 'A';
+                        $checkin_lat_long = null;
+                        $checkout_lat_long = null;
+                        $attendance_mode_checkin = null;
+                        $attendance_mode_checkout = null;
                         $client_code = VmtClientMaster::where('id', $single_user->client_id)->first()->client_code;
                         if (
                             $client_code == "DM" ||  $client_code == 'VASA' || $client_code == 'LAL'
@@ -170,33 +175,39 @@ class VmtAttendanceServiceV2
                             $web_checkout_time = $web_attendance->checkout_time;
                         }
                         if ($web_checkin_time != null) {
-                            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time]);
+                            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time],['attendance_mode_checkin' =>$web_attendance->attendance_mode_checkin]);
                         }
 
                         if ($web_checkout_time != null) {
-                            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time]);
+                            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time],['attendance_mode_checkout' =>$web_attendance->attendance_mode_checkout]);
                         }
 
                         if ($deviceCheckOutTime != null) {
                             // if ($single_user->id == 223)
                             // dd($current_date);
-                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckOutTime]);
+                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckOutTime],['attendance_mode_checkout' =>'biometric']);
                         }
-
+                        if ($single_user->id == 223)
+                                dd($all_att_data);
                         if ($deviceCheckInTime != null) {
-                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckInTime]);
+                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckInTime],['attendance_mode_checkin' =>'biometric']);
                         }
                         $sortedCollection   =   $all_att_data->sortBy([
                             ['date', 'asc'],
                         ]);
-                        $checking_time = $sortedCollection->first()['date'];
-                        $checkout_time =  $sortedCollection->last()['date'];
+                        $checking_time = $sortedCollection->first();
+                        $checkout_time =  $sortedCollection->last();
                         //   dd($checking_time);
 
                         //dd( $sortedCollection->first());
+                        if ($checking_time != null) {
+                            $checking_time = $checking_time['date'];
+                            // $attendance_mode_checkin = $checking_time[]
+                        }
+                        if ($checkout_time != null) {
+                            $checkout_time = $checkout_time['date'];
+                        }
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
-                        if ($single_user->id == 223)
-                       // dd(  $shift_settings );
                         $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
                         $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                         if ($checking_time != null &&  $checkout_time != null &&  $checkout_time ==  $checking_time) {
@@ -205,10 +216,11 @@ class VmtAttendanceServiceV2
                             $checking_time  = $attendance_time['checkin_time'];
                             $checkout_time = $attendance_time['checkout_time'];
                         }
-                        if ($single_user->id == 223)
-                            dd($checkout_time);
+
+
                         $week_off =   $shift_settings->week_off_days;
                         $week_off_sts = $this->checkWeekOffStatus($current_date, $week_off, $checking_time, $checkout_time);
+
                         foreach ($holidays as $holiday) {
                             if (
                                 Carbon::parse($holiday)->eq($current_date)
@@ -219,6 +231,46 @@ class VmtAttendanceServiceV2
                                 $is_holiday = true;
                             }
                         }
+
+                        if ($checking_time != null) {
+                            $checking_date  = substr($checking_time, 0, 10);
+                            $checking_time = substr($checking_time, 11);
+                        } else {
+                            $checking_date = null;
+                        }
+                        if ($checkout_time != null) {
+                            $checkout_date = substr($checkout_time, 0, 10);
+                            $checkout_time =  substr($checkout_time, 11);
+                        } else {
+                            $checkout_date = null;
+                        }
+
+
+                        $attendance_table = new VmtEmployeeAttendanceV2;
+                        $attendance_table->user_id = $single_user->id;
+                        $attendance_table->vmt_employee_workshift_id = $shift_settings->id;
+                        $attendance_table->date = $current_date;
+                        $attendance_table->checkin_time =   $checking_time;
+                        $attendance_table->checkin_date =  $checking_date;
+                        $attendance_table->checkout_time =  $checkout_time;
+                        $attendance_table->checkout_date = $checkout_date;
+
+
+                        if ($checking_time != null ||  $checkout_time != null) {
+                            $attendance_status = 'P';
+                        } else if ($week_off_sts) {
+                            $attendance_status = 'WO';
+                        } else if ($is_holiday) {
+                            $attendance_status = 'HO';
+                        }
+
+                        if ($single_user->id == 223);
+                        dd('ug');
+                        $attendance_table->status = $attendance_status;
+                        $attendance_table->attendance_mode_checkin = $attendance_mode_checkin;
+                        $attendance_table->attendance_mode_checkout = $attendance_mode_checkout;
+                        $attendance_table->checkin_lat_long = $checkin_lat_long;
+                        $attendance_table->checkout_lat_long = $checkout_lat_long;
 
                         // $employee_attendance
                     } else {
