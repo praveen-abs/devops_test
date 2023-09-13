@@ -258,7 +258,7 @@ function updateEmployeeApplyFilter(val){
             if (res.data.rows.length === 0) {
                 Swal.fire({
                     title: res.data.status = "failure",
-                    text: "No Data Found",
+                    text: "No employees found in this category",
                     // "Salary Advance Succesfully",
                     icon: "error",
                     showCancelButton: false,

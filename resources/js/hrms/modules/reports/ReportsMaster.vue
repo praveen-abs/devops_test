@@ -3,17 +3,16 @@
     <div>
         <div style="position: relative;" >
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-                <ul class="mb-3 divide-x nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
+                <ul class="mb-3 divide-x nav nav-pills divide-solid nav-tabs-dashed w-[50%]" id="pills-tab" role="tablist">
                     <li class=" nav-item" role="presentation">
                         <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
-                            aria-selected="true" @click="activetab=1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            aria-selected="true" @click="activetab=1" :class="[activetab === 1 ? 'active font-semibold border: 2px solid #F9BE00 !important;' : 'font-medium !text-[#8B8B8B] border: 2px solid #dcdcdc !important;']" >
                             EMPLOYEE REPORTS
                         </a> 
                         <!-- <router-link to="/testing_pradeesh" class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" @click="activetab=1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']"> EMPLOYEE REPORTS</router-link>            -->
                        
-          
                         <div v-if="activetab === 1" class="h-1 rounded-l-3xl " style="border: 2px solid #F9BE00 !important;" ></div>
-                        <div v-else class="h-1 border-2 border-gray-300 rounded-l-3xl"></div>
+                        <div v-else class="h-1 border-2 border-gray-300 rounded-l-3xl" style="border: 2px solid #dcdcdc !important;"></div>
                     </li>
     
                     <li class="border-0 nav-item position-relative" role="presentation" v-if="false">
