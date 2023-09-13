@@ -18,7 +18,7 @@ const router = createRouter({
         ],
         },
         {
-            path: "/basicReport",
+            path: "/attenndance",
             name: "basicReport",
             component: basicReport,
         },

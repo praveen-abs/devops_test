@@ -5,10 +5,7 @@
             <div class="">
                 <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10  " />
 
-                <Dropdown optionLabel="name"  optionValue="id" :options="dropdown" v-model="selectCategory" @change="UseEmployeeMaster.sentcategory(selectCategory)" placeholder="Select Category" class="w-[200px] mx-2 min-w-[100px] !h-10  !font-semibold !font-['poppins'] !text-[#000]" />
-
-                <button class="px-3 py-2 text-white bg-black rounded-lg hover:bg-sky-700" @click="UseEmployeeMaster.getEmployeeCTC" >Clear All</button>
-
+             
             </div>
             <div class="flex items-center ">
                 <h1 class="text-[12px] text-black font-semibold  font-['poppins']">Personal Details -</h1>
