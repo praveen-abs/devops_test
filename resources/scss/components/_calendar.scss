@@ -17,16 +17,16 @@
     padding: 0.5rem;
 }
 
-.p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
-    background: #002f56;
-    color: black;
-}
+// .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+//     background: #002f56;
+//     color: black;
+// }
 
-.p-calendar-w-btn .p-datepicker-trigger {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background: #002f56;
-}
+// .p-calendar-w-btn .p-datepicker-trigger {
+//     border-top-left-radius: 0;
+//     border-bottom-left-radius: 0;
+//     background: #002f56;
+// }
 
 .p-dialog-mask {
     position: fixed;
@@ -42,11 +42,12 @@
 
 }
 
-.p-button:enabled:hover {
-    background: #002f56;
-    color: #ffffff;
-    border-color: none;
-}
+// .p-button:enabled:hover {
+//     background: #002f56;
+//     color: #ffffff;
+//     border-color: none;
+// }
+
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
     padding: 0.2rem 0.55rem;
     margin-right: 0.5rem;
