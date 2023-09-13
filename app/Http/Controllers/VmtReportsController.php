@@ -661,15 +661,11 @@ class VmtReportsController extends Controller
         $client_id = array(1);
         $Category = 'All';
         $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails($request->type, $request->client_id, $request->active_status, $request->department_id);
-        $headers = array();
-        foreach ($emp_mas_ctc_data as $key => $value) {
-            $headings = $key;
-            array_push($headers, $headings);
-        }
+
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
-        return Excel::download(new EmployeeMasterExport($request->type,$emp_mas_ctc_data, $headers, $client_name, $public_client_logo_path, $date), 'Employees Master Report.xlsx');
+        return Excel::download(new EmployeeMasterExport($request->type,$emp_mas_ctc_data['rows'], $emp_mas_ctc_data['headers'], $client_name, $public_client_logo_path, $date), 'Employees Master Report.xlsx');
     }
 
     public function getCurrentFinancialYear()
