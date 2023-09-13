@@ -243,8 +243,8 @@ class VmtReportsservice
 
             if (empty($department_id)) {
                 $get_department = Department::pluck('id');
-            } else {
-                $get_department = [$department_id];
+            } else{
+                $get_department = $department_id;
             }
             $date = Carbon::now()->format('M-Y');
             //$client_id = array(1);
@@ -260,8 +260,8 @@ class VmtReportsservice
                 ->leftJoin('vmt_employee_statutory_details as statutory', 'statutory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
-                // ->whereIn('users.client_id', $client_id)
-                // ->whereIn('vmt_employee_office_details.department_id', $get_department)
+                //->whereIn('users.client_id', $client_id)
+                ->whereIn('office.department_id', $get_department)
                 ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
                     'office.official_mobile', 'office.l1_manager_code', 'office.work_location', 'employee.aadhar_number', 'employee.pan_number', 'statutory.uan_number', 'statutory.epf_number', 'statutory.esic_number',
