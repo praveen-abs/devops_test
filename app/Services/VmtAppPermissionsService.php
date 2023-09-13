@@ -467,16 +467,16 @@ class VmtAppPermissionsService
 
     */
     //getClientPermissions
-    public function getClient_MobileModulePermissionDetails($client_id, $module_id)
+    public function getClient_MobileModulePermissionDetails($user_code, $module_id)
     {
 
         $validator = Validator::make(
             $data = [
-                'client_id' => $client_id,
+                'user_code' => $user_code,
                 'module_id' => $module_id,
             ],
             $rules = [
-                'client_id' => 'required|exists:vmt_client_master,id',
+                'client_id' => 'required|exists:users,user_code',
                 'module_id' => 'required|exists:vmt_app_modules,id',
             ],
             $messages = [
@@ -494,9 +494,9 @@ class VmtAppPermissionsService
         try {
 
 
+             $user_data = User::where('user_code',$user_code)->first();
 
-
-            $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($client_id, $module_id);
+            $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($user_data->client_id, $module_id);
 
             return response()->json([
                 "status" => "success",
