@@ -263,16 +263,18 @@ class VmtReportsservice
                 // ->whereIn('users.client_id', $client_id)
                 // ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get([
-                    'users.user_code', 'users.name', 'employee.gender', 'employee.dob', 'employee.doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
+                    'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
                     'office.official_mobile', 'office.l1_manager_code', 'office.work_location', 'employee.aadhar_number', 'employee.pan_number', 'statutory.uan_number', 'statutory.epf_number', 'statutory.esic_number',
                     'employee.mobile_number', 'users.email', 'employee.physically_challenged', 'employee.blood_group_id', 'banks.bank_name', 'employee.bank_account_number', 'employee.bank_ifsc_code', 'employee.no_of_children',
                     'employee.marital_status_id', 'employee.present_address', 'employee.permanent_address', 'compensatory.basic', 'compensatory.dearness_allowance', 'compensatory.hra', 'compensatory.child_education_allowance',
-                    'compensatory.food_allowance', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
+                    'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-                  
+                // dd( $emp_master_detail);
             foreach ($emp_master_detail as $single_details) {
+               // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
+               // dd(  $temp_ar);
                 $temp_ar['Employee Name'] = $single_details->name;
                 $temp_ar['Gender'] = strtoupper($single_details->gender);
                 $temp_ar['DOB'] = Carbon::parse($single_details->dob)->format('d-M-Y');
@@ -296,8 +298,13 @@ class VmtReportsservice
                 $temp_ar['Office Mobile Number'] = $single_details->official_mobile;
                 $temp_ar['Reporting Managers Employee Code'] = $single_details->l1_manager_code;
                 //for   Reporting Manager Name
-                if ($single_details->l1_manager_code) {
-                    $temp_ar['Reporting Managers Name'] = user::where('user_code', $single_details->l1_manager_code)->first()->name;
+                if ($single_details->l1_manager_code!=null || $single_details->l1_manager_code!='undefined'||!empty($single_details->l1_manager_code)) {
+                    if(empty(user::where('user_code', $single_details->l1_manager_code)->first()->name)){
+                        $temp_ar['Reporting Managers Name'] = null;
+                    }else{
+                        $temp_ar['Reporting Managers Name'] = user::where('user_code', $single_details->l1_manager_code)->first()->name;
+                    }
+                   
                 } else {
                     $temp_ar['Reporting Managers Name'] = null;
                 }

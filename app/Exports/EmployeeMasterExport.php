@@ -75,19 +75,19 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
         $sheet->setShowGridlines(false);
 
         //For First Row
-        $sheet->mergeCells('C1:D1')->setCellValue('C1', "Legal Entity : " .$this->client_name);
-        $sheet->getStyle('C1:D1')->getFont()->setBold(true);
+        $sheet->mergeCells('C1:E1')->setCellValue('C1', "Legal Entity : " .$this->client_name);
+        $sheet->getStyle('C1:E1')->getFont()->setBold(true);
 
         //For Second Row
-        $sheet->mergeCells('C2:D2')->setCellValue('C2', "Report Type : " .' Employee CTC Report');
-        $sheet->getStyle('C2:D2')->getFont()->setBold(true);
+        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Employee CTC Report');
+        $sheet->getStyle('C2:E2')->getFont()->setBold(true);
 
         //For Third Row
-        $sheet->mergeCells('C3:D3')->setCellValue('C3', "Period : ".$this->date);
-        $sheet->getStyle('C3:D3')->getFont()->setBold(true);
+        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".$this->date);
+        $sheet->getStyle('C3:E3')->getFont()->setBold(true);
         //for fourth row
-        $sheet->mergeCells('C4:D4')->setCellValue('C4', "Category : ".'Active,'.'Resigned,'. 'Yet to activate,'. 'Draft');
-        $sheet->getStyle('C4:D4')->getFont()->setBold(true);
+        $sheet->mergeCells('C4:E4')->setCellValue('C4', "Category : ".'Active,'.'Resigned,'. 'Yet to activate,'. 'Draft');
+        $sheet->getStyle('C4:E4')->getFont()->setBold(true);
 
         $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)

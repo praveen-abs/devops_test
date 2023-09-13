@@ -665,6 +665,7 @@ class VmtReportsController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
+       // dd($emp_mas_ctc_data);
         return Excel::download(new EmployeeMasterExport($request->type,$emp_mas_ctc_data['rows'], $emp_mas_ctc_data['headers'], $client_name, $public_client_logo_path, $date), 'Employees Master Report.xlsx');
     }
 
