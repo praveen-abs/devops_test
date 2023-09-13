@@ -4,7 +4,7 @@
         <div class="">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div id="msform">
+                    <!-- <div id="msform"> -->
                         <form class="p-fluid" enctype="multipart/form-data">
                             <PersonDetails />
                             <Address />
@@ -13,7 +13,7 @@
                             <Compensatory />
                             <PersonDocuments />
                         </form>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -218,15 +218,19 @@ const Sampledata = () => {
 </script>
 
 <style >
-.form-control {
-    height: 2.9em;
+.form-control
+{
+    height: 2.4em;
 }
 
-label{
+label
+{
     font-weight: 501;
+    padding-bottom: 5px;
 }
 
-.form-control:focus {
+.form-control:focus
+{
     color: #212529;
     background-color: #fff;
     border-color: #eaecef;
@@ -237,11 +241,45 @@ label{
     border-color: #212529;
 }
 
-.p-dropdown:not(.p-disabled):hover {
+
+.p-inputgroup
+{
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 2.5rem;
+}
+
+.floating input
+{
+    width: 100% !important;
+    margin-left: 0 !important;
+    height: 2.5em;
+}
+.p-dropdown {
+    background: #ffffff;
+    border: 1px solid #ced4da;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+    height: 2.5em;
+  }
+
+
+
+.p-dropdown .p-dropdown-label
+{
+    background: transparent;
+    border: 0 none;
+    margin-top: -3px;
+}
+
+.p-dropdown:not(.p-disabled):hover
+{
     border-color: #212529;
 }
 
-.p-dropdown:not(.p-disabled):focus {
+.p-dropdown:not(.p-disabled):focus
+{
     color: #212529;
     background-color: #fff;
     border-color: #eaecef;
@@ -252,23 +290,27 @@ label{
     border-color: #212529;
 }
 
-.p-dropdown .p-dropdown-label.p-placeholder {
+.p-dropdown .p-dropdown-label.p-placeholder
+{
     color: #6c757d;
     font-size: 12.5px;
 }
 
-input.p-dropdown-filter.p-inputtext.p-component {
-    height: 2.5em;
+input.p-dropdown-filter.p-inputtext.p-component
+{
+    height: 2.7rem;
     width: 250px;
 }
 
-.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter
+{
     padding-right: 1.75rem;
     margin-right: -1.75rem;
     height: 2.5em;
 }
 
-:deep(.p-dropdown-panel .p-component .p-dropdown-items-wrapper) {
+:deep(.p-dropdown-panel .p-component .p-dropdown-items-wrapper)
+{
     z-index: 1001;
     transform-origin: center bottom;
     top: 792.4px;
@@ -276,11 +318,13 @@ input.p-dropdown-filter.p-inputtext.p-component {
     width: 275px;
 }
 
-:deep(.p-dropdown-panel .p-component .p-dropdown-items-wrapper) {
+:deep(.p-dropdown-panel .p-component .p-dropdown-items-wrapper)
+{
     max-width: 280px;
 }
 
-:deep(.p-dropdown-panel .p-component) {
+:deep(.p-dropdown-panel .p-component)
+{
     background: #ffffff;
     color: #495057;
     border: 0 none;
@@ -289,7 +333,8 @@ input.p-dropdown-filter.p-inputtext.p-component {
     width: 100px;
 }
 
-:deep(.p-dropdown-item) {
+:deep(.p-dropdown-item)
+{
     cursor: pointer;
     font-weight: normal;
     white-space: nowrap;
@@ -298,7 +343,8 @@ input.p-dropdown-filter.p-inputtext.p-component {
     width: 100px;
 }
 
-.p-dialog-mask {
+.p-dialog-mask
+{
     position: fixed;
     top: 0;
     left: 0;
@@ -311,25 +357,31 @@ input.p-dropdown-filter.p-inputtext.p-component {
     background: #0000005e;
 }
 
-.field {
+.field
+{
     margin-bottom: 1.5rem;
 }
 
-form {
+form
+{
     margin-top: 2rem;
 }
 
-.card {
+.card
+{
     min-width: 450px;
 }
 
-@media screen and (max-width: 960px) {
-    .card {
+@media screen and (max-width: 960px)
+{
+    .card
+    {
         width: 80%;
     }
 }
 
-.p-datepicker .p-datepicker-header {
+.p-datepicker .p-datepicker-header
+{
     padding: 0.5rem;
     color: #061328;
     background: #002f56;
@@ -341,25 +393,37 @@ form {
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    color: #fff;
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month
+{
+    color: black;
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
     font-weight: 600;
     padding: 0.5rem;
 }
 
-.p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
-    background: #002f56;
+
+.p-calendar-w-btn .p-datepicker-trigger
+{
+    border-top-left-radius: none;
+    border-bottom-left-radius: none;
+    background: #fff;
+    border: 1px  solid rgb(192, 183, 183);
+    height: 2.5rem;
     color: black;
+    font-weight: 600;
+    font-size: 20px;
 }
 
-.p-calendar-w-btn .p-datepicker-trigger {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background: #002f56;
-}
+.p-button:enabled:hover {
+    background: #fff;
+    color: black;
+    font-weight: 600;
+    border: 1px  solid rgb(192, 183, 183);
+  }
 
-.p-datepicker-decade {
+
+
+.p-datepicker-decade
+{
     color: white;
-}
-</style>
+}</style>
