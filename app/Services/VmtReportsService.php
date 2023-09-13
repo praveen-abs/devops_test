@@ -123,16 +123,15 @@ class VmtReportsservice
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
-                if(!isset($emp_ctc_detail)){
-                    return ['status' => 'Employee not found'];
-                }
+            if (!isset($emp_ctc_detail)) {
+                return ['status' => 'Employee not found'];
+            }
 
             foreach ($emp_ctc_detail as $singleemployeedata) {
 
                 $temp_ar['Employee Code'] = $singleemployeedata->user_code;
                 $temp_ar['Employee Name'] = $singleemployeedata->name;
                 $temp_ar['Gender'] = strtoupper($singleemployeedata->gender);
-                
                 $temp_ar['Designation'] = $singleemployeedata->designation;
                 if ($singleemployeedata->active == 1) {
                     $temp_ar['Employee Status'] = "Active";
@@ -158,40 +157,37 @@ class VmtReportsservice
                     $temp_ar['IFSC Code'] =  $singleemployeedata->bank_ifsc_code;
                 }
 
-                $temp_ar['Basic'] = round ((int) $singleemployeedata->basic);
+                $temp_ar['Basic'] = round((int) $singleemployeedata->basic);
                 $temp_ar['House Rent Allowance'] = round((int) $singleemployeedata->hra);
-                $temp_ar['Special Allowance'] = round ((int) $singleemployeedata->special_allowance);
-                $temp_ar['Fixed Gross'] =round((int) $singleemployeedata->gross);
-                $temp_ar['EPFER'] = round ((int) $singleemployeedata->epf_employer_contribution);
-                $temp_ar['EDLI Charges'] = round((int) $singleemployeedata->epf_employer_contribution);
-                $temp_ar['PF ADMIN Charges'] =round ( (int) $singleemployeedata->pf_admin_charges);
-                $temp_ar['ESICER'] = round((int) $singleemployeedata->esic_employer_contribution);
-                $temp_ar['Insurance'] =  round((int) $singleemployeedata->insurance);
-                $temp_ar['LWFER'] = round((int)$singleemployeedata->labour_welfare_fund);
-                $temp_ar['CTC'] = round((int) $singleemployeedata->cic);
-                $temp_ar['EPFEE'] = round((int)  $singleemployeedata->epf_employee);
-                $temp_ar['ESICEE'] = round ((int)$singleemployeedata->esic_employee);
-                $temp_ar['Income Tax'] = round((int)$singleemployeedata->Income_tax);
-                $temp_ar['Professional Tax'] =round((int) $singleemployeedata->professional_tax);
-                $temp_ar['LWFEE '] =round ((int)$singleemployeedata->lwfee);
-                $temp_ar['Total Deduction'] = round( (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE ']);
-                $temp_ar['NET Pay '] = round((int)$singleemployeedata->net_income);
+                $temp_ar['Special Allowance'] = round((int) $singleemployeedata->special_allowance) == 0 ? "0" : round((int) $singleemployeedata->special_allowance);
+                $temp_ar['Fixed Gross'] = round((int) $singleemployeedata->gross) == 0 ? "0" : round((int) $singleemployeedata->gross);
+                $temp_ar['EPFER'] = round((int) $singleemployeedata->epf_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->epf_employer_contribution);
+                $temp_ar['EDLI Charges'] = round((int) $singleemployeedata->epf_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->epf_employer_contribution);
+                $temp_ar['PF ADMIN Charges'] = round((int) $singleemployeedata->pf_admin_charges) == 0 ? "0" : round((int) $singleemployeedata->pf_admin_charges);
+                $temp_ar['ESICER'] = round((int) $singleemployeedata->esic_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->esic_employer_contribution);
+                $temp_ar['Insurance'] =  round((int) $singleemployeedata->insurance) == 0 ? "0" : round((int) $singleemployeedata->insurance);
+                $temp_ar['LWFER'] = round((int)$singleemployeedata->labour_welfare_fund) == 0 ? "0" : round((int) $singleemployeedata->labour_welfare_fund);
+                $temp_ar['CTC'] = round((int) $singleemployeedata->cic) == 0 ? "0" : round((int) $singleemployeedata->cic);
+                $temp_ar['EPFEE'] = round((int)  $singleemployeedata->epf_employee) == 0 ? "0" : round((int) $singleemployeedata->epf_employee);
+                $temp_ar['ESICEE'] = round((int)$singleemployeedata->esic_employee) == 0 ? "0" : round((int) $singleemployeedata->esic_employee);
+                $temp_ar['Income Tax'] = round((int)$singleemployeedata->Income_tax) == 0 ? "0" : round((int) $singleemployeedata->Income_tax);
+                $temp_ar['Professional Tax'] = round((int) $singleemployeedata->professional_tax) == 0 ? "0" : round((int) $singleemployeedata->professional_tax);
+                $temp_ar['LWFEE '] = round((int)$singleemployeedata->lwfee) == 0 ? "0" : round((int) $singleemployeedata->lwfee);
+                $temp_ar['Total Deduction'] = round((int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE ']);
+                $temp_ar['NET Pay '] = round((int)$singleemployeedata->net_income) == 0 ? "0" : round((int) $singleemployeedata->net_income);
                 array_push($processed_array, $temp_ar);
             }
 
-            if($processed_array){
-            foreach ($processed_array[0] as $key => $value) {
-                $headings = $key;
-                array_push($headers, $headings);
+            if ($processed_array) {
+                foreach ($processed_array[0] as $key => $value) {
+                    $headings = $key;
+                    array_push($headers, $headings);
+                }
+                $response['headers'] =   $headers;
+                $response['rows'] = $processed_array;
+            } else {
+                $response['status'] =  'Employee Not Found';
             }
-
-            $response['headers'] =   $headers;
-            $response['rows'] = $processed_array;
-
-        }else{
-            $response['status'] =  'Employee Not Found';
-        }
-
         } catch (\Exception $e) {
             $response = [
                 'status' => 'failure',
@@ -206,8 +202,6 @@ class VmtReportsservice
     public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id)
 
     {
-
-
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
@@ -254,7 +248,6 @@ class VmtReportsservice
             } else {
                 $get_department = [$department_id];
             }
-
             $date = Carbon::now()->format('M-Y');
             //$client_id = array(1);
             $Category = 'All';
@@ -264,18 +257,25 @@ class VmtReportsservice
             $temp_ar = array();
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
-                ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
-                ->leftJoin('vmt_department', 'vmt_department.id', '=', 'office.department_id')
+                ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_statutory_details as statutory', 'statutory.user_id', '=', 'users.id')
+                ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
+                ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
                 // ->whereIn('users.client_id', $client_id)
                 // ->whereIn('vmt_employee_office_details.department_id', $get_department)
-                ->get('users.user_code','users.name')->toarray();
-                 dd($emp_master_detail);
+                ->get([
+                    'users.user_code', 'users.name', 'employee.gender', 'employee.dob', 'employee.doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
+                    'office.official_mobile', 'office.l1_manager_code', 'office.work_location', 'employee.aadhar_number', 'employee.pan_number', 'statutory.uan_number', 'statutory.epf_number', 'statutory.esic_number',
+                    'employee.mobile_number', 'users.email', 'employee.physically_challenged', 'employee.blood_group_id', 'banks.bank_name', 'employee.bank_account_number', 'employee.bank_ifsc_code', 'employee.no_of_children',
+                    'employee.marital_status_id', 'employee.present_address', 'employee.permanent_address', 'compensatory.basic', 'compensatory.dearness_allowance', 'compensatory.hra', 'compensatory.child_education_allowance',
+                    'compensatory.food_allowance', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
+                    'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
+                ])->toarray();
+                dd($emp_master_detail);
             foreach ($emp_master_detail as $single_details) {
                 $temp_ar['Employee Code'] = $single_details->user_code;
                 $temp_ar['Employee Name'] = $single_details->name;
-                $temp_ar['Gender'] = strtoupper ($single_details->gender);
+                $temp_ar['Gender'] = strtoupper($single_details->gender);
                 $temp_ar['DOB'] = Carbon::parse($single_details->dob)->format('d-M-Y');
                 $temp_ar['DOJ'] = carbon::parse($single_details->doj)->format('d-M-Y');
                 if ($single_details->active == 1) {
@@ -297,10 +297,10 @@ class VmtReportsservice
                 $temp_ar['Office Mobile Number'] = $single_details->official_mobile;
                 $temp_ar['Reporting Managers Employee Code'] = $single_details->l1_manager_code;
                 //for   Reporting Manager Name
-                if($single_details->l1_manager_code){
+                if ($single_details->l1_manager_code) {
                     $temp_ar['Reporting Managers Name'] = user::where('user_code', $single_details->l1_manager_code)->first()->name;
-                }else{
-                    $temp_ar['Reporting Managers Name'] = null ;
+                } else {
+                    $temp_ar['Reporting Managers Name'] = null;
                 }
                 $temp_ar['Location'] = $single_details->work_location;
                 $temp_ar['Aadhar Number'] = $single_details->aadhar_number;
@@ -311,31 +311,31 @@ class VmtReportsservice
                 // $temp_ar['PT location'] = $single_details->;
                 $temp_ar['Mobile Number'] = $single_details->mobile_number;
                 $temp_ar['Email id'] = $single_details->email;
-                $temp_ar['Physically Handicapped'] = strtoupper ($single_details->physically_challenged);
-                $temp_ar['Blood Group'] = VmtBloodGroup::where('id', strtoupper ($single_details->blood_group_id))->first()->name ?? '';
+                $temp_ar['Physically Handicapped'] = strtoupper($single_details->physically_challenged);
+                $temp_ar['Blood Group'] = VmtBloodGroup::where('id', strtoupper($single_details->blood_group_id))->first()->name ?? '';
                 $temp_ar['Bank Name'] = $single_details->bank_name;
                 $temp_ar['Bank Account No'] = $single_details->bank_account_number;
                 $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
                 // $temp_ar['Nominee Name'] = $single_details->;
 
-                 //for father mother detail need dob also
-                 $user_id = User::where('user_code', $single_details->user_code)->first()->id;
-                 $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
-                 foreach ($family_details as $singleFamilyDetails) {
-                     $temp_ar[$singleFamilyDetails->relationship . " Name"] = $singleFamilyDetails->name;
-                 }
-                 $temp_ar['No of Children'] = $single_details->no_of_children;
-                 $temp_ar['Marital Status'] = VmtMaritalStatus::where('id', $single_details->marital_status_id)->first()->name ?? '';
-                 $temp_ar['Marriage Date'] = $single_details->wedding_date;
-                 $temp_ar['Present Address'] = $single_details->present_address;
-                 $temp_ar['Permanent Address'] = $single_details->permanent_address;
+                //for father mother detail need dob also
+                $user_id = User::where('user_code', $single_details->user_code)->first()->id;
+                $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
+                foreach ($family_details as $singleFamilyDetails) {
+                    $temp_ar[$singleFamilyDetails->relationship . " Name"] = $singleFamilyDetails->name;
+                }
+                $temp_ar['No of Children'] = $single_details->no_of_children;
+                $temp_ar['Marital Status'] = VmtMaritalStatus::where('id', $single_details->marital_status_id)->first()->name ?? '';
+                $temp_ar['Marriage Date'] = $single_details->wedding_date;
+                $temp_ar['Present Address'] = $single_details->present_address;
+                $temp_ar['Permanent Address'] = $single_details->permanent_address;
                 $temp_ar['Basic'] = $single_details->basic;
                 $temp_ar['Dearness Allowance'] = $single_details->dearness_allowance;
                 // $temp_ar[' variable Dearness Allowance'] = $single_details->;
                 $temp_ar['House Rent Allowance'] = $single_details->hra;
                 $temp_ar['Child Education Allowance'] = $single_details->child_education_allowance;
                 $temp_ar['Food Allowance'] = $single_details->food_allowance;
-                $temp_ar['Washing Allowance'] = $single_details->washing_allowance; 
+                $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
                 // $temp_ar['Uniform Allowance'] = $single_details->; 
                 $temp_ar['Special Allowance'] = $single_details->special_allowance;
                 $temp_ar['STATUTORY BONUS'] = $single_details->Statutory_bonus;
@@ -345,7 +345,7 @@ class VmtReportsservice
                 // $temp_ar['vehicle Reimbursement'] = $single_details->;
                 $temp_ar['Driver Salary'] = $single_details->driver_salary;
                 $temp_ar['Fixed Gross'] = $single_details->gross;
-                // $temp_ar['Pf Wages'] = $single_details->gross;
+                // $temp_ar['Pf Wages'] = $single_details->;
                 $temp_ar['EPFER'] = $single_details->epf_employer_contribution;
                 $temp_ar['EDLI Charges'] = $single_details->edli_charges;
                 $temp_ar['PF ADMIN Charges'] = $single_details->pf_admin_charges;
@@ -362,7 +362,7 @@ class VmtReportsservice
                 $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
                 $temp_ar['NET Pay '] =  $single_details->net_income;
 
-              
+
 
 
 
@@ -383,11 +383,11 @@ class VmtReportsservice
                 // $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution; 
 
                 //Get family details
-               
+
                 array_push($response, $temp_ar);
                 unset($temp_ar);
             }
-         
+
             return  $response;
         } catch (\Exception $e) {
             $response = [
