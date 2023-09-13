@@ -467,20 +467,23 @@ class VmtAppPermissionsService
 
     */
     //getClientPermissions
-    public function getClient_MobileModulePermissionDetails($user_code, $module_id)
+    public function getClient_MobileModulePermissionDetails($client_id, $module_id,$user_code)
     {
 
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_code,
+                'client_id' => $client_id,
                 'module_id' => $module_id,
+                'user_code' => $user_code,
             ],
             $rules = [
-                'client_id' => 'required|exists:users,user_code',
+                'client_id' => 'required|exists:vmt_client_master,id',
                 'module_id' => 'required|exists:vmt_app_modules,id',
+                'user_code' => 'nullable|exists:users,user_code',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
+                'exists' => 'Field <b>:attribute</b> is invalid',
             ]
 
         );
@@ -493,10 +496,15 @@ class VmtAppPermissionsService
         }
         try {
 
+               if(!empty($user_code)){
+                $user_data = User::where('user_code',$user_code)->first();
+                $client_id=$user_data->client_id;
+               }else{
+                 $client_id =$client_id;
+               }
 
-             $user_data = User::where('user_code',$user_code)->first();
 
-            $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($user_data->client_id, $module_id);
+            $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($client_id, $module_id);
 
             return response()->json([
                 "status" => "success",
@@ -572,11 +580,8 @@ class VmtAppPermissionsService
                 $mobile_settings_data[$key]['employee_count'] =  $emp_count;
             }
 
-            return response()->json([
-                "status" => "success",
-                "message" => "Data fetch successfully",
-                "data" => $mobile_settings_data,
-            ]);
+            return $mobile_settings_data;
+
         } catch (\Exception $e) {
 
             return response()->json([
