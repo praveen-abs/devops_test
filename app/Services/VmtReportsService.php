@@ -382,18 +382,29 @@ class VmtReportsservice
 
                 //Get family details
 
-                array_push($response, $temp_ar);
+                array_push($processed_array, $temp_ar);
                 unset($temp_ar);
             }
-
-            return  $response;
+            
+            if ($processed_array) {
+                foreach ($processed_array[0] as $key => $value) {
+                    $headings = $key;
+                    array_push($headers, $headings);
+                }
+                $response['headers'] =   $headers;
+                $response['rows'] = $processed_array;
+            } else {
+                $response['headers'] =[];
+                $response['rows'] = [];
+            }
         } catch (\Exception $e) {
             $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getTraceAsString()
+                'error_verbose' => $e->getLine()
             ];
         }
+        return $response;
     }
 }
