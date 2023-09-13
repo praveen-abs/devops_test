@@ -121,8 +121,8 @@ class VmtMasterConfigController extends Controller
         return  $serviceVmtAppPermissionsService->getClient_MobileModulePermissionDetails($request->client_id,$module_id);
     }
     public function getClient_AllModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
-
-        return  $serviceVmtAppPermissionsService->getClient_AllModulePermissionDetails($request->client_id);
+                    $client_id =sessionGetSelectedClientid();
+        return  $serviceVmtAppPermissionsService->getClient_AllModulePermissionDetails($client_id);
     }
 
     public function getAllDropdownFilterSetting(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
