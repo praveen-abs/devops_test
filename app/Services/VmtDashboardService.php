@@ -110,9 +110,8 @@ class VmtDashboardService
         $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
 
-       //If there is some error in above line, then throw failure message
-        if(!empty($attendance_DailyReport_PerMonth["status"]) && $attendance_DailyReport_PerMonth["status"] == 'failure')
-        {
+        //If there is some error in above line, then throw failure message
+        if (!empty($attendance_DailyReport_PerMonth["status"]) && $attendance_DailyReport_PerMonth["status"] == 'failure') {
             return $attendance_DailyReport_PerMonth;
         }
 
@@ -1489,16 +1488,23 @@ class VmtDashboardService
 
             $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']); //foractiveemployee
 
-            $emp_details_count['total_employee_count'] = user::where('is_ssa', '0')->where('active', '!=', '-1')->count(); //fortotalemployee
 
-            $emp_details_count['new_employee_count'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
+            $emp_details_count['total_employees'] = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')->where('is_ssa', '0')->where('active', '!=', '-1')->get();
+            $emp_details_count['total_employee_count'] = $emp_details_count['total_employees']->count(); //fortotalemployee
+
+            $emp_details_count['new_employees'] = user::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->get();
+            $emp_details_count['new_employee_count'] =    $emp_details_count['new_employees']->count();
 
             // dd( $emp_details_count['newEmpCount']);
             $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->get()->count();
+            $emp_details_count['active_employees'] = User::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->where('active', '1')->where('is_ssa', '0')->get();
 
             $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->get()->count();
+            $emp_details_count['yet_to_active_employees'] = User::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->where('active', '0')->get();
 
             $emp_details_count['exit_employee_count'] = User::where('active', '-1')->get()->count();
+            $emp_details_count['exit_employees'] = User::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->where('active', '-1')->get();
 
             $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
 
@@ -1624,7 +1630,7 @@ class VmtDashboardService
         $pending_request_count['Document Approvals'] = $doc_count;
         $pending_request_count['Attendance Regularization'] = $reg_count;
 
-        $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count,'graph_chart_count'=>$graph_chart_count];
+        $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count];
 
         return ($response);
     }
@@ -1636,8 +1642,6 @@ class VmtDashboardService
         $user_code =  auth()->user()->user_code;
 
         $user_data = User::where("user_code", $user_code)->first();
-
-
     }
 
 
