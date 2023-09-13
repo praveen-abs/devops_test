@@ -797,10 +797,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
-    ///basic report
-    Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
-    //for master detail
-    Route::get('/download-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesMasterDetails'])->name('generateEmployeesMasterDetails');
+    ///for ctc  report
+    Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');    
+    Route::get('/generate-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
     //payroll reports
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
@@ -810,7 +809,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports/generatePayrollReports', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
-    //employeectcreports
+    //employeemasterreports
     Route::get('/fetch-master-employee-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterCTCDatas');
     Route::get('/generate-master-employee-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesMasterDetails'])->name('generateEmployeesMasterDetails');
     //Ajax For Fetch Month For Given Year for payroll

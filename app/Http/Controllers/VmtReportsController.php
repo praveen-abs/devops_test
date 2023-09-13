@@ -634,6 +634,7 @@ class VmtReportsController extends Controller
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
     {
+    
         $date = Carbon::now()->format('M-y');
         $request->type;
         $period_date= carbon::parse( $request->date)->format('d/m/Y');
@@ -649,7 +650,6 @@ class VmtReportsController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
-        // dd($emp_ctc_data['rows']);
         return Excel::download(new EmployeeBasicCtcExport($request->type, $emp_ctc_data['rows'], $emp_ctc_data['headers'], $client_name, $public_client_logo_path, $date, $period_date), 'Employees CTC Report.xlsx');
     }
 
