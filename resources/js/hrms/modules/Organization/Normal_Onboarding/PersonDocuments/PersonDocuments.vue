@@ -15,7 +15,7 @@
                         <span v-if="v$.AadharCardFront.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.AadharCardFront.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
 
 
                     </div>
@@ -28,7 +28,7 @@
                         <span v-if="v$.AadharCardBack.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.AadharCardBack.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
 
 
                     </div>
@@ -42,7 +42,7 @@
                         <span v-if="v$.PanCardDoc.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.PanCardDoc.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
 
 
                     </div>
@@ -56,7 +56,7 @@
                         <span v-if="v$.PassportDoc.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.PassportDoc.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">Voter ID</label>
@@ -68,7 +68,7 @@
                         <span v-if="v$.VoterIdDoc.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.VoterIdDoc.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"> Driving License</label>
@@ -80,7 +80,7 @@
                         <span v-if="v$.DrivingLicenseDoc.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.DrivingLicenseDoc.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">Educations Certificate
@@ -93,7 +93,7 @@
                         <span v-if="v$.EductionDoc.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.EductionDoc.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
 
 
                     </div>
@@ -106,7 +106,7 @@
                         <span v-if="v$.RelievingLetterDoc.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.RelievingLetterDoc.$errors[0].$message }}
                         </span>
-                        <span>Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
+                        <span class="text-sm text-gray-500">Accepted file types - JPEG, PDF, PNG and Maximum file size is -1MB</span>
                     </div>
                 </div>
             </div>
