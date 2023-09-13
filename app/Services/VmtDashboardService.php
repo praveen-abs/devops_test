@@ -109,6 +109,13 @@ class VmtDashboardService
         //Get monthly attendance report data
         $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
+
+       //If there is some error in above line, then throw failure message
+        if(!empty($attendance_DailyReport_PerMonth["status"]) && $attendance_DailyReport_PerMonth["status"] == 'failure')
+        {
+            return $attendance_DailyReport_PerMonth;
+        }
+
         for ($i = 01; $i <= $day; $i++) {
             $month = date('m');
             if ($i < 10) {
@@ -150,7 +157,11 @@ class VmtDashboardService
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
         $response["events"] = $this->getAllEventsDashboard();
 
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
     }
 
     public function getAllUsersDOJ_DOB()

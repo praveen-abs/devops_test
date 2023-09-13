@@ -1091,7 +1091,27 @@ class VmtAttendanceService
 
 
         //TODO : Hardcoded now. Need to fetch based on assigned shift for this employee
-        $regularTime  = VmtWorkShifts::where('shift_name', 'First Shift')->first();
+
+        $vmt_employee_workshift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->first();
+
+        if (empty($vmt_employee_workshift->work_shift_id)) {
+            return [
+                'status' => 'failure',
+                'message' => 'No shift has been assigned',
+                'data'   => ""
+            ];
+        }
+
+        //dd($vmt_employee_workshift);
+        $current_shift_details  = VmtWorkShifts::find($vmt_employee_workshift->work_shift_id);
+
+        if (empty($current_shift_details)) {
+            return [
+                'status' => 'failure',
+                'message' => 'Assigned Work shift details are missing or taking too long to load.',
+                'data'   => ""
+            ];
+        }
 
         ////Fetch the attendance reports
         //Create date array
@@ -1295,10 +1315,9 @@ class VmtAttendanceService
         }
         //dd($attendanceResponseArray);
 
-        $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
-        $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
+        $shiftStartTime  = Carbon::parse($current_shift_details->shift_start_time);
+        $shiftEndTime  = Carbon::parse($current_shift_details->shift_end_time);
 
-        //dd($regularTime);
         ////Logic to check LC,EG,MIP,MOP,Leave status
         foreach ($attendanceResponseArray as $key => $value) {
 
@@ -2975,7 +2994,7 @@ class VmtAttendanceService
             $response = VmtEmployeeWorkShifts::join('users', 'users.id', '=', 'vmt_employee_workshifts.user_id')
                 ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_workshifts.work_shift_id')
                 ->where('users.id', $user_id)
-                ->get(['vmt_work_shifts.shift_type', 'vmt_work_shifts.shift_start_time', 'vmt_work_shifts.shift_end_time'])
+                ->get(['vmt_work_shifts.shift_name', 'vmt_work_shifts.shift_start_time', 'vmt_work_shifts.shift_end_time'])
                 ->first();
 
 

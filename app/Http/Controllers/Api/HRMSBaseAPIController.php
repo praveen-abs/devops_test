@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
+use App\Models\VmtAppModules;
+use App\Services\VmtConfigAppService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Services\VmtAppPermissionsService;
@@ -25,12 +27,28 @@ class HRMSBaseAPIController extends Controller
     }
 
 
-    public function getEmployeeMobilePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
+    public function getClient_MobileModulePermissionDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $response = $serviceVmtAppPermissionsService->getEmployeeMobilePermissionsDetails($request->user_code);
+        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->first('id');
+
+        $response = $serviceVmtAppPermissionsService->getClient_MobileModulePermissionDetails($request->user_code,$mobile_module_id['id']);
 
         return $response;
     }
+
+    public function getEmployee_MobileModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
+
+        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->first('id');
+        $response = $serviceVmtAppPermissionsService->getEmployee_MobileModulePermissionsDetails($request->user_code,$mobile_module_id['id']);
+
+        return $response;
+    }
+
+
+    public function getAppConfig(Request $request, VmtConfigAppService $serviceVmtConfigAppService){
+        return $serviceVmtConfigAppService->getAppConfig();
+    }
+
 
     public function getFCMToken(Request $request){
 
@@ -154,6 +172,11 @@ class HRMSBaseAPIController extends Controller
 
     public function getEmployeeRole(Request $request, VmtEmployeeService $serviceVmtEmployeeService){
         return $serviceVmtEmployeeService->getEmployeeRole($request->user_code);
+    }
+
+    public function getClientMobilePermissionsDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+
+        return  $serviceVmtAppPermissionsService->getClientMobilePermissionsDetails($request->client_id);
     }
 
     public function getEmployeePermissions(Request $request){

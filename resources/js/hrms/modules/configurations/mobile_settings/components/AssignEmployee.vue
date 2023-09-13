@@ -188,9 +188,9 @@ val.forEach((element) => {
         client_id: useStore.client_details.id
     }
     selectedUserId.push(format);
-    console.log(" testing data Enable All",selectedUserId.value);
+   // console.log(" testing data Enable All",selectedUserId.value);
     }else{
-        console.log(console.log(element.id,"else ::"));
+       // console.log(console.log(element.id,"else ::"));
     }
 });
 
@@ -223,14 +223,14 @@ val.forEach((element) => {
 // const Employee_ConfigData = reactive([])
 
 const saveCurrentlySelectedEmployeeConfig = (data, type) => {
-    // console.log(data);
+    console.log("Dropdown legal Entity : "+legalEntity.value);
 let val = data;
 val.forEach((element) => {
     if(element.status==1){
         let format = {
         id:element.id ,
         isEnabled:element.status,
-        client_id: useStore.client_details.id
+        client_id: legalEntity.value
     }
     selectedUserId.push(format);
     }else{
