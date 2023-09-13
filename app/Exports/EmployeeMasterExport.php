@@ -13,22 +13,24 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithDrawings, WithCustomStartCell
+class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithDrawings, WithCustomStartCell,WithTitle
 {
     protected $data;
     protected $headers;
     protected $last_header_column;
     protected $public_client_logo_path;
     protected $client_name;
+    protected $type;
     protected $date;
     protected $last_row;
 
 
 
-    public function __construct($data, $headers, $client_name, $public_client_logo_path,$date)
+    public function __construct($type,$data, $headers, $client_name, $public_client_logo_path,$date)
     {
-
+        $this->type =$type;
         $this->data = $data;
         $this->date = $date;
         $this->headers = $headers;
@@ -36,6 +38,16 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
         $this->public_client_logo_path = $public_client_logo_path;
         $this->last_header_column = num2alpha(count($headers) - 1);
         $this->last_row = count($this->data)+1;
+    }
+    public function title(): string
+    {
+        if($this->type == null){
+            $this->type= 'Employee Basic CTC Report';
+        }
+        else{
+            $this->type= 'Employee Detailed CTC Report';
+        }
+        return $this->type;
     }
     public function startCell(): string
     {
