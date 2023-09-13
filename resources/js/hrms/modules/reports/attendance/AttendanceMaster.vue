@@ -12,59 +12,81 @@
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
             <div class="flex justify-between">
-                <ul class="mb-3 divide-x nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
-                    <li class=" nav-item" role="presentation">
-                        <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
-                            aria-selected="true" @click="activetab=1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                <ul class="flex mb-3 divide-x max-[1200px]:!w-[60%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] border-[1px] border-[#000]"
+                    id="pills-tab" role="tablist">
+                    <li class="nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
+                  
+                        <!-- <router-link to="" @click="activetab = 1"
+                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
+                            :class="[activetab === 1 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
+                            Master </router-link> -->
+                            <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820] w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            aria-selected="true" @click="activetab =1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             DETAILED REPORT
-                        </a> 
-                        <!-- <router-link to="/testing_pradeesh" class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" @click="activetab=1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']"> EMPLOYEE REPORTS</router-link>            -->
-                       
-          
-                        <div v-if="activetab === 1" class="h-1 rounded-l-3xl " style="border: 2px solid #F9BE00 !important;" ></div>
-                        <div v-else class="h-1 border-2 border-gray-300 rounded-l-3xl"></div>
+                        </a>    
+
+                        <div v-if="activetab === 1" class=" h-1 rounded-l-3xl relative top-[0px] !z-[10]"
+                            style="border:2.2px solid #F9BE00 !important">
+                        </div>
+                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
-                    
-                    <li class="border-0 nav-item position-relative" role="presentation" > 
-                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=2"
-                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+
+                    <li class=" nav-item  !border-0  flex items-center " role="presentation">
+                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            aria-selected="true" @click="activetab = 2" :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             MUSTER ROLL
-                        </a>
-                        <div v-if="activetab === 2"
-                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-r-3xl"></div>
+                        </a>    
+                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
+                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
+                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
+                            CTC </router-link> -->
+                        <div v-if="activetab === 2" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
+                            style="border:2.2px solid #F9BE00 !important"></div>
+                            <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
-                    <li class="border-0 nav-item position-relative" role="presentation" > 
-                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=3"
-                            :class="[activetab === 3 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                    <li class=" nav-item  !border-0  flex items-center " role="presentation">
+                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            aria-selected="true" @click="activetab = 3" :class="[activetab === 3 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             CONSOLIDATE
-                        </a>
-                        <div v-if="activetab === 3"
-                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-r-3xl"></div>
+                        </a>    
+                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
+                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
+                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
+                            CTC </router-link> -->
+                        <div v-if="activetab === 3" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
+                            style="border:2.2px solid #F9BE00 !important"></div>
+                            <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
-                    <li class="border-0 nav-item position-relative" role="presentation" > 
-                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=4"
-                            :class="[activetab === 4 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                    <li class=" nav-item  !border-0  flex items-center " role="presentation">
+                        <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            aria-selected="true" @click="activetab = 4" :class="[activetab === 4 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             OVERTIME
-                        </a>
-                        <div v-if="activetab === 4"
-                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-r-3xl"></div>
+                        </a>    
+                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
+                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
+                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
+                            CTC </router-link> -->
+                        <div v-if="activetab === 4" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
+                            style="border:2.2px solid #F9BE00 !important"></div>
+                            <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
-                    <li class="border-0 nav-item position-relative" role="presentation" > 
-                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=5"
-                            :class="[activetab === 5 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
-                            OTHER
-                        </a>
-                        <div v-if="activetab === 5"
-                            class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-r-3xl"></div>
+                    <li class=" nav-item !border-0  flex items-center " role="presentation">
+                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            aria-selected="true" @click="activetab = 5" :class="[activetab === 5 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            OTHERS
+                        </a>    
+                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
+                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
+                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
+                            CTC </router-link> -->
+                        <div v-if="activetab === 5" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
+                            style="border:2.2px solid #F9BE00 !important"></div>
+                            <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
-                    <div class="border-gray-300 border-b-[4px]  w-100 mt-[-7px]"></div>
+                    <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="flex justify-between flex-wrap max-[1024px]:w-[100%] ">
+                <ul class="flex justify-between max-[1200px]:w-[40%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%] border-[1px] border-[#000]">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
                         

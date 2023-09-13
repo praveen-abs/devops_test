@@ -6,15 +6,17 @@
                 <!-- <button class="px-2 py-2 bg-black rounded-lg hover:bg-sky-700"
                     @click="useEmployeeReport.getEmployeeCTC();"><i class="pi pi-filter"></i></button> -->
                     
-                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(2)" v-if="useEmployeeReport.filterbtn === 1" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-filter"></i> Apply Filter</button>
-                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(1)" v-if="useEmployeeReport.filterbtn === 2" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-times"></i> Clear Filter</button>
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(2)" v-if="useEmployeeReport.filterbtn === 1&&activetab === 1" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-filter"></i> Apply Filter</button>
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(1)" v-if="useEmployeeReport.filterbtn === 2 && activetab === 1" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-times"></i> Clear Filter</button>
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(2)"  v-if="useEmployeeReport.filterbtn === 1 && activetab === 2" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-filter"></i> Apply Filter</button>
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(1)" v-if="useEmployeeReport.filterbtn === 2 && activetab === 2" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-times"></i> Clear Filter</button>
             </div>
         </div>
 
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-            <div class="row flex w-[100%] ">
-                <ul class="flex mb-3 divide-x col-3 max-[1200px]:w-[30%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
+            <div class=" flex w-[100%] ">
+                <ul class="flex mb-3 divide-x col-3 max-[1300px]:w-[50%] w-[35%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
                     id="pills-tab" role="tablist">
                     <li class="w-[50%] nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                   
@@ -22,7 +24,7 @@
                             class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
                             :class="[activetab === 1 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
                             Master </router-link> -->
-                            <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820] w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                            <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820] w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
                             aria-selected="true" @click="activetab =1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             Employee
                             Master
@@ -35,7 +37,7 @@
                     </li>
 
                     <li class=" nav-item w-[50%] !border-0  flex items-center " role="presentation">
-                        <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
                             aria-selected="true" @click="activetab = 2" :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             Employee
                             CTC
@@ -51,7 +53,7 @@
                     <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="flex justify-between col-9 max-[1200px]:w-[60%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%] ">
+                <ul class="flex justify-between max-[1200px]:w-[50%] w-[65%] max-[1200px]:justify-start  flex-wrap max-[1024px]:w-[100%] ">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
                         
@@ -94,7 +96,7 @@
                     <MultiSelect  @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" v-model="useEmployeeReport.select_Category"
                     optionValue="id" :options="dropdown" optionLabel="name" placeholder="Select Category"
                              :maxSelectedLabels="3"
-                            class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
+                            class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6] mx-2 " />
                     </li>
                 </ul>
 

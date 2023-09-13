@@ -9,6 +9,7 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
 
     // variable 
 
+
     // employee CTC 
 
     const legal_Entity = ref();
@@ -226,7 +227,7 @@ const employeeMaterReportSource = ref([]);
 const Employee_MaterReportDynamicHeaders =  ref([]);
 
     function getemployeeMater(){
-        let url = '/fetch-employee-ctc-report'
+        let url = '/fetch-master-employee-report'
         canShowLoading.value = true;
         axios.post(url,{
             type:""
@@ -246,6 +247,24 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
         }).finally(() => {
             canShowLoading.value = false;
         })
+    }
+
+    function downloadEmployeeMaster(){
+
+        let url = '/generate-employee-ctc-report'
+        canShowLoading.value = true;
+        axios.post(url,selectedfilters, { responseType: 'blob' }).then((response) => {
+            console.log(response.data);
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(response.data);
+            // ${new Date(variable.start_date).getDate()}_${new Date(variable.end_date).getDate()}
+            link.download = `Employee Master Report_.xlsx`;
+            link.click();
+        }).finally(() => {
+            btn_download.value = false;
+            canShowLoading.value = false;
+        })
+
     }
 
 
@@ -315,7 +334,8 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
         // employee master report 
         getemployeeMater,
         employeeMaterReportSource,
-        Employee_MaterReportDynamicHeaders 
+        Employee_MaterReportDynamicHeaders ,
+        downloadEmployeeMaster,
 
 
     }
