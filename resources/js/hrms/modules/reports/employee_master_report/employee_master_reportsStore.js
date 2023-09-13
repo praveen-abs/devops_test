@@ -20,6 +20,7 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
     const Employee_CTCReportDynamicHeaders =  ref([]);
     const department = ref();
     const PeriodMonth = ref("");
+    const canShowLoading   = ref(false);
     const selectedfilters = reactive({
         date:"",
         department_id:"",
@@ -32,7 +33,7 @@ const getEmployeeCTC = () => {
     // Absent Reports
     // let url = '/fetch_employee_ctc_report'
     let url = '/fetch-employee-ctc-report'
-    // canShowLoading.value = true
+    canShowLoading.value = true
     axios.post(url,{
         type:""
     }).then(res => {
@@ -49,19 +50,23 @@ const getEmployeeCTC = () => {
         console.log(Employee_CTCReportDynamicHeaders.value);
 
     }).finally(() => {
-        // canShowLoading.value = false;
+        canShowLoading.value = false;
     })
 }
 
     function fetchFilterClientIds(){
+        canShowLoading.value = true;
         axios.get('/filter-client-ids').then((res)=>{
             client_ids.value = res.data;
             console.log(client_ids.value);
+        }).finally(()=>{
+            canShowLoading.value = false;
         })
     }
 
     function sentFilterClientIds(legalEntity){
         selectedfilters.legal_entity = legalEntity;
+        canShowLoading.value = true;
         // let legalEntityID =  legalEntity;
         axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
@@ -77,7 +82,7 @@ const getEmployeeCTC = () => {
             console.log(Employee_CTCReportDynamicHeaders.value);
     
         }).finally(() => {
-            // canShowLoading.value = false;
+            canShowLoading.value = false;
         })
     }
 
@@ -137,9 +142,12 @@ const getEmployeeCTC = () => {
     }
 
     function getALLdepartment(){
+           canShowLoading.value = true;
         axios.get('/get-department').then((res)=>{
          department.value = res.data;
-        });
+        }).finally(()=>{
+            canShowLoading.value = false;
+        })
     }
 
     function getEmployeeCTCReports(department_id){
@@ -167,8 +175,11 @@ const getEmployeeCTC = () => {
 
     function getPeriodMonth(){
         // let date = Date;
+        canShowLoading.value = true;
         axios.post('/get-filter-months-for-reports').then((res)=>{
             PeriodMonth.value= res.data;
+        }).finally(()=>{
+            canShowLoading.value = false;
         })
 
     }
@@ -202,7 +213,7 @@ const getEmployeeCTC = () => {
 
     const downloadEmployeeCTC = () => {
     let url = '/generate-employees-ctc-report-data'
-    // canShowLoading.value = true
+    canShowLoading.value = true;
     axios.post(url,selectedfilters, { responseType: 'blob' }).then((response) => {
         console.log(response.data);
         var link = document.createElement('a');
@@ -212,7 +223,7 @@ const getEmployeeCTC = () => {
         link.click();
     }).finally(() => {
         btn_download.value = false;
-        // canShowLoading.value = false
+        canShowLoading.value = false;
     })
 }
 
@@ -263,7 +274,9 @@ const getEmployeeCTC = () => {
 
 
         // download animation btn
-        btn_download
+        btn_download,
+
+        canShowLoading
      
 
         // testings

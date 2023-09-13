@@ -63,13 +63,7 @@ onMounted(()=>{
     // fetchFilterClientIds();
 });
 
-const selectCategory = ref();
 
-const dropdown = ref([
-    {name: "Active" , id:1},
-    {name: "Yet To Active" , id:0},
-    {name: "Exit" , id:-1},
-])
 
 
 
@@ -139,14 +133,18 @@ const toggleClass = ref('downloaded');
     padding: 0;
     z-index: 0 !important;
 }
-.p-dropdown-label, .p-inputtext{
-    /* position: relative; */
-    /* top:-0px; */
-}
+/* .p-dropdown-label, .p-inputtext{
+   
+} */
 .p-dropdown-item{
     color:black !important;
     font-family: 'poppins';
 
+
+}
+.p-multiselect-label , .p-placeholder{
+ position: relative; 
+     top:-3px; 
 }
 
 
