@@ -106,7 +106,7 @@
                     <div>
                         <div class="card-body">
                             <div v-if="activetab === 1">
-                                <!-- <salary_Revision_pending /> -->
+                                <Employee_Master />
                             </div>
                             <div v-if="activetab === 2">
                                 <!-- <EmployeeSummary /> -->
@@ -127,6 +127,7 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
+import Employee_Master from './Employee_Master.vue';
 import { EmployeeMasterStore } from "./employee_master_reportsStore";
 
 
