@@ -21,6 +21,7 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
     const department = ref();
     const PeriodMonth = ref("");
     const filterbtn = ref(1);
+    // const 
     const canShowLoading   = ref(false);
     const selectedfilters = reactive({
         date:"",
@@ -234,7 +235,8 @@ const getEmployeeCTC = () => {
 function updateEmployeeApplyFilter(val){
     filterbtn.value = val;
     if(val===2){
-        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
+        axios.post('/fetch-employee-ctc-report',selectedfilters)
+        .then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
             console.log(employeeCTCReportSource.value," testings data");
@@ -245,11 +247,32 @@ function updateEmployeeApplyFilter(val){
                 Employee_CTCReportDynamicHeaders.value.push(format)
                 console.log(element);
             });
+
             console.log(Employee_CTCReportDynamicHeaders.value);
+// 
+            if (res.data.rows.splice(0)) {
+                Swal.fire({
+                    title: res.data.status = "failure",
+                    text: "No Data Found",
+                    // "Salary Advance Succesfully",
+                    icon: "error",
+                    showCancelButton: false,
+                }).then((res) => {
+                    // blink_UI.value = res.data.data;
+                    create_new_from.value = 1;
+                })
+    
+            }
     
         });
 
+      
+
     }else{
+        selectedfilters.active_status="";
+        selectedfilters.date="";
+        selectedfilters.department_id="";
+        selectedfilters.legal_entity="";
         getEmployeeCTC();
     }
 
