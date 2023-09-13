@@ -1,5 +1,5 @@
 <template>
-     <loadingSpinner v-if="EmployeeMasterStore.canShowLoading" class="absolute z-50 bg-white" />
+     <loadingSpinner v-if="EmployeeMaster.canShowLoading" class="absolute z-50 bg-white" />
     <div>
         <div style="position: relative;" >
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
@@ -97,5 +97,7 @@ import AttendanceMaster from "./attendance/AttendanceMaster.vue";
 import { EmployeeMasterStore } from "./employee_master_report/employee_master_reportsStore";
 
 const activetab = ref(1);
+
+const EmployeeMaster =EmployeeMasterStore();
 
 </script>

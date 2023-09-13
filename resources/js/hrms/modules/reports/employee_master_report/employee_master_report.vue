@@ -86,9 +86,15 @@
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
-                        <Dropdown optionLabel="name" optionValue="id" :options="dropdown" v-model="useEmployeeReport.select_Category"
+
+                        <!-- <Dropdown optionLabel="name" optionValue="id" :options="dropdown" v-model="useEmployeeReport.select_Category"
                     @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" placeholder="Select Category"
-                    class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
+                    class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" /> -->
+
+                    <MultiSelect  @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" v-model="useEmployeeReport.legal_Entity"
+                    optionValue="id" :options="dropdown" optionLabel="name" placeholder="Select Category"
+                             :maxSelectedLabels="3"
+                            class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                 </ul>
 
@@ -171,7 +177,7 @@ const dropdown = ref([
 .p-inputtext
 {
     position: relative;
-    top: 3px;
+    top: 2px;
 }
 
 .p-inputtext::placeholder
@@ -183,12 +189,14 @@ const dropdown = ref([
 .p-inputtext::placeholder
 {
     color: #000 !important;
+    font-size:10px;
 }
 
 .p-placeholder
 {
     color: #000 !important;
     font-family: 'poppins';
+    font-size:12px;
     /* font-size:11px; */
 }
 
