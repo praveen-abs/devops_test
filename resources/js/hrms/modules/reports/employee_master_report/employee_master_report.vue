@@ -14,9 +14,9 @@
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
             <div class="row flex w-[100%] ">
-                <ul class="flex mb-3 divide-x col-3 nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
+                <ul class="flex mb-3 divide-x col-3 max-[1200px]:w-[30%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
                     id="pills-tab" role="tablist">
-                    <li class=" nav-item w-[50%] !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
+                    <li class="w-[50%] nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                   
                         <!-- <router-link to="" @click="activetab = 1"
                             class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
@@ -31,7 +31,7 @@
                         <div v-if="activetab === 1" class=" h-1 rounded-l-3xl relative top-[0px] !z-[10]"
                             style="border:2.2px solid #F9BE00 !important">
                         </div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"></div>
+                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
 
                     <li class=" nav-item w-[50%] !border-0  flex items-center " role="presentation">
@@ -46,12 +46,12 @@
                             CTC </router-link> -->
                         <div v-if="activetab === 2" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
                             style="border:2.2px solid #F9BE00 !important"></div>
-                        <div v-else class="h-1 border-gray-300 border-3"></div>
+                            <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
-                    <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div>
+                    <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="flex justify-between col-9 flex-wrap max-[1024px]:w-[100%] ">
+                <ul class="flex justify-between col-9 max-[1200px]:w-[60%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%] ">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
                         
@@ -106,7 +106,7 @@
                     <div>
                         <div class="card-body">
                             <div v-if="activetab === 1">
-                                <!-- <salary_Revision_pending /> -->
+                                <Employee_Master />
                             </div>
                             <div v-if="activetab === 2">
                                 <!-- <EmployeeSummary /> -->
@@ -127,6 +127,7 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
+import Employee_Master from './Employee_Master.vue';
 import { EmployeeMasterStore } from "./employee_master_reportsStore";
 
 

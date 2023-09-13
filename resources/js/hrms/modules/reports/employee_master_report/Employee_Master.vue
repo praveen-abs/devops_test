@@ -23,11 +23,11 @@
 
         <div>
 
-            <DataTable :value="employeeCTCReportSource"
+            <DataTable :value="UseEmployeeMaster.employeeMaterReportSource"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-            <Column v-for="col of Employee_CTCReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
+            <Column v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
                 style="white-space: nowrap;text-align: left; !important">
             </Column>
         </DataTable>
@@ -41,38 +41,16 @@
 import axios from 'axios';
 import { ref, onMounted, reactive } from 'vue';
 
+import { EmployeeMasterStore } from "./employee_master_reportsStore" ;
+
 const Basic_details =  ref(1);
 
-const employeeCTCReportSource = ref([]);
 
-const Employee_CTCReportDynamicHeaders =  ref([]);
-
-const getEmployeeCTC = () => {
-    // Absent Reports
-    let url = '/fetch_employee_ctc_report'
-    // canShowLoading.value = true
-    axios.get(url, {
-        // start_date: variable.start_date,
-        // end_date: variable.end_date,
-    }).then(res => {
-        console.log(res.data.rows);
-        employeeCTCReportSource.value = res.data.rows
-        res.data.headers.forEach(element => {
-            let format = {
-                title: element
-            }
-            Employee_CTCReportDynamicHeaders.value.push(format)
-            console.log(element);
-        });
-        console.log(Employee_CTCReportDynamicHeaders.value);
-
-    }).finally(() => {
-        // canShowLoading.value = false;
-    })
-}
+const UseEmployeeMaster = EmployeeMasterStore();
 
 onMounted(()=>{
-    getEmployeeCTC();
-})
+    UseEmployeeMaster.getemployeeMater();
+    // fetchFilterClientIds();
+});
 
 </script>
