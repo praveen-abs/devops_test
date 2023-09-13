@@ -91,7 +91,7 @@
                     @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" placeholder="Select Category"
                     class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" /> -->
 
-                    <MultiSelect  @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" v-model="useEmployeeReport.legal_Entity"
+                    <MultiSelect  @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" v-model="useEmployeeReport.select_Category"
                     optionValue="id" :options="dropdown" optionLabel="name" placeholder="Select Category"
                              :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
