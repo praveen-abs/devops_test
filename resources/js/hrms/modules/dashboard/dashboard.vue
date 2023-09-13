@@ -66,11 +66,11 @@
     <!-- </div> -->
     <div class="col"
         v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3" >
-        <button class="orange_btn font-semibold text-sm"
-            :class="[useDashboard.currentDashboard === 1 ? 'bg-white text-slate-600 border border-black' : 'text-slate-600']"
+        <button class=" font-semibold text-sm p-1.5 rounded-l-lg"
+            :class="[useDashboard.currentDashboard === 0 ? 'bg-white text-black border border-black' : 'bg-gray-300 text-slate-700 border border-black']"
             @click="useDashboard.currentDashboard = 0">Self-dashboard</button>
-        <button class="Enable_btn font-semibold text-sm"
-            :class="[useDashboard.currentDashboard === 1 ? 'bg-[#d4d4d4] text-slate-600' : 'text-slate-600']"
+        <button class=" font-semibold text-sm p-1.5 rounded-r-lg"
+            :class="[useDashboard.currentDashboard === 1 ? 'bg-white text-black border border-black' : 'bg-gray-300 text-slate-700 border border-black']"
             @click="useDashboard.currentDashboard = 1">Org-dashboard</button>
     </div>
     <loadingSpinner v-if="useDashboard.canShowLoading" />
@@ -114,25 +114,3 @@ onMounted(async () => {
 </script>
 
 
-<style>
-:root
-{
-    --disable: #d4d4d4;
-    --white: #fff;
-    --navy: #002f56;
-}
-
-.orange_btn
-{
-    background-color: var(--disable);
-    padding: 3px 30px;
-    border-radius: 4px 0 0 4px;
-}
-
-.Enable_btn
-{
-    border: 1px solid var(--navy);
-    padding: 3px 30px;
-    border-radius: 0 4px 4px 0;
-}
-</style>
