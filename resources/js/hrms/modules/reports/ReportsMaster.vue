@@ -15,7 +15,7 @@
                         <div v-else class=" border-2 h-1 rounded-l-3xl border-gray-300"></div>
                     </li>
     
-                    <li class=" nav-item position-relative  border-0" role="presentation">
+                    <li class=" nav-item position-relative  border-0" role="presentation" v-if="false">
                         <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=2"
                             :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
                             PAYROLL
@@ -24,7 +24,7 @@
                             class=" h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="border: 2px solid #F9BE00 !important;"></div>
                         <div v-else class=" border-3 h-1  border-gray-300"></div>
                     </li>
-                    <li class=" nav-item position-relative  border-0" role="presentation">
+                    <li class=" nav-item position-relative  border-0" role="presentation"  v-if="false">
                         <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=3"
                             :class="[activetab === 3 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
                             STATUTORY REPORTS
@@ -43,7 +43,7 @@
                             class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
                         <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
                     </li>
-                    <li class=" nav-item position-relative  border-0" role="presentation">
+                    <li class=" nav-item position-relative  border-0" role="presentation" v-if="false"> 
                         <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=5"
                             :class="[activetab === 5 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
                             LEAVES
@@ -52,7 +52,7 @@
                             class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
                         <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
                     </li>
-                    <li class=" nav-item position-relative  border-0" role="presentation">
+                    <li class=" nav-item position-relative  border-0" role="presentation" v-if="false"> 
                         <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=6"
                             :class="[activetab === 6 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
                             PMS/OKR
