@@ -2603,7 +2603,7 @@ class VmtAttendanceService
                 "user_code" => 'required|exists:users,user_code',
                 "date" => "required",
                 "checkin_time" => "required",
-                "selfie_checkin" => "required",
+                "selfie_checkin" => "nullable",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkin" => "required", //mobile, web
                 "checkin_lat_long" => "nullable", //stores in lat , long
@@ -2668,7 +2668,7 @@ class VmtAttendanceService
             $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
             $attendanceCheckin->save();
             // processing and storing base64 files in public/selfies folder
-            if (!empty('selfie_checkin')) {
+            if (!empty($selfie_checkin)) {
 
                 $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
 
@@ -2701,7 +2701,7 @@ class VmtAttendanceService
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id), true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
@@ -2770,7 +2770,7 @@ class VmtAttendanceService
                 "user_code" => 'required|exists:users,user_code',
                 "existing_check_in_date" => "required",
                 "checkout_time" => "required",
-                "selfie_checkout" => "required",
+                "selfie_checkout" => "nullable",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkout" => "required", //mobile, web
                 "checkout_lat_long" => "nullable", //stores in lat , long
@@ -2834,7 +2834,7 @@ class VmtAttendanceService
                 $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
                 $existing_att_details->save();
                 // processing and storing base64 files in public/selfies folder
-                if (!empty('selfie_checkout')) {
+                if (!empty($selfie_checkout)) {
 
                     $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
 
@@ -2910,7 +2910,7 @@ class VmtAttendanceService
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id), true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
