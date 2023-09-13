@@ -9,6 +9,11 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
 
     // variable 
 
+    const legal_Entity = ref();
+    const Department = ref();
+    const period_Date = ref();
+    const select_Category = ref();
+
     // functions
 
     const client_ids = ref();
@@ -217,7 +222,7 @@ const getEmployeeCTC = () => {
     // 
 
     const downloadEmployeeCTC = () => {
-    let url = '/generate-employees-ctc-report-data'
+    let url = '/generate-employee-ctc-report'
     canShowLoading.value = true;
     axios.post(url,selectedfilters, { responseType: 'blob' }).then((response) => {
         console.log(response.data);
@@ -259,7 +264,7 @@ function updateEmployeeApplyFilter(val){
                     showCancelButton: false,
                 }).then((res) => {
                     // blink_UI.value = res.data.data;
-                    create_new_from.value = 1;
+                
                 })
     
             }
@@ -273,6 +278,12 @@ function updateEmployeeApplyFilter(val){
         selectedfilters.date="";
         selectedfilters.department_id="";
         selectedfilters.legal_entity="";
+
+        legal_Entity.value="";
+        Department.value="";
+        period_Date.value="";
+        select_Category.value="";
+
         getEmployeeCTC();
     }
 
@@ -331,7 +342,12 @@ function updateEmployeeApplyFilter(val){
 
         canShowLoading,
 
-        filterbtn
+        filterbtn,
+
+        legal_Entity,
+        Department,
+        period_Date,
+        select_Category
      
 
         // testings

@@ -62,8 +62,8 @@
                             
                         <!-- <Dropdown  optionLabel="month" editable v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" optionValue="date" placeholder="Select period" class=" min-w-[100px] w-[114px] !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]"  /> -->
                         
-                        <Dropdown optionLabel="month" optionValue="date" :options="useEmployeeReport.PeriodMonth" v-model="periodDate"
-                        @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" placeholder="Select period"
+                        <Dropdown optionLabel="month" optionValue="date" :options="useEmployeeReport.PeriodMonth" v-model="useEmployeeReport.period_Date"
+                        @change="useEmployeeReport.updateEmployee_Basic_CTC(useEmployeeReport.period_Date)" placeholder="Select period"
                     class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
 
                     </li>
@@ -71,8 +71,8 @@
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']">Department : </h1>
                         <!-- <Dropdown v-model="department" editable  optionLabel="name" placeholder="Department" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
                          -->
-                        <MultiSelect v-model="department" :options="useEmployeeReport.department" optionLabel="name"
-                            placeholder="Department" @change="useEmployeeReport.getEmployeeCTCReports(department)"
+                        <MultiSelect v-model="useEmployeeReport.Department" :options="useEmployeeReport.department" optionLabel="name"
+                            placeholder="Department" @change="useEmployeeReport.getEmployeeCTCReports(useEmployeeReport.Department)"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]   !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
@@ -80,14 +80,14 @@
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins'] ">Legal Entity : </h1>
                         <!-- <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]"  /> -->
 
-                        <MultiSelect @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity"
+                        <MultiSelect @change="useEmployeeReport.sentFilterClientIds(useEmployeeReport.legal_Entity)" v-model="useEmployeeReport.legal_Entity"
                             :options="useEmployeeReport.client_ids" optionLabel="client_fullname" placeholder="Legal Entity"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
-                        <Dropdown optionLabel="name" optionValue="id" :options="dropdown" v-model="selectCategory"
-                    @change="useEmployeeReport.sentcategory(selectCategory)" placeholder="Select Category"
+                        <Dropdown optionLabel="name" optionValue="id" :options="dropdown" v-model="useEmployeeReport.select_Category"
+                    @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" placeholder="Select Category"
                     class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                     </li>
                 </ul>
@@ -117,6 +117,7 @@
 </template>
 
 <script setup>
+
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
@@ -132,22 +133,14 @@ onMounted(() => {
     useEmployeeReport.getEmployeeCTC();
     useEmployeeReport.getALLdepartment();
     useEmployeeReport.getPeriodMonth();
-    legalEntity.value = "";
-    department.value = "";
-    periodDate.value = "";
+
 })
 
 
 
 const activetab = ref(1);
 
-const legalEntity = ref();
 
-const department = ref();
-
-const periodDate = ref();
-
-const selectCategory = ref();
 
 const dropdown = ref([
     {name: "Active" , id:1},
@@ -197,4 +190,10 @@ const dropdown = ref([
     color: #000 !important;
     font-family: 'poppins';
     /* font-size:11px; */
-}</style>
+}
+
+.p-inputtext{
+    color: #000 !important;
+    font-family: 'poppins';
+}
+</style>
