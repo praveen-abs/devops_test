@@ -798,8 +798,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
     ///for ctc  report
-    Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');    
-    Route::get('/generate-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+    Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');    
+    Route::post('/generate-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
     //payroll reports
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
