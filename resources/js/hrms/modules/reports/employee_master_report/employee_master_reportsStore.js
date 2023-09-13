@@ -255,7 +255,7 @@ function updateEmployeeApplyFilter(val){
 
             console.log(Employee_CTCReportDynamicHeaders.value);
 // 
-            if (res.data.rows.splice(0)) {
+            if (res.data.rows.length === 0) {
                 Swal.fire({
                     title: res.data.status = "failure",
                     text: "No Data Found",
