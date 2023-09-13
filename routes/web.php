@@ -798,11 +798,10 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
     ///basic report
-    Route::get('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    Route::get('/fetch-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterCTCData');
     //for master detail
     Route::get('/download-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesMasterDetails'])->name('generateEmployeesMasterDetails');
     //payroll reports
-
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
     })->name('reports-page');
@@ -812,8 +811,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
     //employeectcreports
-    Route::get('/fetch_employee_ctc_report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
-    Route::get('/generate-employees-ctc-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+    Route::post('/fetch_employee_ctc_report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    Route::post('/generate-employees-ctc-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
     //Ajax For Fetch Month For Given Year for payroll
     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
