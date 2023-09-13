@@ -101,8 +101,9 @@ class VmtAttendanceServiceV2
     public function attendanceJobs($start_date, $end_date)
     {
         $user = user::get();
-        // $current_date = Carbon::parse($start_date);
-        $current_date = Carbon::parse('2023-07-31');
+        $start_date = '2023-07-31';
+        $end_date = '2023-08-15';
+        $current_date = Carbon::parse($start_date);
         try {
             while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                 $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
@@ -116,13 +117,14 @@ class VmtAttendanceServiceV2
 
                     if ($single_user->dol == null && Carbon::parse($doj)->lte($current_date) || $current_date->between($doj, Carbon::parse($single_user->dol))) {
 
-
+                        if ($single_user->id == 223)
 
                         $attendance_status = 'A';
                         $checkin_lat_long = null;
                         $checkout_lat_long = null;
                         $attendance_mode_checkin = null;
                         $attendance_mode_checkout = null;
+                        $is_holiday = false;
                         $client_code = VmtClientMaster::where('id', $single_user->client_id)->first()->client_code;
                         if (
                             $client_code == "DM" ||  $client_code == 'VASA' || $client_code == 'LAL'
@@ -175,37 +177,41 @@ class VmtAttendanceServiceV2
                             $web_checkout_time = $web_attendance->checkout_time;
                         }
                         if ($web_checkin_time != null) {
-                            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time],['attendance_mode_checkin' =>$web_attendance->attendance_mode_checkin]);
+                            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time, 'attendance_mode' => $web_attendance->attendance_mode_checkin]);
                         }
 
                         if ($web_checkout_time != null) {
-                            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time],['attendance_mode_checkout' =>$web_attendance->attendance_mode_checkout]);
+                            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time, 'attendance_mode' => $web_attendance->attendance_mode_checkout]);
                         }
 
                         if ($deviceCheckOutTime != null) {
                             // if ($single_user->id == 223)
                             // dd($current_date);
-                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckOutTime],['attendance_mode_checkout' =>'biometric']);
+                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckOutTime, 'attendance_mode' => 'biometric']);
+                            //  $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckOutTime]);
                         }
-                        if ($single_user->id == 223)
-                                dd($all_att_data);
+
+
                         if ($deviceCheckInTime != null) {
-                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckInTime],['attendance_mode_checkin' =>'biometric']);
+                            $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckInTime, 'attendance_mode' => 'biometric']);
+                            // $all_att_data->push(['date' => $current_date->format('Y-m-d') . ' ' . $deviceCheckInTime]);
                         }
                         $sortedCollection   =   $all_att_data->sortBy([
                             ['date', 'asc'],
                         ]);
-                        $checking_time = $sortedCollection->first();
-                        $checkout_time =  $sortedCollection->last();
-                        //   dd($checking_time);
+
+                        $checking_time_ar = $sortedCollection->first();
+                        $checkout_time_ar =  $sortedCollection->last();
+
 
                         //dd( $sortedCollection->first());
-                        if ($checking_time != null) {
-                            $checking_time = $checking_time['date'];
-                            // $attendance_mode_checkin = $checking_time[]
+                        if ($checking_time_ar != null) {
+                            $checking_time = $checking_time_ar['date'];
+                            $attendance_mode_checkin = $checking_time_ar['attendance_mode'];
                         }
-                        if ($checkout_time != null) {
-                            $checkout_time = $checkout_time['date'];
+                        if ($checkout_time_ar != null) {
+                            $checkout_time =  $checkout_time_ar['date'];
+                            $attendance_mode_checkout =    $checkout_time_ar['attendance_mode'];
                         }
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
                         $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
@@ -238,12 +244,14 @@ class VmtAttendanceServiceV2
                         } else {
                             $checking_date = null;
                         }
+                      
                         if ($checkout_time != null) {
                             $checkout_date = substr($checkout_time, 0, 10);
                             $checkout_time =  substr($checkout_time, 11);
                         } else {
                             $checkout_date = null;
                         }
+                      
 
 
                         $attendance_table = new VmtEmployeeAttendanceV2;
@@ -253,6 +261,8 @@ class VmtAttendanceServiceV2
                         $attendance_table->checkin_time =   $checking_time;
                         $attendance_table->checkin_date =  $checking_date;
                         $attendance_table->checkout_time =  $checkout_time;
+                        // if ($single_user->id == 223)
+                        // dd(  $attendance_table);
                         $attendance_table->checkout_date = $checkout_date;
 
 
@@ -263,14 +273,12 @@ class VmtAttendanceServiceV2
                         } else if ($is_holiday) {
                             $attendance_status = 'HO';
                         }
-
-                        if ($single_user->id == 223);
-                        dd('ug');
                         $attendance_table->status = $attendance_status;
                         $attendance_table->attendance_mode_checkin = $attendance_mode_checkin;
                         $attendance_table->attendance_mode_checkout = $attendance_mode_checkout;
                         $attendance_table->checkin_lat_long = $checkin_lat_long;
                         $attendance_table->checkout_lat_long = $checkout_lat_long;
+                        $attendance_table->save();
 
                         // $employee_attendance
                     } else {
@@ -278,9 +286,10 @@ class VmtAttendanceServiceV2
                     }
                     // dd($single_user);
                 }
-                $current_date->day();
-                dd($current_date);
+              
+                $current_date->addDay();
             }
+            dd('done');
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failure',
