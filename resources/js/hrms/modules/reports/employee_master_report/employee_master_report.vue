@@ -3,9 +3,11 @@
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Employee Master Report</h1>
             <div>
-                <button class="px-2 py-2 text-white bg-black rounded-lg hover:bg-sky-700"
-                    @click="useEmployeeReport.getEmployeeCTC();"><i class="pi pi-filter"></i></button>
-                    <button class=" text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[2px] border-[#000] mx-2 rounded-xl "  >generate</button>
+                <!-- <button class="px-2 py-2 bg-black rounded-lg hover:bg-sky-700"
+                    @click="useEmployeeReport.getEmployeeCTC();"><i class="pi pi-filter"></i></button> -->
+                    
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(2)" v-if="useEmployeeReport.filterbtn===1" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-filter"></i> Apply Filter</button>
+                    <button @click="useEmployeeReport.updateEmployeeApplyFilter(1)" v-if="useEmployeeReport.filterbtn===2" class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-times"></i> Clear Filter</button>
             </div>
         </div>
 
@@ -118,7 +120,8 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
-import { EmployeeMasterStore } from "./employee_master_reportsStore"
+import { EmployeeMasterStore } from "./employee_master_reportsStore";
+
 
 
 
