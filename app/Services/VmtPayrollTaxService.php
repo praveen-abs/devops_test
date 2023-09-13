@@ -19,6 +19,7 @@ use Dompdf\Options;
 use \stdClass;
 use App\Models\User;
 use App\Models\VmtInvFormSection;
+use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtPayroll;
 use Carbon\CarbonPeriod;
 use App\Models\VmtSnapchatEmpPaysheet;
@@ -1063,6 +1064,183 @@ class VmtPayrollTaxService
 
     }
 
+    public function fetchInvestmentTaxReports()
+    {
+        $reportsdata = array();
 
+        $client_id = "3";
+
+        $payroll_month = "2023-04-01";
+
+        // $inv_emp = VmtInvFEmpAssigned::where()->pluck('user_id')->toArray();
+
+        $inv_emp = ['144','194'];
+
+        $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+            ->where("users.active", "1")
+            ->where("users.client_id", $client_id)
+            ->whereIn("users.id", $inv_emp)
+            ->get([
+                'users.id as user_id',
+                'users.user_code as Employee Code',
+                'users.name as Employee Name',
+                'vmt_employee_details.gender as Gender',
+                'vmt_employee_details.pan_number as PAN Number',
+                'vmt_employee_details.dob as Date Of Birth',
+                'vmt_employee_details.doj as Date Of Joining',
+                'vmt_employee_statutory_details.tax_regime as Tax Regime'
+            ]);
+
+     $employee_salary_details = array();
+
+        foreach ($Employee_details as $key => $single_user) {
+
+            $payroll_date = VmtPayroll::where('payroll_date',  $payroll_month)->where('client_id', $client_id)->first();
+
+            if (!empty($payroll_date)) {
+
+                $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_user['user_id']);
+            }
+
+            if ($emp_payroll->exists()) {
+                 $emp_payroll =$emp_payroll->first();
+                 $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
+
+            }
+
+            if ($employee_projected_salary->exists()) {
+
+                $employee_salary_details[$key]["Employee Code"] =$single_user['Employee Code'] ;
+                $employee_salary_details[$key]["Employee Name"] =$single_user['Employee Name'] ;
+                $employee_salary_details[$key]["Gender"] =$single_user['Gender'];
+                $employee_salary_details[$key]["PAN Number"] =$single_user['PAN Number'];
+                $employee_salary_details[$key]["Date Of Birth"] =$single_user['Date Of Birth'];
+                $employee_salary_details[$key]["Date Of Joining"] =$single_user['Date Of Joining'];
+                $employee_salary_details[$key]["Tax Regime"] =$single_user['Tax Regime'];
+                $employee_salary_details[$key]["Basic"] =$employee_projected_salary->sum('earned_basic');
+                $employee_salary_details[$key]["Basic Arrears"] =$employee_projected_salary->sum('basic_arrear');
+                $employee_salary_details[$key]["Dearness Allowance"] =$employee_projected_salary->sum('dearness_allowance_earned');
+                $employee_salary_details[$key]["Dearness Allowance Arrears"] =$employee_projected_salary->sum('dearness_allowance_arrear');
+                $employee_salary_details[$key]["Variable Dearness Allowance"] =$employee_projected_salary->sum('vda_earned');
+                $employee_salary_details[$key]["Vairable Dearness Allowance Arrears"] =$employee_projected_salary->sum('vda_arrear');
+                $employee_salary_details[$key]["HRA"] =$employee_projected_salary->sum('earned_hra');
+                $employee_salary_details[$key]["HRA Arrears"] =$employee_projected_salary->sum('hra_arrear');
+                $employee_salary_details[$key]["Child Education Allowance"] =$employee_projected_salary->sum('earned_child_edu_allowance');
+                $employee_salary_details[$key]["Child Education Allowance Arrears"] =$employee_projected_salary->sum('child_edu_allowance_arrear');
+                $employee_salary_details[$key]["Statutory Bonus"] =$employee_projected_salary->sum('earned_stats_bonus');
+                $employee_salary_details[$key]["Statutory Bonus Arrears"] =$employee_projected_salary->sum('earned_stats_arrear');
+                $employee_salary_details[$key]["Medical Allowance"] =$employee_projected_salary->sum('medical_allowance_earned');
+                $employee_salary_details[$key]["Medical Allowance Arrears"] =$employee_projected_salary->sum('medical_allowance_arrear');
+                $employee_salary_details[$key]["Communicaton Allowance"] =$employee_projected_salary->sum('communication_allowance_earned');
+                $employee_salary_details[$key]["Communication Allowance Arrears"] =$employee_projected_salary->sum('communication_allowance_arrear');
+                $employee_salary_details[$key]["Leave Travel Allowance"] =$employee_projected_salary->sum('earned_lta');
+                $employee_salary_details[$key]["Leave Travel Allowance Arrears"] =$employee_projected_salary->sum('lta_arrear');
+                $employee_salary_details[$key]["Food Allowance"] =$employee_projected_salary->sum('food_allowance_earned');
+                $employee_salary_details[$key]["Food Allowance Arrear"] =$employee_projected_salary->sum('food_allowance_arrear');
+                $employee_salary_details[$key]["Special Allowance"] =$employee_projected_salary->sum('earned_spl_alw');
+                $employee_salary_details[$key]["Special Allowance Arrears"] =$employee_projected_salary->sum('spl_alw_arrear');
+                $employee_salary_details[$key]["Other Allowance"] =$employee_projected_salary->sum('other_allowance_earned');
+                $employee_salary_details[$key]["Other Allowance Arrears"] =$employee_projected_salary->sum('other_allowance_arrear');
+                $employee_salary_details[$key]["Washing Allowance"] =$employee_projected_salary->sum('washing_allowance_earned');
+                $employee_salary_details[$key]["Washing Allowance Arrears"] =$employee_projected_salary->sum('washing_allowance_arrear');
+                $employee_salary_details[$key]["Uniform Allowance"] =$employee_projected_salary->sum('uniform_allowance_earned');
+                $employee_salary_details[$key]["Uniform Allowance Arrears"] =$employee_projected_salary->sum('uniform_allowance_arrear');
+                $employee_salary_details[$key]["Vehicle Reimbursement"] =$employee_projected_salary->sum('vehicle_reimbursement_earned');
+                $employee_salary_details[$key]["Vehicle Reimbursement Arrears"] =$employee_projected_salary->sum('vehicle_reimbursement_arrear');
+                $employee_salary_details[$key]["Driver Salary Reimbursment"] =$employee_projected_salary->sum('driver_salary_earned');
+                $employee_salary_details[$key]["Driver Salary Reimbursment Arrears"] =$employee_projected_salary->sum('driver_salary_arrear');
+                $employee_salary_details[$key]["Overtime"] =$employee_projected_salary->sum('overtime');
+                $employee_salary_details[$key]["Overtime Arrears"] =$employee_projected_salary->sum('overtime_arrear');
+                $employee_salary_details[$key]["Arrears"] = $employee_projected_salary->sum('basic_arrear')+ $employee_projected_salary->sum('dearness_allowance_arrear') + $employee_projected_salary->sum('vda_arrear') + $employee_projected_salary->sum('hra_arrear')+$employee_projected_salary->sum('hra_arrear') +
+                                                            $employee_projected_salary->sum('child_edu_allowance_arrear') + $employee_projected_salary->sum('earned_stats_arrear') + $employee_projected_salary->sum('medical_allowance_arrear')
+                                                            +$employee_projected_salary->sum('communication_allowance_arrear')  + $employee_projected_salary->sum('food_allowance_arrear') + $employee_projected_salary->sum('lta_arrear') + $employee_projected_salary->sum('spl_alw_arrear') + $employee_projected_salary->sum('other_allowance_arrear')
+                                                            + $employee_projected_salary->sum('washing_allowance_arrear') + $employee_projected_salary->sum('uniform_allowance_arrear') + $employee_projected_salary->sum('vehicle_reimbursement_arrear') +$employee_projected_salary->sum('driver_salary_arrear');
+
+
+                $employee_salary_details[$key]["Incentive"] =$employee_projected_salary->sum('incentive');;
+                $employee_salary_details[$key]["Other Earnings"] =$employee_projected_salary->sum('other_earnings');
+                $employee_salary_details[$key]["Referral Bonus"] =$employee_projected_salary->sum('referral_bonus');
+                $employee_salary_details[$key]["Annual Statutory Bonus"] =$employee_projected_salary->sum('earned_stats_bonus');
+                $employee_salary_details[$key]["Ex-Gratia"] =$employee_projected_salary->sum('ex_gratia');
+                $employee_salary_details[$key]["Attendance Bonus"] =$employee_projected_salary->sum('attendance_bonus');
+                $employee_salary_details[$key]["Daily Allowance"] =$employee_projected_salary->sum('daily_allowance');
+                $employee_salary_details[$key]["Leave Encashments"] =$employee_projected_salary->sum('leave_encashment');
+                $employee_salary_details[$key]["Gift"] =$employee_projected_salary->sum('gift_payment');
+                $employee_salary_details[$key]["Annual Gross Salary"] =$employee_projected_salary->sum('earned_basic') + $employee_projected_salary->sum('dearness_allowance_earned') + $employee_projected_salary->sum('vda_earned')
+                                                                     +$employee_projected_salary->sum('earned_hra') +$employee_projected_salary->sum('earned_child_edu_allowance') + $employee_projected_salary->sum('medical_allowance_earned')
+                                                                     + $employee_projected_salary->sum('communication_allowance_earned')+ $employee_projected_salary->sum('earned_lta') +$employee_projected_salary->sum('food_allowance_earned')
+                                                                     +$employee_projected_salary->sum('earned_spl_alw')+$employee_projected_salary->sum('other_allowance_earned')+$employee_projected_salary->sum('washing_allowance_earned')+
+                                                                     $employee_projected_salary->sum('uniform_allowance_earned') ;
+
+
+
+            }
+
+        }
+
+        $salary_data['headers'] = array('Employee Code','Employee Name','Gender','PAN Number','Date Of Birth','Date Of Joining','Tax Regime','Basic','Basic Arrears',
+        'Dearness Allowance','Dearness Allowance Arrears','Variable Dearness Allowance','Vairable Dearness Allowance Arrears','HRA','HRA Arrears','Child Education Allowance',
+        'Child Education Allowance Arrears','Statutory Bonus','Statutory Bonus Arrears','Medical Allowance','Medical Allowance Arrears','Communicaton Allowance','Communication Allowance Arrears', 'Leave Travel Allowance',
+        'Leave Travel Allowance Arrears','Food Allowance','Food Allowance Arrears','Special Allowance','Special Allowance Arrears','Other Allowance','Other Allowance Arrears',
+        'Washing Allowance','Washing Allowance Arrears','Uniform Allowance','Uniform Allowance Arrears','Vehicle Reimbursement','Vehicle Reimbursement Arrears','Driver Salary Reimbursment',
+        'Driver Salary Reimbursment Arrears','Arrears','Overtime','Overtime Arrears','Incentive','Other Earnings','Referral Bonus','Annual Statutory Bonus','Ex-Gratia','Attendance Bonus',
+         'Daily Allowance','Leave Encashments','Gift','Annual Gross Salary');
+
+         $sumofprevious_emp =0;
+         foreach($inv_emp as $single_inv_users){
+
+         $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+         ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+         ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+         ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
+         ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
+         ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
+         ->where('vmt_inv_f_emp_assigned.user_id', $single_inv_users)
+         ->get(
+             [
+                 'vmt_inv_section_group.section_group',
+                 'vmt_inv_section.section',
+                 'vmt_inv_section.particular',
+                 'vmt_inv_emp_formdata.dec_amount',
+                 'vmt_inv_section.max_amount',
+                 'vmt_inv_emp_formdata.json_popups_value',
+                 'vmt_inv_f_emp_assigned.regime',
+                 'vmt_inv_f_emp_assigned.updated_at',
+                 'vmt_employee_compensatory_details.gross',
+                 'vmt_employee_compensatory_details.basic',
+                 'vmt_employee_compensatory_details.hra',
+                 'vmt_employee_compensatory_details.special_allowance',
+                 'vmt_employee_compensatory_details.professional_tax',
+                 'vmt_employee_compensatory_details.child_education_allowance',
+                 'vmt_employee_compensatory_details.lta',
+                 'vmt_employee_details.doj',
+                 'vmt_employee_details.dob',
+             ]
+         )->toArray();
+
+        foreach($v_form_template as $dec_amt){
+          if($dec_amt['section_group'] == 'Previous Employer Income'){
+                array_push($salary_data['headers'], $dec_amt['particular']);
+                foreach ($Employee_details as $key => $single_user) {
+                    $employee_salary_details[$key][$dec_amt['particular']] = 0;
+                }
+                foreach ($Employee_details as $key => $single_user) {
+                    if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                    $employee_salary_details[$key][$dec_amt['particular']] = $dec_amt['dec_amount'];
+                            $sumofprevious_emp += $dec_amt['dec_amount'];
+                    $employee_salary_details[$key]['Gross Total Income'] = $sumofprevious_emp ?? 0;
+                    }
+                }
+          }
+        }
+    }
+        $salary_data['rows'] = $employee_salary_details;
+        array_push($reportsdata,array_unique($salary_data['headers']),$salary_data['rows']);
+
+        return dd($reportsdata);
+
+
+    }
 
 }

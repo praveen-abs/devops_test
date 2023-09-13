@@ -1445,6 +1445,8 @@ class VmtCorrectionController extends Controller
     public function saveEmployeeAnnualProjection(Request $request)
     {
 
+        ini_set('max_execution_time', 180);
+
         try {
 
             DB::table('abs_salary_projection')->truncate();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\VmtPayrollTaxService;
+use App\Exports\InvestmentsReportsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VmtPayrollTaxController extends Controller
 {
@@ -22,6 +24,11 @@ public function annualProjection(Request $request, VmtPayrollTaxService $vmtPayr
 
     return $vmtPayrollTaxService->HraExceptionCalc();
 
+}
+
+public function downloadInvestmentReport(Request $request, VmtPayrollTaxService $vmtPayrollTaxService)
+{
+    return Excel::download(new InvestmentsReportsExport($vmtPayrollTaxService->fetchInvestmentTaxReports()),'Investments Report.xlsx');
 }
 
 

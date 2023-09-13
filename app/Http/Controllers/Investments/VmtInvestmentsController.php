@@ -8,6 +8,8 @@ use App\Models\VmtInvestmentForm;
 use App\Models\VmtInvFormSection;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\VmtInvFEmpAssigned;
+use App\Models\VmtEmployeePayroll;
+use App\Models\AbsSalaryProjection;
 use App\Http\Controllers\Controller;
 use App\Models\VmtOrgTimePeriod;
 use App\Models\VmtPayroll;
@@ -647,7 +649,7 @@ class VmtInvestmentsController extends Controller
     public function taxDeclaration()
     {
 
-        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+        $user_id = User::where('user_code', auth()->user()->user_code)->first();
 
         $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
             ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
@@ -655,7 +657,7 @@ class VmtInvestmentsController extends Controller
             ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
             ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
             ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
-            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id->id)
             ->get(
                 [
                     'vmt_inv_section_group.section_group',
@@ -716,7 +718,7 @@ class VmtInvestmentsController extends Controller
         $inv_previous_emp_pt = 0;
         $sumofletout = 0;
 
-
+        $payroll_month = carbon::now()->format('Y-m-d');
 
 
         foreach ($v_form_template as $dec_amt) {
@@ -727,18 +729,6 @@ class VmtInvestmentsController extends Controller
             $dob = date_parse($dec_amt['dob']); // Employeer Dob
             $year = $dob["year"];
             $empAge = ($current_year - $year);
-
-            $current_financial = VmtOrgTimePeriod::where('status', "1")->first();
-            $finance_month = Carbon::parse($current_financial->end_date);
-            $doj = Carbon::parse($dec_amt['doj']);
-
-            $joining_months = ($doj)->diffInMonths($finance_month);
-
-            if ($joining_months > 12) {
-                $joinmonth = 12;
-            } else {
-                $joinmonth = $joining_months;
-            }
 
 
             $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
@@ -862,14 +852,13 @@ class VmtInvestmentsController extends Controller
                 $sumofhouseproperty = $SumOfHousPropsInOld;
             }
 
-            $sumofgross = round($dec_amt['gross'] * $joinmonth);
-
+           $annual_gross =  $this->annual_projection($payroll_month, $user_id->id, $user_id->idclient_id)['Annual Gross Salary'];
 
             // sum pervious employee gross with actual gross
             $total_gross['sno'] = "a";
             $total_gross['section'] = "Total Gross Salary";
-            $total_gross['old_regime'] = $sumofgross;
-            $total_gross['new_regime'] = $sumofgross;
+            $total_gross['old_regime'] = $annual_gross;
+            $total_gross['new_regime'] = $annual_gross;
 
 
 
@@ -920,9 +909,9 @@ class VmtInvestmentsController extends Controller
 
             $total_tax_income['sno'] = "i";
             $total_tax_income['section'] = "Total Taxable Income";
-            $total_old_tax = $sumofgross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + $sumofsection10 + $sumofSec16 + $sumofchap6a) + $sumofhouseproperty;
+            $total_old_tax = $annual_gross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + $sumofsection10 + $sumofSec16 + $sumofchap6a) + $sumofhouseproperty;
             $total_tax_income['old_regime'] = $total_old_tax;
-            $total_new_tax = $sumofgross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + 0 + $final_standard + 0) + $sumofletout;
+            $total_new_tax = $annual_gross + $sumOfOtherSourceOfIncome + $sumOfpreviousempincome - ($sumOfReimbersument + 0 + $final_standard + 0) + $sumofletout;
             $total_tax_income['new_regime'] = $total_new_tax;
 
 
@@ -1091,4 +1080,58 @@ class VmtInvestmentsController extends Controller
 
         return $serviceVmtInvestmentsService->taxableIncomeFromAllHeads();
     }
+
+
+    public function annual_projection($payroll_month,$user_id,$client_id){
+
+        $reportsdata = array();
+
+        // $inv_emp = VmtInvFEmpAssigned::where()->pluck('user_id')->toArray();
+
+        $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+            ->where("users.active", "1")
+            ->where("users.client_id", $client_id)
+            ->where('users.id', $user_id)
+            ->get([
+                'users.id as user_id',
+                'users.user_code as Employee Code',
+                'users.name as Employee Name',
+                'vmt_employee_details.gender as Gender',
+                'vmt_employee_details.pan_number as PAN Number',
+                'vmt_employee_details.dob as Date Of Birth',
+                'vmt_employee_details.doj as Date Of Joining',
+                'vmt_employee_statutory_details.tax_regime as Tax Regime'
+            ]);
+
+     $employee_salary_details = array();
+
+        foreach ($Employee_details as $key => $single_user) {
+            $payroll_date = VmtPayroll::where('payroll_date',  $payroll_month)->where('client_id', $client_id)->first();
+
+            if (!empty($payroll_date)) {
+                $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_user['user_id']);
+            }
+
+            if ($emp_payroll->exists()) {
+                 $emp_payroll =$emp_payroll->first();
+                 $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
+            }
+
+            if ($employee_projected_salary->exists()) {
+                $employee_salary_details["Arrears"] = $employee_projected_salary->sum('basic_arrear')+ $employee_projected_salary->sum('dearness_allowance_arrear') + $employee_projected_salary->sum('vda_arrear') + $employee_projected_salary->sum('hra_arrear')+$employee_projected_salary->sum('hra_arrear') +
+                                                            $employee_projected_salary->sum('child_edu_allowance_arrear') + $employee_projected_salary->sum('earned_stats_arrear') + $employee_projected_salary->sum('medical_allowance_arrear')
+                                                            +$employee_projected_salary->sum('communication_allowance_arrear')  + $employee_projected_salary->sum('food_allowance_arrear') + $employee_projected_salary->sum('lta_arrear') + $employee_projected_salary->sum('spl_alw_arrear') + $employee_projected_salary->sum('other_allowance_arrear')
+                                                            + $employee_projected_salary->sum('washing_allowance_arrear') + $employee_projected_salary->sum('uniform_allowance_arrear') + $employee_projected_salary->sum('vehicle_reimbursement_arrear') +$employee_projected_salary->sum('driver_salary_arrear');
+
+                $employee_salary_details["Annual Gross Salary"] =$employee_projected_salary->sum('earned_basic') + $employee_projected_salary->sum('dearness_allowance_earned') + $employee_projected_salary->sum('vda_earned')
+                                                                     +$employee_projected_salary->sum('earned_hra') +$employee_projected_salary->sum('earned_child_edu_allowance') + $employee_projected_salary->sum('medical_allowance_earned')
+                                                                     + $employee_projected_salary->sum('communication_allowance_earned')+ $employee_projected_salary->sum('earned_lta') +$employee_projected_salary->sum('food_allowance_earned')
+                                                                     +$employee_projected_salary->sum('earned_spl_alw')+$employee_projected_salary->sum('other_allowance_earned')+$employee_projected_salary->sum('washing_allowance_earned')+
+                                                                     $employee_projected_salary->sum('uniform_allowance_earned');
+            }
+        }
+        return ($employee_salary_details);
+    }
+
 }

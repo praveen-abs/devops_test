@@ -509,6 +509,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('annualProjection', [App\Http\Controllers\VmtPayrollTaxController::class, 'annualProjection']);
 
+    Route::get('downloadInvestmentReport', [App\Http\Controllers\VmtPayrollTaxController::class, 'downloadInvestmentReport']);
+
 
 
     //Asset Inventory
@@ -817,7 +819,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports-absent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showAbsentReport'])->name('showAbsentReport');
     Route::get('/reports-attendane-overtime-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showOvertimeReport'])->name('showOvertimeReport');
     Route::get('/reports-half-dayabsent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showHalfdayAbsentReport'])->name('showHalfdayAbsentReport');
-    Route::get('/reports-investment-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadInvestmentReport'])->name('downloadInvestmentReport');
 
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
     Route::post('/fetch-detailed-attendance-data', [
@@ -977,6 +978,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/monthTaxDeductionDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'monthTaxDeductionDetails']);
     Route::get('/grossEarningsFromEmployment', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'grossEarningsFromEmployment']);
     Route::get('/taxableIncomeFromAllHeads', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxableIncomeFromAllHeads']);
+    Route::get('/annual_projection', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'annual_projection']);
 
 
     //Salary Advance
