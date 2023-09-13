@@ -267,6 +267,58 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
 
     }
 
+    function updateEmployeeMasterApplyFilter(val){
+        filterbtn.value = val;
+        if(val===2){
+                  axios.post('/fetch-master-employee-report',selectedfilters).then(res => {
+                console.log(res.data.rows,"get value ");
+                employeeCTCReportSource.value = res.data.rows
+                console.log(employeeCTCReportSource.value," testings data");
+                res.data.headers.forEach(element => {
+                    let format = {
+                        title: element
+                    }
+                    Employee_CTCReportDynamicHeaders.value.push(format)
+                    console.log(element);
+                });
+    
+                console.log(Employee_CTCReportDynamicHeaders.value);
+    // 
+                if (res.data.rows.length === 0) {
+                    Swal.fire({
+                        title: res.data.status = "failure",
+                        text: "No employees found in this category",
+                        // "Salary Advance Succesfully",
+                        icon: "error",
+                        showCancelButton: false,
+                    }).then((res) => {
+                        // blink_UI.value = res.data.data;
+                    
+                    })
+        
+                }
+        
+            });
+    
+          
+    
+        }else{
+            selectedfilters.active_status="";
+            selectedfilters.date="";
+            selectedfilters.department_id="";
+            selectedfilters.legal_entity="";
+    
+            legal_Entity.value="";
+            Department.value="";
+            period_Date.value="";
+            select_Category.value="";
+    
+            getemployeeMater();
+        }
+    
+    
+    }
+
 
 
     // function testings(val){
@@ -336,6 +388,8 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
         employeeMaterReportSource,
         Employee_MaterReportDynamicHeaders ,
         downloadEmployeeMaster,
+        updateEmployeeMasterApplyFilter
+
 
 
     }

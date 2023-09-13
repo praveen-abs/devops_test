@@ -5,7 +5,7 @@
         <div class="bg-white p-2 flex  justify-between">
             <!-- v-model="filters['global'].value" -->
             <div>
-                <InputText placeholder="Search" class="border-color " style="height: 3em; font-['poppins'] " />
+                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10" style="height: 3em; font-['poppins'] " />
 
                 <!-- <Dropdown optionLabel="name" placeholder="Select Category" class="w-[200px] mx-2" /> -->
             </div>
@@ -14,7 +14,7 @@
                     <button class="px-3 py-2 " :class="[Basic_details==1 ? 'bg-black  text-[white] rounded-l-md' : ' bg-[#E6E6E6] text-black rounded-l-md']" @click="Basic_details=1">Basic</button>
                     <button class="px-3 py-2 " :class="[Basic_details==2 ? 'bg-black text-[white] rounded-r-md' : ' bg-[#E6E6E6] text-black  rounded-r-md']" @click="Basic_details=2">Detail</button>
                 </div> -->
-                <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]" @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download,UseEmployeeMaster.downloadEmployeeCTC() ">
+                <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]" @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download,UseEmployeeMaster.downloadEmployeeMaster() ">
                         <p class=" relative left-2 font-['poppins']">Download</p>
                         <div id="btn-download"  style=" position: absolute; right: 0;"
                             :class="[UseEmployeeMaster.btn_download == true ? toggleClass : ' ' ]">
@@ -51,6 +51,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, onMounted, reactive } from 'vue';
+import { FilterMatchMode } from 'primevue/api';
 
 import { EmployeeMasterStore } from "./employee_master_reportsStore" ;
 
@@ -63,6 +64,11 @@ onMounted(()=>{
     UseEmployeeMaster.getemployeeMater();
     // fetchFilterClientIds();
 });
+
+const filters = ref({
+    'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
 
 const toggleClass = ref('downloaded');
 
