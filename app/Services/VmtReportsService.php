@@ -104,7 +104,7 @@ class VmtReportsservice
             }
 
 
-            $date = Carbon::now()->format('M-Y');
+            $dates = Carbon::now()->format('Y-m-d');
             // $Category = 'All';
             $processed_array = array();
             $response = array();
@@ -123,12 +123,8 @@ class VmtReportsservice
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
-            if (!isset($emp_ctc_detail)) {
-                return ['status' => 'Employee not found'];
-            }
-
+          
             foreach ($emp_ctc_detail as $singleemployeedata) {
-
                 $temp_ar['Employee Code'] = $singleemployeedata->user_code;
                 $temp_ar['Employee Name'] = $singleemployeedata->name;
                 $temp_ar['Gender'] = strtoupper($singleemployeedata->gender);
@@ -177,6 +173,7 @@ class VmtReportsservice
                 $temp_ar['NET Pay '] = round((int)$singleemployeedata->net_income) == 0 ? "0" : round((int) $singleemployeedata->net_income);
                 array_push($processed_array, $temp_ar);
             }
+            
 
             if ($processed_array) {
                 foreach ($processed_array[0] as $key => $value) {
@@ -186,7 +183,8 @@ class VmtReportsservice
                 $response['headers'] =   $headers;
                 $response['rows'] = $processed_array;
             } else {
-                $response['status'] =  'Employee Not Found';
+                $response['headers'] =[];
+                $response['rows'] = [];
             }
         } catch (\Exception $e) {
             $response = [
@@ -358,7 +356,7 @@ class VmtReportsservice
                 $temp_ar['Professional Tax'] = $single_details->professional_tax;
                 $temp_ar['Income Tax'] = $single_details->Income_tax;
                 $temp_ar['LWFEE'] = $single_details->lwfee;
-                // $temp_ar[' employee Insurance'] = $single_details->insurance;
+                // $temp_ar[' employee Insurance'] = $single_details->;
                 $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
                 $temp_ar['NET Pay '] =  $single_details->net_income;
 

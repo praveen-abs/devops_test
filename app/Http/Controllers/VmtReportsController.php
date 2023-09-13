@@ -634,11 +634,12 @@ class VmtReportsController extends Controller
 
     public function generateEmployeesCTCReportData(Request $request, VmtReportsservice $reportsService)
     {
-        $date = Carbon::now();
+        $date = Carbon::now()->format('M-y');
         $request->type;
+        $period_date= carbon::parse( $request->date)->format('d/m/Y');
         // $client_id = array(1);
         // $Category = 'All';
-        $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type, $request->legal_entity, $request->active_status, $request->department_id, $request->date);
+        $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type, $request->legal_entity, $request->active_status, $request->department_id, $period_date);
         $headers = array();
         // dd( $emp_ctc_data);
         // foreach ($emp_ctc_data as $key => $value) {
@@ -649,7 +650,7 @@ class VmtReportsController extends Controller
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
         // dd($emp_ctc_data['rows']);
-        return Excel::download(new EmployeeBasicCtcExport($request->type, $emp_ctc_data['rows'], $emp_ctc_data['headers'], $client_name, $public_client_logo_path, $date), 'Employees CTC Report.xlsx');
+        return Excel::download(new EmployeeBasicCtcExport($request->type, $emp_ctc_data['rows'], $emp_ctc_data['headers'], $client_name, $public_client_logo_path, $date, $period_date), 'Employees CTC Report.xlsx');
     }
 
     public function getCurrentFinancialYear()

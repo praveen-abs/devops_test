@@ -25,12 +25,13 @@ class EmployeeBasicCtcExport implements FromArray, ShouldAutoSize, WithHeadings,
     protected $date;
     protected $type;
     protected $last_row;
-   
-    public function __construct($type,$data, $headers, $client_name, $public_client_logo_path,$date)
+   protected $period;
+    public function __construct($type,$data, $headers, $client_name, $public_client_logo_path,$date,$period)
     {
         
         $this->type =$type;
         $this->data = $data;
+        $this->period = $period;
         $this->date = $date;
         $this->headers = $headers;
         $this->client_name = $client_name;
