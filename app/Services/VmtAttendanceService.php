@@ -2701,7 +2701,7 @@ class VmtAttendanceService
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id), true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
@@ -2910,7 +2910,7 @@ class VmtAttendanceService
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id), true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
