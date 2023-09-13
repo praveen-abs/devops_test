@@ -100,7 +100,7 @@ class VmtReportsservice
             if (empty($department_id)) {
                 $get_department = Department::pluck('id');
             } else {
-                $get_department = [$department_id];
+                $get_department = $department_id;
             }
 
 
@@ -119,7 +119,7 @@ class VmtReportsservice
                 ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 ->where('vmt_employee_details.doj', '<', $date_req)
                 ->whereIn('users.client_id', $client_id)
-                ->whereIn('users.active', $active_status)
+                ->where('users.active', $active_status)
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
@@ -191,7 +191,7 @@ class VmtReportsservice
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getLine()
+                'error_verbose' => $e->getLine()."  ".$e->getfile(),
             ];
         }
         return $response;
@@ -249,6 +249,7 @@ class VmtReportsservice
             $date = Carbon::now()->format('M-Y');
             //$client_id = array(1);
             $Category = 'All';
+            $processed_array = array();
             $response = array();
             $headings = array();
             $type = '';
@@ -268,8 +269,8 @@ class VmtReportsservice
                     'employee.marital_status_id', 'employee.present_address', 'employee.permanent_address', 'compensatory.basic', 'compensatory.dearness_allowance', 'compensatory.hra', 'compensatory.child_education_allowance',
                     'compensatory.food_allowance', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
-                ])->toarray();
-                dd($emp_master_detail);
+                ]);
+               
             foreach ($emp_master_detail as $single_details) {
                 $temp_ar['Employee Code'] = $single_details->user_code;
                 $temp_ar['Employee Name'] = $single_details->name;
@@ -382,18 +383,29 @@ class VmtReportsservice
 
                 //Get family details
 
-                array_push($response, $temp_ar);
+                array_push($processed_array, $temp_ar);
                 unset($temp_ar);
             }
-
-            return  $response;
+            
+            if ($processed_array) {
+                foreach ($processed_array[0] as $key => $value) {
+                    $headings = $key;
+                    array_push($headers, $headings);
+                }
+                $response['headers'] =   $headers;
+                $response['rows'] = $processed_array;
+            } else {
+                $response['headers'] =[];
+                $response['rows'] = [];
+            }
         } catch (\Exception $e) {
             $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getTraceAsString()
+                'error_verbose' => $e->getLine()
             ];
         }
+        return $response;
     }
 }
