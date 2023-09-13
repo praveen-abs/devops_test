@@ -27,16 +27,18 @@ class HRMSBaseAPIController extends Controller
     }
 
 
-    public function getEmployee_AllModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
+    public function getClient_MobileModulePermissionDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $response = $serviceVmtAppPermissionsService->getEmployee_AllModulePermissionsDetails($request->user_code);
+        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->first('id');
+
+        $response = $serviceVmtAppPermissionsService->getClient_MobileModulePermissionDetails($request->user_code,$mobile_module_id['id']);
 
         return $response;
     }
 
     public function getEmployee_MobileModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->first('id'); ;
+        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->first('id');
         $response = $serviceVmtAppPermissionsService->getEmployee_MobileModulePermissionsDetails($request->user_code,$mobile_module_id['id']);
 
         return $response;

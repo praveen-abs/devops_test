@@ -54,7 +54,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/getEmployeePermissions', [HRMSBaseAPIController::class, 'getEmployeePermissions']);
     Route::get('/getAppConfig', [HRMSBaseAPIController::class, 'getAppConfig']);
     Route::post('/permissions/getClientMobilePermissionsDetails', [HRMSBaseAPIController::class, 'getClientMobilePermissionsDetails']);
-    Route::post('/permissions/getEmployee_AllModulePermissionsDetails', [HRMSBaseAPIController::class, 'getEmployee_AllModulePermissionsDetails']);
     Route::post('/permissions/getEmployee_MobileModulePermissionsDetails', [HRMSBaseAPIController::class, 'getEmployee_MobileModulePermissionsDetails']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
