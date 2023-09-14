@@ -1489,22 +1489,29 @@ class VmtDashboardService
             $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']); //foractiveemployee
 
 
-            $emp_details_count['total_employees'] = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')->where('is_ssa', '0')->where('active', '!=', '-1')->get();
+            $emp_details_count['total_employees'] = User::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
+                ->where('users.is_ssa', '0')->where('users.active', '!=', '-1')
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
             $emp_details_count['total_employee_count'] = $emp_details_count['total_employees']->count(); //fortotalemployee
 
-            $emp_details_count['new_employees'] = user::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->get();
+            $emp_details_count['new_employees'] = user::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_details as det', 'det.userid' , '=','users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->wheredate('det.doj',   $current_date)->where('users.is_ssa', '!=', '1')->where('users.active', '=', '1')
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
             $emp_details_count['new_employee_count'] =    $emp_details_count['new_employees']->count();
 
             // dd( $emp_details_count['newEmpCount']);
-            $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->get()->count();
             $emp_details_count['active_employees'] = User::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->where('active', '1')->where('is_ssa', '0')->get();
+            $emp_details_count['active_employee_count'] = $emp_details_count['active_employees']->count();
 
-            $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->get()->count();
             $emp_details_count['yet_to_active_employees'] = User::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->where('active', '0')->get();
+            $emp_details_count['yet_to_active_employee_count'] = $emp_details_count['yet_to_active_employees']->count();
 
-            $emp_details_count['exit_employee_count'] = User::where('active', '-1')->get()->count();
             $emp_details_count['exit_employees'] = User::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->where('active', '-1')->get();
+            $emp_details_count['exit_employee_count'] =  $emp_details_count['exit_employees']->count();
 
             $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
 
