@@ -149,6 +149,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('/attendance-leavesettings', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveSettings'])->name('attendance-leavesettings');
     Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
+    
 
     Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showTimesheet'])->name('attendance-timesheet');
 
@@ -793,6 +794,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     ///for current year
 
     Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
+    Route::get('/reports/employee-reports',[App\Http\Controllers\VmtReportsController::class,'showEmployeeReportsPage'])->name('showEmployeeReportsPage');
 
     Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client

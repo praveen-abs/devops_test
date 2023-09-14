@@ -1,4 +1,5 @@
 <template>
+        <loadingSpinner v-if="useEmployeeReport.canShowLoading" class="absolute z-50 bg-white" />
     <div class="px-4">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Employee Master Report</h1>
@@ -131,6 +132,7 @@ import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
 import Employee_Master from './Employee_Master.vue';
 import { EmployeeMasterStore } from "./employee_master_reportsStore";
+import loadingSpinner from "../../../components/LoadingSpinner.vue";
 
 
 
@@ -206,5 +208,9 @@ const dropdown = ref([
 .p-inputtext{
     color: #000 !important;
     font-family: 'poppins';
+}
+.p-dropdown-label{
+    position: relative;
+    top:-2px;
 }
 </style>
