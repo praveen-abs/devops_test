@@ -11,8 +11,8 @@
 
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-            <div class="flex justify-between">
-                <ul class="flex mb-3 divide-x max-[1200px]:!w-[55%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] "
+            <div class="flex  border-[1px] border-[#000]">
+                <ul class="w-[42%] flex border-[1px] border-[#000] mb-3 divide-x max-[1200px]:!w-[55%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] "
                     id="pills-tab" role="tablist">
                     <li class="nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                   
@@ -86,7 +86,7 @@
                     <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="flex justify-start max-[1200px]:w-[45%] w-[50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%] ">
+                <ul class="flex border-[1px] border-[#000] justify-start max-[1200px]:w-[45%] w-[58%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%] ">
                     <li class="flex items-center mx-1">
                         <h1 class="text-[12px] text-black px-1  font-semibold font-['poppins']">Period : </h1>
                         
@@ -99,10 +99,10 @@
                         
                         <Dropdown optionLabel="month" optionValue="date" :options="useEmployeeReport.PeriodMonth" v-model="periodDate"
                         @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" placeholder="Select period"
-                    class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
+                    class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6] m-1" />
 
                     </li>
-                    <li class="flex items-center mx-1">
+                    <li class="flex items-center m-1">
                         <h1 class="text-[12px] text-black px-1 font-semibold  font-['poppins']">Department : </h1>
                         <!-- <Dropdown v-model="department" editable  optionLabel="name" placeholder="Department" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
                          -->
@@ -111,7 +111,7 @@
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]   !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
-                    <li class="flex items-center mx-1">
+                    <li class="flex items-center m-1">
                         <h1 class="text-[12px] text-black px-1 font-semibold  font-['poppins'] ">Legal Entity : </h1>
                         <!-- <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]"  /> -->
 
@@ -130,14 +130,22 @@
                     <div>
                         <div class="card-body">
                             <div v-if="activetab === 1">
-                                <!-- <salary_Revision_pending /> -->
+                           
                             </div>
                             <div v-if="activetab === 2">
-                                <!-- <EmployeeSummary /> -->
-                                <!-- <employee_CTC /> -->
+                             
                             </div>
                             <div v-if="activetab === 3">
-                                <!-- <salary_Revision_Cancelled /> -->
+
+                            </div>
+                            <div v-if="activetab === 4">
+                              
+                            </div>
+                            <div v-if="activetab === 5">
+                            
+                            </div>
+                             <div v-if="activetab === 6">
+                            
                             </div>
                         </div>
                     </div>
@@ -152,7 +160,13 @@ import { onMounted, ref } from 'vue';
 
 import { EmployeeMasterStore } from "../employee_master_report/employee_master_reportsStore";
 
-
+import halfdayabsentreport from './HalfDayAbsentReport/halfdayabsentreport.vue';
+import attendanceAbsentReports from './attendanceAbsentReports/attendanceAbsentReports.vue';
+import attendanceBasicReports from './attendanceBasicReports/attendanceBasicReports.vue';
+import attendanceOvertimeReports from './attendanceOvertimeReports/attendanceOvertimeReports.vue'
+import attendanceEarlygoingReports from './attendanceEarlygoingReports/attendanceEarlygoingReports.vue';
+import attendanceLatecomingReports from './attendanceLatecomingReports/attendanceLatecomingReports.vue'
+import attendanceReport_Detailed from './attendanceDetailReports/AttendanceReport_Detailed.vue'
 
 
 const useEmployeeReport = EmployeeMasterStore();
@@ -204,11 +218,9 @@ const dropdown = ref([
     z-index: 0 !important;
 }
 
-.p-dropdown-label,
-.p-inputtext
-{
+.p-inputtext{
     position: relative;
-    top: 3px;
+    top: 7px;
 }
 
 .p-inputtext::placeholder
