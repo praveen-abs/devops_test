@@ -31,6 +31,7 @@
     "dom-autoscroller": "^2.3.4",
     "dropzone": "^6.0.0-beta.2",
     "echarts": "^5.4.1",
+    "exceljs": "^4.3.0",
     "feather-icons": "^4.29.0",
     "fg-emoji-picker": "^1.0.1",
     "file-saver": "^2.0.5",
