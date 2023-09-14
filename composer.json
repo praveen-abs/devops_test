@@ -66,8 +66,8 @@
             "app/Services/VmtPayRunService.php",
             "app/Services/VmtSalaryRevisionService.php",
             "app/Services/VmtAppPermissionsService.php",
-            "app/Services/VmtReportsservice"
-
+            "app/Services/VmtReportsService.php"
+           
         ]
     },
     "autoload-dev": {
