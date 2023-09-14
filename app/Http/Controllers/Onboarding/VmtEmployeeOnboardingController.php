@@ -330,15 +330,12 @@ class VmtEmployeeOnboardingController extends Controller
                             $VmtClientMaster = VmtClientMaster::first();
                             $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                         if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS')
-                            {
+                            if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS') {
 
-                              $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data,"normal");
-
-                            }else{
+                                $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data, "normal");
+                            } else {
 
                                 $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
-
                             }
 
                             $message = "Employee onboarded successfully";
@@ -436,33 +433,28 @@ class VmtEmployeeOnboardingController extends Controller
             }
 
             $existing_user_data = array();
-            foreach ( $onboard_data  as $key => $excelRowdata) {
+            foreach ($onboard_data  as $key => $excelRowdata) {
 
                 $user_id = User::where('user_code',  $excelRowdata['employee_code'])->first();
 
-                if(!empty($user_id)){
-                                  $user_id = $user_id->id;
+                if (!empty($user_id)) {
+                    $user_id = $user_id->id;
 
                     $emp_data = VmtEmployee::where('userid',  $user_id);
-                    $emp_office_data =VmtEmployeeOfficeDetails::where('user_id',  $user_id);
-                    $emp_compensatory_data =Compensatory::where('user_id',  $user_id);
+                    $emp_office_data = VmtEmployeeOfficeDetails::where('user_id',  $user_id);
+                    $emp_compensatory_data = Compensatory::where('user_id',  $user_id);
 
-                    if($emp_data->exists() && $emp_office_data->exists() && $emp_compensatory_data->exists() ){
-
-
-                        $message =$excelRowdata['employee_code'] . "Employee already added" ;
-
-                        array_push($existing_user_data,$message);
+                    if ($emp_data->exists() && $emp_office_data->exists() && $emp_compensatory_data->exists()) {
 
 
+                        $message = $excelRowdata['employee_code'] . "Employee already added";
 
-                    }else{
-                     $emp_data->delete();
-                     $emp_office_data->delete();
-                     $emp_compensatory_data->delete();
-
+                        array_push($existing_user_data, $message);
+                    } else {
+                        $emp_data->delete();
+                        $emp_office_data->delete();
+                        $emp_compensatory_data->delete();
                     }
-
                 }
             }
             // if(!empty($existing_user_data))
@@ -482,16 +474,16 @@ class VmtEmployeeOnboardingController extends Controller
                 array_push($data_array, $rowdata_response);
             }
 
-            if($rowdata_response['status'] =='success'){
+            if ($rowdata_response['status'] == 'success') {
                 $message = "Excelsheet data import success";
-            }else{
+            } else {
                 $message = "Errorwhile importing Excelsheet data ";
             }
-             $response = [
-                 'status' => $rowdata_response['status'],
-                 'message' =>$message ,
-                 'data' => $data_array
-             ];
+            $response = [
+                'status' => $rowdata_response['status'],
+                'message' => $message,
+                'data' => $data_array
+            ];
 
             return response()->json($response);
         } catch (\Exception $e) {
@@ -513,7 +505,7 @@ class VmtEmployeeOnboardingController extends Controller
         $mail_message = '';
         $status = 'failure';
         try {
-            $isEmailSent="";
+            $isEmailSent = "";
 
             $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: 'quick');
 
@@ -526,16 +518,13 @@ class VmtEmployeeOnboardingController extends Controller
 
 
 
-               if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS')
-               {
+                if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS') {
 
-                    $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"quick");
+                    $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row, "quick");
+                } else {
 
-               }else{
-
-                $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
-
-               }
+                    $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                }
                 if ($isEmailSent) {
                     $mail_message = 'success';
                 } else {
@@ -583,42 +572,37 @@ class VmtEmployeeOnboardingController extends Controller
                 array_push($onboard_data, $Emp_data);
             }
 
-            foreach ( $onboard_data  as $key => $excelRowdata) {
+            foreach ($onboard_data  as $key => $excelRowdata) {
 
                 $user_id = User::where('user_code',  $excelRowdata['employee_code'])->first();
 
-                if(!empty($user_id)){
-                                  $user_id = $user_id->id;
+                if (!empty($user_id)) {
+                    $user_id = $user_id->id;
 
                     $emp_data = VmtEmployee::where('userid',  $user_id);
-                    $emp_office_data =VmtEmployeeOfficeDetails::where('user_id',  $user_id);
-                    $emp_fam_data =VmtEmployeeFamilyDetails::where('user_id',  $user_id);
-                    $emp_compensatory_data =Compensatory::where('user_id',  $user_id);
-                    $emp_statutory_data =VmtEmployeeStatutoryDetails::where('user_id',  $user_id);
+                    $emp_office_data = VmtEmployeeOfficeDetails::where('user_id',  $user_id);
+                    $emp_fam_data = VmtEmployeeFamilyDetails::where('user_id',  $user_id);
+                    $emp_compensatory_data = Compensatory::where('user_id',  $user_id);
+                    $emp_statutory_data = VmtEmployeeStatutoryDetails::where('user_id',  $user_id);
 
-                    if($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() &&    $emp_statutory_data->exists()){
+                    if ($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() &&    $emp_statutory_data->exists()) {
 
 
                         $response = [
                             'status' => 'failure',
-                            'message' =>$excelRowdata['employee_code'] . " Employee already added",
+                            'message' => $excelRowdata['employee_code'] . " Employee already added",
                         ];
 
                         return response()->json($response);
+                    } else {
 
-
-                    }else{
-
-                     $emp_data->delete();
-                     $emp_office_data->delete();
-                     $emp_fam_data->delete();
-                     $emp_compensatory_data->delete();
-                     $emp_statutory_data->delete();
-
+                        $emp_data->delete();
+                        $emp_office_data->delete();
+                        $emp_fam_data->delete();
+                        $emp_compensatory_data->delete();
+                        $emp_statutory_data->delete();
                     }
-
                 }
-
             }
 
 
@@ -627,19 +611,18 @@ class VmtEmployeeOnboardingController extends Controller
                 array_push($data_array, $rowdata_response);
             }
 
-           if($rowdata_response['status'] =='success'){
-               $message = "Excelsheet data import success";
-           }else{
-               $message = "Errorwhile importing Excelsheet data ";
-           }
+            if ($rowdata_response['status'] == 'success') {
+                $message = "Excelsheet data import success";
+            } else {
+                $message = "Errorwhile importing Excelsheet data ";
+            }
             $response = [
                 'status' => $rowdata_response['status'],
-                'message' =>$message ,
+                'message' => $message,
                 'data' => $data_array
             ];
 
             return response()->json($response);
-
         } catch (\Exception $e) {
 
             return response()->json([
@@ -670,13 +653,11 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS')
-                {
-                     $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row,"bulk");
+                if (sessionGetSelectedClientCode() == 'LAL' || sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||   sessionGetSelectedClientCode() ==  'ABS') {
+                    $isEmailSent  = $employeeService->attachAppointmentLetterPDF($row, "bulk");
+                } else {
 
-                }else{
-
-                    $isEmailSent =\Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                    $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
                 }
 
 
@@ -691,7 +672,7 @@ class VmtEmployeeOnboardingController extends Controller
                     $mail_message = 'failure';
                 }
             } else {
-                $message =$row['employee_code']  . ' has failed';
+                $message = $row['employee_code']  . ' has failed';
             }
 
 
@@ -704,7 +685,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'row_number' => '',
                 'status' => $status,
                 'message' => $message,
-                'Employee_Name' =>$row['employee_name']  ,
+                'Employee_Name' => $row['employee_name'],
                 'mail_status' => $mail_message,
                 'data' => $response['data'],
             ];
@@ -811,12 +792,13 @@ class VmtEmployeeOnboardingController extends Controller
     }
     public function getMandatoryDocumentDetails(Request $request)
     {
-        $response =VmtDocuments::get(['id',
-                                     "document_name",
-                                     "is_mandatory"]);
+        $response = VmtDocuments::get([
+            'id',
+            "document_name",
+            "is_mandatory"
+        ]);
 
         return $response;
-
     }
 
 
@@ -834,7 +816,7 @@ class VmtEmployeeOnboardingController extends Controller
                 return !is_null($data) && trim($data) != '';
             });
 
-            $data['client_code']= $client_code;
+            $data['client_code'] = $client_code;
 
             //get existing employee_code
             $employees_user_code = User::pluck('user_code')->toarray();

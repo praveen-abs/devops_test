@@ -441,5 +441,6 @@ const getBackgroundColor = (index) => {
 {
     width: 28rem;
     height: 100%;
-}</style>
+}
+</style>
 
