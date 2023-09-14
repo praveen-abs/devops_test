@@ -30,10 +30,10 @@
                         Attendance</a>
                 </li>
 
-                <li class="mx-5 nav-item text-muted" role="presentation">
+                {{-- <li class="mx-5 nav-item text-muted" role="presentation">
                     <a class="pb-2 nav-link" data-bs-toggle="tab" href="#leaves_tab" aria-selected="false" tabindex="-1" role="tab">
                         Leaves</a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item text-muted " role="presentation">
                     <a class="pb-2 nav-link" data-bs-toggle="tab" href="#pms_tab" aria-selected="false" tabindex="-1" role="tab">
@@ -55,15 +55,15 @@
                     <div id="employee_master_report"></div>
                 </div>
             </div>
-            <div id="attendance_tab" class="tab-pane fade ">
+            {{-- <div id="attendance_tab" class="tab-pane fade ">
 
-            </div>
-            <div id="leaves_tab" class="tab-pane fade ">
+            </div> --}}
+            {{-- <div id="leaves_tab" class="tab-pane fade ">
 
             </div>
             <div id="pms_tab" class="tab-pane fade ">
 
-            </div>
+            </div> --}}
         </div>
 
 
@@ -196,15 +196,15 @@
                     </div>
                 </div>
             </div>
-            <div id="attendance_tab" class="tab-pane fade ">
+            {{-- <div id="attendance_tab" class="tab-pane fade ">
 
-            </div>
-            <div id="leaves_tab" class="tab-pane fade ">
+            </div> --}}
+            {{-- <div id="leaves_tab" class="tab-pane fade ">
 
             </div>
             <div id="pms_tab" class="tab-pane fade ">
 
-            </div>
+            </div> --}}
         </div>
 
         <div id="statutory_tab" class="tab-pane fade ">
@@ -305,15 +305,15 @@
                     </div>
                 </div>
             </div>
-            <div id="attendance_tab" class="tab-pane fade ">
+            {{-- <div id="attendance_tab" class="tab-pane fade ">
 
-            </div>
-            <div id="leaves_tab" class="tab-pane fade ">
+            </div> --}}
+            {{-- <div id="leaves_tab" class="tab-pane fade ">
 
             </div>
             <div id="pms_tab" class="tab-pane fade ">
 
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
