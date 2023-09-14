@@ -18,7 +18,7 @@ onMounted(() => {
     setTimeout(() => {
         console.log(useDashboard.overallEmployeeCountForGraph);
         chartData.value.datasets[0].data = useDashboard.overallEmployeeCountForGraph
-        updateChartLabels()
+        // updateChartLabels()
     }, 3000);
 
 });

@@ -1631,7 +1631,7 @@ class VmtDashboardService
             }
         }
 
-        $pending_request_count['employee_absent_count'] =  $absent_count;
+        // $pending_request_count['employee_absent_count'] =  $absent_count;
 
 
         foreach ($employees_data as $key => $single_user_data) {

@@ -15,6 +15,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const currentlySelectedShiftDetails = ref([])
     const currentlySelectedShiftName = ref()
     const attendanceDashboardUpcoming = ref()
+    const downloadShiftDetails = ref([])
 
 
     const getAttendanceDashboardMainSource = () =>{
@@ -43,7 +44,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
         attendanceOverview,
 
-        canShowShiftDetails,currentlySelectedShiftDetails,currentlySelectedShiftName,
+        canShowShiftDetails,currentlySelectedShiftDetails,currentlySelectedShiftName,downloadShiftDetails,
 
         attendanceDashboardUpcoming
 
