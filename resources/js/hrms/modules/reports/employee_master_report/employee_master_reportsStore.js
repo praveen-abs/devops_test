@@ -268,6 +268,7 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
     }
 
     function updateEmployeeMasterApplyFilter(val){
+        canShowLoading.value = true;
         filterbtn.value = val;
         if(val===2){
                   axios.post('/fetch-master-employee-report',selectedfilters).then(res => {
@@ -298,7 +299,9 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
         
                 }
         
-            });
+            }).finally(()=>{
+                canShowLoading.value = false;
+            })
     
           
     
