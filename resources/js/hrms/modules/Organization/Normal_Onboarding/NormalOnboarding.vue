@@ -426,4 +426,5 @@ form
 .p-datepicker-decade
 {
     color: white;
-}</style>
+}
+</style>

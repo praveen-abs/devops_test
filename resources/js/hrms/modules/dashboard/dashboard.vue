@@ -67,10 +67,10 @@
     <div class="col"
         v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3" >
         <button class=" font-semibold text-sm p-1.5 rounded-l-lg"
-            :class="[useDashboard.currentDashboard === 0 ? 'bg-white text-black border border-black' : 'bg-gray-300 text-slate-700 border border-black']"
+            :class="[useDashboard.currentDashboard === 0 ? 'bg-green-200 text-black border border-black' : 'bg-white text-slate-700 border border-black']"
             @click="useDashboard.currentDashboard = 0">Self-dashboard</button>
         <button class=" font-semibold text-sm p-1.5 rounded-r-lg"
-            :class="[useDashboard.currentDashboard === 1 ? 'bg-white text-black border border-black' : 'bg-gray-300 text-slate-700 border border-black']"
+            :class="[useDashboard.currentDashboard === 1 ? 'bg-green-200 text-black border border-black' : 'bg-white text-slate-700 border border-black']"
             @click="useDashboard.currentDashboard = 1">Org-dashboard</button>
     </div>
     <loadingSpinner v-if="useDashboard.canShowLoading" />
@@ -85,6 +85,22 @@
         leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
         <employee_dashboard />
     </transition>
+
+    <Sidebar v-model:visible="useDashboard.canShowSidebar" position="right" class="w-full">
+        <template #header>
+            <p class="absolute left-0 mx-4 font-semibold fs-5 "> Reports</p>
+        </template>
+        <!-- {{ useDashboard.ShowEmployeeStatuswise }} -->
+       <div class="mt-6" v-if="useDashboard.ShowEmployeeStatuswise ">
+        <DataTable :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
+            <Column field="user_code" header="User code"></Column>
+            <Column field="name" header="Name" style="text-align: left !important;white-space: no !important;"></Column>
+            <Column field="department" header="Department" style="text-align: left !important;white-space: no !important;"></Column>
+            <Column field="process" header="Process" style="text-align: left !important;white-space: no !important;"></Column>
+            <Column field="work_location" header="Work location" style="text-align: left !important;white-space: no !important;"></Column>
+        </DataTable>
+       </div>
+\    </Sidebar>
 </template>
 
 
@@ -112,5 +128,13 @@ onMounted(async () => {
 })
 
 </script>
+
+<style>
+.p-sidebar-right .p-sidebar
+{
+    width: 80%;
+    height: 100%;
+}
+</style>
 
 
