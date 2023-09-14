@@ -3591,10 +3591,10 @@ class VmtAttendanceService
                 $each_user['user_code'] = $single_user->user_code;
                 $each_user['name'] = $single_user->name;
                 $each_user['location'] = $single_user->location;
-                if ($single_user->department_id == null) {
-                    $each_user['department'] = $single_user->department_id;
-                } else {
+                if ($single_user->department_id != null) {
                     $each_user['department'] =  Department::where('id', $single_user->department_id)->first()->name;
+                } else {
+                    $each_user['department'] = $single_user->department_id;
                 }
 
                 foreach ($overall_leave_balance as $single_leave_balance) {
