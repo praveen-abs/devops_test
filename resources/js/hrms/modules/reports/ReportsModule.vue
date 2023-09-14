@@ -9,7 +9,7 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog>
-    <ul class="nav nav-pills  nav-tabs-dashed" id="pills-tab" role="tablist">
+    <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
         <li class="mx-2 nav-item ember-view" role="presentation">
             <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                 data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
@@ -47,7 +47,7 @@
 
     <div class="grid grid-cols-12">
         <div class="col-span-4">
-            <ul class="nav nav-pills  nav-tabs-dashed" id="pills-tab" role="tablist">
+            <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
                 <li class="mx-2 nav-item ember-view" role="presentation">
                     <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                         data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
@@ -68,7 +68,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-span-8 flex justify-end gap-4">
+        <div class="flex justify-end col-span-8 gap-4">
             <div class="flex gap-3">
                 <div>
                     <p class="text-sm">Report type:</p>
@@ -105,7 +105,7 @@
         </div>
     </div>
 
-    <div class="bg-white p-2 my-2 rounded-lg grid grid-cols-12">
+    <div class="grid grid-cols-12 p-2 my-2 bg-white rounded-lg">
         <div class="col-span-6">
             <input type="text" placeholder="Search employee..." name="" class="border p-1.5 text-sm bg-gray-50 rounded-lg"
                 id="">
@@ -113,12 +113,12 @@
             <input type="date" name="" id="" v-model="variable.end_date">
             <button @click="getEmployeeAbsentReports" class="btn btn-orange">Generate</button>
         </div>
-        <div class="col-span-6 flex justify-end gap-4">
-            <button><img src="../../assests/icons/printer.svg" alt="" srcset="" class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
-            <button><img src="../../assests/icons/download.svg" alt="" srcset="" class="w-9 h-9 p-2 bg-gray-50 rounded-lg"></button>
-            <button class="bg-gray-100 rounded-full p-2 text-sm flex">
-                <p class="bg-orange-400 p-1 h-6 w-6 rounded-full text-xs">A</p>
-                <p class="text-sm my-auto">Abbrevation</p>
+        <div class="flex justify-end col-span-6 gap-4">
+            <button><img src="../../assests/icons/printer.svg" alt="" srcset="" class="p-2 rounded-lg w-9 h-9 bg-gray-50"></button>
+            <button><img src="../../assests/icons/download.svg" alt="" srcset="" class="p-2 rounded-lg w-9 h-9 bg-gray-50"></button>
+            <button class="flex p-2 text-sm bg-gray-100 rounded-full">
+                <p class="w-6 h-6 p-1 text-xs bg-orange-400 rounded-full">A</p>
+                <p class="my-auto text-sm">Abbrevation</p>
             </button>
         </div>
     </div>

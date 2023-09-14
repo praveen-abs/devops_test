@@ -13,6 +13,9 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const attendanceDashboardWorkShiftSource = ref()
     const canShowShiftDetails = ref(false)
     const currentlySelectedShiftDetails = ref([])
+    const currentlySelectedShiftName = ref()
+    const attendanceDashboardUpcoming = ref()
+    const downloadShiftDetails = ref([])
 
 
     const getAttendanceDashboardMainSource = () =>{
@@ -21,6 +24,14 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
         axios.get(url).then(res=>{
             attendanceOverview.value = res.data.attendance_overview
             attendanceDashboardWorkShiftSource.value = res.data.work_shift
+            // attendanceDashboardUpcoming.value = res.data.upcomings
+            let obj = Object.entries(res.data.upcomings).map(item => {
+                return {
+                    title: item[0],
+                    value: item[1]
+                }
+            })
+            attendanceDashboardUpcoming.value = obj
         }).finally(()=>{
             canShowLoading.value = false
         })
@@ -33,7 +44,9 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
         attendanceOverview,
 
-        canShowShiftDetails,currentlySelectedShiftDetails
+        canShowShiftDetails,currentlySelectedShiftDetails,currentlySelectedShiftName,downloadShiftDetails,
+
+        attendanceDashboardUpcoming
 
     }
 })

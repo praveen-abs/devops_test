@@ -16,6 +16,9 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const canShowConfiguration = ref(false)
     const canShowCurrentEmployee = ref(false)
 
+    const ShowEmployeeStatuswise = ref({})
+    const canShowSidebar = ref(false)
+
     const currentDashboard = ref(0)
 
     const allEventSource = ref()
@@ -190,7 +193,9 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         // hr Dashboard source
 
-        getHrDashboardMainSource, hrDashboardSource, orgEmployeeDetailCount, hrPendingRequestCount, overallEmployeeCount, overallEmployeeCountForGraph
+        getHrDashboardMainSource, hrDashboardSource, orgEmployeeDetailCount, hrPendingRequestCount, overallEmployeeCount, overallEmployeeCountForGraph,
+
+        ShowEmployeeStatuswise,canShowSidebar
 
     };
 });
