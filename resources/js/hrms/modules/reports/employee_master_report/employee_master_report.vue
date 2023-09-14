@@ -17,7 +17,7 @@
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
             <div class=" flex w-[100%] ">
-                <ul class="flex mb-3 divide-x col-3 max-[1300px]:w-[50%] w-[35%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
+                <ul class="flex mb-3 divide-x  max-[1300px]:w-[50%] w-[25%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
                     id="pills-tab" role="tablist">
                     <li class="w-[50%] nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                   
@@ -54,7 +54,7 @@
                     <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="flex justify-between max-[1200px]:w-[50%] w-[65%] max-[1200px]:justify-start  flex-wrap max-[1024px]:w-[100%] ">
+                <ul class="flex justify-between max-[1200px]:w-[50%] w-[75%] max-[1200px]:justify-start  flex-wrap max-[1024px]:w-[100%] ">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
                         
