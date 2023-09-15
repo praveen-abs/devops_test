@@ -52,20 +52,16 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     async function performLeaveWithdraw(leave_id) {
 
-        /*
-        await axios.post('/attendance/getEmployeeLeaveDetails', {
-            user_code: user_code,
-            filter_month: filter_month,
-            filter_year: filter_year,
-            filter_leave_status: filter_leave_status,
 
+        await axios.post('/leave/withdrawLeave', {
+            leave_id: leave_id,
         }).then((response) => {
-            array_employeeLeaveHistory.value = response.data.data;
-            console.log("getEmployeeLeaveHistory() : " + response.data);
+
+            console.log("performLeaveWithdraw() : " + response.data);
         }).finally(() => {
             canShowLoading.value = false
         });
-        */
+
     }
 
 
