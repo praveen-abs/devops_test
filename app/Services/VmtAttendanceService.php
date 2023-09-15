@@ -1098,7 +1098,6 @@ class VmtAttendanceService
         //Check whether current loggedin user_id matches with leave's user_id
         if($leave_details->user_id == auth()->user()->id)
         {
-            dd($leave_id);
             $leave_details->status = 'Withdrawn';
             $leave_details->save();
         }
