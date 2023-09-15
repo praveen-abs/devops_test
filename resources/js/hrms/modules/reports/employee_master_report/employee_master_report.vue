@@ -1,4 +1,5 @@
 <template>
+        <!-- <loadingSpinner v-if="useEmployeeReport.canShowLoading" class="absolute z-50 bg-white" /> -->
     <div class="px-4">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Employee Master Report</h1>
@@ -16,7 +17,7 @@
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
             <div class=" flex w-[100%] ">
-                <ul class="flex mb-3 divide-x col-3 max-[1300px]:w-[50%] w-[35%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
+                <ul class="flex justify-between mb-3 divide-x max   w-[25%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] !border-0 "
                     id="pills-tab" role="tablist">
                     <li class="w-[50%] nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                   
@@ -53,8 +54,8 @@
                     <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="flex justify-between max-[1200px]:w-[50%] w-[65%] max-[1200px]:justify-start  flex-wrap max-[1024px]:w-[100%] ">
-                    <li class="flex items-center">
+                <ul class="flex justify-between max-[1300px]:grid-cols-2 w-[75%] flex-wrap max-[1024px]:!w-[100%] max-[1300px]:!bg-sky-300 ">
+                    <li class="flex items-center my-1">
                         <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
                         
                         <!-- <MultiSelect v-model="periodDate" :options="useEmployeeReport.PeriodMonth" optionLabel="month"
@@ -69,7 +70,7 @@
                     class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
 
                     </li>
-                    <li class="flex items-center">
+                    <li class="flex items-center my-1">
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']">Department : </h1>
                         <!-- <Dropdown v-model="department" editable  optionLabel="name" placeholder="Department" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
                          -->
@@ -78,7 +79,7 @@
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]   !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
-                    <li class="flex items-center">
+                    <li class="flex items-center my-1">
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins'] ">Legal Entity : </h1>
                         <!-- <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]"  /> -->
 
@@ -87,7 +88,7 @@
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
-                    <li class="flex items-center">
+                    <li class="flex items-center my-1">
 
                         <!-- <Dropdown optionLabel="name" optionValue="id" :options="dropdown" v-model="useEmployeeReport.select_Category"
                     @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)" placeholder="Select Category"
@@ -131,6 +132,7 @@ import { onMounted, ref } from 'vue';
 import employee_CTC from "./employee_CTC.vue";
 import Employee_Master from './Employee_Master.vue';
 import { EmployeeMasterStore } from "./employee_master_reportsStore";
+import loadingSpinner from "../../../components/LoadingSpinner.vue";
 
 
 
@@ -207,4 +209,15 @@ const dropdown = ref([
     color: #000 !important;
     font-family: 'poppins';
 }
+.p-dropdown-label{
+    position: relative;
+    top:-2px;
+}
+
+@media (max-width: 1300px) {
+    .max{
+        width: 300px;
+    }
+}
+
 </style>

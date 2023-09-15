@@ -40,6 +40,9 @@ use App\Models\VmtOrgTimePeriod;
 
 class VmtReportsController extends Controller
 {
+    public function showEmployeeReportsPage(){
+        return view('reports.abs_employee_report');
+    }
     public function showPayrollReportsPage(Request $request)
     {
         // $payroll_months = [
@@ -649,7 +652,7 @@ class VmtReportsController extends Controller
     public function getEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
     {
         
-        return  $reportsService->getEmployeesMasterDetails($request->type, $request->client_id, $request->active_status, $request->department_id);
+        return  $reportsService->getEmployeesMasterDetails($request->type, $request->client_id, $request->active_status, $request->department_id,$request->date);
     }
 
     public function generateEmployeesMasterDetails(Request $request, VmtReportsservice $reportsService)

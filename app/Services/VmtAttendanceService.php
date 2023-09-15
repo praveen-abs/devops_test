@@ -1013,13 +1013,13 @@ class VmtAttendanceService
                     $text_status = "approved";
                     $leave_module_type = 'manager_approves_leave';
                 } else
-             if ($status == "Rejected") {
+                if ($status == "Rejected") {
                     $text_status = "rejected";
                     $leave_module_type = 'manager_rejects_leave';
                 } else
-             if ($status == "Revoked") {
+                if ($status == "Revoked") {
                     $text_status = "revoked";
-                    $leave_module_type = 'manager_withdraw_leave';
+                    $leave_module_type = 'manager_revokes_leave';
                 }
 
                 $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
@@ -1067,20 +1067,59 @@ class VmtAttendanceService
     }
 
 
-    public function withdrawLeave(Request $request)
+    public function withdrawLeave($leave_id)
     {
-        $withdraw_leave_query = VmtEmployeeLeaves::where('id', $request->leave_id)
-            ->update(array('status' => 'Withdrawn'));
-        $leave_status = VmtEmployeeLeaves::where('id', $request->leave_id)->first()->status;
 
-        $response = [
+        $validator = Validator::make(
+            $data = [
+                "leave_id" => $leave_id,
+            ],
+            $rules = [
+                'leave_id' => 'required|exists:vmt_employee_leaves,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'in' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $leave_details = VmtEmployeeLeaves::find($leave_id);
+
+        //Check whether current loggedin user_id matches with leave's user_id
+        if($leave_details->user_id == auth()->user()->id)
+        {
+            dd($leave_id);
+            $leave_details->status = 'Withdrawn';
+            $leave_details->save();
+        }
+        else
+        {
+            //User id mismatching .
+            return [
+                'status' => 'failure',
+                'message' => 'You are not authorized to perform this operation',
+                'error' => 'Unable to withdrawn leave due to mismatch in user_id',
+                'error_verbose' => ''
+            ];
+
+        }
+
+        return [
             'status' => 'success',
             'message' => 'Leave withdrawn successfully',
             'error' => '',
             'error_verbose' => ''
         ];
-
-        return $response;
     }
 
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
@@ -2603,7 +2642,7 @@ class VmtAttendanceService
                 "user_code" => 'required|exists:users,user_code',
                 "date" => "required",
                 "checkin_time" => "required",
-                "selfie_checkin" => "required",
+                "selfie_checkin" => "nullable",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkin" => "required", //mobile, web
                 "checkin_lat_long" => "nullable", //stores in lat , long
@@ -2668,7 +2707,7 @@ class VmtAttendanceService
             $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
             $attendanceCheckin->save();
             // processing and storing base64 files in public/selfies folder
-            if (!empty('selfie_checkin')) {
+            if (!empty($selfie_checkin)) {
 
                 $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
 
@@ -2701,7 +2740,7 @@ class VmtAttendanceService
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id), true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
@@ -2770,7 +2809,7 @@ class VmtAttendanceService
                 "user_code" => 'required|exists:users,user_code',
                 "existing_check_in_date" => "required",
                 "checkout_time" => "required",
-                "selfie_checkout" => "required",
+                "selfie_checkout" => "nullable",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkout" => "required", //mobile, web
                 "checkout_lat_long" => "nullable", //stores in lat , long
@@ -2834,7 +2873,7 @@ class VmtAttendanceService
                 $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
                 $existing_att_details->save();
                 // processing and storing base64 files in public/selfies folder
-                if (!empty('selfie_checkout')) {
+                if (!empty($selfie_checkout)) {
 
                     $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
 
@@ -2910,7 +2949,7 @@ class VmtAttendanceService
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id), true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
@@ -3152,6 +3191,20 @@ class VmtAttendanceService
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
                 $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
                 $query_employees_leaves[$i]["user_short_name"] = getUserShortName($user_id);
+
+                //If user_code is the currently loggedin user AND if leave status is PENDING,  then show WITHDRAW button
+                //if($user_code == auth()->user()->user_code && $query_employees_leaves[$i]["status"] == "Pending")
+                if($query_employees_leaves[$i]["status"] == "Pending") //We dont have to check auth()->user()->user_code since this is returned for current user only.
+                {
+                    //Show the Withdraw button in ui
+                    $query_employees_leaves[$i]["can_withdraw_leave"] = true;
+                }
+                else
+                {
+                    //Dont show the Withdraw button in ui
+                    $query_employees_leaves[$i]["can_withdraw_leave"] = false;
+                }
+
             }
 
 
@@ -3246,6 +3299,19 @@ class VmtAttendanceService
 
                 //Map leave types
                 $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+
+
+                //If leave status is PENDING,  then show WITHDRAW button
+                if($singleItem->status != "Pending")
+                {
+                    //Show the Revoke button in ui
+                    $singleItem->can_revoke_leave = true;
+                }
+                else
+                {
+                    //Dont show the Revoke button in ui
+                    $singleItem->can_revoke_leave = false;
+                }
             }
 
             return response()->json([
@@ -3525,10 +3591,10 @@ class VmtAttendanceService
                 $each_user['user_code'] = $single_user->user_code;
                 $each_user['name'] = $single_user->name;
                 $each_user['location'] = $single_user->location;
-                if ($single_user->department_id == null) {
-                    $each_user['department'] = $single_user->department_id;
-                } else {
+                if ($single_user->department_id != null) {
                     $each_user['department'] =  Department::where('id', $single_user->department_id)->first()->name;
+                } else {
+                    $each_user['department'] = $single_user->department_id;
                 }
 
                 foreach ($overall_leave_balance as $single_leave_balance) {
@@ -3926,9 +3992,9 @@ class VmtAttendanceService
             ->where('leave_type_id', VmtLeaves::where('leave_type', 'On Duty')->first()->id)->count();
         $leave_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
             ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
-        $upcomings['on_duty_count'] =  $on_duty_count;
-        $upcomings['leave_count'] = $leave_count;
-        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings'=>$upcomings];
+        $upcomings['On duty'] =  $on_duty_count;
+        $upcomings['Leave'] = $leave_count;
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings];
         return $response;
     }
 

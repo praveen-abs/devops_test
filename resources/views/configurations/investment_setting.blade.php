@@ -7,7 +7,8 @@
 @endsection
 @section('content')
 <div class="mb-0 card approvals_wrapper">
-       @vite('resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js')
-       <div id="InvestmentSetting"></div>
+
+       @vite('resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_settings.js')
+       <div id="finance_setting"></div>
  </div>
 @endsection

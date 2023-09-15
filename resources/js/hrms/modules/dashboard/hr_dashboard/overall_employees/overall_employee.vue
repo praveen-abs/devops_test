@@ -18,7 +18,7 @@ onMounted(() => {
     setTimeout(() => {
         console.log(useDashboard.overallEmployeeCountForGraph);
         chartData.value.datasets[0].data = useDashboard.overallEmployeeCountForGraph
-
+        // updateChartLabels()
     }, 3000);
 
 });
@@ -94,11 +94,11 @@ const setChartOptions = () => {
         scales: {
             x: {
                 ticks: {
-                    // autoSkip: false, // Prevent auto-skipping of labels
-                    // maxRotation: 0, // Rotate the labels to 0 degrees (horizontal)
-                    // minRotation: 0,
+                    autoSkip: false, // Prevent auto-skipping of labels
+                    maxRotation: 0, // Rotate the labels to 0 degrees (horizontal)
+                    minRotation: 0,
                     textAlign: 'center', // Center-align the tick labels
-                    // padding: 10, // Add some padding for better alignment
+                    padding: 10, // Add some padding for better alignment
                     color: textColorSecondary,
                     font: {
                         weight: 600,
@@ -122,5 +122,21 @@ const setChartOptions = () => {
             },
         },
     };
+};
+
+// Function to calculate the total employee count for each bar
+const calculateTotalEmployees = () => {
+    const data = chartData.value.datasets[0].data;
+    return data.reduce((total, count) => total + count, 0);
+};
+
+// Update the chart labels with the total employee count
+const updateChartLabels = () => {
+    const labels = chartData.value.labels;
+    const updatedLabels = labels.map((label, index) => {
+        const total = calculateTotalEmployees();
+        return `${label} (${total})`;
+    });
+    chartData.value.labels = updatedLabels;
 };
 </script>

@@ -197,7 +197,7 @@ class VmtReportsservice
         return $response;
     }
 
-    public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id)
+    public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id,$date_req)
 
     {
         $validator = Validator::make(
@@ -240,6 +240,9 @@ class VmtReportsservice
             } else {
                 $active_status = [$active_status];
             }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
 
             if (empty($department_id)) {
                 $get_department = Department::pluck('id');
@@ -254,13 +257,16 @@ class VmtReportsservice
             $headings = array();
             $type = '';
             $temp_ar = array();
+           // dd($date_req);
+          // $date_req ='2022-05-01';
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details as statutory', 'statutory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
-                //->whereIn('users.client_id', $client_id)
+                ->whereIn('users.client_id', $client_id)
+                ->where('employee.doj', '<', $date_req)
                 ->whereIn('office.department_id', $get_department)
                 ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
@@ -270,7 +276,7 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-                // dd( $emp_master_detail);
+               //  dd( $emp_master_detail);
             foreach ($emp_master_detail as $single_details) {
                // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
@@ -408,6 +414,7 @@ class VmtReportsservice
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
+                'line'=>$e->getTraceAsString(),
                 'error_verbose' => $e->getLine()
             ];
         }
