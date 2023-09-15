@@ -183,7 +183,7 @@ let data_review_documents = ref();
 let canShowConfirmation = ref(false);
 let canShowBulkConfirmation = ref(false);
 let canShowBulkConfirmationAll = ref(false);
-let canShowLoadingScreen = ref(true);
+let canShowLoadingScreen = ref(false);
 const toast = useToast();
 const expandedRows = ref([]);
 const selectedAllEmployee = ref();
@@ -358,7 +358,6 @@ function processSingleDocumentApproveReject() {
         .catch((error) => {
             canShowLoadingScreen.value = false;
             resetVars();
-
             console.log(error.toJSON());
         });
 }
@@ -366,7 +365,7 @@ function processSingleDocumentApproveReject() {
 function processBulkDocumentsApproveReject() {
     hideBulkConfirmDialog(false);
 
-    canShowLoadingScreen = true;
+    canShowLoadingScreen.value = true;
 
     console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData.documents));
     console.log("currentlySelectedStatus : " + currentlySelectedStatus);
@@ -389,14 +388,14 @@ function processBulkDocumentsApproveReject() {
         .then((response) => {
             console.log(response.data);
             ajax_GetReviewDocumentData();
-            canShowLoadingScreen = false;
+            canShowLoadingScreen.value = false;
 
             //toast.add({ severity: "success", summary: "", detail: " Successfully Approved !", life: 3000 });
 
             resetVars();
         })
         .catch((error) => {
-            canShowLoadingScreen = false;
+            canShowLoadingScreen.value = false;
             resetVars();
 
             console.log(error.toJSON());

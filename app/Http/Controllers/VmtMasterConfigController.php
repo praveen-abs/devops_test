@@ -12,7 +12,7 @@ use App\Models\VmtAppModules;
 use App\Models\VmtEmpSubModules;
 use App\Models\VmtClientSubModules;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
-use App\Services\VmtMobileConfigService;
+use App\Services\VmtAppPermissionsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -95,32 +95,39 @@ class VmtMasterConfigController extends Controller
 
     }
 
-    public function  saveAppConfigStatus(Request $request,VmtMobileConfigService $serviceVmtMasterConfigService){
+    public function  updateClientModuleStatus(Request $request,VmtAppPermissionsService $serviceVmtMasterConfigService){
+         $client_id = sessionGetSelectedClientid();
 
-        $response = $serviceVmtMasterConfigService->saveAppConfigStatus($request->module_id,$request->status);
+        $response = $serviceVmtMasterConfigService->updateClientModuleStatus( $client_id,$request->module_id,$request->status);
 
         return response()->json($response);
 
     }
 
-    public function SaveEmployeeAppConfigStatus(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
+    public function updateEmployeesPermissionStatus(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-
-        $response = $serviceVmtMobileConfigService->SaveEmployeeAppConfigStatus($request->app_sub_modules_link_id,$request->selected_employees_user_code);
+        $client_id = sessionGetSelectedClientid();
+        $response = $serviceVmtAppPermissionsService->updateEmployeesPermissionStatus($client_id,$request->app_sub_modules_link_id,$request->selected_employees_user_code);
 
 
         return $response;
 
     }
 
-    public function getAppModules( Request $request ,VmtMobileConfigService $serviceVmtMobileConfigService){
+    public function getClient_MobileModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        return  $serviceVmtMobileConfigService->getAppModules($request->client_id);
+         $module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->pluck('id');
+
+        return  $serviceVmtAppPermissionsService->getClient_MobileModulePermissionDetails($request->client_id,$module_id,$user_code=null);
+    }
+    public function getClient_AllModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+                    $client_id =sessionGetSelectedClientid();
+        return  $serviceVmtAppPermissionsService->getClient_AllModulePermissionDetails($client_id);
     }
 
-    public function getAllDropdownFilterSetting(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
+    public function getAllDropdownFilterSetting(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        return  $serviceVmtMobileConfigService->getAllDropdownFilterSetting();
+        return  $serviceVmtAppPermissionsService->getAllDropdownFilterSetting();
 
 
     }
@@ -189,15 +196,5 @@ class VmtMasterConfigController extends Controller
             ]);
         }
     }
-    public function GetAllEmpModuleActiveStatus(Request $request,VmtMobileConfigService $serviceVmtMobileConfigService){
-
-        $response = $serviceVmtMobileConfigService->GetAllEmpModuleActiveStatus($request->user_code, $request->module_type);
-
-
-        return $response;
-
-    }
-
-
 
 }

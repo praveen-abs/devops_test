@@ -10,6 +10,7 @@ use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\vmtHolidays;
 use App\Models\VmtEmployeeAttendance;
+use Exception;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
@@ -1012,13 +1013,13 @@ class VmtAttendanceService
                     $text_status = "approved";
                     $leave_module_type = 'manager_approves_leave';
                 } else
-             if ($status == "Rejected") {
+                if ($status == "Rejected") {
                     $text_status = "rejected";
                     $leave_module_type = 'manager_rejects_leave';
                 } else
-             if ($status == "Revoked") {
+                if ($status == "Revoked") {
                     $text_status = "revoked";
-                    $leave_module_type = 'manager_withdraw_leave';
+                    $leave_module_type = 'manager_revokes_leave';
                 }
 
                 $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
@@ -1066,20 +1067,59 @@ class VmtAttendanceService
     }
 
 
-    public function withdrawLeave(Request $request)
+    public function withdrawLeave($leave_id)
     {
-        $withdraw_leave_query = VmtEmployeeLeaves::where('id', $request->leave_id)
-            ->update(array('status' => 'Withdrawn'));
-        $leave_status = VmtEmployeeLeaves::where('id', $request->leave_id)->first()->status;
 
-        $response = [
+        $validator = Validator::make(
+            $data = [
+                "leave_id" => $leave_id,
+            ],
+            $rules = [
+                'leave_id' => 'required|exists:vmt_employee_leaves,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'in' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $leave_details = VmtEmployeeLeaves::find($leave_id);
+
+        //Check whether current loggedin user_id matches with leave's user_id
+        if($leave_details->user_id == auth()->user()->id)
+        {
+            dd($leave_id);
+            $leave_details->status = 'Withdrawn';
+            $leave_details->save();
+        }
+        else
+        {
+            //User id mismatching .
+            return [
+                'status' => 'failure',
+                'message' => 'You are not authorized to perform this operation',
+                'error' => 'Unable to withdrawn leave due to mismatch in user_id',
+                'error_verbose' => ''
+            ];
+
+        }
+
+        return [
             'status' => 'success',
             'message' => 'Leave withdrawn successfully',
             'error' => '',
             'error_verbose' => ''
         ];
-
-        return $response;
     }
 
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
@@ -1090,7 +1130,27 @@ class VmtAttendanceService
 
 
         //TODO : Hardcoded now. Need to fetch based on assigned shift for this employee
-        $regularTime  = VmtWorkShifts::where('shift_name', 'First Shift')->first();
+
+        $vmt_employee_workshift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->first();
+
+        if (empty($vmt_employee_workshift->work_shift_id)) {
+            return [
+                'status' => 'failure',
+                'message' => 'No shift has been assigned',
+                'data'   => ""
+            ];
+        }
+
+        //dd($vmt_employee_workshift);
+        $current_shift_details  = VmtWorkShifts::find($vmt_employee_workshift->work_shift_id);
+
+        if (empty($current_shift_details)) {
+            return [
+                'status' => 'failure',
+                'message' => 'Assigned Work shift details are missing or taking too long to load.',
+                'data'   => ""
+            ];
+        }
 
         ////Fetch the attendance reports
         //Create date array
@@ -1294,10 +1354,9 @@ class VmtAttendanceService
         }
         //dd($attendanceResponseArray);
 
-        $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
-        $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
+        $shiftStartTime  = Carbon::parse($current_shift_details->shift_start_time);
+        $shiftEndTime  = Carbon::parse($current_shift_details->shift_end_time);
 
-        //dd($regularTime);
         ////Logic to check LC,EG,MIP,MOP,Leave status
         foreach ($attendanceResponseArray as $key => $value) {
 
@@ -1820,8 +1879,7 @@ class VmtAttendanceService
                 //dd("Request not applied");
 
                 //For LC, EG : user_time is mandatory , So check it
-                if (($regularization_type == 'LC' || $regularization_type == 'EG') && empty($user_time))
-                {
+                if (($regularization_type == 'LC' || $regularization_type == 'EG') && empty($user_time)) {
                     //if user_time is null, then throw error
                     return $responseJSON = [
                         'status' => 'failure',
@@ -1829,9 +1887,7 @@ class VmtAttendanceService
                         'mail_status' => '',
                         'data' => [],
                     ];
-
-                }
-                else
+                } else
                 if ($regularization_type == 'MIP' || $regularization_type == 'MOP')
                     $user_time = null;
 
@@ -2586,7 +2642,7 @@ class VmtAttendanceService
                 "user_code" => 'required|exists:users,user_code',
                 "date" => "required",
                 "checkin_time" => "required",
-                "selfie_checkin" => "required",
+                "selfie_checkin" => "nullable",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkin" => "required", //mobile, web
                 "checkin_lat_long" => "nullable", //stores in lat , long
@@ -2606,13 +2662,12 @@ class VmtAttendanceService
         }
 
 
-        try
-        {
+        try {
 
             $query_user = User::where('user_code', $user_code)->first();
             $user_id = $query_user->id;
 
-        /*
+            /*
          1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
          2,then check wheather the user have workshiftid or not.
          */
@@ -2652,7 +2707,7 @@ class VmtAttendanceService
             $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
             $attendanceCheckin->save();
             // processing and storing base64 files in public/selfies folder
-            if (!empty('selfie_checkin')) {
+            if (!empty($selfie_checkin)) {
 
                 $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
 
@@ -2679,14 +2734,13 @@ class VmtAttendanceService
             $isSent = "NA";
 
             //If its LC, then send mail
-            if($parsed_checkin_time->gt($current_workshift_timings))
-            {
+            if ($parsed_checkin_time->gt($current_workshift_timings)) {
                 //Send notification mail
-                $user_mail = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first()->officical_mail;
+                $user_mail = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->officical_mail;
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
@@ -2698,7 +2752,6 @@ class VmtAttendanceService
                     request()->getSchemeAndHttpHost(),
                     "LC"
                 ));
-
             }
 
 
@@ -2714,9 +2767,7 @@ class VmtAttendanceService
                 'mail_status' => $mail_status,
                 'data'   => ''
             ]);
-
-        }
-        catch (TransportException $e) {
+        } catch (TransportException $e) {
             $response = [
                 'status' => 'success',
                 'message' => 'Check-in success.',
@@ -2758,7 +2809,7 @@ class VmtAttendanceService
                 "user_code" => 'required|exists:users,user_code',
                 "existing_check_in_date" => "required",
                 "checkout_time" => "required",
-                "selfie_checkout" => "required",
+                "selfie_checkout" => "nullable",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkout" => "required", //mobile, web
                 "checkout_lat_long" => "nullable", //stores in lat , long
@@ -2778,8 +2829,7 @@ class VmtAttendanceService
         }
 
 
-        try
-        {
+        try {
 
             $query_user = User::where('user_code', $user_code)->first();
             $user_id = $query_user->id;
@@ -2809,7 +2859,7 @@ class VmtAttendanceService
             //Checkout date will be current date...
             $t_checkout_date = date("Y-m-d");
 
-                //If check-in exists and checkout doesnt exist, then its normal checkout
+            //If check-in exists and checkout doesnt exist, then its normal checkout
             if (!empty($existing_att_details) && empty($existing_att_details->checkout_time)) {
 
 
@@ -2823,7 +2873,7 @@ class VmtAttendanceService
                 $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
                 $existing_att_details->save();
                 // processing and storing base64 files in public/selfies folder
-                if (!empty('selfie_checkout')) {
+                if (!empty($selfie_checkout)) {
 
                     $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
 
@@ -2842,52 +2892,49 @@ class VmtAttendanceService
                 }
 
                 $existing_att_details->save();
+            } else // If existing record not in emp-att table but available in Biometric table, then add new entry in emp-att table
+                if (empty($existing_att_details) && !empty($bio_attendanceCheckIn->check_in_time)) {
 
-            }
-            else // If existing record not in emp-att table but available in Biometric table, then add new entry in emp-att table
-            if (empty($existing_att_details) && !empty($bio_attendanceCheckIn->check_in_time)) {
+                    $existing_att_details = new VmtEmployeeAttendance;
+                    $existing_att_details->date = $existing_check_in_date;
+                    $existing_att_details->checkout_time = $checkout_time;
+                    $existing_att_details->user_id = $user_id;
+                    $existing_att_details->work_mode = $work_mode;
+                    $existing_att_details->checkout_date = $t_checkout_date;
+                    $existing_att_details->checkout_comments = "";
+                    $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
+                    $existing_att_details->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
+                    $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
+                    $existing_att_details->save();
 
-                $existing_att_details = new VmtEmployeeAttendance;
-                $existing_att_details->date = $existing_check_in_date;
-                $existing_att_details->checkout_time = $checkout_time;
-                $existing_att_details->user_id = $user_id;
-                $existing_att_details->work_mode = $work_mode;
-                $existing_att_details->checkout_date = $t_checkout_date;
-                $existing_att_details->checkout_comments = "";
-                $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
-                $existing_att_details->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
-                $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
-                $existing_att_details->save();
+                    // processing and storing base64 files in public/selfies folder
+                    if (!empty('selfie_checkout')) {
 
-                // processing and storing base64 files in public/selfies folder
-                if (!empty('selfie_checkout')) {
+                        $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
 
-                    $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
-
-                    // dd($emp_document_path);
-                    if (!File::isDirectory($emp_selfiedir_path))
-                        File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+                        // dd($emp_document_path);
+                        if (!File::isDirectory($emp_selfiedir_path))
+                            File::makeDirectory($emp_selfiedir_path, 0777, true, true);
 
 
-                    $selfieFileEncoded  =  $selfie_checkout;
+                        $selfieFileEncoded  =  $selfie_checkout;
 
-                    $fileName = $existing_att_details->id . '_checkout.png';
+                        $fileName = $existing_att_details->id . '_checkout.png';
 
-                    \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
+                        \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
 
-                    $existing_att_details->selfie_checkout = $fileName;
+                        $existing_att_details->selfie_checkout = $fileName;
+                    }
+
+                    $existing_att_details->save();
+                } else // If record doesnt exist in emp_table and biometric table, then its error
+                {
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Unable to check-out since Check-in is not done for the given date or Check-out is already done',
+                        'data'   => ""
+                    ]);
                 }
-
-                $existing_att_details->save();
-            }
-            else // If record doesnt exist in emp_table and biometric table, then its error
-            {
-                return response()->json([
-                    'status' => 'failure',
-                    'message' => 'Unable to check-out since Check-in is not done for the given date or Check-out is already done',
-                    'data'   => ""
-                ]);
-            }
 
             //Check whether check-in time is EG...
 
@@ -2896,14 +2943,13 @@ class VmtAttendanceService
             $isSent = "NA";
 
             //If its EG, then send mail
-            if($parsed_checkout_time->lt($current_workshift_timings))
-            {
+            if ($parsed_checkout_time->lt($current_workshift_timings)) {
                 //Send notification mail
-                $user_mail = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first()->officical_mail;
+                $user_mail = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->officical_mail;
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     $query_user->name,
@@ -2915,7 +2961,6 @@ class VmtAttendanceService
                     request()->getSchemeAndHttpHost(),
                     "EG"
                 ));
-
             }
 
             if ($isSent) {
@@ -2930,8 +2975,7 @@ class VmtAttendanceService
                 'data'   => '',
                 'mail_status' => $mail_status
             ]);
-        }
-        catch (TransportException $e) {
+        } catch (TransportException $e) {
             $response = [
                 'status' => 'success',
                 'message' => 'Check-out success.',
@@ -2954,8 +2998,6 @@ class VmtAttendanceService
 
             return $response;
         }
-
-
     }
 
 
@@ -2991,7 +3033,7 @@ class VmtAttendanceService
             $response = VmtEmployeeWorkShifts::join('users', 'users.id', '=', 'vmt_employee_workshifts.user_id')
                 ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_workshifts.work_shift_id')
                 ->where('users.id', $user_id)
-                ->get(['vmt_work_shifts.shift_type', 'vmt_work_shifts.shift_start_time', 'vmt_work_shifts.shift_end_time'])
+                ->get(['vmt_work_shifts.shift_name', 'vmt_work_shifts.shift_start_time', 'vmt_work_shifts.shift_end_time'])
                 ->first();
 
 
@@ -3149,6 +3191,20 @@ class VmtAttendanceService
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
                 $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
                 $query_employees_leaves[$i]["user_short_name"] = getUserShortName($user_id);
+
+                //If user_code is the currently loggedin user AND if leave status is PENDING,  then show WITHDRAW button
+                //if($user_code == auth()->user()->user_code && $query_employees_leaves[$i]["status"] == "Pending")
+                if($query_employees_leaves[$i]["status"] == "Pending") //We dont have to check auth()->user()->user_code since this is returned for current user only.
+                {
+                    //Show the Withdraw button in ui
+                    $query_employees_leaves[$i]["can_withdraw_leave"] = true;
+                }
+                else
+                {
+                    //Dont show the Withdraw button in ui
+                    $query_employees_leaves[$i]["can_withdraw_leave"] = false;
+                }
+
             }
 
 
@@ -3243,6 +3299,19 @@ class VmtAttendanceService
 
                 //Map leave types
                 $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+
+
+                //If leave status is PENDING,  then show WITHDRAW button
+                if($singleItem->status != "Pending")
+                {
+                    //Show the Revoke button in ui
+                    $singleItem->can_revoke_leave = true;
+                }
+                else
+                {
+                    //Dont show the Revoke button in ui
+                    $singleItem->can_revoke_leave = false;
+                }
             }
 
             return response()->json([
@@ -3511,28 +3580,37 @@ class VmtAttendanceService
         $response = array();
         $all_active_user = User::leftJoin('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->leftJoin('vmt_employee_office_details', 'users.id', '=', 'vmt_employee_office_details.user_id')
             ->where('active', 1)->where('is_ssa', 0)->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_details.location', 'vmt_employee_office_details.department_id']);
-        //  dd( $all_active_user);
-        foreach ($all_active_user as $single_user) {
-            $total_leave_balance = 0;
-            $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
-            // dd($overall_leave_balance);
-            $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
-            //dd($leavetypeAndBalanceDetails);
-            $each_user['user_code'] = $single_user->user_code;
-            $each_user['name'] = $single_user->name;
-            $each_user['location'] = $single_user->location;
-            if ($single_user->department_id == null) {
-                $each_user['department'] = $single_user->department_id;
-            } else {
-                $each_user['department'] =  Department::where('id', $single_user->department_id)->first()->name;
-            }
+        // dd( $all_active_user);
+        try {
+            foreach ($all_active_user as $single_user) {
+                $total_leave_balance = 0;
+                $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
+                // dd($overall_leave_balance);
+                $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
+                //dd($leavetypeAndBalanceDetails);
+                $each_user['user_code'] = $single_user->user_code;
+                $each_user['name'] = $single_user->name;
+                $each_user['location'] = $single_user->location;
+                if ($single_user->department_id != null) {
+                    $each_user['department'] =  Department::where('id', $single_user->department_id)->first()->name;
+                } else {
+                    $each_user['department'] = $single_user->department_id;
+                }
 
-            foreach ($overall_leave_balance as $single_leave_balance) {
-                $total_leave_balance =  $total_leave_balance + $single_leave_balance['leave_balance'];
+                foreach ($overall_leave_balance as $single_leave_balance) {
+                    $total_leave_balance =  $total_leave_balance + $single_leave_balance['leave_balance'];
+                }
+                $each_user['total_leave_balance'] =  $total_leave_balance;
+                $each_user['leave_balance_details'] =  $leavetypeAndBalanceDetails;
+                //  dd( $each_user);
+                array_push($response, $each_user);
             }
-            $each_user['total_leave_balance'] =  $total_leave_balance;
-            $each_user['leave_balance_details'] =  $leavetypeAndBalanceDetails;
-            array_push($response, $each_user);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "fetchOrgLeaveBalance",
+                'data' => $e->getTraceAsString(),
+            ]);
         }
         return $response;
     }
@@ -3575,7 +3653,7 @@ class VmtAttendanceService
         $response = array();
         $accrued_leave_types = VmtLeaves::get();
         $temp_leave = array();
-
+        // dd($accrued_leave_types);
         foreach ($accrued_leave_types as $single_leave_types) {
             if ($single_leave_types->is_finite == 1) {
                 if ($single_leave_types->is_accrued != 1) {
@@ -3589,6 +3667,7 @@ class VmtAttendanceService
                     $temp_leave['leave_balance'] = (int)$single_leave_types->days_annual;
                     $temp_leave['avalied_leaves'] = $total_avalied_leaves;
                 } else {
+
                     if ($single_leave_types->is_carry_forward != 1) {
                         $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                             ->whereBetween('start_date', [$start_time_period, $end_time_period])
@@ -3632,6 +3711,7 @@ class VmtAttendanceService
                     }
                 }
             } else {
+                // dd($single_leave_types);
                 $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                     ->whereBetween('start_date', [$start_time_period, $end_time_period])
                     ->where('leave_type_id', $single_leave_types->id)
@@ -3646,23 +3726,24 @@ class VmtAttendanceService
             unset($temp_leave);
         }
         $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'Avalied Leaves' => $avalied_leaves);
-
+        //dd($response);
         //Based on gender, remove Maternity/Paternity leave type
 
-        $getcurrentusergender = getCurrentUserGender();
+        // $getcurrentusergender = getCurrentUserGender();
 
-        for ($i = 0; $i < count($response); $i++) {
-            $singleLeaveType = $response[$i];
 
-            if ($getcurrentusergender == 'male') {
-                if ($response[$i]['leave_type'] == 'Maternity Leave')
-                    unset($response[$i]);
-            } else
-             if ($getcurrentusergender == 'female') {
-                if ($response[$i]['leave_type'] == 'Paternity Leave')
-                    unset($response[$i]);
-            }
-        }
+
+        // for ($i = 0; $i < count($response); $i++) {
+        //     $singleLeaveType = $response[$i];
+        //     if ($getcurrentusergender == 'male') {
+        //         if ($response[$i]['leave_type'] == 'Maternity Leave')
+        //             unset($response[$i]);
+        //     } else
+        //     if ($getcurrentusergender == 'female') {
+        //         if ($response[$i]['leave_type'] == 'Paternity Leave')
+        //             unset($response[$i]);
+        //     }
+        // }
 
 
         return $response;
@@ -3897,14 +3978,23 @@ class VmtAttendanceService
                 $mop_count++;
             }
         }
-        $response['absent_count'] = $absent_count;
-        $response['absent_count'] = $absent_count;
-        $response['present_count'] = $present_count;
-        $response['leave_emp_count'] = count($leave_employee_count);
-        $response['lg_count'] = $lc_count;
-        $response['eg_count'] = $eg_count;
-        $response['mop_count'] = $mop_count;
-        $response['mip_count'] = $mip_count;
+        // $attendanceOverview['absent_count'] = $absent_count;
+        $attendanceOverview['absent_count'] = $absent_count;
+        $attendanceOverview['present_count'] = $present_count;
+        $attendanceOverview['leave_emp_count'] = count($leave_employee_count);
+        $attendanceOverview['lg_count'] = $lc_count;
+        $attendanceOverview['eg_count'] = $eg_count;
+        $attendanceOverview['mop_count'] = $mop_count;
+        $attendanceOverview['mip_count'] = $mip_count;
+
+        $shifts = $this->getWorkShiftDetails();
+        $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+            ->where('leave_type_id', VmtLeaves::where('leave_type', 'On Duty')->first()->id)->count();
+        $leave_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+            ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
+        $upcomings['On duty'] =  $on_duty_count;
+        $upcomings['Leave'] = $leave_count;
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings];
         return $response;
     }
 
@@ -4217,5 +4307,36 @@ class VmtAttendanceService
         } else {
             return  $reg_sts;
         }
+    }
+
+    // public function getEmployeeUpcomingAppliedRequested()
+    // {
+    //     $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+    //         ->where('leave_type_id', VmtLeaves::where('leave_type', 'On Duty')->first()->id)->count();
+    //     $leave_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
+    //         ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
+    //     return $response = array('on_duty_count' => $on_duty_count, 'leave_count' => $leave_count);
+    // }
+    public function getWorkShiftDetails()
+    {
+        $workshiftCount = array();
+        $work_shift_details = VmtWorkShifts::all()->toArray();
+
+        foreach ($work_shift_details as $key => $single_shift_id) {
+
+            $work_shift_assigned_employees = VmtWorkShifts::join('vmt_employee_workshifts', 'vmt_employee_workshifts.work_shift_id', '=', 'vmt_work_shifts.id')
+                ->join('users', 'users.id', '=', 'vmt_employee_workshifts.user_id')
+                ->where('vmt_employee_workshifts.work_shift_id', '=', $single_shift_id['id'])
+                ->where('users.active', '=', 1)
+                ->get();
+            // $response ["work_shift_assigned_employees"][$key] = count( $work_shift_assigned_employees) ;
+            $response[$key]["work_shift_assigned_employees"] = count($work_shift_assigned_employees);
+            $response[$key]["work_shift_employee_data"] = $work_shift_assigned_employees;
+        }
+        // dd(count($workshiftCount));
+
+        return $response;
+
+        // return $work_shift->toArray();
     }
 }

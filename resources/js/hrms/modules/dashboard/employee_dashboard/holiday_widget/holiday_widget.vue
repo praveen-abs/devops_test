@@ -144,7 +144,7 @@ onMounted(() => {
     position: absolute;
     top: 55px !important;
     left: 10px;
-    z-index: 10000 !important;
+    z-index: 1 !important;
 }
 
 .p-galleria-item-container

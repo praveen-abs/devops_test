@@ -204,29 +204,29 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->is_default =$row["is_default"];
                 $fin_components->save();
 
-            return $rowdata_response = [
+        //     return $rowdata_response = [
 
-                'status' => 'success',
-                'error_fields' => [],
-            ];
-        }else{
-            return $rowdata_response = [
+        //         'status' => 'success',
+        //         'error_fields' => [],
+        //     ];
+        // }else{
+        //     return $rowdata_response = [
 
-                'status' => 'SUCCESS',
-                'message'=>'given data is already added',
-                'error_fields' => [],
-            ];
-        }
-        } catch (\Exception $e) {
-            //$this->deleteUser($user->id);
+        //         'status' => 'SUCCESS',
+        //         'message'=>'given data is already added',
+        //         'error_fields' => [],
+        //     ];
+        // }
+        // } catch (\Exception $e) {
+        //     //$this->deleteUser($user->id);
 
-            //dd("For Usercode : ".$row['emp_no']."  -----  ".$e);
-            return $rowdata_response = [
-                'row_number' => '',
-                'status' => 'failure',
-                'error_fields' => json_encode(['error' =>$e->getMessage()]),
-                'stack_trace' => $e->getTraceAsString()
-            ];
-        }
+        //     //dd("For Usercode : ".$row['emp_no']."  -----  ".$e);
+        //     return $rowdata_response = [
+        //         'row_number' => '',
+        //         'status' => 'failure',
+        //         'error_fields' => json_encode(['error' =>$e->getMessage()]),
+        //         'stack_trace' => $e->getTraceAsString()
+        //     ];
+        // }
     }
 }
