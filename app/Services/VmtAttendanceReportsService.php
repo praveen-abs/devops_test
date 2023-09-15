@@ -14,6 +14,8 @@ use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Department;
 use \Datetime;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -1180,9 +1182,60 @@ class VmtAttendanceReportsService
         return $data;
     }
 
-    public function detailedAttendanceReport($start_date, $end_date)
+    public function detailedAttendanceReport($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
-        // dd('testing');
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
+
         ini_set('max_execution_time', 3000);
         //dd($month);
         $reportresponse = array();
@@ -1803,9 +1856,19 @@ class VmtAttendanceReportsService
         }
 
         $data = array($heading_dates, $header_2, $reportresponse, $heading_dates_2);
-
+    }
+        catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+            ];
+        }
         return $data;
     }
+
+
     public function fetch_attendance_data($start_date, $end_date)
     {
         ini_set('max_execution_time', 3000);
@@ -2209,6 +2272,7 @@ class VmtAttendanceReportsService
 
         return  $reportresponse;
     }
+
 
     public function fetchAbsentReportData($start_date, $end_date)
     {
