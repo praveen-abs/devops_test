@@ -35,9 +35,9 @@
         <div>
 
             <DataTable :value="UseEmployeeMaster.employeeMaterReportSource"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+            paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
             <Column v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
                 style="white-space: nowrap;text-align: left; !important">
             </Column>
