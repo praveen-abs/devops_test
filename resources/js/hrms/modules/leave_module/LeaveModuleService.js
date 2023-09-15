@@ -49,6 +49,26 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
             canShowLoading.value = false
         })
     }
+
+    async function performLeaveWithdraw(leave_id) {
+
+        /*
+        await axios.post('/attendance/getEmployeeLeaveDetails', {
+            user_code: user_code,
+            filter_month: filter_month,
+            filter_year: filter_year,
+            filter_leave_status: filter_leave_status,
+
+        }).then((response) => {
+            array_employeeLeaveHistory.value = response.data.data;
+            console.log("getEmployeeLeaveHistory() : " + response.data);
+        }).finally(() => {
+            canShowLoading.value = false
+        });
+        */
+    }
+
+
     async function getEmployeeLeaveHistory(filter_month, filter_year, filter_leave_status) {
 
         let user_code = 0;
@@ -173,6 +193,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         //
 
         // Functions
+        performLeaveWithdraw,
 
         getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveHistory, getLeaveInformation, getEmployeeLeaveBalance,
         // org leave Balance functions

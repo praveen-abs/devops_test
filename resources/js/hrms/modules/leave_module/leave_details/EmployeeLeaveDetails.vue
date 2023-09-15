@@ -249,4 +249,10 @@ function Leavehistory_Addcomment_btn() {
     leaveModuleStore.canShowLeaveDetails = false;
 }
 
+function performLeaveWithDraw(leave_id){
+    leaveModuleStore.performLeaveWithdraw(leave_id);
+
+
+}
+
 </script>
