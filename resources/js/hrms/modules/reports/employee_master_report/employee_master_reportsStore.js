@@ -271,19 +271,19 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
         canShowLoading.value = true;
         filterbtn.value = val;
         if(val===2){
-                  axios.post('/fetch-master-employee-report',selectedfilters).then(res => {
+                axios.post('/fetch-master-employee-report',selectedfilters).then(res => {
                 console.log(res.data.rows,"get value ");
-                employeeCTCReportSource.value = res.data.rows
-                console.log(employeeCTCReportSource.value," testings data");
+                employeeMaterReportSource.value = res.data.rows;
+                console.log(employeeMaterReportSource.value ," testings data");
                 res.data.headers.forEach(element => {
                     let format = {
                         title: element
                     }
-                    Employee_CTCReportDynamicHeaders.value.push(format)
+                    Employee_MaterReportDynamicHeaders.value.push(format)
                     console.log(element);
                 });
     
-                console.log(Employee_CTCReportDynamicHeaders.value);
+                console.log(Employee_MaterReportDynamicHeaders.value);
     // 
                 if (res.data.rows.length === 0) {
                     Swal.fire({

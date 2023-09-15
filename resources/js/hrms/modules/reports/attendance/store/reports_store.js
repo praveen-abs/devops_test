@@ -10,6 +10,10 @@ export const UseReports_store = defineStore("UseReports_store",()=>{
 
     const { downloand , legal_entity , department, } = ref();
 
+    // const {  }
+
+    const activetab =  ref(1);
+
     function fetchFilterClientIds(){
         canShowLoading.value = true;
         axios.get('/filter-client-ids').then((res)=>{
@@ -20,7 +24,11 @@ export const UseReports_store = defineStore("UseReports_store",()=>{
         })
     }
 
+    // function 
+
     // function fetch
+
+    // function 
 
     function get_All_Department(){
         canShowLoading.value = true;
@@ -41,6 +49,9 @@ export const UseReports_store = defineStore("UseReports_store",()=>{
         // variables 
         legal_entity,
         department,
+
+        // navbar var
+        activetab, 
 
 
         // functions 

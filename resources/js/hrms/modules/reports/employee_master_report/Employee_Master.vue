@@ -2,18 +2,12 @@
     <div>
 
     <div>
-        <div class="bg-white p-2 flex  justify-between">
+        <div class="flex justify-between p-2 bg-white">
             <!-- v-model="filters['global'].value" -->
             <div>
                 <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10" style="height: 3em; font-['poppins'] !mb-[4px]" />
-
-                <!-- <Dropdown optionLabel="name" placeholder="Select Category" class="w-[200px] mx-2" /> -->
             </div>
             <div class="flex items-center ">
-                <!-- <div>
-                    <button class="px-3 py-2 " :class="[Basic_details==1 ? 'bg-black  text-[white] rounded-l-md' : ' bg-[#E6E6E6] text-black rounded-l-md']" @click="Basic_details=1">Basic</button>
-                    <button class="px-3 py-2 " :class="[Basic_details==2 ? 'bg-black text-[white] rounded-r-md' : ' bg-[#E6E6E6] text-black  rounded-r-md']" @click="Basic_details=2">Detail</button>
-                </div> -->
                 <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]" @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download,UseEmployeeMaster.downloadEmployeeMaster() ">
                         <p class=" relative left-2 font-['poppins']">Download</p>
                         <div id="btn-download"  style=" position: absolute; right: 0;"
@@ -34,14 +28,14 @@
 
         <div>
 
-            <DataTable :value="UseEmployeeMaster.employeeMaterReportSource"
+            <!-- <DataTable :value="UseEmployeeMaster.employeeMaterReportSource"
             paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
             <Column v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
                 style="white-space: nowrap;text-align: left; !important">
             </Column>
-        </DataTable>
+        </DataTable> -->
 
         </div>
     </div>
@@ -61,7 +55,7 @@ const Basic_details =  ref(1);
 const UseEmployeeMaster = EmployeeMasterStore();
 
 onMounted(()=>{
-    UseEmployeeMaster.getemployeeMater();
+    // UseEmployeeMaster.getemployeeMater();
     // fetchFilterClientIds();
 });
 
