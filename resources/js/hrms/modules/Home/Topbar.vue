@@ -319,7 +319,12 @@ const getSessionClient = () => {
     axios.get('session-sessionselectedclient').then(res => {
         console.log(res.data);
         currentlySelectedClient.value = res.data
+    }).finally(() => {
+        updateMasterConfigClientCode()
+
     })
+
+
 }
 
 const submitSelectedClient = (client) => {
@@ -331,7 +336,7 @@ const submitSelectedClient = (client) => {
         getOrgList()
     }).finally(() => {
         useDashboard.canShowLoading = false
-
+        updateMasterConfigClientCode();
     })
 }
 
@@ -374,10 +379,20 @@ const readNotification = (notification_id) => {
 }
 
 
+function updateMasterConfigClientCode(){
+        axios.get('/update-MasterConfig-ClientCode',{
+        }).then(()=>{
+        });
+
+    }
+
+
+
 onMounted(() => {
     getOrgList()
     getClientList()
-    getSessionClient()
+    getSessionClient();
+    updateMasterConfigClientCode();
     setTimeout(() => {
         canShowLoading.value = true
     }, 2000);
