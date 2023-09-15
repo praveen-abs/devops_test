@@ -608,7 +608,7 @@ class VmtCorrectionController extends Controller
                 "user_id": "DM189"
                }
            ]';
-           
+
 
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '', $dunamis);
@@ -714,7 +714,6 @@ class VmtCorrectionController extends Controller
     {
 
         return view('vmt_MasterEmployeedata_Upload');
-
     }
 
     public function importMasetrEmployeesExcelData(Request $request)
@@ -736,7 +735,6 @@ class VmtCorrectionController extends Controller
             $data['failed'] = $validator->errors()->all();
             return response()->json($data);
         }
-
     }
 
     private function storeMasterdEmployeesData($data)
@@ -780,7 +778,6 @@ class VmtCorrectionController extends Controller
 
                 $Single_data['child_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['child_dob'])->format('Y-m-d');
             }
-
         }
         unset($Single_data);
 
@@ -801,7 +798,6 @@ class VmtCorrectionController extends Controller
                 'status' => 'failure',
                 'message' => 'Please fill the excel',
             ];
-
         } else {
             foreach ($excelRowdata_row[0] as $key => $excelRowdata) {
 
@@ -853,7 +849,6 @@ class VmtCorrectionController extends Controller
                                 if (!$result) {
                                     $fail($value . '<b> : ' . $attribute . ' is invalid');
                                 }
-
                             }
                         },
                     ],
@@ -992,7 +987,6 @@ class VmtCorrectionController extends Controller
                 'data' => $data_array,
                 'error_data' => $rowdata_response['data']
             ];
-
         } else {
 
             return $responseJSON = [
@@ -1000,7 +994,6 @@ class VmtCorrectionController extends Controller
                 'message' => "Please fix the below excelsheet data",
                 'data' => $data_array
             ];
-
         }
 
         return response()->json($responseJSON);
@@ -1033,8 +1026,6 @@ class VmtCorrectionController extends Controller
                 'mail_status' => '',
                 'data' => $response['data']
             ];
-
-
         } catch (\Exception $e) {
             //dd($e);
             // $this->deleteUser($user->id);
@@ -1045,7 +1036,6 @@ class VmtCorrectionController extends Controller
                 'data' => $e->getMessage(),
             ];
         }
-
     }
 
 
@@ -1157,32 +1147,26 @@ class VmtCorrectionController extends Controller
 
                                     $dob = $single_data;
                                     $update_employee_data->dob = $dob ? $this->getdateFormatForDb($dob) : '';
-
                                 } else if ($data_key == 'doj') {
 
                                     $doj = $single_data;
                                     $update_employee_data->doj = $doj ? $this->getdateFormatForDb($doj) : '';
-
                                 } else if ($data_key == 'dol') {
 
                                     $dol = $single_data;
                                     $update_employee_data->dol = $dol ? $this->getdateFormatForDb($dol) : '';
-
                                 } else if ($data_key == 'martial_status') {
 
                                     $martial_status_id = VmtMaritalStatus::where('name', ucfirst($single_data ?? ''))->first();
                                     $update_employee_data->marital_status_id = !empty($martial_status_id) ? $martial_status_id->id : '';
-
                                 } else if ($data_key == 'blood_group') {
 
                                     $blood_group_id = VmtBloodGroup::where('name', $single_data ?? '')->first();
                                     $update_employee_data->blood_group_id = !empty($blood_group_id) ? $blood_group_id->id : '';
-
                                 } else if ($data_key == 'bank_name') {
 
                                     $bank_id = Bank::where('bank_name', $single_data ?? '')->first();
                                     $update_employee_data->bank_id = !empty($bank_id) ? $bank_id->id : '';
-
                                 } else {
                                     $update_employee_data->$single_employee_data = $single_data;
                                 }
@@ -1229,12 +1213,10 @@ class VmtCorrectionController extends Controller
                                     $emp_mother_data->name = $single_data;
                                     $emp_mother_data->save();
                                 }
-
                             } else if ($data_key == 'mother_dob') {
 
                                 $emp_mother_data->dob = $this->getdateFormatForDb($single_data);
                                 $emp_mother_data->save();
-
                             }
                         }
 
@@ -1250,7 +1232,6 @@ class VmtCorrectionController extends Controller
 
                                     $emp_spouse_data->name = $single_data;
                                     $emp_spouse_data->save();
-
                                 }
                             } else if ($data_key == 'spouse_dob') {
 
@@ -1274,7 +1255,6 @@ class VmtCorrectionController extends Controller
 
                                     $emp_spouse_male_data->name = $single_data;
                                     $emp_spouse_male_data->save();
-
                                 }
                             } else if ($data_key == 'spouse_dob') {
 
@@ -1318,7 +1298,6 @@ class VmtCorrectionController extends Controller
                                     if (!empty($single_data) && $single_data != 'NULL') {
                                         $department_id = Department::where('name', $single_data)->first();
                                         $update_empOffice_data->department_id = $department_id->id;
-
                                     }
                                 } else {
                                     $update_empOffice_data->$single_office_data = $single_data;
@@ -1343,7 +1322,6 @@ class VmtCorrectionController extends Controller
                             }
                             $newEmployee_statutoryDetails->$single_statutory_data = $single_data;
                             $newEmployee_statutoryDetails->save();
-
                         }
                     }
 
@@ -1364,7 +1342,6 @@ class VmtCorrectionController extends Controller
                             $compensatory->save();
                         }
                     }
-
                 }
                 return $response = ([
                     'status' => 'success',
@@ -1372,7 +1349,6 @@ class VmtCorrectionController extends Controller
                     'data' => ''
                 ]);
             }
-
         } catch (\Exception $e) {
             return $response = ([
                 'status' => 'failure',
@@ -1380,7 +1356,6 @@ class VmtCorrectionController extends Controller
                 'data' => $e->getMessage() . ' error_line' . $e->getline(),
             ]);
         }
-
     }
     private function getdateFormatForDb($date)
     {
@@ -1416,7 +1391,6 @@ class VmtCorrectionController extends Controller
                 'message' => 'Error for input date',
                 'data' => $e->getMessage() . ' error_line ' . $e->getline(),
             ]);
-
         }
     }
 
@@ -1705,8 +1679,6 @@ class VmtCorrectionController extends Controller
             'status' => 'success',
             'message' => 'updated successfully',
         ]);
-
-
     }
 
     public function setAnnualProjection()
@@ -1721,8 +1693,8 @@ class VmtCorrectionController extends Controller
         $end_date = Carbon::parse($end_date)->subMonth(1);
         $current_date = Carbon::parse($payslip_month);
 
-        $users = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-        ->where('client_id', $client_id)->get(['users.id','vmt_employee_details.doj']);
+        $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->where('client_id', $client_id)->get(['users.id', 'vmt_employee_details.doj']);
 
         // dd($users);
         foreach ($users as $single_users) {
@@ -1743,70 +1715,82 @@ class VmtCorrectionController extends Controller
                 $start_date = Carbon::parse($start_date)->addMonth();
                 if ($start_date->lt($current_date)) {
 
-                    $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-                    ->where('vmt_payroll.payroll_date', $start_date)
-                    ->where('vmt_emp_payroll.user_id', $single_users->id)
-                    ->first([
-                        'vmt_emp_payroll.id as id'
-                    ]);
+                    $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                        ->where('vmt_payroll.payroll_date', $start_date)
+                        ->where('vmt_emp_payroll.user_id', $single_users->id)
+                        ->first([
+                            'vmt_emp_payroll.id as id'
+                        ]);
 
-                    if($payslip_id){
-                        $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id',$payslip_id->id)->first();
-                    }else
-                    {
+                    if ($payslip_id) {
+                        $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id', $payslip_id->id)->first();
+                    } else {
                         $payslip_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                        ->where('user_id', $single_users->id)->first();
-
+                            ->where('user_id', $single_users->id)->first();
                     }
 
                     if ($payslip_details) {
-                        if($emp_payroll){
-                        $salary_project_data = new AbsSalaryProjection;
-                        $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                        $salary_project_data->payroll_months = $start_date;
-                        $salary_project_data->earned_basic = $payslip_details['earned_basic'];
-                        $salary_project_data->earned_hra = $payslip_details['earned_hra'];
-                        $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
-                        $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
-                        $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
-                        $salary_project_data->save();
+                        if ($emp_payroll) {
+                            $salary_project_data = new AbsSalaryProjection;
+                            $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                            $salary_project_data->payroll_months = $start_date;
+                            $salary_project_data->earned_basic = $payslip_details['earned_basic'];
+                            $salary_project_data->earned_hra = $payslip_details['earned_hra'];
+                            $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
+                            $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
+                            $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
+                            $salary_project_data->save();
                         }
-                    }else{
-                        return 'no payslip data found for '.$single_users->id.'user';
+                    } else {
+                        return 'no payslip data found for ' . $single_users->id . 'user';
                     }
 
-                    array_push($res,$payslip_details);
+                    array_push($res, $payslip_details);
                 } else {
 
                     $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                         ->where('user_id', $single_users->id)->first();
 
                     $salary_project_data = new AbsSalaryProjection;
-                    if($emp_payroll){
-                    $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                    $salary_project_data->payroll_months = $start_date;
-                    $salary_project_data->earned_basic = $compensatory_details['basic'];
-                    $salary_project_data->earned_hra = $compensatory_details['hra'];
-                    $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'];
-                    $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'];
-                    $salary_project_data->total_earned_gross = $compensatory_details['gross'];
-                    $salary_project_data->save();
+                    if ($emp_payroll) {
+                        $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                        $salary_project_data->payroll_months = $start_date;
+                        $salary_project_data->earned_basic = $compensatory_details['basic'];
+                        $salary_project_data->earned_hra = $compensatory_details['hra'];
+                        $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'];
+                        $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'];
+                        $salary_project_data->total_earned_gross = $compensatory_details['gross'];
+                        $salary_project_data->save();
                     }
 
 
-                    array_push($res,$compensatory_details);
-
+                    array_push($res, $compensatory_details);
                 }
-
             }
         }
 
-            // dd($res);
-        return  "saved" ;
-
+        // dd($res);
+        return  "saved";
     }
 
-
-
-
+    public function convertUserCodeToUserId()
+    {
+        $error = array();
+        $user_id = '';
+        $i=0;
+        $user_codes = array('NAT13839','NAT13850','NAT13894','NAT13963','NAT13835','NAT13902','NAMC029','NAT5012','VANTY037','NAT13965','NAT13949','NAT13948','NAT13929','NAT13897','NAT13811','NAT13872','NAT13879','NAT13816','NAT1905','VANTY025','NAT13856','NAT13802','NAT13848','NAT13817','NAT13851','NAT13899','NAT13786','NAT13833','NAT13804','NAT13799','VANTY026','VANTY032','NAT13788','NAT5015','NAT13974','NAT13956','NAT13812','VANTY007','NAT1904','NAT1372','NAT1364','NAT13898','NAT13935','NAT13853','NAT13913','NAT13955','NAT13847','NAT13825','NAT13933','NAT13983','NAT13938','NAT13803','NAT13810','NAT13911','NAT13880','NAT1374','NAT13814','KOV001','NAT13882','NAMC003','NAMC001','NAT13891','NAT14041','NAT14048','NAT14051','NAT14053','NAT0023','NAT14035','NAT14059','NAT14060','NAT14007','NAT14008','NAT14009','NAT13964','NAT13924','NAT13930','NAT13978','NAT14034','NAT14010','NAT13971','NAMC030','NAT13931','NAT13934','NAT13808','NAT13819','NAT14026','NAT13840','NAT14030','NAT13995','VANTY033','NAT13960','NAT14027','NAT13937','NAT13947','NAT14021','NAT13986','NAT13950','NAT13906','NAT13967','NAT13895','NAT13844','NAT13801','VANTY028','VANTY027','NAT13798','NAT13859','NAT13842','NAT13807','NAT13834','NAT13824','NAT13820','NAT13813','NAT13826','NAT14006','NAT13996','NAT5007','NAT13997','NAT13939','NAT13873','NAT14028','NAT14025','NAT5009','VANTY006','VANTY004','VANTY001','VANTY034','NAT1906','NAT14020','NAT13823','NAT14032','NAT13837','NAT14011','NAT1368','NAT14005','NAT14003','NAT13962','NAT13998','NAT13910','NAT14031','NAT14014','NAMC006','NAT14004','NAMC032','NAT13958','NAT14029','NAT13981','NAT13968','NAT13991','NAT13887','NAT13821','NAT13846');
+        foreach ($user_codes as $single_code) {
+            $user = User::where('user_code', $single_code);
+            if ($user->exists()) {
+                $user_id = $user_id.$user->first()->id . ',';
+                $i++;
+            } else {
+                array_push($error, $single_code . ' not exist in db');
+            }
+        }
+        $response['user_ids'] = $user_id;
+        $response['error'] = $error;
+        $response['count'] = $i;
+        return $response;
+    }
 }
