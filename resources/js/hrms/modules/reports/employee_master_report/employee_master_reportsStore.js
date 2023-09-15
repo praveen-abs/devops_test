@@ -251,7 +251,7 @@ const Employee_MaterReportDynamicHeaders =  ref([]);
 
     function downloadEmployeeMaster(){
 
-        let url = '/generate-employee-ctc-report'
+        let url = '/generate-master-employee-report-data'
         canShowLoading.value = true;
         axios.post(url,selectedfilters, { responseType: 'blob' }).then((response) => {
             console.log(response.data);
