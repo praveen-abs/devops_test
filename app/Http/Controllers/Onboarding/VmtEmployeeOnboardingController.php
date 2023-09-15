@@ -965,7 +965,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             $quick_onboarding_column_data =["Employee Code","Employee Name","Legal Entity","Email","DOJ","Mobile Number","Designation","Work Location",
                                             "L1 Manager Code","Basic","HRA","Statutory Bonus","Child Education Allowance","Food Coupon","LTA",
-                                            "Special Allowance","Other Allowance	Gross","EPF Employer Contribution","ESIC Employer Contribution","Insurance","Graduity","CTC",
+                                            "Special Allowance","Other Allowance" ,"Gross","EPF Employer Contribution","ESIC Employer Contribution","Insurance","Graduity","CTC",
                                              "Net Income","EPF Employee","ESIC Employee","Professional Tax","Labour Welfare Fund"
             ];
             $data['quick_onboard_column_data'] = $quick_onboarding_column_data;

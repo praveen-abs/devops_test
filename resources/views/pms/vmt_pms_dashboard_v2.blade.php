@@ -229,7 +229,7 @@
 
                             </div>
                             @if ($canShowOverallScoreCard_SelfAppraisal_Dashboard == 'true')
-                                <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
+                                <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5 d-flex my-3">
                                     <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
                                         <div class="card-body">
                                             <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
