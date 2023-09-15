@@ -21,13 +21,15 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
-class VmtEmployeeDocumentsService {
+class VmtEmployeeDocumentsService
+{
 
 
-    public function getEmployeeAllDocumentDetails($user_code){
+    public function getEmployeeAllDocumentDetails($user_code)
+    {
 
-            //Validate
-            $validator = Validator::make(
+        //Validate
+        $validator = Validator::make(
             $data = [
                 'user_code' => $user_code
             ],
@@ -41,7 +43,7 @@ class VmtEmployeeDocumentsService {
 
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
@@ -49,61 +51,45 @@ class VmtEmployeeDocumentsService {
         }
 
 
-        try{
+        try {
 
-           $query_user_id=User::where('user_code',$user_code)->first()->id;
+            $query_user_id = User::where('user_code', $user_code)->first()->id;
 
-            // $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
-            //         ->where('vmt_employee_documents.user_id',$query_user_id)
-            //          ->orWhereNull('vmt_employee_documents.id')
-            //         ->where('vmt_documents.is_onboarding_doc','0')
-            //         // ->where('vmt_documents.is_mandatory','1')
-            //         ->get();
+            $query_document = VmtDocuments::where('is_mandatory', 1)->pluck('id');
 
+            $query_user_doc = VmtEmployeeDocuments::where('user_id', $query_user_id)->whereIn('doc_id', $query_document)->get();
 
-             $query_document =VmtDocuments::where('is_mandatory',1)->get();
-             $query_doc_id = array();
-          foreach ($query_document as $key => $Singledocid)
-            {
-                $query_doc_id[] = $Singledocid;
+            $reponse = $query_document->diff($query_user_doc);
+
+            $emp_documents = array();
+            $i = 0;
+            foreach ($reponse as $key => $docid) {
+
+                $employee_documents = VmtEmployeeDocuments::where('user_id', $query_user_id)->where('doc_id', $docid)->first();
+
+                if (!empty($employee_documents)) {
+
+                    $emp_documents[$i] = $employee_documents;
+                    $emp_documents[$i]['document_name'] = VmtDocuments::where('id', $docid)->first()->document_name;
+                } else {
+
+                    $emp_documents[$i]['document_name'] = VmtDocuments::where('id', $docid)->first()->document_name;
+                    $emp_documents[$i]['status'] = null;
+                }
+                $i++;
             }
-
-             $query_user_doc_id = array();
-          foreach ($query_doc_id as $key => $Singledocid)
-            {
-                $query_user_doc_id[] = VmtEmployeeDocuments::where('user_id',$query_user_id)->where('doc_id',$Singledocid['id'])->first();
-             }
-
-             $reponse= array_diff($query_user_doc_id,$query_doc_id);
-             $emp_documents=array();
-             $i=0;
-             foreach ($reponse as $key => $docid) {
-
-                 if($docid){
-                     $emp_documents[$i]=$docid;
-                     $emp_documents[$i]['document_name']=VmtDocuments::where('id',($key+1))->first()->document_name;
-                 }else{
-                      $emp_documents[$i]['document_name']=VmtDocuments::where('id',($key+1))->first()->document_name;
-                      $emp_documents[$i]['status']=null;
-                 }
-                 $i++;
-           }
             return response()->json([
                 'status' => 'success',
                 'message' => '',
                 'data' => $emp_documents
             ]);
-
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
                 'message' => 'Error while fetching employee document details',
                 'data' => $e
             ]);
-
         }
-
     }
 
     /*
@@ -112,9 +98,10 @@ class VmtEmployeeDocumentsService {
 
 
     */
-    public function getEmployeeDocumentsSettings(){
+    public function getEmployeeDocumentsSettings()
+    {
 
-        try{
+        try {
             $response = VmtDocuments::all();
 
             return response()->json([
@@ -122,22 +109,20 @@ class VmtEmployeeDocumentsService {
                 "message" => "",
                 "data" => $response,
             ]);
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching from vmt_documents",
                 "data" => $e,
             ]);
         }
-
     }
 
-    public function updateEmployeeDocumentsSettings($data){
-        try{
-            foreach($data as $singleRecord){
-                $document = VmtDocuments::where('id',$singleRecord['id'] )->first();
+    public function updateEmployeeDocumentsSettings($data)
+    {
+        try {
+            foreach ($data as $singleRecord) {
+                $document = VmtDocuments::where('id', $singleRecord['id'])->first();
                 $document->is_onboarding_doc = $singleRecord['is_onboarding_doc'];
                 $document->is_mandatory = $singleRecord['is_mandatory'];
                 $document->save();
@@ -149,15 +134,12 @@ class VmtEmployeeDocumentsService {
                 "message" => "Documents settings updated successfully",
                 "data" => "",
             ]);
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while updating vmt_documents",
                 "data" => $e,
             ]);
         }
-
     }
 }

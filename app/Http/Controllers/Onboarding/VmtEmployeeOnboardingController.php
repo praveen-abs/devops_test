@@ -301,6 +301,20 @@ class VmtEmployeeOnboardingController extends Controller
         try {
             $data = $request->all();
 
+               $query_client = VmtClientMaster::find(session('client_id'));
+            if(!empty( $query_client )){
+                $client_name = $query_client->client_fullname;
+            }else{
+                $client_name =" ";
+            }
+
+           if($client_name == "All"){
+                return $response = [
+                    'status' => 'failure',
+                    'message' => 'you are not authorized to do this action',
+                    'data' => '',
+                ];
+           }
 
             $user_code = $data['employee_code'];
 
@@ -431,6 +445,52 @@ class VmtEmployeeOnboardingController extends Controller
 
                 array_push($onboard_data, $Emp_data);
             }
+        //     $currentRowInExcel =0;
+        //     $excelRowdata_row = $onboard_data ;
+
+        // foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
+
+        //           $currentRowInExcel++;
+
+        //     $rules = [
+
+        //         'department' => 'required|exists:vmt_department,name',
+
+        //     ];
+
+        //     $messages = [
+        //         'required' => 'Field <b>:attribute</b> is required',
+        //         'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
+        //     ];
+
+        //     $validator = Validator::make($excelRowdata, $rules, $messages);
+
+        //     if (!$validator->passes()) {
+
+        //         $rowDataValidationResult = [
+        //             'row_number' => $currentRowInExcel,
+        //             'status' => 'failure',
+        //             'message' =>json_encode($validator->errors()),
+        //             'data' =>  ""
+        //         ];
+
+        //         array_push($data_array, $rowDataValidationResult);
+
+        //         $isAllRecordsValid = false;
+        //     }
+        // }
+
+
+        // if (!$isAllRecordsValid) {
+
+        //     return $response = [
+        //         'status' => 'failure',
+        //         'message' =>"Please fix th
+        //         e below excelsheet data",
+        //         'data' =>$data_array
+        //      ];
+
+        // }
 
             $existing_user_data = array();
             foreach ($onboard_data  as $key => $excelRowdata) {
@@ -903,6 +963,22 @@ class VmtEmployeeOnboardingController extends Controller
             });
             $data['client_details'] = $client_data;
 
+            $quick_onboarding_column_data =["Employee Code","Employee Name","Legal Entity","Email","DOJ","Mobile Number","Designation","Work Location",
+                                            "L1 Manager Code","Basic","HRA","Statutory Bonus","Child Education Allowance","Food Coupon","LTA",
+                                            "Special Allowance","Other Allowance	Gross","EPF Employer Contribution","ESIC Employer Contribution","Insurance","Graduity","CTC",
+                                             "Net Income","EPF Employee","ESIC Employee","Professional Tax","Labour Welfare Fund"
+            ];
+            $data['quick_onboard_column_data'] = $quick_onboarding_column_data;
+
+            $bulk_onboarding_column_data =["Employee Code","Employee Name","Legal Entity","Email","Gender","DOJ","Location","DOB","Pan No","Aadhar","Marital Status","Mobile Number","Bank Name",
+            "Bank ifsc","Account No","Current Address","Permanent Address","Father name","Mother Name","Spouse Name","Department","Process","Designation",
+            "Cost Center","Confirmation Period","Holiday Location","L1 Manager Code","Work Location","Official Mail","Official Mobile","Emp Notice","Basic",
+            "HRA","Statutory Bonus","dearness  allowance","Child Education Allowance","Food Coupon","LTA","Special Allowance","Other Allowance","Gross",
+            "EPF Employer Contribution","ESIC Employer Contribution","Insurance","CTC","Graduity","EPf Employee","ESIC Employee","Professional Tax",
+            "Labour Welfare Fund","Net Income","uan number","Pf applicable","Esic applicable","Ptax location","tax regime"
+            ];
+            $data['bulk_onboard_column_data'] = $bulk_onboarding_column_data;
+
             $response = ([
                 'status' => 'success',
                 'message' => '',
@@ -917,5 +993,17 @@ class VmtEmployeeOnboardingController extends Controller
         }
 
         return response()->json($response);
+    }
+
+
+    public function updateMasterConfigClientCode(Request $request, VmtEmployeeService $employeeService){
+
+        $query_client = VmtClientMaster::find(session('client_id'));
+
+        $client_id =$query_client->id;
+
+        $response = $employeeService->updateMasterConfigClientCode( $client_id);
+
+        return $response;
     }
 }
