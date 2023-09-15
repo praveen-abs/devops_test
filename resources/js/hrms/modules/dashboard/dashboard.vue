@@ -201,18 +201,15 @@ const downloadExcelFile = async () => {
 
     });
 
-    // Generate the report content (replace this with your report data)
-    const reportData = [
-        ['', '', ''],
-        ['', '', ''],
-        [authorMessage, '', ''],
-        // Add more rows for your report
-    ];
+    worksheet.addRow(['']);
 
-    // Add the report data after the last row of data
-    // reportData.forEach((rowData) => {
-    //     worksheet.addRow(rowData);
-    // });
+    // Merge three cells for the author message
+    const authorRow = worksheet.addRow(['']); // Add an empty row
+    authorRow.getCell(1).value = authorMessage;
+    worksheet.mergeCells(authorRow.number, 1, authorRow.number, 3); // Merge three cells
+    authorRow.getCell(1).alignment = { wrapText: true };
+    authorRow.getCell(1).font = { italic: true };
+
 
     // Create a Blob from the workbook
     const blob = await workbook.xlsx.writeBuffer();
