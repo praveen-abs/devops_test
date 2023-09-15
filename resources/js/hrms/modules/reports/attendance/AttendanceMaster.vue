@@ -1,18 +1,15 @@
 <template>
-    <div class="px-4">
+    <div class="px-2">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Attendance Reports</h1>
             <div>
-                <!-- <button class="px-2 py-2 bg-black rounded-lg hover:bg-sky-700"
-                    @click="useEmployeeReport.getEmployeeCTC();"><i class="pi pi-filter"></i></button> -->
                     <button class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] " ><i class="mr-2 pi pi-filter"></i> Apply Filter</button>
             </div>
         </div>
 
         <div style="position: relative;">
-            <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-            <div class="flex justify-between">
-                <ul class="flex mb-3 divide-x max-[1200px]:!w-[60%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%] border-[1px] border-[#000]"
+            <div class="flex justify-between"> 
+                <ul class="flex mb-3 divide-x max-[1200px]:!w-[50%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%]"
                     id="pills-tab" role="tablist">
                     <li class="nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                   
@@ -86,39 +83,26 @@
                     <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="flex justify-between max-[1200px]:w-[40%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%] border-[1px] border-[#000]">
+                <ul class="flex justify-between max-[1200px]:w-[50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
                     <li class="flex items-center">
-                        <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins']">Period : </h1>
-                        
-                        <!-- <MultiSelect v-model="periodDate" :options="useEmployeeReport.PeriodMonth" optionLabel="month"
-                            placeholder="Select period" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)"
-                            optionValue="date" :maxSelectedLabels="3"
-                            class="min-w-[100px] w-[140px] !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" /> -->
-                            
-                        <!-- <Dropdown  optionLabel="month" editable v-model="periodDate" @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" :options="useEmployeeReport.PeriodMonth" optionValue="date" placeholder="Select period" class=" min-w-[100px] w-[114px] !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]"  /> -->
-                        
+                        <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins']">Period : </h1>                        
                         <Dropdown optionLabel="month" optionValue="date" :options="useEmployeeReport.PeriodMonth" v-model="periodDate"
                         @change="useEmployeeReport.updateEmployee_Basic_CTC(periodDate)" placeholder="Select period"
-                    class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
-
+                    class="w-[120px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
-                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']">Department : </h1>
-                        <!-- <Dropdown v-model="department" editable  optionLabel="name" placeholder="Department" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]" optionValue="id" :options="useEmployeeReport.department" @change="useEmployeeReport.getEmployeeCTCReports(department)" />
-                         -->
+                        <h1 class="text-[12px] text-black mx-2 font-semibold  font-['poppins']">Department : </h1>
                         <MultiSelect v-model="department" :options="useEmployeeReport.department" optionLabel="name"
                             placeholder="Department" @change="useEmployeeReport.getEmployeeCTCReports(department)"
                             optionValue="id" :maxSelectedLabels="3"
-                            class="min-w-[100px] w-[150px]   !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
+                            class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
-                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins'] ">Legal Entity : </h1>
-                        <!-- <Dropdown @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity" editable  optionLabel="client_fullname" :options="useEmployeeReport.client_ids" optionValue="id" placeholder="Legal Entity" class="w-[200px] !font-semibold !font-['poppins'] text-[#000] !h-10 !bg-[#E6E6E6]"  /> -->
-
+                        <h1 class="text-[12px] text-black mx-1 font-semibold  font-['poppins'] ">Legal Entity : </h1>
                         <MultiSelect @change="useEmployeeReport.sentFilterClientIds(legalEntity)" v-model="legalEntity"
                             :options="useEmployeeReport.client_ids" optionLabel="client_fullname" placeholder="Legal Entity"
                             optionValue="id" :maxSelectedLabels="3"
-                            class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
+                            class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                 </ul>
 
@@ -130,14 +114,16 @@
                     <div>
                         <div class="card-body">
                             <div v-if="activetab === 1">
-                                <!-- <salary_Revision_pending /> -->
+                                <attendanceBasicReports/>
                             </div>
                             <div v-if="activetab === 2">
-                                <!-- <EmployeeSummary /> -->
-                                <!-- <employee_CTC /> -->
+                          
                             </div>
                             <div v-if="activetab === 3">
-                                <!-- <salary_Revision_Cancelled /> -->
+                         
+                            </div>
+                            <div v-if="activetab === 6">
+                                <others_attendance_Reports/>
                             </div>
                         </div>
                     </div>
@@ -149,6 +135,8 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import attendanceBasicReports from './attendanceBasicReports/attendanceBasicReports.vue';
+import others_attendance_Reports from './others_attendanceReports/others_attendance_Reports.vue';
 
 import { EmployeeMasterStore } from "../employee_master_report/employee_master_reportsStore";
 
