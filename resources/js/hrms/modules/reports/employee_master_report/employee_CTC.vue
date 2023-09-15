@@ -3,9 +3,7 @@
         <div class="flex justify-between p-2 bg-white">
             <!-- v-model="filters['global'].value" -->
             <div class="">
-                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10  " />
-
-             
+                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10  " />             
             </div>
             <div class="flex items-center ">
                 <h1 class="text-[12px] text-black font-semibold  font-['poppins']">Personal Details -</h1>

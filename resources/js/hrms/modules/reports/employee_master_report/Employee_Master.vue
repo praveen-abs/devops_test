@@ -5,7 +5,7 @@
         <div class="bg-white p-2 flex  justify-between">
             <!-- v-model="filters['global'].value" -->
             <div>
-                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10" style="height: 3em; font-['poppins'] " />
+                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10" style="height: 3em; font-['poppins'] !mb-[4px]" />
 
                 <!-- <Dropdown optionLabel="name" placeholder="Select Category" class="w-[200px] mx-2" /> -->
             </div>
