@@ -185,6 +185,8 @@
             </div>
         </div>
         <div class="text-end mx-4 my-4">
+            <button class="btn btn-orange px-5 mx-2" @click="Leavehistory_Addcomment_btn" v-if="leaveModuleStore.setLeaveDetails.can_withdraw_leave !== null && leaveModuleStore.setLeaveDetails.can_withdraw_leave">Withdraw</button> <!-- For Employee -->
+            <button class="btn btn-orange px-5 mx-2" @click="Leavehistory_Addcomment_btn" v-if="leaveModuleStore.setLeaveDetails.can_revoke_leave !== null && leaveModuleStore.setLeaveDetails.can_revoke_leave">Revoke</button> <!-- For Manager -->
             <button class="btn btn-orange px-5 " @click="Leavehistory_Addcomment_btn">Post</button>
         </div>
         <!-- {{ leaveModuleStore.setLeaveDetails }} -->

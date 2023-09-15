@@ -118,7 +118,7 @@ class VmtMasterConfigController extends Controller
 
          $module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->pluck('id');
 
-        return  $serviceVmtAppPermissionsService->getClient_MobileModulePermissionDetails($request->client_id,$module_id);
+        return  $serviceVmtAppPermissionsService->getClient_MobileModulePermissionDetails($request->client_id,$module_id,$user_code=null);
     }
     public function getClient_AllModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
                     $client_id =sessionGetSelectedClientid();

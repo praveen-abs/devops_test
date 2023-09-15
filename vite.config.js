@@ -137,6 +137,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/roles_permission/RolesPermission.js',
                 'resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js',
                 'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_settings.js',
 
                 // super Admin screen
                 'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
