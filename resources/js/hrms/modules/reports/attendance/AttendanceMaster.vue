@@ -13,10 +13,7 @@
                     id="pills-tab" role="tablist">
                     <li class="nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                   
-                        <!-- <router-link to="" @click="activetab = 1"
-                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
-                            :class="[activetab === 1 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
-                            Master </router-link> -->
+
                             <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820] w-[100%]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
                             aria-selected="true" @click="activetab =1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             DETAILED REPORT
@@ -33,10 +30,7 @@
                             aria-selected="true" @click="activetab = 2" :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             MUSTER ROLL
                         </a>    
-                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
-                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
-                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
-                            CTC </router-link> -->
+
                         <div v-if="activetab === 2" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
                             style="border:2.2px solid #F9BE00 !important"></div>
                             <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
@@ -46,10 +40,6 @@
                             aria-selected="true" @click="activetab = 3" :class="[activetab === 3 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             CONSOLIDATE
                         </a>    
-                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
-                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
-                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
-                            CTC </router-link> -->
                         <div v-if="activetab === 3" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
                             style="border:2.2px solid #F9BE00 !important"></div>
                             <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
@@ -59,10 +49,7 @@
                             aria-selected="true" @click="activetab = 4" :class="[activetab === 4 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             OVERTIME
                         </a>    
-                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
-                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
-                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
-                            CTC </router-link> -->
+ 
                         <div v-if="activetab === 4" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
                             style="border:2.2px solid #F9BE00 !important"></div>
                             <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
@@ -72,15 +59,10 @@
                             aria-selected="true" @click="activetab = 5" :class="[activetab === 5 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             OTHERS
                         </a>    
-                        <!-- <router-link to="/testing_pradeesh/employee_CTC" @click="activetab = 2"
-                            class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]"
-                            :class="[activetab === 2 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']">Employee
-                            CTC </router-link> -->
                         <div v-if="activetab === 5" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
                             style="border:2.2px solid #F9BE00 !important"></div>
                             <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl" style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
-                    <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
                 <ul class="flex justify-between max-[1200px]:w-[50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
@@ -135,11 +117,9 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import attendanceBasicReports from './attendanceBasicReports/attendanceBasicReports.vue';
-import others_attendance_Reports from './others_attendanceReports/others_attendance_Reports.vue';
-
 import { EmployeeMasterStore } from "../employee_master_report/employee_master_reportsStore";
 
+import others_attendance_Reports from './others_attendanceReports/others_attendance_Reports.vue';
 import halfdayabsentreport from './HalfDayAbsentReport/halfdayabsentreport.vue';
 import attendanceAbsentReports from './attendanceAbsentReports/attendanceAbsentReports.vue';
 import attendanceBasicReports from './attendanceBasicReports/attendanceBasicReports.vue';
