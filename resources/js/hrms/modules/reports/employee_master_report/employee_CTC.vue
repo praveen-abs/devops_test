@@ -3,7 +3,7 @@
         <div class="flex justify-between p-2 bg-white">
             <!-- v-model="filters['global'].value" -->
             <div class="">
-                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10  " />             
+                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10  my-2" />             
             </div>
             <div class="flex items-center ">
                 <h1 class="text-[12px] text-black font-semibold  font-['poppins']">Personal Details -</h1>
@@ -34,9 +34,9 @@
         <div>
 
             <DataTable :value="UseEmployeeMaster.employeeCTCReportSource" :filters="filters"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+            paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
             <Column v-for="col of UseEmployeeMaster.Employee_CTCReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
                 style="white-space: nowrap;text-align: left; !important">
 

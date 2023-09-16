@@ -5,7 +5,7 @@
         <div class="flex justify-between p-2 bg-white">
             <!-- v-model="filters['global'].value" -->
             <div>
-                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10" style="height: 3em; font-['poppins'] !mb-[4px]" />
+                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10 my-2" style="height: 3em; font-['poppins'] !mb-[4px]" />
             </div>
             <div class="flex items-center ">
                 <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]" @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download,UseEmployeeMaster.downloadEmployeeMaster() ">
@@ -28,14 +28,14 @@
 
         <div>
 
-            <!-- <DataTable :value="UseEmployeeMaster.employeeMaterReportSource"
+            <DataTable :value="UseEmployeeMaster.employeeMaterReportSource"
             paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
             <Column v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
                 style="white-space: nowrap;text-align: left; !important">
             </Column>
-        </DataTable> -->
+        </DataTable>
 
         </div>
     </div>
@@ -56,7 +56,7 @@ const UseEmployeeMaster = EmployeeMasterStore();
 
 onMounted(()=>{
     // UseEmployeeMaster.getemployeeMater();
-    // fetchFilterClientIds();
+    //  UseEmployeeMaster.fetchFilterClientIds();
 });
 
 const filters = ref({

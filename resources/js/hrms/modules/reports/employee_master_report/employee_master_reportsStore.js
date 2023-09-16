@@ -68,9 +68,11 @@ const getEmployeeCTC = () => {
 
     function fetchFilterClientIds(){
         canShowLoading.value = true;
-        axios.get('/filter-client-ids').then((res)=>{
+        // // filter-client-ids
+        // clients-fetchAll
+        axios.get('/clients-fetchAll').then((res)=>{
             client_ids.value = res.data;
-            console.log(client_ids.value);
+            console.log(" testing client id",client_ids.value);
         }).finally(()=>{
             canShowLoading.value = false;
         })
