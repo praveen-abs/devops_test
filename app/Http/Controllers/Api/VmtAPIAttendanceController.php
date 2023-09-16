@@ -229,14 +229,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     {
         try {
 
-            $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status, $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
+            return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status, $request->review_comment, $request->user_type, $serviceNotificationsService = $serviceVmtNotificationsService);
 
-            return response()->json(
-                [
-                    'status' => 'success',
-                    'message' => 'Leave Request ' . $request->status . ' successfully',
-                ]
-            );
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',

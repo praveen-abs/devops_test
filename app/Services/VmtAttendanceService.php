@@ -895,7 +895,7 @@ class VmtAttendanceService
         }
     }
 
-    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment, VmtNotificationsService $serviceNotificationsService)
+    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $user_type, $review_comment, VmtNotificationsService $serviceNotificationsService)
     {
 
         $validator = Validator::make(
@@ -934,6 +934,29 @@ class VmtAttendanceService
 
             // $approval_status = $request->status;
             $leave_record = VmtEmployeeLeaves::where('id', $record_id)->first();
+
+            //Check whether the current status matches with the incoming status.
+            if($leave_record->status == $status)
+            {
+                if ($status == "Approved") {
+                    $text_status = "approved";
+                } else
+                if ($status == "Rejected") {
+                    $text_status = "rejected";
+                }
+
+                return $response = [
+                    'status' => 'failure',
+                    'message' => 'Leave Request has been already ' . $text_status,
+                    'mail_status' => 'Not sent',
+                    'notification' => 'Not sent',
+                    'error' => '',
+                    'error_verbose' => ''
+                ];
+            }
+
+
+
             //dd($leave_record);
             //dd( $leave_record);
             //dd( $request->status);
@@ -962,7 +985,7 @@ class VmtAttendanceService
             $VmtClientMaster = VmtClientMaster::first();
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
-            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id), true);
 
             if (!empty($user_type) && $user_type == "admin") {
 
