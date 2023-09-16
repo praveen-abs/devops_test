@@ -998,7 +998,8 @@ class VmtAttendanceService
                         request()->getSchemeAndHttpHost(),
                         $image_view,
                         $emp_avatar,
-                        $status
+                        $status,
+                        $user_type
                     )
 
                 );
