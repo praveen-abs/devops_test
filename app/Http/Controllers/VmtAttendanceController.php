@@ -146,8 +146,9 @@ class VmtAttendanceController extends Controller
             $request->record_id,
             auth()->user()->user_code,
             $request->status,
+            $request->user_type,
             $request->review_comment,
-            serviceNotificationsService: $serviceNotificationsService
+            $serviceNotificationsService
         );
     }
 
@@ -318,15 +319,6 @@ class VmtAttendanceController extends Controller
         return $serviceAttendanceService->withdrawLeave($request->leave_id);
     }
 
-
-    //Revoke Leave function
-    public function revokeLeave(Request $request)
-    {
-
-        $response = $this->approveRejectRevokeLeaveRequest($request);
-
-        return $response;
-    }
     /*
         Show the attendance IN/OUT time for the given month
 
