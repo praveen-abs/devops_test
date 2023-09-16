@@ -101,8 +101,8 @@ class VmtAttendanceServiceV2
     public function attendanceJobs($start_date, $end_date)
     {
         $user = user::get();
-        $start_date = '2023-07-31';
-        $end_date = '2023-08-15';
+        $start_date = '2023-07-26';
+        $end_date = '2023-08-25';
         $current_date = Carbon::parse($start_date);
         try {
             while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
@@ -114,10 +114,10 @@ class VmtAttendanceServiceV2
                     // dd($single_user);
                     $doj = Carbon::parse($single_user->doj);
                     //  employee in that company on date
-
+                   
                     if ($single_user->dol == null && Carbon::parse($doj)->lte($current_date) || $current_date->between($doj, Carbon::parse($single_user->dol))) {
 
-                        if ($single_user->id == 223)
+                     
 
                         $attendance_status = 'A';
                         $checkin_lat_long = null;
@@ -125,6 +125,10 @@ class VmtAttendanceServiceV2
                         $attendance_mode_checkin = null;
                         $attendance_mode_checkout = null;
                         $is_holiday = false;
+                        $checking_date = null;
+                        $checking_time = null;
+                        $checkout_date = null;
+                        $checkout_time = null;
                         $client_code = VmtClientMaster::where('id', $single_user->client_id)->first()->client_code;
                         if (
                             $client_code == "DM" ||  $client_code == 'VASA' || $client_code == 'LAL'
@@ -199,7 +203,8 @@ class VmtAttendanceServiceV2
                         $sortedCollection   =   $all_att_data->sortBy([
                             ['date', 'asc'],
                         ]);
-
+                        //    if($single_user->id==298)
+                        //    dd( $sortedCollection );
                         $checking_time_ar = $sortedCollection->first();
                         $checkout_time_ar =  $sortedCollection->last();
 
@@ -288,6 +293,7 @@ class VmtAttendanceServiceV2
                 }
               
                 $current_date->addDay();
+              //  dd(  $current_date);
             }
             dd('done');
         } catch (Exception $e) {
