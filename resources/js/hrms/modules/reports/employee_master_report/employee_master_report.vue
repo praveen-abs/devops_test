@@ -4,25 +4,14 @@
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Employee Master Report</h1>
             <div>
-                <!-- <button class="px-2 py-2 bg-black rounded-lg hover:bg-sky-700"
-                    @click="useEmployeeReport.getEmployeeCTC();"><i class="pi pi-filter"></i></button> -->
+<!-- 
+                <button @change="useEmployeeReport.clearfilterBtn(activetab)"
+                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
+                        class="mr-2 pi pi-times"></i> Clear Filter</button> -->
 
-                <button @click="useEmployeeReport.updateEmployeeApplyFilter(2)"
-                    v-if="useEmployeeReport.filterbtn === 1 && activetab === 2"
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] "><i
-                        class="mr-2 pi pi-filter"></i> Apply Filter</button>
-                <button @click="useEmployeeReport.updateEmployeeApplyFilter(1)"
-                    v-if="useEmployeeReport.filterbtn === 2 && activetab === 2"
+                        <button @click="useEmployeeReport.clearfilterBtn(activetab)"
                     class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
-                        class="mr-2 pi pi-times"></i> Clear Filter</button>
-                <button @click="useEmployeeReport.updateEmployeeMasterApplyFilter(2)"
-                    v-if="useEmployeeReport.filterbtn === 1 && activetab === 1"
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] "><i
-                        class="mr-2 pi pi-filter"></i> Apply Filter</button>
-                <button @click="useEmployeeReport.updateEmployeeMasterApplyFilter(1)"
-                    v-if="useEmployeeReport.filterbtn === 2 && activetab === 1"
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
-                        class="mr-2 pi pi-times"></i> Clear Filter</button>
+                        class="mr-2 pi pi-times"></i> Clear Filter</button> 
             </div>
         </div>
 
@@ -67,7 +56,7 @@
 
                         <Dropdown optionLabel="month" optionValue="date" :options="useEmployeeReport.PeriodMonth"
                             v-model="useEmployeeReport.period_Date"
-                            @change="useEmployeeReport.updateEmployee_Basic_CTC(useEmployeeReport.period_Date)"
+                            @change="useEmployeeReport.getSelectoption('date',useEmployeeReport.period_Date,activetab)"
                             placeholder="Select period"
                             class="w-[150px]  mx-2 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
 
@@ -77,20 +66,20 @@
     
                         <MultiSelect v-model="useEmployeeReport.Department" :options="useEmployeeReport.department"
                             optionLabel="name" placeholder="Department"
-                            @change="useEmployeeReport.getEmployeeCTCReports(useEmployeeReport.Department)" optionValue="id"
+                            @change="useEmployeeReport.getSelectoption('department',useEmployeeReport.Department,activetab)" optionValue="id"
                             :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]   !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']  whitespace-nowrap">Legal Entity : </h1>
-                        <MultiSelect @change="useEmployeeReport.sentFilterClientIds(useEmployeeReport.legal_Entity)"
+                        <MultiSelect @change="useEmployeeReport.getSelectoption('legal_entity',useEmployeeReport.legal_Entity,activetab)"
                             v-model="useEmployeeReport.legal_Entity" :options="useEmployeeReport.client_ids"
                             optionLabel="client_fullname" placeholder="Legal Entity" optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center my-1">
 
-                        <MultiSelect @change="useEmployeeReport.sentcategory(useEmployeeReport.select_Category)"
+                        <MultiSelect @change="useEmployeeReport.getSelectoption('Category',useEmployeeReport.select_Category,activetab)"
                             v-model="useEmployeeReport.select_Category" optionValue="id" :options="dropdown"
                             optionLabel="name" placeholder="Select Category" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6] mx-2 " />

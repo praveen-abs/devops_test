@@ -57,8 +57,6 @@ import { EmployeeMasterStore } from "./employee_master_reportsStore" ;
 const UseEmployeeMaster = EmployeeMasterStore();
 
 onMounted(()=>{
-    // UseEmployeeMaster.getEmployeeCTC();
-    // fetchFilterClientIds();
 });
 
 
