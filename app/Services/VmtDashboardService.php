@@ -107,7 +107,7 @@ class VmtDashboardService
         $leave_count = 0;
 
         //Get monthly attendance report data
-        $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
+        $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth_v2($user_code, $year, $month);
 
 
         //If there is some error in above line, then throw failure message
