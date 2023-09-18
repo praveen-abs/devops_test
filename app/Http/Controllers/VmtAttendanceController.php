@@ -780,7 +780,6 @@ class VmtAttendanceController extends Controller
                         $regularization_record = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
 
                         //check regularization status
-                        //dd(  $regularization_record['reason']);
                         $attendanceResponseArray[$key]["lc_status"] =  $regularization_record['status'];
                         $attendanceResponseArray[$key]["lc_reason"] = $regularization_record['reason'];
                         $attendanceResponseArray[$key]["lc_reason_custom"] = $regularization_record['cst_reason'];
@@ -928,7 +927,11 @@ class VmtAttendanceController extends Controller
     }
 
 
+    /*
+        TODO : DUPLICATION!! . Need to replace this with service class function to prevent
 
+
+    */
     private function isRegularizationRequestApplied($user_id, $attendance_date, $regularizeType)
     {
 
