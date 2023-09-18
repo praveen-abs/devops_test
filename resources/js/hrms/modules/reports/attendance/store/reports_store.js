@@ -74,8 +74,10 @@ function downloadEmployeeMaster(val){
 } 
 
 function getSelectoption(key,filterValue,active_status){
-
+    console.log(key,filterValue,active_status);
+    console.log(selectedfilters);
     let url;
+    
     if(active_status==1){
         url = `/fetch-attendance-data`;
     }else{

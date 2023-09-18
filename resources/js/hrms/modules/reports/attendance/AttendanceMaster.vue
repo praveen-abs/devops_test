@@ -165,7 +165,6 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { EmployeeMasterStore } from "../employee_master_report/employee_master_reportsStore";
 import { UseReports_store } from "./store/reports_store";
 
 import others_attendance_Reports from './others_attendanceReports/others_attendance_Reports.vue';
@@ -178,8 +177,6 @@ import attendanceLatecomingReports from './attendanceLatecomingReports/attendanc
 import attendanceReport_Detailed from './attendanceDetailReports/AttendanceReport_Detailed.vue';
 import { FilterMatchMode } from 'primevue/api';
 
-
-const useEmployeeReport = EmployeeMasterStore();
 
 const Reports_store = UseReports_store();
 
