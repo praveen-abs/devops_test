@@ -115,16 +115,19 @@ class VmtDashboardService
             return $attendance_DailyReport_PerMonth;
         }
 
+        //Get the Month details array only.
+        $array_att_month_details = $attendance_DailyReport_PerMonth['data'];
+
         for ($i = 01; $i <= $day; $i++) {
             $month = date('m');
             if ($i < 10) {
                 $i = '0' . $i;
             }
             $date = $year . '-' . $month . '-' . $i;
-            if ($attendance_DailyReport_PerMonth[$date]['checkin_time'] || $attendance_DailyReport_PerMonth[$date]['checkout_time']) {
+            if ($array_att_month_details[$date]['checkin_time'] || $array_att_month_details[$date]['checkout_time']) {
                 $present_count++;
-            } else if ($attendance_DailyReport_PerMonth[$date]['isAbsent']) {
-                if ($attendance_DailyReport_PerMonth[$date]['absent_status'] == 'Approved') {
+            } else if ($array_att_month_details[$date]['isAbsent']) {
+                if ($array_att_month_details[$date]['absent_status'] == 'Approved') {
                     $leave_count++;
                 } else {
                     $is_sunday_or_holiday = $this->checkingGivenDateHolidayOrNot($year, $month, $i);
