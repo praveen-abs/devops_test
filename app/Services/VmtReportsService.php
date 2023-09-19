@@ -278,7 +278,6 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-               
             foreach ($emp_master_detail as $single_details) {
                // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
@@ -319,6 +318,7 @@ class VmtReportsservice
                 }
                 $temp_ar['Location'] = $single_details->work_location;
                 $temp_ar['Aadhar Number'] = $single_details->aadhar_number;
+                dd( $temp_ar['Aadhar Number']);
                 $temp_ar['PAN Number'] = $single_details->pan_number;
                 $temp_ar['UAN Number'] = $single_details->uan_number;
                 $temp_ar['EPF Number'] = $single_details->epf_number;
