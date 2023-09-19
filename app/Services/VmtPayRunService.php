@@ -9,7 +9,9 @@ use App\Models\VmtEmployeeAttendance;
 use App\Services\VmtAttendanceReportsService;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtLeaves;
-
+use Illuminate\Support\Facades\Validator;
+use App\Models\VmtClientMaster;
+use App\Models\Department;
 class VmtPayRunService
 {
     protected $attendance_report_service;
@@ -17,8 +19,59 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function fetch_attendance_data($start_date, $end_date, $department,$client_id)
+    public function fetch_attendance_data($start_date, $end_date, $department,$client_id, $type, $active_status)
     {
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id');
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
+            }
+
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = $active_status;
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else{
+                $get_department = $department_id;
+            }
+
+
         ini_set('max_execution_time', 300);
         $reportresponse = array();
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
@@ -27,8 +80,8 @@ class VmtPayRunService
             ->where('active', '1')
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
-        if ($client_id != 1) {
-            $user = $user->where('client_id',$client_id);
+        if (sessionGetSelectedClientid() != 1) {
+            $user = $user->where('client_id', sessionGetSelectedClientid());
         }
         if ($department) {
             $user = $user->where('vmt_employee_office_details.department_id', '=', $department);
@@ -530,6 +583,17 @@ class VmtPayRunService
         }
         $data['headers'] =$heading_dates;
         $data['rows'] =  $reportresponse;
+        }
+        catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'line'=>$e->getTraceAsString(),
+                'error_verbose' => $e->getLine()
+            ];
+        }
         return $data;
     }
 }
+    
