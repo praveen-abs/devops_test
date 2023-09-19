@@ -10,9 +10,22 @@ export const UseReports_store = defineStore("UseReports_store",()=>{
 
     const { downloand  } = ref();
 
-    const legal_entity = ref();
-    const department =ref();
+    // fetch filter details variables 
+
+    const get_Legal_Entity = ref();
+    const getDepartment =ref();
+    const getPeriodMonth =  ref();
+
+
+    // v-model values 
+
+    const Legal_Entity = ref();
+    const Department =ref();
     const PeriodMonth =  ref();
+
+    const attendance_Type = ref();
+
+    // const 
 
     const canShowLoading  = ref(false);
 
@@ -33,33 +46,27 @@ export const UseReports_store = defineStore("UseReports_store",()=>{
     function fetchFilterClientId(){
         canShowLoading.value = true;
         axios.get('/clients-fetchAll').then((res)=>{
-            legal_entity.value = res.data;
-            console.log("legal_entity ::",legal_entity.value);
+            get_Legal_Entity.value = res.data;
+            console.log("legal_entity ::",get_Legal_Entity.value);
         }).finally(()=>{
             canShowLoading.value = false;
         })
     }
 
-    // function 
-
-    // function fetch
-
-    // function 
-
     function get_All_Department(){
         canShowLoading.value = true;
      axios.get('/get-department').then((res)=>{
-      department.value = res.data;
+        getDepartment.value = res.data;
      }).finally(()=>{
          canShowLoading.value = false;
      })
  }
 
- function getPeriodMonth(){
+ function fetchPeriodMonth(){
     // let date = Date;
     canShowLoading.value = true;
     axios.post('/get-filter-months-for-reports').then((res)=>{
-        PeriodMonth.value= res.data;
+        getPeriodMonth.value= res.data;
     }).finally(()=>{
         canShowLoading.value = false;
     })
@@ -78,12 +85,12 @@ function getSelectoption(key,filterValue,active_status){
     console.log(selectedfilters);
     let url;
     
-    // if(active_status==1){
-    //     url = `/fetch-attendance-data`;
-    // }else{
-    //     url = ``;
-    // }
-    url= '/fetch-attendance-data';
+    if(active_status==1){
+        url = `/fetch-attendance-data`;
+    }else{
+        url = `/fetch-LC-report-data`;
+    }
+    // url= '/fetch-attendance-data';
 
     if (key == "department") {
         selectedfilters.department_id = filterValue;
@@ -142,9 +149,7 @@ const getEmployeeAttendanceReports = async () => {
     // Attendance Basic Reports
     let url = '/fetch-attendance-data'
     canShowLoading.value = true
-    await axios.post(url, {
-        start_date: ""
-    }).then(res => {
+    await axios.post(url).then(res => {
         console.log(res.data.rows);
         AttendanceReportSource.value = res.data.rows
         res.data.headers.forEach(element => {
@@ -170,10 +175,15 @@ const getEmployeeAttendanceReports = async () => {
         canShowLoading,
 
         // variables 
-        legal_entity,
-        department,
+        Legal_Entity,
+        Department,
         PeriodMonth,
+
         btn_download,
+
+        getPeriodMonth,
+        getDepartment,
+        get_Legal_Entity,
 
         // navbar var
         activetab, 
@@ -183,12 +193,12 @@ const getEmployeeAttendanceReports = async () => {
         // fetch leagl entity
         fetchFilterClientId,
         get_All_Department,
+        fetchPeriodMonth,
        
         // 
-
-        getPeriodMonth,
         getSelectoption,
-        getEmployeeAttendanceReports 
+        getEmployeeAttendanceReports,
+        attendance_Type 
     }
 
 });
