@@ -663,7 +663,7 @@ class VmtReportsController extends Controller
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
-        $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails($request->type, $request->client_id, $request->active_status, $request->department_id);
+        $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails($request->type, $request->client_id, $request->active_status, $request->department_id,$request->date);
 
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
