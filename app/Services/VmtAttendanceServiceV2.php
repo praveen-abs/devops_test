@@ -349,6 +349,19 @@ class VmtAttendanceServiceV2
             return 'Not Applied';
         }
     }
+    public function canCalculateOt($user_code)
+    {
+        $ot_ids = array('DM007', 'DM009', 'DM012', 'DM016', 'DM018', 'DM019', 'DM022', 'DM028', 'DM029', 'DM032', 'DM034', 'DM038', 'DM045', 'DM054', 'DM059', 'DM069', 'DM088', 'DM091', 'DM101', 'DM103', 'DM104', 'DM107', 'DM112', 'DM113', 'DM120', 'DM123', 'DM124', 'DM125', 'DM127', 'DM128', 'DM134', 'DM140', 'DM145', 'DM146', 'DM148', 'DM149', 'DM150', 'DM151', 'DM153', 'DM156', 'DM160', 'DM161', 'DM162', 'DM163', 'DM165', 'DM166', 'DM167', 'DM169', 'DM170', 'DM175', 'DM176', 'DM177', 'DM178', 'DM179', 'DM180', 'DM181', 'DM182', 'DM183', 'DMC069', 'DMC072', 'DMC083', 'DMC084', 'DMC086', 'DMC087', 'DMC089', 'DMC090', 'DMC091', 'DMC092', 'DMC093', 'DMC094', 'DMC095', 'DMC097', 'DMC101', 'DMC102', 'DMC103', 'DMC104', 'DMC105', 'DMC106', 'DMC107', 'DMC108', 'DMC110', 'DMC111', 'DMC114', 'DMC115', 'DMC116', 'DMC118', 'DMC119', 'DMC120', 'DMC121', 'DMC123', 'DMC124', 'DMC125', 'DMC126', 'DMC128', 'DMC129', 'DMC130', 'DMC133', 'DMC136', 'DMC137', 'DMC138', 'DMC139', 'DMC142', 'DMC143', 'DMC144', 'DMC145', 'DMC146', 'DMC147', 'DMC148', 'DMC149', 'DMC150', 'DMC151', 'DMC152', 'DMC153', 'DMC154', 'DMC155', 'DMC156', 'DMC158', 'DMC159', 'DMC161', 'DMC162', 'DMC163', 'DMC164', 'DMC165', 'DMC166', 'DMC168', 'DMC169', 'DMC170', 'DMC173', 'DMC174', 'DMC176', 'DMC177');
+        if (sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "DMC") {
+            if (in_array($user_code,  $ot_ids)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 
     public function downloadDetailedAttendanceReport($start_date, $end_date)
     {
@@ -380,6 +393,8 @@ class VmtAttendanceServiceV2
                 array_push($header_2, 'Status');
                 $temp_ar = array();
                 array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
+                $total_LC_mins = 0;
+                $total_ot = 0;
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
 
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
@@ -388,7 +403,10 @@ class VmtAttendanceServiceV2
                         $lc_eg_setting = $this->attendanceSettingsinfos($att_detail->vmt_employee_workshift_id);
                         $checkin_time = 0;
                         $checkout_time = 0;
-                        $ot = 0;
+                        $current_ot = 0;
+                        $is_eg = null;
+                        $is_lc = null;
+                        $lc_mins = 0;
                         if ($lc_eg_setting['lc_status'])
                             $lc_minutes = 0;
                         $status = $att_detail->status;
@@ -433,7 +451,7 @@ class VmtAttendanceServiceV2
                         } else if ($att_detail->status != 'P') {
                             $checkin_time = $att_detail->checkin_time;
                             $checkin_time =  $att_detail->checkout_time;
-                            $shift_settings = $this->getShiftTimeForEmployee($single_user->id,  $checkin_time,$checkin_time);
+                            $shift_settings = $this->getShiftTimeForEmployee($single_user->id,  $checkin_time, $checkin_time);
                             $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
                             $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                             if (!empty($checkin_time)) {
@@ -448,6 +466,41 @@ class VmtAttendanceServiceV2
                                     $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date->format('Y-m-d'), 'LC');
                                     $is_lc = $regularization_status;
                                 }
+                            }
+
+                            if (!empty($checkout_time)) {
+                                $parsedCheckOut_time  = Carbon::parse($checkout_time);
+                                //Check whether checkin out on-time
+                                $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
+                                if ($isCheckout_done_ontime) {
+                                    //employee left early on time....
+                                    $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
+                                    $is_eg = $regularization_status;
+                                } else {
+                                    //employee left late....
+                                }
+                            }
+
+                            if ($this->canCalculateOt($single_user->user_code)) {
+                                if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($checkin_time)->diffInMinutes($checkout_time) && $checkout_time != null) {
+                                    $ot = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time));
+                                    $ot_ar = CarbonInterval::minutes($ot)->cascade();
+                                    $ot_hrs = (int) $ot_ar->totalHours;
+                                    $ot_mins = $ot_ar->toArray()['minutes'];
+                                    $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+                                    // dd( $total_ot);
+                                    if ($ot_hrs == 0) {
+                                        if ($ot_mins > 30) {
+                                            $total_ot =  $total_ot +   $current_ot;
+                                        }
+                                    } else {
+                                        $total_ot =  $total_ot +  $current_ot;
+                                    }
+                                }
+                            }
+                            if ($is_lc != null) {
+                                $lc_mins = Carbon::parse($checkin_time)->diffInMinutes($shiftStartTime);
+                                $total_LC_mins =  $total_LC_mins + $lc_mins;
                             }
                         } else if ($att_detail->status != 'HO' && $att_detail->status != 'WO') {
                             $checkin_time = '-';
