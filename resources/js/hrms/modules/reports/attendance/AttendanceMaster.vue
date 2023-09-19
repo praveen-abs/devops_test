@@ -84,23 +84,26 @@
                     class="flex justify-between max-[1200px]:w-[50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins']">Period : </h1>
-                        <Dropdown optionLabel="month" optionValue="date" :options="Reports_store.PeriodMonth"
-                            v-model="Reports_store.PeriodMonth" @change="Reports_store.getSelectoption('date',Reports_store.PeriodMonth,Reports_store.activetab)"
+                        <Dropdown optionLabel="month" optionValue="date" :options="Reports_store.getPeriodMonth"
+                            v-model="Reports_store.PeriodMonth"
+                            @change="Reports_store.getSelectoption('date', Reports_store.PeriodMonth, Reports_store.activetab)"
                             placeholder="Select period"
                             class="w-[120px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-2 font-semibold  font-['poppins']">Department : </h1>
-                        <MultiSelect v-model="Reports_store.department" :options="Reports_store.department" optionLabel="name"
-                            placeholder="Department" @change="Reports_store.getSelectoption('department',Reports_store.department,Reports_store.activetab)"
+                        <MultiSelect v-model="Reports_store.Department" :options="Reports_store.Department"
+                            optionLabel="name" placeholder="Department"
+                            @change="Reports_store.getSelectoption('department', Reports_store.Department, Reports_store.activetab)"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold  font-['poppins'] ">Legal Entity : </h1>
-                        <MultiSelect @change="Reports_store.getSelectoption('legal_entity',Reports_store.legal_entity,Reports_store.activetab)" v-model="Reports_store.legal_entity"
-                            :options="Reports_store.legal_entity" optionLabel="client_fullname" placeholder="Legal Entity"
-                            optionValue="id" :maxSelectedLabels="3"
+                        <MultiSelect
+                            @change="Reports_store.getSelectoption('legal_entity', Reports_store.Legal_Entity, Reports_store.activetab)"
+                            v-model="Reports_store.Legal_Entity" :options="Reports_store.Legal_Entity"
+                            optionLabel="client_fullname" placeholder="Legal Entity" optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                 </ul>
@@ -114,18 +117,34 @@
                 <div class="card-body">
 
                     <div>
-                        <div class="bg-white p-2 flex  justify-between">
+                        <div class="bg-white p-2 flex  justify-between items-center">
 
-                            <div class="flex !items-center">
-                                <InputText placeholder="Search" v-model="filters['global'].value" class="border-color !h-10 my-1"
-                                    style=" font-['poppins'] " />
+                            <div class=" flex !items-center" >
+                                <div>
+                                    <InputText placeholder="Search" v-model="filters['global'].value"
+                                    class="border-color !h-10 my-1 " />
+                                </div>
 
-                                    <Dropdown optionLabel="month" optionValue="date" :options="attendanceReportType"
-                            v-model="periodDate" @change="Reports_store.getSelectoption('date',periodDate,Reports_store.activetab)"
-                            placeholder="Select Type"
-                            class="  mx-1 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6] mt-1" />
+                                <div class="flex items-center ml-2 pt-2" v-if="Reports_store.activetab==5">
+                                    <!-- <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
+                                    v-model="Reports_store.attendance_Type"
+                                    @change="Reports_store.getSelectoption('date', periodDate,Reports_store.activetab)"
+                                    placeholder="Select Type"
+                                    class="!h-10 !font-semibold mx-4 !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" /> -->
+
+                                    <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Period : </h1>
+                        <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
+                                    v-model="Reports_store.attendance_Type"
+                                    @change="Reports_store.getSelectoption('',Reports_store.attendance_Type,Reports_store.attendance_Type)"
+                                    placeholder="Select Type"
+                            class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
+                                </div>
+                               
+
+                                   
 
                             </div>
+
                             <div class="flex items-center ">
                                 <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]"
                                     @click="Reports_store.btn_download = !Reports_store.btn_download, Reports_store.downloadEmployeeMaster()">
@@ -173,8 +192,10 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { UseReports_store } from "./store/reports_store";
 import { FilterMatchMode } from 'primevue/api';
+import { EmployeeMasterStore } from "../employee_master_report/employee_master_reportsStore";
 
 
+const EmployeeMaster = EmployeeMasterStore();
 const Reports_store = UseReports_store();
 
 const filters = ref({
@@ -184,7 +205,7 @@ const filters = ref({
 onMounted(() => {
     Reports_store.fetchFilterClientId();
     Reports_store.get_All_Department();
-    Reports_store.getPeriodMonth();
+    Reports_store.fetchPeriodMonth();
     Reports_store.getEmployeeAttendanceReports();
 });
 
@@ -198,12 +219,12 @@ const dropdown = ref([
 ]);
 
 const attendanceReportType = ref([
-    {type :"Late Coming" , value:1 },
-    {type :'Early Going'},
-    {type: 'Absent'},
-    {type : 'Absent Regularization'},
-    {type : 'Half-Day Absent'},
-    {type: 'Attendance Regularization'}
+    { type: "Late Coming", id: 1 },
+    { type: 'Early Going', id: 2 },
+    { type: 'Absent', id: 3 },
+    { type: 'Absent Regularization', id: 4 },
+    { type: 'Half-Day Absent', id: 5 },
+    { type: 'Attendance Regularization', id: 6 }
 ])
 
 
@@ -228,7 +249,7 @@ const attendanceReportType = ref([
 .p-inputtext
 {
     position: relative;
-    top: 7px;
+    top: 5px;
 }
 
 .p-inputtext::placeholder

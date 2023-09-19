@@ -10,7 +10,7 @@
                         class="mr-2 pi pi-times"></i> Clear Filter</button> -->
 
                         <button @click="useEmployeeReport.clearfilterBtn(activetab)"
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
+                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-times"></i> Clear Filter</button> 
             </div>
         </div>
