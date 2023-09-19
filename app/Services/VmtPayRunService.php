@@ -21,8 +21,10 @@ class VmtPayRunService
     }
     public function fetch_attendance_data($start_date, $end_date, $department,$client_id, $type, $active_status)
     {
+
+        ini_set('max_execution_time', 300);
         $validator = Validator::make(
-            $data = [
+            $data = [   
                 'client_id' => $client_id,
                 'type' => $type,
                 'active_status' => $active_status,
@@ -49,12 +51,6 @@ class VmtPayRunService
 
         try {
 
-            if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id');
-            } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
-            }
-
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
@@ -65,28 +61,23 @@ class VmtPayRunService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else{
-                $get_department = $department_id;
-            }
-
-
-        ini_set('max_execution_time', 300);
+     
         $reportresponse = array();
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
-
-        if (sessionGetSelectedClientid() != 1) {
-            $user = $user->where('client_id', sessionGetSelectedClientid());
+        if ( $client_id) {
+            $user = $user->where('client_id',  $client_id);
         }
         if ($department) {
-            $user = $user->where('vmt_employee_office_details.department_id', '=', $department);
+            $user = $user->where('vmt_employee_office_details.department_id', '=', $department)->get();
+           
         }
+        
         $user = $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+      
         // pr
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {

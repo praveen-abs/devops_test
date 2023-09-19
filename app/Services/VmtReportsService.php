@@ -91,7 +91,7 @@ class VmtReportsservice
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = $active_status;
+                $active_status = [$active_status];
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -238,7 +238,7 @@ class VmtReportsservice
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = $active_status;
+                $active_status = [$active_status];
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -259,7 +259,6 @@ class VmtReportsservice
             $temp_ar = array();
            // dd($date_req);
           // $date_req ='2022-05-01';
-         
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
@@ -269,7 +268,6 @@ class VmtReportsservice
                 ->whereIn('users.client_id', $client_id)
                 ->where('employee.doj', '<', $date_req)
                 ->whereIn('office.department_id', $get_department)
-                ->whereIn('users.active', $active_status)
                 ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
                     'office.official_mobile', 'office.l1_manager_code', 'office.work_location', 'employee.aadhar_number', 'employee.pan_number', 'statutory.uan_number', 'statutory.epf_number', 'statutory.esic_number',
@@ -278,6 +276,7 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
+               //  dd( $emp_master_detail);
             foreach ($emp_master_detail as $single_details) {
                // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
@@ -286,14 +285,13 @@ class VmtReportsservice
                 $temp_ar['Gender'] = strtoupper($single_details->gender);
                 $temp_ar['DOB'] = Carbon::parse($single_details->dob)->format('d-M-Y');
                 $temp_ar['DOJ'] = carbon::parse($single_details->doj)->format('d-M-Y');
-                if ($single_details->active == 1) { 
+                if ($single_details->active == 1) {
                     $temp_ar['Employee Status'] = "Active";
                 } else if ($single_details->active == -1) {
                     $temp_ar['Employee Status'] = "Exit";
                 } else if ($single_details->active == 0) {
                     $temp_ar['Employee Status'] = 'Not Yet Active';
                 }
-
                 $temp_ar['Last Working Day'] = carbon::parse($single_details->dol)->format('d-M-Y');
                 $temp_ar['NATIONALITY'] = $single_details->nationality;
                 // $temp_ar['legal entity'] = $single_details->;
@@ -318,7 +316,6 @@ class VmtReportsservice
                 }
                 $temp_ar['Location'] = $single_details->work_location;
                 $temp_ar['Aadhar Number'] = $single_details->aadhar_number;
-                dd( $temp_ar['Aadhar Number']);
                 $temp_ar['PAN Number'] = $single_details->pan_number;
                 $temp_ar['UAN Number'] = $single_details->uan_number;
                 $temp_ar['EPF Number'] = $single_details->epf_number;

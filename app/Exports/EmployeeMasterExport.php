@@ -14,9 +14,11 @@ use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Carbon\Carbon;
 
 class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithDrawings, WithCustomStartCell,WithTitle
 {
+   
     protected $data;
     protected $headers;
     protected $last_header_column;
@@ -30,6 +32,7 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
 
     public function __construct($type,$data, $headers, $client_name, $public_client_logo_path,$date)
     {
+      
         $this->type =$type;
         $this->data = $data;
         $this->date = $date;
@@ -83,7 +86,7 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
         $sheet->getStyle('C2:E2')->getFont()->setBold(true);
 
         //For Third Row
-        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".$this->date);
+        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".Carbon::parse($this->date)->format('d-M-Y'));
         $sheet->getStyle('C3:E3')->getFont()->setBold(true);
         //for fourth row
         $sheet->mergeCells('C4:E4')->setCellValue('C4', "Category : ".'Active,'.'Resigned,'. 'Yet to activate,'. 'Draft');
@@ -96,8 +99,8 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
             ->getColor()->setRGB('ffffff');
 
             //last row 
-            $sheet->mergeCells('A'.$this->last_row.':G'.$this->last_row)->setCellValue('A'.$this->last_row, "Period : ".$this->date);
-            $sheet->getStyle('A'.$this->last_row.':G'.$this->last_row)->getFont()->setBold(true);
+            // $sheet->mergeCells('A'.$this->last_row.':G'.$this->last_row)->setCellValue('A'.$this->last_row, "Period : ".$this->date);
+            // $sheet->getStyle('A'.$this->last_row.':G'.$this->last_row)->getFont()->setBold(true);
     }
 
     public function drawings()
