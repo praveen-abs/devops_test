@@ -1408,10 +1408,10 @@ class VmtAttendanceService
                 //selfies
                 //format : http://127.0.0.1:8000/employees/PLIPL068/selfies/checkout.png
                 if ($singleValue["checkin_time"] && !empty($singleValue["selfie_checkin"]))
-                    $attendanceResponseArray[$key]["selfie_checkin"] = 'employees/' . $user->user_code . '/selfies/' . $singleValue["selfie_checkin"];
+                    $attendanceResponseArray[$key]["selfie_checkin"] = 'employees/' . $user_code . '/selfies/' . $singleValue["selfie_checkin"];
 
                 if ($singleValue["checkout_time"] && !empty($singleValue["selfie_checkout"]))
-                    $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/' . $user->user_code . '/selfies/' . $singleValue["selfie_checkout"];
+                    $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/' . $user_code . '/selfies/' . $singleValue["selfie_checkout"];
             }
 
             // dd($attendanceResponseArray);
@@ -1532,8 +1532,7 @@ class VmtAttendanceService
                     $attendanceResponseArray[$key]["isAbsent"] = true;
 
                     //Check whether leave is applied or not.
-                    $year = $year;
-                    $month = $month;
+
                     $t_leaveRequestDetails = $this->isLeaveRequestApplied($user_id, $key, $year, $month);
 
                     if (empty($t_leaveRequestDetails)) {
