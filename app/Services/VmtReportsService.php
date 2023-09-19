@@ -91,7 +91,7 @@ class VmtReportsservice
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -238,7 +238,7 @@ class VmtReportsservice
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -259,7 +259,7 @@ class VmtReportsservice
             $temp_ar = array();
            // dd($date_req);
           // $date_req ='2022-05-01';
-      
+         
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
