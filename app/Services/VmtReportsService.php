@@ -278,7 +278,7 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-               //  dd( $emp_master_detail);
+               
             foreach ($emp_master_detail as $single_details) {
                // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;

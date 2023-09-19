@@ -17,7 +17,7 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function fetch_attendance_data($start_date, $end_date, $department)
+    public function fetch_attendance_data($start_date, $end_date, $department,$client_id)
     {
         ini_set('max_execution_time', 300);
         $reportresponse = array();
@@ -27,8 +27,8 @@ class VmtPayRunService
             ->where('active', '1')
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
-        if (sessionGetSelectedClientid() != 1) {
-            $user = $user->where('client_id', sessionGetSelectedClientid());
+        if ($client_id != 1) {
+            $user = $user->where('client_id',$client_id);
         }
         if ($department) {
             $user = $user->where('vmt_employee_office_details.department_id', '=', $department);
