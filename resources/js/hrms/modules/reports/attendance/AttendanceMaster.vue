@@ -92,7 +92,7 @@
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-2 font-semibold  font-['poppins']">Department : </h1>
-                        <MultiSelect v-model="Reports_store.Department" :options="Reports_store.Department"
+                        <MultiSelect v-model="Reports_store.Department" :options="Reports_store.getDepartment"
                             optionLabel="name" placeholder="Department"
                             @change="Reports_store.getSelectoption('department', Reports_store.Department, Reports_store.activetab)"
                             optionValue="id" :maxSelectedLabels="3"
@@ -102,7 +102,7 @@
                         <h1 class="text-[12px] text-black mx-1 font-semibold  font-['poppins'] ">Legal Entity : </h1>
                         <MultiSelect
                             @change="Reports_store.getSelectoption('legal_entity', Reports_store.Legal_Entity, Reports_store.activetab)"
-                            v-model="Reports_store.Legal_Entity" :options="Reports_store.Legal_Entity"
+                            v-model="Reports_store.Legal_Entity" :options="Reports_store.get_Legal_Entity"
                             optionLabel="client_fullname" placeholder="Legal Entity" optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
@@ -219,7 +219,7 @@ const dropdown = ref([
 ]);
 
 const attendanceReportType = ref([
-    { type: "Late Coming", id: 1 },
+    { type: "Late Coming", id: 11 },
     { type: 'Early Going', id: 2 },
     { type: 'Absent', id: 3 },
     { type: 'Absent Regularization', id: 4 },
