@@ -73,7 +73,13 @@
             :class="[useDashboard.currentDashboard === 1 ? 'bg-[#d4d4d4] text-slate-600' : 'text-slate-600']"
             @click="useDashboard.currentDashboard = 1">Org-dashboard</button>
     </div>
+
+    <RouterLink to="/">dashboard</RouterLink>
+    <RouterLink to="dashboard" >Attendance dashboard</RouterLink>
+    <RouterLink to="timesheet">Attendance timesheet</RouterLink>
+    <RouterLink to="leave">Leave</RouterLink>
     <loadingSpinner v-if="useDashboard.canShowLoading" />
+
     <transition v-else-if="useDashboard.currentDashboard == 1"
         enter-active-class="transition ease-out transform duration-600" enter-class="translate-y-2 opacity-0"
         enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in transform"

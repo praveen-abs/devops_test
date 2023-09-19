@@ -1162,4 +1162,7 @@ Route::get('/testing_sass', function () {
 
 
 //DONT WRITE ANT ROUTES BELOW THIS
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
+// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('{any}', function () {
+    return view('layouts.master');
+})->where('any', '.*');

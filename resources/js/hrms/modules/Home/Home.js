@@ -40,6 +40,7 @@ import AccordionTab from 'primevue/accordiontab';
 import SelectButton from 'primevue/selectbutton';
 
 import Home from './Home.vue'
+import router from './router'
 
 const app = createApp(Home);
 const pinia=createPinia()
@@ -49,6 +50,7 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(pinia);
+app.use(router);
 
 
 app.directive('tooltip', Tooltip);

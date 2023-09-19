@@ -173,23 +173,9 @@ clearstatcache();
         <div id="loading-content" class="loading-content"></div>
     </section> -->
 {{-- @yield('loading') --}}
-<div class="flex flex-row h-screen fixed w-screen">
-    @if (Auth::user()->active == 0)
-    @vite('resources/js/hrms/modules/Home/Sidebar.js')
-    <div id="Sidebar"></div>
-    @else
-    @vite('resources/js/hrms/modules/Home/Sidebar.js')
-    <div id="Sidebar"></div>
-    @endif
+@vite('resources/js/hrms/modules/Home/Home.js')
+<div id="Home"></div>
 
-    <div class="bg-gray-50  text-gray-700 h-screen w-[100%] main-content">
-        @vite('resources/js/hrms/modules/Home/Topbar.js')
-        <div id="Topbar"></div>
-        <div class="h-full overflow-auto p-2 mb-14">
-            @yield('content')
-        </div>
-    </div>
-</div>
 
 <div style="z-index: 11">
     <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
