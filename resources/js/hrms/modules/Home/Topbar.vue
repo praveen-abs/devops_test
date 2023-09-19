@@ -129,7 +129,7 @@
                         <a href="investment_settings"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Investment setting</a>
-                         <a href="showMobileSettingsPage"
+                         <a href="Settings-Mobile"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Mobile setting</a>
                       <!--  <a href="showSAsettingsView"
