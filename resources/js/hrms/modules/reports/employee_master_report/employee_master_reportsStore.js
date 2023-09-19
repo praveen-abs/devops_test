@@ -235,32 +235,30 @@ function getSelectoption(key,filterValue,active_status){
                 if(active_status == 1){
                     // canShowLoading.value = true;
                    let url = `/fetch-master-employee-report`;
-                    axios.post(url,selectedfilters).then(res => {
-                        employeeMaterReportSource.value = res.data.rows
-                        console.log(employeeMaterReportSource.value," testings data");
-                        res.data.headers.forEach(element => {
-                            let format = {
-                                title: element
-                            }
-                            Employee_MaterReportDynamicHeaders.value.push(format);
+                   axios.post(url,selectedfilters).then(res => {
+                    console.log(res.data.rows,"get value ");
+                    employeeMaterReportSource.value = res.data.rows
+                    console.log(employeeMaterReportSource.value," testings data");
+                    res.data.headers.forEach(element => {
+                        let format = {
+                            title: element
+                        }
+                        Employee_MaterReportDynamicHeaders.value.push(format)
+                        console.log(element);
+                    });
+                    console.log(Employee_MaterReportDynamicHeaders.value);
 
-                            if (res.data.rows.length === 0) {
-                                Swal.fire({
-                                    title: res.data.status = "failure",
-                                    text: "No employees found in this category",
-                                    // "Salary Advance Succesfully",
-                                    icon: "error",
-                                    showCancelButton: false,
-                                }).then((res) => {
-                                    // blink_UI.value = res.data.data;
-                                
-                                })
-                    
-                            }
-                        });
-                    }).finally(() => {
-    
-                    })
+                    if (res.data.headers.length === 0) {
+                        Swal.fire({
+                            title: res.data.status = "failure",
+                            text: "No employees found in this category",
+                            icon: "error",
+                            showCancelButton: false,
+                        }).then((res) => {
+                        
+                        })
+                    }
+                })
 
                 }else{
 
@@ -291,8 +289,6 @@ function getSelectoption(key,filterValue,active_status){
                             
                             })
                         }
-                    }).finally(() => {
-
                     })
                 }
 }

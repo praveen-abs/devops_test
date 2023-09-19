@@ -85,20 +85,20 @@
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins']">Period : </h1>
                         <Dropdown optionLabel="month" optionValue="date" :options="Reports_store.PeriodMonth"
-                            v-model="periodDate" @change="Reports_store.getSelectoption('date',periodDate,Reports_store.activetab)"
+                            v-model="Reports_store.PeriodMonth" @change="Reports_store.getSelectoption('date',Reports_store.PeriodMonth,Reports_store.activetab)"
                             placeholder="Select period"
                             class="w-[120px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-2 font-semibold  font-['poppins']">Department : </h1>
-                        <MultiSelect v-model="department" :options="Reports_store.department" optionLabel="name"
-                            placeholder="Department" @change="Reports_store.getSelectoption('department',department,Reports_store.activetab)"
+                        <MultiSelect v-model="Reports_store.department" :options="Reports_store.department" optionLabel="name"
+                            placeholder="Department" @change="Reports_store.getSelectoption('department',Reports_store.department,Reports_store.activetab)"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold  font-['poppins'] ">Legal Entity : </h1>
-                        <MultiSelect @change="Reports_store.getSelectoption('legal_entity',legalEntity,Reports_store.activetab)" v-model="legalEntity"
+                        <MultiSelect @change="Reports_store.getSelectoption('legal_entity',Reports_store.legal_entity,Reports_store.activetab)" v-model="Reports_store.legal_entity"
                             :options="Reports_store.legal_entity" optionLabel="client_fullname" placeholder="Legal Entity"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
