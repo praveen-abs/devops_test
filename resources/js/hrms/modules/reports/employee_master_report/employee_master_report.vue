@@ -1,5 +1,5 @@
 <template>
-        <!-- <loadingSpinner v-if="useEmployeeReport.canShowLoading" class="absolute z-50 bg-white" /> -->
+        <loadingSpinner v-if="useEmployeeReport.canShowLoading" class="absolute z-50 bg-white" />
     <div class="px-2">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Employee Master Report</h1>
@@ -24,7 +24,7 @@
                         role="presentation" >
                         <a class="p-2 position-relative font-['poppins'] text-[14px] text-[#001820] w-[100%] "
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="activetab = 1"
+                            @click="activetab = 1,useEmployeeReport.clearfilterBtn(activetab)"
                             :class="[activetab === 1 ? ' rounded-l-[2px] font-semibold !border-b-[2px] !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B] ']" >
                             Employee
                             Master
@@ -78,7 +78,7 @@
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center my-1">
-
+                        <h1 class="text-[12px] text-black px-2 font-semibold  font-['poppins']  whitespace-nowrap">Status :</h1>
                         <MultiSelect @change="useEmployeeReport.getSelectoption('Category',useEmployeeReport.select_Category,activetab)"
                             v-model="useEmployeeReport.select_Category" optionValue="id" :options="dropdown"
                             optionLabel="name" placeholder="Select Category" :maxSelectedLabels="3"
