@@ -793,6 +793,16 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('dayWiseStaffAttendance', [App\Http\Controllers\VmtAttendanceController::class, 'dayWiseStaffAttendance'])->name('dayWiseStaffAttendance');
 
 
+    //--- PMS v3 START ---
+    Route::get('/performance', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'showPMSDashboard']);
+
+
+
+
+
+
+    //--- PMS v3 END ---
+
     ////Reports
     ///for current year
 
