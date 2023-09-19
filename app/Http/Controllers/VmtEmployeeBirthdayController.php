@@ -19,6 +19,8 @@ class VmtEmployeeBirthdayController extends Controller
 
     public function sendBirthdayNotificationtoEmployee(){
 
+        try{
+
         $isEmailSent =null;
         $birth_date = Carbon::now()->format('m-d');
 
@@ -42,10 +44,22 @@ class VmtEmployeeBirthdayController extends Controller
             return $response=([
                 'status' => 'success',
                 'mail_status' => $isEmailSent ? 'success':'failure',
+                'message' => $isEmailSent ? 'Birthday mail send successfully':'error while mail send '." ".$isEmailSent,
                ]);
+
+            }catch(\Exception $e){
+
+                return $response=([
+                    'status' => 'failure',
+                    'mail_status' => 'failure',
+                    'message' => 'Error while send Birthday mail'.$e->getmessage(),
+                   ]);
+            }
 
     }
     public function sendAniversaryNotificationtoEmployee(){
+
+        try{
 
         $anniversary_date = Carbon::now()->format('m-d');;
 
@@ -69,7 +83,18 @@ class VmtEmployeeBirthdayController extends Controller
            return $response=([
             'status' => 'success',
             'mail_status' => $isEmailSent ? 'success':'failure',
+            'message' => $isEmailSent ? 'Anniversary mail send successfully':'error while mail send '." ".$isEmailSent,
            ]);
+
+        }catch(\Exception $e){
+
+            return $response=([
+                'status' => 'failure',
+                'mail_status' => 'failure',
+                'message' => 'Error while send Anniversary mail'.$e->getmessage(),
+               ]);
+        }
+
 
     }
 
