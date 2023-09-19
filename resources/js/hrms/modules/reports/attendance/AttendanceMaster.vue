@@ -116,9 +116,15 @@
                     <div>
                         <div class="bg-white p-2 flex  justify-between">
 
-                            <div>
-                                <InputText placeholder="Search" v-model="filters['global'].value" class="border-color !h-10"
-                                    style="height: 3em; font-['poppins'] " />
+                            <div class="flex !items-center">
+                                <InputText placeholder="Search" v-model="filters['global'].value" class="border-color !h-10 my-1"
+                                    style=" font-['poppins'] " />
+
+                                    <Dropdown optionLabel="month" optionValue="date" :options="attendanceReportType"
+                            v-model="periodDate" @change="Reports_store.getSelectoption('date',periodDate,Reports_store.activetab)"
+                            placeholder="Select Type"
+                            class="  mx-1 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6] mt-1" />
+
                             </div>
                             <div class="flex items-center ">
                                 <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]"
@@ -166,15 +172,6 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { UseReports_store } from "./store/reports_store";
-
-import others_attendance_Reports from './others_attendanceReports/others_attendance_Reports.vue';
-import halfdayabsentreport from './HalfDayAbsentReport/halfdayabsentreport.vue';
-import attendanceAbsentReports from './attendanceAbsentReports/attendanceAbsentReports.vue';
-import attendanceBasicReports from './attendanceBasicReports/attendanceBasicReports.vue';
-import attendanceOvertimeReports from './attendanceOvertimeReports/attendanceOvertimeReports.vue'
-import attendanceEarlygoingReports from './attendanceEarlygoingReports/attendanceEarlygoingReports.vue';
-import attendanceLatecomingReports from './attendanceLatecomingReports/attendanceLatecomingReports.vue'
-import attendanceReport_Detailed from './attendanceDetailReports/AttendanceReport_Detailed.vue';
 import { FilterMatchMode } from 'primevue/api';
 
 
@@ -186,23 +183,11 @@ const filters = ref({
 
 onMounted(() => {
     Reports_store.fetchFilterClientId();
-    // Reports_store.getEmployeeCTC();
     Reports_store.get_All_Department();
     Reports_store.getPeriodMonth();
-    legalEntity.value = "";
-    department.value = "";
-    periodDate.value = "";
+    Reports_store.getEmployeeAttendanceReports();
 });
 
-
-
-const activetab = ref(1);
-
-const legalEntity = ref();
-
-const department = ref();
-
-const periodDate = ref();
 
 const selectCategory = ref();
 
@@ -210,6 +195,15 @@ const dropdown = ref([
     { name: "Active", id: 1 },
     { name: "Yet To Active", id: 0 },
     { name: "Exit", id: -1 },
+]);
+
+const attendanceReportType = ref([
+    {type :"Late Coming" , value:1 },
+    {type :'Early Going'},
+    {type: 'Absent'},
+    {type : 'Absent Regularization'},
+    {type : 'Half-Day Absent'},
+    {type: 'Attendance Regularization'}
 ])
 
 

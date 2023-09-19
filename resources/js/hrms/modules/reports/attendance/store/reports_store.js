@@ -78,11 +78,12 @@ function getSelectoption(key,filterValue,active_status){
     console.log(selectedfilters);
     let url;
     
-    if(active_status==1){
-        url = `/fetch-attendance-data`;
-    }else{
-        url = ``;
-    }
+    // if(active_status==1){
+    //     url = `/fetch-attendance-data`;
+    // }else{
+    //     url = ``;
+    // }
+    url= '/fetch-attendance-data';
 
     if (key == "department") {
         selectedfilters.department_id = filterValue;
@@ -136,6 +137,32 @@ function getSelectoption(key,filterValue,active_status){
 }
 
 
+const getEmployeeAttendanceReports = async () => {
+
+    // Attendance Basic Reports
+    let url = '/fetch-attendance-data'
+    canShowLoading.value = true
+    await axios.post(url, {
+        start_date: ""
+    }).then(res => {
+        console.log(res.data.rows);
+        AttendanceReportSource.value = res.data.rows
+        res.data.headers.forEach(element => {
+            let format = {
+                title: element
+            }
+            AttendanceReportDynamicHeaders.value.push(format)
+            console.log(element);
+        });
+        console.log(AttendanceReportDynamicHeaders.value);
+
+    }).finally(() => {
+        canShowLoading.value = false
+    })
+
+}
+
+
 
 
     return{
@@ -160,7 +187,8 @@ function getSelectoption(key,filterValue,active_status){
         // 
 
         getPeriodMonth,
-        getSelectoption
+        getSelectoption,
+        getEmployeeAttendanceReports 
     }
 
 });
