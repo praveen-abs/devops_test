@@ -37,7 +37,7 @@ export const UseReports_store = defineStore("UseReports_store",()=>{
         date:"",
         department_id:"",
         legal_entity:"",
-        active_status:""
+        active_status:"",
     });
 
     const AttendanceReportSource = ref([]);
@@ -107,7 +107,6 @@ function getSelectoption(key,filterValue,active_status){
                     selectedfilters.legal_entity = filterValue
                 }
 
-                if(active_status == 1){
                     // canShowLoading.value = true;
                 
                     axios.post(url,selectedfilters).then(res => {
@@ -137,9 +136,7 @@ function getSelectoption(key,filterValue,active_status){
     
                     })
 
-                }else{
-
-                }
+                
 
 }
 
