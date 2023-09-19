@@ -39,8 +39,7 @@ class VmtAttendanceControllerV2 extends Controller
             }
         }
         $end_date = Carbon::now()->format('Y-m-d');
-        return $attendance_services->attendanceJobs($start_date,$end_date);
-
+        return $attendance_services->attendanceJobs($start_date, $end_date);
     }
 
     public function detailedAttendanceReport($start_date, $end_date)
@@ -653,5 +652,13 @@ class VmtAttendanceControllerV2 extends Controller
         $data = array($heading_dates, $header_2, $reportresponse, $heading_dates_2);
 
         return $data;
+    }
+
+    public function downloadDetailedAttendanceReport(VmtAttendanceServiceV2 $attendance_services)
+    {
+        $start_date = '2023-07-26';
+        $end_date = '2023-08-26';
+        $data = $attendance_services->downloadDetailedAttendanceReport($start_date, $end_date);
+        dd($data);
     }
 }

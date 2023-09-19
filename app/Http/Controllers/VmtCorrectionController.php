@@ -608,7 +608,7 @@ class VmtCorrectionController extends Controller
                 "user_id": "DM189"
                }
            ]';
-           
+
 
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '', $dunamis);
@@ -714,7 +714,6 @@ class VmtCorrectionController extends Controller
     {
 
         return view('vmt_MasterEmployeedata_Upload');
-
     }
 
     public function importMasetrEmployeesExcelData(Request $request)
@@ -736,7 +735,6 @@ class VmtCorrectionController extends Controller
             $data['failed'] = $validator->errors()->all();
             return response()->json($data);
         }
-
     }
 
     private function storeMasterdEmployeesData($data)
@@ -780,7 +778,6 @@ class VmtCorrectionController extends Controller
 
                 $Single_data['child_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['child_dob'])->format('Y-m-d');
             }
-
         }
         unset($Single_data);
 
@@ -801,7 +798,6 @@ class VmtCorrectionController extends Controller
                 'status' => 'failure',
                 'message' => 'Please fill the excel',
             ];
-
         } else {
             foreach ($excelRowdata_row[0] as $key => $excelRowdata) {
 
@@ -853,7 +849,6 @@ class VmtCorrectionController extends Controller
                                 if (!$result) {
                                     $fail($value . '<b> : ' . $attribute . ' is invalid');
                                 }
-
                             }
                         },
                     ],
@@ -992,7 +987,6 @@ class VmtCorrectionController extends Controller
                 'data' => $data_array,
                 'error_data' => $rowdata_response['data']
             ];
-
         } else {
 
             return $responseJSON = [
@@ -1000,7 +994,6 @@ class VmtCorrectionController extends Controller
                 'message' => "Please fix the below excelsheet data",
                 'data' => $data_array
             ];
-
         }
 
         return response()->json($responseJSON);
@@ -1033,8 +1026,6 @@ class VmtCorrectionController extends Controller
                 'mail_status' => '',
                 'data' => $response['data']
             ];
-
-
         } catch (\Exception $e) {
             //dd($e);
             // $this->deleteUser($user->id);
@@ -1045,7 +1036,6 @@ class VmtCorrectionController extends Controller
                 'data' => $e->getMessage(),
             ];
         }
-
     }
 
 
@@ -1157,32 +1147,26 @@ class VmtCorrectionController extends Controller
 
                                     $dob = $single_data;
                                     $update_employee_data->dob = $dob ? $this->getdateFormatForDb($dob) : '';
-
                                 } else if ($data_key == 'doj') {
 
                                     $doj = $single_data;
                                     $update_employee_data->doj = $doj ? $this->getdateFormatForDb($doj) : '';
-
                                 } else if ($data_key == 'dol') {
 
                                     $dol = $single_data;
                                     $update_employee_data->dol = $dol ? $this->getdateFormatForDb($dol) : '';
-
                                 } else if ($data_key == 'martial_status') {
 
                                     $martial_status_id = VmtMaritalStatus::where('name', ucfirst($single_data ?? ''))->first();
                                     $update_employee_data->marital_status_id = !empty($martial_status_id) ? $martial_status_id->id : '';
-
                                 } else if ($data_key == 'blood_group') {
 
                                     $blood_group_id = VmtBloodGroup::where('name', $single_data ?? '')->first();
                                     $update_employee_data->blood_group_id = !empty($blood_group_id) ? $blood_group_id->id : '';
-
                                 } else if ($data_key == 'bank_name') {
 
                                     $bank_id = Bank::where('bank_name', $single_data ?? '')->first();
                                     $update_employee_data->bank_id = !empty($bank_id) ? $bank_id->id : '';
-
                                 } else {
                                     $update_employee_data->$single_employee_data = $single_data;
                                 }
@@ -1229,12 +1213,10 @@ class VmtCorrectionController extends Controller
                                     $emp_mother_data->name = $single_data;
                                     $emp_mother_data->save();
                                 }
-
                             } else if ($data_key == 'mother_dob') {
 
                                 $emp_mother_data->dob = $this->getdateFormatForDb($single_data);
                                 $emp_mother_data->save();
-
                             }
                         }
 
@@ -1250,7 +1232,6 @@ class VmtCorrectionController extends Controller
 
                                     $emp_spouse_data->name = $single_data;
                                     $emp_spouse_data->save();
-
                                 }
                             } else if ($data_key == 'spouse_dob') {
 
@@ -1274,7 +1255,6 @@ class VmtCorrectionController extends Controller
 
                                     $emp_spouse_male_data->name = $single_data;
                                     $emp_spouse_male_data->save();
-
                                 }
                             } else if ($data_key == 'spouse_dob') {
 
@@ -1318,7 +1298,6 @@ class VmtCorrectionController extends Controller
                                     if (!empty($single_data) && $single_data != 'NULL') {
                                         $department_id = Department::where('name', $single_data)->first();
                                         $update_empOffice_data->department_id = $department_id->id;
-
                                     }
                                 } else {
                                     $update_empOffice_data->$single_office_data = $single_data;
@@ -1343,7 +1322,6 @@ class VmtCorrectionController extends Controller
                             }
                             $newEmployee_statutoryDetails->$single_statutory_data = $single_data;
                             $newEmployee_statutoryDetails->save();
-
                         }
                     }
 
@@ -1364,7 +1342,6 @@ class VmtCorrectionController extends Controller
                             $compensatory->save();
                         }
                     }
-
                 }
                 return $response = ([
                     'status' => 'success',
@@ -1372,7 +1349,6 @@ class VmtCorrectionController extends Controller
                     'data' => ''
                 ]);
             }
-
         } catch (\Exception $e) {
             return $response = ([
                 'status' => 'failure',
@@ -1380,7 +1356,6 @@ class VmtCorrectionController extends Controller
                 'data' => $e->getMessage() . ' error_line' . $e->getline(),
             ]);
         }
-
     }
     private function getdateFormatForDb($date)
     {
@@ -1416,7 +1391,6 @@ class VmtCorrectionController extends Controller
                 'message' => 'Error for input date',
                 'data' => $e->getMessage() . ' error_line ' . $e->getline(),
             ]);
-
         }
     }
 
@@ -1705,8 +1679,6 @@ class VmtCorrectionController extends Controller
             'status' => 'success',
             'message' => 'updated successfully',
         ]);
-
-
     }
 
     public function setAnnualProjection()
@@ -1721,8 +1693,8 @@ class VmtCorrectionController extends Controller
         $end_date = Carbon::parse($end_date)->subMonth(1);
         $current_date = Carbon::parse($payslip_month);
 
-        $users = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-        ->where('client_id', $client_id)->get(['users.id','vmt_employee_details.doj']);
+        $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->where('client_id', $client_id)->get(['users.id', 'vmt_employee_details.doj']);
 
         // dd($users);
         foreach ($users as $single_users) {
@@ -1743,70 +1715,590 @@ class VmtCorrectionController extends Controller
                 $start_date = Carbon::parse($start_date)->addMonth();
                 if ($start_date->lt($current_date)) {
 
-                    $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-                    ->where('vmt_payroll.payroll_date', $start_date)
-                    ->where('vmt_emp_payroll.user_id', $single_users->id)
-                    ->first([
-                        'vmt_emp_payroll.id as id'
-                    ]);
+                    $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                        ->where('vmt_payroll.payroll_date', $start_date)
+                        ->where('vmt_emp_payroll.user_id', $single_users->id)
+                        ->first([
+                            'vmt_emp_payroll.id as id'
+                        ]);
 
-                    if($payslip_id){
-                        $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id',$payslip_id->id)->first();
-                    }else
-                    {
+                    if ($payslip_id) {
+                        $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id', $payslip_id->id)->first();
+                    } else {
                         $payslip_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                        ->where('user_id', $single_users->id)->first();
-
+                            ->where('user_id', $single_users->id)->first();
                     }
 
                     if ($payslip_details) {
-                        if($emp_payroll){
-                        $salary_project_data = new AbsSalaryProjection;
-                        $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                        $salary_project_data->payroll_months = $start_date;
-                        $salary_project_data->earned_basic = $payslip_details['earned_basic'];
-                        $salary_project_data->earned_hra = $payslip_details['earned_hra'];
-                        $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
-                        $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
-                        $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
-                        $salary_project_data->save();
+                        if ($emp_payroll) {
+                            $salary_project_data = new AbsSalaryProjection;
+                            $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                            $salary_project_data->payroll_months = $start_date;
+                            $salary_project_data->earned_basic = $payslip_details['earned_basic'];
+                            $salary_project_data->earned_hra = $payslip_details['earned_hra'];
+                            $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
+                            $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
+                            $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
+                            $salary_project_data->save();
                         }
-                    }else{
-                        return 'no payslip data found for '.$single_users->id.'user';
+                    } else {
+                        return 'no payslip data found for ' . $single_users->id . 'user';
                     }
 
-                    array_push($res,$payslip_details);
+                    array_push($res, $payslip_details);
                 } else {
 
                     $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                         ->where('user_id', $single_users->id)->first();
 
                     $salary_project_data = new AbsSalaryProjection;
-                    if($emp_payroll){
-                    $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                    $salary_project_data->payroll_months = $start_date;
-                    $salary_project_data->earned_basic = $compensatory_details['basic'];
-                    $salary_project_data->earned_hra = $compensatory_details['hra'];
-                    $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'];
-                    $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'];
-                    $salary_project_data->total_earned_gross = $compensatory_details['gross'];
-                    $salary_project_data->save();
+                    if ($emp_payroll) {
+                        $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                        $salary_project_data->payroll_months = $start_date;
+                        $salary_project_data->earned_basic = $compensatory_details['basic'];
+                        $salary_project_data->earned_hra = $compensatory_details['hra'];
+                        $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'];
+                        $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'];
+                        $salary_project_data->total_earned_gross = $compensatory_details['gross'];
+                        $salary_project_data->save();
                     }
 
 
-                    array_push($res,$compensatory_details);
-
+                    array_push($res, $compensatory_details);
                 }
-
             }
         }
 
-            // dd($res);
-        return  "saved" ;
-
+        // dd($res);
+        return  "saved";
     }
 
 
-
-
+    public function addingDOLandDOJ()
+    {
+        $err = array();
+        $succ = array();
+        $arr = array(
+            array(
+                "Employee Code" => "DM001",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM002",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM003",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM004",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM006",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM007",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM009",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM012",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM018",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM019",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM021",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM022",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM024",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM026",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM028",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM029",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM032",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM034",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM038",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM045",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM054",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM059",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM069",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM071",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM079",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM088",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM091",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM094",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM101",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM103",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM104",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM106",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM107",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM109",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM110",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM112",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM113",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM115",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM117",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM118",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM120",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM122",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM123",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM124",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM125",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM127",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM128",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM131",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM134",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM140",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM141",
+                "Date of Joined (dd-mmm-yyyy)" => "01-04-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM145",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM146",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM148",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM149",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM150",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM151",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM153",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM154",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM156",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM159",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM160",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "29-04-2023"
+            ),
+            array(
+                "Employee Code" => "DM161",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM162",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM163",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM165",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM166",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM167",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM169",
+                "Date of Joined (dd-mmm-yyyy)" => "14-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "03-06-2023"
+            ),
+            array(
+                "Employee Code" => "DM170",
+                "Date of Joined (dd-mmm-yyyy)" => "18-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM172",
+                "Date of Joined (dd-mmm-yyyy)" => "04-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM173",
+                "Date of Joined (dd-mmm-yyyy)" => "08-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM174",
+                "Date of Joined (dd-mmm-yyyy)" => "11-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM175",
+                "Date of Joined (dd-mmm-yyyy)" => "08-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM176",
+                "Date of Joined (dd-mmm-yyyy)" => "11-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM177",
+                "Date of Joined (dd-mmm-yyyy)" => "16-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM178",
+                "Date of Joined (dd-mmm-yyyy)" => "29-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM179",
+                "Date of Joined (dd-mmm-yyyy)" => "23-09-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM180",
+                "Date of Joined (dd-mmm-yyyy)" => "30-09-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM181",
+                "Date of Joined (dd-mmm-yyyy)" => "07-10-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM182",
+                "Date of Joined (dd-mmm-yyyy)" => "10-10-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM183",
+                "Date of Joined (dd-mmm-yyyy)" => "12-10-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM184",
+                "Date of Joined (dd-mmm-yyyy)" => "25-10-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM185",
+                "Date of Joined (dd-mmm-yyyy)" => "01-04-2023",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM186",
+                "Date of Joined (dd-mmm-yyyy)" => "04-11-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "28-06-2023"
+            ),
+            array(
+                "Employee Code" => "DM187",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM188",
+                "Date of Joined (dd-mmm-yyyy)" => "02-12-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM189",
+                "Date of Joined (dd-mmm-yyyy)" => "14-12-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM190",
+                "Date of Joined (dd-mmm-yyyy)" => "19-12-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM191",
+                "Date of Joined (dd-mmm-yyyy)" => "07-06-2023",
+                "Last Working Day (dd-mmm-yyyy)" => "-"
+            ),
+            array(
+                "Employee Code" => "DM095",
+                "Date of Joined (dd-mmm-yyyy)" => "01-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "31-12-2021"
+            ),
+            array(
+                "Employee Code" => "DM157",
+                "Date of Joined (dd-mmm-yyyy)" => "01-08-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "21-12-2022"
+            ),
+            array(
+                "Employee Code" => "DM011",
+                "Date of Joined (dd-mmm-yyyy)" => "28-02-2017",
+                "Last Working Day (dd-mmm-yyyy)" => "30-11-2021"
+            ),
+            array(
+                "Employee Code" => "DM135",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "06-02-2023"
+            ),
+            array(
+                "Employee Code" => "DM105",
+                "Date of Joined (dd-mmm-yyyy)" => "08-07-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "31-12-2021"
+            ),
+            array(
+                "Employee Code" => "DM061",
+                "Date of Joined (dd-mmm-yyyy)" => "01-03-2020",
+                "Last Working Day (dd-mmm-yyyy)" => "30-11-2021"
+            ),
+            array(
+                "Employee Code" => "DM133",
+                "Date of Joined (dd-mmm-yyyy)" => "03-01-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "30-03-2023"
+            ),
+            array(
+                "Employee Code" => "DM108",
+                "Date of Joined (dd-mmm-yyyy)" => "10-07-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "21-01-2023"
+            ),
+            array(
+                "Employee Code" => "DM164",
+                "Date of Joined (dd-mmm-yyyy)" => "11-07-2022",
+                "Last Working Day (dd-mmm-yyyy)" => "03-04-2023"
+            ),
+            array(
+                "Employee Code" => "DM016",
+                "Date of Joined (dd-mmm-yyyy)" => "01-12-2021",
+                "Last Working Day (dd-mmm-yyyy)" => "27-05-2023"
+            )
+        );
+        foreach ($arr as $single_emp) {
+            $user = User::where('user_code', $single_emp['Employee Code']);
+            if ($user->exists()) {
+                $user_id = $user->first()->id;
+                $doj = Carbon::parse($single_emp['Date of Joined (dd-mmm-yyyy)'])->format('Y-m-d');
+                if ($single_emp['Last Working Day (dd-mmm-yyyy)'] != '-') {
+                    $dol = Carbon::parse($single_emp['Last Working Day (dd-mmm-yyyy)'])->format('Y-m-d');
+                } else {
+                    $dol = null;
+                }
+                VmtEmployee::where('userid', $user_id)->update(['doj' => $doj, 'dol' => $dol]);
+                //   $emp_details = new VmtEmployee::where('userid',$user_id);
+                array_push($succ, $single_emp['Employee Code'] . ' added sucessfully');
+            } else {
+                array_push($arr, $single_emp['Employee Code'] . ' not in db');
+            }
+        }
+        $response['err'] = $err;
+        $response['succ'] = $succ;
+        return $response;
+    }
 }

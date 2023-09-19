@@ -17,6 +17,7 @@ use App\Models\VmtEmployeeWorkShifts;
 use App\Models\TrackTaskScheduler;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtClientMaster;
+use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtOrgTimePeriod;
 use Carbon\CarbonInterval;
 
@@ -98,11 +99,45 @@ class VmtAttendanceServiceV2
         return $response;
     }
 
+    public function attendanceSettingsinfos($work_shift_id)
+    {
+        $lc_enable = false;
+        $eg_enable = false;
+        $lop_status_settings = array();
+        if ($work_shift_id == null) {
+            $all_work_shift = VmtWorkShifts::all();
+            foreach ($all_work_shift as $single_shift) {
+                if ($single_shift->is_lc_applicable == 1) {
+                    $lc_enable = true;
+                }
+                if ($single_shift->is_eg_applicable == 1) {
+                    $eg_enable = true;
+                }
+            }
+            $lop_status_settings['lc_status'] = $lc_enable;
+            $lop_status_settings['eg_status'] = $eg_enable;
+            return  $lop_status_settings;
+        } else {
+            $work_shift = VmtWorkShifts::where('id', $work_shift_id)->first();
+            if ($work_shift->is_lc_applicable == 1) {
+                $lc_enable = true;
+            }
+            if ($work_shift->is_eg_applicable == 1) {
+                $eg_enable = true;
+            }
+
+            $lop_status_settings['lc_status'] = $lc_enable;
+            $lop_status_settings['eg_status'] = $eg_enable;
+            return  $lop_status_settings;
+        }
+    }
+
     public function attendanceJobs($start_date, $end_date)
     {
+        ini_set('max_execution_time', 3000);
         $user = user::get();
         $start_date = '2023-07-26';
-        $end_date = '2023-08-25';
+        $end_date = '2023-08-26';
         $current_date = Carbon::parse($start_date);
         try {
             while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
@@ -114,10 +149,10 @@ class VmtAttendanceServiceV2
                     // dd($single_user);
                     $doj = Carbon::parse($single_user->doj);
                     //  employee in that company on date
-                   
+
                     if ($single_user->dol == null && Carbon::parse($doj)->lte($current_date) || $current_date->between($doj, Carbon::parse($single_user->dol))) {
 
-                     
+
 
                         $attendance_status = 'A';
                         $checkin_lat_long = null;
@@ -249,14 +284,14 @@ class VmtAttendanceServiceV2
                         } else {
                             $checking_date = null;
                         }
-                      
+
                         if ($checkout_time != null) {
                             $checkout_date = substr($checkout_time, 0, 10);
                             $checkout_time =  substr($checkout_time, 11);
                         } else {
                             $checkout_date = null;
                         }
-                      
+
 
 
                         $attendance_table = new VmtEmployeeAttendanceV2;
@@ -291,11 +326,150 @@ class VmtAttendanceServiceV2
                     }
                     // dd($single_user);
                 }
-              
+
                 $current_date->addDay();
-              //  dd(  $current_date);
+                //  dd(  $current_date);
             }
             dd('done');
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "attendanceJobs",
+                'data' => $e->getTraceAsString(),
+            ]);
+        }
+    }
+    public function isRegularizationRequestApplied($user_id, $date, $regularizeType)
+    {
+        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $date)
+            ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
+        if ($regularize_record->exists()) {
+            return $regularize_record->value('status');
+        } else {
+            return 'Not Applied';
+        }
+    }
+
+    public function downloadDetailedAttendanceReport($start_date, $end_date)
+    {
+        try {
+            $current_date = Carbon::parse($start_date);
+            $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
+                ->where('is_ssa', '0')
+                ->get([
+                    'users.id as id',
+                    'users.user_code as user_code',
+                    'users.name as name',
+                    'vmt_employee_office_details.designation as designation',
+                    'vmt_employee_details.dob as dob',
+                    'vmt_employee_details.doj as doj',
+                    'vmt_employee_details.dol as dol'
+                ]);
+            $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
+            $header_2 = array('', '', '', '');
+            $attendance_setting_details = $this->attendanceSettingsinfos(null);
+            foreach ($users as $single_user) {
+                $current_date = Carbon::parse($start_date);
+                array_push($heading_dates, $current_date->format('d') . ' - ' . $current_date->format('l'));
+                array_push($header_2, 'InPunch', 'OutPunch', 'OT');
+                if ($attendance_setting_details['lc_status'] == 1) {
+                    array_push($header_2, 'LC Minutes');
+                }
+                array_push($header_2, 'Status');
+                $temp_ar = array();
+                array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
+                while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
+
+                    if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
+
+                        $att_detail = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        $lc_eg_setting = $this->attendanceSettingsinfos($att_detail->vmt_employee_workshift_id);
+                        $checkin_time = 0;
+                        $checkout_time = 0;
+                        $ot = 0;
+                        if ($lc_eg_setting['lc_status'])
+                            $lc_minutes = 0;
+                        $status = $att_detail->status;
+                        if ($att_detail->status == 'A') {
+                            // get leave details for current date 
+                            $leave = VmtLeaves::where('user_id', $single_user->id)
+                                ->orWhereMonth('start_date', $current_date->format('m'))
+                                ->orWhereMonth('end_date', $current_date->format('m'))->orderBy('id', 'DESC')->first();
+                            if ($leave->exists()) {
+                                $leave = $leave->first();
+                                if ($current_date->between(Carbon::parse($leave->start_date), Carbon::parse($leave->end_date)) && $leave->status == 'Approved') {
+                                    $leave_type = VmtLeaves::where('id', $leave->leave_type_id);
+                                    if ($leave_type == 'Sick Leave / Casual Leave') {
+                                        $status = 'SL/CL';
+                                    } else if ($leave_type == 'Casual/Sick Leave') {
+                                        $status = 'CL/SL';
+                                    } else if ($leave_type == 'LOP Leave') {
+                                        $status = 'LOP LE';
+                                    } else if ($leave_type == 'Earned Leave') {
+                                        $status = 'EL';
+                                    } else if ($leave_type == 'Maternity Leave') {
+                                        $status = 'ML';
+                                    } else if ($leave_type == 'Paternity Leave') {
+                                        $status = 'PTL';
+                                    } else if ($leave_type == 'On Duty') {
+                                        $status = 'OD';
+                                    } else if ($leave_type == 'Permission') {
+                                        $status = "PI";
+                                    } else if ($leave_type == 'Compensatory Off') {
+                                        $status = 'CO';
+                                    } else if ($leave_type == 'Casual Leave') {
+                                        $status = 'CL';
+                                    } else if ($leave_type == 'Sick Leave') {
+                                        $status = 'SL';
+                                    } else if ($leave_type == 'Compensatory Leave') {
+                                        $status = 'CO';
+                                    } else if ($leave_type == 'Flexi day-off Leave') {
+                                        $status = 'FO L';
+                                    }
+                                }
+                            }
+                        } else if ($att_detail->status != 'P') {
+                            $checkin_time = $att_detail->checkin_time;
+                            $checkin_time =  $att_detail->checkout_time;
+                            $shift_settings = $this->getShiftTimeForEmployee($single_user->id,  $checkin_time,$checkin_time);
+                            $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
+                            $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
+                            if (!empty($checkin_time)) {
+                                $parsedCheckIn_time  = Carbon::parse($checkin_time);
+                                //Check whether checkin done on-time
+                                $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+                                if ($isCheckin_done_ontime) {
+                                    //employee came on time....
+                                } else {
+                                    //dd("Checkin NOT on-time");
+                                    //check whether regularization applied.
+                                    $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date->format('Y-m-d'), 'LC');
+                                    $is_lc = $regularization_status;
+                                }
+                            }
+                        } else if ($att_detail->status != 'HO' && $att_detail->status != 'WO') {
+                            $checkin_time = '-';
+                            $checkout_time = '-';
+                            $ot = '-';
+                            if ($lc_eg_setting['lc_status'])
+                                $lc_minutes = '-';
+                            $status = $att_detail->status;
+                        }
+                        dd($att_detail);
+                    } else {
+                        array_push($temp_ar, 0, 0, 0);
+                        if ($attendance_setting_details['lc_status'] == 1) {
+                            array_push($temp_ar, '0 Minutes');
+                        }
+                        array_push($temp_ar, 'N');
+                    }
+                }
+                dd($single_user);
+            }
+            array_push($heading_dates, 'Total Calculation');
+            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failure',
