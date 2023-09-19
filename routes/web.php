@@ -902,7 +902,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/salary_adv', [App\Http\Controllers\VmtCorrectionController::class, 'setFinanceidHrid'])->name('setFinanceidHrid');
 
     Route::get('/saveEmployeeAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'saveEmployeeAnnualProjection'])->name('saveEmployeeAnnualProjection');
-
+    Route::get('/convert-user-code-to-user-id', [App\Http\Controllers\VmtCorrectionController::class, 'convertUserCodeToUserId'])->name('convertUserCodeToUserId');
+    Route::get('/setAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'setAnnualProjection'])->name('setAnnualProjection');
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
 

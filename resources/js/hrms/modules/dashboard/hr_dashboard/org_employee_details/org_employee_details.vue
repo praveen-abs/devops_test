@@ -22,7 +22,7 @@
                 </div>
                 <p class=" text-lg font-semibold text-center text-gray-500">New Employees</p>
             </div>
-            <div class=" bg-[#F6F6F6] rounded-lg p-2 transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100 cursor-pointer"  @click="useDashboard.canShowSidebar = true,useDashboard.ShowEmployeeStatuswise = {...useDashboard.orgEmployeeDetailCount.active_employees},useDashboard.reportName =`active_employee_reports_${new Date()}`">
+            <div class=" bg-[#F6F6F6] rounded-lg p-2 transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100 cursor-pointer"  @click="useDashboard.canShowSidebar = true,useDashboard.ShowEmployeeStatuswise = {...useDashboard.orgEmployeeDetailCount.exit_employees},useDashboard.reportName =`active_employee_reports_${new Date()}`">
                 <div class="px-auto flex justify-center">
                     <span class=" text-3xl font-semibold text-center">
                         {{ useDashboard.orgEmployeeDetailCount.exit_employee_count ? useDashboard.orgEmployeeDetailCount.exit_employee_count : 0 }}
