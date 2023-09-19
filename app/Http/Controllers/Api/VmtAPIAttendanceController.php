@@ -228,17 +228,9 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
         try {
-            $record_ids = $request->record_id;
-            foreach ($record_ids as $single_record_id) {
 
-                $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($single_record_id, auth()->user()->user_code, $request->status, $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
-            }
-            return response()->json(
-                [
-                    'status' => 'success',
-                    'message' => 'Leave Request ' . $request->status . ' successfully',
-                ]
-            );
+            return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status, $request->review_comment, $request->user_type, $serviceNotificationsService = $serviceVmtNotificationsService);
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -251,40 +243,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
 
 
-    public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    public function getAttendanceDailyReport_PerMonth_v2(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        //dd("asdf");
-        //Validate the request
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-                'year' => 'required|integer',
-                'month' => 'required|integer',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
         //Fetch the data
-        $response = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($request->user_code, $request->year, $request->month);
-
-
-        return response()->json([
-            'status' => 'success',
-            'message' => '',
-            'data' => $response
-        ]);
+        return $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth_v2($request->user_code, $request->year, $request->month);
     }
 
     public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)

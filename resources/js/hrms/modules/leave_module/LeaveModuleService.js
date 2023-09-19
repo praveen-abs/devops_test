@@ -49,6 +49,22 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
             canShowLoading.value = false
         })
     }
+
+    async function performLeaveWithdraw(leave_id) {
+
+
+        await axios.post('/leave/withdrawLeave', {
+            leave_id: leave_id,
+        }).then((response) => {
+
+            console.log("performLeaveWithdraw() : " + response.data);
+        }).finally(() => {
+            canShowLoading.value = false
+        });
+
+    }
+
+
     async function getEmployeeLeaveHistory(filter_month, filter_year, filter_leave_status) {
 
         let user_code = 0;
@@ -173,6 +189,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         //
 
         // Functions
+        performLeaveWithdraw,
 
         getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveHistory, getLeaveInformation, getEmployeeLeaveBalance,
         // org leave Balance functions
