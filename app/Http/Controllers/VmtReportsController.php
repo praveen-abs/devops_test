@@ -644,11 +644,26 @@ class VmtReportsController extends Controller
         $period_date = carbon::parse($request->date)->format('d-m-Y');
         $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type, $request->legal_entity, $request->active_status, $request->department_id, $request->date);
         $headers = array();
+        if (empty($request->active_status)) {
+            $active_status = 'Active,Resigned,Yet to activate';
+        } else {
+            $active_status = '';
+            foreach ($request->active_status as $single_sts) {
+                if ($single_sts == '0') {
+                    $active_status = $active_status . 'Yet to activate,';
+                } else if ($single_sts == '1') {
+                    $active_status = $active_status . 'Active,';
+                } else if ($single_sts == '-1') {
+                    $active_status = $active_status . 'Resigned,';
+                } else {
+                }
+            }
+        }
         //  dd( $emp_ctc_data);
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
-        return Excel::download(new EmployeeBasicCtcExport($request->type, $emp_ctc_data['rows'], $emp_ctc_data['headers'], $client_name, $public_client_logo_path, $date, $period_date), 'Employees CTC Report.xlsx');
+        return Excel::download(new EmployeeBasicCtcExport($request->type, $emp_ctc_data['rows'], $emp_ctc_data['headers'], $client_name, $public_client_logo_path, $request->date,$period_date, $active_status), 'Employees CTC Report.xlsx');
     }
     public function getEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
     {
