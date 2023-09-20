@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtClientMaster;
-use App\Services\VmtMobileConfigService;
+use App\Services\VmtAppPermissionsService;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
@@ -628,13 +628,9 @@ class VmtMainDashboardController extends Controller
     {
 
         //Fetch the data
-        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
+        return $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '',
-            'data' => $response
-        ]);
+
     }
 
 

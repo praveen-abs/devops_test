@@ -2,7 +2,7 @@
     <div class="p-2 overflow-hidden bg-white rounded-lg" style="height: 200px;">
         <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Analytics</span>
         <div class="h-full overflow-x-scroll bg-white rounded-lg">
-            <div class="px-auto" v-for="request in useDashboard.hrPendingRequestCount"
+            <!-- <div class="px-auto" v-for="request in useDashboard.hrPendingRequestCount"
                 v-if="useDashboard.hrPendingRequestCount">
                 <div
                     class="p-2  my-2 transition duration-700 ease-in-out bg-[#E4ECFF] rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100 ">
@@ -19,7 +19,9 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <p  class="font-medium text-sm text-center">No data to display</p>
+
         </div>
     </div>
 </template>

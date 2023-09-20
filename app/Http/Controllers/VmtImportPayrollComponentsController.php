@@ -147,9 +147,10 @@ $i=array_keys($excelRowdata_row);
 
 
         try{
+            
             $component_type =VmtPayrollCompTypes::where('name',strtolower($row["componant_type"]))->first();
             $paygroup_components =VmtPayrollComponents::where('comp_name',$row["component_name"])->where('comp_type_id',$component_type->id)->first();
-            $comp_identifier = str_replace(" ","_", $row["component_name"]);
+            $comp_identifier = strtolower(str_replace(" ","_", $row["component_name"]));
             if(empty($paygroup_components)){
                 $fin_components = new VmtPayrollComponents;
                 $fin_components->comp_name =$row["component_name"];
@@ -184,9 +185,7 @@ $i=array_keys($excelRowdata_row);
 
                         }
                      }
-                     $calculation_amount=
                  $calculation_amount = json_encode( $array_data,true);
-
 
                 $fin_components->calculation_desc = $row["flat_amount"];
                 $fin_components->calculation_amount =$calculation_amount ;

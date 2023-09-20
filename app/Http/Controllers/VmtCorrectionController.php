@@ -612,6 +612,7 @@ class VmtCorrectionController extends Controller
            ]';
 
 
+
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '', $dunamis);
         $dunamis = json_decode($dunamis, true);
@@ -1445,16 +1446,13 @@ class VmtCorrectionController extends Controller
     public function saveEmployeeAnnualProjection(Request $request)
     {
 
-        ini_set('max_execution_time', 180);
+        ini_set('max_execution_time', 300);
 
         try {
 
             DB::table('abs_salary_projection')->truncate();
 
-            $client_details = VmtClientMaster::Where('client_fullname', "!=", "All")->get(['id', 'client_name'])->toarray();
-
-
-            for ($i = 0; $i < count($client_details); $i++) {
+             $client_details = VmtClientMaster::Where('client_fullname', "!=", "All")->get(['id', 'client_name'])->toarray();
 
 
                 $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
@@ -1465,9 +1463,11 @@ class VmtCorrectionController extends Controller
                 $current_date = Carbon::now();
 
 
-                $existing_employee_data = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                    ->where('client_id', $client_details[$i]['id'])->where('users.active', "1")->where('users.is_ssa', "0")->get(['users.id', 'vmt_employee_details.doj', 'users.client_id'])->toarray();
-                //dd($existing_employee_data);
+                 $existing_employee_data = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                                           ->where('users.active', "1")->where('users.is_ssa', "0")->get(['users.id', 'vmt_employee_details.doj', 'users.client_id'])->toarray();
+                // $existing_employee_data = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                //     ->where('client_id', "3")->where('users.active', "1")->where('users.id', "194")->where('users.is_ssa', "0")->get(['users.id', 'vmt_employee_details.doj', 'users.client_id'])->toarray();
+              //  dd($existing_employee_data);
 
 
                 foreach ($existing_employee_data as $key => $single_users) {
@@ -1483,7 +1483,7 @@ class VmtCorrectionController extends Controller
                         $fin_start_date = Carbon::parse($single_users['doj']);
                     }
 
-                    $date_range = CarbonPeriod::create($fin_start_date->startOfMonth()->format('Y-m-d'), '1 month', $current_date->subMonths()->endOfMonth()->format('Y-m-d'));
+                    $date_range = CarbonPeriod::create($fin_start_date->startOfMonth()->format('Y-m-d'), '1 month', $current_date->endOfMonth()->format('Y-m-d'));
 
 
                     $finyear_date_range = CarbonPeriod::create($fin_start_date->startOfMonth()->format('Y-m-d'), '1 month', $fin_end_date->endOfMonth()->format('Y-m-d'));
@@ -1492,6 +1492,7 @@ class VmtCorrectionController extends Controller
                     $previous_month_payslip_date = array();
                     $financial_year_date = array();
                     $exists_month_data = array();
+
 
                     foreach ($date_range  as $key => $single_date) {
 
@@ -1512,39 +1513,47 @@ class VmtCorrectionController extends Controller
 
 
 
-                    //dd($previous_month_payslip_date, $financial_year_date);
+                   //dd($previous_month_payslip_date, $financial_year_date);
+                   // dd( $exists_month_data);
+
+
+
 
                     foreach ($previous_month_payslip_date as $month_key => $single_month) {
 
                         foreach ($financial_year_date as $key => $single_fin_month) {
 
+
                             $emp_payroll = '';
 
-                            $payroll_date = VmtPayroll::where('payroll_date',  $single_month)->where('client_id', $single_users['client_id'])->first();
+                            $payroll_date = VmtPayroll::where('payroll_date',  $single_month)->where('client_id',$single_users['client_id'] );
 
-                            if (!empty($payroll_date)) {
+                            if ($payroll_date->exists()) {
+                                $payroll_date = $payroll_date->first();
                                 $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_users['id'])->first();
                             }
 
-
                             if(in_array($single_fin_month, $exists_month_data[$month_key])) {
 
-
                                 $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                                    // ->where('vmt_payroll.client_id',  $single_users['client_id'])
                                     ->where('vmt_payroll.payroll_date',  $single_fin_month)
                                     ->where('vmt_emp_payroll.user_id', $single_users['id'])
                                     ->first(['vmt_emp_payroll.id as id']);
+
+
                                 if (!empty($payslip_id)) {
 
                                     $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id', $payslip_id->id)->first();
                                 }
 
+
                                 if (!empty($payslip_details)) {
 
-                                    if (!empty($emp_payroll)) {
+                                     if (!empty($emp_payroll)) {
 
                                         $salary_project_data = new AbsSalaryProjection;
-                                        $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                                        $salary_project_data->vmt_emp_payroll_id =$emp_payroll->id;
                                         $salary_project_data->payroll_months = $single_fin_month;
                                         $salary_project_data->basic = 0;
                                         $salary_project_data->hra = 0;
@@ -1651,13 +1660,14 @@ class VmtCorrectionController extends Controller
                                         $salary_project_data->uniform_deductions = $payslip_details['uniform_deductions'];
                                         $salary_project_data->loan_deductions = $payslip_details['loan_deductions'];
                                         $salary_project_data->save();
-                                    }
+                             }
                                 } else {
                                     return 'no payslip data found for ' . $single_users['id'] . 'user'  . " " . $single_month . " " . $single_fin_month;
                                 }
 
+
                                 //array_push($res, $payslip_details);
-                            } else {
+                    } else {
 
                                 $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')->where('user_id', $single_users['id'])->first();
 
@@ -1771,15 +1781,13 @@ class VmtCorrectionController extends Controller
                                     $salary_project_data->loan_deductions = $compensatory_details['loan_deductions'] ?? 0;
                                     $salary_project_data->save();
                                 }
-
-
-                                //array_push($res, $compensatory_details);
                             }
+                                //array_push($res, $compensatory_details);
                         }
-                    }
 
+                    }
                 }
-            }
+
             return $response = ([
                 'status ' => "success",
                 "message" => "data saved successfully",

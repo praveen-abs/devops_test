@@ -146,8 +146,9 @@ class VmtAttendanceController extends Controller
             $request->record_id,
             auth()->user()->user_code,
             $request->status,
+            $request->user_type,
             $request->review_comment,
-            serviceNotificationsService: $serviceNotificationsService
+            $serviceNotificationsService
         );
     }
 
@@ -313,31 +314,11 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function withdrawLeave(Request $request)
+    public function withdrawLeave(Request $request, VmtAttendanceService $serviceAttendanceService)
     {
-        $withdraw_leave_query = VmtEmployeeLeaves::where('id', $request->leave_id)
-            ->update(array('status' => 'Withdrawn'));
-        $leave_status = VmtEmployeeLeaves::where('id', $request->leave_id)->first()->status;
-
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave withdrawn successfully',
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-        return $response;
+        return $serviceAttendanceService->withdrawLeave($request->leave_id);
     }
 
-
-    //Revoke Leave function
-    public function revokeLeave(Request $request)
-    {
-
-        $response = $this->approveRejectRevokeLeaveRequest($request);
-
-        return $response;
-    }
     /*
         Show the attendance IN/OUT time for the given month
 
@@ -799,7 +780,6 @@ class VmtAttendanceController extends Controller
                         $regularization_record = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
 
                         //check regularization status
-                        //dd(  $regularization_record['reason']);
                         $attendanceResponseArray[$key]["lc_status"] =  $regularization_record['status'];
                         $attendanceResponseArray[$key]["lc_reason"] = $regularization_record['reason'];
                         $attendanceResponseArray[$key]["lc_reason_custom"] = $regularization_record['cst_reason'];
@@ -947,7 +927,11 @@ class VmtAttendanceController extends Controller
     }
 
 
+    /*
+        TODO : DUPLICATION!! . Need to replace this with service class function to prevent
 
+
+    */
     private function isRegularizationRequestApplied($user_id, $attendance_date, $regularizeType)
     {
 
@@ -1567,4 +1551,8 @@ class VmtAttendanceController extends Controller
     {
         return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
     }
+
+    // public function getEmployeeUpcomingAppliedRequested(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    //     return $serviceVmtAttendanceService->getEmployeeUpcomingAppliedRequested();
+    // }
 }

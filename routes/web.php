@@ -136,6 +136,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
         Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
 
         Route::post('/employee-documents-details', 'getEmployeeAllDocumentDetails')->name('employee-documents-details');
+     //change client_code on masterconfig
+        Route::get('/update-MasterConfig-ClientCode', 'updateMasterConfigClientCode')->name('updateMasterConfigClientCode');
     });
 
 
@@ -145,9 +147,11 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
     Route::get('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData'])->name('getAttendanceDashboardData');
     Route::get('/attendance-leave', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePage'])->name('attendance-leave');
+   // Route::get('/upcoming-employee-leaves', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeUpcomingAppliedRequested'])->name('getEmployeeUpcomingAppliedRequested');
 
     Route::get('/attendance-leavesettings', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveSettings'])->name('attendance-leavesettings');
     Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
+
 
     Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showTimesheet'])->name('attendance-timesheet');
 
@@ -230,7 +234,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/save-work-shift', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'saveWorkShiftSettings'])->name('saveWorkShiftSettings');
 
     //Ajax For Leave withdraw
-    Route::get('/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
+    Route::post('/leave/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
+
     //Leave Policy
     Route::get('/fetch-holidays', [App\Http\Controllers\VmtLeavePolicyController::class, 'fetchHolidays'])->name('fetch-getHolidays');
 
@@ -791,8 +796,18 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
 
     ////Reports
-    //payroll reports
+    ///for current year
 
+    Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
+    Route::get('/reports/employee-reports',[App\Http\Controllers\VmtReportsController::class,'showEmployeeReportsPage'])->name('showEmployeeReportsPage');
+
+    Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
+    //filter client
+    Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
+    ///for ctc  report
+    Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
+    Route::post('/generate-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+    //payroll reports
     Route::get('/reports', function () {
         return view('reports.vmt_reports_page');
     })->name('reports-page');
@@ -801,9 +816,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports/generatePayrollReports', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
-    //employeectcreports
-    Route::get('/fetch_employee_ctc_report',[App\Http\Controllers\VmtReportsController::class,'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
-    Route::get('/generate-employees-ctc-report-data',[App\Http\Controllers\VmtReportsController::class,'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+    //employeemasterreports
+    Route::post('/fetch-master-employee-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterCTCDatas');
+    Route::post('/generate-master-employee-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesMasterDetails'])->name('generateEmployeesMasterDetails');
     //Ajax For Fetch Month For Given Year for payroll
     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
@@ -887,17 +902,20 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/salary_adv', [App\Http\Controllers\VmtCorrectionController::class, 'setFinanceidHrid'])->name('setFinanceidHrid');
 
     Route::get('/saveEmployeeAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'saveEmployeeAnnualProjection'])->name('saveEmployeeAnnualProjection');
-
+    Route::get('/convert-user-code-to-user-id', [App\Http\Controllers\VmtCorrectionController::class, 'convertUserCodeToUserId'])->name('convertUserCodeToUserId');
+    Route::get('/setAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'setAnnualProjection'])->name('setAnnualProjection');
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
 
-    Route::post('/SaveEmployeeAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'SaveEmployeeAppConfigStatus'])->name('SaveEmployeeAppConfigStatus');
-    Route::post('/saveAppConfigStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'saveAppConfigStatus'])->name('saveAppConfigStatus');
+    Route::post('/updateEmployeesPermissionStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateEmployeesPermissionStatus'])->name('updateEmployeesPermissionStatus');
+    Route::post('/updateClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateClientModuleStatus'])->name('updateClientModuleStatus');
     Route::post('/getEmployeesFilterData', [App\Http\Controllers\VmtMasterConfigController::class, 'getEmployeesFilterData'])->name('getEmployeesFilterData');
     Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
-    Route::post('/fetchMobileModuleData', [App\Http\Controllers\VmtMasterConfigController::class, 'getAppModules'])->name('getAppModules');
+    Route::post('/getClient_MobileModulePermissionDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_MobileModulePermissionDetails'])->name('getClient_MobileModulePermissionDetails');
     Route::get('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
+    Route::get('/getClient_AllModulePermissionDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModulePermissionDetails'])->name('getClient_AllModulePermissionDetails');
+
 
     //Configrations
     ////Attendance Settings
