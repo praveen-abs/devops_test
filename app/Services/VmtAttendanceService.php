@@ -1013,13 +1013,13 @@ class VmtAttendanceService
                     $text_status = "approved";
                     $leave_module_type = 'manager_approves_leave';
                 } else
-             if ($status == "Rejected") {
+                if ($status == "Rejected") {
                     $text_status = "rejected";
                     $leave_module_type = 'manager_rejects_leave';
                 } else
-             if ($status == "Revoked") {
+                if ($status == "Revoked") {
                     $text_status = "revoked";
-                    $leave_module_type = 'manager_withdraw_leave';
+                    $leave_module_type = 'manager_revokes_leave';
                 }
 
                 $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
@@ -1067,20 +1067,59 @@ class VmtAttendanceService
     }
 
 
-    public function withdrawLeave(Request $request)
+    public function withdrawLeave($leave_id)
     {
-        $withdraw_leave_query = VmtEmployeeLeaves::where('id', $request->leave_id)
-            ->update(array('status' => 'Withdrawn'));
-        $leave_status = VmtEmployeeLeaves::where('id', $request->leave_id)->first()->status;
 
-        $response = [
+        $validator = Validator::make(
+            $data = [
+                "leave_id" => $leave_id,
+            ],
+            $rules = [
+                'leave_id' => 'required|exists:vmt_employee_leaves,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'in' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $leave_details = VmtEmployeeLeaves::find($leave_id);
+
+        //Check whether current loggedin user_id matches with leave's user_id
+        if($leave_details->user_id == auth()->user()->id)
+        {
+            dd($leave_id);
+            $leave_details->status = 'Withdrawn';
+            $leave_details->save();
+        }
+        else
+        {
+            //User id mismatching .
+            return [
+                'status' => 'failure',
+                'message' => 'You are not authorized to perform this operation',
+                'error' => 'Unable to withdrawn leave due to mismatch in user_id',
+                'error_verbose' => ''
+            ];
+
+        }
+
+        return [
             'status' => 'success',
             'message' => 'Leave withdrawn successfully',
             'error' => '',
             'error_verbose' => ''
         ];
-
-        return $response;
     }
 
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
@@ -3152,6 +3191,20 @@ class VmtAttendanceService
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
                 $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
                 $query_employees_leaves[$i]["user_short_name"] = getUserShortName($user_id);
+
+                //If user_code is the currently loggedin user AND if leave status is PENDING,  then show WITHDRAW button
+                //if($user_code == auth()->user()->user_code && $query_employees_leaves[$i]["status"] == "Pending")
+                if($query_employees_leaves[$i]["status"] == "Pending") //We dont have to check auth()->user()->user_code since this is returned for current user only.
+                {
+                    //Show the Withdraw button in ui
+                    $query_employees_leaves[$i]["can_withdraw_leave"] = true;
+                }
+                else
+                {
+                    //Dont show the Withdraw button in ui
+                    $query_employees_leaves[$i]["can_withdraw_leave"] = false;
+                }
+
             }
 
 
@@ -3246,6 +3299,19 @@ class VmtAttendanceService
 
                 //Map leave types
                 $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+
+
+                //If leave status is PENDING,  then show WITHDRAW button
+                if($singleItem->status != "Pending")
+                {
+                    //Show the Revoke button in ui
+                    $singleItem->can_revoke_leave = true;
+                }
+                else
+                {
+                    //Dont show the Revoke button in ui
+                    $singleItem->can_revoke_leave = false;
+                }
             }
 
             return response()->json([
