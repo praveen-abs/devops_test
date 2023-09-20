@@ -39,7 +39,7 @@
                     <li class="flex items-center nav-item" role="presentation">
                         <a class="p-2 position-relative font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id=""
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="activetab = 2"
+                            @click="activetab = 2, useEmployeeReport.clearfilterBtn(activetab)"
                             :class="[activetab === 2 ? 'rounded-r-[2px] font-semibold !border-b-[2px] !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B]']">
                             Employee
                             CTC

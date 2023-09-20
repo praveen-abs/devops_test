@@ -169,6 +169,15 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 });
             }).finally(() => {
                 useEmployeeMaster.canShowLoading = false
+                useEmployeeMaster.selectedfilters.active_status="";
+                useEmployeeMaster.selectedfilters.date="";
+                useEmployeeMaster.selectedfilters.department_id="";
+                useEmployeeMaster.selectedfilters.legal_entity="";
+        
+                useEmployeeMaster.legal_Entity="";
+                useEmployeeMaster.Department="";
+                useEmployeeMaster.period_Date="";
+                useEmployeeMaster.select_Category=""
             })
 
         }
