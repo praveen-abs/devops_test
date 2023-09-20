@@ -718,7 +718,9 @@ class VmtInvestmentsController extends Controller
         $inv_previous_emp_pt = 0;
         $sumofletout = 0;
 
-        $payroll_month = carbon::now()->format('Y-m-d');
+        // $payroll_month = carbon::now()->format('Y-m-d');
+
+        $payroll_month = carbon::parse("2023-04-01");
 
 
         foreach ($v_form_template as $dec_amt) {
@@ -852,7 +854,9 @@ class VmtInvestmentsController extends Controller
                 $sumofhouseproperty = $SumOfHousPropsInOld;
             }
 
-           $annual_gross =  $this->annual_projection($payroll_month, $user_id->id, $user_id->idclient_id)['Annual Gross Salary'];
+           $annual_gross =  $this->annual_projection($payroll_month, $user_id->id, $user_id->client_id)['Annual Gross Salary'];
+
+        //    dd($annual_gross);
 
             // sum pervious employee gross with actual gross
             $total_gross['sno'] = "a";
@@ -1117,6 +1121,7 @@ class VmtInvestmentsController extends Controller
                  $emp_payroll =$emp_payroll->first();
                  $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
             }
+
 
             if ($employee_projected_salary->exists()) {
                 $employee_salary_details["Arrears"] = $employee_projected_salary->sum('basic_arrear')+ $employee_projected_salary->sum('dearness_allowance_arrear') + $employee_projected_salary->sum('vda_arrear') + $employee_projected_salary->sum('hra_arrear')+$employee_projected_salary->sum('hra_arrear') +

@@ -961,21 +961,18 @@ class VmtPayrollTaxService
 
         // dd($projection);
 
-    $getpersonal =[];
        foreach ($payroll_value as $key => $single_details) {
            if ($single_details == "0" || $single_details == null || $single_details == 0) {
                unset($payroll_value[$key]);
            }
        }
 
-    $getpersonal =[];
        foreach ($compensatory_value as $key => $single_details) {
            if ($single_details == "0" || $single_details == null) {
                unset($compensatory_value[$key]);
            }
        }
 
-    //    dd($compensatory_value);
        $res = []; $res1 = [];
      foreach($payroll_value as $key => $value){
             if(isset($compensatory_value[$key])){
@@ -985,14 +982,13 @@ class VmtPayrollTaxService
             }
      }
 
-     $total_income =0;
+     $total_income = 0;
      foreach($res as $single_value){
         $total_income  += $single_value;
      }
 
      return ["Actual" => $payroll_value, "Projection" => $compensatory_value, "Total" => $res , "Total Income" => $total_income ];
 
-    //  $payroll_value, $compensatory_value, $res ,;
 
     }
 
@@ -1074,7 +1070,7 @@ class VmtPayrollTaxService
 
         // $inv_emp = VmtInvFEmpAssigned::where()->pluck('user_id')->toArray();
 
-        $inv_emp = ['144','194'];
+        $inv_emp = ['144','194',];
 
         $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
@@ -1187,7 +1183,7 @@ class VmtPayrollTaxService
         'Driver Salary Reimbursment Arrears','Arrears','Overtime','Overtime Arrears','Incentive','Other Earnings','Referral Bonus','Annual Statutory Bonus','Ex-Gratia','Attendance Bonus',
          'Daily Allowance','Leave Encashments','Gift','Annual Gross Salary');
 
-         $sumofprevious_emp =0;
+
          foreach($inv_emp as $single_inv_users){
 
          $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
@@ -1219,6 +1215,38 @@ class VmtPayrollTaxService
              ]
          )->toArray();
 
+             }
+        //  foreach($v_form_template as $dec_amt){
+
+        //     dd($dec_amt);
+        //  }
+
+             // Excemption
+
+        array_push($salary_data['headers'], 'HRA Exceptions');
+        array_push($salary_data['headers'], 'CEA Exceptions');
+        array_push($salary_data['headers'], 'LTA Exceptions');
+
+        foreach ($Employee_details as $key => $single_user) {
+            // if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+           $hra_value  =  $this->HraExceptionCalc(User::where('user_code',$single_user['Employee Code'])->first()->id,Carbon::now()->subMonth(2));
+
+                $employee_salary_details[$key]["HRA Exceptions"] = $hra_value;
+            // }else{
+            //     $employee_salary_details[$key]["Total Gross Income"] = 0;
+            // }
+       }
+
+        foreach ($Employee_details as $key => $single_user) {
+            // if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+            $employee_salary_details[$key]["HRA Exceptions"] = 0;
+            $employee_salary_details[$key]["CEA Exceptions"] = 0;
+            $employee_salary_details[$key]["LTA Exceptions"] = 0;
+            // }
+        }
+
+        // Previous employeer income
+
         foreach($v_form_template as $dec_amt){
           if($dec_amt['section_group'] == 'Previous Employer Income'){
                 array_push($salary_data['headers'], $dec_amt['particular']);
@@ -1228,17 +1256,47 @@ class VmtPayrollTaxService
                 foreach ($Employee_details as $key => $single_user) {
                     if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
                     $employee_salary_details[$key][$dec_amt['particular']] = $dec_amt['dec_amount'];
-                            $sumofprevious_emp += $dec_amt['dec_amount'];
-                    $employee_salary_details[$key]['Gross Total Income'] = $sumofprevious_emp ?? 0;
                     }
                 }
-          }
         }
-    }
+          }
+         $sumofprevious_emp =0;
+          foreach($v_form_template as $dec_amt){
+            if($dec_amt['section_group'] == 'Previous Employer Income'){
+                array_push($salary_data['headers'], "Total Gross Income");
+
+                foreach ($Employee_details as $key => $single_user) {
+                    if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                        $sumofprevious_emp  += $dec_amt['dec_amount'];
+                        $employee_salary_details[$key]["Total Gross Income"] = $sumofprevious_emp + $employee_salary_details[$key]["Annual Gross Salary"];
+                    }else{
+                        $employee_salary_details[$key]["Total Gross Income"] = $employee_salary_details[$key]["Annual Gross Salary"];
+                    }
+               }
+            }
+        }
+
+
+
+        array_push($salary_data['headers'], '(a) salary as per provision as containeds in sec.17(1)',
+        '(b) Value of Prequisites u/s 17 (2)',
+        '(c) Profits in lie u of salary under section 13(3)');
+
+        foreach ($Employee_details as $key => $single_user) {
+
+            // if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+            $employee_salary_details[$key]["(a) salary as per provision as containeds in sec.17(1)"] = 0;
+            $employee_salary_details[$key]["(b) Value of Prequisites u/s 17 (2)"] = 0;
+            $employee_salary_details[$key]["(c) Profits in lie u of salary under section 13(3)"] = 0;
+            // }
+        }
+
+
         $salary_data['rows'] = $employee_salary_details;
         array_push($reportsdata,array_unique($salary_data['headers']),$salary_data['rows']);
 
-        return dd($reportsdata);
+        return
+        dd($reportsdata);
 
 
     }
