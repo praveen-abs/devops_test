@@ -135,7 +135,6 @@
                                     <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Period : </h1>
                                     <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
                                         v-model="Reports_store.attendance_Type"
-                                        @change="Reports_store.getSelectoption('', Reports_store.attendance_Type, Reports_store.attendance_Type)"
                                         placeholder="Select Type"
                                         class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                                 </div>
@@ -219,12 +218,10 @@ const dropdown = ref([
 ]);
 
 const attendanceReportType = ref([
-    { type: "Late Coming", id: 11 },
+    { type: "Late Coming", id: 1 },
     { type: 'Early Going', id: 2 },
     { type: 'Absent', id: 3 },
-    { type: 'Absent Regularization', id: 4 },
-    { type: 'Half-Day Absent', id: 5 },
-    { type: 'Attendance Regularization', id: 6 }
+    { type: 'Half-Day Absent', id: 4 },
 ])
 
 

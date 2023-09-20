@@ -8,25 +8,20 @@ import { EmployeeMasterStore } from "../../employee_master_report/employee_maste
 
 export const UseReports_store = defineStore("UseReports_store", () => {
 
-    // variable
-
-    const { downloand } = ref();
+    // variable Declaration
 
     const useEmployeeMaster = EmployeeMasterStore()
 
     // fetch filter details variables
-
     const get_Legal_Entity = ref();
     const getDepartment = ref();
     const getPeriodMonth = ref();
 
 
     // v-model values
-
     const Legal_Entity = ref();
     const Department = ref();
     const PeriodMonth = ref();
-
     const attendance_Type = ref();
 
     // const
@@ -85,10 +80,10 @@ export const UseReports_store = defineStore("UseReports_store", () => {
     }
 
     function getSelectoption(key, filterValue, active_status) {
-        useEmployeeMaster.canShowLoading = true
         console.log(key, filterValue, active_status);
         console.log(selectedfilters);
         let url;
+        let subUrl;
 
         if (active_status == 1) {
             // Detailed Reports
@@ -97,11 +92,39 @@ export const UseReports_store = defineStore("UseReports_store", () => {
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
-            }
-            else {
-                url = `/fetch-LC-report-data`;
-            }
-        // url= '/fetch-attendance-data';
+            } else
+            if (active_status == 4) {
+                // Overtime Reports
+                url = `/fetch-overtime-report-data'`;
+            } else
+                if (active_status == 5) {
+                    if (attendance_Type.value) {
+                        if (attendance_Type.value == 1) {
+                            url = '/fetch-LC-report-data'
+                        } else
+                            if (attendance_Type.value == 2) {
+                                url = '/fetch-EG-report-data'
+                            } else
+                                if (attendance_Type.value == 3) {
+                                    url = '/fetch-absent-report-data'
+                                } else
+                                        if (attendance_Type.value ==4) {
+                                            url = '/fetch-half-day-report'
+                                        }
+                    } else {
+                        Swal.fire({
+                            title: "error",
+                            text: "selected report type",
+                            icon: "error",
+                            showCancelButton: false,
+                        })
+
+                        useEmployeeMaster.period_Date = null
+                        useEmployeeMaster.Department = null
+                        useEmployeeMaster.legal_Entity = null
+                    }
+                }
+
 
         if (key == "department") {
             selectedfilters.department_id = filterValue;
@@ -120,32 +143,35 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
         // canShowLoading.value = true;
 
-        axios.post(url, selectedfilters).then(res => {
-            AttendanceReportSource.value = res.data.rows;
-            res.data.headers.forEach(element => {
-                let format = {
-                    title: element
-                }
-                AttendanceReportDynamicHeaders.value.push(format);
+        if (url) {
+            useEmployeeMaster.canShowLoading = true
+            axios.post(url, selectedfilters).then(res => {
+                AttendanceReportSource.value = res.data.rows;
+                res.data.headers.forEach(element => {
+                    let format = {
+                        title: element
+                    }
+                    AttendanceReportDynamicHeaders.value.push(format);
 
-                if (res.data.rows.length === 0) {
-                    Swal.fire({
-                        title: res.data.status = "failure",
-                        text: "No employees found in this category",
-                        // "Salary Advance Succesfully",
-                        icon: "error",
-                        showCancelButton: false,
-                    }).then((res) => {
-                        // blink_UI.value = res.data.data;
+                    if (res.data.rows.length === 0) {
+                        Swal.fire({
+                            title: res.data.status = "failure",
+                            text: "No employees found in this category",
+                            // "Salary Advance Succesfully",
+                            icon: "error",
+                            showCancelButton: false,
+                        }).then((res) => {
+                            // blink_UI.value = res.data.data;
 
-                    })
+                        })
 
-                }
-            });
-        }).finally(() => {
-            useEmployeeMaster.canShowLoading = false
-        })
+                    }
+                });
+            }).finally(() => {
+                useEmployeeMaster.canShowLoading = false
+            })
 
+        }
 
 
     }
@@ -163,18 +189,44 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 url = '/reports/generate-basic-attendance'
                 filename = "Attendance Basic Report"
 
-            }
-        axios.post(url, selectedfilters, { responseType: 'blob' }).then((response) => {
-            console.log(response.data);
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(response.data);
-            link.download = `${filename}.xlsx`;
-            link.click();
-        }).finally(() => {
-            useEmployeeMaster.canShowLoading = false
+            } else
+            if (active_status == 4) {
+                url = '/report/download-over-time-report'
+                filename = "Attendance Overtime Report"
 
-        })
+            } else
+                if (active_status == 5) {
+                    if (attendance_Type.value == 1) {
+                        url = '/report/download-late-coming-report'
+                        filename = "Attendance Late-coming Report"
+                    } else
+                        if (attendance_Type.value == 2) {
+                            url = '/report/download-early-going-report'
+                            filename = "Attendance Early-coming Report"
+                        } else
+                            if (attendance_Type.value == 3) {
+                                url = '/report/download-absent-report'
+                                filename = "Attendance Absent Report"
+                            } else
+                                if (attendance_Type.value == 4) {
+                                    url = '/report/download-half-day-report'
+                                    filename = "Attendance Half-day Report"
+                                }
 
+                }
+
+        if (url) {
+            axios.post(url, selectedfilters, { responseType: 'blob' }).then((response) => {
+                console.log(response.data);
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(response.data);
+                link.download = `${filename}.xlsx`;
+                link.click();
+            }).finally(() => {
+                useEmployeeMaster.canShowLoading = false
+
+            })
+        }
     }
 
 

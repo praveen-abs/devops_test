@@ -3,7 +3,7 @@
         <div class="flex justify-between p-2 bg-white">
             <!-- v-model="filters['global'].value" -->
             <div class="">
-                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10  my-2" />             
+                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10  my-2" />
             </div>
             <div class="flex items-center ">
                 <h1 class="text-[12px] text-black font-semibold  font-['poppins']">Personal Details -</h1>
@@ -39,7 +39,7 @@
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
             <Column v-for="col of UseEmployeeMaster.Employee_CTCReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
-                style="white-space: nowrap;text-align: left; !important">
+                style="white-space: nowrap;text-align: left; !important;width:15rem !important;">
 
             </Column>
         </DataTable>
@@ -131,7 +131,7 @@ const toggleClass = ref('downloaded');
     z-index: 0 !important;
 }
 /* .p-dropdown-label, .p-inputtext{
-   
+
 } */
 .p-dropdown-item{
     color:black !important;
@@ -140,8 +140,8 @@ const toggleClass = ref('downloaded');
 
 }
 .p-multiselect-label , .p-placeholder{
- position: relative; 
-     top:-3px; 
+ position: relative;
+     top:-3px;
 }
 
 
