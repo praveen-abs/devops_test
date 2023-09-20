@@ -204,7 +204,7 @@
                                         <?php //dd($assignedUserDetails);
                                         ?>
                                         <div class="appraisal_userDet mt-3">
-                                            <h6>{{ $assignedUserDetails->name }}</h6>
+                                            <h6>{{ $assignedUserDetails->name ?? '-'}}</h6>
                                             <p class="f-14 mt-2  text-primary">
                                                 {{ $assignedUserDetails->designation ?? '-' }}
                                             </p>
