@@ -93,6 +93,10 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
             } else
+            if (active_status == 4) {
+                // Overtime Reports
+                url = `/fetch-overtime-report-data'`;
+            } else
                 if (active_status == 5) {
                     if (attendance_Type.value) {
                         if (attendance_Type.value == 1) {
@@ -104,11 +108,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                                 if (attendance_Type.value == 3) {
                                     url = '/fetch-absent-report-data'
                                 } else
-                                    if (attendance_Type.value == 4) {
-                                        url = '/fetch-LC-report-data'
-                                    } else
-                                        if (attendance_Type.value == 5) {
-                                            url = '/fetch-LC-report-data'
+                                        if (attendance_Type.value ==4) {
+                                            url = '/fetch-half-day-report'
                                         }
                     } else {
                         Swal.fire({
@@ -189,22 +190,28 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 filename = "Attendance Basic Report"
 
             } else
+            if (active_status == 4) {
+                url = '/report/download-over-time-report'
+                filename = "Attendance Overtime Report"
+
+            } else
                 if (active_status == 5) {
                     if (attendance_Type.value == 1) {
                         url = '/report/download-late-coming-report'
+                        filename = "Attendance Late-coming Report"
                     } else
                         if (attendance_Type.value == 2) {
                             url = '/report/download-early-going-report'
+                            filename = "Attendance Early-coming Report"
                         } else
                             if (attendance_Type.value == 3) {
                                 url = '/report/download-absent-report'
+                                filename = "Attendance Absent Report"
                             } else
                                 if (attendance_Type.value == 4) {
                                     url = '/report/download-half-day-report'
-                                } else
-                                    if (attendance_Type.value == 5) {
-                                        url = '/fetch-LC-report-data'
-                                    }
+                                    filename = "Attendance Half-day Report"
+                                }
 
                 }
 

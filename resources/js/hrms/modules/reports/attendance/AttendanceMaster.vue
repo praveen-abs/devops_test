@@ -221,9 +221,7 @@ const attendanceReportType = ref([
     { type: "Late Coming", id: 1 },
     { type: 'Early Going', id: 2 },
     { type: 'Absent', id: 3 },
-    { type: 'Absent Regularization', id: 4 },
-    { type: 'Half-Day Absent', id: 5 },
-    { type: 'Attendance Regularization', id: 6 }
+    { type: 'Half-Day Absent', id: 4 },
 ])
 
 
