@@ -85,10 +85,10 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         let url;
         let subUrl;
 
-        if (active_status == 1) {
-            // Detailed Reports
-            url = `/fetch-detailed-attendance-data`;
-        } else
+        // if (active_status == 1) {
+        //     // Detailed Reports
+        //     url = `/fetch-detailed-attendance-data`;
+        // } else
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
