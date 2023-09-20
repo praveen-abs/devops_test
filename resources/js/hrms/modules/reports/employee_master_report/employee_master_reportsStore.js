@@ -70,7 +70,7 @@ const getEmployeeCTC = () => {
 
     function fetchFilterClientIds(){
         canShowLoading.value = true;
-        axios.get('/clients-fetchAll').then((res)=>{
+        axios.get('filter-client-ids').then((res)=>{
             client_ids.value = res.data;
             console.log(" testing client id",client_ids.value);
         }).finally(()=>{
@@ -84,6 +84,7 @@ const getEmployeeCTC = () => {
      }).finally(()=>{
          canShowLoading.value = false;
      })
+
  }
  function getPeriodMonth(){
      // let date = Date;

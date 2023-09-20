@@ -718,12 +718,12 @@ class VmtReportsController extends Controller
     public function filterClient()
     {
         //dd(sessionGetSelectedClientName());
-        if (sessionGetSelectedClientName() == 'VASA' || sessionGetSelectedClientName() == 'All') {
-            return VmtClientMaster::where('client_fullname', '<>', 'All')->get(['id', 'abs_client_code', 'client_fullname']);
-        } else {
-            return VmtClientMaster::where('client_fullname', sessionGetSelectedClientName())->get(['id', 'abs_client_code', 'client_fullname']);
-        }
-        //  return VmtClientMaster::where();
+        // if (sessionGetSelectedClientName() == 'VASA' || sessionGetSelectedClientName() == 'All') {
+        //     return VmtClientMaster::where('client_fullname', '<>', 'All')->get(['id', 'abs_client_code', 'client_fullname']);
+        // } else {
+        //     return VmtClientMaster::where('client_fullname', sessionGetSelectedClientName())->get(['id', 'abs_client_code', 'client_fullname']);
+        // }
+          return VmtClientMaster::get(['id', 'abs_client_code', 'client_fullname']);
     }
 
 
