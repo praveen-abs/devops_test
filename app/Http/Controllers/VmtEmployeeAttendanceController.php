@@ -33,24 +33,24 @@ class VmtEmployeeAttendanceController extends Controller
 {
     public function generateDetailedAttendanceReports(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
-        $date = $request->date_req;
+        $date = $request->date;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date ='2023-06-26';
         // $end_date ='2023-07-26';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->type, $request->active_status), 'Detailed Attendance Report.xlsx'));
+        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status)), 'Detailed Attendance Report.xlsx');
     }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         // $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
         // $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
-        $date = $request->date_req;
+        $date = $request->date;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-26';
-        dd( $start_date);
-        // $end_date = '2023-07-29'; 
+        // dd( $start_date);
+        // $end_date = '2023-07-29';
         $attendance_data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->type, $request->active_status);
         $first_row_array =  $attendance_data[0];
         $secound_row_ar =  $attendance_data[1];
@@ -163,8 +163,8 @@ class VmtEmployeeAttendanceController extends Controller
     public function fetchEGReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         $date = $request->date_req;
-        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d'); 
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));  
+        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';
         $response = $attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->client_id, $request->type, $request->active_status);
@@ -174,14 +174,14 @@ class VmtEmployeeAttendanceController extends Controller
     public function downloadEGReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         $date = $request->date_req;
-        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d'); 
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));  
+        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->client_id, $request->type, $request->active_status), 'Early Going Report.xlsx'));
     }
     public function fetchHalfDayReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
-    { 
+    {
         $date = $request->date_req;
-        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d'); 
+        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';
@@ -191,7 +191,7 @@ class VmtEmployeeAttendanceController extends Controller
     public function downloadHalfDayReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         $date = $request->date_req;
-        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d'); 
+        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         return Excel::download(new HalfDayReportExport($attendance_report_service->fetchHalfDayReportData($start_date, $end_date, $request->department_id, $request->client_id, $request->type, $request->active_status), 'Half Day Report.xlsx'));
     }
@@ -199,7 +199,7 @@ class VmtEmployeeAttendanceController extends Controller
     public function fetchOvertimeReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         $date = $request->date_req;
-        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d'); 
+        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';
@@ -210,7 +210,7 @@ class VmtEmployeeAttendanceController extends Controller
     public function downloadOvertimeReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         $date = $request->date_req;
-        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d'); 
+        $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';

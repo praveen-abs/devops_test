@@ -1182,18 +1182,18 @@ class VmtAttendanceReportsService
         return $data;
     }
 
-    public function detailedAttendanceReport($start_date, $end_date, $department_id,$client_id,$type, $active_status)
+    public function detailedAttendanceReport($start_date, $end_date, $department_id,$client_id, $active_status)
     {
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
-                'type' => $type,
+                // 'type' => $type,
                 'active_status' => $active_status,
                 'department_id' => $department_id,
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
-                'type' => 'nullable',
+                // 'type' => 'nullable',
                 'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
                 'date' => 'nullable'
@@ -2391,7 +2391,7 @@ class VmtAttendanceReportsService
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
             ];
         }
-    
+
         return $response;
     }
 
@@ -2850,9 +2850,9 @@ class VmtAttendanceReportsService
             } else {
                 $get_department = $department_id;
             }
-            
 
-    
+
+
                $client_id =sessionGetSelectedClientid();
 
                $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();

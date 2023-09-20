@@ -84,25 +84,25 @@
                     class="flex justify-between max-[1200px]:w-[50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins']">Period : </h1>
-                        <Dropdown optionLabel="month" optionValue="date" :options="Reports_store.getPeriodMonth"
-                            v-model="Reports_store.PeriodMonth"
-                            @change="Reports_store.getSelectoption('date', Reports_store.PeriodMonth, Reports_store.activetab)"
+                        <Dropdown optionLabel="month" optionValue="date" :options="EmployeeMaster.PeriodMonth"
+                            v-model="EmployeeMaster.period_Date"
+                            @change="Reports_store.getSelectoption('date', EmployeeMaster.period_Date, Reports_store.activetab)"
                             placeholder="Select period"
                             class="w-[120px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-2 font-semibold  font-['poppins']">Department : </h1>
-                        <MultiSelect v-model="Reports_store.Department" :options="Reports_store.getDepartment"
+                        <MultiSelect v-model="EmployeeMaster.Department" :options="EmployeeMaster.department"
                             optionLabel="name" placeholder="Department"
-                            @change="Reports_store.getSelectoption('department', Reports_store.Department, Reports_store.activetab)"
+                            @change="Reports_store.getSelectoption('department', EmployeeMaster.Department, Reports_store.activetab)"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold  font-['poppins'] ">Legal Entity : </h1>
                         <MultiSelect
-                            @change="Reports_store.getSelectoption('legal_entity', Reports_store.Legal_Entity, Reports_store.activetab)"
-                            v-model="Reports_store.Legal_Entity" :options="Reports_store.get_Legal_Entity"
+                            @change="Reports_store.getSelectoption('legal_entity', EmployeeMaster.legal_Entity, Reports_store.activetab)"
+                            v-model="EmployeeMaster.legal_Entity" :options="EmployeeMaster.client_ids"
                             optionLabel="client_fullname" placeholder="Legal Entity" optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
@@ -119,13 +119,13 @@
                     <div>
                         <div class="bg-white p-2 flex  justify-between items-center">
 
-                            <div class=" flex !items-center" >
+                            <div class=" flex !items-center">
                                 <div>
                                     <InputText placeholder="Search" v-model="filters['global'].value"
-                                    class="border-color !h-10 my-1 " />
+                                        class="border-color !h-10 my-1 " />
                                 </div>
 
-                                <div class="flex items-center ml-2 pt-2" v-if="Reports_store.activetab==5">
+                                <div class="flex items-center ml-2 pt-2" v-if="Reports_store.activetab == 5">
                                     <!-- <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
                                     v-model="Reports_store.attendance_Type"
                                     @change="Reports_store.getSelectoption('date', periodDate,Reports_store.activetab)"
@@ -133,21 +133,21 @@
                                     class="!h-10 !font-semibold mx-4 !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" /> -->
 
                                     <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Period : </h1>
-                        <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
-                                    v-model="Reports_store.attendance_Type"
-                                    @change="Reports_store.getSelectoption('',Reports_store.attendance_Type,Reports_store.attendance_Type)"
-                                    placeholder="Select Type"
-                            class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
+                                    <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
+                                        v-model="Reports_store.attendance_Type"
+                                        @change="Reports_store.getSelectoption('', Reports_store.attendance_Type, Reports_store.attendance_Type)"
+                                        placeholder="Select Type"
+                                        class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                                 </div>
-                               
 
-                                   
+
+
 
                             </div>
 
                             <div class="flex items-center ">
                                 <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]"
-                                    @click="Reports_store.btn_download = !Reports_store.btn_download, Reports_store.downloadEmployeeMaster()">
+                                    @click="Reports_store.btn_download = !Reports_store.btn_download, Reports_store.downloadAttendanceReports(Reports_store.activetab)">
                                     <p class=" relative left-2 font-['poppins']">Download</p>
                                     <div id="btn-download" style=" position: absolute; right: 0;"
                                         :class="[Reports_store.btn_download == true ? toggleClass : ' ']">
@@ -202,12 +202,12 @@ const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-onMounted(() => {
-    Reports_store.fetchFilterClientId();
-    Reports_store.get_All_Department();
-    Reports_store.fetchPeriodMonth();
-    Reports_store.getEmployeeAttendanceReports();
-});
+// onMounted(() => {
+//     Reports_store.fetchFilterClientId();
+//     Reports_store.get_All_Department();
+//     Reports_store.fetchPeriodMonth();
+//     Reports_store.getEmployeeAttendanceReports();
+// });
 
 
 const selectCategory = ref();
