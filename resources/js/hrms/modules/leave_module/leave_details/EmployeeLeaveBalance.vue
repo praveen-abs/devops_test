@@ -36,8 +36,8 @@
                             {{ leave_balance.leave_type }}
                         </p>
                         <p class="my-1 text-xl font-semibold text-center">
-                            <span class="text-lg font-semibold" v-if="leave_balance.avalied_leaves == ''">0</span>
-                            <span class="text-lg font-semibold" v-else>{{ leave_balance.avalied_leaves }}</span>
+                            <span class="text-lg font-semibold" v-if="leave_balance.availed_leaves == ''">0</span>
+                            <span class="text-lg font-semibold" v-else>{{ leave_balance.availed_leaves }}</span>
                         </p>
                     </div>
                 </div>

@@ -94,14 +94,14 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
                 year: year,
                 type:"pdf"
             }).then((response) => {
-                //  console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
-                console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));
+                 //console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.payslip);
+                console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data.payslip));
 
                 if(response.data){
-                    let base64String = response.data.payslip;
-                    let employeeName = response.data.emp_name
-                    let payslipMonth = response.data.month;
-                    let payslipyear = response.data.year;
+                    let base64String = response.data.data.payslip;
+                    let employeeName = response.data.data.emp_name
+                    let payslipMonth = response.data.data.month;
+                    let payslipyear = response.data.data.year;
                     console.log(base64String);
                     if(base64String){
                         if (base64String.startsWith("JVB")) {
