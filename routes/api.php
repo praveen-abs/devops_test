@@ -117,6 +117,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/payroll/payslip/getEmployeePayslipDetails', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetails']);
     Route::post('/payroll/payslip/getEmployeePayslipDetailsAsPDF', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetailsAsPDF']);
     Route::post('/payroll/payslip/getEmployeePayslipDetailsAsHTML', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetailsAsHTML']);
+    Route::post('/payroll/payslip/sendEmployeePayslipMail', [VmtAPIPaySlipController::class, 'sendEmployeePayslipMail']);
     Route::post('/payroll/payslip/getEmployeeAllPayslipList', [VmtAPIPaySlipController::class, 'getEmployeeAllPayslipList']);
     Route::post('/payroll/getEmployeeCompensatoryDetails', [VmtAPIPaySlipController::class, 'getEmployeeCompensatoryDetails']);
 

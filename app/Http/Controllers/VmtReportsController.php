@@ -640,7 +640,7 @@ class VmtReportsController extends Controller
     
         $date = Carbon::now()->format('M-y');
         $request->type;
-        $period_date= carbon::parse( $request->date)->format('d/m/Y');
+        $period_date= carbon::parse( $request->date)->format('d-m-Y');
         $emp_ctc_data = $reportsService->getEmployeesCTCDetails($request->type, $request->legal_entity, $request->active_status, $request->department_id, $request->date);
         $headers = array();
       //  dd( $emp_ctc_data);
@@ -659,11 +659,11 @@ class VmtReportsController extends Controller
     {
         $date = Carbon::now()->format('M-y');
         $request->type;
-        $period_date= carbon::parse( $request->date)->format('d/m/Y');
+        $period_date= carbon::parse( $request->date)->format('d-m-Y');
         $date = Carbon::now();
         $client_id = array(1);
         $Category = 'All';
-        $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails($request->type, $request->client_id, $request->active_status, $request->department_id);
+        $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails($request->type, $request->client_id, $request->active_status, $request->department_id,$request->date);
 
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
