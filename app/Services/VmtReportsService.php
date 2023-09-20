@@ -267,6 +267,7 @@ class VmtReportsservice
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
                 ->whereIn('users.client_id', $client_id)
                 ->where('employee.doj', '<', $date_req)
+                ->where('users.active',$active_status)
                 ->whereIn('office.department_id', $get_department)
                 ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
