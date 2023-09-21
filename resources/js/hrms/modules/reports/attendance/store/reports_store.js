@@ -262,6 +262,12 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
     }
 
+    function clearDataTable(){
+        AttendanceReportSource.value.splice(0,AttendanceReportSource.value.length);
+        AttendanceReportDynamicHeaders.value.splice(0,
+                AttendanceReportDynamicHeaders.value.length);
+    }
+
 
 
 
@@ -296,7 +302,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         AttendanceReportDynamicHeaders,
         getEmployeeAttendanceReports,
         attendance_Type,
-        downloadAttendanceReports
+        downloadAttendanceReports,
+        clearDataTable
     }
 
 });

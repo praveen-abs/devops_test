@@ -16,7 +16,7 @@
                         role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820] w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 1"
+                            @click="Reports_store.activetab = 1,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             DETAILED REPORT
                         </a>
@@ -31,7 +31,7 @@
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 2"
+                            @click="Reports_store.activetab = 2,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             MUSTER ROLL
                         </a>
@@ -44,7 +44,7 @@
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 3"
+                            @click="Reports_store.activetab = 3,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 3 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             CONSOLIDATE
                         </a>
@@ -56,7 +56,7 @@
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 4"
+                            @click="Reports_store.activetab = 4,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 4 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             OVERTIME
                         </a>
@@ -69,7 +69,7 @@
                     <li class=" nav-item !border-0  flex items-center " role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 5"
+                            @click="Reports_store.activetab = 5,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 5 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             OTHERS
                         </a>

@@ -222,4 +222,10 @@ const dropdown = ref([
 a
 {
     color: #000 !important;
-}</style>
+}
+
+.p-multiselect-panel {
+    z-index: 0 !important;
+}
+
+</style>
