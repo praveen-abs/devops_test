@@ -84,14 +84,14 @@ class VmtReportsservice
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -231,14 +231,14 @@ class VmtReportsservice
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id');
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
+                $client_id =  $client_id;
             }
 
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -364,30 +364,30 @@ class VmtReportsservice
                 $temp_ar['Food Allowance'] = $single_details->food_allowance;
                 $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
                 // $temp_ar['Uniform Allowance'] = $single_details->; 
-                $temp_ar['Special Allowance'] = $single_details->special_allowance;
-                $temp_ar['STATUTORY BONUS'] = $single_details->Statutory_bonus;
-                $temp_ar['Other Allowance'] = $single_details->other_allowance;
-                $temp_ar['Leave Travel Allowance (LTA)'] = $single_details->lta;
+                $temp_ar['Special Allowance'] = round((int) $single_details->special_allowance) == 0 ? "0" : round((int) $single_details->special_allowance);
+                $temp_ar['STATUTORY BONUS'] = round((int) $single_details->Statutory_bonus) == 0 ? "0" : round((int) $single_details->Statutory_bonus);
+                $temp_ar['Other Allowance'] = round((int) $single_details->other_allowance) == 0 ? "0" : round((int) $single_details->other_allowance);
+                $temp_ar['Leave Travel Allowance (LTA)'] = round((int) $single_details->lta) == 0 ? "0" : round((int) $single_details->lta);
                 // $temp_ar['Telephone Reimbursement'] = $single_details->;
                 // $temp_ar['vehicle Reimbursement'] = $single_details->;
                 $temp_ar['Driver Salary'] = $single_details->driver_salary;
-                $temp_ar['Fixed Gross'] = $single_details->gross;
+                $temp_ar['Fixed Gross'] = round((int) $single_details->gross) == 0 ? "0" : round((int) $single_details->gross);
                 // $temp_ar['Pf Wages'] = $single_details->;
-                $temp_ar['EPFER'] = $single_details->epf_employer_contribution;
-                $temp_ar['EDLI Charges'] = $single_details->edli_charges;
-                $temp_ar['PF ADMIN Charges'] = $single_details->pf_admin_charges;
-                $temp_ar['ESICR'] = $single_details->esic_employer_contribution;
+                $temp_ar['EPFER'] = round((int) $single_details->epf_employer_contribution) == 0 ? "0" : round((int) $single_details->epf_employer_contribution);
+                $temp_ar['EDLI Charges'] = round((int) $single_details->epf_employer_contribution) == 0 ? "0" : round((int) $single_details->epf_employer_contribution);
+                $temp_ar['PF ADMIN Charges'] = round((int) $single_details->pf_admin_charges) == 0 ? "0" : round((int) $single_details->pf_admin_charges);
+                $temp_ar['ESICER'] = round((int) $single_details->esic_employer_contribution) == 0 ? "0" : round((int) $single_details->esic_employer_contribution);
                 // $temp_ar[' employer Insurance'] = $single_details->;
-                $temp_ar['LWFER'] = $single_details->labour_welfare_fund;
-                $temp_ar['CTC'] = $single_details->cic;
-                $temp_ar['EPFEE'] = $single_details->epf_employee;
-                $temp_ar['ESICEE'] = $single_details->esic_employee;
-                $temp_ar['Professional Tax'] = $single_details->professional_tax;
-                $temp_ar['Income Tax'] = $single_details->Income_tax;
-                $temp_ar['LWFEE'] = $single_details->lwfee;
+                $temp_ar['LWFER'] = round((int)$single_details->labour_welfare_fund) == 0 ? "0" : round((int) $single_details->labour_welfare_fund);
+                $temp_ar['CTC'] = round((int) $single_details->cic) == 0 ? "0" : round((int) $single_details->cic);
+                $temp_ar['EPFEE'] = round((int)  $single_details->epf_employee) == 0 ? "0" : round((int) $single_details->epf_employee);
+                $temp_ar['ESICEE'] = round((int)$single_details->esic_employee) == 0 ? "0" : round((int) $single_details->esic_employee);
+                $temp_ar['Professional Tax'] = round((int) $single_details->professional_tax) == 0 ? "0" : round((int) $single_details->professional_tax);
+                $temp_ar['Income Tax'] = round((int)$single_details->Income_tax) == 0 ? "0" : round((int) $single_details->Income_tax);
+                $temp_ar['LWFEE'] = round((int)$single_details->lwfee) == 0 ? "0" : round((int) $single_details->lwfee);
                 // $temp_ar[' employee Insurance'] = $single_details->;
-                $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
-                $temp_ar['NET Pay '] =  $single_details->net_income;
+                $temp_ar['Total Deduction'] = round((int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE ']);
+                $temp_ar['NET Pay '] = round((int)$single_details->net_income) == 0 ? "0" : round((int) $single_details->net_income);
 
 
 
