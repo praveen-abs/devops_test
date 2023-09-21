@@ -111,7 +111,7 @@ class VmtReportsservice
             $headings = array();
             $temp_ar = array();
             $headers = array();
-
+            
             $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
@@ -158,7 +158,7 @@ class VmtReportsservice
                 $temp_ar['Special Allowance'] = round((int) $singleemployeedata->special_allowance) == 0 ? "0" : round((int) $singleemployeedata->special_allowance);
                 $temp_ar['Fixed Gross'] = round((int) $singleemployeedata->gross) == 0 ? "0" : round((int) $singleemployeedata->gross);
                 $temp_ar['EPFER'] = round((int) $singleemployeedata->epf_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->epf_employer_contribution);
-                $temp_ar['EDLI Charges'] = round((int) $singleemployeedata->epf_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->epf_employer_contribution);
+                $temp_ar['EDLI Charges'] = round((int) $singleemployeedata->edli_charges) == 0 ? "0" : round((int) $singleemployeedata->edli_charges);
                 $temp_ar['PF ADMIN Charges'] = round((int) $singleemployeedata->pf_admin_charges) == 0 ? "0" : round((int) $singleemployeedata->pf_admin_charges);
                 $temp_ar['ESICER'] = round((int) $singleemployeedata->esic_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->esic_employer_contribution);
                 $temp_ar['Insurance'] =  round((int) $singleemployeedata->insurance) == 0 ? "0" : round((int) $singleemployeedata->insurance);
@@ -200,6 +200,7 @@ class VmtReportsservice
     public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id, $date_req)
 
     {
+     
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
@@ -227,7 +228,7 @@ class VmtReportsservice
         }
 
         try {
-
+           
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id');
             } else {
@@ -259,6 +260,7 @@ class VmtReportsservice
             $temp_ar = array();
             // dd($date_req);
             // $date_req ='2022-05-01';
+   
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
@@ -374,7 +376,7 @@ class VmtReportsservice
                 $temp_ar['Fixed Gross'] = round((int) $single_details->gross) == 0 ? "0" : round((int) $single_details->gross);
                 // $temp_ar['Pf Wages'] = $single_details->;
                 $temp_ar['EPFER'] = round((int) $single_details->epf_employer_contribution) == 0 ? "0" : round((int) $single_details->epf_employer_contribution);
-                $temp_ar['EDLI Charges'] = round((int) $single_details->epf_employer_contribution) == 0 ? "0" : round((int) $single_details->epf_employer_contribution);
+                $temp_ar['EDLI Charges'] = round((int) $single_details->edli_charges) == 0 ? "0" : round((int) $single_details->edli_charges);
                 $temp_ar['PF ADMIN Charges'] = round((int) $single_details->pf_admin_charges) == 0 ? "0" : round((int) $single_details->pf_admin_charges);
                 $temp_ar['ESICER'] = round((int) $single_details->esic_employer_contribution) == 0 ? "0" : round((int) $single_details->esic_employer_contribution);
                 // $temp_ar[' employer Insurance'] = $single_details->;
@@ -386,7 +388,7 @@ class VmtReportsservice
                 $temp_ar['Income Tax'] = round((int)$single_details->Income_tax) == 0 ? "0" : round((int) $single_details->Income_tax);
                 $temp_ar['LWFEE'] = round((int)$single_details->lwfee) == 0 ? "0" : round((int) $single_details->lwfee);
                 // $temp_ar[' employee Insurance'] = $single_details->;
-                $temp_ar['Total Deduction'] = round((int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE ']);
+                $temp_ar['Total Deduction'] = round((int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE']);
                 $temp_ar['NET Pay '] = round((int)$single_details->net_income) == 0 ? "0" : round((int) $single_details->net_income);
 
 
