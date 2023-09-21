@@ -197,7 +197,7 @@ class VmtReportsservice
         return $response;
     }
 
-    public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id,$date_req)
+    public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id, $date_req)
 
     {
         $validator = Validator::make(
@@ -246,7 +246,7 @@ class VmtReportsservice
 
             if (empty($department_id)) {
                 $get_department = Department::pluck('id');
-            } else{
+            } else {
                 $get_department = $department_id;
             }
             $date = Carbon::now()->format('M-Y');
@@ -257,8 +257,8 @@ class VmtReportsservice
             $headings = array();
             $type = '';
             $temp_ar = array();
-           // dd($date_req);
-          // $date_req ='2022-05-01';
+            // dd($date_req);
+            // $date_req ='2022-05-01';
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
@@ -266,8 +266,8 @@ class VmtReportsservice
                 ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
                 ->whereIn('users.client_id', $client_id)
-                ->where('employee.doj', '<', $date_req)
-                ->where('users.active',$active_status)
+                ->whereDate('employee.doj', '<', $date_req)
+                ->where('users.active', $active_status)
                 ->whereIn('office.department_id', $get_department)
                 ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
@@ -277,11 +277,11 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-               //  dd( $emp_master_detail);
+            //  dd( $emp_master_detail);
             foreach ($emp_master_detail as $single_details) {
-               // dd($single_details);
+                // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
-               // dd(  $temp_ar);
+                // dd(  $temp_ar);
                 $temp_ar['Employee Name'] = $single_details->name;
                 $temp_ar['Gender'] = strtoupper($single_details->gender);
                 $temp_ar['DOB'] = Carbon::parse($single_details->dob)->format('d-M-Y');
@@ -305,13 +305,13 @@ class VmtReportsservice
                 $temp_ar['Office Mobile Number'] = $single_details->official_mobile;
                 $temp_ar['Reporting Managers Employee Code'] = $single_details->l1_manager_code;
                 //for   Reporting Manager Name
-                if ($single_details->l1_manager_code!=null || $single_details->l1_manager_code!='undefined'||!empty($single_details->l1_manager_code)) {
-                    if(empty(user::where('user_code', $single_details->l1_manager_code)->first()->name)){
+
+                if ($single_details->l1_manager_code != null || $single_details->l1_manager_code != 'undefined' || !empty($single_details->l1_manager_code)) {
+                    if (empty(user::where('user_code', $single_details->l1_manager_code)->first()->name)) {
                         $temp_ar['Reporting Managers Name'] = null;
-                    }else{
+                    } else {
                         $temp_ar['Reporting Managers Name'] = user::where('user_code', $single_details->l1_manager_code)->first()->name;
                     }
-                   
                 } else {
                     $temp_ar['Reporting Managers Name'] = null;
                 }
@@ -334,11 +334,25 @@ class VmtReportsservice
                 //for father mother detail need dob also
                 $user_id = User::where('user_code', $single_details->user_code)->first()->id;
                 $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
+                $temp_ar['Father Name']='';
+                $temp_ar['Mother Name']='';
+                $temp_ar['Spouse Name']='';
+                $temp_ar['Children Name'] ='';
                 foreach ($family_details as $singleFamilyDetails) {
-                    $temp_ar[$singleFamilyDetails->relationship . " Name"] = $singleFamilyDetails->name;
+                    if (strtolower($singleFamilyDetails->relationship) == 'father') {
+                        $temp_ar['Father Name'] = $singleFamilyDetails->name;
+                    } else if (strtolower($singleFamilyDetails->relationship) == 'mother') {
+                        $temp_ar['Mother Name'] = $singleFamilyDetails->name;
+                    } else if (strtolower($singleFamilyDetails->relationship) == 'spouse') {
+                        $temp_ar['Spouse Name'] = $singleFamilyDetails->name;
+                    } else if (strtolower($singleFamilyDetails->relationship) == 'children') {
+                        $temp_ar['Children Name'] = $singleFamilyDetails->name;
+                    }
                 }
                 $temp_ar['No of Children'] = $single_details->no_of_children;
                 $temp_ar['Marital Status'] = VmtMaritalStatus::where('id', $single_details->marital_status_id)->first()->name ?? '';
+                // if ($temp_ar['Employee Code'] == 'DM034')
+                //     dd($temp_ar);
                 $temp_ar['Marriage Date'] = $single_details->wedding_date;
                 $temp_ar['Present Address'] = $single_details->present_address;
                 $temp_ar['Permanent Address'] = $single_details->permanent_address;
@@ -399,10 +413,10 @@ class VmtReportsservice
                 array_push($processed_array, $temp_ar);
                 unset($temp_ar);
             }
-           
+
             if ($processed_array) {
                 foreach ($processed_array[0] as $key => $value) {
-                    array_push($headings,$key);
+                    array_push($headings, $key);
                 }
                 $response['headers'] = $headings;
                 $response['rows'] = $processed_array;
@@ -415,11 +429,11 @@ class VmtReportsservice
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
-                'line'=>$e->getTraceAsString(),
+                'line' => $e->getTraceAsString(),
                 'error_verbose' => $e->getLine()
             ];
         }
-       // dd($response);
+        // dd($response);
         return $response;
     }
 }
