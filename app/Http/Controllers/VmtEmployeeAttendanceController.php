@@ -37,7 +37,7 @@ class VmtEmployeeAttendanceController extends Controller
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date ='2023-06-26';
-        // $end_date ='2023-07-26';
+        // $end_date ='2023-06-29';
         return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status)), 'Detailed Attendance Report.xlsx');
     }
 
