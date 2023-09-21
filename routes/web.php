@@ -516,6 +516,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('downloadInvestmentReport', [App\Http\Controllers\VmtPayrollTaxController::class, 'downloadInvestmentReport']);
 
+    Route::get('downloadInvestReport', [App\Http\Controllers\VmtPayrollTaxController::class, 'downloadInvestReport']);
+
 
 
     //Asset Inventory

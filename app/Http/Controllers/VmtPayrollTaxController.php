@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\VmtPayrollTaxService;
+use App\Http\Controllers\VmtTestingController;
 use App\Exports\InvestmentsReportsExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -29,6 +30,10 @@ public function annualProjection(Request $request, VmtPayrollTaxService $vmtPayr
 public function downloadInvestmentReport(Request $request, VmtPayrollTaxService $vmtPayrollTaxService)
 {
     return Excel::download(new InvestmentsReportsExport($vmtPayrollTaxService->fetchInvestmentTaxReports()),'Investments Report.xlsx');
+}
+public function downloadInvestReport(Request $request, VmtPayrollTaxService $vmtPayrollTaxService)
+{
+    return Excel::download(new InvestmentsReportsExport((new VmtTestingController)->fetchInvestmentTaxReports()),'Investments Report.xlsx');
 }
 
 
