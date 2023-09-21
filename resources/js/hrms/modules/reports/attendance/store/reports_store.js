@@ -266,6 +266,7 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         AttendanceReportSource.value.splice(0,AttendanceReportSource.value.length);
         AttendanceReportDynamicHeaders.value.splice(0,
                 AttendanceReportDynamicHeaders.value.length);
+                attendance_Type.value = null;
     }
 
 
