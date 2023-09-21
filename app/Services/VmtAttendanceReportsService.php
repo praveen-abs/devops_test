@@ -18,6 +18,8 @@ use App\Models\AbsSalaryProjection;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Department;
 use \Datetime;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -1184,9 +1186,60 @@ class VmtAttendanceReportsService
         return $data;
     }
 
-    public function detailedAttendanceReport($start_date, $end_date)
+    public function detailedAttendanceReport($start_date, $end_date, $department_id,$client_id, $active_status)
     {
-        // dd('testing');
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                // 'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                // 'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
+
         ini_set('max_execution_time', 3000);
         //dd($month);
         $reportresponse = array();
@@ -1807,10 +1860,20 @@ class VmtAttendanceReportsService
         }
 
         $data = array($heading_dates, $header_2, $reportresponse, $heading_dates_2);
-
+    }
+        catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+            ];
+        }
         return $data;
     }
-    public function fetch_attendance_data($start_date, $end_date)
+
+
+    public function fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
         ini_set('max_execution_time', 3000);
         $reportresponse = array();
@@ -2214,13 +2277,66 @@ class VmtAttendanceReportsService
         return  $reportresponse;
     }
 
-    public function fetchAbsentReportData($start_date, $end_date)
+
+    public function fetchAbsentReportData($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
+
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
         ini_set('max_execution_time', 3000);
         $response = array();
         $absent_data = array();
         $temp_ar = array();
-        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status);
         foreach ($attendance_data as $single_data) {
             foreach ($single_data as $key => $value) {
                 if ($value['isAbsent'] == true && $value['isLeave'] == false  && $value['is_weekoff'] == false) {
@@ -2270,16 +2386,78 @@ class VmtAttendanceReportsService
         }
         $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Status', 'Day Status');
         $response['rows'] = $absent_data;
+    }
+        catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+            ];
+        }
+
         return $response;
     }
 
-    public function fetchHalfDayReportData($start_date, $end_date)
+    public function fetchHalfDayReportData($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
+
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
         ini_set('max_execution_time', 3000);
         $response = array();
         $halfday_data = array();
         $temp_ar = array();
-        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status);
         // dd( $attendance_data);
         foreach ($attendance_data as $single_data) {
             foreach ($single_data as $key => $value) {
@@ -2315,13 +2493,73 @@ class VmtAttendanceReportsService
 
         $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Status', 'Day Status');
         $response['rows'] = $halfday_data;
+    }catch (\Exception $e) {
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while fetching data',
+            'error' =>  $e->getMessage(),
+            'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+        ];
+    }
         return $response;
     }
 
-    public function fetchLCReportData($start_date, $end_date)
+    public function fetchLCReportData($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
+
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
         ini_set('max_execution_time', 3000);
-        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status);
         $lcData = array();
         $response = array();
         $temp_ar = array();
@@ -2404,12 +2642,73 @@ class VmtAttendanceReportsService
             'Employee Reason For Late Coming', 'Approved By', 'Approved On', 'Approver Comments'
         );
         $response['rows'] = $lcData;
+    }  catch (\Exception $e) {
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while fetching data',
+            'error' =>  $e->getMessage(),
+            'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+        ];
+    }
         return $response;
     }
-    public function fetchEGReportData($start_date, $end_date)
+    public function fetchEGReportData($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
+
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
+
         ini_set('max_execution_time', 3000);
-        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status);
         $ecData = array();
         $response = array();
         $temp_ar = array();
@@ -2490,12 +2789,75 @@ class VmtAttendanceReportsService
             'Employee Reason For Late Coming', 'Approved By', 'Approved On', 'Approver Comments'
         );
         $response['rows'] =  $ecData;
+    }
+        catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+            ];
+        }
         return $response;
     }
-    public function fetchMIPReportData($date)
-    {
+    public function fetchMIPReportData($start_date, $end_date, $department_id,$client_id,$type, $active_status)
+   {
+
+     $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
         try {
-            $client_id = sessionGetSelectedClientid();
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
+
+
+
+               $client_id =sessionGetSelectedClientid();
 
             $user_data = User::where('client_id', $client_id)->get(["id", "name", "user_code", "client_id", "email"])->toarray();
 
@@ -2566,10 +2928,62 @@ class VmtAttendanceReportsService
         }
     }
 
-    public function fetchOvertimeReportData($start_date, $end_date)
+    public function fetchOvertimeReportData($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
+
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = [$active_status];
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
         ini_set('max_execution_time', 3000);
-        $attendance_data = $this->fetch_attendance_data($start_date, $end_date);
+        $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status);
         $otData = array();
         $response = array();
         $temp_ar = array();
@@ -2619,6 +3033,14 @@ class VmtAttendanceReportsService
 
         $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
         $response['rows'] = $otData;
+    } catch (\Exception $e) {
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while fetching data',
+            'error' =>  $e->getMessage(),
+            'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+        ];
+    }
         return $response;
     }
     public function fetchSandwidchReportData($start_date, $end_date)

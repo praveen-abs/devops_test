@@ -180,9 +180,9 @@
                 @endfor
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:#383838;">Avalied</p>
+                <p style="font-size:10px;color:#383838;">Availed</p>
                 @for ($i=0; $i<count($leave_data); $i++)
-                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['avalied'] }}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['availed'] }}</p>
                 @endfor
             </td>
             <td style="width:25%;">
