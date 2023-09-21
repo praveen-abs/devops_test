@@ -180,7 +180,7 @@ class VmtEmployeeAttendanceController extends Controller
     }
     public function fetchHalfDayReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
-        $date = $request->date_req;
+        $date = $request->date;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';

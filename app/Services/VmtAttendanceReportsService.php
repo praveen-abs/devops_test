@@ -2438,7 +2438,7 @@ class VmtAttendanceReportsService
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
