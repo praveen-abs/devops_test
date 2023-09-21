@@ -731,8 +731,8 @@ class VmtPayrollTaxService
                     'vmt_emp_payroll.id as id'
                 ]);
 
-
      $payslip_details  = AbsSalaryProjection::where('vmt_emp_payroll_id',$payslip_id->id)->get()->toarray();
+
 
      $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
      $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
@@ -1060,17 +1060,111 @@ class VmtPayrollTaxService
 
     }
 
+
+    public function oldRegimeTaxReportCalculation($regime, $age, $total_income)
+    {
+
+        if ($regime == "old") {
+            if ($age < 60) {
+                if ($total_income <= 250000) {
+                    return $taxable_amt = 0;
+                } else if ($total_income > 250000 && $total_income <= 500000) {
+                    $deduction = $total_income - 250000;
+                    $taxable_amount = $deduction * 5 / 100;
+                    return $taxable_amount;
+                } else if ($total_income > 500000 && $total_income <= 1000000) {
+                    $deduction = $total_income - 500000;
+                    $taxable_amount = $deduction * 20 / 100;
+                    return $taxable_amount;
+                } else if ($total_income > 1000000) {
+                    $subcharge = '';
+                    $heath_and_education = 0;
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    return $taxable_amount;
+                } else {
+                    return $total_income;
+                }
+            } else if ($age >= 60 && $age <= 80) {
+                if ($total_income > 300000 && $total_income <= 500000) {
+                    $deduction = $total_income - 300000;
+                    $taxable_amount = $deduction * 5 / 100;
+                    return $taxable_amount;
+                } else
+                    if ($total_income > 500000 && $total_income < 1000000) {
+                    // 5% (tax rebate u/s 87A is available)
+                    $deduction = $total_income - 500000;
+                    $taxable_amount = $deduction * 20 / 100;
+                    return $taxable_amount;
+                } else if ($total_income > 1000000) {
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    return $taxable_amount;
+                } else {
+                    return $total_income;
+                }
+            } else if ($age > 80) {
+
+                if ($total_income > 500000 && $total_income <= 1000000) {
+                    $deduction = $total_income - 500000;
+                    $taxable_amount = $deduction * 20 / 100;
+                    return $taxable_amount;
+                } else
+                    if ($total_income > 1000000) {
+                    $deduction = $total_income - 1000000;
+                    $taxable_amount = $deduction * 30 / 100;
+                    return $taxable_amount;
+                } else {
+                    return $total_income;
+                }
+            }
+        }
+    }
+
+
+    public function rebateUs87acalc($regime,$taxable_income,$tax_income){
+
+        if($regime == "new"){
+            if($taxable_income > 700000){
+                $rebate = 0;
+                return $rebate;
+            }else{
+                if($tax_income >= 25000){
+                    $rebate = 25000;
+                    return $rebate;
+                }elseif($tax_income < 25000){
+                    $rebate = $tax_income;
+                    return $rebate;
+                }
+            }
+        }elseif($regime == "old"){
+            if($taxable_income > 500000){
+                $rebate = 0;
+                return $rebate;
+            }else{
+                if($tax_income >= 12500){
+                    $rebate = 12500;
+                    return $rebate;
+                }elseif($tax_income < 12500){
+                    $rebate = $tax_income;
+                    return $rebate;
+                }
+            }
+        }
+    }
+
+
     public function fetchInvestmentTaxReports()
     {
         $reportsdata = array();
 
         $client_id = "3";
 
-        $payroll_month = "2023-04-01";
+        $payroll_month = "2023-05-01";
 
         // $inv_emp = VmtInvFEmpAssigned::where()->pluck('user_id')->toArray();
 
-        $inv_emp = ['144','194',];
+        $inv_emp = ['182','194'];
 
         $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
@@ -1148,6 +1242,8 @@ class VmtPayrollTaxService
                 $employee_salary_details[$key]["Driver Salary Reimbursment Arrears"] =$employee_projected_salary->sum('driver_salary_arrear');
                 $employee_salary_details[$key]["Overtime"] =$employee_projected_salary->sum('overtime');
                 $employee_salary_details[$key]["Overtime Arrears"] =$employee_projected_salary->sum('overtime_arrear');
+                $employee_salary_details[$key]["Professional Tax"] =$employee_projected_salary->sum('prof_tax');
+                $employee_salary_details[$key]["Income Tax"] =$employee_projected_salary->sum('income_tax');
                 $employee_salary_details[$key]["Arrears"] = $employee_projected_salary->sum('basic_arrear')+ $employee_projected_salary->sum('dearness_allowance_arrear') + $employee_projected_salary->sum('vda_arrear') + $employee_projected_salary->sum('hra_arrear')+$employee_projected_salary->sum('hra_arrear') +
                                                             $employee_projected_salary->sum('child_edu_allowance_arrear') + $employee_projected_salary->sum('earned_stats_arrear') + $employee_projected_salary->sum('medical_allowance_arrear')
                                                             +$employee_projected_salary->sum('communication_allowance_arrear')  + $employee_projected_salary->sum('food_allowance_arrear') + $employee_projected_salary->sum('lta_arrear') + $employee_projected_salary->sum('spl_alw_arrear') + $employee_projected_salary->sum('other_allowance_arrear')
@@ -1180,8 +1276,9 @@ class VmtPayrollTaxService
         'Child Education Allowance Arrears','Statutory Bonus','Statutory Bonus Arrears','Medical Allowance','Medical Allowance Arrears','Communicaton Allowance','Communication Allowance Arrears', 'Leave Travel Allowance',
         'Leave Travel Allowance Arrears','Food Allowance','Food Allowance Arrears','Special Allowance','Special Allowance Arrears','Other Allowance','Other Allowance Arrears',
         'Washing Allowance','Washing Allowance Arrears','Uniform Allowance','Uniform Allowance Arrears','Vehicle Reimbursement','Vehicle Reimbursement Arrears','Driver Salary Reimbursment',
-        'Driver Salary Reimbursment Arrears','Arrears','Overtime','Overtime Arrears','Incentive','Other Earnings','Referral Bonus','Annual Statutory Bonus','Ex-Gratia','Attendance Bonus',
+        'Driver Salary Reimbursment Arrears','Overtime','Overtime Arrears','Professional Tax','Income Tax','Arrears','Incentive','Other Earnings','Referral Bonus','Annual Statutory Bonus','Ex-Gratia','Attendance Bonus',
          'Daily Allowance','Leave Encashments','Gift','Annual Gross Salary');
+
 
 
          foreach($inv_emp as $single_inv_users){
@@ -1215,34 +1312,16 @@ class VmtPayrollTaxService
              ]
          )->toArray();
 
-             }
-        //  foreach($v_form_template as $dec_amt){
+        }
 
-        //     dd($dec_amt);
-        //  }
-
-             // Excemption
-
-        array_push($salary_data['headers'], 'HRA Exceptions');
-        array_push($salary_data['headers'], 'CEA Exceptions');
-        array_push($salary_data['headers'], 'LTA Exceptions');
+        array_push($salary_data['headers'], 'HRA Exceptions','CEA Exceptions', 'LTA Exceptions');
 
         foreach ($Employee_details as $key => $single_user) {
-            // if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
-           $hra_value  =  $this->HraExceptionCalc(User::where('user_code',$single_user['Employee Code'])->first()->id,Carbon::now()->subMonth(2));
-
-                $employee_salary_details[$key]["HRA Exceptions"] = $hra_value;
-            // }else{
-            //     $employee_salary_details[$key]["Total Gross Income"] = 0;
-            // }
-       }
-
-        foreach ($Employee_details as $key => $single_user) {
-            // if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
-            $employee_salary_details[$key]["HRA Exceptions"] = 0;
+            $value =  $this->HraExceptionCalc(User::where('user_code',$single_user['Employee Code'])->first()->id,$payroll_month)['total_exception_amt'];
+            $employee_salary_details[$key]["HRA Exceptions"] = $value;
             $employee_salary_details[$key]["CEA Exceptions"] = 0;
             $employee_salary_details[$key]["LTA Exceptions"] = 0;
-            // }
+
         }
 
         // Previous employeer income
@@ -1258,8 +1337,10 @@ class VmtPayrollTaxService
                     $employee_salary_details[$key][$dec_amt['particular']] = $dec_amt['dec_amount'];
                     }
                 }
-        }
+            }
           }
+
+
          $sumofprevious_emp =0;
           foreach($v_form_template as $dec_amt){
             if($dec_amt['section_group'] == 'Previous Employer Income'){
@@ -1268,7 +1349,7 @@ class VmtPayrollTaxService
                 foreach ($Employee_details as $key => $single_user) {
                     if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
                         $sumofprevious_emp  += $dec_amt['dec_amount'];
-                        $employee_salary_details[$key]["Total Gross Income"] = $sumofprevious_emp + $employee_salary_details[$key]["Annual Gross Salary"];
+                      $employee_salary_details[$key]["Total Gross Income"] = $sumofprevious_emp + $employee_salary_details[$key]["Annual Gross Salary"];
                     }else{
                         $employee_salary_details[$key]["Total Gross Income"] = $employee_salary_details[$key]["Annual Gross Salary"];
                     }
@@ -1277,28 +1358,180 @@ class VmtPayrollTaxService
         }
 
 
+        $sumOfpreviousempincome = 0;
+        foreach($v_form_template as $dec_amt){
+
+        if ($dec_amt['section_group'] == "Previous Employer Income") {
+            $sumOfpreviousempincome += $dec_amt['dec_amount'];
+
+            if ($dec_amt['particular'] == "Previous Employer Standard Deduction") {
+                $inv_stantard_deduction = $dec_amt['dec_amount'];
+            }
+
+            if ($dec_amt['particular'] == "Previous Employer PT") {
+                $inv_previous_emp_pt = $dec_amt['dec_amount'];
+            }
+
+            if ($dec_amt['particular'] == "Previous Employer Income Tax Deduction") {
+                $inv_previous_emp_inv_dec = $dec_amt['dec_amount'];
+                $inv_previous_emp_inv_perticular = 'Previous Employer Income Tax Deduction';
+            }
+        }
+
+        if ($dec_amt['section_group'] == "Other Source Of  Income") {
+            $sumOfOtherSourceOfIncome = $dec_amt['dec_amount'];
+            // $ExemptionsUnder80s += $dec_amt['dec_amount'];
+        }
+
+        if ($dec_amt['section'] == "80EE") {
+            $sumof80Ee = $dec_amt['dec_amount'];
+            // $ExemptionsUnder80s += $dec_amt['dec_amount'];
+        }
+
+    }
+
+    foreach ($Employee_details as $key => $single_user) {
+        if($inv_stantard_deduction + $employee_salary_details[$key]["Annual Gross Salary"] >= 50000){
+            $value = 50000;
+        }else{
+            $value = $inv_stantard_deduction + $employee_salary_details[$key]["Annual Gross Salary"];
+        }
+    }
+
+    foreach ($Employee_details as $key => $single_user) {
+        if($inv_previous_emp_pt + $employee_salary_details[$key]["Professional Tax"] >= 2500){
+            $pt_value = 2500;
+        }else{
+            $pt_value = $inv_previous_emp_pt + $employee_salary_details[$key]["Professional Tax"];
+        }
+    }
+
 
         array_push($salary_data['headers'], '(a) salary as per provision as containeds in sec.17(1)',
         '(b) Value of Prequisites u/s 17 (2)',
-        '(c) Profits in lie u of salary under section 13(3)');
+        '(c) Profits in lie u of salary under section 13(3)',
+        'Total',
+        '2.Less: Allowance to the extent exempt u/s 10',
+        '3. Balance (1-2)',
+        '(a) Standard Deduction u/s 16(ia)',
+        '(b) Entertainment allowance u/s 16(ii)',
+        '(c) Tax on employment u/s 16(iii)',
+        '5. Aggregate of 4(a), (b) and (c)',
+        "6. Income chargeable under head 'salaries'(3-5)",
+        '(a) Deductions u/s 24 - Interest',
+        '(b) Other Source Of Income',
+        '(c) 80EE Additional interest on House property',
+        '8. Gross total income (6+7)',
+
+    );
 
         foreach ($Employee_details as $key => $single_user) {
-
-            // if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
-            $employee_salary_details[$key]["(a) salary as per provision as containeds in sec.17(1)"] = 0;
+            if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+            $employee_salary_details[$key]["(a) salary as per provision as containeds in sec.17(1)"] = $employee_salary_details[$key]["Total Gross Income"];
             $employee_salary_details[$key]["(b) Value of Prequisites u/s 17 (2)"] = 0;
             $employee_salary_details[$key]["(c) Profits in lie u of salary under section 13(3)"] = 0;
-            // }
+            $employee_salary_details[$key]["Total"] = $employee_salary_details[$key]["Total Gross Income"];
+            $employee_salary_details[$key]["2.Less: Allowance to the extent exempt u/s 10"] = $employee_salary_details[$key]["HRA Exceptions"] - $employee_salary_details[$key]["CEA Exceptions"];
+            $employee_salary_details[$key]["3. Balance (1-2)"] = $employee_salary_details[$key]["Total"] - $employee_salary_details[$key]["2.Less: Allowance to the extent exempt u/s 10"];
+            $employee_salary_details[$key]["(a) Standard Deduction u/s 16(ia)"] = $value;
+            $employee_salary_details[$key]["(b) Entertainment allowance u/s 16(ii)"] = 0;
+            $employee_salary_details[$key]["(c) Tax on employment u/s 16(iii)"] = $pt_value;
+            $employee_salary_details[$key]["5. Aggregate of 4(a), (b) and (c)"] = $value + 0 + $pt_value;
+            $employee_salary_details[$key]["6. Income chargeable under head 'salaries'(3-5)"] = $employee_salary_details[$key]["3. Balance (1-2)"] - $employee_salary_details[$key]["5. Aggregate of 4(a), (b) and (c)"];
+            $employee_salary_details[$key]['(a) Deductions u/s 24 - Interest'] = 0;
+            $employee_salary_details[$key]['(b) Other Source Of Income'] = $sumOfOtherSourceOfIncome ?? 0;
+            $employee_salary_details[$key]['(c) 80EE Additional interest on House property'] = $sumof80Ee;
+            $employee_salary_details[$key]['8. Gross total income (6+7)'] = $employee_salary_details[$key]["6. Income chargeable under head 'salaries'(3-5)"] + $employee_salary_details[$key]['(a) Deductions u/s 24 - Interest'] + $employee_salary_details[$key]['(b) Other Source Of Income'] + $employee_salary_details[$key]['(c) 80EE Additional interest on House property'];
+            }else{
+                $employee_salary_details[$key]["(a) salary as per provision as containeds in sec.17(1)"] = $employee_salary_details[$key]["Total Gross Income"];
+                $employee_salary_details[$key]["(b) Value of Prequisites u/s 17 (2)"] = 0;
+                $employee_salary_details[$key]["(c) Profits in lie u of salary under section 13(3)"] = 0;
+                $employee_salary_details[$key]["Total"] = $employee_salary_details[$key]["Total Gross Income"];
+                $employee_salary_details[$key]["2.Less: Allowance to the extent exempt u/s 10"] = $employee_salary_details[$key]["HRA Exceptions"] - $employee_salary_details[$key]["CEA Exceptions"];
+                $employee_salary_details[$key]["3. Balance (1-2)"] = $employee_salary_details[$key]["Total"] - $employee_salary_details[$key]["2.Less: Allowance to the extent exempt u/s 10"];
+                $employee_salary_details[$key]["(a) Standard Deduction u/s 16(ia)"] = 0;
+                $employee_salary_details[$key]["(b) Entertainment allowance u/s 16(ii)"] = 0;
+                $employee_salary_details[$key]["(c) Tax on employment u/s 16(iii)"] = 0;
+                $employee_salary_details[$key]["5. Aggregate of 4(a), (b) and (c)"] = 0;
+                $employee_salary_details[$key]["6. Income chargeable under head 'salaries'(3-5)"] = $employee_salary_details[$key]["3. Balance (1-2)"] - $employee_salary_details[$key]["5. Aggregate of 4(a), (b) and (c)"];
+                $employee_salary_details[$key]['(a) Deductions u/s 24 - Interest'] = 0;
+                $employee_salary_details[$key]['(b) Other Source Of Income'] = 0;
+                $employee_salary_details[$key]['(c) 80EE Additional interest on House property'] = 0;
+                $employee_salary_details[$key]['8. Gross total income (6+7)'] = $employee_salary_details[$key]["6. Income chargeable under head 'salaries'(3-5)"] + $employee_salary_details[$key]['(a) Deductions u/s 24 - Interest'] + $employee_salary_details[$key]['(b) Other Source Of Income'] + $employee_salary_details[$key]['(c) 80EE Additional interest on House property'];
+            }
+        }
+
+
+        array_push($salary_data['headers'], '11.Total Income (8-10)',
+        '12.Tax on total income',
+        '13. Rebate u/s 87A (Taxable Income below Rs.5,00,000',
+        '14.Total Income Tax',
+        '15.Surcharge',
+        '16.Education Cess @4% (On Tax computed at (14 & 15)',
+        '17.Tax Payable (14+15+16)',
+        '18.Less: Relief under section 89',
+        '19.Tax Payable (17-18)',
+        '20.Tax Deducted Till Date',
+        '22.Tax Due (19-20-21)',
+
+    );
+
+        foreach ($Employee_details as $key => $single_user) {
+            if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+            $employee_salary_details[$key]['11.Total Income (8-10)'] = 371857;
+            $employee_salary_details[$key]['12.Tax on total income'] = $this->oldRegimeTaxReportCalculation('old','40',$employee_salary_details[$key]['11.Total Income (8-10)']);
+            $employee_salary_details[$key]['13. Rebate u/s 87A (Taxable Income below Rs.5,00,000'] = $this->rebateUs87acalc('old',$employee_salary_details[$key]['11.Total Income (8-10)'],$employee_salary_details[$key]['12.Tax on total income']);
+            $employee_salary_details[$key]['14.Total Income Tax'] = $employee_salary_details[$key]['12.Tax on total income'] - $employee_salary_details[$key]['13. Rebate u/s 87A (Taxable Income below Rs.5,00,000'];
+            $employee_salary_details[$key]['15.Surcharge'] = $this->subChargeCalculation($employee_salary_details[$key]['11.Total Income (8-10)']);
+            $employee_salary_details[$key]['16.Education Cess @4% (On Tax computed at (14 & 15)'] = ($employee_salary_details[$key]['14.Total Income Tax'] + $employee_salary_details[$key]['15.Surcharge']) * 0.04;
+            $employee_salary_details[$key]['17.Tax Payable (14+15+16)'] = $employee_salary_details[$key]['14.Total Income Tax'] + $employee_salary_details[$key]['15.Surcharge'] + $employee_salary_details[$key]['16.Education Cess @4% (On Tax computed at (14 & 15)'];
+            $employee_salary_details[$key]['18.Less: Relief under section 89'] = 0;
+            $employee_salary_details[$key]['19.Tax Payable (17-18)'] = $employee_salary_details[$key]['17.Tax Payable (14+15+16)'] - $employee_salary_details[$key]['18.Less: Relief under section 89'];
+            $employee_salary_details[$key]['20.Tax Deducted Till Date'] = $employee_salary_details[$key]["Income Tax"];
+            $employee_salary_details[$key]['22.Tax Due (19-20-21)'] = $employee_salary_details[$key]['19.Tax Payable (17-18)'] - $employee_salary_details[$key]['20.Tax Deducted Till Date'] - 0;
+
+            }else{
+                $employee_salary_details[$key]['11.Total Income (8-10)'] = 371857;
+                $employee_salary_details[$key]['12.Tax on total income'] = $this->oldRegimeTaxReportCalculation('old','40',$employee_salary_details[$key]['11.Total Income (8-10)']);
+                $employee_salary_details[$key]['13. Rebate u/s 87A (Taxable Income below Rs.5,00,000'] = $this->rebateUs87acalc('old',$employee_salary_details[$key]['11.Total Income (8-10)'],$employee_salary_details[$key]['12.Tax on total income']);
+                $employee_salary_details[$key]['14.Total Income Tax'] = $employee_salary_details[$key]['12.Tax on total income'] - $employee_salary_details[$key]['13. Rebate u/s 87A (Taxable Income below Rs.5,00,000'];
+                $employee_salary_details[$key]['15.Surcharge'] = $this->subChargeCalculation($employee_salary_details[$key]['11.Total Income (8-10)']);
+                $employee_salary_details[$key]['16.Education Cess @4% (On Tax computed at (14 & 15)'] = ($employee_salary_details[$key]['14.Total Income Tax'] + $employee_salary_details[$key]['15.Surcharge']) * 0.04;
+                $employee_salary_details[$key]['17.Tax Payable (14+15+16)'] = $employee_salary_details[$key]['14.Total Income Tax'] + $employee_salary_details[$key]['15.Surcharge'] + $employee_salary_details[$key]['16.Education Cess @4% (On Tax computed at (14 & 15)'];
+                $employee_salary_details[$key]['18.Less: Relief under section 89'] = 0;
+                $employee_salary_details[$key]['19.Tax Payable (17-18)'] = $employee_salary_details[$key]['17.Tax Payable (14+15+16)'] - $employee_salary_details[$key]['18.Less: Relief under section 89'];
+                $employee_salary_details[$key]['20.Tax Deducted Till Date'] = $employee_salary_details[$key]["Income Tax"];
+                $employee_salary_details[$key]['22.Tax Due (19-20-21)'] = $employee_salary_details[$key]['19.Tax Payable (17-18)'] - $employee_salary_details[$key]['20.Tax Deducted Till Date'] - 0;
+
+            }
+        }
+
+        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
+        $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
+        $end_date = Carbon::parse($end_date)->floorMonth();
+        $current = Carbon::now()->floorMonth();
+
+        $diffmonths = $current->diffInMonths($end_date);
+
+        array_push($salary_data['headers'], '23.Tax Deduction Per Month');
+
+        foreach ($Employee_details as $key => $single_user) {
+            if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                $employee_salary_details[$key]['23.Tax Deduction Per Month'] = $employee_salary_details[$key]['22.Tax Due (19-20-21)'] / $diffmonths ;
+            }else{
+                $employee_salary_details[$key]['23.Tax Deduction Per Month'] = 0;
+            }
         }
 
 
         $salary_data['rows'] = $employee_salary_details;
         array_push($reportsdata,array_unique($salary_data['headers']),$salary_data['rows']);
 
-        return
-        dd($reportsdata);
+        return ($reportsdata);
 
 
-    }
+
+
+}
 
 }
