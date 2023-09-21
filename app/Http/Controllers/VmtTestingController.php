@@ -1162,11 +1162,11 @@ class VmtTestingController extends Controller
             'Driver Salary Reimbursment Arrears', 'Arrears', 'Overtime', 'Overtime Arrears', 'Incentive', 'Other Earnings', 'Referral Bonus', 'Annual Statutory Bonus', 'Ex-Gratia', 'Attendance Bonus',
             'Daily Allowance', 'Leave Encashments', 'Gift', 'Annual Gross Salary'
         );
-
+        $v_form_template =array();
 
         foreach ($inv_emp as $form_key => $single_inv_users) {
 
-            $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+            $v_form_template[] = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
                 ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
                 ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
                 ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
@@ -1316,7 +1316,7 @@ foreach ($v_form_template as $key => $single_user_data) {
                 }
             }
             }
-        }
+
 
 
 

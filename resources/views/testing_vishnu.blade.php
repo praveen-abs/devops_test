@@ -890,11 +890,13 @@ foreach ($Employee_details as $key => $single_user) {
         ->get(['vmt_inv_section_group.section_group', 'vmt_inv_section.particular', 'vmt_inv_section.max_amount', 'vmt_inv_emp_formdata.dec_amount', 'vmt_inv_emp_formdata.json_popups_value', 'vmt_employee_compensatory_details.gross', 'vmt_employee_compensatory_details.basic', 'vmt_inv_f_emp_assigned.regime', 'vmt_inv_f_emp_assigned.updated_at', 'vmt_employee_compensatory_details.hra', 'vmt_employee_compensatory_details.special_allowance', 'vmt_employee_compensatory_details.professional_tax', 'vmt_employee_compensatory_details.child_education_allowance', 'vmt_employee_compensatory_details.lta', 'vmt_employee_details.doj', 'vmt_employee_details.dob'])
         ->toArray();
 }
+
+/*------------------------Take the code from here da simma frfc ---------------------------------*/
+
 $tax_reports_Section_column = [];
 $tax_reports_Excemption_column = [];
 $employee_section_details = [];
 $employee_excemption_details = [];
-$v_form_template = array_values(array_filter($v_form_template));
 
 foreach ($v_form_template as $form_key => $single_emp_form_data) {
 
@@ -908,14 +910,18 @@ foreach ($v_form_template as $form_key => $single_emp_form_data) {
                 array_push($salary_data['headers'], $single_user_data['particular'] );
 
             }
+
             $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
             $employee_section_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
 
         }
     }
+}
+if (!in_array("Section 80CCE Total",$tax_reports_Section_column )) {
 
+array_push($tax_reports_Section_column, 'Section 80CCE Total');
 
-
+}
      foreach ($v_form_template as $form_key => $single_emp_form_data) {
         foreach ($single_emp_form_data as $key => $single_user_data) {
          if (trim($single_user_data['section_group']) == 'Other Excemptions') {
@@ -936,10 +942,13 @@ foreach ($v_form_template as $form_key => $single_emp_form_data) {
                     $employee_excemption_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
                 }
             }
-            }
         }
 }
+if (!in_array('10.Aggregate of deductible amount under Chapter VI-A',$tax_reports_Excemption_column )) {
 
+array_push($tax_reports_Excemption_column, '10.Aggregate of deductible amount under Chapter VI-A');
+
+}
 
 $section_count=0;
 foreach ($employee_salary_details as $section_key => $single_section_data) {
@@ -973,112 +982,24 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
             $employee_excemption_details[$Excemption_key][$single_excemption_column] = 0;
             $employee_salary_details[$Excemption_key][$single_excemption_column] = 0;
         }
+    }
+    $employee_salary_details[$Excemption_key]['10.Aggregate of deductible amount under Chapter VI-A'] =array_sum($single_Excemption_data) + $employee_salary_details[$Excemption_key]['Section 80CCE Total'];
 
     }
 
-    $employee_salary_details[$Excemption_key]['10.Aggregate of deductible amount under Chapter VI-A'] =array_sum($single_Excemption_data) + $employee_salary_details[$Excemption_key]['Section 80CCE Total'];
+    for ($i=0; $i < count($tax_reports_Section_column); $i++) {
 
-// dd($v_form_template);
-//$user_id = User::where('user_code', "PSC0018")->first();
+        array_push($salary_data['headers'],$tax_reports_Section_column[$i]);
+    }
+    for ($i=0; $i < count($tax_reports_Excemption_column); $i++) {
 
-// $tax_reports_Section_column = [];
-// $tax_reports_Excemption_column = [];
-// $employee_section_details = [];
-// $employee_excemption_details = [];
-// $v_form_template = array_values(array_filter($v_form_template));
+        array_push($salary_data['headers'],$tax_reports_Excemption_column[$i]);
+    }
 
-// foreach ($v_form_template as $form_key => $single_emp_form_data) {
-//     foreach ($single_emp_form_data as $key => $single_user_data) {
+    /*----------------------------------------------------------------------end--------------------------------------------------------*/
 
-//       if (trim($single_user_data['section_group']) == 'Section 80C & 80CC') {
+       dd($tax_reports_Section_column, $tax_reports_Excemption_column, $employee_salary_details,$salary_data['headers']);
 
-//                     if (!in_array($single_user_data['particular'], $tax_reports_Section_column)) {
-
-//                         array_push($tax_reports_Section_column, $single_user_data['particular']);
-//                         array_push($salary_data['headers'], $single_user_data['particular'] );
-
-//                     }
-
-//                     $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
-//                     $employee_section_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
-
-//                 }
-//            // }
-//             // if (!in_array("Section 80C & 80CC",$salary_data['headers'] )) {
-
-//             //     array_push($salary_data['headers'], 'Section 80CCE Total');
-
-//             //    }
-//         // foreach ($v_form_template as $form_key => $single_emp_form_data) {
-//         //      foreach ($single_emp_form_data as $key => $single_user_data) {
-//          else if (trim($single_user_data['section_group']) == 'Other Excemptions') {
-
-//                 if (!in_array($single_user_data['particular'], $tax_reports_Excemption_column)) {
-
-//                     array_push($tax_reports_Excemption_column, $single_user_data['particular']);
-//                     array_push($salary_data['headers'], $single_user_data['particular']);
-//                 }
-
-//                 if ($single_user_data['dec_amount'] >= $single_user_data['max_amount']) {
-
-//                     $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['max_amount'];
-//                     $employee_excemption_details[$form_key][$single_user_data['particular']] = $single_user_data['max_amount'];
-//                 } else {
-
-//                     $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
-//                     $employee_excemption_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
-//                 }
-//             //}
-//             }
-//         }
-//             if (!in_array("10.Aggregate of deductible amount under Chapter VI-A",$salary_data['headers'] )) {
-
-//                 array_push($salary_data['headers'], '10.Aggregate of deductible amount under Chapter VI-A');
-
-//                 }
-
-//         //dd($employee_salary_details);
-//         $section_count = 0;
-//         foreach ($employee_salary_details as $section_key => $single_section_data) {
-//             $section_count =  $section_key;
-//             foreach ($tax_reports_Section_column as $key => $single_section_column) {
-
-//                 if (!in_array($single_section_column, array_keys($single_section_data))) {
-
-//                     $employee_salary_details[$section_key][$single_section_column] = 0;
-//                     $employee_section_details[$section_key][$single_section_column] = 0;
-//                 }
-
-//             }
-
-//             $Section_80CCE_total = array_sum($single_section_data);
-//             if ($Section_80CCE_total >= '150000') {
-
-//                 $employee_salary_details[$section_count]['Section 80CCE Total'] = 150000;
-//                 $section_count++;
-//             } else {
-//                 $employee_salary_details[$section_count]['Section 80CCE Total'] = $Section_80CCE_total;
-//                 $section_count++;
-//             }
-
-//         }
-
-
-//         foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_data) {
-
-//             foreach ($tax_reports_Excemption_column as $key => $single_excemption_column) {
-
-//                 if (!in_array($single_excemption_column, array_keys($single_Excemption_data))) {
-//                     $employee_excemption_details[$Excemption_key][$single_excemption_column] = 0;
-//                     $employee_salary_details[$Excemption_key][$single_excemption_column] = 0;
-//                 }
-
-//             }
-
-//             $employee_salary_details[$Excemption_key]['10.Aggregate of deductible amount under Chapter VI-A'] = array_sum($single_Excemption_data) + $employee_salary_details[$Excemption_key]['Section 80CCE Total'];
-
-       }
-    dd($tax_reports_Section_column, $tax_reports_Excemption_column, $employee_salary_details,$salary_data['headers']);
 
 
 ?>
