@@ -99,6 +99,17 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
             ->getStartColor()->setRGB('002164');
         $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFont()->setBold(true)
             ->getColor()->setRGB('ffffff');
+        //for allignment
+        // $sheet->getStyle('E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $range = 'A1:'. $this->last_header_column.$this->last_row;
+$style = [
+    'alignment' => [
+        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        'wrapText' => true,
+    ],
+];
+$sheet->getStyle($range)->applyFromArray($style);
 
             //last row 
             // $sheet->mergeCells('A'.$this->last_row.':G'.$this->last_row)->setCellValue('A'.$this->last_row, "Period : ".$this->date);
