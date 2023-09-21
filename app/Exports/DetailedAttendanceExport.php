@@ -36,11 +36,11 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
     public function __construct($data)
     {
-        $this->heading_dates = $data[0];
-        $this->total_column = num2alpha(count($data[1]) - 1);
-        $this->header_2 = $data[1];
-        $this->reportresponse = $data[2];
-        $this->heading_dates_2 = $data[3];
+        $this->heading_dates = $data['heading_dates'];
+        $this->total_column = num2alpha(count($data['header_2']) - 1);
+        $this->header_2 = $data['header_2'];
+        $this->reportresponse = $data['rows'];
+        $this->heading_dates_2 = $data['heading_dates_2'];
     }
 
     public function headings(): array

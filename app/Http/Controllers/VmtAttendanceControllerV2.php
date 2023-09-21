@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DetailedAttendanceExport;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeAttendanceV2;
 use Exception;
@@ -20,6 +21,7 @@ use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtClientMaster;
 use App\Models\VmtOrgTimePeriod;
 use Carbon\CarbonInterval;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VmtAttendanceControllerV2 extends Controller
 {
@@ -657,8 +659,9 @@ class VmtAttendanceControllerV2 extends Controller
     public function downloadDetailedAttendanceReport(VmtAttendanceServiceV2 $attendance_services)
     {
         $start_date = '2023-07-26';
-        $end_date = '2023-08-26';
-        $data = $attendance_services->downloadDetailedAttendanceReport($start_date, $end_date);
-        dd($data);
+        $end_date = '2023-08-25';
+        //return $attendance_services->downloadDetailedAttendanceReport($start_date, $end_date);
+        return Excel::download(new DetailedAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date)), 'Detailed Attendance Report.xlsx');
+      // return $data;
     }
 }

@@ -57,6 +57,7 @@ class VmtAttendanceServiceV2
             }
         }
     }
+
     public function checkWeekOffStatus($date, $weekOffJson, $checkin_time, $checkout_time)
     {
         $days_for_per_week = array('Sunday' => 0, 'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6);
@@ -383,52 +384,65 @@ class VmtAttendanceServiceV2
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $header_2 = array('', '', '', '');
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
+            $response['rows'] = array();
+            $header_date = Carbon::parse($start_date);
+            $heading_dates_2 = array();
+            while ($header_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
+                array_push($heading_dates, $header_date->format('d') . ' - ' .  $header_date->format('l'));
+                array_push($heading_dates_2,$header_date->format('d') . ' - ' .  $header_date->format('l'));
+                $header_date->addDay();
+            }
+            //dd(count($users));
             foreach ($users as $single_user) {
                 $current_date = Carbon::parse($start_date);
-                array_push($heading_dates, $current_date->format('d') . ' - ' . $current_date->format('l'));
                 array_push($header_2, 'InPunch', 'OutPunch', 'OT');
                 if ($attendance_setting_details['lc_status'] == 1) {
-                    array_push($header_2, 'LC Minutes');
+                    array_push($header_2, 'LC Minutes','Status');
+                }else{
+                    array_push($header_2, 'Status');
                 }
-                array_push($header_2, 'Status');
                 $temp_ar = array();
                 array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
                 $total_LC_mins = 0;
                 $total_ot = 0;
-                $total_weekoff =0;
-                $total_holiday =0;
+                $total_weekoff = 0;
+                $total_holiday = 0;
                 $total_present = 0;
-                $total_absent=0;
-                $total_late_lop =0;
+                $total_absent = 0;
+                $total_late_lop = 0;
                 $total_leave = 0;
                 $total_half_day = 0;
                 $total_on_duty = 0;
-                $total_LC =0;
-                $total_EG=0;
+                $total_LC = 0;
+                $total_EG = 0;
+
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
 
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
 
                         $att_detail = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
                         $lc_eg_setting = $this->attendanceSettingsinfos($att_detail->vmt_employee_workshift_id);
-                        $checkin_time = 0;
-                        $checkout_time = 0;
+                        $checkin_time = null;
+                        $checkout_time = null;
                         $current_ot = 0;
                         $is_eg = null;
                         $is_lc = null;
                         $lc_mins = 0;
                         if ($lc_eg_setting['lc_status'])
                             $lc_minutes = 0;
+
                         $status = $att_detail->status;
                         if ($att_detail->status == 'A') {
                             // get leave details for current date 
-                            $leave = VmtLeaves::where('user_id', $single_user->id)
-                                ->orWhereMonth('start_date', $current_date->format('m'))
-                                ->orWhereMonth('end_date', $current_date->format('m'))->orderBy('id', 'DESC')->first();
+                            // dd('workin');
+                            $leave = VmtEmployeeLeaves::where('user_id', $single_user->id)
+                                ->WhereMonth('start_date', $current_date->format('m'))
+                                ->orWhereMonth('end_date', $current_date->format('m'))
+                                ->orderBy('id', 'DESC');
                             if ($leave->exists()) {
                                 $leave = $leave->first();
                                 if ($current_date->between(Carbon::parse($leave->start_date), Carbon::parse($leave->end_date)) && $leave->status == 'Approved') {
-                                    $total_leave = $total_leave+1;
+                                    $total_leave = $total_leave + 1;
                                     $leave_type = VmtLeaves::where('id', $leave->leave_type_id);
                                     if ($leave_type == 'Sick Leave / Casual Leave') {
                                         $status = 'SL/CL';
@@ -457,13 +471,13 @@ class VmtAttendanceServiceV2
                                     } else if ($leave_type == 'Flexi day-off Leave') {
                                         $status = 'FO L';
                                     }
-                                }else{
-                                    $total_absent = $total_absent+1;
+                                } else {
+                                    $total_absent = $total_absent + 1;
                                 }
-                            }else{
-                               $total_absent = $total_absent+1;
+                            } else {
+                                $total_absent = $total_absent + 1;
                             }
-                        } else if ($att_detail->status != 'P') {
+                        } else if ($att_detail->status == 'P') {
                             $checkin_time = $att_detail->checkin_time;
                             $checkin_time =  $att_detail->checkout_time;
                             $shift_settings = $this->getShiftTimeForEmployee($single_user->id,  $checkin_time, $checkin_time);
@@ -513,11 +527,11 @@ class VmtAttendanceServiceV2
                                     }
                                 }
                             }
-                            
+
 
                             if ($shift_settings->is_lc_applicable == 1 ||  $shift_settings->is_eg_applicable == 1) {
                                 $lc_eg_day_att = 'P';
-                                if ($is_lc == 'Rejected' || $is_lc== 'Not Applied') {
+                                if ($is_lc == 'Rejected' || $is_lc == 'Not Applied') {
                                     if ($shift_settings->is_lc_applicable == 1) {
                                         $status = $status . '/LC';
                                         if ($total_LC >= $shift_settings->lc_limit_permonth && $shift_settings->lc_limit_permonth != null) {
@@ -525,18 +539,14 @@ class VmtAttendanceServiceV2
                                         }
                                     }
                                 }
-                                if ($is_eg == 'Rejected' ||$is_eg == 'Not Applied') {
+                                if ($is_eg == 'Rejected' || $is_eg == 'Not Applied') {
                                     if ($shift_settings->is_eg_applicable == 1) {
-                                       $status= $status . '/EG';
+                                        $status = $status . '/EG';
                                         if ($total_EG >= $shift_settings->eg_limit_permonth && $shift_settings->eg_limit_permonth != null) {
                                             $total_late_lop =  $total_late_lop + $shift_settings->lc_exceed_lop_day;
                                         }
                                     }
                                 }
-                                array_push($arrayReport,  $lc_eg_day_att);
-                                $total_present++;
-                            } else {
-                                $total_present = $total_present+1;
                             }
                             if ($is_lc != null) {
                                 $lc_mins = Carbon::parse($checkin_time)->diffInMinutes($shiftStartTime);
@@ -544,27 +554,26 @@ class VmtAttendanceServiceV2
                                 $total_LC++;
                             }
 
-                            if($is_eg !==null){
-                             $total_EG++;
+                            if ($is_eg !== null) {
+                                $total_EG++;
                             }
-        
-                           
+
+                            $total_present = $total_present + 1;
                         } else if ($att_detail->status == 'HO') {
                             $status = $att_detail->status;
                             $total_holiday = $total_holiday + 1;
-                        }else if($att_detail->status == 'WO'){
+                        } else if ($att_detail->status == 'WO') {
                             $status = $att_detail->status;
-                            $total_weekoff = $total_weekoff +1;
-                        }else{
+                            $total_weekoff = $total_weekoff + 1;
+                        } else {
                             $checkin_time = '-';
                             $checkout_time = '-';
                             $ot = '-';
                             if ($lc_eg_setting['lc_status'])
                                 $lc_minutes = '-';
-                              
                         }
-                        array_push($temp_ar,$checkin_time,$checkout_time,$ot,$lc_mins);
-                        dd($temp_ar);
+
+                        array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $status);
                     } else {
                         array_push($temp_ar, 0, 0, 0);
                         if ($attendance_setting_details['lc_status'] == 1) {
@@ -572,15 +581,25 @@ class VmtAttendanceServiceV2
                         }
                         array_push($temp_ar, 'N');
                     }
+                    $current_date->addDay();
                 }
-                dd($single_user);
+                $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day) - $total_late_lop;
+                array_push($temp_ar, $total_weekoff, $total_holiday, $total_ot, $total_present, $total_absent, $total_late_lop, $total_leave, $total_half_day, $total_on_duty, $total_payable_days);
+                array_push($response['rows'], $temp_ar);
+                unset($temp_ar);
             }
+            //dd($response ['rows']);
             array_push($heading_dates, 'Total Calculation');
             array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
+            $response['heading_dates'] = $heading_dates;
+            $response['header_2'] = $header_2;
+            $response['heading_dates_2'] = $heading_dates_2;
+            return $response;
         } catch (Exception $e) {
+
             return response()->json([
                 'status' => 'failure',
-                'message' => "attendanceJobs",
+                'message' => "downloadDetailedAttendanceReport",
                 'data' => $e->getTraceAsString(),
             ]);
         }
