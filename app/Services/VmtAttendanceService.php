@@ -2604,8 +2604,7 @@ class VmtAttendanceService
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
-
+                $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName($query_user->id), true);
                 $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
                     $employee_details->name,
                     $employee_details->user_code,
@@ -2656,6 +2655,7 @@ class VmtAttendanceService
                     'message' => 'Attendance Regularization approval successful',
                     'mail_status' => 'failure',
                     'error' => $e->getMessage(),
+                    'error_string'=>$e->getTraceAsString(),
                     'error_verbose' => $e->getline(),
                 ]
             );
@@ -2663,6 +2663,7 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ approveRejectAttendanceRegularization() ) ] ",
+                'error_string'=>$e->getTraceAsString(),
                 'data' => $e->getMessage(),
                 'error_line' => $e->getline(),
             ]);
