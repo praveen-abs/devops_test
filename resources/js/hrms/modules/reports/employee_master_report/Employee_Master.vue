@@ -2,7 +2,7 @@
     <div>
         <!-- !bg-[#E6E6E6]/ -->
         <div>
-            <div class="flex justify-between p-2 bg-white">
+            <div class="flex justify-between bg-white py-1">
                 <!-- v-model="filters['global'].value" -->
                 <div>
                     <InputText placeholder="Search" v-model="filters['global'].value" class="border-color !h-10 my-2"
@@ -34,14 +34,13 @@
 
             </div>
             <!-- overflow-y-auto -->
-            <div class=" !h-[400px] ">
-
+            <div class="">
                 <DataTable :value="UseEmployeeMaster.employeeMaterReportSource" paginator :rows="5"
-                    :rowsPerPageOptions="[5, 10, 20, 50]" responsiveLayout="scroll"
+                    :rowsPerPageOptions="[5, 10, 20, 50]" responsiveLayout="scroll" scrollable scrollHeight="240px"
                     paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                     currentPageReportTemplate="{first} to {last} of {totalRecords}">
                     <Column class="" v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title"
-                        :field="col.title" :header="col.title" style="white-space:nowrap;text-align: left !important;  ">
+                        :field="col.title" :header="col.title"  style="white-space: nowrap;text-align: left; !important;width:15rem !important; marign-right:1rem !important ;">
                     </Column>
                 </DataTable>
 

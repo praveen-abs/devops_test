@@ -32,10 +32,10 @@
 
         </div>
 
-        <div>
-
+        <div class="">
+          <loadingSpinner v-if="UseEmployeeMaster.canShowLoading" class="absolute z-50 bg-white" />
             <DataTable :value="UseEmployeeMaster.employeeCTCReportSource" :filters="filters"
-            paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" scrollable scrollHeight="400px"
+            paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" scrollable scrollHeight="240px"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
             <Column v-for="col of UseEmployeeMaster.Employee_CTCReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
