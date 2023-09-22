@@ -2,12 +2,12 @@ import { defineStore } from "pinia";
 import { ref, reactive ,watch } from "vue";
 import axios from "axios";
 
-export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
+export const useModuleSettingsStore = defineStore("useModuleSettingsStore", () => {
 
 
     const employeeAssignDialog = ref(false);
 
-    const arrayMobileSetDetails = ref();
+    const arrayModuleSettingsDetails = ref();
 
     const client_details = ref();
 
@@ -15,16 +15,14 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
     const canshowloading = ref(false);
 
-    async function getMobileSettings(){
+    async function getModuleSettings(){
         canshowloading.value = true;
 
-            await axios.post('/getClient_MobileModulePermissionDetails',{
-                client_id:client_details.value.id
-            }).then((res)=>{
+            await axios.get('/getClient_AllModulePermissionDetails').then((res)=>{
                 console.log(res.data);
                 // if(res.data.data[1]){
-                    arrayMobileSetDetails.value =res.data.data;
-                    console.log( "mobile settings",arrayMobileSetDetails.value );
+                    arrayModuleSettingsDetails.value =res.data.data;
+                    console.log( "mobile settings",arrayModuleSettingsDetails.value );
                 // }
             }).finally(()=>{
                 canshowloading.value = false;
@@ -83,7 +81,7 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
     return {
         employeeAssignDialog,
-        arrayMobileSetDetails,
+        arrayModuleSettingsDetails,
         getSessionClient,
         saveEnableDisableSetting,
         canshowloading,
@@ -92,6 +90,6 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
         // function
         updateEmployeesPermissionStatus,
 
-        getMobileSettings
+        getModuleSettings
     };
 });
