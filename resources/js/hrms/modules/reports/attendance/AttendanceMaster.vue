@@ -115,6 +115,7 @@
             <div class="tab-content" id="">
 
                 <div class="card-body">
+                    <loadingSpinner v-if="EmployeeMaster.canShowLoading" class="absolute z-50 bg-white" />
 
                     <div>
                         <div class="bg-white p-2 flex  justify-between items-center">
@@ -138,6 +139,14 @@
                                         placeholder="Select Type"
                                         class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                                 </div>
+                                <div>
+                                    <Calendar v-model="Reports_store.Start_Date" @click="Reports_store.select_StartAndEnd_Date('start_date',Reports_store.Start_Date, Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
+                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @click="Reports_store.select_StartAndEnd_Date('end_date',Reports_store.End_Date, Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
+                                    <!-- <Calendar inputId="icon" dateFormat="dd-mm-yy" class="w-[150px] h-10"  placeholder="End-date " :showIcon="true" style="height: 2.5rem;"
+                            v-model="End_date" /> -->
+                                </div>
+
+
 
 
 
@@ -165,11 +174,11 @@
                         </div>
 
                         <div>
-
+                           
                             <DataTable :value="Reports_store.AttendanceReportSource" paginator :rows="5"
-                                :rowsPerPageOptions="[5, 10, 20, 50]"
+                                :rowsPerPageOptions="[5, 10, 20, 50]" responsiveLayout="scroll" scrollable scrollHeight="240px"
                                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-                                currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
+                                currentPageReportTemplate="{first} to {last} of {totalRecords}" >
                                 <Column v-for="col of Reports_store.AttendanceReportDynamicHeaders" :key="col.title"
                                     :field="col.title" :header="col.title"
                                     style="white-space: nowrap;text-align: left; !important">
@@ -190,6 +199,7 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { UseReports_store } from "./store/reports_store";
+import dayjs from 'dayjs';
 import { FilterMatchMode } from 'primevue/api';
 import { EmployeeMasterStore } from "../employee_master_report/employee_master_reportsStore";
 
@@ -200,6 +210,9 @@ const Reports_store = UseReports_store();
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
+
+const start_date = ref();
+const End_date = ref();
 
 // onMounted(() => {
 //     Reports_store.fetchFilterClientId();
@@ -265,6 +278,20 @@ const attendanceReportType = ref([
     color: #000 !important;
     font-family: 'poppins';
     /* font-size:11px; */
+}
+.p-inputtext .p-placeholder{
+    color: #000 !important;
+    font-family: 'poppins';
+}
+
+.p-dropdown .p-dropdown-label
+{
+    background: transparent;
+    border: 0 none;
+    margin-top: -7px;
+}
+.p-button{
+    margin-top:5px;
 }
 </style>
 
