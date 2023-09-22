@@ -3,9 +3,9 @@
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Attendance Reports</h1>
             <div>
-                <button
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] border-[#DDDDDD] mx-2 rounded-[4px] "><i
-                        class="mr-2 pi pi-filter"></i> Apply Filter</button>
+                <button @click="EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
+                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
+                        class="mr-2 pi pi-times"></i> Clear Filter</button>
             </div>
         </div>
         <div style="position: relative;">
@@ -16,7 +16,7 @@
                         role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820] w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 1"
+                            @click="Reports_store.activetab = 1,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             DETAILED REPORT
                         </a>
@@ -31,7 +31,7 @@
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 2"
+                            @click="Reports_store.activetab = 2,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             MUSTER ROLL
                         </a>
@@ -44,7 +44,7 @@
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 3"
+                            @click="Reports_store.activetab = 3,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 3 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             CONSOLIDATE
                         </a>
@@ -56,7 +56,7 @@
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 4"
+                            @click="Reports_store.activetab = 4,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 4 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             OVERTIME
                         </a>
@@ -69,7 +69,7 @@
                     <li class=" nav-item !border-0  flex items-center " role="presentation">
                         <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
-                            @click="Reports_store.activetab = 5"
+                            @click="Reports_store.activetab = 5,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
                             :class="[Reports_store.activetab === 5 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             OTHERS
                         </a>
@@ -145,12 +145,12 @@
                             </div>
 
                             <div class="flex items-center ">
-                                <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]"
+                                <button class=" p-2 mx-2 rounded-md w-[120px]" :class="[ !Reports_store.AttendanceReportDynamicHeaders.length == 0 ? 'bg-[#000] text-white':' !text-[#000] !bg-[#E6E6E6] ']"
                                     @click="Reports_store.btn_download = !Reports_store.btn_download, Reports_store.downloadAttendanceReports(Reports_store.activetab)">
                                     <p class=" relative left-2 font-['poppins']">Download</p>
                                     <div id="btn-download" style=" position: absolute; right: 0;"
                                         :class="[Reports_store.btn_download == true ? toggleClass : ' ']">
-                                        <svg width="22px" height="16px" viewBox="0 0 22 16">
+                                        <svg width="22px" height="16px" viewBox="0 0 22 16" :class="[ !Reports_store.AttendanceReportDynamicHeaders.length == 0 ? '!stroke-[#ffff] ':'!stroke-[#000]']" >
                                             <path
                                                 d="M2,10 L6,13 L12.8760559,4.5959317 C14.1180021,3.0779974 16.2457925,2.62289624 18,3.5 L18,3.5 C19.8385982,4.4192991 21,6.29848669 21,8.35410197 L21,10 C21,12.7614237 18.7614237,15 16,15 L1,15"
                                                 id="check"></path>
@@ -291,7 +291,7 @@ const attendanceReportType = ref([
     transform: translate3d(0,0,0)
     polyline,
     path
-      stroke: #000
+    //   stroke: #000
       stroke-width: 1.5
       stroke-linecap: round
       stroke-linejoin: round

@@ -85,17 +85,17 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         let url;
         let subUrl;
 
-        if (active_status == 1) {
-            // Detailed Reports
-            url = `/fetch-detailed-attendance-data`;
-        } else
+        // if (active_status == 1) {
+        //     // Detailed Reports
+        //     url = `/fetch-detailed-attendance-data`;
+        // } else
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
             } else
             if (active_status == 4) {
                 // Overtime Reports
-                url = `/fetch-overtime-report-data'`;
+                url = `/fetch-overtime-report-data`;
             } else
                 if (active_status == 5) {
                     if (attendance_Type.value) {
@@ -169,6 +169,15 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 });
             }).finally(() => {
                 useEmployeeMaster.canShowLoading = false
+                useEmployeeMaster.selectedfilters.active_status="";
+                useEmployeeMaster.selectedfilters.date="";
+                useEmployeeMaster.selectedfilters.department_id="";
+                useEmployeeMaster.selectedfilters.legal_entity="";
+        
+                useEmployeeMaster.legal_Entity="";
+                useEmployeeMaster.Department="";
+                useEmployeeMaster.period_Date="";
+                useEmployeeMaster.select_Category=""
             })
 
         }
@@ -253,6 +262,13 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
     }
 
+    function clearDataTable(){
+        AttendanceReportSource.value.splice(0,AttendanceReportSource.value.length);
+        AttendanceReportDynamicHeaders.value.splice(0,
+                AttendanceReportDynamicHeaders.value.length);
+                attendance_Type.value = null;
+    }
+
 
 
 
@@ -287,7 +303,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         AttendanceReportDynamicHeaders,
         getEmployeeAttendanceReports,
         attendance_Type,
-        downloadAttendanceReports
+        downloadAttendanceReports,
+        clearDataTable
     }
 
 });

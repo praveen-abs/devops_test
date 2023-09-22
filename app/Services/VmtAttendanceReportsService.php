@@ -1217,18 +1217,17 @@ class VmtAttendanceReportsService
 
 
         try {
-
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -2314,14 +2313,14 @@ class VmtAttendanceReportsService
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -2431,18 +2430,17 @@ class VmtAttendanceReportsService
 
 
         try {
-
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -2540,14 +2538,14 @@ class VmtAttendanceReportsService
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -2688,14 +2686,14 @@ class VmtAttendanceReportsService
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -2960,18 +2958,17 @@ class VmtAttendanceReportsService
 
 
         try {
-
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
