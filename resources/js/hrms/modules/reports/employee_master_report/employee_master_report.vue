@@ -99,9 +99,11 @@
                 <div>
                     <div class="card-body">
                         <div v-if="activetab === 1">
+                            <loadingSpinner v-if="useEmployeeReport.canShowLoading" class="absolute z-50 bg-white" />
                             <Employee_Master />
                         </div>
                         <div v-if="activetab === 2">
+                            <loadingSpinner v-if="useEmployeeReport.canShowLoading" class="absolute z-50 bg-white" />
                             <!-- <EmployeeSummary /> -->
                             <employee_CTC />
                         </div>

@@ -35,7 +35,8 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
         date:"",
         department_id:"",
         legal_entity:"",
-        active_status:""
+        active_status:"",
+        type:""
     });
 
     const employeeMaterReportSource = ref([]);
@@ -112,12 +113,10 @@ const getEmployeeCTC = () => {
             personalDetail.value = "detailed";
             console.log(personalDetail.value);
         };
+        
+        selectedfilters.type =   personalDetail.value;
 
-        let type =   personalDetail.value;
-
-        axios.post('/fetch-employee-ctc-report',{
-            type:type
-        }).then(res => {
+        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
             console.log(employeeCTCReportSource.value," testings data");
