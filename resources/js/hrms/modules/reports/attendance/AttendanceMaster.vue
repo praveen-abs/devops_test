@@ -118,7 +118,7 @@
                     <LoadingSpinner v-if="EmployeeMaster.canShowLoading" class="absolute z-50 bg-white" />
 
                     <div>
-                        <div class="bg-white p-2 flex  justify-between items-center">
+                        <div class="flex items-center justify-between p-2 bg-white">
 
                             <div class=" flex !items-center">
                                 <div>
@@ -126,7 +126,7 @@
                                         class="border-color !h-10 my-1 " />
                                 </div>
 
-                                <div class="flex items-center ml-2 pt-2" v-if="Reports_store.activetab == 5">
+                                <div class="flex items-center pt-2 ml-2" v-if="Reports_store.activetab == 5">
                                     <!-- <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
                                     v-model="Reports_store.attendance_Type"
                                     @change="Reports_store.getSelectoption('date', periodDate,Reports_store.activetab)"
@@ -140,8 +140,8 @@
                                         class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                                 </div>
                                 <div>
-                                    <Calendar v-model="Reports_store.Start_Date" @change="Reports_store.select_StartAndEnd_Date('start_date',Reports_store.Start_Date, Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
-                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @change="Reports_store.select_StartAndEnd_Date('end_date',Reports_store.End_Date, Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
+                                    <Calendar v-model="Reports_store.Start_Date" @date-select="Reports_store.select_StartAndEnd_Date('start_date',dayjs(Reports_store.Start_Date).format('YYYY-MM-DD'), Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
+                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @date-select="Reports_store.select_StartAndEnd_Date('end_date',dayjs(Reports_store.End_Date).format('YYYY-MM-DD') , Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
                                     <!-- <Calendar inputId="icon" dateFormat="dd-mm-yy" class="w-[150px] h-10"  placeholder="End-date " :showIcon="true" style="height: 2.5rem;"
                             v-model="End_date" /> -->
                                 </div>
@@ -181,7 +181,7 @@
                                 currentPageReportTemplate="{first} to {last} of {totalRecords}" >
                                 <Column v-for="col of Reports_store.AttendanceReportDynamicHeaders" :key="col.title"
                                     :field="col.title" :header="col.title"
-                                    style="white-space: nowrap;text-align: left; !important">
+                                    style="white-space: nowrap;text-align: left; !important;width:15rem !important; marign-right:1rem !important ;">
                                 </Column>
                             </DataTable>
 
