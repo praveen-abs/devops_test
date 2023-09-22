@@ -47,7 +47,9 @@ class VmtEmployeeAttendanceController extends Controller
         if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
             $is_lc = true;
         }
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status,),$is_lc), 'Detailed Attendance Report.xlsx');
+        $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
+       // dd($data);
+        return Excel::download(new DetailedAttendanceExport( $data,$is_lc), 'Detailed Attendance Report.xlsx');
     }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
