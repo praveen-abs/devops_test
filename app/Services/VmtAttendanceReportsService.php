@@ -583,6 +583,7 @@ class VmtAttendanceReportsService
 
                 if ($doj->gt($current_date)) {
                     array_push($arrayReport, 'N');
+
                 } else if ($attendanceResponseArray[$key]['is_weekoff']) {
                     array_push($arrayReport, 'WO');
                     $total_weekoff++;
@@ -1081,8 +1082,8 @@ class VmtAttendanceReportsService
 
             foreach ($attendanceResponseArray as $key => $value) {
                 $current_date = Carbon::parse($attendanceResponseArray[$key]['date']);
-                $doj = Carbon::parse($attendanceResponseArray[$key]['DOJ']);
-
+                $doj = Carbon::parse($attendanceResponseArray[$key]['DOJ']->format('d-m-Y'));
+            
                 if ($doj->gt($current_date)) {
                     array_push($arrayReport, 'N');
                 } else if ($attendanceResponseArray[$key]['is_weekoff']) {
@@ -1267,7 +1268,7 @@ class VmtAttendanceReportsService
 
             //dd($singleUser);
 
-            $arrayReport = array($singleUser->user_code, $singleUser->name, $singleUser->designation, $singleUser->doj);
+            $arrayReport = array($singleUser->user_code, $singleUser->name, $singleUser->designation, Carbon::parse($singleUser->doj)->format('d-M-Y'));
 
 
 
@@ -1385,8 +1386,9 @@ class VmtAttendanceReportsService
                 }
                 array_push($header_2, 'Staus');
                 $attendanceResponseArray[$fulldate] = array(
-                    //"user_id"=>$request->user_id,
-                    "user_id" => $singleUser->id, "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false,
+                    //"user_id"=>$request->user_id, 
+                    $dojformat=carbon::parse($singleUser->doj)->format('d-m-Y'),
+                    "user_id" => $singleUser->id, "DOJ" => $dojformat, "isAbsent" => false, "isLeave" => false,
                     "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false,
                     "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null,
                     "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null,
@@ -2381,6 +2383,7 @@ class VmtAttendanceReportsService
         }
         $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Status', 'Day Status');
         $response['rows'] = $absent_data;
+
     }
         catch (\Exception $e) {
             $response = [

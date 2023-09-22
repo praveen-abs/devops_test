@@ -38,7 +38,11 @@ class VmtEmployeeAttendanceController extends Controller
         $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date ='2023-06-26';
         // $end_date ='2023-06-29';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status)), 'Detailed Attendance Report.xlsx');
+        $is_lc = false;
+        if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
+            $is_lc = true;
+        }
+        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status,),$is_lc), 'Detailed Attendance Report.xlsx');
     }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -141,6 +145,7 @@ class VmtEmployeeAttendanceController extends Controller
         $date = $request->date_req;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
         $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+       // dd($attendance_report_service->fetchAbsentReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status));
         return Excel::download(new AbsentReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Absent Report.xlsx');
     }
 
@@ -164,7 +169,7 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $date = $request->date_req;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+        $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';
         $response = $attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
@@ -175,14 +180,14 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $date = $request->date_req;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+        $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Early Going Report.xlsx');
     }
     public function fetchHalfDayReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         $date = $request->date;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+        $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';
         $response = $attendance_report_service->fetchHalfDayReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
@@ -192,7 +197,7 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $date = $request->date_req;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+        $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         return Excel::download(new HalfDayReportExport($attendance_report_service->fetchHalfDayReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Half Day Report.xlsx');
     }
 
@@ -200,7 +205,7 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $date = $request->date_req;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+        $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';
         $response = $attendance_report_service->fetchOvertimeReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
@@ -211,7 +216,7 @@ class VmtEmployeeAttendanceController extends Controller
     {
         $date = $request->date_req;
         $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-        $end_date =Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+        $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         // $start_date = '2023-07-25';
         // $end_date = '2023-07-28';
         return Excel::download(new OverTimeReportExport($attendance_report_service->fetchOvertimeReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Over Time Report.xlsx');
