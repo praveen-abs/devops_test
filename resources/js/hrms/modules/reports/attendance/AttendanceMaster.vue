@@ -115,7 +115,7 @@
             <div class="tab-content" id="">
 
                 <div class="card-body">
-                    <loadingSpinner v-if="EmployeeMaster.canShowLoading" class="absolute z-50 bg-white" />
+                    <LoadingSpinner v-if="EmployeeMaster.canShowLoading" class="absolute z-50 bg-white" />
 
                     <div>
                         <div class="bg-white p-2 flex  justify-between items-center">
@@ -140,8 +140,8 @@
                                         class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                                 </div>
                                 <div>
-                                    <Calendar v-model="Reports_store.Start_Date" @click="Reports_store.select_StartAndEnd_Date('start_date',Reports_store.Start_Date, Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
-                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @click="Reports_store.select_StartAndEnd_Date('end_date',Reports_store.End_Date, Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
+                                    <Calendar v-model="Reports_store.Start_Date" @change="Reports_store.select_StartAndEnd_Date('start_date',Reports_store.Start_Date, Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
+                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @change="Reports_store.select_StartAndEnd_Date('end_date',Reports_store.End_Date, Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
                                     <!-- <Calendar inputId="icon" dateFormat="dd-mm-yy" class="w-[150px] h-10"  placeholder="End-date " :showIcon="true" style="height: 2.5rem;"
                             v-model="End_date" /> -->
                                 </div>
@@ -202,6 +202,7 @@ import { UseReports_store } from "./store/reports_store";
 import dayjs from 'dayjs';
 import { FilterMatchMode } from 'primevue/api';
 import { EmployeeMasterStore } from "../employee_master_report/employee_master_reportsStore";
+import LoadingSpinner from '../../../components/LoadingSpinner.vue';
 
 
 const EmployeeMaster = EmployeeMasterStore();

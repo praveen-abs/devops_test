@@ -277,7 +277,7 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                             useEmployeeMaster.Department="";
                             useEmployeeMaster.period_Date="";
                             useEmployeeMaster.select_Category=""
-                            Start_Date=""
+                            Start_Date.value=""
                             End_Date.value= ""
                         })
 
@@ -369,7 +369,7 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         AttendanceReportDynamicHeaders.value.splice(0,
                 AttendanceReportDynamicHeaders.value.length);
                 attendance_Type.value = null;
-                Start_Date=""
+                Start_Date.value=""
                 End_Date.value= ""
     }
 
