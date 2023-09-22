@@ -232,6 +232,7 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
                 if (key == "start_date") {
                     selectedfilters.start_date = filterValue;
+                    console.log(selectedfilters);
         
                 } else
                     if (key == "end_date") {
@@ -268,21 +269,10 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                             });
                         }).finally(() => {
                             useEmployeeMaster.canShowLoading = false
-                            useEmployeeMaster.selectedfilters.active_status="";
-                            useEmployeeMaster.selectedfilters.date="";
-                            useEmployeeMaster.selectedfilters.department_id="";
-                            useEmployeeMaster.selectedfilters.legal_entity="";
-                    
-                            useEmployeeMaster.legal_Entity="";
-                            useEmployeeMaster.Department="";
-                            useEmployeeMaster.period_Date="";
-                            useEmployeeMaster.select_Category=""
-                            Start_Date.value=""
-                            End_Date.value= ""
                         })
 
                     }else{
-                        console.log("testing start date and end date ::");
+                        console.log("testing start date and end date ::",selectedfilters);
                     }
 
     }
@@ -334,7 +324,20 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 link.download = `${filename}.xlsx`;
                 link.click();
             }).finally(() => {
-                useEmployeeMaster.canShowLoading = false
+                useEmployeeMaster.canShowLoading = false;
+                useEmployeeMaster.selectedfilters.active_status="";
+                useEmployeeMaster.selectedfilters.date="";
+                useEmployeeMaster.selectedfilters.department_id="";
+                useEmployeeMaster.selectedfilters.legal_entity="";
+        
+                useEmployeeMaster.legal_Entity="";
+                useEmployeeMaster.Department="";
+                useEmployeeMaster.period_Date="";
+                useEmployeeMaster.select_Category=""
+                Start_Date.value=""
+                End_Date.value= ""
+                selectedfilters.end_date=""
+                 selectedfilters.start_date=""
 
             })
         }
@@ -371,6 +374,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 attendance_Type.value = null;
                 Start_Date.value=""
                 End_Date.value= ""
+                selectedfilters.end_date=""
+                 selectedfilters.start_date=""
     }
 
 
