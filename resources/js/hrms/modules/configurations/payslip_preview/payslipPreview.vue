@@ -38,7 +38,7 @@
                         <div class="card-body">
                             <div v-if="activetab === 1" class="flex justify-center">
                                 <div class="w-[100%] p-4">
-                                    <!-- <dynamicPayslip /> -->
+                                    <!-- <dynamicPayslip /> --> 
                                     <apponiment_letter />
                                 </div>
                             </div>
