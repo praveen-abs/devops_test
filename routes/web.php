@@ -1016,7 +1016,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/salAdvSettingEdit', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingEdit']);
     Route::post('/salAdvSettingDelete', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingDelete']);
     Route::get('/salAdvAmtApprovedEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvAmtApprovedEmp']);
-    Route::post('imporExistingSalaryAdvanceData', [App\Http\Controllers\ImportExistingSADataController::class, 'imporExistingSalaryAdvanceData'])->name('imporExistingSalaryAdvanceData');
+    Route::post('imporExistingSalaryAdvanceData', [App\Http\Controllers\ImportExistingSADataController::class, 'storeExistingLoanAmount'])->name('imporExistingSalaryAdvanceData');
     Route::get('saveSalaryAdvanceUploadPage', [App\Http\Controllers\ImportExistingSADataController::class, 'saveSalaryAdvanceUploadPage'])->name('saveSalaryAdvanceUploadPage');
     Route::get('getActiveEmployeedata', [App\Http\Controllers\VmtEmployeeController::class, 'getEmployeeLoanDetails'])->name('getEmployeeLoanDetails');
     //Travel Advance
