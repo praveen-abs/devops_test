@@ -1,51 +1,52 @@
 <template>
     <div>
-
-    <div>
-        <div class="bg-white p-2 flex  justify-between">
-            <!-- v-model="filters['global'].value" -->
-            <div>
-                <InputText placeholder="Search"  v-model="filters['global'].value" class="border-color !h-10" style="height: 3em; font-['poppins'] " />
-
-                <!-- <Dropdown optionLabel="name" placeholder="Select Category" class="w-[200px] mx-2" /> -->
-            </div>
-            <div class="flex items-center ">
-                <!-- <div>
-                    <button class="px-3 py-2 " :class="[Basic_details==1 ? 'bg-black  text-[white] rounded-l-md' : ' bg-[#E6E6E6] text-black rounded-l-md']" @click="Basic_details=1">Basic</button>
-                    <button class="px-3 py-2 " :class="[Basic_details==2 ? 'bg-black text-[white] rounded-r-md' : ' bg-[#E6E6E6] text-black  rounded-r-md']" @click="Basic_details=2">Detail</button>
-                </div> -->
-                <button class=" bg-[#E6E6E6] p-2 mx-2 rounded-md w-[120px]" @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download,UseEmployeeMaster.downloadEmployeeMaster() ">
+        <!-- !bg-[#E6E6E6]/ -->
+        <div>
+            <div class="flex justify-between bg-white py-1">
+                <!-- v-model="filters['global'].value" -->
+                <div>
+                    <InputText placeholder="Search" v-model="filters['global'].value" class="border-color !h-10 my-2"
+                        style="height: 3em; font-['poppins'] !mb-[4px]" />
+                </div>
+                <div class="flex items-center">
+                    <button class=" p-2 mx-2 rounded-md w-[120px] "
+                        :class="[!UseEmployeeMaster.employeeMaterReportSource.length == 0 ? 'bg-[#000] text-white' : ' !text-[#000] !bg-[#E6E6E6] ']"
+                        @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download, UseEmployeeMaster.downloadEmployeeMaster()">
                         <p class=" relative left-2 font-['poppins']">Download</p>
-                        <div id="btn-download"  style=" position: absolute; right: 0;"
-                            :class="[UseEmployeeMaster.btn_download == true ? toggleClass : ' ' ]">
-                            <svg width="22px" height="16px" viewBox="0 0 22 16">
+                        <div id="btn-download" style=" position: absolute; right: 0;"
+                            :class="[UseEmployeeMaster.btn_download == true ? toggleClass : '']">
+                            <svg width="22px" height="16px" viewBox="0 0 22 16"
+                                :class="[!UseEmployeeMaster.employeeMaterReportSource.length == 0 ? '!stroke-[#ffff] ' : '!stroke-[#000]']">
                                 <path
                                     d="M2,10 L6,13 L12.8760559,4.5959317 C14.1180021,3.0779974 16.2457925,2.62289624 18,3.5 L18,3.5 C19.8385982,4.4192991 21,6.29848669 21,8.35410197 L21,10 C21,12.7614237 18.7614237,15 16,15 L1,15"
-                                    id="check"></path>
+                                    id="check"
+                                    :style="[!UseEmployeeMaster.employeeMaterReportSource.length === 0 ? 'stroke=blue' : '!bg-[#E6E6E6] !text-[#000] ']">
+                                </path>
                                 <polyline points="4.5 8.5 8 11 11.5 8.5" class="svg-out"></polyline>
-                                <path d="M8,1 L8,11" class="svg-out"></path>
+                                <path d="M8,1 L8,11" class="svg-out " stroke=""
+                                    :style="[UseEmployeeMaster.employeeMaterReportSource.length === 0 ? 'red' : 'fill: red']">
+                                </path>
                             </svg>
                         </div>
-                </button>
+                    </button>
+                </div>
+
+
             </div>
+            <!-- overflow-y-auto -->
+            <div class="">
+                <DataTable :value="UseEmployeeMaster.employeeMaterReportSource" paginator :rows="5"
+                    :rowsPerPageOptions="[5, 10, 20, 50]" responsiveLayout="scroll" scrollable scrollHeight="240px"
+                    paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                    currentPageReportTemplate="{first} to {last} of {totalRecords}">
+                    <Column class="" v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title"
+                        :field="col.title" :header="col.title"  style="white-space: nowrap;text-align: left; !important;width:15rem !important; marign-right:1rem !important ;"  resizableColumns columnResizeMode="fit">
+                    </Column>
+                </DataTable>
 
-
+            </div>
         </div>
 
-        <div>
-
-            <DataTable :value="UseEmployeeMaster.employeeMaterReportSource"
-            paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        currentPageReportTemplate="{first} to {last} of {totalRecords}" responsiveLayout="scroll">
-            <Column v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title" :field="col.title" :header="col.title"
-                style="white-space: nowrap;text-align: left; !important">
-            </Column>
-        </DataTable>
-
-        </div>
-    </div>
-        
     </div>
 </template>
 <script setup>
@@ -53,16 +54,16 @@ import axios from 'axios';
 import { ref, onMounted, reactive } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 
-import { EmployeeMasterStore } from "./employee_master_reportsStore" ;
+import { EmployeeMasterStore } from "./employee_master_reportsStore";
 
-const Basic_details =  ref(1);
+const Basic_details = ref(1);
 
 
 const UseEmployeeMaster = EmployeeMasterStore();
 
-onMounted(()=>{
-    UseEmployeeMaster.getemployeeMater();
-    // fetchFilterClientIds();
+onMounted(() => {
+    // UseEmployeeMaster.getemployeeMater();
+    //  UseEmployeeMaster.ea();
 });
 
 const filters = ref({
@@ -71,6 +72,9 @@ const filters = ref({
 
 
 const toggleClass = ref('downloaded');
+
+const stroke_black = "stroke='#000'"
+const stroke_white = "stroke='#fff'"
 
 </script>
 
@@ -97,7 +101,7 @@ const toggleClass = ref('downloaded');
     transform: translate3d(0,0,0)
     polyline,
     path
-      stroke: #000
+      // stroke: #000
       stroke-width: 1.5
       stroke-linecap: round
       stroke-linejoin: round

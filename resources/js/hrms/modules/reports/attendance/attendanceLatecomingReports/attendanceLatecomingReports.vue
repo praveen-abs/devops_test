@@ -130,7 +130,7 @@ const getEmployeeAttendanceReports = async () => {
         console.log(AttendanceReportDynamicHeaders.value);
 
     }).finally(() => {
-        canShowLoading.value = false
+        canShowLoading.value = false;
     })
 
 }

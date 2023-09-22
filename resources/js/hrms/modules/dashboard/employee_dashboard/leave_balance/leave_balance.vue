@@ -14,7 +14,7 @@
                             <div class="">
                                 <span class="text-3xl font-semibold text-black">{{ leaveBalance.leave_balance }}</span>
                                 <span class="">/</span>
-                                <span class="">{{ leaveBalance.avalied_leaves }}</span>
+                                <span class="">{{ leaveBalance.availed_leaves }}</span>
                             </div>
                         <div class="px-3">
                             <p class=" font-semibold text-primary text-[14px] align-bottom  py-2">{{ leaveBalance.leave_type }}</p>
