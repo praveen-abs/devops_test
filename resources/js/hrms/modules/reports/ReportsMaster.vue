@@ -1,5 +1,5 @@
 <template>
-    <loadingSpinner v-if="EmployeeMaster.canShowLoading" class="absolute z-50 bg-white" />
+
     <div>
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
@@ -88,7 +88,6 @@
                         <div v-if="activetab === 4">
                             <!-- <EmployeeSummary /> -->
                             <AttendanceMaster />
-
                         </div>
                         <div v-if="activetab === 3">
                             <!-- <salary_Revision_Cancelled /> -->

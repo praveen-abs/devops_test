@@ -22,6 +22,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
     const Legal_Entity = ref();
     const Department = ref();
     const PeriodMonth = ref();
+    const Start_Date = ref();
+    const End_Date = ref();
     const attendance_Type = ref();
 
     // const
@@ -37,6 +39,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         department_id: "",
         client_id: "",
         active_status: "",
+        start_date:"",
+        end_date:""
     });
 
     const AttendanceReportSource = ref([]);
@@ -185,6 +189,94 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
     }
 
+    function select_StartAndEnd_Date(key, filterValue, active_status){
+        let url;
+        let subUrl;
+
+
+            if (active_status == 2) {
+                // Muster Reports
+                url = `/fetch-attendance-data`;
+            } else
+            if (active_status == 4) {
+                // Overtime Reports
+                url = `/fetch-overtime-report-data`;
+            } else
+                if (active_status == 5) {
+                    if (attendance_Type.value) {
+                        if (attendance_Type.value == 1) {
+                            url = '/fetch-LC-report-data'
+                        } else
+                            if (attendance_Type.value == 2) {
+                                url = '/fetch-EG-report-data'
+                            } else
+                                if (attendance_Type.value == 3) {
+                                    url = '/fetch-absent-report-data'
+                                } else
+                                        if (attendance_Type.value ==4) {
+                                            url = '/fetch-half-day-report'
+                                        }
+                    } else {
+                        Swal.fire({
+                            title: "error",
+                            text: "selected report type",
+                            icon: "error",
+                            showCancelButton: false,
+                        })
+
+                        useEmployeeMaster.period_Date = null
+                        useEmployeeMaster.Department = null
+                        useEmployeeMaster.legal_Entity = null
+                    }
+                }
+
+                if (key == "start_date") {
+                    selectedfilters.start_date = filterValue;
+                    console.log(selectedfilters);
+        
+                } else
+                    if (key == "end_date") {
+                        selectedfilters.end_date = filterValue
+                        console.log(selectedfilters);
+                    } 
+
+                    if(selectedfilters.start_date && selectedfilters.end_date){
+
+                        console.log("success");
+
+                        useEmployeeMaster.canShowLoading = true
+                        axios.post(url, selectedfilters).then(res => {
+                            AttendanceReportSource.value = res.data.rows;
+                            res.data.headers.forEach(element => {
+                                let format = {
+                                    title: element
+                                }
+                                AttendanceReportDynamicHeaders.value.push(format);
+            
+                                if (res.data.rows.length === 0) {
+                                    Swal.fire({
+                                        title: res.data.status = "failure",
+                                        text: "No employees found in this category",
+                                        // "Salary Advance Succesfully",
+                                        icon: "error",
+                                        showCancelButton: false,
+                                    }).then((res) => {
+                                        // blink_UI.value = res.data.data;
+            
+                                    })
+            
+                                }
+                            });
+                        }).finally(() => {
+                            useEmployeeMaster.canShowLoading = false
+                        })
+
+                    }else{
+                        console.log("testing start date and end date ::",selectedfilters);
+                    }
+
+    }
+
 
     const downloadAttendanceReports = (active_status) => {
         useEmployeeMaster.canShowLoading = true
@@ -232,7 +324,20 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 link.download = `${filename}.xlsx`;
                 link.click();
             }).finally(() => {
-                useEmployeeMaster.canShowLoading = false
+                useEmployeeMaster.canShowLoading = false;
+                useEmployeeMaster.selectedfilters.active_status="";
+                useEmployeeMaster.selectedfilters.date="";
+                useEmployeeMaster.selectedfilters.department_id="";
+                useEmployeeMaster.selectedfilters.legal_entity="";
+        
+                useEmployeeMaster.legal_Entity="";
+                useEmployeeMaster.Department="";
+                useEmployeeMaster.period_Date="";
+                useEmployeeMaster.select_Category=""
+                Start_Date.value=""
+                End_Date.value= ""
+                selectedfilters.end_date=""
+                 selectedfilters.start_date=""
 
             })
         }
@@ -267,6 +372,10 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         AttendanceReportDynamicHeaders.value.splice(0,
                 AttendanceReportDynamicHeaders.value.length);
                 attendance_Type.value = null;
+                Start_Date.value=""
+                End_Date.value= ""
+                selectedfilters.end_date=""
+                 selectedfilters.start_date=""
     }
 
 
@@ -280,6 +389,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         Legal_Entity,
         Department,
         PeriodMonth,
+        Start_Date,
+        End_Date,
 
         btn_download,
 
@@ -304,7 +415,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         getEmployeeAttendanceReports,
         attendance_Type,
         downloadAttendanceReports,
-        clearDataTable
+        clearDataTable,
+        select_StartAndEnd_Date
     }
 
 });

@@ -100,7 +100,7 @@ class VmtPayRunService
             $arrayReport['Emp Code'] = $singleUser->user_code;
             $arrayReport['Name'] = $singleUser->name;
             $arrayReport['Designation'] = $singleUser->designation;
-            $arrayReport['DOJ'] = $singleUser->doj;
+            $arrayReport['DOJ'] = Carbon::parse($singleUser->doj)->format('d-M-Y');
 
             $firstDateStr = $start_date;
             $lastAttendanceDate = Carbon::parse($end_date);

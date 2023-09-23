@@ -117,11 +117,14 @@ class VmtReportsservice
                 ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                ->where('users.is_ssa','=','0')
+                ->where('users.active','=','1')
                 ->where('vmt_employee_details.doj', '<', $date_req)
                 ->whereIn('users.client_id', $client_id)
                 ->where('users.active', $active_status)
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
+
 
 
             foreach ($emp_ctc_detail as $singleemployeedata) {
@@ -260,16 +263,16 @@ class VmtReportsservice
             $temp_ar = array();
             // dd($date_req);
             // $date_req ='2022-05-01';
-   
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details as statutory', 'statutory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
+                ->where('users.is_ssa','=','0')
                 ->whereIn('users.client_id', $client_id)
                 ->whereDate('employee.doj', '<', $date_req)
-                ->where('users.active', $active_status)
+                ->whereIn('users.active', $active_status)
                 ->whereIn('office.department_id', $get_department)
                 ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
@@ -279,7 +282,7 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-            //  dd( $emp_master_detail);
+                
             foreach ($emp_master_detail as $single_details) {
                 // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
@@ -294,6 +297,7 @@ class VmtReportsservice
                     $temp_ar['Employee Status'] = "Exit";
                 } else if ($single_details->active == 0) {
                     $temp_ar['Employee Status'] = 'Not Yet Active';
+                
                 }
                 $temp_ar['Last Working Day'] = carbon::parse($single_details->dol)->format('d-M-Y');
                 $temp_ar['NATIONALITY'] = $single_details->nationality;
