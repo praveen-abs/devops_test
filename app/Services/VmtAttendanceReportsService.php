@@ -1233,12 +1233,6 @@ class VmtAttendanceReportsService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
-
             ini_set('max_execution_time', 3000);
             //dd($month);
             $reportresponse = array();
@@ -1248,9 +1242,12 @@ class VmtAttendanceReportsService
                 ->where('active', '1')
                 ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
-            if (sessionGetSelectedClientid() != 1) {
-                $user = $user->where('client_id', sessionGetSelectedClientid());
-            }
+            // if (sessionGetSelectedClientid() != 1) {
+            //     $user = $user->where('client_id', sessionGetSelectedClientid());
+            // }
+            if (!empty($department_id)) {
+                $user = $user->whereIn('vmt_employee_office_details.department_id', $department_id);
+            } 
             $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
             $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
             foreach ($user as $singleUser) {
@@ -1897,11 +1894,6 @@ class VmtAttendanceReportsService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
 
         ini_set('max_execution_time', 3000);
         $reportresponse = array();
@@ -1909,12 +1901,14 @@ class VmtAttendanceReportsService
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->whereIn('users.client_id', $client_id)
             ->whereIn('users.active', $active_status)
-          ->whereIn('office.department_id', $get_department)
             ->whereDate('vmt_employee_details.doj', '<', $end_date);
 
         // if (sessionGetSelectedClientid() != 1) {
         //     $user = $user->where('client_id', sessionGetSelectedClientid());
         // }
+        if (!empty($department_id)) {
+            $user  =$user->whereIn('vmt_employee_office_details.department_id', $department_id);
+        }
         $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
       //  dd(  $user);
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
