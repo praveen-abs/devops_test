@@ -240,7 +240,7 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                         console.log(selectedfilters);
                     } 
 
-                    if(selectedfilters.start_date && selectedfilters.end_date){
+                    if(active_status !== 1 && selectedfilters.start_date && selectedfilters.end_date){
 
                         console.log("success");
 
