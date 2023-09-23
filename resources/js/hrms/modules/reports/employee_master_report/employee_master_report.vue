@@ -5,21 +5,17 @@
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Employee Master Report</h1>
             <div>
-                <!--
-                <button @change="useEmployeeReport.clearfilterBtn(activetab)"
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
-                        class="mr-2 pi pi-times"></i> Clear Filter</button> -->
-
+        
                 <button @click="useEmployeeReport.clearfilterBtn(activetab)"
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
+                    class="my-2 flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-times"></i> Clear Filter</button>
             </div>
         </div>
 
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-            <div class="grid grid-cols-12  w-[100%] ">
-                <ul class="grid items-center grid-cols-2 col-span-3 whitespace-nowrap" id="pills-tab" role="tablist">
+            <div class="grid grid-cols-12  w-[100%]  ">
+                <ul class="grid items-center grid-cols-2 col-span-3 whitespace-nowrap " id="pills-tab" role="tablist">
                     <li class=" nav-item text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                         <a class="p-2 position-relative font-['poppins'] text-[14px] text-[#001820] w-[100%] " id=""
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
@@ -28,12 +24,6 @@
                             Employee
                             Master
                         </a>
-
-                        <!-- <div v-if="activetab === 1" class=" h-1 rounded-l-3xl relative top-[0px] !z-[10]"
-                            >
-                        </div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"
-                            style="border:2.2px solid #dcdcdc !important"></div> -->
                     </li>
 
                     <li class="flex items-center nav-item" role="presentation">
@@ -45,15 +35,12 @@
                             CTC
                         </a>
                     </li>
-                    <!-- <div class="border-gray-300 border-b-[3px]  w-100 mt-[-7px] absolute bottom-0 z-0"></div> -->
                 </ul>
 
-                <ul class="grid grid-cols-4 col-span-9 gap-4 ">
-                    <li class="flex items-center">
-                        <h1 class="text-[12px] text-black px-2  font-semibold font-['poppins'] whitespace-nowrap">Period :
+                <ul class="grid grid-cols-12 col-span-9 gap-2  ">
+                    <li class="flex items-center ">
+                        <h1 class="text-[12px] text-black px-2 mx-2  font-semibold font-['poppins'] whitespace-nowrap">Period :
                         </h1>
-
-
                         <Dropdown optionLabel="month" optionValue="date" :options="useEmployeeReport.PeriodMonth"
                             v-model="useEmployeeReport.period_Date"
                             @change="useEmployeeReport.getSelectoption('date', useEmployeeReport.period_Date, activetab)"
