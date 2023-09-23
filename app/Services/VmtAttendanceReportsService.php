@@ -1233,12 +1233,6 @@ class VmtAttendanceReportsService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
-
             ini_set('max_execution_time', 3000);
             //dd($month);
             $reportresponse = array();
@@ -1248,9 +1242,12 @@ class VmtAttendanceReportsService
                 ->where('active', '1')
                 ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
-            if (sessionGetSelectedClientid() != 1) {
-                $user = $user->where('client_id', sessionGetSelectedClientid());
-            }
+            // if (sessionGetSelectedClientid() != 1) {
+            //     $user = $user->where('client_id', sessionGetSelectedClientid());
+            // }
+            if (!empty($department_id)) {
+                $user = $user->whereIn('vmt_employee_office_details.department_id', $department_id);
+            } 
             $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
             $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
             foreach ($user as $singleUser) {
@@ -1876,35 +1873,9 @@ class VmtAttendanceReportsService
     }
 
 
-    public function fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status)
+    public function fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
-        $validator = Validator::make(
-            $data = [
-                'client_id' => $client_id,
-                // 'type' => $type,
-                'active_status' => $active_status,
-                'department_id' => $department_id,
-            ],
-            $rules = [
-                'client_id' => 'nullable|exists:vmt_client_master,id',
-                // 'type' => 'nullable',
-                'active_status' => 'nullable',
-                'department_id' => 'nullable|exists:vmt_department,id',
-                'date' => 'nullable'
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
+       
 
         try {
             if (empty($client_id)) {
@@ -1923,28 +1894,25 @@ class VmtAttendanceReportsService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
 
-            ini_set('max_execution_time', 3000);
-            $reportresponse = array();
-            $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->whereIn('users.client_id', $client_id)
-                ->whereDate('employee.doj', '<', $date_req)
-                ->whereIn('users.active', $active_status)
-                ->whereIn('office.department_id', $get_department)
-                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
+        ini_set('max_execution_time', 3000);
+        $reportresponse = array();
+        $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->whereIn('users.client_id', $client_id)
+            ->whereIn('users.active', $active_status)
+            ->whereDate('vmt_employee_details.doj', '<', $end_date);
 
-            if (sessionGetSelectedClientid() != 1) {
-                $user = $user->where('client_id', sessionGetSelectedClientid());
-            }
-            $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-            $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
-            foreach ($user as $singleUser) {
+        // if (sessionGetSelectedClientid() != 1) {
+        //     $user = $user->where('client_id', sessionGetSelectedClientid());
+        // }
+        if (!empty($department_id)) {
+            $user  =$user->whereIn('vmt_employee_office_details.department_id', $department_id);
+        }
+        $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+      //  dd(  $user);
+        $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
+        foreach ($user as $singleUser) {
 
                 $firstDateStr = $start_date;
                 $lastAttendanceDate = Carbon::parse($end_date);
@@ -2276,60 +2244,60 @@ class VmtAttendanceReportsService
                     $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
                     $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
 
-                    //Code For Check LC
-                    if (!empty($checkin_time)) {
-                        $parsedCheckIn_time  = Carbon::parse($checkin_time);
-                        //Check whether checkin done on-time
-                        $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
-                        if ($isCheckin_done_ontime) {
-                            //employee came on time....
-                        } else {
-                            //dd("Checkin NOT on-time");
-                            //check whether regularization applied.
-                            $user_id = $attendanceResponseArray[$key]['user_id'];
-                            $date = $attendanceResponseArray[$key]['date'];
-                            $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'LC');
-                            $attendanceResponseArray[$key]["isLC"] = $regularization_status['sts'];
-                            $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
-                            $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
-                        }
-                    } else if (empty($checkin_time) && !empty($checkout_time)) {
+                //Code For Check LC
+                if (!empty($checkin_time)) {
+                    $parsedCheckIn_time  = Carbon::parse($checkin_time);
+                    //Check whether checkin done on-time
+                    $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+                    if ($isCheckin_done_ontime) {
+                        //employee came on time....
+                    } else {
+                        //dd("Checkin NOT on-time");
+                        //check whether regularization applied.
                         $user_id = $attendanceResponseArray[$key]['user_id'];
                         $date = $attendanceResponseArray[$key]['date'];
-                        $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'MIP');
-                        $attendanceResponseArray[$key]["isMIP"] = $regularization_status['sts'];
+                        $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'LC');
+                        $attendanceResponseArray[$key]["isLC"] = $regularization_status['sts'];
                         $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
                         $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
                     }
-                    //Code For Check EG
-                    if (!empty($checkout_time)) {
-                        $parsedCheckOut_time  = Carbon::parse($checkout_time);
-                        //Check whether checkin out on-time
-                        $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
-                        if ($isCheckout_done_ontime) {
-                            //employee left early on time....
-                            $user_id = $attendanceResponseArray[$key]['user_id'];
-                            $date = $attendanceResponseArray[$key]['date'];
-                            $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'EG');
-                            $attendanceResponseArray[$key]["isEG"] = $regularization_status['sts'];
-                            $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
-                            $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
-                        } else if (!empty($checkin_time) && empty($checkout_time)) {
-                            $user_id = $attendanceResponseArray[$key]['user_id'];
-                            $date = $attendanceResponseArray[$key]['date'];
-                            $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'MOP');
-                            $attendanceResponseArray[$key]["isMOP"] = $regularization_status['sts'];
-                            $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
-                            $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
-                        } else {
-                            //employee left late....
-                        }
+                } else if (empty($checkin_time) && !empty($checkout_time)) {
+                    $user_id = $attendanceResponseArray[$key]['user_id'];
+                    $date = $attendanceResponseArray[$key]['date'];
+                    $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'MIP');
+                    $attendanceResponseArray[$key]["isMIP"] = $regularization_status['sts'];
+                    $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
+                    $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
+                }
+                //Code For Check EG
+                if (!empty($checkout_time)) {
+                    $parsedCheckOut_time  = Carbon::parse($checkout_time);
+                    //Check whether checkin out on-time
+                    $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
+                    if ($isCheckout_done_ontime) {
+                        //employee left early on time....
+                        $user_id = $attendanceResponseArray[$key]['user_id'];
+                        $date = $attendanceResponseArray[$key]['date'];
+                        $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'EG');
+                        $attendanceResponseArray[$key]["isEG"] = $regularization_status['sts'];
+                        $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
+                        $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
+                    } else if (!empty($checkin_time) && empty($checkout_time)) {
+                        $user_id = $attendanceResponseArray[$key]['user_id'];
+                        $date = $attendanceResponseArray[$key]['date'];
+                        $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'MOP');
+                        $attendanceResponseArray[$key]["isMOP"] = $regularization_status['sts'];
+                        $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
+                        $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
+                    } else {
+                        //employee left late....
                     }
                 }
-                array_push($reportresponse, $attendanceResponseArray);
-                unset($attendanceResponseArray);
             }
-        } catch (\Exception $e) {
+            array_push($reportresponse, $attendanceResponseArray);
+            unset($attendanceResponseArray);
+        }
+    }catch (\Exception $e) {
             $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
@@ -2338,6 +2306,7 @@ class VmtAttendanceReportsService
                 'error_verbose' => $e->getLine()
             ];
         }
+       // dd($reportresponse);
         return  $reportresponse;
     }
 
@@ -2921,15 +2890,14 @@ class VmtAttendanceReportsService
 
             $client_id = sessionGetSelectedClientid();
 
-            $user_data = User::where('client_id', $client_id)->get(["id", "name", "user_code", "client_id", "email"])->toarray();
+               $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
 
-            $dateString  = Carbon::parse($date)->format('Y-m-d');
+               $dateString  = Carbon::parse($date)->format('Y-m-d');
 
-            foreach ($user_data as $key => $single_user_data) {
+     foreach($user_data as $key =>$single_user_data){
 
-                if (
-                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+      if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+            || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
                 ) {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -2971,24 +2939,27 @@ class VmtAttendanceReportsService
                 if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
                     $deviceData[] = array(
                         'date' => $dateString,
-                        'user_code' => $single_user_data['user_code'],
-                        'user_code' => $single_user_data['name'],
+                        'user_code'=>$single_user_data['user_code'],
+                        'user_code'=>$single_user_data['name'],
                         'checkin_time' => $deviceCheckInTime,
                         'checkout_time' => $deviceCheckOutTime,
                         'attendance_mode_checkin' => 'biometric',
                         'attendance_mode_checkout' => 'biometric'
                     );
                 }
+
             }
-            return $deviceData;
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => "failure",
-                'message' => "",
-                'data' => $e->getmessage(),
-            ]);
-        }
-    }
+                  return $deviceData;
+
+            }catch(\Exception $e){
+                return response()->json([
+                     'status'=>"failure",
+                     'message'=>"",
+                     'data'=>$e->getmessage(),
+                ]);
+            }
+
+   }
 
     public function fetchOvertimeReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
     {
@@ -3136,141 +3107,5 @@ class VmtAttendanceReportsService
         $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
         $response['rows'] = $otData;
         return $response;
-    }
-
-    public function fetchInvestmentTaxReports()
-    {
-        $reportsdata = array();
-
-        $client_id = "3";
-
-        $payroll_month = "2023-06-01";
-
-        $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-            ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-            ->where("users.active", "1")
-            ->where("users.client_id", $client_id)
-            ->get([
-                'users.id as user_id',
-                'users.user_code as Employee Code',
-                'users.name as Employee Name',
-                'vmt_employee_details.gender as Gender',
-                'vmt_employee_details.pan_number as PAN Number',
-                'vmt_employee_details.dob as Date Of Birth',
-                'vmt_employee_details.doj as Date Of Joining',
-                'vmt_employee_statutory_details.tax_regime as Tax Regime'
-            ]);
-
-        $employee_salary_details = array();
-
-        foreach ($Employee_details as $key => $single_user) {
-
-            $payroll_date = VmtPayroll::where('payroll_date',  $payroll_month)->where('client_id', $client_id)->first();
-
-            if (!empty($payroll_date)) {
-
-                $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_user['user_id']);
-            }
-
-            if ($emp_payroll->exists()) {
-                $emp_payroll = $emp_payroll->first();
-                $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
-            }
-
-            if ($employee_projected_salary->exists()) {
-
-                $employee_salary_details[$key]["Employee Code"] = $single_user['Employee Code'];
-                $employee_salary_details[$key]["Employee Name"] = $single_user['Employee Name'];
-                $employee_salary_details[$key]["Gender"] = $single_user['Gender'];
-                $employee_salary_details[$key]["PAN Number"] = $single_user['PAN Number'];
-                $employee_salary_details[$key]["Date Of Birth"] = $single_user['Date Of Birth'];
-                $employee_salary_details[$key]["Date Of Joining"] = $single_user['Date Of Joining'];
-                $employee_salary_details[$key]["Tax Regime"] = $single_user['Tax Regime'];
-                $employee_salary_details[$key]["Basic"] = $employee_projected_salary->sum('earned_basic');
-                $employee_salary_details[$key]["Basic Arrears"] = $employee_projected_salary->sum('basic_arrear');
-                $employee_salary_details[$key]["Dearness Allowance"] = $employee_projected_salary->sum('dearness_allowance_earned');
-                $employee_salary_details[$key]["Dearness Allowance Arrears"] = $employee_projected_salary->sum('dearness_allowance_arrear');
-                $employee_salary_details[$key]["Variable Dearness Allowance"] = $employee_projected_salary->sum('vda_earned');
-                $employee_salary_details[$key]["Vairable Dearness Allowance Arrears"] = $employee_projected_salary->sum('vda_arrear');
-                $employee_salary_details[$key]["HRA"] = $employee_projected_salary->sum('earned_hra');
-                $employee_salary_details[$key]["HRA Arrears"] = $employee_projected_salary->sum('hra_arrear');
-                $employee_salary_details[$key]["Child Education Allowance"] = $employee_projected_salary->sum('earned_child_edu_allowance');
-                $employee_salary_details[$key]["Child Education Allowance Arrears"] = $employee_projected_salary->sum('child_edu_allowance_arrear');
-                $employee_salary_details[$key]["Statutory Bonus"] = $employee_projected_salary->sum('earned_stats_bonus');
-                $employee_salary_details[$key]["Statutory Bonus Arrears"] = $employee_projected_salary->sum('earned_stats_arrear');
-                $employee_salary_details[$key]["Medical Allowance"] = $employee_projected_salary->sum('medical_allowance_earned');
-                $employee_salary_details[$key]["Medical Allowance Arrears"] = $employee_projected_salary->sum('medical_allowance_arrear');
-                $employee_salary_details[$key]["Communicaton Allowance"] = $employee_projected_salary->sum('communication_allowance_earned');
-                $employee_salary_details[$key]["Communication Allowance Arrears"] = $employee_projected_salary->sum('communication_allowance_arrear');
-                $employee_salary_details[$key]["Leave Travel Allowance"] = $employee_projected_salary->sum('earned_lta');
-                $employee_salary_details[$key]["Leave Travel Allowance Arrears"] = $employee_projected_salary->sum('lta_arrear');
-                $employee_salary_details[$key]["Food Allowance"] = $employee_projected_salary->sum('food_allowance_earned');
-                $employee_salary_details[$key]["Food Allowance Arrear"] = $employee_projected_salary->sum('food_allowance_arrear');
-                $employee_salary_details[$key]["Special Allowance"] = $employee_projected_salary->sum('earned_spl_alw');
-                $employee_salary_details[$key]["Special Allowance Arrears"] = $employee_projected_salary->sum('spl_alw_arrear');
-                $employee_salary_details[$key]["Other Allowance"] = $employee_projected_salary->sum('other_allowance_earned');
-                $employee_salary_details[$key]["Other Allowance Arrears"] = $employee_projected_salary->sum('other_allowance_arrear');
-                $employee_salary_details[$key]["Washing Allowance"] = $employee_projected_salary->sum('washing_allowance_earned');
-                $employee_salary_details[$key]["Washing Allowance Arrears"] = $employee_projected_salary->sum('washing_allowance_arrear');
-                $employee_salary_details[$key]["Uniform Allowance"] = $employee_projected_salary->sum('uniform_allowance_earned');
-                $employee_salary_details[$key]["Uniform Allowance Arrears"] = $employee_projected_salary->sum('uniform_allowance_arrear');
-                $employee_salary_details[$key]["Vehicle Reimbursement"] = $employee_projected_salary->sum('vehicle_reimbursement_earned');
-                $employee_salary_details[$key]["Vehicle Reimbursement Arrears"] = $employee_projected_salary->sum('vehicle_reimbursement_arrear');
-                $employee_salary_details[$key]["Driver Salary Reimbursment"] = $employee_projected_salary->sum('driver_salary_earned');
-                $employee_salary_details[$key]["Driver Salary Reimbursment Arrears"] = $employee_projected_salary->sum('driver_salary_arrear');
-                $employee_salary_details[$key]["Overtime"] = $employee_projected_salary->sum('overtime');
-                $employee_salary_details[$key]["Overtime Arrears"] = $employee_projected_salary->sum('overtime_arrear');
-                $employee_salary_details[$key]["Arrears"] = $employee_projected_salary->sum('basic_arrear') + $employee_projected_salary->sum('dearness_allowance_arrear') + $employee_projected_salary->sum('vda_arrear') + $employee_projected_salary->sum('hra_arrear') + $employee_projected_salary->sum('hra_arrear') +
-                    $employee_projected_salary->sum('child_edu_allowance_arrear') + $employee_projected_salary->sum('earned_stats_arrear') + $employee_projected_salary->sum('medical_allowance_arrear')
-                    + $employee_projected_salary->sum('communication_allowance_arrear')  + $employee_projected_salary->sum('food_allowance_arrear') + $employee_projected_salary->sum('lta_arrear') + $employee_projected_salary->sum('spl_alw_arrear') + $employee_projected_salary->sum('other_allowance_arrear')
-                    + $employee_projected_salary->sum('washing_allowance_arrear') + $employee_projected_salary->sum('uniform_allowance_arrear') + $employee_projected_salary->sum('vehicle_reimbursement_arrear') + $employee_projected_salary->sum('driver_salary_arrear');
-
-
-                $employee_salary_details[$key]["Incentive"] = $employee_projected_salary->sum('incentive');;
-                $employee_salary_details[$key]["Other Earnings"] = $employee_projected_salary->sum('other_earnings');
-                $employee_salary_details[$key]["Referral Bonus"] = $employee_projected_salary->sum('referral_bonus');
-                $employee_salary_details[$key]["Annual Statutory Bonus"] = $employee_projected_salary->sum('earned_stats_bonus');
-                $employee_salary_details[$key]["Ex-Gratia"] = $employee_projected_salary->sum('ex_gratia');
-                $employee_salary_details[$key]["Attendance Bonus"] = $employee_projected_salary->sum('attendance_bonus');
-                $employee_salary_details[$key]["Daily Allowance"] = $employee_projected_salary->sum('daily_allowance');
-                $employee_salary_details[$key]["Leave Encashments"] = $employee_projected_salary->sum('leave_encashment');
-                $employee_salary_details[$key]["Gift"] = $employee_projected_salary->sum('gift_payment');
-                $employee_salary_details[$key]["Annual Gross Salary"] = $employee_projected_salary->sum('earned_basic') + $employee_projected_salary->sum('dearness_allowance_earned') + $employee_projected_salary->sum('vda_earned')
-                    + $employee_projected_salary->sum('hra_arrear') + $employee_projected_salary->sum('earned_child_edu_allowance') + $employee_projected_salary->sum('medical_allowance_earned')
-                    + $employee_projected_salary->sum('communication_allowance_earned') + $employee_projected_salary->sum('earned_lta') + $employee_projected_salary->sum('food_allowance_earned')
-                    + $employee_projected_salary->sum('earned_spl_alw') + $employee_projected_salary->sum('other_allowance_arrear') + $employee_projected_salary->sum('washing_allowance_earned') +
-                    $employee_projected_salary->sum('uniform_allowance_earned');
-            }
-        }
-
-        $salary_data['headers'] = array(
-            'Employee Code', 'Employee Name', 'Gender', 'PAN Number', 'Date Of Birth', 'Date Of Joining', 'Tax Regime', 'Basic', 'Basic Arrears',
-            'Dearness Allowance', 'Dearness Allowance Arrears', 'Variable Dearness Allowance', 'Vairable Dearness Allowance Arrears', 'HRA', 'HRA Arrears', 'Child Education Allowance',
-            'Child Education Allowance Arrears', 'Statutory Bonus', 'Statutory Bonus Arrears', 'Medical Allowance', 'Medical Allowance Arrears', 'Communicaton Allowance', 'Communication Allowance Arrears', 'Leave Travel Allowance',
-            'Leave Travel Allowance Arrears', 'Food Allowance', 'Food Allowance Arrears', 'Special Allowance', 'Special Allowance Arrears', 'Other Allowance', 'Other Allowance Arrears',
-            'Washing Allowance', 'Washing Allowance Arrears', 'Uniform Allowance', 'Uniform Allowance Arrears', 'Vehicle Reimbursement', 'Vehicle Reimbursement Arrears', 'Driver Salary Reimbursment',
-            'Driver Salary Reimbursment Arrears', 'Arrears', 'Overtime', 'Overtime Arrears', 'Incentive', 'Other Earnings', 'Referral Bonus', 'Annual Statutory Bonus', 'Ex-Gratia', 'Attendance Bonus',
-            'Daily Allowance', 'Leave Encashments', 'Gift', 'Annual Gross Salary', //'HRA - Exemptions','CEA - Exemptions','LTA Exemptions','Previous Employer Income','Previous Employer PT',
-            // 'Previous Standard Deduction u/s 16(ia)','Gross Total Income','(a) Salary as per provisions contained in sec.17(1)','(b) Value of perquisites u/s 17(2)','(c) Profits in lieu of salary under section 17(3)',
-            // '(d) Total','2. Less: Allowance to the extent exempt u/s 10','3. Balance (1-2)','(a) Standard Deduction u/s 16(ia)','(b) Entertainment allowance u/s 16(ii)','(c) Tax on employment u/s 16(iii)',
-            // '5. Aggregate of 4(a), (b) and (c)', '6. Income chargeable under head salaries(3-5)','(a) Deductions u/s 24 - Interest','(b) Other Source Of Income','(c) 80EE Additional interest on House property','8. Gross total income (6+7)',
-            // 'i) Provident Fund','(ii) Voluntary Provident Fund','(iii) National Savings Certificate','(iv) Children Tuition Fees','(v) Mutual Fund / ELSS / ULIP / SIP','(vi) Housing Loan Principal repayment',
-            // '(vii) Life Insurance Premium','(viii) Sukanya Samriddhi Scheme','(ix) Others / Fixed Deposit (5 years) & Term Deposit','(x) NSC Accrued Interest / Approved Superannuation','(xi) Public Provident Fund',
-            // '(xii) Life Insurance Pension Scheme (section 80CCC)','(xiii) Employee Contribution NPS (section 80CCD) (1)','(xiv) Employee Contribution NPS (section 80CCD) (2)','Section 80CCE Total','(a) 80D Mediclaim-Self', '(b) 80D Mediclaim -Parents','(c) 80DD Handicapped Dependents',
-            // '(d) 80DDB Medical Expenses - Chronic Diseases','(e) 80E Interest on Loan taken for Higher Education','(f) 80U Permanent Physical disability','(g) 80G Donation','(h) 80GG Rent paid (HRA not received)', '(i) 80TTA Deduction of interest on savings account',
-            // '(j) 80EEA interest on certain house property','(k) 80EEB Purchase of electric vehicle','10. Aggregate of deductible amount under Chapter VI-A','11.Total Income (8-10)','12.Tax on total income','13. Rebate u/s 87A (Taxable Income below Rs.5,00,000',
-            // '14.Total Income Tax	15.Surcharge','16.Education Cess @4% (On Tax computed at (14 & 15)','17.Tax Payable (14+15+16)','18.Less: Relief under section 89','19.Tax Payable (17-18)','20.Tax Deducted Till Date', '21.Previous Employer TDS','22.Tax Due (19-20-21)','23.Tax Deduction Per Month'
-        );
-
-
-
-
-
-
-
-        $salary_data['rows'] = $employee_salary_details;
-        array_push($reportsdata, $salary_data['headers'], $salary_data['rows']);
-
-        return $reportsdata;
     }
 }
