@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class vmt_emp_paygroup_values extends Model
+class VmtEmpActivePaygroup extends Model
 {
     use HasFactory;
 
-    protected $table = 'vmt_emp_paygroup_values';
+    protected $table = 'vmt_emp_active_paygroups';
 }

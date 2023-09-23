@@ -1312,11 +1312,14 @@ class VmtEmployeePayCheckService
                     ]
                 )->toArray();
 
-            $getCompensatorydata = $payroll_data
-                ->get(
-                    [
-                        'vmt_employee_compensatory_details.basic as Basic',
-                        'vmt_employee_compensatory_details.hra as HRA',
+        $getCompensatorydata = $payroll_data
+            ->get(
+                [
+                    'vmt_employee_compensatory_details.basic as Basic',
+                    'vmt_employee_compensatory_details.hra as HRA',
+                    'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
+                    'vmt_employee_compensatory_details.special_allowance as Special Allowance',
+                    'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
 
                     ]
                 )->toArray();
@@ -1689,14 +1692,16 @@ class VmtEmployeePayCheckService
                     ]
                 )->toArray();
 
-            $getCompensatorydata = $payroll_data
-                ->get(
-                    [
-                        'vmt_employee_compensatory_details.basic as Basic',
-                        'vmt_employee_compensatory_details.hra as HRA',
-
-                    ]
-                )->toArray();
+        $getCompensatorydata = $payroll_data
+            ->get(
+                [
+                    'vmt_employee_compensatory_details.basic as Basic',
+                    'vmt_employee_compensatory_details.hra as HRA',
+                    'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
+                    'vmt_employee_compensatory_details.special_allowance as Special Allowance',
+                    'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
+                ]
+            )->toArray();
 
 
             $getpersonal['date_month'] = [
