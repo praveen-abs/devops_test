@@ -9,10 +9,10 @@
             </div>
         </div>
         <div style="position: relative;">
-            <div class="flex justify-between border-[5px] border-[green]">
-                <ul class="flex mb-3 divide-x max-[1200px]:!w-[50%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%]"
+            <div class="flex justify-between">
+                <ul class="flex mb-3 divide-x max-[1300px]:!w-[40%] max-[1400px]:![50%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%]"
                     id="pills-tab" role="tablist">
-                    <li class=" nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]"
+                    <li class="nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]"
                         role="presentation">
                         <a class="px-2 position-relative font-['poppins'] text-[14px] text-[#001820] w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
@@ -60,7 +60,7 @@
                 </ul>
 
                 <ul
-                    class="flex justify-between max-[1200px]:w-[50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
+                    class=" flex justify-between max-[1300px]:w-[60%] max-[1400px]:![50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins']">Period : </h1>
                         <Dropdown optionLabel="month" optionValue="date" :options="EmployeeMaster.PeriodMonth"
