@@ -33,8 +33,9 @@ public function downloadInvestmentReport(Request $request, VmtPayrollTaxService 
 }
 public function downloadInvestReport(Request $request, VmtPayrollTaxService $vmtPayrollTaxService)
 {
-    return Excel::download(new InvestmentsReportsExport((new VmtTestingController)->fetchInvestmentTaxReports()),'Investments Report.xlsx');
+    return Excel::download(new InvestmentsReportsExport((new VmtTestingController)->fetchInvestmentsReports()),'Investments Report.xlsx');
 }
+
 
 
 }

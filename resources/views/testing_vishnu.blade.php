@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Models\VmtTempEmployeeProofDocuments;
 use App\Models\VmtMaritalStatus;
 use App\Models\VmtInvFormSection;
+use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeOfficeDetails;
@@ -864,22 +865,29 @@ $net_take_home = $gross - ($epf_employee + $esi_employee + $professional_tax);
 //         dd($formattedSentence);
 //     }
 
-$client_id = '3';
 
-$payroll_month = '2023-05-01';
-
-$inv_emp = ['144', '194', '176'];
+$inv_emp = VmtInvFEmpAssigned::pluck('user_id')->toArray();
 $salary_data['headers'] = [];
 
 $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
     ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
     ->where('users.active', '1')
-    ->where('users.client_id', $client_id)
+    //->where('users.client_id', $client_id)
     ->whereIn('users.id', $inv_emp)
     ->get(['users.id as user_id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'vmt_employee_details.gender as Gender', 'vmt_employee_details.pan_number as PAN Number', 'vmt_employee_details.dob as Date Of Birth', 'vmt_employee_details.doj as Date Of Joining', 'vmt_employee_statutory_details.tax_regime as Tax Regime']);
-
+    
+ array_push($salary_data['headers'],"Employee Code","Employee Name","Gender","PAN Number","Date Of Birth","Date Of Joining","Tax Regime");
 $v_form_template = [];
 foreach ($Employee_details as $key => $single_user) {
+
+    $employee_salary_details[$key]["Employee Code"] =$single_user['Employee Code'] ;
+    $employee_salary_details[$key]["Employee Name"] =$single_user['Employee Name'] ;
+    $employee_salary_details[$key]["Gender"] =$single_user['Gender'];
+    $employee_salary_details[$key]["PAN Number"] =$single_user['PAN Number'];
+    $employee_salary_details[$key]["Date Of Birth"] =$single_user['Date Of Birth'];
+    $employee_salary_details[$key]["Date Of Joining"] =$single_user['Date Of Joining'];
+    $employee_salary_details[$key]["Tax Regime"] =$single_user['Tax Regime'];
+
     $v_form_template[] = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
         ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
         ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
@@ -891,6 +899,7 @@ foreach ($Employee_details as $key => $single_user) {
         ->toArray();
 }
 
+//dd($v_form_template);
 /*------------------------Take the code from here da simma frfc ---------------------------------*/
 
 $tax_reports_Section_column = [];
@@ -902,7 +911,7 @@ foreach ($v_form_template as $form_key => $single_emp_form_data) {
 
     foreach ($single_emp_form_data as $key => $single_user_data) {
 
-        if (trim($single_user_data['section_group']) == 'Section 80C & 80CC') {
+
 
             if (!in_array($single_user_data['particular'], $tax_reports_Section_column) ) {
 
@@ -916,43 +925,10 @@ foreach ($v_form_template as $form_key => $single_emp_form_data) {
 
         }
     }
-}
-if (!in_array("Section 80CCE Total",$tax_reports_Section_column )) {
 
-array_push($tax_reports_Section_column, 'Section 80CCE Total');
 
-}
-     foreach ($v_form_template as $form_key => $single_emp_form_data) {
-        foreach ($single_emp_form_data as $key => $single_user_data) {
-         if (trim($single_user_data['section_group']) == 'Other Excemptions') {
-
-                if (!in_array($single_user_data['particular'], $tax_reports_Excemption_column)) {
-
-                    array_push($tax_reports_Excemption_column, $single_user_data['particular']);
-                    array_push($salary_data['headers'], $single_user_data['particular']);
-                }
-
-                if ($single_user_data['dec_amount'] >= $single_user_data['max_amount']) {
-
-                    $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['max_amount'];
-                    $employee_excemption_details[$form_key][$single_user_data['particular']] = $single_user_data['max_amount'];
-                } else {
-
-                    $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
-                    $employee_excemption_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
-                }
-            }
-        }
-}
-if (!in_array('10.Aggregate of deductible amount under Chapter VI-A',$tax_reports_Excemption_column )) {
-
-array_push($tax_reports_Excemption_column, '10.Aggregate of deductible amount under Chapter VI-A');
-
-}
-
-$section_count=0;
 foreach ($employee_salary_details as $section_key => $single_section_data) {
-    $section_count =  $section_key;
+
     foreach ($tax_reports_Section_column as $key => $single_section_column) {
 
         if (!in_array($single_section_column, array_keys($single_section_data))) {
@@ -963,42 +939,21 @@ foreach ($employee_salary_details as $section_key => $single_section_data) {
 
     }
 
-    $Section_80CCE_total =array_sum($single_section_data);
-    if($Section_80CCE_total >= '150000'){
-
-        $employee_salary_details[$section_count]['Section 80CCE Total'] =150000;
-        $section_count++;
-    }else{
-        $employee_salary_details[$section_count]['Section 80CCE Total'] = $Section_80CCE_total;
-        $section_count++;
-    }
-
 }
-foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_data) {
 
-    foreach ($tax_reports_Excemption_column as $key => $single_excemption_column) {
 
-        if (!in_array($single_excemption_column, array_keys($single_Excemption_data))) {
-            $employee_excemption_details[$Excemption_key][$single_excemption_column] = 0;
-            $employee_salary_details[$Excemption_key][$single_excemption_column] = 0;
-        }
-    }
-    $employee_salary_details[$Excemption_key]['10.Aggregate of deductible amount under Chapter VI-A'] =array_sum($single_Excemption_data) + $employee_salary_details[$Excemption_key]['Section 80CCE Total'];
+    // for ($i=0; $i < count($tax_reports_Section_column); $i++) {
 
-    }
+    //     array_push($salary_data['headers'],$tax_reports_Section_column[$i]);
+    // }
+    // for ($i=0; $i < count($tax_reports_Excemption_column); $i++) {
 
-    for ($i=0; $i < count($tax_reports_Section_column); $i++) {
-
-        array_push($salary_data['headers'],$tax_reports_Section_column[$i]);
-    }
-    for ($i=0; $i < count($tax_reports_Excemption_column); $i++) {
-
-        array_push($salary_data['headers'],$tax_reports_Excemption_column[$i]);
-    }
+    //     array_push($salary_data['headers'],$tax_reports_Excemption_column[$i]);
+    // }
 
     /*----------------------------------------------------------------------end--------------------------------------------------------*/
 
-       dd($tax_reports_Section_column, $tax_reports_Excemption_column, $employee_salary_details,$salary_data['headers']);
+       dd($employee_salary_details,$salary_data['headers']);
 
 
 
