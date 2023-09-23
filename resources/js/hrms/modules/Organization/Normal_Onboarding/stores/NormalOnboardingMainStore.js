@@ -1134,7 +1134,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
         axios.get('/getMandatoryDocumentDetails').then(res => {
             mandatoryDocuments.value = res.data
-            console.log(res.data);
+            console.log(res.data[0]);
         }).finally(() => {
             if (mandatoryDocuments.value) {
                 console.log("working");
@@ -1760,6 +1760,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         bankList, country, state, departmentDetails, Managerdetails, maritalDetails, bloodGroups, checkIsQuickOrNormal, family_details_disable,
         isSpouseDisable, spouseDisable, ForCopyAdrress, spouseGenderCheck, fnCalculateAge, isNationalityVisible, NationalityCheck, RequiredDocument,
         user_code_exists, is_ac_no_exists, is_mobile_no_exists, personal_mail_exists, pan_card_exists,
+        
+        mandatoryDocuments,
 
 
         // Checking is quick or bulk onboarding

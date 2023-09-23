@@ -4,12 +4,14 @@
             <div class="flex header-card-text">
                 <h6  class="my-2 font-semibold text-lg"><i class="fa fa-file-image-o" aria-hidden="true"></i> Personal Documents </h6>
             </div>
-
+{{ service.mandatoryDocuments[0].document_name }}
             <div class="mb-2 form-card">
                 <div class="mt-1 row">
-                    <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                    <!-- v-if="service.mandatoryDocuments[0].document_name=='Aadhar Card Front' &&  service.mandatoryDocuments[0].is_mandatory === 0 " -->
+                    <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6"  >
                         <!-- ,application/pdf -->
-                        <label for="" class="float-label">Aadhar Card Front<span class="text-danger">*</span></label>
+                        <!-- {{ service }} -->
+                        <label for="" class="float-label">Aadhar Card Front<span class="text-danger"   >*</span></label>
                         <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
                             id="formFile" class="onboard-form form-control file"
                             @change="service.getPersonalDocuments($event, 'AadharFront')" />
@@ -138,7 +140,7 @@
 
 <script setup>
 
-import { useNormalOnboardingMainStore } from '../stores/NormalOnboardingMainStore'
+import { useNormalOnboardingMainStore } from '../stores/NormalOnboardingMainStore';
 
 
 const service = useNormalOnboardingMainStore()
