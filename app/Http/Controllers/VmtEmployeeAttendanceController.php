@@ -44,7 +44,13 @@ class VmtEmployeeAttendanceController extends Controller
         }
         // $start_date ='2023-06-26';
         // $end_date ='2023-06-29';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status)), 'Detailed Attendance Report.xlsx');
+        $is_lc = false;
+        if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
+            $is_lc = true;
+        }
+        $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
+       // dd($data);
+        return Excel::download(new DetailedAttendanceExport( $data,$is_lc), 'Detailed Attendance Report.xlsx');
     }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
