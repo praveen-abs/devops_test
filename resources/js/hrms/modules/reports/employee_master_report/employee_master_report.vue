@@ -15,7 +15,7 @@
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
             <div class="flex justify-between ">
-                <ul class="flex mb-3 h-[3rem] divide-x !w-[280px] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%]" id="pills-tab" role="tablist">
+                <ul class="flex mb-3 h-[3rem]  !border-[0px]  divide-x !w-[280px] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%]" id="pills-tab" role="tablist">
                     <li class="flex items-center nav-item !border-[0px] " role="presentation">
                         <a class="p-2 position-relative font-['poppins'] !border-r-[0px] text-[14px] text-[#001820] w-[100%] !m-[0px] " id=""
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
@@ -26,7 +26,7 @@
                         </a>
                     </li>
 
-                    <li class="flex items-center nav-item border-[0px]" role="presentation">
+                    <li class="flex items-center nav-item !border-[0px]" role="presentation">
                         <a class="p-2 position-relative font-['poppins'] text-[14px] text-[#001820]  w-[100%]" id=""
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="activetab = 2, useEmployeeReport.clearfilterBtn(activetab)"
