@@ -10,78 +10,57 @@
         </div>
         <div style="position: relative;">
             <div class="flex justify-between">
-                <ul class="flex mb-3 divide-x max-[1200px]:!w-[50%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%]"
+                <ul class="flex mb-3 divide-x max-[1300px]:!w-[40%] max-[1400px]:![50%] nav nav-pills divide-solid nav-tabs-dashed max-[1024px]:w-[100%]"
                     id="pills-tab" role="tablist">
                     <li class="nav-item !border-0  text-center font-['poppins'] text-[14px] text-[#001820]"
                         role="presentation">
-                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820] w-[100%]"
+                        <a class="px-2 position-relative font-['poppins'] text-[14px] text-[#001820] w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="Reports_store.activetab = 1,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
-                            :class="[Reports_store.activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            :class="[Reports_store.activetab === 1 ? 'active font-semibold !border-b-[2.2px]  !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B] border-b-[2.2px] border-[#dcdcdc] ']">
                             DETAILED REPORT
                         </a>
-
-                        <div v-if="Reports_store.activetab === 1" class=" h-1 rounded-l-3xl relative top-[0px] !z-[10]"
-                            style="border:2.2px solid #F9BE00 !important">
-                        </div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"
-                            style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
 
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
-                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
+                        <a class="px-2 position-relative font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="Reports_store.activetab = 2,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
-                            :class="[Reports_store.activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            :class="[Reports_store.activetab === 2 ? 'active font-semibold !border-b-[2.2px]  !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B] border-b-[2.2px] border-[#dcdcdc] ']">
                             MUSTER ROLL
                         </a>
 
-                        <div v-if="Reports_store.activetab === 2" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
-                            style="border:2.2px solid #F9BE00 !important"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"
-                            style="border:2.2px solid #dcdcdc !important"></div>
+                     
                     </li>
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
-                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
+                        <a class="px-2 position-relative font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="Reports_store.activetab = 3,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
-                            :class="[Reports_store.activetab === 3 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            :class="[Reports_store.activetab === 3 ? 'active font-semibold !border-b-[2.2px]  !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B] border-b-[2.2px] border-[#dcdcdc] ']">
                             CONSOLIDATE
                         </a>
-                        <div v-if="Reports_store.activetab === 3" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
-                            style="border:2.2px solid #F9BE00 !important"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"
-                            style="border:2.2px solid #dcdcdc !important"></div>
+                      
                     </li>
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
-                        <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
+                        <a class="px-4 position-relative font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="Reports_store.activetab = 4,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
-                            :class="[Reports_store.activetab === 4 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            :class="[Reports_store.activetab === 4 ? 'active font-semibold !border-b-[2.2px]  !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B] border-b-[2.2px] border-[#dcdcdc] ']">
                             OVERTIME
                         </a>
-
-                        <div v-if="Reports_store.activetab === 4" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
-                            style="border:2.2px solid #F9BE00 !important"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"
-                            style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
                     <li class=" nav-item !border-0  flex items-center " role="presentation">
-                        <a class="px-2 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
+                        <a class="px-2 position-relative  font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
                             id="" data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
                             @click="Reports_store.activetab = 5,EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
-                            :class="[Reports_store.activetab === 5 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                            :class="[Reports_store.activetab === 5 ? 'active font-semibold !border-b-[2.2px]  !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B] border-b-[2.2px] border-[#dcdcdc] ']">
                             OTHERS
                         </a>
-                        <div v-if="Reports_store.activetab === 5" class=" w-[100%] h-1 relative top-[0px] !z-[10]"
-                            style="border:2.2px solid #F9BE00 !important"></div>
-                        <div v-else class="h-1 border-gray-300 border-3 rounded-l-3xl"
-                            style="border:2.2px solid #dcdcdc !important"></div>
                     </li>
                 </ul>
 
                 <ul
-                    class="flex justify-between max-[1200px]:w-[50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
+                    class=" flex justify-between max-[1300px]:w-[60%] max-[1400px]:![50%] max-[1200px]:justify-start flex-wrap max-[1024px]:w-[100%]">
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins']">Period : </h1>
                         <Dropdown optionLabel="month" optionValue="date" :options="EmployeeMaster.PeriodMonth"
@@ -127,12 +106,6 @@
                                 </div>
 
                                 <div class="flex items-center pt-2 ml-2" v-if="Reports_store.activetab == 5">
-                                    <!-- <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
-                                    v-model="Reports_store.attendance_Type"
-                                    @change="Reports_store.getSelectoption('date', periodDate,Reports_store.activetab)"
-                                    placeholder="Select Type"
-                                    class="!h-10 !font-semibold mx-4 !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" /> -->
-
                                     <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Period : </h1>
                                     <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
                                         v-model="Reports_store.attendance_Type"
@@ -142,8 +115,7 @@
                                 <div>
                                     <Calendar v-model="Reports_store.Start_Date" @date-select="Reports_store.select_StartAndEnd_Date('start_date',dayjs(Reports_store.Start_Date).format('YYYY-MM-DD'), Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
                                     <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @date-select="Reports_store.select_StartAndEnd_Date('end_date',dayjs(Reports_store.End_Date).format('YYYY-MM-DD') , Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
-                                    <!-- <Calendar inputId="icon" dateFormat="dd-mm-yy" class="w-[150px] h-10"  placeholder="End-date " :showIcon="true" style="height: 2.5rem;"
-                            v-model="End_date" /> -->
+
                                 </div>
 
 
@@ -156,7 +128,7 @@
                             <div class="flex items-center ">
                                 <button class=" p-2 mx-2 rounded-md w-[120px]" :class="[ !Reports_store.AttendanceReportDynamicHeaders.length == 0 ? 'bg-[#000] text-white':' !text-[#000] !bg-[#E6E6E6] ']"
                                     @click="Reports_store.btn_download = !Reports_store.btn_download, Reports_store.downloadAttendanceReports(Reports_store.activetab)">
-                                    <p class=" relative left-2 font-['poppins']">Download</p>
+                                    <p class=" relative left-2 font-['poppins']" :class="[!Reports_store.AttendanceReportDynamicHeaders.length == 0 ? 'bg-[#000] !text-[#ffff]' : '!text-[#000] !bg-[#E6E6E6]']">Download</p>
                                     <div id="btn-download" style=" position: absolute; right: 0;"
                                         :class="[Reports_store.btn_download == true ? toggleClass : ' ']">
                                         <svg width="22px" height="16px" viewBox="0 0 22 16" :class="[ !Reports_store.AttendanceReportDynamicHeaders.length == 0 ? '!stroke-[#ffff] ':'!stroke-[#000]']" >
@@ -196,7 +168,6 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { UseReports_store } from "./store/reports_store";
 import dayjs from 'dayjs';
@@ -215,12 +186,7 @@ const filters = ref({
 const start_date = ref();
 const End_date = ref();
 
-// onMounted(() => {
-//     Reports_store.fetchFilterClientId();
-//     Reports_store.get_All_Department();
-//     Reports_store.fetchPeriodMonth();
-//     Reports_store.getEmployeeAttendanceReports();
-// });
+
 
 
 const selectCategory = ref();

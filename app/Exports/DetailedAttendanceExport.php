@@ -35,8 +35,8 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
     private $header_2;
     private $heading_dates_2;
     private $last_row;
-
     private $is_lc;
+
     public function __construct($data, $is_lc)
     {
         $this->heading_dates = $data[0];
@@ -126,7 +126,11 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
             }
             $sheet->getStyle(num2alpha($i) . '2:' . num2alpha($i + $k) . '2')
                 ->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-            $i = $i + 4; //5
+            if ($this->is_lc) {
+                $i = $i + 5;
+            } else {
+                $i = $i + 4;
+            }
             $j = $j + 1;
         }
 
