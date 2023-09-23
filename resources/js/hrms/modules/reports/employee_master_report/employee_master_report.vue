@@ -14,8 +14,8 @@
 
         <div style="position: relative;">
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-            <div class="grid grid-cols-12  w-[100%]  ">
-                <ul class="grid items-center grid-cols-2 col-span-3 whitespace-nowrap " id="pills-tab" role="tablist">
+            <div class="grid grid-cols-12 w-[100%]  ">
+                <ul class="grid grid-cols-2 col-span-4 whitespace-nowrap border-[1px] " id="pills-tab" role="tablist">
                     <li class=" nav-item text-center font-['poppins'] text-[14px] text-[#001820]" role="presentation">
                         <a class="p-2 position-relative font-['poppins'] text-[14px] text-[#001820] w-[100%] " id=""
                             data-bs-toggle="pill" href="" role="tab" aria-controls="" aria-selected="true"
@@ -37,7 +37,7 @@
                     </li>
                 </ul>
 
-                <ul class="grid grid-cols-12 col-span-9 gap-2  ">
+                <ul class="grid grid-cols-4 col-span-8 gap-2  ">
                     <li class="flex items-center ">
                         <h1 class="text-[12px] text-black px-2 mx-2  font-semibold font-['poppins'] whitespace-nowrap">Period :
                         </h1>
