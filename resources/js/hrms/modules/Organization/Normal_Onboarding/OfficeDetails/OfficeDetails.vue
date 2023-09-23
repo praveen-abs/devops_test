@@ -92,7 +92,7 @@
                             <label for="" class="float-label">Reporting Manager Name<span
                                     class="text-danger">*</span></label>
                             <!-- {{employee_onboarding.l1_manager_code.user_code}} -->
-                            <Dropdown :readonly="service.readonly.l1_code" :options="service.Managerdetails"
+                            <!-- <Dropdown :readonly="service.readonly.l1_code" :options="service.Managerdetails"
                                 optionLabel="name" placeholder="Reporting Manager Name"
                                 v-model="service.employee_onboarding.l1_manager_code" class="p-error" :class="{
                                     'p-invalid':
@@ -119,7 +119,35 @@
                                         <div></div>
                                     </div>
                                 </template>
-                            </Dropdown>
+                            </Dropdown> -->
+                            <Dropdown editable   :readonly="service.readonly.l1_code" :options="service.Managerdetails"
+                                optionLabel="name" placeholder="Reporting Manager Name"
+                                v-model="service.employee_onboarding.l1_manager_code" class="p-error" :class="{
+                                    'p-invalid':
+                                        v$.l1_manager_code.$error,
+                                }">
+
+                                <template #value="slotProps">
+                                    <div v-if="slotProps.value" class="flex align-items-center">
+                                        <div>
+                                            {{ slotProps.value.user_code }} -
+                                            {{ slotProps.value.name }}
+                                        </div>
+                                    </div>
+                                    <span v-else>
+                                        {{ slotProps.placeholder }}
+                                    </span>
+                                </template>
+                                <template #option="slotProps">
+                                    <div class="flex align-items-center">
+                                        <div>
+                                            {{ slotProps.option.user_code }} -
+                                            {{ slotProps.option.name }}
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </template>
+                                </Dropdown>
 
                             <span v-if="(v$.l1_manager_code.$error) ||
                                 v$.l1_manager_code.$pending.$response
@@ -225,3 +253,10 @@ const isLetter = (e) => {
 
 
 </script>
+
+<style>
+
+.p-inputwrapper {
+
+}
+</style>

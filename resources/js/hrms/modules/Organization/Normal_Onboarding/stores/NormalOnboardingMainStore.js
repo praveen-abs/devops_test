@@ -185,24 +185,102 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
         let selectedDocument = e.target.files[0]
         console.log(selectedDocument);
-        // Get uploaded file
 
+        const maxSizeInBytes = 2 * 512 * 512; 
+        // Get uploaded file
+        // || selectedDocument.type == 'application/pdf'
         if (selectedDocument) {
-            if (selectedDocument.type == 'image/jpeg' || selectedDocument.type == 'image/png' || selectedDocument.type == 'application/pdf') {
+            if (selectedDocument.type == 'image/jpeg' || selectedDocument.type == 'image/png' ) {
                 if (filename == 'AadharFront') {
                     employee_onboarding.AadharCardFront = e.target.files[0]
+
+                    if(employee_onboarding.AadharCardFront.size  > maxSizeInBytes ){
+                       
+                        console.log('testing image update size :: ');
+                        toast.add({
+                            severity: "error",
+                            summary: "Error",
+                            detail: `The file its too large.Allowed maximum size is 1MB ${employee_onboarding.AadharCardFront.name}`,
+                            life: 3000,
+                        });
+                        // console.log(filename,employee_onboarding.AadharCardFront);
+                        employee_onboarding.AadharCardFront = '' ;
+                        e.target.files[0] ="";
+                        selectedDocument = "";
+                    };
+
                 } else
                     if (filename == 'AadharBack') {
-                        employee_onboarding.AadharCardBack = e.target.files[0]
+                        employee_onboarding.AadharCardBack = e.target.files[0];
+
+                        if( employee_onboarding.AadharCardBack.size  > maxSizeInBytes ){
+                       
+                            console.log('testing image update size :: ');
+                            toast.add({
+                                severity: "error",
+                                summary: "Error",
+                                detail: `The file its too large.Allowed maximum size is 1MB ${employee_onboarding.AadharCardBack.name}`,
+                                life: 3000,
+                            });
+                            // console.log(filename,employee_onboarding.AadharCardFront);
+                            employee_onboarding.AadharCardBack = '' ;
+                            e.target.files[0] ="";
+                            selectedDocument = "";
+                        };
                     } else
                         if (filename == 'Pancard') {
-                            employee_onboarding.PanCardDoc = e.target.files[0]
+                            employee_onboarding.PanCardDoc = e.target.files[0];
+                            if(  employee_onboarding.PanCardDoc.size  > maxSizeInBytes ){
+                       
+                                console.log('testing image update size :: ');
+                                toast.add({
+                                    severity: "error",
+                                    summary: "Error",
+                                    detail: `The file its too large.Allowed maximum size is 1MB ${ employee_onboarding.PanCardDoc.name}`,
+                                    life: 3000,
+                                });
+                                // console.log(filename,employee_onboarding.AadharCardFront);
+                                employee_onboarding.PanCardDoc = '' ;
+                                e.target.files[0] ="";
+                                selectedDocument = "";
+                            };
                         } else
                             if (filename == 'DrivingLicense') {
-                                employee_onboarding.DrivingLicenseDoc = e.target.files[0]
+                                employee_onboarding.DrivingLicenseDoc = e.target.files[0];
+
+                                 if(  employee_onboarding.DrivingLicenseDoc.size  > maxSizeInBytes ){
+                       
+                                console.log('testing image update size :: ');
+                                toast.add({
+                                    severity: "error",
+                                    summary: "Error",
+                                    detail: `The file its too large.Allowed maximum size is 1MB ${ employee_onboarding.DrivingLicenseDoc.name}`,
+                                    life: 3000,
+                                });
+                                // console.log(filename,employee_onboarding.AadharCardFront);
+                                employee_onboarding.DrivingLicenseDoc = '' ;
+                                e.target.files[0] ="";
+                                selectedDocument = "";
+                            };
+
+
                             } else
                                 if (filename == 'Passport') {
-                                    employee_onboarding.PassportDoc = e.target.files[0]
+                                    employee_onboarding.PassportDoc = e.target.files[0];
+                                    if(  employee_onboarding.PassportDoc.size  > maxSizeInBytes ){
+                       
+                                        console.log('testing image update size :: ');
+                                        toast.add({
+                                            severity: "error",
+                                            summary: "Error",
+                                            detail: `The file its too large.Allowed maximum size is 1MB ${ employee_onboarding.PassportDoc.name}`,
+                                            life: 3000,
+                                        });
+                                        // console.log(filename,employee_onboarding.AadharCardFront);
+                                        employee_onboarding.PassportDoc = '' ;
+                                        e.target.files[0] ="";
+                                        selectedDocument = "";
+                                    };
                                 } else
                                     if (filename == 'VoterId') {
                                         employee_onboarding.VoterIdDoc = e.target.files[0]
