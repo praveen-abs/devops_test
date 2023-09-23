@@ -1872,12 +1872,65 @@ class VmtAttendanceReportsService
 
     public function fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status)
     {
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                // 'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department_id,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                // 'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'date' => 'nullable'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+            if (empty($client_id)) {
+                $client_id = VmtClientMaster::pluck('id')->toArray();
+            } else {
+                $client_id =  $client_id;
+            }
+            // dd($client_id);
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = $active_status;
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+            if (empty($department_id)) {
+                $get_department = Department::pluck('id');
+            } else {
+                $get_department = $department_id;
+            }
+
         ini_set('max_execution_time', 3000);
         $reportresponse = array();
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('is_ssa', '0')
-            ->where('active', '1')
+            ->whereIn('users.client_id', $client_id)
+            ->whereDate('employee.doj', '<', $date_req)
+            ->whereIn('users.active', $active_status)
+            ->whereIn('office.department_id', $get_department)
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
         if (sessionGetSelectedClientid() != 1) {
@@ -2270,9 +2323,19 @@ class VmtAttendanceReportsService
             array_push($reportresponse, $attendanceResponseArray);
             unset($attendanceResponseArray);
         }
-
+    }
+        catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'line' => $e->getTraceAsString(),
+                'error_verbose' => $e->getLine()
+            ];
+        }
         return  $reportresponse;
     }
+    
 
 
     public function fetchAbsentReportData($start_date, $end_date, $department_id,$client_id,$type, $active_status)
