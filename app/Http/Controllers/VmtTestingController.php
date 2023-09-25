@@ -1767,18 +1767,32 @@ class VmtTestingController extends Controller
 
 
 
-    public function fetchInvestmentsReports()
+    public function fetchInvestmentsReports($active_status,$regime_type)
     {
 
         $reports_data = array();
+
+        if (empty($active_status)) {
+            $active_status = ['1', '0', '-1'];
+        } else {
+            $active_status = $active_status;
+        }
+
+        if (empty($regime_type)) {
+            $active_status = ['old','new'];
+        } else {
+            $regime_type = $regime_type;
+        }
 
         $inv_emp = VmtInvFEmpAssigned::pluck('user_id')->toArray();
 
         $salary_data['headers'] = [];
 
+
         $Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-            ->where('users.active', '1')
+            ->where('users.active', $active_status)
+            ->where('vmt_employee_statutory_details.tax_regime', $regime_type)
             //->where('users.client_id', $client_id)
             ->whereIn('users.id', $inv_emp)
             ->get(['users.id as user_id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'vmt_employee_details.gender as Gender', 'vmt_employee_details.pan_number as PAN Number', 'vmt_employee_details.dob as Date Of Birth', 'vmt_employee_details.doj as Date Of Joining', 'vmt_employee_statutory_details.tax_regime as Tax Regime']);
@@ -1838,7 +1852,11 @@ class VmtTestingController extends Controller
 
         $salary_data['rows'] = $employee_salary_details;
 
-        array_push($reports_data, array_unique($salary_data['headers']), $salary_data['rows']);
+        $reports_data = $salary_data['headers'];
+
+        $reports_data =$salary_data['rows'];
+
+        //array_push($reports_data, array_unique($salary_data['headers']), $salary_data['rows']);
 
 
         return $reports_data;
