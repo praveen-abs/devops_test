@@ -801,7 +801,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     ///for current year
 
     Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
-    Route::get('/reports/employee-reports',[App\Http\Controllers\VmtReportsController::class,'showEmployeeReportsPage'])->name('showEmployeeReportsPage');
+    Route::get('/reports',[App\Http\Controllers\VmtReportsController::class,'showReportsPage'])->name('showReportsPage');
 
     Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
@@ -810,9 +810,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
     Route::post('/generate-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
     //payroll reports
-    Route::get('/reports', function () {
-        return view('reports.vmt_reports_page');
-    })->name('reports-page');
 
     Route::get('/reports-payroll', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
     Route::get('/reports/generatePayrollReports', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
