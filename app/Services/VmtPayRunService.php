@@ -72,7 +72,7 @@ class VmtPayRunService
             $user = $user->where('client_id',  $client_id);
         }
         if ($department) {
-            $user = $user->where('vmt_employee_office_details.department_id', '=', $department)->get();
+            $user = $user->whereIn('vmt_employee_office_details.department_id', $department)->get();
            
         }
         
