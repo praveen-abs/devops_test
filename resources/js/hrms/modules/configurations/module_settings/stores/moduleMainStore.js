@@ -5,7 +5,9 @@ import axios from "axios";
 export const useModuleSettingsStore = defineStore("useModuleSettingsStore", () => {
 
 
+    const currentlySelectedModule = ref()
     const employeeAssignDialog = ref(false);
+
 
     const arrayModuleSettingsDetails = ref();
 
@@ -18,7 +20,7 @@ export const useModuleSettingsStore = defineStore("useModuleSettingsStore", () =
     async function getModuleSettings(){
         canshowloading.value = true;
 
-            await axios.get('/getClient_AllModulePermissionDetails').then((res)=>{
+            await axios.get('/getClient_AllModuleDetails').then((res)=>{
                 console.log(res.data);
                 // if(res.data.data[1]){
                     arrayModuleSettingsDetails.value =res.data.data;
@@ -40,15 +42,23 @@ export const useModuleSettingsStore = defineStore("useModuleSettingsStore", () =
         })
     }
 
+    const getClient_AllModulePermissionDetails=()=>{
+        axios.get('/getClient_AllModulePermissionDetails').then((res)=>{
+            console.log(res.data);
+        });
+    }
+
     const saveEnableDisableSetting = async(item,status)=>{
 
-
+        let modulesettings = {
+            module_id:item.module_id ? item.module_id : item.module_id ? '' : item.value.module_id,
+            module_status:status,
+            sub_module_id: item.sub_module_id ? '' : item.module_id ? '' : item.value.sub_module_id,
+            sub_module_status:item.sub_module_status? '' : item.module_id ? '' : item.value.sub_module_status,
+        }
         canshowloading.value = true;
 
-        await axios.post('/updateClientModuleStatus',{
-            module_id:item.id,
-            status:status
-        }).then((res)=>{
+        await axios.post('/update_AllClientModuleStatus',modulesettings).then((res)=>{
 
             console.log("Status received : "+res.data.status);
 
@@ -59,6 +69,8 @@ export const useModuleSettingsStore = defineStore("useModuleSettingsStore", () =
 
         }).finally(()=>{
             canshowloading.value = false;
+            getModuleSettings();
+            getClient_AllModulePermissionDetails();
 
         })
 
@@ -77,9 +89,8 @@ export const useModuleSettingsStore = defineStore("useModuleSettingsStore", () =
 
     }
 
-
-
     return {
+        currentlySelectedModule,
         employeeAssignDialog,
         arrayModuleSettingsDetails,
         getSessionClient,
@@ -90,6 +101,8 @@ export const useModuleSettingsStore = defineStore("useModuleSettingsStore", () =
         // function
         updateEmployeesPermissionStatus,
 
-        getModuleSettings
+        getModuleSettings,
+
+        getClient_AllModulePermissionDetails
     };
 });
