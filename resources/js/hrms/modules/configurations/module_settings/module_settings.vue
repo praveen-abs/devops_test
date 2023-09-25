@@ -22,11 +22,12 @@
                     <h1 class="text-[#000] text-[14px]">{{ item.module_name }}</h1>
                 </div>
                 <div class="mx-auto">
+                    <!-- {{ item.module_status }} -->
                     <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]"
-                        :class="[item.status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
+                        :class="[item.module_status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
                         @click="useStore.saveEnableDisableSetting(item, 1)">Enable</button>
                     <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
-                        :class="[item.status == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
+                        :class="[item.module_status == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
                         @click="useStore.saveEnableDisableSetting(item, 0)">Disable</button>
                 </div>
                 <div class="my-auto">
@@ -34,7 +35,7 @@
                     <div class="flex float-right cursor-pointer w-[170px] items-center" v-if="item.status === 1">
                         <i class="pi pi-users"></i>
                         <span class="text-[#000] mx-2">
-                            {{ item.employee_count }}</span>
+                            {{ item }}</span>
                         <span class="underline "
                             @click="selectedType = item.id, useStore.employeeAssignDialog = true">Assign
                             Employee</span>
@@ -60,27 +61,27 @@
                     <div>
                         <div class="mx-auto">
                             <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]"
-                                :class="[item.sub_module_name.IS_ENABLED == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
-                                @click="useStore.saveEnableDisableSetting(item, 1)">Enable</button>
+                                :class="[item.module_status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
+                                @click="useStore.saveEnableDisableSetting(item, 1),item.module_status = 1">Enable</button>
                             <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
-                                :class="[item.sub_module_name.IS_ENABLED  == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
-                                @click="useStore.saveEnableDisableSetting(item, 0)">Disable</button>
+                                :class="[item.module_status  == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
+                                @click="useStore.saveEnableDisableSetting(item, 0),item.module_status = 0">Disable</button>
                         </div>
                     </div>
                 </div>
             </template>
             <div class="grid grid-cols-2 p-2 rounded-lg border my-2.5 h-[44px]"
-                v-for="(item, index) in format(item.sub_module_name)" :key="index">
+                v-for="(item, index) in format(item.sub_module_details)" :key="index">
                 <div class="my-auto">
-                    <h1 class="text-[#000] text-[14px]">{{ item.title }}</h1>
+                    <h1 class="text-[#000] text-[14px]">{{item ?  item.value.sub_module_name : '' }}</h1>
                 </div>
                 <div class="mx-auto">
                     <button class=" text-[12px] w-[100px] rounded-l-[8px] h-[26px]"
-                        :class="[item.value == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
-                        @click="useStore.saveEnableDisableSetting(item, 1)">Enable</button>
+                        :class="[item.value.sub_module_status == 1 ? ' bg-[#000] text-white  ' : ' bg-white !text-[#000] border-[2px] border-black']"
+                        @click="useStore.saveEnableDisableSetting(item, 1),item.value.sub_module_status =1">Enable</button>
                     <button class=" text-[12px] w-[100px] rounded-r-[8px] h-[26px]"
-                        :class="[item.value == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
-                        @click="useStore.saveEnableDisableSetting(item, 0)">Disable</button>
+                        :class="[item.value.sub_module_status == 0 ? 'bg-[#000] text-white ' : 'bg-white text-black border-[2px] border-black']"
+                        @click="useStore.saveEnableDisableSetting(item, 0),item.value.sub_module_status =0">Disable</button>
                 </div>
             </div>
         </AccordionTab>

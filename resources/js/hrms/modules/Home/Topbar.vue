@@ -95,7 +95,7 @@
                 </transition>
             </div>
             <div class="flex justify-end col-span-4">
-                <button v-tooltip="'Settings'" v-if="service.current_user_role == 2 || service.current_user_role == 4"
+                <button v-tooltip="'Settings'" v-if=" service.current_user_role == 1 ||service.current_user_role == 2 || service.current_user_role == 3"
                     class="p-2 mx-2 transition duration-700 ease-in-out transform bg-gray-100 rounded-full hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="w-6 h-6">
