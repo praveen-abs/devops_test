@@ -26,6 +26,7 @@ use App\Exports\DetailedAttendanceExport;
 use App\Exports\OverTimeReportExport;
 use App\Exports\EarlyGoingReportExport;
 use App\Exports\HalfDayReportExport;
+use App\Exports\InvestmentsReportsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -43,7 +44,13 @@ class VmtEmployeeAttendanceController extends Controller
         }
         // $start_date ='2023-06-26';
         // $end_date ='2023-06-29';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status)), 'Detailed Attendance Report.xlsx');
+        $is_lc = false;
+        if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
+            $is_lc = true;
+        }
+        $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
+       // dd($data);
+        return Excel::download(new DetailedAttendanceExport( $data,$is_lc), 'Detailed Attendance Report.xlsx');
     }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -285,6 +292,14 @@ class VmtEmployeeAttendanceController extends Controller
         $response = $attendance_report_service->shiftTimeForEmployee($start_date, $end_date, $client_domain);
         return $response;
     }
+
+    public function downloadInvestmentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+
+
+        return Excel::download(new InvestmentsReportsExport($attendance_report_service->fetchInvestmentTaxReports()),'Investments Report.xlsx');
+    }
+
 
 
     public function showLateComingReport(Request $request)

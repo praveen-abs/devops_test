@@ -40,10 +40,12 @@ use App\Models\VmtOrgTimePeriod;
 
 class VmtReportsController extends Controller
 {
-    public function showEmployeeReportsPage()
+    public function showReportsPage()
     {
-        return view('reports.abs_employee_report');
+
+        return view('reports.vmt_reports_page');
     }
+
     public function showPayrollReportsPage(Request $request)
     {
         // $payroll_months = [
