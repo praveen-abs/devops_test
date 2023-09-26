@@ -68,8 +68,12 @@
                 <Column field="Employee code" header="Date Time"></Column>
                 <Column field="Employee code" header="Total Employees Onboarded"></Column>
                 <Column field="Employee code" header="Action"></Column>
+
             </DataTable>
+            <button class="flex justify-center mx-auto btn btn-orange">Upload</button>
+
         </div>
+
     </Transition>
     <!-- <div class="" v-else>
          <ImportQuickOnboarding />
@@ -87,7 +91,7 @@
             </template>
         </Dialog>
     </Transition>
-<importSalaryAdvance />
+    <importSalaryAdvance />
 </template>
 
 
