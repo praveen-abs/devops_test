@@ -266,7 +266,7 @@
                     </div>
                     <div class="col-3">
                         <p>Availed</p>
-                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.avalied ? item.avalied :'-' }}</p>
+                        <p class=" text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.leave_data"  :key="item" >{{ item.availed ? item.availed :'-' }}</p>
                     </div>
                     <div class="col-3">
                         <p>Closing Balance</p>
@@ -381,6 +381,7 @@
 </template>
 
 <script setup>
+import dayjs from 'dayjs';
 import { ref, onMounted, reactive, computed } from "vue";
 import { useManagePayslipStore } from './ManagePayslipService';
 import LoadingSpinner from '../../components/LoadingSpinner.vue'

@@ -94,7 +94,7 @@ export const Service = defineStore("Service", () => {
     ];
 
     const getBackgroundColor = (index) => {
-        console.log(index);
+       // console.log(index);
         return colors[index % colors.length];
     };
 

@@ -1,45 +1,44 @@
 <?php
 
-    use Illuminate\Support\Facades\Storage;
-    use App\Models\VmtDocuments;
-    use App\Models\VmtEmployeeDocuments;
-    use App\Models\VmtEmployee;
-    use App\Models\VmtPMS_KPIFormAssignedModel;
-    use App\Models\VmtPMS_KPIFormDetailsModel;
-    use Dompdf\Dompdf;
-     use Dompdf\Options;
-     use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use App\Models\VmtDocuments;
+use App\Models\VmtEmployeeDocuments;
+use App\Models\VmtEmployee;
+use App\Models\VmtPMS_KPIFormAssignedModel;
+use App\Models\VmtPMS_KPIFormDetailsModel;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Carbon\Carbon;
 
-    use App\Models\VmtTempEmployeeProofDocuments;
-    use App\Models\VmtMaritalStatus;
-    use App\Models\VmtEmployeeLeaves;
-    use App\Models\VmtMasterConfig;
-    use App\Models\VmtEmployeeLeaves;
-    use App\Models\VmtEmployeeOfficeDetails;
-    use App\Models\VmtClientMaster;
-    use App\Mail\ApproveRejectEmpDetails;
-    use App\Mail\VmtPMSMail_Assignee;
-    use App\Mail\VmtAttendanceMail_Regularization;
-    use App\Models\User;
-    use App\Models\VmtEmpPaygroup;
-    use App\Models\VmtPaygroup;
-    use App\Models\vmtHolidays;
-    use App\Models\VmtEmployeeAttendance;
-    use App\Models\VmtEmployeePayroll;
-    use App\Models\VmtEmployeePaySlip;
-    use App\Models\VmtEmployeePaySlipV2;
-    use App\Models\VmtPMS_KPIFormModel;
-    use App\Models\VmtLoanInterestSettings;
-    use App\Models\VmtUserMailStatus;
-    use App\Models\VmtEmployeePayslipStatus;
-    use App\Models\VmtEmployeeMailStatus;
-    use App\Models\VmtEmployeeStatutoryDetails;
-    use App\Models\VmtPayroll;
-    use App\Models\Compensatory;
-    use App\Mail\QuickOnboardLink;
-    use App\Services\VmtApprovalsService;
-    use App\Mail\WelcomeMail;
-
+use App\Models\VmtTempEmployeeProofDocuments;
+use App\Models\VmtMaritalStatus;
+use App\Models\VmtInvFormSection;
+use App\Models\VmtMasterConfig;
+use App\Models\VmtEmployeeLeaves;
+use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtClientMaster;
+use App\Mail\ApproveRejectEmpDetails;
+use App\Mail\VmtPMSMail_Assignee;
+use App\Mail\VmtAttendanceMail_Regularization;
+use App\Models\User;
+use App\Models\VmtEmpPaygroup;
+use App\Models\VmtPaygroup;
+use App\Models\vmtHolidays;
+use App\Models\VmtEmployeeAttendance;
+use App\Models\VmtEmployeePayroll;
+use App\Models\VmtEmployeePaySlip;
+use App\Models\VmtEmployeePaySlipV2;
+use App\Models\VmtPMS_KPIFormModel;
+use App\Models\VmtLoanInterestSettings;
+use App\Models\VmtUserMailStatus;
+use App\Models\VmtEmployeePayslipStatus;
+use App\Models\VmtEmployeeMailStatus;
+use App\Models\VmtEmployeeStatutoryDetails;
+use App\Models\VmtPayroll;
+use App\Models\Compensatory;
+use App\Mail\QuickOnboardLink;
+use App\Services\VmtApprovalsService;
+use App\Mail\WelcomeMail;
 
 ?>
 
@@ -47,11 +46,11 @@
 @section('title')
     @lang('translation.dashboards')
 @section('css')
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
 @endsection
 @endsection
 @section('content')
-    <?php
+<?php
 
 //     foreach ($emp_payroll_user_id as $key => $singleuser) {
 
@@ -65,13 +64,16 @@
 // }
 // }
 
+/*Get all employee payslip details */
 
- /*Get all employee payslip details */
-
-        $query_all_payslip = VmtEmployeePayslip::all();
+$query_all_payslip = VmtEmployeePayslip::all();
 
 /* save single payrollmonth in vmt_payroll*/
-            $emp_payroll_month = VmtEmployeePayslip::whereYear('created_at', '2022')->orwhereYear('created_at','2023')->distinct('created_at')->orderBy('PAYROLL_MONTH', 'ASC')->pluck('PAYROLL_MONTH');
+$emp_payroll_month = VmtEmployeePayslip::whereYear('created_at', '2022')
+    ->orwhereYear('created_at', '2023')
+    ->distinct('created_at')
+    ->orderBy('PAYROLL_MONTH', 'ASC')
+    ->pluck('PAYROLL_MONTH');
 
 //  $client_details_id = VmtClientMaster::get("id");
 
@@ -84,8 +86,6 @@
 //                 $query_payroll->save();
 //             }
 // }
-
-
 
 // /* save user id and payroll id in the table vmt_emp_payroll*/
 //           foreach ($query_all_payslip as $key => $singleuserdata) {
@@ -163,52 +163,51 @@
 //            $emppayslip->other_earnings=$singlepayslipdetails->other_earnings;
 //            $emppayslip->save();
 
-
 //          }
 
-  // $payroll_month= VmtPayroll::whereMonth('payroll_date', $month)
-            //                                      ->whereYear('payroll_date', $year)->first();
+// $payroll_month= VmtPayroll::whereMonth('payroll_date', $month)
+//                                      ->whereYear('payroll_date', $year)->first();
 
-                //  $emp_payslip_id =VmtEmployeePayroll::where('user_id','144')->get('id');
-                //  $query_payslips=array();
-                //   foreach ($emp_payslip_id as $key => $singleuserid) {
+//  $emp_payslip_id =VmtEmployeePayroll::where('user_id','144')->get('id');
+//  $query_payslips=array();
+//   foreach ($emp_payslip_id as $key => $singleuserid) {
 
-                // //     $query_payslips[] = VmtEmployeePaySlipV2::where('emp_payroll_id',$singleuserid->id)
-                // //                                     ->orderBy('emp_payroll_id', 'ASC')
-                // //                                     ->get(['id','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
-                //  }
-        //         $month='08';
-        //          $year='2022';
-        //          $user_id ='144';
+// //     $query_payslips[] = VmtEmployeePaySlipV2::where('emp_payroll_id',$singleuserid->id)
+// //                                     ->orderBy('emp_payroll_id', 'ASC')
+// //                                     ->get(['id','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
+//  }
+//         $month='08';
+//          $year='2022';
+//          $user_id ='144';
 
-        //          $response['payslip_data'] = User::with([
-        //                                     'getEmployeeDetails' => function($query){
-        //                                        $query->select(['id','userid','dob','doj','location','pan_number','bank_id','bank_account_number','bank_ifsc_code']);
-        //                                     },
-        //                                     'getEmployeeOfficeDetails' => function($query){
-        //                                             $query->select(['id','user_id','designation']);
-        //                                     },
-        //                                     'getStatutoryDetails' =>function($query){
-        //                                         $query->select(['id','user_id','epf_number','esic_number','uan_number']);
-        //                                     },
-        //                                     'single_payslip_empid' =>function($query){
-        //                                         $query->select(['user_id']);
-        //                                     },
-        //                                     'single_payslip_month' =>function($query) use($month , $year){
-        //                                         $query->whereMonth('payroll_date', $month)
-        //                                               ->whereYear('payroll_date', $year)
-        //                                               ->select(['payroll_date']);
-        //                                     },
-        //                                     'single_payslip_detail' => function($query) {
-        //                                             $query->select(['id','month_days as MONTH_DAYS','worked_Days as Worked_Days','lop as LOP','arrears_Days as ArrearS_Days','basic as BASIC','hra as HRA','spl_alw as SPL_ALW',
-        //                                                     'overtime as Overtime','travel_conveyance','total_earned_gross as TOTAL_EARNED_GROSS','prof_tax as PROF_TAX','income_tax','sal_adv as SAL_ADV','other_deduc as OTHER_DEDUC','total_deductions as TOTAL_DEDUCTIONS','epfr as EPFR','employee_esic as EMPLOYEE_ESIC',
-        //                                                     'net_take_home as NET_TAKE_HOME','employer_esi as EMPLOYER_ESI']);
-        //                                         },
-        //                                     ])
-        //                                     ->where('users.id','144')
-        //                                     ->get(['users.id','users.name','users.user_code','users.email']);
+//          $response['payslip_data'] = User::with([
+//                                     'getEmployeeDetails' => function($query){
+//                                        $query->select(['id','userid','dob','doj','location','pan_number','bank_id','bank_account_number','bank_ifsc_code']);
+//                                     },
+//                                     'getEmployeeOfficeDetails' => function($query){
+//                                             $query->select(['id','user_id','designation']);
+//                                     },
+//                                     'getStatutoryDetails' =>function($query){
+//                                         $query->select(['id','user_id','epf_number','esic_number','uan_number']);
+//                                     },
+//                                     'single_payslip_empid' =>function($query){
+//                                         $query->select(['user_id']);
+//                                     },
+//                                     'single_payslip_month' =>function($query) use($month , $year){
+//                                         $query->whereMonth('payroll_date', $month)
+//                                               ->whereYear('payroll_date', $year)
+//                                               ->select(['payroll_date']);
+//                                     },
+//                                     'single_payslip_detail' => function($query) {
+//                                             $query->select(['id','month_days as MONTH_DAYS','worked_Days as Worked_Days','lop as LOP','arrears_Days as ArrearS_Days','basic as BASIC','hra as HRA','spl_alw as SPL_ALW',
+//                                                     'overtime as Overtime','travel_conveyance','total_earned_gross as TOTAL_EARNED_GROSS','prof_tax as PROF_TAX','income_tax','sal_adv as SAL_ADV','other_deduc as OTHER_DEDUC','total_deductions as TOTAL_DEDUCTIONS','epfr as EPFR','employee_esic as EMPLOYEE_ESIC',
+//                                                     'net_take_home as NET_TAKE_HOME','employer_esi as EMPLOYER_ESI']);
+//                                         },
+//                                     ])
+//                                     ->where('users.id','144')
+//                                     ->get(['users.id','users.name','users.user_code','users.email']);
 
-        //   dd( $response['payslip_data']);
+//   dd( $response['payslip_data']);
 // $year='2022';
 // $month='10';
 
@@ -220,22 +219,16 @@
 //                                             ->where('users.is_ssa','0')
 //                                             ->where('users.active','1')
 //                                             ->get(['payroll_date','users.name','users.id']);                                                                        // "max_loan_amount as max_eligible_amount",
-                                                                        // "loan_amt_interest as interest_rate",
-                                                                        // "deduction_starting_months",
-                                                                        // "max_tenure_months",
+// "loan_amt_interest as interest_rate",
+// "deduction_starting_months",
+// "max_tenure_months",
 //                                                                         $multiple_months=array();
-
 
 //                                                                         $user_id=auth()->user()->id;
 //         $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
 //         $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
 
-
 //      $client_data = Users::where('id',auth()->user()->id)->first();
-
-
-
-
 
 //             $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
 
@@ -255,8 +248,6 @@
 
 // dd( $loan_withinterest_setting_data );
 
-
-
 //             $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
 
 //            foreach ($loan_withinterest_setting_data as $key => $singledata) {
@@ -275,14 +266,6 @@
 
 // dd( $loan_withinterest_setting_data );
 
-
-
-
-
-
-
-
-
 // $payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
 //         for($i=0; $i < count($payroll_month); $i++)
 //         {
@@ -293,11 +276,8 @@
 
 // dd($payroll_available_months);
 
-
 // $query_docs = User::whereIn('id',[174, 177, 179])->get();
 // dd($query_docs);
-
-
 
 // $timestamp = (strtotime('2023-03-01 08:56:04'));
 // $date = date('Y-j-n', $timestamp);
@@ -312,57 +292,53 @@
 
 //                         dd($attendanceCheckOut );
 
+//dd($attendanceCheckOut );
 
-                        //dd($attendanceCheckOut );
+//                     uploadDocument($client_id,$fileObject){
 
-    //                     uploadDocument($client_id,$fileObject){
+// try{
+//         $emp_code = User::find($emp_id)->user_code;
 
-    // try{
-    //         $emp_code = User::find($emp_id)->user_code;
+//         $Client_logo= VmtClientMaster::where('client_id', $client_id);
 
-    //         $Client_logo= VmtClientMaster::where('client_id', $client_id);
+//         //check if document already uploaded
 
-    //         //check if document already uploaded
+//         }
+//         else
+//         {
+//             $employee_documents = new VmtEmployeeDocuments;
+//             $employee_documents->user_id = $emp_id;
+//             $employee_documents->doc_id = $onboard_doc_id;
+//         }
 
-    //         }
-    //         else
-    //         {
-    //             $employee_documents = new VmtEmployeeDocuments;
-    //             $employee_documents->user_id = $emp_id;
-    //             $employee_documents->doc_id = $onboard_doc_id;
-    //         }
+//         $date = date('d-m-Y_H-i-s');
+//         $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+//         $path = $emp_code.'/onboarding_documents';
+//         $filePath = $fileObject->storeAs($path,$fileName, 'private');
+//         $employee_documents->doc_url = $fileName;
 
+//         $employee_documents_status = VmtEmployeeDocuments::where('user_id', $emp_id)
+//                                                            ->where('doc_id',$onboard_doc_id);
 
-    //         $date = date('d-m-Y_H-i-s');
-    //         $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
-    //         $path = $emp_code.'/onboarding_documents';
-    //         $filePath = $fileObject->storeAs($path,$fileName, 'private');
-    //         $employee_documents->doc_url = $fileName;
+//         if($employee_documents_status->exists() ){
+//                 $employee_documents_status = $employee_documents_status->first()->status;
+//            if($employee_documents_status == 'Approved')
+//                 $employee_documents->status = $employee_documents_status;
+//            else{
+//             $employee_documents->status ='Pending';
+//            }
+//         }else{
 
-    //         $employee_documents_status = VmtEmployeeDocuments::where('user_id', $emp_id)
-    //                                                            ->where('doc_id',$onboard_doc_id);
+//             $employee_documents->status = 'Pending';
+//          }
 
-    //         if($employee_documents_status->exists() ){
-    //                 $employee_documents_status = $employee_documents_status->first()->status;
-    //            if($employee_documents_status == 'Approved')
-    //                 $employee_documents->status = $employee_documents_status;
-    //            else{
-    //             $employee_documents->status ='Pending';
-    //            }
-    //         }else{
+//         $employee_documents->save();
+//     }
+//     catch(\Exception $e){
+//         dd("Error :: uploadDocument() ".$e);
+//     }
 
-    //             $employee_documents->status = 'Pending';
-    //          }
-
-
-    //         $employee_documents->save();
-    //     }
-    //     catch(\Exception $e){
-    //         dd("Error :: uploadDocument() ".$e);
-    //     }
-
-    //     return "success";
-
+//     return "success";
 
 // $flowCheck	="1";
 
@@ -382,7 +358,6 @@
 //     //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
 //                $comments_employee = '';
 //     $login_Link = request()->getSchemeAndHttpHost();
-
 
 //      $is_sent=\Mail::to('vvishva185@gmail.com')
 //                         ->send(new VmtPMSMail_Assignee("none",$flowCheck,
@@ -412,103 +387,92 @@
 //              dd(  $query_doc_id );
 //              $reponse= array_diff($query_user_doc_id,$query_doc_id);
 
+//     $query_document =VmtDocuments::all()->toarray();
 
+//     $query_user_doc_id = VmtEmployeeDocuments::where('user_id','236')->get()->toarray();
 
+//     $present_doc= $query_document->diff($query_user_doc_id);
 
-            //     $query_document =VmtDocuments::all()->toarray();
+//     $missing_doc=$query_document->diff($present_doc);
+//  $emp_documents=array();
+//  foreach ($present_doc as $key => $singledata) {
 
-            //     $query_user_doc_id = VmtEmployeeDocuments::where('user_id','236')->get()->toarray();
+//      if($docid){
+//         $emp_documents[$key]=
+//         $emp_documents[$key]['document_name']=VmtDocuments::where('id',$singledata->id)->first()->document_name;
+//      }else{
+//         $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+//         $emp_documents[$j]['status']=null;
+//      }
+//      $i++;
+//     }
 
+//      $missing_doc_id= $query_document->diff($query_user_doc_id);
+//      $present_doc_id= $query_document->diff($missing_doc);
+//      $emp_documents=array();
+//                $i=0;
+//      foreach ($present_doc_id as $key => $singledocid) {
+//              $emp_documents[$i]= VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$singledocid)->first();
+//              $emp_documents[$i]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+//              $i++;
+//            }
+//            $j=$i;
+//    foreach ($missing_doc_id as $key => $singledocid) {
+//               $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+//               $emp_documents[$j]['status']=null;
+//               $j++;
+//          }
 
-            //     $present_doc= $query_document->diff($query_user_doc_id);
+$gross = 50000;
 
-            //     $missing_doc=$query_document->diff($present_doc);
-            //  $emp_documents=array();
-            //  foreach ($present_doc as $key => $singledata) {
+$basic = ($gross / 100) * 60;
 
-            //      if($docid){
-            //         $emp_documents[$key]=
-            //         $emp_documents[$key]['document_name']=VmtDocuments::where('id',$singledata->id)->first()->document_name;
-            //      }else{
-            //         $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
-            //         $emp_documents[$j]['status']=null;
-            //      }
-            //      $i++;
-            //     }
+$hra = ($basic / 100) * 50;
 
-        //      $missing_doc_id= $query_document->diff($query_user_doc_id);
-        //      $present_doc_id= $query_document->diff($missing_doc);
-        //      $emp_documents=array();
-        //                $i=0;
-        //      foreach ($present_doc_id as $key => $singledocid) {
-        //              $emp_documents[$i]= VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$singledocid)->first();
-        //              $emp_documents[$i]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
-        //              $i++;
-        //            }
-        //            $j=$i;
-        //    foreach ($missing_doc_id as $key => $singledocid) {
-        //               $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
-        //               $emp_documents[$j]['status']=null;
-        //               $j++;
-        //          }
+$communication_allowance = 0;
 
+$food_allowance = 0;
 
+if ($gross > 40000) {
+    $communication_allowance = 2000;
+}
 
-       $gross =50000;
+$leave_travel_allowance = 0;
 
-       $basic =$gross/100*60;
+if ($gross > 50000) {
+    $leave_travel_allowance = 2000;
+}
 
-       $hra =$basic/100*50;
+$special_allowance = $gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance);
 
-       $communication_allowance = 0;
+$epf_employer = 0;
+$epf_employee = 0;
 
-       $food_allowance = 0;
+if ($gross - $hra > 15000) {
+    $epf_employer = (15000 / 100) * 12;
+    $epf_employee = (15000 / 100) * 12;
+} else {
+    $epf_employer = (($gross - $hra) / 100) * 12;
+    $epf_employee = (($gross - $hra) / 100) * 12;
+}
 
-       if($gross > 40000){
-        $communication_allowance =2000;
-       }
+$esi_employer = 0;
+$esi_employee = 0;
 
-       $leave_travel_allowance = 0;
+if ($gross > 21000) {
+    $esi_employer = 0;
+    $esi_employee = 0;
+} else {
+    $esi_employer = ($gross / 100) * 3.25;
+    $esi_employee = ($gross / 100) * 0.75;
+}
+$insurance = 0;
 
-       if($gross > 50000){
-        $leave_travel_allowance =2000;
-       }
+$professional_tax = 208;
 
-       $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
+$ctc = $gross + $epf_employer + $esi_employer + $insurance;
 
-
-       $epf_employer = 0;
-       $epf_employee = 0;
-
-       if(($gross - $hra) > 15000){
-
-        $epf_employer = 15000/100*12;
-        $epf_employee = 15000/100*12;
-       }else{
-        $epf_employer = ($gross - $hra)/100*12;
-        $epf_employee =($gross - $hra)/100*12;
-       }
-
-       $esi_employer = 0;
-       $esi_employee = 0;
-
-       if($gross > 21000){
-        $esi_employer = 0;
-       $esi_employee = 0;
-
-       }else{
-        $esi_employer = $gross/100*3.25;
-        $esi_employee = $gross/100*0.75;
-       }
-       $insurance =0;
-
-       $professional_tax = 208;
-
-       $ctc = $gross + $epf_employer +$esi_employer + $insurance;
-
-       $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
-
-
+$net_take_home = $gross - ($epf_employee + $esi_employee + $professional_tax);
 
 // dd([ 'basic' =>$basic,
 //      'hra'=> $hra,
@@ -662,213 +626,381 @@
 //                 $pdf->render();
 //                 $pdf->stream(['breezetech.pdf']);
 
-
 // $data =numberToWord("123");
 // dd(str_replace(" ","",$data));
 //                 $docUploads =  $pdf->output();
 //                  dd( $docUploads);
-        //         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
-        //         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
-        //     }
-        // }
+//         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+//         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+//     }
+// }
 
-        // $notification_user = User::where('id', auth()->user()->id)->first();
-        // $message = "Employee Bulk OnBoard was Created   ";
+// $notification_user = User::where('id', auth()->user()->id)->first();
+// $message = "Employee Bulk OnBoard was Created   ";
 
-        // Notification::send($notification_user, new ViewNotification($message . $employeeData['employee_name']));
-        // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
+// Notification::send($notification_user, new ViewNotification($message . $employeeData['employee_name']));
+// $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
-        // return $isSent;
-        //  }
-$comp_data = ['Basic',
-'Dearness Allowance',
-'Variable Dearness Allowance',
-'House Rent Allowance',
-'Child Education Allowance',
-'Communication Allowance',
-'Statutory Bonus',
-'Food Allowance',
-'Leave Travel Allowance',
-'Special Allowance',
-'Other Allowance',
-'Washing Allowance',
-'Uniform Allowance',
-'Vehicle Reimbursement',
-'Driver Salary',
-'Fuel Reimbursement',
-'Telephone Reimbursement',
-'Overtime',
-'Incentive',
-'Other Earnings',
-'Leave Encashment',
-'Referral Bonus',
-'Statutory Bonus',
-'Ex-Gratia',
-'Gift Payment',
-'Attendance Bonus',
-'Daily Allowance',
-'EPF_Employer',
-'Employer ESIC',
-'Employer LWF',
-'EPF_Employee',
-'VPF_Employee',
-'Employee ESIC',
-'Professional Tax',
-'Income Tax',
-'Salary Advance',
-'Medical Deductions',
-'Canteen Deduction',
-'Uniform Deduction',
-'Loan Deductions',
-'Other Deductions'];
+// return $isSent;
+//  }
+// $comp_data = ['Basic',
+// 'Dearness Allowance',
+// 'Variable Dearness Allowance',
+// 'House Rent Allowance',
+// 'Child Education Allowance',
+// 'Communication Allowance',
+// 'Statutory Bonus',
+// 'Food Allowance',
+// 'Leave Travel Allowance',
+// 'Special Allowance',
+// 'Other Allowance',
+// 'Washing Allowance',
+// 'Uniform Allowance',
+// 'Vehicle Reimbursement',
+// 'Driver Salary',
+// 'Fuel Reimbursement',
+// 'Telephone Reimbursement',
+// 'Overtime',
+// 'Incentive',
+// 'Other Earnings',
+// 'Leave Encashment',
+// 'Referral Bonus',
+// 'Statutory Bonus',
+// 'Ex-Gratia',
+// 'Gift Payment',
+// 'Attendance Bonus',
+// 'Daily Allowance',
+// 'EPF_Employer',
+// 'Employer ESIC',
+// 'Employer LWF',
+// 'EPF_Employee',
+// 'VPF_Employee',
+// 'Employee ESIC',
+// 'Professional Tax',
+// 'Income Tax',
+// 'Salary Advance',
+// 'Medical Deductions',
+// 'Canteen Deduction',
+// 'Uniform Deduction',
+// 'Loan Deductions',
+// 'Other Deductions'];
 
-$comp_data = str_replace(" ","_",array_map('strtolower', $comp_data));
+// $comp_data = str_replace(" ","_",array_map('strtolower', $comp_data));
 
-     $data =   [" 50% from CTC ",
-      "50% from Gross",
-"Based on MW Table",
-"Based on MW Table",
-"50% from Basic Salary",
-"200 Maximum, if the person married",
-"3000 Max",
-"If the Basic is Less then 21K then we can give this",
-"2200 Max",
-"10% from Basic Salary",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"2400 Max",
-"900 Max",
-"3000 Max",
-"3000 Max",
-"Gross/Month Days/8*Overtime Hours*2 or Gross/Month Days/8*Overtime Hours*2 or Basic/Month Days/8*Overtime Hours*2 or Formula can be typed",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"Rule Given",
-"From Table",
-"From Table",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",
-"Open Amount",];
+// $data =   [" 50% from CTC ",
+//       "50% from Gross",
+// "Based on MW Table",
+// "Based on MW Table",
+// "50% from Basic Salary",
+// "200 Maximum, if the person married",
+// "3000 Max",
+// "If the Basic is Less then 21K then we can give this",
+// "2200 Max",
+// "10% from Basic Salary",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "2400 Max",
+// "900 Max",
+// "3000 Max",
+// "3000 Max",
+// "Gross/Month Days/8*Overtime Hours*2 or Gross/Month Days/8*Overtime Hours*2 or Basic/Month Days/8*Overtime Hours*2 or Formula can be typed",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "Rule Given",
+// "From Table",
+// "From Table",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",
+// "Open Amount",];
 
- $array_data =array();
- $i=1;
-foreach ($data as $key => $value) {
-    if(strpos($value, '%') !== false){
-        preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
-        foreach ($calci_data as $key => $single_calci_data) {
-            $array_data[$i]['value'] = $single_calci_data[1];
-            $array_data[$i]['action'] = $single_calci_data[2];
-            $array_data[$i]['comp_name'] =$comp_data[$i] ;
-           $i++;
-        }
-     }
-     else{
-        preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
-         foreach ($calci_data as $key => $single_calci_data) {
-            $array_data[$i]['value'] = $single_calci_data[1];
-            $array_data[$i]['action'] = $single_calci_data[2];
-            $array_data[$i]['comp_name'] =$comp_data[$i] ;
-           $i++;
-        }
-     }
+//  $array_data =array();
+//  $i=1;
+// foreach ($data as $key => $value) {
+//     if(strpos($value, '%') !== false){
+//         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
+//         foreach ($calci_data as $key => $single_calci_data) {
+//             $array_data[$i]['value'] = $single_calci_data[1];
+//             $array_data[$i]['action'] = $single_calci_data[2];
+//             $array_data[$i]['comp_name'] =$comp_data[$i] ;
+//            $i++;
+//         }
+//      }
+//      else{
+//         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
+//          foreach ($calci_data as $key => $single_calci_data) {
+//             $array_data[$i]['value'] = $single_calci_data[1];
+//             $array_data[$i]['action'] = $single_calci_data[2];
+//             $array_data[$i]['comp_name'] =$comp_data[$i] ;
+//            $i++;
+//         }
+//      }
 
-}
+// }
+
+// //dd($array_data);
+
+// // $inputSentence = "50% from Basic Salary";
+
+//  $array_data =array();
+//  $i=0;
+// foreach ($data as $key => $value) {
+//     if(strpos($value, '%') !== false){
+//         preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $value, $calci_data, PREG_SET_ORDER);
+//         foreach ($calci_data as $key => $single_calci_data) {
+//             $numericValue = rtrim($single_calci_data[1], '%');
+//             $array_data[$i]['value'] = (float)($numericValue) / 100;;
+//             $array_data[$i]['action'] = $single_calci_data[2];
+//             $array_data[$i]['comp_name'] =$comp_data[$i] ;
+//            $i++;
+//         }
+//      }
+//      else{
+
+//         preg_match_all('/(\d+ Max)/', $value, $calci_data, PREG_SET_ORDER);
+//          foreach ($calci_data as $key => $single_calci_data) {
+
+//             $array_data[$i]['value'] = $single_calci_data[1];
+//             $array_data[$i]['action'] = "";
+//             $array_data[$i]['comp_name'] =$comp_data[$i] ;
+//            $i++;
+//         }
+//      }
+
+// // foreach ($matches as $match) {
+// //     $percentage = $match[1]."_".$match[2];
+// // }
+// // dd($matches);
 
 //dd($array_data);
 
-// $inputSentence = "50% from Basic Salary";
+// // $pattern = '/\bBasic\s*(?:is)?\s*(Less\s*than|<)\s*(\d+K)\b/i';
+// // preg_match($pattern, $input, $matches);
 
-//   preg_match_all('/(\d+%)(?:\s*(?:from\s*)?)(CTC|Gross|Basic|Max)/i', $inputSentence, $matches, PREG_SET_ORDER);
+// // if (count($matches) > 0) {
+// //     $condition = "basic " . $matches[1] . " " . $matches[2];
+// //     echo $condition;
+// // } else {
+// //     echo "Pattern not found.";
+// // }
+// // $input = "50% from CTC or 50% from Gross";
 
-// foreach ($matches as $match) {
-//     $percentage = $match[1]."_".$match[2];
-// }
-// dd($matches);
+// // $pattern = '/\(([^)]+)\s*<\s*(\d+)\)/';
+// // preg_match_all($pattern, $input, $matches, PREG_SET_ORDER);
 
-// $input = "If the Basic is Less then 21K then we can give this";
+// // foreach ($matches as $match) {
+// //     $condition = $match[1];
+// //     $value = $match[2];
+// //     echo "Condition: $condition Value: $value" . PHP_EOL;
+// // }
 
-// $pattern = '/\bBasic\s*(?:is)?\s*(Less\s*than|<)\s*(\d+K)\b/i';
-// preg_match($pattern, $input, $matches);
+// $inputSentence = "200 Max, if the person married";
+// $pattern = '/(\d+)(?:\s*(?:from\s*)?)\s*(?:|Max|Maximum)./i';
 
-// if (count($matches) > 0) {
-//     $condition = "basic " . $matches[1] . " " . $matches[2];
-//     echo $condition;
+// preg_match_all('/(\d+%)(?:\s*(?:Max\s*)?)(Maximum|Max)/i', $inputSentence, $calci_data, PREG_SET_ORDER);
+
+// if (isset($matches[1])) {
+//     $maxValue = (int)$matches[1];
+//     echo  $maxValue;
 // } else {
+//     echo "No max value found.";
+// }
+
+// $sentence = "200 Maximum, if the person married";
+
+// // Extract the maximum value using regular expression
+// if (preg_match('/(\d+)\s*Maximum/', $sentence, $matches)) {
+//     $maxValue = (int)$matches[1];
+//     if ($maxValue <= 200) {
+//         // Do something with the maximum value
+//         echo "Maximum value is: " . $maxValue;
+//     } else {
+//         // Handle the case when the value is greater than 200
+//         echo "Maximum value exceeds 200.";
+//     }
+// } else {
+//     // Handle the case when the pattern is not found in the sentence
 //     echo "Pattern not found.";
 // }
-// $input = "50% from CTC or 50% from Gross";
 
-// $pattern = '/\(([^)]+)\s*<\s*(\d+)\)/';
-// preg_match_all($pattern, $input, $matches, PREG_SET_ORDER);
+// $sentence = "30000 Maximum, if the person married";
+// $pattern = '/(\d+ Max)/';
 
-// foreach ($matches as $match) {
-//     $condition = $match[1];
-//     $value = $match[2];
-//     echo "Condition: $condition Value: $value" . PHP_EOL;
+// if (preg_match($pattern, $sentence, $matches)) {
+//     dd($matches);
+//     $result = Str::of($matches[0])->trim();
+//     echo $result;
+// } else {
+//     // Pattern not found
+//     echo "Pattern not found in the sentence.";
 // }
+// $sentence = "Basic is Less then 21K then we can give this";
+// $pattern = '/(\d+)K/';
+//     preg_match($pattern, $sentence, $matches);
 
+//     if (isset($matches[1])) {
+//         // Convert the extracted value to an integer and multiply by 1000
+//         $numericValue = intval($matches[1]) * 1000;
 
-$inputSentence = "200 Max, if the person married";
-$pattern = '/(\d+)(?:\s*(?:from\s*)?)\s*(?:|Max|Maximum)./i';
+//         // Replace the original sentence with the formatted result
+//         $formattedSentence = str_replace($matches[0], "< $numericValue", $sentence);
 
-preg_match_all('/(\d+%)(?:\s*(?:Max\s*)?)(Maximum|Max)/i', $inputSentence, $calci_data, PREG_SET_ORDER);
+//         dd($formattedSentence);
+//     }
 
+$client_id = '3';
 
-if (isset($matches[1])) {
-    $maxValue = (int)$matches[1];
-    echo  $maxValue;
-} else {
-    echo "No max value found.";
+$payroll_month = '2023-05-01';
+
+$inv_emp = ['144', '194', '176'];
+$salary_data['headers'] = [];
+
+$Employee_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+    ->leftjoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+    ->where('users.active', '1')
+    ->where('users.client_id', $client_id)
+    ->whereIn('users.id', $inv_emp)
+    ->get(['users.id as user_id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'vmt_employee_details.gender as Gender', 'vmt_employee_details.pan_number as PAN Number', 'vmt_employee_details.dob as Date Of Birth', 'vmt_employee_details.doj as Date Of Joining', 'vmt_employee_statutory_details.tax_regime as Tax Regime']);
+
+$v_form_template = [];
+foreach ($Employee_details as $key => $single_user) {
+    $v_form_template[] = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+        ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+        ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+        ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
+        ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
+        ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
+        ->where('vmt_inv_f_emp_assigned.user_id', $single_user['user_id'])
+        ->get(['vmt_inv_section_group.section_group', 'vmt_inv_section.particular', 'vmt_inv_section.max_amount', 'vmt_inv_emp_formdata.dec_amount', 'vmt_inv_emp_formdata.json_popups_value', 'vmt_employee_compensatory_details.gross', 'vmt_employee_compensatory_details.basic', 'vmt_inv_f_emp_assigned.regime', 'vmt_inv_f_emp_assigned.updated_at', 'vmt_employee_compensatory_details.hra', 'vmt_employee_compensatory_details.special_allowance', 'vmt_employee_compensatory_details.professional_tax', 'vmt_employee_compensatory_details.child_education_allowance', 'vmt_employee_compensatory_details.lta', 'vmt_employee_details.doj', 'vmt_employee_details.dob'])
+        ->toArray();
 }
 
+/*------------------------Take the code from here da simma frfc ---------------------------------*/
 
-$sentence = "200 Maximum, if the person married";
+$tax_reports_Section_column = [];
+$tax_reports_Excemption_column = [];
+$employee_section_details = [];
+$employee_excemption_details = [];
 
-// Extract the maximum value using regular expression
-if (preg_match('/(\d+)\s*Maximum/', $sentence, $matches)) {
-    $maxValue = (int)$matches[1];
-    if ($maxValue <= 200) {
-        // Do something with the maximum value
-        echo "Maximum value is: " . $maxValue;
-    } else {
-        // Handle the case when the value is greater than 200
-        echo "Maximum value exceeds 200.";
+foreach ($v_form_template as $form_key => $single_emp_form_data) {
+
+    foreach ($single_emp_form_data as $key => $single_user_data) {
+
+        if (trim($single_user_data['section_group']) == 'Section 80C & 80CC') {
+
+            if (!in_array($single_user_data['particular'], $tax_reports_Section_column) ) {
+
+                array_push($tax_reports_Section_column, $single_user_data['particular']);
+                array_push($salary_data['headers'], $single_user_data['particular'] );
+
+            }
+
+            $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
+            $employee_section_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
+
+        }
     }
-} else {
-    // Handle the case when the pattern is not found in the sentence
-    echo "Pattern not found.";
+}
+if (!in_array("Section 80CCE Total",$tax_reports_Section_column )) {
+
+array_push($tax_reports_Section_column, 'Section 80CCE Total');
+
+}
+     foreach ($v_form_template as $form_key => $single_emp_form_data) {
+        foreach ($single_emp_form_data as $key => $single_user_data) {
+         if (trim($single_user_data['section_group']) == 'Other Excemptions') {
+
+                if (!in_array($single_user_data['particular'], $tax_reports_Excemption_column)) {
+
+                    array_push($tax_reports_Excemption_column, $single_user_data['particular']);
+                    array_push($salary_data['headers'], $single_user_data['particular']);
+                }
+
+                if ($single_user_data['dec_amount'] >= $single_user_data['max_amount']) {
+
+                    $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['max_amount'];
+                    $employee_excemption_details[$form_key][$single_user_data['particular']] = $single_user_data['max_amount'];
+                } else {
+
+                    $employee_salary_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
+                    $employee_excemption_details[$form_key][$single_user_data['particular']] = $single_user_data['dec_amount'];
+                }
+            }
+        }
+}
+if (!in_array('10.Aggregate of deductible amount under Chapter VI-A',$tax_reports_Excemption_column )) {
+
+array_push($tax_reports_Excemption_column, '10.Aggregate of deductible amount under Chapter VI-A');
+
 }
 
+$section_count=0;
+foreach ($employee_salary_details as $section_key => $single_section_data) {
+    $section_count =  $section_key;
+    foreach ($tax_reports_Section_column as $key => $single_section_column) {
+
+        if (!in_array($single_section_column, array_keys($single_section_data))) {
+
+            $employee_salary_details[$section_key][$single_section_column] = 0;
+            $employee_section_details[$section_key][$single_section_column] = 0;
+        }
+
+    }
+
+    $Section_80CCE_total =array_sum($single_section_data);
+    if($Section_80CCE_total >= '150000'){
+
+        $employee_salary_details[$section_count]['Section 80CCE Total'] =150000;
+        $section_count++;
+    }else{
+        $employee_salary_details[$section_count]['Section 80CCE Total'] = $Section_80CCE_total;
+        $section_count++;
+    }
+
+}
+foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_data) {
+
+    foreach ($tax_reports_Excemption_column as $key => $single_excemption_column) {
+
+        if (!in_array($single_excemption_column, array_keys($single_Excemption_data))) {
+            $employee_excemption_details[$Excemption_key][$single_excemption_column] = 0;
+            $employee_salary_details[$Excemption_key][$single_excemption_column] = 0;
+        }
+    }
+    $employee_salary_details[$Excemption_key]['10.Aggregate of deductible amount under Chapter VI-A'] =array_sum($single_Excemption_data) + $employee_salary_details[$Excemption_key]['Section 80CCE Total'];
+
+    }
+
+    for ($i=0; $i < count($tax_reports_Section_column); $i++) {
+
+        array_push($salary_data['headers'],$tax_reports_Section_column[$i]);
+    }
+    for ($i=0; $i < count($tax_reports_Excemption_column); $i++) {
+
+        array_push($salary_data['headers'],$tax_reports_Excemption_column[$i]);
+    }
+
+    /*----------------------------------------------------------------------end--------------------------------------------------------*/
+
+       dd($tax_reports_Section_column, $tax_reports_Excemption_column, $employee_salary_details,$salary_data['headers']);
 
 
 
-//    $leave_data =VmtEmployeeLeaves::where('user_id',"334")->whereBetween('start_date', ["2023-08-30", "2023-08-30"])->get();
-
-$leave_Details = VmtEmployeeLeaves::where('user_id', "334")
-                        ->whereBetween('start_date', ["2023-08-29", "2023-08-29"])
-                        ->orWhereBetween('end_date', ["2023-08-30", "2023-08-30"])
-                        ->get();
-
-        dd($leave_Details);
-    ?>
-
-
+?>
 @endsection
-

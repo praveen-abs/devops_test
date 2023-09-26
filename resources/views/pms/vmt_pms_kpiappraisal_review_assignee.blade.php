@@ -12,7 +12,7 @@ use Carbon\Carbon;
 @endsection
 @section('content')
     <div class="loader" style="display:none;"></div>
-    <div class="employee-review-wrapper mt-30">
+    <div class="employee-review-wrapper" style="margin-bottom: 120px;">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -55,7 +55,7 @@ use Carbon\Carbon;
                     </div>
 
                     @if($canShowOverallScoreCard_ReviewPage == 'true')
-                    <div class="col-md-12 col-sm-12 col-lg-9 col-xl-9 col-xxl-9 d-flex">
+                    <div class="col-md-12 col-sm-12 col-lg-9 col-xl-9 col-xxl-9 d-flex my-3">
                         <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4 w-full mr-4"  style="width: 250px">
                             <div class="card-body">
                                 <p class="mb-2 fw-bold f-15 text-primary"> Current Rating</p>

@@ -6,39 +6,61 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Services\VmtEmployeePayCheckService;
+use App\Services\VmtAttendanceService;
 
 class VmtAPIPaySlipController extends Controller
 {
+    public function getEmployeePayslipDetails(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService,VmtAttendanceService $serviceVmtAttendanceService){
 
-
-
-    public function getEmployeePayslipDetails(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService){
-
-       $response = $serviceEmployeePayslipService->getEmployeePayslipDetails( user_code : $request->user_code,
+       $response = $serviceEmployeePayslipService->viewPayslipdetails( user_code : $request->user_code,
                                                                     year : $request->year,
-                                                                    month : $request->month
-                                                                );
+                                                                    month : $request->month,
+                                                                    serviceVmtAttendanceService:$serviceVmtAttendanceService
+                                                               );
 
+      return $response;
+
+    }
+    // public function getEmployeePayslipDetails(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService){
+
+    //    $response = $serviceEmployeePayslipService->getEmployeePayslipDetails( user_code : $request->user_code,
+    //                                                                 year : $request->year,
+    //                                                                 month : $request->month
+    //                                                             );
+
+    //     return $response;
+    // }
+
+
+    public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService,VmtAttendanceService $serviceVmtAttendanceService){
+
+             $response = $serviceEmployeePayslipService->generatePayslip( user_code : $request->user_code,
+                                                                    year : $request->year,
+                                                                    month : $request->month,
+                                                                    type:  "pdf",
+                                                                    serviceVmtAttendanceService:$serviceVmtAttendanceService
+                                                                );
         return $response;
     }
 
+    public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService,VmtAttendanceService $serviceVmtAttendanceService){
 
-    public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService){
-
-       $response = $serviceEmployeePayslipService->getEmployeePayslipDetailsAsPDF( user_code : $request->user_code,
+              $response = $serviceEmployeePayslipService->generatePayslip( user_code : $request->user_code,
                                                                     year : $request->year,
-                                                                    month : $request->month
+                                                                    month : $request->month,
+                                                                    type: "html",
+                                                                    serviceVmtAttendanceService:$serviceVmtAttendanceService
                                                                 );
+         return $response;
+     }
+    public function sendEmployeePayslipMail(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService,VmtAttendanceService $serviceVmtAttendanceService){
 
-        return $response;
-    }
-
-    public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService){
-
-        $response = $serviceEmployeePayslipService->getEmployeePayslipDetailsAsHTML( user_code : $request->user_code,
-                                                                     month : $request->month,
-                                                                     year : $request->year
-                                                                 );
+              $response = $serviceEmployeePayslipService->generatePayslip( user_code : $request->user_code,
+                                                                    year : $request->year,
+                                                                    month : $request->month,
+                                                                    type: "mail",
+                                                                    serviceVmtAttendanceService:$serviceVmtAttendanceService
+                                                                );
 
          return $response;
      }

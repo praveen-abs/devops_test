@@ -9,7 +9,9 @@ use App\Models\VmtEmployeeAttendance;
 use App\Services\VmtAttendanceReportsService;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtLeaves;
-
+use Illuminate\Support\Facades\Validator;
+use App\Models\VmtClientMaster;
+use App\Models\Department;
 class VmtPayRunService
 {
     protected $attendance_report_service;
@@ -17,23 +19,65 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function fetch_attendance_data($start_date, $end_date, $department)
+    public function fetch_attendance_data($start_date, $end_date, $department,$client_id, $type, $active_status)
     {
+
         ini_set('max_execution_time', 300);
+        $validator = Validator::make(
+            $data = [   
+                'client_id' => $client_id,
+                'type' => $type,
+                'active_status' => $active_status,
+                'department_id' => $department,
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'type' => 'nullable',
+                'active_status' => 'nullable',
+                'department_id' => 'nullable|exists:vmt_department,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+
+
+            if (empty($active_status)) {
+                $active_status = ['1', '0', '-1'];
+            } else {
+                $active_status = $active_status;
+            }
+            if (empty($date_req)) {
+                $date_req = Carbon::now()->format('Y-m-d');
+            }
+
+     
         $reportresponse = array();
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
             ->where('active', '1')
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
-
-        if (sessionGetSelectedClientid() != 1) {
-            $user = $user->where('client_id', sessionGetSelectedClientid());
+        if ( $client_id) {
+            $user = $user->where('client_id',  $client_id);
         }
         if ($department) {
-            $user = $user->where('vmt_employee_office_details.department_id', '=', $department);
+            $user = $user->whereIn('vmt_employee_office_details.department_id', $department)->get();
+           
         }
+        
         $user = $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+      
         // pr
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
@@ -56,7 +100,7 @@ class VmtPayRunService
             $arrayReport['Emp Code'] = $singleUser->user_code;
             $arrayReport['Name'] = $singleUser->name;
             $arrayReport['Designation'] = $singleUser->designation;
-            $arrayReport['DOJ'] = $singleUser->doj;
+            $arrayReport['DOJ'] = Carbon::parse($singleUser->doj)->format('d-M-Y');
 
             $firstDateStr = $start_date;
             $lastAttendanceDate = Carbon::parse($end_date);
@@ -530,7 +574,17 @@ class VmtPayRunService
         }
         $data['headers'] =$heading_dates;
         $data['rows'] =  $reportresponse;
+        }
+        catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'line'=>$e->getTraceAsString(),
+                'error_verbose' => $e->getLine()
+            ];
+        }
         return $data;
-
     }
 }
+    

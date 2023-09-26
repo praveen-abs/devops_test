@@ -33,6 +33,7 @@ import BadgeDirective from 'primevue/badgedirective';
 import Carousel from 'primevue/carousel';
 import Galleria from 'primevue/galleria';
 import Chart from 'primevue/chart';
+import Sidebar from 'primevue/sidebar'
 
 
 
@@ -77,6 +78,7 @@ app.component('MultiSelect', MultiSelect)
 app.component('Carousel', Carousel)
 app.component('Galleria', Galleria)
 app.component('Chart', Chart)
+app.component('Sidebar', Sidebar)
 
 
 app.mount("#Dashboard");

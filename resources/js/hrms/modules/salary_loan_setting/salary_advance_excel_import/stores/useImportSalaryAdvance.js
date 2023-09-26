@@ -123,14 +123,8 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
     //Upload selected file
     const uploadOnboardingFile = (data) => {
 
-        let url = ''
+        let url = '/imporExistingSalaryAdvanceData'
 
-        if (type.value == 'quick') {
-            url = '/onboarding/storeQuickOnboardEmployees'
-        } else
-            if (type.value == 'bulk') {
-                url = '/onboarding/storeBulkOnboardEmployees'
-            }
         if (errorRecordsCount.value == 0) {
             canShowloading.value = true
             axios.post(url, data).then(res => {
@@ -223,9 +217,9 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
         }
     }
 
-    const isExistsOrNot = (array,e) =>{
+    const isExistsOrNot = (array, e) => {
         console.log(e);
-       return array.includes(e) ? true : false
+        return array.includes(e) ? true : false
     }
 
 
@@ -241,8 +235,8 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
 
 
     const loanAmount = (e) => {
-        console.log("loan Amount:" + convertRupeeIntoNumber(e));
-        return convertRupeeIntoNumber(e) <= 0 ? false : true
+        // console.log("loan Amount:" + convertRupeeIntoNumber(e));
+        return convertRupeeIntoNumber(e) <= 0 ? true : false
     }
 
     const loanTypes = ref([
@@ -253,25 +247,36 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
     ])
 
     const findBalanceAmount = (e, loanAmount, repaymentAmount) => {
-        // let format = { balance: e, loanAmt: loanAmount, Repayment: repaymentAmount }
-        // console.log(format);
-        // console.log(`convertRupeeIntoNumber${convertRupeeIntoNumber(loanAmount)}`);
+        let format = { balance: e, loanAmt: loanAmount, Repayment: repaymentAmount }
+        console.log(format);
+        console.log(`loanAmount${convertRupeeIntoNumber(loanAmount)}`);
+        console.log(`repaymentAmount${convertRupeeIntoNumber(repaymentAmount)}`);
         if (e) {
-            let balance = convertRupeeIntoNumber(loanAmount) - convertRupeeIntoNumber(repaymentAmount)
-            // console.log("Actual Balance:" + convertRupeeIntoNumber(e));
-            // console.log("subbed Balance:" + balance);
-            console.log(convertRupeeIntoNumber(e) == balance);
-           return convertRupeeIntoNumber(e) == balance ? false : true
+            let balance;
+            var containsNumber = /\d/.test(repaymentAmount);
+            if (containsNumber) {
+                balance = convertRupeeIntoNumber(loanAmount) - convertRupeeIntoNumber(repaymentAmount)
+                return convertRupeeIntoNumber(e) == balance ? false : true
+            } else {
+                balance = convertRupeeIntoNumber(loanAmount)
+                console.log("======Balance=====" + balance);
+                return convertRupeeIntoNumber(e) == balance ? false : true
+            }
+
         }
+        // console.log("Actual Balance:" + convertRupeeIntoNumber(e));
+        // console.log("subbed Balance:" + balance);
+        console.log(convertRupeeIntoNumber(e) == balance);
     }
 
+
     const findEmiCalculation = (e, balance, tenure) => {
-        // let format = { emi: e, balance: balance, tenure: tenure }
-        // console.log(format);
+        let format = { emi: e, balance: balance, tenure: tenure }
+        console.log(format);
         if (e) {
             let emi = convertRupeeIntoNumber(balance) / convertRupeeIntoNumber(tenure)
-            // console.log("Actual emi:" + convertRupeeIntoNumber(e));
-            // console.log("subbed emi:" + emi);
+            console.log("Actual emi:" + convertRupeeIntoNumber(e));
+            console.log("subbed emi:" + emi);
             return convertRupeeIntoNumber(e) == emi ? false : true
         }
 
@@ -313,7 +318,7 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
 
         // TODO:: Separate
 
-        loanAmount, loanTypes, findBalanceAmount, findEmiCalculation,isExistsOrNot,
+        loanAmount, loanTypes, findBalanceAmount, findEmiCalculation, isExistsOrNot,
 
 
 

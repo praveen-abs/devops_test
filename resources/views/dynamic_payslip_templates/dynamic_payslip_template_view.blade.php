@@ -186,7 +186,7 @@
                             <td style="width:25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; marign-top:-10px;">Availed</p>
                               @foreach ($leave_data as $key => $single_leave)
-                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $single_leave['avalied']}}</p>
+                              <p style="display: flex; font-size:14px; color: #000; marign-top:-10px;">{{ $single_leave['availed']}}</p>
                               @endforeach
                             </td>
                             <td style="width:25%">
@@ -263,7 +263,7 @@
                             </td>
                           </tr>
                           @foreach ($earnings[0] as $earned_key => $single_earnings)
-                          
+
                           @if ($earned_key == "Total Earnings")
                           <tr>
                             <td style="width:40%">
@@ -283,7 +283,7 @@
                             @if (!empty($arrears[0]))
 
                             @foreach ($arrears[0] as $key => $single_value )
-                           
+
                             @if($key == $earned_key)
                             <p style="height: 8px; color: #000; ">{{ $single_value }}</p>
                             @endif

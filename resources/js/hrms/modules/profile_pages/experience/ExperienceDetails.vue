@@ -6,7 +6,10 @@
             <div class="relative flex h-full w-1 bg-green-300 items-center justify-center">
                 <div
                     class="absolute flex flex-col justify-center h-12 w-12 rounded-full border-2 border-green-300 leading-none text-center z-10 bg-white font-thin">
-                    <div>20</div>
+                    <div>
+                        {{ experience.period_from && experience.period_to ?
+                            calculateYears(experience.period_from, experience.period_to) : 0 }}
+                    </div>
 
                 </div>
             </div>
@@ -50,13 +53,13 @@
                     </p>
                 </div>
                 <div class="col-span-2 flex justify-end ">
-                    <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt="">
+                    <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt="" @click="dialog_ExperienceInfovisible = true">
                 </div>
             </div>
         </div>
     </div>
 
-    <div>
+    <div v-if="false">
         <div class="mb-2 card">
             <div class="card-body">
                 <h6 class="font-semibold text-lg">Experience Information
@@ -64,71 +67,6 @@
                         Add New
 
                     </button>
-                    <Dialog v-model:visible="dialog_ExperienceInfovisible" modal
-                        :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
-                        <template #header>
-                            <div>
-                                <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
-                                    class="fs-5 fw-bold">
-                                    Experience Information</h5>
-                            </div>
-                        </template>
-
-
-                        <div class="grid grid-cols-2">
-                            <div class="" style="margin-right: 20px; !important">
-                                <span>Company Name <span class="text-danger">*</span></span>
-                                <InputText type="text" v-model="ExperienceInfo.company_name"
-                                    name="ExperienceDetails_company_name[]" required class=" !w-[100%]" />
-                            </div>
-                            <div class="mr-2">
-                                <span> Location<span class="text-danger">*</span></span>
-                                <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
-                                    required class=" w-[100%]" />
-                            </div>
-
-                            <div class="">
-                                <span>Job Position <span class="text-danger">*</span></span>
-                                <InputText type="text" @keypress="isLetter($event)" v-model="ExperienceInfo.job_position"
-                                    name="experienceDet_job_position[]" class=" !w-[95%]" required />
-
-                            </div>
-
-                            <div class="">
-                                <span :style="{ paddingLeft: '6px' }">Period From<span class="text-danger">*</span></span>
-                                <Calendar class="!w-[98%] !mr-[15px] relative right-2"
-                                    v-model="ExperienceInfo.period_from" />
-
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2">
-                            <div class=" mr-2">
-                                <span :style="{ paddingLeft: '6px' }">Period To <span class="text-danger">*</span></span>
-                                <Calendar v-model="ExperienceInfo.period_to" name="experienceDet_period_to[]"
-                                    class="!w-[96%] relative right-2" />
-                            </div>
-                            <div class=""></div>
-                        </div>
-
-
-
-
-
-
-
-                        <template #footer>
-                            <div>
-                                <Toast />
-                                <button type="button" class="submit_btn success warning" severity="success" id=""
-                                    @click="saveExperienceDetails">submit</button>
-                            </div>
-
-                        </template>
-
-
-                    </Dialog>
-
                 </h6>
                 <div class="my-6 table-responsive">
                     <DataTable ref="dt" :value="_instance_profilePagesStore.employeeDetails.get_experience_details"
@@ -253,6 +191,63 @@
         </div>
 
     </div>
+
+    <Dialog v-model:visible="dialog_ExperienceInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }"
+        id="">
+        <template #header>
+            <div>
+                <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                    class="fs-5 fw-bold">
+                    Experience Information</h5>
+            </div>
+        </template>
+
+
+        <div class="grid grid-cols-2">
+            <div class="" style="margin-right: 20px; !important">
+                <span>Company Name <span class="text-danger">*</span></span>
+                <InputText type="text" v-model="ExperienceInfo.company_name" name="ExperienceDetails_company_name[]"
+                    required class=" !w-[100%]" />
+            </div>
+            <div class="mr-2">
+                <span> Location<span class="text-danger">*</span></span>
+                <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]" required
+                    class=" w-[100%]" />
+            </div>
+
+            <div class="">
+                <span>Job Position <span class="text-danger">*</span></span>
+                <InputText type="text" @keypress="isLetter($event)" v-model="ExperienceInfo.job_position"
+                    name="experienceDet_job_position[]" class=" !w-[95%]" required />
+
+            </div>
+
+            <div class="">
+                <span :style="{ paddingLeft: '6px' }">Period From<span class="text-danger">*</span></span>
+                <Calendar class="!w-[98%] !mr-[15px] relative right-2" v-model="ExperienceInfo.period_from" />
+
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2">
+            <div class=" mr-2">
+                <span :style="{ paddingLeft: '6px' }">Period To <span class="text-danger">*</span></span>
+                <Calendar v-model="ExperienceInfo.period_to" name="experienceDet_period_to[]"
+                    class="!w-[96%] relative right-2" />
+            </div>
+            <div class=""></div>
+        </div>
+        <template #footer>
+            <div>
+                <Toast />
+                <button type="button" class="submit_btn success warning" severity="success" id=""
+                    @click="saveExperienceDetails">submit</button>
+            </div>
+
+        </template>
+
+
+    </Dialog>
 </template>
 <script setup>
 import dayjs from 'dayjs';
@@ -418,6 +413,22 @@ const isLetter = (e) => {
 
 
 
+function calculateYears(startDate, endDate) {
+    // Parse the start and end dates into JavaScript Date objects
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+
+    // Calculate the difference in milliseconds between the end date and start date
+    const timeDifference = endDateObj - startDateObj;
+
+    // Calculate the number of milliseconds in a year (assuming an average year of 365.25 days)
+    const millisecondsInYear = 365.25 * 24 * 60 * 60 * 1000;
+
+    // Calculate the number of years
+    const years = timeDifference / millisecondsInYear;
+
+    return years ? years.toFixed(1) : null;
+}
 
 
 

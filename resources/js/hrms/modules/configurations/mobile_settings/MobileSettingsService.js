@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, reactive ,watch } from "vue";
 import axios from "axios";
-import {Service} from '../../Service/Service';
 
 export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
@@ -18,8 +17,8 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
     async function getMobileSettings(){
         canshowloading.value = true;
-        console.log("testings ",client_details.value.id);
-            await axios.post('/fetchMobileModuleData',{
+
+            await axios.post('/getClient_MobileModulePermissionDetails',{
                 client_id:client_details.value.id
             }).then((res)=>{
                 console.log(res.data);
@@ -48,7 +47,7 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
         canshowloading.value = true;
 
-        await axios.post('/saveAppConfigStatus',{
+        await axios.post('/updateClientModuleStatus',{
             module_id:item.id,
             status:status
         }).then((res)=>{
@@ -67,9 +66,9 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 
     }
 
-    const SaveEmployeeAppConfigStatus =()=>{
+    const updateEmployeesPermissionStatus =()=>{
 
-        axios.post('/SaveEmployeeAppConfigStatus',{
+        axios.post('/updateEmployeesPermissionStatus',{
             app_sub_modules_link_id:app_sub_modules_link_id,
             selected_employees_user_code:selected_employees_user_code
         }).then(()=>{
@@ -91,7 +90,7 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
         client_details,
 
         // function
-        SaveEmployeeAppConfigStatus,
+        updateEmployeesPermissionStatus,
 
         getMobileSettings
     };

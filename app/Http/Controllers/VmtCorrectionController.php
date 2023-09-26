@@ -30,6 +30,8 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtWorkShifts;
 use App\Imports\VmtMasterImport;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 
@@ -608,7 +610,8 @@ class VmtCorrectionController extends Controller
                 "user_id": "DM189"
                }
            ]';
-           
+
+
 
         //Removing Extra Spaace and white space in string
         $dunamis = preg_replace('/\s+/', '', $dunamis);
@@ -714,7 +717,6 @@ class VmtCorrectionController extends Controller
     {
 
         return view('vmt_MasterEmployeedata_Upload');
-
     }
 
     public function importMasetrEmployeesExcelData(Request $request)
@@ -736,7 +738,6 @@ class VmtCorrectionController extends Controller
             $data['failed'] = $validator->errors()->all();
             return response()->json($data);
         }
-
     }
 
     private function storeMasterdEmployeesData($data)
@@ -780,7 +781,6 @@ class VmtCorrectionController extends Controller
 
                 $Single_data['child_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['child_dob'])->format('Y-m-d');
             }
-
         }
         unset($Single_data);
 
@@ -801,7 +801,6 @@ class VmtCorrectionController extends Controller
                 'status' => 'failure',
                 'message' => 'Please fill the excel',
             ];
-
         } else {
             foreach ($excelRowdata_row[0] as $key => $excelRowdata) {
 
@@ -853,7 +852,6 @@ class VmtCorrectionController extends Controller
                                 if (!$result) {
                                     $fail($value . '<b> : ' . $attribute . ' is invalid');
                                 }
-
                             }
                         },
                     ],
@@ -992,7 +990,6 @@ class VmtCorrectionController extends Controller
                 'data' => $data_array,
                 'error_data' => $rowdata_response['data']
             ];
-
         } else {
 
             return $responseJSON = [
@@ -1000,7 +997,6 @@ class VmtCorrectionController extends Controller
                 'message' => "Please fix the below excelsheet data",
                 'data' => $data_array
             ];
-
         }
 
         return response()->json($responseJSON);
@@ -1033,8 +1029,6 @@ class VmtCorrectionController extends Controller
                 'mail_status' => '',
                 'data' => $response['data']
             ];
-
-
         } catch (\Exception $e) {
             //dd($e);
             // $this->deleteUser($user->id);
@@ -1045,7 +1039,6 @@ class VmtCorrectionController extends Controller
                 'data' => $e->getMessage(),
             ];
         }
-
     }
 
 
@@ -1157,32 +1150,26 @@ class VmtCorrectionController extends Controller
 
                                     $dob = $single_data;
                                     $update_employee_data->dob = $dob ? $this->getdateFormatForDb($dob) : '';
-
                                 } else if ($data_key == 'doj') {
 
                                     $doj = $single_data;
                                     $update_employee_data->doj = $doj ? $this->getdateFormatForDb($doj) : '';
-
                                 } else if ($data_key == 'dol') {
 
                                     $dol = $single_data;
                                     $update_employee_data->dol = $dol ? $this->getdateFormatForDb($dol) : '';
-
                                 } else if ($data_key == 'martial_status') {
 
                                     $martial_status_id = VmtMaritalStatus::where('name', ucfirst($single_data ?? ''))->first();
                                     $update_employee_data->marital_status_id = !empty($martial_status_id) ? $martial_status_id->id : '';
-
                                 } else if ($data_key == 'blood_group') {
 
                                     $blood_group_id = VmtBloodGroup::where('name', $single_data ?? '')->first();
                                     $update_employee_data->blood_group_id = !empty($blood_group_id) ? $blood_group_id->id : '';
-
                                 } else if ($data_key == 'bank_name') {
 
                                     $bank_id = Bank::where('bank_name', $single_data ?? '')->first();
                                     $update_employee_data->bank_id = !empty($bank_id) ? $bank_id->id : '';
-
                                 } else {
                                     $update_employee_data->$single_employee_data = $single_data;
                                 }
@@ -1229,12 +1216,10 @@ class VmtCorrectionController extends Controller
                                     $emp_mother_data->name = $single_data;
                                     $emp_mother_data->save();
                                 }
-
                             } else if ($data_key == 'mother_dob') {
 
                                 $emp_mother_data->dob = $this->getdateFormatForDb($single_data);
                                 $emp_mother_data->save();
-
                             }
                         }
 
@@ -1250,7 +1235,6 @@ class VmtCorrectionController extends Controller
 
                                     $emp_spouse_data->name = $single_data;
                                     $emp_spouse_data->save();
-
                                 }
                             } else if ($data_key == 'spouse_dob') {
 
@@ -1274,7 +1258,6 @@ class VmtCorrectionController extends Controller
 
                                     $emp_spouse_male_data->name = $single_data;
                                     $emp_spouse_male_data->save();
-
                                 }
                             } else if ($data_key == 'spouse_dob') {
 
@@ -1318,7 +1301,6 @@ class VmtCorrectionController extends Controller
                                     if (!empty($single_data) && $single_data != 'NULL') {
                                         $department_id = Department::where('name', $single_data)->first();
                                         $update_empOffice_data->department_id = $department_id->id;
-
                                     }
                                 } else {
                                     $update_empOffice_data->$single_office_data = $single_data;
@@ -1343,7 +1325,6 @@ class VmtCorrectionController extends Controller
                             }
                             $newEmployee_statutoryDetails->$single_statutory_data = $single_data;
                             $newEmployee_statutoryDetails->save();
-
                         }
                     }
 
@@ -1364,7 +1345,6 @@ class VmtCorrectionController extends Controller
                             $compensatory->save();
                         }
                     }
-
                 }
                 return $response = ([
                     'status' => 'success',
@@ -1372,7 +1352,6 @@ class VmtCorrectionController extends Controller
                     'data' => ''
                 ]);
             }
-
         } catch (\Exception $e) {
             return $response = ([
                 'status' => 'failure',
@@ -1380,7 +1359,6 @@ class VmtCorrectionController extends Controller
                 'data' => $e->getMessage() . ' error_line' . $e->getline(),
             ]);
         }
-
     }
     private function getdateFormatForDb($date)
     {
@@ -1416,251 +1394,8 @@ class VmtCorrectionController extends Controller
                 'message' => 'Error for input date',
                 'data' => $e->getMessage() . ' error_line ' . $e->getline(),
             ]);
-
         }
     }
-
-    //     private function Update_MasterEmployeeData($data){
-
-    //         try{
-    //  //dd($data);
-
-
-    //             $user_id = User::where('user_code',$data['employee_code'])->first();
-
-    //             if(!empty($user_id)){
-
-    //                 $user_id =$user_id->id;
-
-
-    //             $update_Userdata = User::where('id',$user_id)->first();
-    //             $update_Userdata->name = $data['name'];
-    //             $update_Userdata->email = empty($data["email"]) ? '' : $data["email"];
-    //             $update_Userdata->save();
-
-
-    //             $update_employee_data =VmtEmployee::where('userid',$user_id)->first();
-    //             $doj=$data["doj"] ?? '';
-    //             $dob=$data["dob"] ?? '';
-    //             $update_employee_data->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
-    //             $update_employee_data->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
-    //             $update_employee_data->gender   =    $data["gender"] ?? '';
-    //             $data_mobile_number = empty($data["mobile_number"]) ? "" : strval($data["mobile_number"]);
-    //             $update_employee_data->mobile_number  = $data_mobile_number;
-    //             $update_employee_data->aadhar_number = $data["aadhar_number"] ?? '';
-    //             $update_employee_data->pan_number   =  isset($data["pan_number"]) ? ($data["pan_number"]) : " ";
-
-    //             $martial_status_id =VmtMaritalStatus::where('name',ucfirst($data["martial_status"] ?? ''))->first();
-    //             $update_employee_data->marital_status_id =!empty($martial_status_id) ? $martial_status_id->id :'';
-
-    //             $blood_group_id =VmtBloodGroup::where('name',$data["blood_group"] ?? '')->first();
-    //             $update_employee_data->blood_group_id  =  !empty($blood_group_id) ? $blood_group_id->id : '';
-
-    //             $bank_id =Bank::where('bank_name',$data["bank_name"] ?? '')->first();
-    //             $update_employee_data->bank_id   = !empty($bank_id) ? $bank_id->id : '';
-
-    //             $update_employee_data->bank_account_number  = $data["bank_account_number"] ?? '';
-    //             $update_employee_data->nationality = $data["nationality"] ?? '';
-    //             $update_employee_data->physically_challenged  = $data["physically_challenged"] ?? 'no';
-    //             $update_employee_data->bank_ifsc_code  = $data["bank_ifsc_code"] ?? '';
-    //             $update_employee_data->current_address_line_1   = $data["current_address"] ?? '';
-    //             $update_employee_data->permanent_address_line_1   = $data["permanent_address"] ?? '';
-    //             $update_employee_data->save();
-
-    //             $update_empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
-
-    //             if($update_empOffice->exists())
-    //             {
-    //                 $update_empOffice = $update_empOffice->first();
-
-    //             }
-    //             else
-    //             {
-    //                 $update_empOffice = new VmtEmployeeOfficeDetails;
-    //             }
-    //                 //dd($data['department']);
-    //                 $confirmation_period= $data['confirmation_period'] ?? '';
-    //                 $update_empOffice->user_id = $user_id;
-    //                 $department =$data['department']??'';
-    //                 if(!empty($department) && $department !='NULL'){
-
-    //                     $department_id=Department::where('name',$data['department'])->first();
-    //                     $update_empOffice->department_id = $department_id ?? ''; // => "lk"
-    //                     }
-    //                 $update_empOffice->process = $data["process"] ?? '';
-    //                 $update_empOffice->designation = $data["designation"] ?? '';
-    //                 $update_empOffice->cost_center = $data["cost_center"] ?? '';
-    //                 $update_empOffice->probation_period  = $data['probation_period'] ?? '';
-    //                 $update_empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb( $confirmation_period,$user_id) : '';
-    //                 $update_empOffice->holiday_location  = $data["holiday_location"] ?? '';
-    //                 $update_empOffice->l1_manager_code  = $data["l1_manager_code"] ?? '';
-    //                 $update_empOffice->work_location  = $data["work_location"] ?? '';
-    //                 $update_empOffice->officical_mail  = $data["officical_mail"] ?? '';
-    //                 $update_empOffice->official_mobile  = $data["official_mobile"] ?? '';
-    //                 $update_empOffice->emp_notice  = $data["emp_notice"] ?? '';
-    //                 $update_empOffice->save();
-
-    //                 $father_name =$data['father_name'] ?? '';
-    //                 $mother_name =$data['mother_name'] ??'';
-    //                 $spouse_name=$data['spouse_name'] ??'';
-    //                 $child_name =$data['child_name'] ?? '';
-    //                 $father_dob=$data["dob_father"]??'';
-    //                 $mother_dob=$data["dob_mother"] ??'';
-    //                 $spouse_dob=$data["dob_spouse"] ??'';
-    //                 $child_dob = $data["child_dob"] ?? '';
-
-    //             if(!empty($father_name)){
-    //                 $emp_father_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('relationship','Father');
-
-    //                 if($emp_father_data->exists()){
-
-    //                     $emp_father_data=$emp_father_data->first();
-
-    //                 }else{
-    //                     $emp_father_data = new VmtEmployeeFamilyDetails;
-    //                 }
-    //                     $emp_father_data->name =  $father_name;
-    //                     $emp_father_data->save();
-
-    //                 if(!empty( $father_dob)){
-    //                     $dob_father=  $father_dob;
-    //                     $emp_father_data->dob = $this->getdateFormatForDb($dob_father,$user_id);
-    //                     }
-    //                 $emp_father_data->save();
-    //             }
-    //             if(!empty($mother_name)){
-
-    //                 $emp_mother_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('relationship','Mother');
-
-    //                 if($emp_mother_data->exists()){
-
-    //                     $emp_mother_data=$emp_mother_data->first();
-
-    //                 }else{
-    //                     $emp_mother_data = new VmtEmployeeFamilyDetails;
-    //                 }
-    //                 $emp_mother_data->name =  $mother_name;
-    //                 $emp_mother_data->save();
-    //                 if(!empty( $mother_dob)){
-    //                     $dob_mother= $mother_dob;
-    //                     $emp_mother_data->dob = $this->getdateFormatForDb( $mother_dob,$user_id) ;
-    //                     $emp_mother_data->save();
-    //                     }
-    //             }
-    //             if( !empty($spouse_name)){
-
-    //                 $emp_spouse_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('gender','Female')->where('relationship','Spouse');
-
-    //                 if($emp_spouse_data->exists()){
-    //                     $emp_spouse_data=$emp_spouse_data->first();
-    //                     $emp_spouse_data->name =   $spouse_name;
-    //                     $emp_spouse_data->save();
-    //                 }else{
-    //                     $emp_spouse_data = new VmtEmployeeFamilyDetails;
-    //                     $emp_spouse_data->name =   $spouse_name;
-    //                     $emp_spouse_data->save();
-    //                 }
-    //                 if(!empty( $spouse_dob)){
-    //                     $dob_spouse =   $spouse_dob;
-    //                     $emp_spouse_data->dob = $this->getdateFormatForDb($spouse_dob,$user_id);
-    //                     $emp_spouse_data->save();
-    //                 }
-    //                 $emp_spouse_male_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('gender','male')->where('relationship','Spouse');
-
-    //                 if($emp_spouse_male_data->exists()){
-    //                     $emp_spouse_male_data=$emp_spouse_male_data->first();
-    //                     $emp_spouse_data->name =  $spouse_name;
-    //                     $emp_spouse_data->save();
-    //                 }else{
-    //                     $emp_spouse_male_data = new VmtEmployeeFamilyDetails;
-    //                     $emp_spouse_data->name =  $spouse_name;
-    //                     $emp_spouse_data->save();
-    //                 }
-    //                 if(!empty($spouse_dob)){
-    //                     $dob_spouse = $spouse_dob;
-    //                     $emp_spouse_data->dob = $this->getdateFormatForDb($spouse_dob,$user_id);
-    //                     $emp_spouse_data->save();
-    //                 }
-
-    //                 $emp_child_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('relationship','Child')->first();
-
-    //             } if (!empty($emp_child_data)){
-    //                 $emp_child_data =  new VmtEmployeeFamilyDetails;
-    //                 $emp_child_data->user_id  = $user_id;
-    //                 $emp_child_data->name =$child_name;
-    //                 $emp_child_data->relationship = 'Children';
-    //                 $emp_child_data->gender = '';
-
-    //         if(!empty( $child_dob )){
-    //                 $child_dob = $child_dob ;
-    //                 $emp_child_data->dob = $this->getdateFormatForDb($child_dob ,$user_id) ;
-    //                 }
-    //                 $emp_child_data->save();
-    //             }
-
-
-    //             $newEmployee_statutoryDetails =VmtEmployeeStatutoryDetails::where('user_id',$user_id);
-    //             if($newEmployee_statutoryDetails->exists()){
-    //                 $newEmployee_statutoryDetails=$newEmployee_statutoryDetails->first();
-    //             }else{
-    //                 $newEmployee_statutoryDetails=new VmtEmployeeStatutoryDetails;
-    //                 $newEmployee_statutoryDetails->user_id = $user_id;
-    //             }
-
-    //             $newEmployee_statutoryDetails->uan_number = $data["uan_number"] ?? '';
-    //             $newEmployee_statutoryDetails->epf_number = $data["epf_number"] ?? '';
-    //             $newEmployee_statutoryDetails->esic_number = $data["esic_number"] ?? '';
-    //             $newEmployee_statutoryDetails->save();
-
-    //             $compensatory =Compensatory::where('user_id',$user_id);
-    //             if($compensatory->exists()){
-    //                 $compensatory=$compensatory->first();
-    //             }else{
-    //                 $compensatory=new Compensatory;
-    //                 $compensatory->user_id = $user_id;
-    //             }
-    //             $compensatory->basic = $data["basic"] ?? '';
-    //             $compensatory->hra = $data["hra"] ?? '';
-    //             $compensatory->Statutory_bonus = $data["statutory_bonus"] ?? '' ;
-    //             $compensatory->child_education_allowance = $data["child_education_allowance"] ?? '' ;
-    //             $compensatory->lta = $data["lta"] ?? '' ;
-    //             $compensatory->transport_allowance = $data["special_allowance"] ?? '' ;
-    //             $compensatory->transport_allowance = $data["transport_allowance"] ?? '' ;
-    //             $compensatory->medical_allowance = $data["medical_allowance"] ?? '' ;
-    //             $compensatory->education_allowance = $data["education_allowance"] ?? '' ;
-    //             $compensatory->other_allowance = $data["other_allowance"] ?? '' ;
-    //             $compensatory->gross = $data["gross"] ?? '' ;
-    //             $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '' ;
-    //             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '' ;
-    //             $compensatory->epf_employee = $data["epf_employee_contribution"] ?? '' ;
-    //             $compensatory->esic_employee = $data["esic_employee_contribution"] ?? '' ;
-    //             $compensatory->cic = $data["ctc"] ?? '' ;
-    //             $compensatory->insurance = $data["insurance"] ?? '' ;
-    //             $compensatory->dearness_allowance = $data["dearness_allowance"] ?? '' ;
-    //             $compensatory->professional_tax = $data["professional_tax"] ?? '' ;
-    //             $compensatory->labour_welfare_fund = $data["labour_welfare_fund"] ?? '' ;
-    //             $compensatory->net_income = $data["net_income"] ?? '' ;
-    //             $compensatory->save();
-
-
-    //         }
-    //         return $response=([
-    //             'status' => 'success',
-    //             'message' =>'Master data updated successfully',
-    //             'data' => ''
-    //         ]);
-
-
-
-
-    //         }catch(Exception $e){
-    //             return $response = ([
-    //                 'status' => 'failure',
-    //                 'message' =>'error while upadateing master info',
-    //                 'data' =>  $e->getMessage() .' error_line'.$e->getline(),
-    //             ]);
-
-    //         }
 
     public function setFinanceidHrid(Request $request)
     {
@@ -1705,108 +1440,366 @@ class VmtCorrectionController extends Controller
             'status' => 'success',
             'message' => 'updated successfully',
         ]);
-
-
     }
 
-    public function setAnnualProjection()
+
+    public function saveEmployeeAnnualProjection(Request $request)
     {
 
-        $client_id = '3';
-        $payslip_month = '2023-04-01';
+        ini_set('max_execution_time', 300);
 
-        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
-        $start_date = Carbon::parse($timeperiod->start_date)->subMonth(1);
-        $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
-        $end_date = Carbon::parse($end_date)->subMonth(1);
-        $current_date = Carbon::parse($payslip_month);
+        try {
 
-        $users = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-        ->where('client_id', $client_id)->get(['users.id','vmt_employee_details.doj']);
+            DB::table('abs_salary_projection')->truncate();
 
-        // dd($users);
-        foreach ($users as $single_users) {
-
-            $payroll_date = VmtPayroll::where('payroll_date', $payslip_month)->where('client_id', $client_id)->first();
-            $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_users->id)->first();
-            $start_date = Carbon::parse($timeperiod->start_date)->subMonth(1);
-            $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
-            $end_date = Carbon::parse($end_date)->subMonth(1);
-            $res = [];
-            while ($start_date->lte($end_date)) {
-
-                // if( $current_date $single_users->doj ){
-                //     array_push($res,$single_users->id);
-                // }
+             $client_details = VmtClientMaster::Where('client_fullname', "!=", "All")->get(['id', 'client_name'])->toarray();
 
 
-                $start_date = Carbon::parse($start_date)->addMonth();
-                if ($start_date->lt($current_date)) {
+                $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
+                $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
 
-                    $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-                    ->where('vmt_payroll.payroll_date', $start_date)
-                    ->where('vmt_emp_payroll.user_id', $single_users->id)
-                    ->first([
-                        'vmt_emp_payroll.id as id'
-                    ]);
+                $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
+                $end_date = Carbon::parse($end_date)->format('Y-m-d');
+                $current_date = Carbon::now();
 
-                    if($payslip_id){
-                        $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id',$payslip_id->id)->first();
-                    }else
-                    {
-                        $payslip_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                        ->where('user_id', $single_users->id)->first();
+
+                 $existing_employee_data = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                                           ->where('users.active', "1")->where('users.is_ssa', "0")->get(['users.id', 'vmt_employee_details.doj', 'users.client_id'])->toarray();
+                // $existing_employee_data = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                //     ->where('client_id', "3")->where('users.active', "1")->where('users.id', "194")->where('users.is_ssa', "0")->get(['users.id', 'vmt_employee_details.doj', 'users.client_id'])->toarray();
+              //  dd($existing_employee_data);
+
+
+                foreach ($existing_employee_data as $key => $single_users) {
+
+
+                    $fin_end_date = Carbon::parse($timeperiod->end_date);
+
+                    if ($single_users['doj'] < $start_date) {
+
+                        $fin_start_date = Carbon::parse($timeperiod->start_date);
+                    } else if (Carbon::parse($single_users['doj'])->format('m') != Carbon::parse($current_date)->format('m')) {
+
+                        $fin_start_date = Carbon::parse($single_users['doj']);
+                    }
+
+                    $date_range = CarbonPeriod::create($fin_start_date->startOfMonth()->format('Y-m-d'), '1 month', $current_date->endOfMonth()->format('Y-m-d'));
+
+
+                    $finyear_date_range = CarbonPeriod::create($fin_start_date->startOfMonth()->format('Y-m-d'), '1 month', $fin_end_date->endOfMonth()->format('Y-m-d'));
+
+
+                    $previous_month_payslip_date = array();
+                    $financial_year_date = array();
+                    $exists_month_data = array();
+
+
+                    foreach ($date_range  as $key => $single_date) {
+
+                        $payroll_date = $single_date->format('Y-m-d');
+
+                        $previous_month_payslip_date[] = $payroll_date;
+
+                        array_push($exists_month_data,$previous_month_payslip_date);
 
                     }
 
-                    if ($payslip_details) {
-                        if($emp_payroll){
-                        $salary_project_data = new AbsSalaryProjection;
-                        $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                        $salary_project_data->payroll_months = $start_date;
-                        $salary_project_data->earned_basic = $payslip_details['earned_basic'];
-                        $salary_project_data->earned_hra = $payslip_details['earned_hra'];
-                        $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
-                        $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
-                        $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
-                        $salary_project_data->save();
+                    foreach ($finyear_date_range  as $key => $single_fin_date) {
+
+                        $fin_year_date = $single_fin_date->format('Y-m-d');
+
+                        $financial_year_date[] = $fin_year_date;
+                    }
+
+
+
+                   //dd($previous_month_payslip_date, $financial_year_date);
+                   // dd( $exists_month_data);
+
+
+
+
+                    foreach ($previous_month_payslip_date as $month_key => $single_month) {
+
+                        foreach ($financial_year_date as $key => $single_fin_month) {
+
+
+                            $emp_payroll = '';
+
+                            $payroll_date = VmtPayroll::where('payroll_date',  $single_month)->where('client_id',$single_users['client_id'] );
+
+                            if ($payroll_date->exists()) {
+                                $payroll_date = $payroll_date->first();
+                                $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $single_users['id'])->first();
+                            }
+
+                            if(in_array($single_fin_month, $exists_month_data[$month_key])) {
+
+                                $payslip_id = VmtPayroll::join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                                    // ->where('vmt_payroll.client_id',  $single_users['client_id'])
+                                    ->where('vmt_payroll.payroll_date',  $single_fin_month)
+                                    ->where('vmt_emp_payroll.user_id', $single_users['id'])
+                                    ->first(['vmt_emp_payroll.id as id']);
+
+
+                                if (!empty($payslip_id)) {
+
+                                    $payslip_details  = VmtEmployeePaySlipV2::where('emp_payroll_id', $payslip_id->id)->first();
+                                }
+
+
+                                if (!empty($payslip_details)) {
+
+                                     if (!empty($emp_payroll)) {
+
+                                        $salary_project_data = new AbsSalaryProjection;
+                                        $salary_project_data->vmt_emp_payroll_id =$emp_payroll->id;
+                                        $salary_project_data->payroll_months = $single_fin_month;
+                                        $salary_project_data->basic = 0;
+                                        $salary_project_data->hra = 0;
+                                        $salary_project_data->child_edu_allowance = 0;
+                                        $salary_project_data->spl_alw =0;
+                                        $salary_project_data->total_fixed_gross = $payslip_details['total_fixed_gross'];
+                                        $salary_project_data->month_days = $payslip_details['month_days'];
+                                        $salary_project_data->worked_Days = $payslip_details['worked_Days'];
+                                        $salary_project_data->arrears_Days = $payslip_details['arrears_Days'];
+                                        $salary_project_data->lop = $payslip_details['lop'];
+                                        $salary_project_data->earned_basic = $payslip_details['earned_basic'];
+                                        $salary_project_data->basic_arrear = $payslip_details['basic_arrear'];
+                                        $salary_project_data->earned_hra = $payslip_details['earned_hra'];
+                                        $salary_project_data->hra_arrear = $payslip_details['hra_arrear'];
+                                        $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
+                                        $salary_project_data->earned_child_edu_allowance = $payslip_details['child_edu_allowance_arrear'];
+                                        $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
+                                        $salary_project_data->earned_spl_alw = $payslip_details['spl_alw_arrear'];
+                                        $salary_project_data->overtime = $payslip_details['overtime'];
+                                        $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
+                                        $salary_project_data->pf_wages = $payslip_details['pf_wages'];
+                                        $salary_project_data->pf_wages_arrear_epfr = $payslip_details['pf_wages_arrear_epfr'];
+                                        $salary_project_data->epfr = $payslip_details['epfr'];
+                                        $salary_project_data->epfr_arrear = $payslip_details['epfr_arrear'];
+                                        $salary_project_data->edli_charges = $payslip_details['edli_charges'];
+                                        $salary_project_data->edli_charges_arrears = $payslip_details['edli_charges_arrears'];
+                                        $salary_project_data->pf_admin_charges = $payslip_details['pf_admin_charges'];
+                                        $salary_project_data->pf_admin_charges_arrears = $payslip_details['pf_admin_charges_arrears'];
+                                        $salary_project_data->employer_esi = $payslip_details['employer_esi'];
+                                        $salary_project_data->employer_lwf = $payslip_details['employer_lwf'];
+                                        $salary_project_data->ctc = $payslip_details['ctc'];
+                                        $salary_project_data->epf_ee = $payslip_details['epf_ee'];
+                                        $salary_project_data->employee_esic = $payslip_details['employee_esic'];
+                                        $salary_project_data->prof_tax = $payslip_details['prof_tax'];
+                                        $salary_project_data->income_tax = $payslip_details['income_tax'];
+                                        $salary_project_data->sal_adv = $payslip_details['sal_adv'];
+                                        $salary_project_data->canteen_dedn = $payslip_details['canteen_dedn'];
+                                        $salary_project_data->other_deduc = $payslip_details['other_deduc'];
+                                        $salary_project_data->lwf = $payslip_details['lwf'];
+                                        $salary_project_data->total_deductions = $payslip_details['total_deductions'];
+                                        $salary_project_data->net_take_home = $payslip_details['net_take_home'];
+                                        $salary_project_data->rupees = $payslip_details['rupees'];
+                                        $salary_project_data->el_opn_bal = $payslip_details['el_opn_bal'];
+                                        $salary_project_data->availed_el = $payslip_details['availed_el'];
+                                        $salary_project_data->balance_el = $payslip_details['balance_el'];
+                                        $salary_project_data->sl_opn_bal = $payslip_details['sl_opn_bal'];
+                                        $salary_project_data->availed_sl = $payslip_details['availed_sl'];
+                                        $salary_project_data->balance_sl = $payslip_details['balance_sl'];
+                                        $salary_project_data->rename = $payslip_details['rename'];
+                                        $salary_project_data->greetings = $payslip_details['greetings'];
+                                        $salary_project_data->stats_bonus = $payslip_details['stats_bonus'];
+                                        $salary_project_data->email = $payslip_details['email'];
+                                        $salary_project_data->earned_stats_bonus = $payslip_details['earned_stats_bonus'];
+                                        $salary_project_data->earned_stats_arrear = $payslip_details['earned_stats_arrear'];
+                                        $salary_project_data->travel_conveyance = $payslip_details['travel_conveyance'];
+                                        $salary_project_data->other_earnings = $payslip_details['other_earnings'];
+                                        $salary_project_data->dearness_allowance = $payslip_details['dearness_allowance'];
+                                        $salary_project_data->dearness_allowance_earned = $payslip_details['dearness_allowance_earned'];
+                                        $salary_project_data->dearness_allowance_arrear = $payslip_details['dearness_allowance_arrear'];
+                                        $salary_project_data->vda = 0;
+                                        $salary_project_data->vda_earned = $payslip_details['vda_earned'];
+                                        $salary_project_data->vda_arrear = $payslip_details['vda_arrear'];
+                                        $salary_project_data->vpf_arrear = $payslip_details['vpf_arrear'];
+                                        $salary_project_data->communication_allowance = 0;
+                                        $salary_project_data->communication_allowance_earned = $payslip_details['communication_allowance_earned'];
+                                        $salary_project_data->communication_allowance_arrear = $payslip_details['communication_allowance_arrear'];
+                                        $salary_project_data->food_allowance_earned = $payslip_details['food_allowance'];
+                                        $salary_project_data->food_allowance_arrear = $payslip_details['food_allowance_arrear'];
+                                        $salary_project_data->other_allowance =0;
+                                        $salary_project_data->other_allowance_earned = $payslip_details['other_allowance_earned'];
+                                        $salary_project_data->other_allowance_arrear = $payslip_details['other_allowance_arrear'];
+                                        $salary_project_data->washing_allowance =0;
+                                        $salary_project_data->washing_allowance_earned = $payslip_details['washing_allowance_earned'];
+                                        $salary_project_data->washing_allowance_arrear = $payslip_details['washing_allowance_arrear'];
+                                        $salary_project_data->uniform_allowance = 0;
+                                        $salary_project_data->uniform_allowance_earned = $payslip_details['uniform_allowance_earned'];
+                                        $salary_project_data->uniform_allowance_arrear = $payslip_details['uniform_allowance_arrear'];
+                                        $salary_project_data->vehicle_reimbursement = 0;
+                                        $salary_project_data->vehicle_reimbursement_earned = $payslip_details['vehicle_reimbursement_earned'];
+                                        $salary_project_data->vehicle_reimbursement_arrear = $payslip_details['vehicle_reimbursement_arrear'];
+                                        $salary_project_data->driver_salary = 0;
+                                        $salary_project_data->driver_salary_earned = $payslip_details['driver_salary_earned'];
+                                        $salary_project_data->driver_salary_arrear = $payslip_details['driver_salary_arrear'];
+                                        $salary_project_data->fuel_reimbursement =0;
+                                        $salary_project_data->fuel_reimbursement_earned = $payslip_details['fuel_reimbursement_earned'];
+                                        $salary_project_data->fuel_reimbursement_arrear = $payslip_details['fuel_reimbursement_arrear'];
+                                        $salary_project_data->overtime_arrear = $payslip_details['overtime_arrear'];
+                                        $salary_project_data->incentive = $payslip_details['incentive'];
+                                        $salary_project_data->incentive_arrear = $payslip_details['incentive_arrear'];
+                                        $salary_project_data->leave_encashment = $payslip_details['leave_encashment'];
+                                        $salary_project_data->leave_encashment_arrear = $payslip_details['leave_encashment_arrear'];
+                                        $salary_project_data->referral_bonus = $payslip_details['referral_bonus'];
+                                        $salary_project_data->referral_bonus_arrear = $payslip_details['referral_bonus_arrear'];
+                                        $salary_project_data->statutory_bonus = $payslip_details['statutory_bonus'];
+                                        $salary_project_data->statutory_bonus_arrear = $payslip_details['statutory_bonus_arrear'];
+                                        $salary_project_data->ex_gratia = $payslip_details['ex_gratia'];
+                                        $salary_project_data->gift_payment = $payslip_details['gift_payment'];
+                                        $salary_project_data->gift_payment_arrear = $payslip_details['gift_payment_arrear'];
+                                        $salary_project_data->attendance_bonus = $payslip_details['attendance_bonus'];
+                                        $salary_project_data->attendance_bonus_arrear = $payslip_details['attendance_bonus_arrear'];
+                                        $salary_project_data->daily_allowance_arrear = $payslip_details['daily_allowance_arrear'];
+                                        $salary_project_data->salary_adv_arrear = $payslip_details['salary_adv_arrear'];
+                                        $salary_project_data->medical_deductions = $payslip_details['medical_deductions'];
+                                        $salary_project_data->uniform_deductions = $payslip_details['uniform_deductions'];
+                                        $salary_project_data->loan_deductions = $payslip_details['loan_deductions'];
+                                        $salary_project_data->save();
+                             }
+                                } else {
+                                    return 'no payslip data found for ' . $single_users['id'] . 'user'  . " " . $single_month . " " . $single_fin_month;
+                                }
+
+
+                                //array_push($res, $payslip_details);
+                    } else {
+
+                                $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')->where('user_id', $single_users['id'])->first();
+
+                                $salary_project_data = new AbsSalaryProjection;
+
+                                if (!empty($emp_payroll)) {
+
+                                    $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
+                                    $salary_project_data->payroll_months = $single_fin_month;
+                                    $salary_project_data->basic =  0;
+                                    $salary_project_data->hra =  0;
+                                    $salary_project_data->child_edu_allowance = 0;
+                                    $salary_project_data->spl_alw =  0;
+                                    $salary_project_data->total_fixed_gross = $compensatory_details['gross'] ?? 0;
+                                    $salary_project_data->month_days = $compensatory_details['month_days'] ?? 0;
+                                    $salary_project_data->worked_Days = $compensatory_details['worked_Days'] ?? 0;
+                                    $salary_project_data->arrears_Days = $compensatory_details['arrears_Days'] ?? 0;
+                                    $salary_project_data->lop = $compensatory_details['lop'] ?? 0;
+                                    $salary_project_data->earned_basic = $compensatory_details['basic'] ?? 0;
+                                    $salary_project_data->basic_arrear = $compensatory_details['basic_arrear'] ?? 0;
+                                    $salary_project_data->earned_hra = $compensatory_details['hra'] ?? 0;
+                                    $salary_project_data->hra_arrear = $compensatory_details['hra_arrear'] ?? 0;
+                                    $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'] ?? 0;
+                                    $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'] ?? 0;
+                                    $salary_project_data->overtime = $compensatory_details['overtime'] ?? 0;
+                                    $salary_project_data->total_earned_gross = $compensatory_details['gross'] ?? 0;
+                                    $salary_project_data->pf_wages = $compensatory_details['pf_wages'] ?? 0;
+                                    $salary_project_data->pf_wages_arrear_epfr = $compensatory_details['pf_wages_arrear_epfr'] ?? 0;
+                                    $salary_project_data->epfr = $compensatory_details['epfr'] ?? 0;
+                                    $salary_project_data->epfr_arrear = $compensatory_details['epfr_arrear'] ?? 0;
+                                    $salary_project_data->edli_charges = $compensatory_details['edli_charges'] ?? 0;
+                                    $salary_project_data->edli_charges_arrears = $compensatory_details['edli_charges_arrears'] ?? 0;
+                                    $salary_project_data->pf_admin_charges = $compensatory_details['pf_admin_charges'] ?? 0;
+                                    $salary_project_data->pf_admin_charges_arrears = $compensatory_details['pf_admin_charges_arrears'] ?? 0;
+                                    $salary_project_data->employer_esi = $compensatory_details['esic_employer_contribution'] ?? 0;
+                                    $salary_project_data->employer_lwf = $compensatory_details['employer_lwf'] ?? 0;
+                                    $salary_project_data->ctc = $compensatory_details['cic'] ?? 0;
+                                    $salary_project_data->epf_ee = $compensatory_details['epf_employee'] ?? 0;
+                                    $salary_project_data->employee_esic = $compensatory_details['esic_employee'] ?? 0;
+                                    $salary_project_data->prof_tax = $compensatory_details['professional_tax'] ?? 0;
+                                    $salary_project_data->income_tax = $compensatory_details['income_tax'] ?? 0;
+                                    $salary_project_data->sal_adv = $compensatory_details['sal_adv'] ?? 0;
+                                    $salary_project_data->canteen_dedn = $compensatory_details['canteen_dedn'] ?? 0;
+                                    $salary_project_data->other_deduc = $compensatory_details['other_deduc'] ?? 0;
+                                    $salary_project_data->lwf = $compensatory_details['lwf'] ?? 0;
+                                    $salary_project_data->total_deductions = $compensatory_details['total_deductions'] ?? 0;
+                                    $salary_project_data->net_take_home = $compensatory_details['net_income'] ?? 0;
+                                    $salary_project_data->rupees = $compensatory_details['rupees'] ?? 0;
+                                    $salary_project_data->el_opn_bal = $compensatory_details['el_opn_bal'] ?? 0;
+                                    $salary_project_data->availed_el = $compensatory_details['availed_el'] ?? 0;
+                                    $salary_project_data->balance_el = $compensatory_details['balance_el'] ?? 0;
+                                    $salary_project_data->sl_opn_bal = $compensatory_details['sl_opn_bal'] ?? 0;
+                                    $salary_project_data->availed_sl = $compensatory_details['availed_sl'] ?? 0;
+                                    $salary_project_data->balance_sl = $compensatory_details['balance_sl'] ?? 0;
+                                    $salary_project_data->rename = $compensatory_details['rename'] ?? 0;
+                                    $salary_project_data->greetings = $compensatory_details['greetings'] ?? 0;
+                                    $salary_project_data->stats_bonus = $compensatory_details['stats_bonus'] ?? 0;
+                                    $salary_project_data->email = $compensatory_details['email'] ?? 0;
+                                    $salary_project_data->earned_stats_bonus = $compensatory_details['Statutory_bonus'] ?? 0;
+                                    $salary_project_data->earned_stats_arrear = $compensatory_details['earned_stats_arrear'] ?? 0;
+                                    $salary_project_data->travel_conveyance = $compensatory_details['travel_conveyance'] ?? 0;
+                                    $salary_project_data->other_earnings = $compensatory_details['other_earnings'] ?? 0;
+                                    $salary_project_data->dearness_allowance =  0;
+                                    $salary_project_data->dearness_allowance_earned = $compensatory_details['dearness_allowance']?? 0;
+                                    $salary_project_data->dearness_allowance_arrear = $compensatory_details['dearness_allowance_arrear']?? 0;
+                                    $salary_project_data->vda =  0;
+                                    $salary_project_data->vda_earned = $compensatory_details['vda']?? 0;
+                                    $salary_project_data->vda_arrear = $compensatory_details['vda_arrear']?? 0;
+                                    $salary_project_data->vpf_arrear = $compensatory_details['vpf_arrear']?? 0;
+                                    $salary_project_data->communication_allowance =  0;
+                                    $salary_project_data->communication_allowance_earned = $compensatory_details['communication_allowance']?? 0;
+                                    $salary_project_data->communication_allowance_arrear = $compensatory_details['communication_allowance_arrear']?? 0;
+                                    $salary_project_data->food_allowance_earned = $compensatory_details['food_allowance']?? 0;
+                                    $salary_project_data->food_allowance_arrear = $compensatory_details['food_allowance_arrear'] ?? 0;
+                                    $salary_project_data->other_allowance = 0;
+                                    $salary_project_data->other_allowance_earned = $compensatory_details['other_allowance'] ?? 0;
+                                    $salary_project_data->other_allowance_arrear = $compensatory_details['other_allowance_arrear'] ?? 0;
+                                    $salary_project_data->washing_allowance =  0;
+                                    $salary_project_data->washing_allowance_earned = $compensatory_details['washing_allowance'] ?? 0;
+                                    $salary_project_data->washing_allowance_arrear = $compensatory_details['washing_allowance_arrear'] ?? 0;
+                                    $salary_project_data->uniform_allowance =  0;
+                                    $salary_project_data->uniform_allowance_earned = $compensatory_details['uniform_allowance'] ?? 0;
+                                    $salary_project_data->uniform_allowance_arrear = $compensatory_details['uniform_allowance_arrear'] ?? 0;
+                                    $salary_project_data->vehicle_reimbursement =  0;
+                                    $salary_project_data->vehicle_reimbursement_earned = $compensatory_details['vehicle_reimbursement'] ?? 0;
+                                    $salary_project_data->vehicle_reimbursement_arrear = $compensatory_details['vehicle_reimbursement_arrear'] ?? 0;
+                                    $salary_project_data->driver_salary =  0;
+                                    $salary_project_data->driver_salary_earned = $compensatory_details['driver_salary'] ?? 0;
+                                    $salary_project_data->driver_salary_arrear = $compensatory_details['driver_salary_arrear'] ?? 0;
+                                    $salary_project_data->fuel_reimbursement = 0;
+                                    $salary_project_data->fuel_reimbursement_earned = $compensatory_details['fuel_reimbursement'] ?? 0;
+                                    $salary_project_data->fuel_reimbursement_arrear = $compensatory_details['fuel_reimbursement_arrear'] ?? 0;
+                                    $salary_project_data->overtime_arrear = $compensatory_details['overtime_arrear'] ?? 0;
+                                    $salary_project_data->incentive = $compensatory_details['incentive'] ?? 0;
+                                    $salary_project_data->incentive_arrear = $compensatory_details['incentive_arrear'] ?? 0;
+                                    $salary_project_data->leave_encashment = $compensatory_details['leave_encashment'] ?? 0;
+                                    $salary_project_data->leave_encashment_arrear = $compensatory_details['leave_encashment_arrear'] ?? 0;
+                                    $salary_project_data->referral_bonus = $compensatory_details['referral_bonus'] ?? 0;
+                                    $salary_project_data->referral_bonus_arrear = $compensatory_details['referral_bonus_arrear'] ?? 0;
+                                    $salary_project_data->statutory_bonus = $compensatory_details['statutory_bonus'] ?? 0;
+                                    $salary_project_data->statutory_bonus_arrear = $compensatory_details['statutory_bonus_arrear'] ?? 0;
+                                    $salary_project_data->ex_gratia = $compensatory_details['ex_gratia'] ?? 0;
+                                    $salary_project_data->gift_payment = $compensatory_details['gift_payment'] ?? 0;
+                                    $salary_project_data->gift_payment_arrear = $compensatory_details['gift_payment_arrear'] ?? 0;
+                                    $salary_project_data->attendance_bonus = $compensatory_details['attendance_bonus'] ?? 0;
+                                    $salary_project_data->attendance_bonus_arrear = $compensatory_details['attendance_bonus_arrear'] ?? 0;
+                                    $salary_project_data->daily_allowance_arrear = $compensatory_details['daily_allowance_arrear'] ?? 0;
+                                    $salary_project_data->salary_adv_arrear = $compensatory_details['salary_adv_arrear'] ?? 0;
+                                    $salary_project_data->medical_deductions = $compensatory_details['medical_deductions'] ?? 0;
+                                    $salary_project_data->uniform_deductions = $compensatory_details['uniform_deductions'] ?? 0;
+                                    $salary_project_data->loan_deductions = $compensatory_details['loan_deductions'] ?? 0;
+                                    $salary_project_data->save();
+                                }
+                            }
+                                //array_push($res, $compensatory_details);
                         }
-                    }else{
-                        return 'no payslip data found for '.$single_users->id.'user';
+
                     }
-
-                    array_push($res,$payslip_details);
-                } else {
-
-                    $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                        ->where('user_id', $single_users->id)->first();
-
-                    $salary_project_data = new AbsSalaryProjection;
-                    if($emp_payroll){
-                    $salary_project_data->vmt_emp_payroll_id = $emp_payroll->id;
-                    $salary_project_data->payroll_months = $start_date;
-                    $salary_project_data->earned_basic = $compensatory_details['basic'];
-                    $salary_project_data->earned_hra = $compensatory_details['hra'];
-                    $salary_project_data->earned_child_edu_allowance = $compensatory_details['child_education_allowance'];
-                    $salary_project_data->earned_spl_alw = $compensatory_details['special_allowance'];
-                    $salary_project_data->total_earned_gross = $compensatory_details['gross'];
-                    $salary_project_data->save();
-                    }
-
-
-                    array_push($res,$compensatory_details);
-
                 }
 
-            }
+            return $response = ([
+                'status ' => "success",
+                "message" => "data saved successfully",
+                "data" => ""
+            ]);
+        } catch (\Exception $e) {
+            return $response = ([
+                "status" => "failure",
+                "user_data" =>  $single_users['id'] . " " . $single_month,
+                "user_month" => $single_users['id'] . " " . $single_month,
+                "data" => $e->getmessage() . "line" . $e->getline()
+            ]);
         }
-
-            // dd($res);
-        return  "saved" ;
-
     }
-
-
-
-
 }

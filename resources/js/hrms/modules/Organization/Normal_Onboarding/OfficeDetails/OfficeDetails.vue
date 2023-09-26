@@ -1,8 +1,9 @@
 <template>
-    <div class="p-2 shadow card profile-box card-top-border">
-        <div class="card-body justify-content-center align-items-center">
+    <div class="p-2 ">
+        <div class=" justify-content-center align-items-center">
             <div class="flex header-card-text">
-                <h6 class="my-2 "><i class="fa fa-briefcase" aria-hidden="true"></i> Official Details</h6>
+                <h6 class="my-2 font-semibold text-lg"><i class="fa fa-briefcase" aria-hidden="true"></i> Official Details
+                </h6>
             </div>
 
 
@@ -11,7 +12,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3">
                         <div class="floating">
                             <label for="" class="float-label">Department</label>
-                            <Dropdown  v-model="service.employee_onboarding.department" :class="{
+                            <Dropdown v-model="service.employee_onboarding.department" :class="{
                                 'p-invalid': v$.department.$error,
                             }" :options="service.departmentDetails" optionLabel="name" optionValue="id"
                                 placeholder="Department" name="department" id="department" class="p-error" />
@@ -22,9 +23,7 @@
                             <label for="" class="float-label">Process
                                 <!-- <span class="text-danger">*</span> -->
                             </label>
-                            <InputText class="onboard-form form-control"
-                            @keypress="isLetter($event)"
-                            type="text" :class="{
+                            <InputText class="onboard-form form-control" @keypress="isLetter($event)" type="text" :class="{
                                 'p-invalid': v$.process.$error,
                             }" v-model="service.employee_onboarding.process" placeholder="Process" />
 
@@ -41,9 +40,8 @@
                             <label for="" class="float-label">Designation<span class="text-danger">*</span>
                             </label>
 
-                            <InputText @keypress="isLetter($event)"
-                            class="onboard-form form-control" type="text" :readonly="readonly.designation"
-                                placeholder="Designation" :class="[{
+                            <InputText @keypress="isLetter($event)" class="onboard-form form-control" type="text"
+                                :readonly="readonly.designation" placeholder="Designation" :class="[{
                                     'p-invalid': v$.designation.$error,
                                 }, readonly.designation ? 'bg-gray-200' : '']"
                                 v-model="service.employee_onboarding.designation" />
@@ -73,9 +71,10 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Work Location<span class="text-danger">*</span></label>
-                            <InputText @keypress="isLetter($event)"  class="onboard-form form-control" type="text" placeholder="Work Location" :class="{
-                                'p-invalid': v$.work_location.$error,
-                            }" v-model="service.employee_onboarding.work_location" />
+                            <InputText @keypress="isLetter($event)" class="onboard-form form-control" type="text"
+                                placeholder="Work Location" :class="{
+                                    'p-invalid': v$.work_location.$error,
+                                }" v-model="service.employee_onboarding.work_location" />
                             <span v-if="(v$.work_location.$error) ||
                                 v$.work_location.$pending.$response
                                 " class="p-error">
@@ -93,7 +92,7 @@
                             <label for="" class="float-label">Reporting Manager Name<span
                                     class="text-danger">*</span></label>
                             <!-- {{employee_onboarding.l1_manager_code.user_code}} -->
-                            <Dropdown  :readonly="service.readonly.l1_code" :options="service.Managerdetails"
+                            <Dropdown :readonly="service.readonly.l1_code" :options="service.Managerdetails"
                                 optionLabel="name" placeholder="Reporting Manager Name"
                                 v-model="service.employee_onboarding.l1_manager_code" class="p-error" :class="{
                                     'p-invalid':
@@ -138,11 +137,12 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Official Email </label>
-                            <InputText type="email" placeholder="Official E-Mail Id" name="officical_mail" @keypress="isEmail($event)"
-                                class="textbox form-control" v-model="service.employee_onboarding.officical_mail" />
-                                <span v-if="v$.officical_mail.$error" class="font-medium text-red-600 fs-6">
-                                    {{ v$.officical_mail.$errors[0].$message }}
-                                </span>
+                            <InputText type="email" placeholder="Official E-Mail Id" name="officical_mail"
+                                @keypress="isEmail($event)" class="textbox form-control"
+                                v-model="service.employee_onboarding.officical_mail" />
+                            <span v-if="v$.officical_mail.$error" class="font-medium text-red-600 fs-6">
+                                {{ v$.officical_mail.$errors[0].$message }}
+                            </span>
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -157,24 +157,24 @@
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-                    <div class="floating">
-                        <label for="" class="float-label">Date of confirmation<span class="text-danger">*</span></label>
-                        <InputText class="onboard-form form-control" type="text" placeholder="Date of confirmation"
-                            max="9999-12-31" :class="{
-                                'p-invalid': v$.confirmation_period.$error,
-                            }" v-model="service.employee_onboarding.confirmation_period"
-                            onfocus="(this.type='date')" />
+                        <div class="floating">
+                            <label for="" class="float-label">Date of confirmation<span class="text-danger">*</span></label>
+                            <InputText class="onboard-form form-control" type="text" placeholder="Date of confirmation"
+                                max="9999-12-31" :class="{
+                                    'p-invalid': v$.confirmation_period.$error,
+                                }" v-model="service.employee_onboarding.confirmation_period"
+                                onfocus="(this.type='date')" />
 
-                        <span v-if="(v$.confirmation_period.$error) ||
-                            v$.confirmation_period.$pending.$response
-                            " class="p-error">
-                            {{
-                                v$.confirmation_period.required.$message.replace(
-                                    "Value",
-                                    "Date Of Confirmation"
-                                )
-                            }}</span>
-                    </div>
+                            <span v-if="(v$.confirmation_period.$error) ||
+                                v$.confirmation_period.$pending.$response
+                                " class="p-error">
+                                {{
+                                    v$.confirmation_period.required.$message.replace(
+                                        "Value",
+                                        "Date Of Confirmation"
+                                    )
+                                }}</span>
+                        </div>
                     </div>
                 </div>
             </div>

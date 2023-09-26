@@ -1,5 +1,5 @@
 <template>
-    <div class="card p-3"  style="margin-top: -25px;">
+    <div class="card p-3" >
         <h2 class="font-semibold text-2xl my-4 mx-3">Employee Documents</h2>
         <div class="w-full">
         <DataTable ref="dt" :value="EmployeeDocumentManagerService.getEmployeeDoc" dataKey="id" :paginator="true" :rows="10"
@@ -39,26 +39,26 @@
                         <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="file"
                                 class="cursor-pointer"><i class="pi pi-upload"></i> Upload
                                 file</label></button>
-                                <!-- <p>{{ file }}</p> -->
-                             
+                                <p class="" v-if="slotProps.data.document_name == fileName" > {{ upload_ref.name.name}}</p>
+
                     </div>
-                  
+
                     <div v-else>
                            <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
                             @click="showDocument(slotProps.data)" style="height: 2em" />
                     </div>
-                  
+
 
                     </div>
 
                     <div v-else>
                         <input type="file" name="" id="file" hidden @change="uploadDocument($event)">
                         <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="file"
-                                class="cursor-pointer"><i class="pi pi-upload"></i> Upload file
-                                </label></button>
+                                class="cursor-pointer"><i class="pi pi-upload"></i> Upload
+                                file</label></button>
                                 <p class="" v-if="slotProps.data.document_name == fileName" > {{ upload_ref.name.name}}</p>
                     </div>
-                   
+
                 </template>
             </Column>
         </DataTable>
@@ -122,9 +122,6 @@ const EmployeeDocumentManagerService = UseEmployeeDocumentManagerService();
 const toast = useToast();
 const visible = ref(false);
 
-const upload_ref = reactive({
-    name:""
-});
 
 // View Documents
 const view_document = ref({});
@@ -133,6 +130,10 @@ const documentPath = ref();
 // Upload Documents
 const UploadDocument = ref();
 const uploadDocs = ref();
+
+const upload_ref = reactive({
+    name:""
+});
 
 
 //Get and Append Filename and Filepath
@@ -170,6 +171,8 @@ const uploadDocument = (e) => {
         // Get file size
         // Print to console
         formdata.append(`${fileName.value}`, uploadDocs.value);
+
+        upload_ref.name =  uploadDocs.value ;
 
         console.log(formdata);
         upload_ref.name =  uploadDocs.value ;

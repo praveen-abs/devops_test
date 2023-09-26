@@ -126,6 +126,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     <p style="font-weight: 600;  color: #334155">leave Request {{ $leave_status }}</p>
                                     <table align="center" style="margin-bottom: 20px; height: 80px; width: 80px; border-radius: 9999px; " cellpadding="0" cellspacing="0" role="presentation">
                                       <tr>
+
                                         @if($empAvatar['type'] == "avatar")
                                         <img src="data:image/png;base64,{{ $empAvatar['data'] }}" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; border-radius: 9999px; padding: 12px">
                                         @elseif($empAvatar['type'] == "shortname")

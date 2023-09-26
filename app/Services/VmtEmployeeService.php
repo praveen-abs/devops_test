@@ -242,6 +242,7 @@ class VmtEmployeeService
     private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
         try {
+
             $newUser = new User;
             $newUser->name = $data['employee_name'];
             $newUser->email = empty($data["email"]) ? '' : $data["email"];
@@ -249,11 +250,15 @@ class VmtEmployeeService
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
             if($onboard_type == 'normal'){
-                $client_data =VmtMasterConfig::where("config_name","client_id")->first('config_value');
-                $newUser->client_id = $client_data['config_value'];
+
+                $newUser->client_id = sessionGetSelectedClientid();
             }else{
                 $emp_client_code = trim($data['legal_entity']);
+
                 $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
+
+
+
             }
 
             $newUser->active = '0';
@@ -271,7 +276,7 @@ class VmtEmployeeService
             return $response = ([
                 'status' => 'failure',
                 'message' => '',
-                'data' => "Error in VmtEmployeeService::CreateNewUser() : " . $e->getMessage()
+                'data' => "Error in VmtEmployeeService::CreateNewUser() : " . $e->getMessage() ." ".$e->getFile()
             ]);
         }
     }
@@ -492,7 +497,7 @@ class VmtEmployeeService
             $compensatory->save();
 
             //save the onboard documents
-            if ($onboard_type == 'normal' ||$onboard_type == 'quick' ) {
+            if ($onboard_type == 'normal' || $onboard_type == 'quick' ) {
                 $this->uploadDocument($user_id, $data['Aadharfront'], 'Aadhar Card Front');
                 $this->uploadDocument($user_id, $data['AadharBack'], 'Aadhar Card Back');
                 $this->uploadDocument($user_id, $data['panDoc'], 'Pan Card');
@@ -512,7 +517,7 @@ class VmtEmployeeService
             return $response = ([
                 'status' => 'failure',
                 'message' => 'Error while saving record ',
-                'data' => $e->getMessage() . " " . $e->getline()
+                'data' => $e->getMessage() . "  ".$e->getline()
 
             ]);
         }
@@ -522,6 +527,7 @@ class VmtEmployeeService
     {
 
         try {
+
 
             $user_id = $user_data->id;
 
@@ -539,7 +545,7 @@ class VmtEmployeeService
 
             $newEmployee->userid   =    $user_id;
             $newEmployee->marital_status_id = $data["marital_status"] ?? '';
-           // $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
+            $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
            // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->gender   =    $data["gender"] ?? '';
@@ -689,7 +695,7 @@ class VmtEmployeeService
             $newEmployee->gender   =    $data["gender"] ?? '';
             $newEmployee->location   =    $data["location"] ?? '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
-            $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
+           // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             // $newEmployee->location   =    $data["work_location"] ?? '';
             $newEmployee->pan_number   =  isset($data["pan_no"]) ? ($data["pan_no"]) : "PANNOTAVBL";
@@ -749,6 +755,7 @@ class VmtEmployeeService
               $emp_workshift->user_id = $user_id;
               $work_shift_id = VmtWorkShifts::where('is_default', '1')->first();
               $emp_shift_id = VmtEmployeeWorkShifts::where('user_id', '$user_id')->first();
+
               if (!empty($work_shift_id)) {
                   $emp_workshift->work_shift_id = $work_shift_id->id;
               }
@@ -888,7 +895,7 @@ class VmtEmployeeService
             return $response = ([
                 'status' => 'failure',
                 'message' => 'Error while saving record ',
-                'data' => $e->getMessage() . " " . $e->getline()
+                'data' => $e->getMessage(). " " .$e->getline() . " " . $e->getFile()
 
             ]);
         }
@@ -953,6 +960,7 @@ class VmtEmployeeService
                 } else {
 
                     $employee_documents->status = 'Pending';
+
                 }
 
 
@@ -1070,9 +1078,9 @@ class VmtEmployeeService
         $data['CEA_yearly'] = intval($employeeData["child_education_allowance"]??"0") * 12;
         $data['food_coupon_monthly'] = $employeeData['food_coupon']??"0";
         $data['food_coupon_yearly'] = intval($employeeData['lta']??"0") * 12;
-        $data['lta_monthly'] = $employeeData['lta']??"0";tval($employeeData['food_coupon']??'0') * 12;
+        $data['lta_monthly'] = $employeeData['lta']??"0";
         $data['lta_yearly'] = intval($employeeData['lta']??"0") * 12;
-        if($onboard_type='normal'){
+        if($onboard_type =='normal'){
             $data['ctc_monthly'] = $employeeData['cic'];
             $data['ctc_yearly'] = intval($employeeData['cic']) * 12;
         }else{
@@ -1087,7 +1095,7 @@ class VmtEmployeeService
         $data['employer_pt_yearly'] =  $employeeData["professional_tax" ] ? intval($employeeData["professional_tax" ])* 12 :"0";
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
-        if($onboard_type='normal'){
+        if($onboard_type =='normal'){
         $data["ctc_in_words"] = numberToWord(intval($employeeData['cic']) * 12);
 
         }else{
@@ -1097,12 +1105,17 @@ class VmtEmployeeService
 
         $fetchMasterConfigValue = VmtMasterConfig::where("config_name","can_send_appointmentletter_after_onboarding")->first();
 
-        if ($fetchMasterConfigValue['config_value'] == "true") {
-            //$client_name = str_replace(' ', '_', sessionGetSelectedClientName());
-            $client_name = strtolower(str_replace(' ', '_', sessionGetSelectedClientName()));
+       // if ($fetchMasterConfigValue['config_value'] == "true") {
 
+            $query_client = VmtClientMaster::find(session('client_id'));
 
-                $html = view('appointment_mail_templates.appointment_Letter_client',$data);
+            $client_full_name = $query_client->client_fullname;
+
+            $client_name = strtolower(str_replace(' ', '_',$client_full_name ));
+
+            $appointment_letter_name = $this->getAppointmentletterName($client_name);
+
+                $html = view($appointment_letter_name,$data);
 
                 $options = new Options();
                 $options->set('isHtml5ParserEnabled', true);
@@ -1128,10 +1141,47 @@ class VmtEmployeeService
 
              $isSent = \Mail::to($data['email'])->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),$appoinmentPath , $image_view,$VmtClientMaster->client_code));
             return $isSent;
-         }
+         //}
     }
 
 
+    public function getAppointmentletterName($client_name)
+    {
+        try{
+
+            $appointment_letter_name ="";
+
+             if($client_name == "indchem_marketing_agencies"){
+
+                $appointment_letter_name ="appointment_mail_templates.appointment_Letter_Indchem_Marketing_Agencies";
+
+             }
+             if($client_name == "langro_india_private_limited"){
+
+                $appointment_letter_name ="appointment_mail_templates.appointment_letter_langro_india_pvt_ltd";
+
+             }
+             if($client_name == "priti_sales_corporations"){
+
+                $appointment_letter_name ="appointment_mail_templates.appointment_Letter_priti_sales_corporation";
+
+             }
+             if($client_name == "ardens_business_solutions_private_limited"){
+
+                $appointment_letter_name ="appointment_mail_templates.appointmentletter_ardensbusinesssolutionsprivatelimited";
+
+             }
+
+             return  $appointment_letter_name;
+
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 'failure',
+                'message' => "",
+                'data' => $e->getmessage(),
+            ]);
+        }
+    }
     public function isUserExist($t_emp_code)
     {
         if (empty(User::where('user_code', $t_emp_code)->where('is_ssa', '0')->first()))
@@ -1175,7 +1225,6 @@ class VmtEmployeeService
             ->where('users.is_ssa', "0")
             ->where('users.is_onboarded', "1")
             ->where('users.active', '<>', "-1")
-            ->where('vmt_employee_documents.status', '<>', "Approved")
             ->get([
                 'users.id as user_id',
                 'users.name as name',
@@ -1186,6 +1235,8 @@ class VmtEmployeeService
                 'vmt_employee_documents.status as doc_status',
                 'vmt_employee_documents.doc_url as doc_url'
             ]);
+
+
         // //store all the documents in single key
         foreach ($query_pending_onboard_docs as $single_pending_docs) {
 
@@ -1366,6 +1417,52 @@ class VmtEmployeeService
                 'status' => 'failure',
                 'message' => "Error[ getEmployeeRole() ] ",
                 'data' => $e
+            ]);
+        }
+    }
+    public function updateMasterConfigClientCode($client_id)
+    {
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+            ],
+            $rules = [
+                "client_id" => 'required|exists:vmt_client_master,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+             $client_data =VmtClientMaster::where('id',$client_id)->first();
+
+            $update_master_config  = VmtMasterConfig::where('config_name','employee_code_prefix')->first();
+            $update_master_config->config_value = $client_data->client_code ;
+            $update_master_config->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "client code updated successfully",
+                'data' => $update_master_config
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "",
+                'data' => $e->getmessage()
             ]);
         }
     }
