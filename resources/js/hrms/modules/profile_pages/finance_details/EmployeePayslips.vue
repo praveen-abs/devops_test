@@ -45,15 +45,14 @@
     </div> -->
     <!-- dialog for show details -->
 
-    <Sidebar position="right" v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Payslip"
+    <Sidebar position="right" v-model:visible="employeePayslipStore.canShowPayslipView" v-if="employeePayslipStore.canShowPayslipView" modal header="Payslip"
         :style="{ width: '58vw' }">
-
         <div class=" flex justify-center w-[100%] my-3 rounded-lg">
             <div class="w-[95%] h-[90%] shadow-lg p-4 ">
                 <div class="w-[100%] flex justify-between">
                     <div class="flex flex-col">
-                        <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">MAR 2023</span></h1>
-                        <h2 class=" text-[16px] mt-[10px] text-[#000]"
+                        <h1 class=" text-[25px] flex items-center " >PAYSLIP <span class=" text-gray-500 text-[25px]" > {{employeePayslipStore.paySlipHTMLView.data.date_month.Month}} {{employeePayslipStore.paySlipHTMLView.data.date_month.Year  }}</span></h1>
+                        <h2 class=" text-[16px] mt-[10px] text-[#000] font-semibold "
                             v-for="item in employeePayslipStore.paySlipHTMLView.data.client_details" :key="item">
                             {{ item.client_fullname }}</h2>
                         <p class=" w-[300px] mt-[10px]"
@@ -303,9 +302,9 @@ const employeePayslipStore = useEmployeePayslipStore()
 const viewpayslip = ref(true);
 const op = ref();
 
-onMounted(async () => {
-    console.log("EmployeePayslips,vue loaded");
-    await employeePayslipStore.getEmployeeAllPayslipList();
+onMounted( () => {
+    console.log("EmployeePayslips,vue loaded"); 
+    employeePayslipStore.getEmployeeAllPayslipList();
 
 });
 

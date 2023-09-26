@@ -182,18 +182,51 @@ class VmtAttendanceReportsService
         }
     }
 
-    public function basicAttendanceReport($start_date, $end_date, $client_domain)
+    public function basicAttendanceReport($start_date,  $end_date, $date, $department_id, $client_id, $active_status)
     {
         ini_set('max_execution_time', 3000);
         //dd($month);
+
+
+
+        if (empty($client_id)) {
+            $client_id = VmtClientMaster::pluck('id')->toArray();
+        } else {
+            $client_id =  $client_id;
+        }
+        // dd($client_id);
+
+        if (empty($active_status)) {
+            $active_status = ['1', '0', '-1'];
+        } else {
+            $active_status = $active_status;
+        }
+        if (!empty($start_date) && !empty($end_date)) {
+            $start_date = $start_date;
+            $end_date = $end_date;
+        } else {
+            if (empty($date)) {
+                $date = Carbon::now()->format('Y-m-d');
+                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+            } else {
+                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+            }
+        }
+
         $reportresponse = array();
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
-            ->where('active', '1')
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        // print($user);exit;
+            ->whereIn('active',  $active_status)
+            ->whereIn('client_id', $client_id)
+            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
+
+        if (!empty($department_id)) {
+            $user =  $user->whereIn('vmt_employee_office_details.department_id', $department_id);
+        }
+        $user =   $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
         $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
         foreach ($user as $singleUser) {
 
@@ -1188,6 +1221,7 @@ class VmtAttendanceReportsService
 
     public function detailedAttendanceReport($start_date, $end_date, $department_id, $client_id, $active_status)
     {
+        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
@@ -1233,7 +1267,7 @@ class VmtAttendanceReportsService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            ini_set('max_execution_time', 3000);
+
             //dd($month);
             $reportresponse = array();
             $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
@@ -1247,7 +1281,7 @@ class VmtAttendanceReportsService
             // }
             if (!empty($department_id)) {
                 $user = $user->whereIn('vmt_employee_office_details.department_id', $department_id);
-            } 
+            }
             $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
             $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
             foreach ($user as $singleUser) {
@@ -1873,9 +1907,9 @@ class VmtAttendanceReportsService
     }
 
 
-    public function fetch_attendance_data($start_date, $end_date, $department_id,$client_id,$type, $active_status)
+    public function fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status)
     {
-       
+
 
         try {
             if (empty($client_id)) {
@@ -1895,24 +1929,24 @@ class VmtAttendanceReportsService
             }
 
 
-        ini_set('max_execution_time', 3000);
-        $reportresponse = array();
-        $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->whereIn('users.client_id', $client_id)
-            ->whereIn('users.active', $active_status)
-            ->whereDate('vmt_employee_details.doj', '<', $end_date);
+            ini_set('max_execution_time', 3000);
+            $reportresponse = array();
+            $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->whereIn('users.client_id', $client_id)
+                ->whereIn('users.active', $active_status)
+                ->whereDate('vmt_employee_details.doj', '<', $end_date);
 
-        // if (sessionGetSelectedClientid() != 1) {
-        //     $user = $user->where('client_id', sessionGetSelectedClientid());
-        // }
-        if (!empty($department_id)) {
-            $user  =$user->whereIn('vmt_employee_office_details.department_id', $department_id);
-        }
-        $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-      //  dd(  $user);
-        $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
-        foreach ($user as $singleUser) {
+            // if (sessionGetSelectedClientid() != 1) {
+            //     $user = $user->where('client_id', sessionGetSelectedClientid());
+            // }
+            if (!empty($department_id)) {
+                $user  = $user->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+            //  dd(  $user);
+            $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
+            foreach ($user as $singleUser) {
 
                 $firstDateStr = $start_date;
                 $lastAttendanceDate = Carbon::parse($end_date);
@@ -2244,60 +2278,60 @@ class VmtAttendanceReportsService
                     $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
                     $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
 
-                //Code For Check LC
-                if (!empty($checkin_time)) {
-                    $parsedCheckIn_time  = Carbon::parse($checkin_time);
-                    //Check whether checkin done on-time
-                    $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
-                    if ($isCheckin_done_ontime) {
-                        //employee came on time....
-                    } else {
-                        //dd("Checkin NOT on-time");
-                        //check whether regularization applied.
+                    //Code For Check LC
+                    if (!empty($checkin_time)) {
+                        $parsedCheckIn_time  = Carbon::parse($checkin_time);
+                        //Check whether checkin done on-time
+                        $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+                        if ($isCheckin_done_ontime) {
+                            //employee came on time....
+                        } else {
+                            //dd("Checkin NOT on-time");
+                            //check whether regularization applied.
+                            $user_id = $attendanceResponseArray[$key]['user_id'];
+                            $date = $attendanceResponseArray[$key]['date'];
+                            $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'LC');
+                            $attendanceResponseArray[$key]["isLC"] = $regularization_status['sts'];
+                            $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
+                            $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
+                        }
+                    } else if (empty($checkin_time) && !empty($checkout_time)) {
                         $user_id = $attendanceResponseArray[$key]['user_id'];
                         $date = $attendanceResponseArray[$key]['date'];
-                        $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'LC');
-                        $attendanceResponseArray[$key]["isLC"] = $regularization_status['sts'];
+                        $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'MIP');
+                        $attendanceResponseArray[$key]["isMIP"] = $regularization_status['sts'];
                         $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
                         $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
                     }
-                } else if (empty($checkin_time) && !empty($checkout_time)) {
-                    $user_id = $attendanceResponseArray[$key]['user_id'];
-                    $date = $attendanceResponseArray[$key]['date'];
-                    $regularization_status =  $this->RegularizationRequestStatus($user_id, $date, 'MIP');
-                    $attendanceResponseArray[$key]["isMIP"] = $regularization_status['sts'];
-                    $attendanceResponseArray[$key]["checkinRegId"] = $regularization_status['id'];
-                    $attendanceResponseArray[$key]["reged_checkin_time"] = $regularization_status['time'];
-                }
-                //Code For Check EG
-                if (!empty($checkout_time)) {
-                    $parsedCheckOut_time  = Carbon::parse($checkout_time);
-                    //Check whether checkin out on-time
-                    $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
-                    if ($isCheckout_done_ontime) {
-                        //employee left early on time....
-                        $user_id = $attendanceResponseArray[$key]['user_id'];
-                        $date = $attendanceResponseArray[$key]['date'];
-                        $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'EG');
-                        $attendanceResponseArray[$key]["isEG"] = $regularization_status['sts'];
-                        $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
-                        $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
-                    } else if (!empty($checkin_time) && empty($checkout_time)) {
-                        $user_id = $attendanceResponseArray[$key]['user_id'];
-                        $date = $attendanceResponseArray[$key]['date'];
-                        $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'MOP');
-                        $attendanceResponseArray[$key]["isMOP"] = $regularization_status['sts'];
-                        $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
-                        $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
-                    } else {
-                        //employee left late....
+                    //Code For Check EG
+                    if (!empty($checkout_time)) {
+                        $parsedCheckOut_time  = Carbon::parse($checkout_time);
+                        //Check whether checkin out on-time
+                        $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
+                        if ($isCheckout_done_ontime) {
+                            //employee left early on time....
+                            $user_id = $attendanceResponseArray[$key]['user_id'];
+                            $date = $attendanceResponseArray[$key]['date'];
+                            $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'EG');
+                            $attendanceResponseArray[$key]["isEG"] = $regularization_status['sts'];
+                            $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
+                            $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
+                        } else if (!empty($checkin_time) && empty($checkout_time)) {
+                            $user_id = $attendanceResponseArray[$key]['user_id'];
+                            $date = $attendanceResponseArray[$key]['date'];
+                            $regularization_status =   $this->RegularizationRequestStatus($user_id, $date, 'MOP');
+                            $attendanceResponseArray[$key]["isMOP"] = $regularization_status['sts'];
+                            $attendanceResponseArray[$key]["checkoutRegId"] = $regularization_status['id'];
+                            $attendanceResponseArray[$key]["reged_checkout_time"] = $regularization_status['time'];
+                        } else {
+                            //employee left late....
+                        }
                     }
                 }
+                array_push($reportresponse, $attendanceResponseArray);
+                unset($attendanceResponseArray);
             }
-            array_push($reportresponse, $attendanceResponseArray);
-            unset($attendanceResponseArray);
-        }
-    }catch (\Exception $e) {
+        } catch (\Exception $e) {
             $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
@@ -2306,7 +2340,7 @@ class VmtAttendanceReportsService
                 'error_verbose' => $e->getLine()
             ];
         }
-       // dd($reportresponse);
+        // dd($reportresponse);
         return  $reportresponse;
     }
 
@@ -2890,14 +2924,15 @@ class VmtAttendanceReportsService
 
             $client_id = sessionGetSelectedClientid();
 
-               $user_data =User::where('client_id',$client_id)->get(["id","name","user_code","client_id", "email"])->toarray();
+            $user_data = User::where('client_id', $client_id)->get(["id", "name", "user_code", "client_id", "email"])->toarray();
 
-               $dateString  = Carbon::parse($date)->format('Y-m-d');
+            $dateString  = Carbon::parse($date)->format('Y-m-d');
 
-     foreach($user_data as $key =>$single_user_data){
+            foreach ($user_data as $key => $single_user_data) {
 
-      if ( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-            || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                if (
+                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
                 ) {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -2939,27 +2974,24 @@ class VmtAttendanceReportsService
                 if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
                     $deviceData[] = array(
                         'date' => $dateString,
-                        'user_code'=>$single_user_data['user_code'],
-                        'user_code'=>$single_user_data['name'],
+                        'user_code' => $single_user_data['user_code'],
+                        'user_code' => $single_user_data['name'],
                         'checkin_time' => $deviceCheckInTime,
                         'checkout_time' => $deviceCheckOutTime,
                         'attendance_mode_checkin' => 'biometric',
                         'attendance_mode_checkout' => 'biometric'
                     );
                 }
-
             }
-                  return $deviceData;
-
-            }catch(\Exception $e){
-                return response()->json([
-                     'status'=>"failure",
-                     'message'=>"",
-                     'data'=>$e->getmessage(),
-                ]);
-            }
-
-   }
+            return $deviceData;
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => "failure",
+                'message' => "",
+                'data' => $e->getmessage(),
+            ]);
+        }
+    }
 
     public function fetchOvertimeReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
     {

@@ -161,7 +161,8 @@ class VmtEmployeeAttendanceController extends Controller
                 }
             }
         }
-        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($start_date,  $end_date, $client_domain), $public_client_logo_path), 'Basic Attendance Report c  .xlsx');
+       // dd($request->all());
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($request->start_date,  $request->end_date,$request->date,$request->department_id,$request->client_id,$request->active_status), $public_client_logo_path), 'Basic Attendance Report c  .xlsx');
     }
 
     public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work

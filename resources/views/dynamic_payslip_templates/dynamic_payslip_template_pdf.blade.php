@@ -57,8 +57,8 @@
     <table style="width: 100%;  border-collapse: collapse; background:#fff;  ">
             <tr>
                 <td colspan="3" style="margin-top:-10px" >
-                    <h3 style="color:#000; ">PAYSLIP <span style="color:#383838; font-weight:500;   font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
-                    <p style="color:#000;font-size:10px; margin-top:-10px;">{{$client_details[0]['client_fullname']}}</p>
+                    <h3 style="color:#000; ">PAYSLIP <span style="color:#6b7280; font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
+                    <h1 style="color:#000;font-size:10px; margin-top:-10px;">{{$client_details[0]['client_fullname']}}</h1>
                     <div style=" text-align: justify; width:200px;">
                         <p style="color:#000; font-size:9px;  text-align:left; margin-top:-10px;">{{ $client_details[0]['address'] }}</p>
                     </div>
