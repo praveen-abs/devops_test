@@ -9,7 +9,7 @@
                         <!-- useEmployeeReport.updateEmployeeApplyFilter(activetab) -->
                         <button @click="Reports_store.updateAttendanceReports(Reports_store.activetab)"
                     class="my-2 flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] !bg-[#E6E6E6] mx-2 rounded-[4px] "><i
-                        class="mr-2 pi pi-filter"></i> Apply Filter</button>
+                        class="mr-2 pi pi-filter"></i> Run</button>
             </div>
         </div>
         <div style="position: relative;">
@@ -116,11 +116,7 @@
                                         placeholder="Select Type"
                                         class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                                 </div>
-                                <div>
-                                    <Calendar v-model="Reports_store.Start_Date" @date-select="Reports_store.select_StartAndEnd_Date('start_date',dayjs(Reports_store.Start_Date).format('YYYY-MM-DD'), Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
-                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @date-select="Reports_store.select_StartAndEnd_Date('end_date',dayjs(Reports_store.End_Date).format('YYYY-MM-DD') , Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
 
-                                </div>
 
 
 
@@ -160,6 +156,15 @@
                                     style="white-space: nowrap;text-align: left; !important;width:15rem !important; marign-right:1rem !important ;">
                                 </Column>
                             </DataTable>
+
+                            <Dialog v-model:visible="Reports_store.dialog_customDate" modal header="Custom Date" :style="{ width: '30vw' }">
+                                <div>
+                                    <div class="flex items-center">
+                                    <Calendar v-model="Reports_store.Start_Date" @date-select="Reports_store.select_StartAndEnd_Date('start_date',dayjs(Reports_store.Start_Date).format('YYYY-MM-DD'), Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
+                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @date-select="Reports_store.select_StartAndEnd_Date('end_date',dayjs(Reports_store.End_Date).format('YYYY-MM-DD') , Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
+                                 </div>
+                                </div>                                
+                            </Dialog>
 
                         </div>
                     </div>
