@@ -124,17 +124,14 @@ class VmtEmployeeAttendanceController extends Controller
     {
 
         $client_domain = $request->getHttpHost();
-        if ($request->start_date == null || $request->end_date == null) {
-            $current_date = Carbon::now();
-            $current_month = $current_date->format('m');
-            $last_month =  $current_month - 1;
-            $date = 26;
-            $year =  $current_date->format('Y');
-            $start_date =  Carbon::parse($year . '-' . $last_month . '-' . $date)->format('Y-m-d');
-            if ($current_date->lt(Carbon::parse($year . '-' .   $current_month . '-' . 25))) {
-                $end_date = Carbon::parse($year . '-' .   $current_month . '-' . 25)->format('Y-m-d');
+        if (empty($request->start_date)  || empty($request->end_date)) {
+            if (empty($date)) {
+                $date = Carbon::now()->format('Y-m-d');
+                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
             } else {
-                $end_date =   $current_date->format('Y-m-d');
+                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
             }
         } else {
             $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
@@ -162,7 +159,7 @@ class VmtEmployeeAttendanceController extends Controller
             }
         }
        // dd($request->all());
-        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($request->start_date,  $request->end_date,$request->date,$request->department_id,$request->client_id,$request->active_status), $public_client_logo_path), 'Basic Attendance Report c  .xlsx');
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport( $start_date, $end_date,$request->department_id,$request->client_id,$request->active_status), $public_client_logo_path, $active_status), 'Basic Attendance Report c  .xlsx');
     }
 
     public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work

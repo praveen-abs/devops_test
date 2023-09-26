@@ -182,7 +182,7 @@ class VmtAttendanceReportsService
         }
     }
 
-    public function basicAttendanceReport($start_date,  $end_date, $date, $department_id, $client_id, $active_status)
+    public function basicAttendanceReport($start_date,  $end_date, $department_id, $client_id, $active_status)
     {
         ini_set('max_execution_time', 3000);
         //dd($month);
@@ -201,20 +201,6 @@ class VmtAttendanceReportsService
         } else {
             $active_status = $active_status;
         }
-        if (!empty($start_date) && !empty($end_date)) {
-            $start_date = $start_date;
-            $end_date = $end_date;
-        } else {
-            if (empty($date)) {
-                $date = Carbon::now()->format('Y-m-d');
-                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
-            } else {
-                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
-            }
-        }
-
         $reportresponse = array();
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
