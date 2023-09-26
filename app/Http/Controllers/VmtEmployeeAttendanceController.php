@@ -125,17 +125,17 @@ class VmtEmployeeAttendanceController extends Controller
 
         $client_domain = $request->getHttpHost();
         if (empty($request->start_date)  || empty($request->end_date)) {
-            if (empty($date)) {
+            if (empty($request->date)) {
                 $date = Carbon::now()->format('Y-m-d');
                 $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
                 $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
             } else {
-                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
-                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+                $start_date = Carbon::parse($request->date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($request->date)->addDay(24)->format(('Y-m-d'));
             }
         } else {
-            $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
-            $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
+            $start_date = Carbon::parse($request->start_date);
+            $end_date = Carbon::parse($request->end_date);
         }
         // dd($attendance_report_service->basicAttendanceReport($year)[0]);
         //return $attendance_report_service->basicAttendanceReport($year);
@@ -158,8 +158,9 @@ class VmtEmployeeAttendanceController extends Controller
                 }
             }
         }
-       // dd($request->all());
-        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport( $start_date, $end_date,$request->department_id,$request->client_id,$request->active_status), $public_client_logo_path, $active_status), 'Basic Attendance Report c  .xlsx');
+        // dd($request->all());
+        $period = Carbon::parse($start_date)->format('d-M-Y') . ' - ' . Carbon::parse($end_date)->format('d-M-Y');
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status), $public_client_logo_path, $active_status, $period,sessionGetSelectedClientName() ), 'Basic Attendance Report c  .xlsx');
     }
 
     public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work

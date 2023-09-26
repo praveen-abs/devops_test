@@ -694,6 +694,7 @@ class VmtReportsController extends Controller
                 }
             }
         }
+         
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
