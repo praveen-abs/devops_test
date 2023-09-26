@@ -209,10 +209,13 @@ class VmtEmployeeAttendanceController extends Controller
             $end_date = $request->end_date;
         } else {
             $date = $request->date;
+            $client_name = sessionGetSelectedClientName();
+            $client_logo_path = session()->get('client_logo_url');
+            $public_client_logo_path = public_path($client_logo_path);
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return Excel::download(new LateComingReportExport($attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Late Coming Report.xlsx');
+        return Excel::download(new LateComingReportExport($attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status),$public_client_logo_path, $client_name), 'Late Coming Report.xlsx');
     }
 
     public function fetchEGReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
