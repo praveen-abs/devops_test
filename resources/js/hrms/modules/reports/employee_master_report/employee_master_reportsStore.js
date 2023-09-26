@@ -152,64 +152,9 @@ const getEmployeeCTC = () => {
     })
 }
 
-function updateEmployeeApplyFilter(val){
-    filterbtn.value = val;
-    if(val===2){
-        axios.post('/fetch-employee-ctc-report',selectedfilters)
-        .then(res => {
-            console.log(res.data.rows,"get value ");
-            employeeCTCReportSource.value = res.data.rows
-            console.log(employeeCTCReportSource.value," testings data");
-            res.data.headers.forEach(element => {
-                let format = {
-                    title: element
-                }
-                Employee_CTCReportDynamicHeaders.value.push(format)
-                console.log(element);
-            });
+function updateEmployeeApplyFilter(active_status){
+    console.log("active_status: ",active_status);
 
-            console.log(Employee_CTCReportDynamicHeaders.value);
-//
-            if (res.data.rows.length === 0) {
-                Swal.fire({
-                    title: res.data.status = "failure",
-                    text: "No employees found in this category",
-                    // "Salary Advance Succesfully",
-                    icon: "error",
-                    showCancelButton: false,
-                }).then((res) => {
-                    // blink_UI.value = res.data.data;
-
-                })
-
-            }
-
-        });
-
-
-
-    }else{
-        selectedfilters.active_status="";
-        selectedfilters.date="";
-        selectedfilters.department_id="";
-        selectedfilters.legal_entity="";
-
-        legal_Entity.value="";
-        Department.value="";
-        period_Date.value="";
-        select_Category.value="";
-
-        getEmployeeCTC();
-    }
-
-
-}
-
-
-
-function getSelectoption(key,filterValue,active_status){
-
-    console.log(key,filterValue,active_status);
     Employee_MaterReportDynamicHeaders.value.splice(0, Employee_MaterReportDynamicHeaders.value.length);
     employeeMaterReportSource.value.splice(0,employeeMaterReportSource.value.length);
 
@@ -217,24 +162,8 @@ function getSelectoption(key,filterValue,active_status){
     Employee_CTCReportDynamicHeaders.value.splice(0,
         Employee_CTCReportDynamicHeaders.value.length);
 
-        canShowLoading.value = true
-    if (key == "department") {
-        selectedfilters.department_id = filterValue;
-
-    } else
-        if (key == "Category") {
-            selectedfilters.active_status = filterValue
-            console.log(selectedfilters);
-        } else
-            if (key == "date") {
-                selectedfilters.date = filterValue
-            } else
-                if (key == "legal_entity") {
-                    selectedfilters.legal_entity = filterValue
-                }
-
-                if(active_status == 1){
-                    // canShowLoading.value = true;
+      if(active_status == 1){
+                    canShowLoading.value = true;
                    let url = `/fetch-master-employee-report`;
                    axios.post(url,selectedfilters).then(res => {
                     console.log(res.data.rows,"get value ");
@@ -264,7 +193,7 @@ function getSelectoption(key,filterValue,active_status){
 
                 })
 
-                }else{
+                }else if(active_status==2){
 
                     let url = '/fetch-employee-ctc-report';
 
@@ -298,6 +227,103 @@ function getSelectoption(key,filterValue,active_status){
     
                     })
                 }
+
+
+}
+
+
+
+function getSelectoption(key,filterValue,active_status){
+
+    console.log(key,filterValue,active_status);
+    // Employee_MaterReportDynamicHeaders.value.splice(0, Employee_MaterReportDynamicHeaders.value.length);
+    // employeeMaterReportSource.value.splice(0,employeeMaterReportSource.value.length);
+
+    // employeeCTCReportSource.value.splice(0,employeeCTCReportSource.value.length);
+    // Employee_CTCReportDynamicHeaders.value.splice(0,
+    //     Employee_CTCReportDynamicHeaders.value.length);
+
+        // canShowLoading.value = true
+    if (key == "department") {
+        selectedfilters.department_id = filterValue;
+
+    } else
+        if (key == "Category") {
+            selectedfilters.active_status = filterValue
+            console.log(selectedfilters);
+        } else
+            if (key == "date") {
+                selectedfilters.date = filterValue
+            } else
+                if (key == "legal_entity") {
+                    selectedfilters.legal_entity = filterValue
+                }
+
+                // if(active_status == 1){
+                //     // canShowLoading.value = true;
+                //    let url = `/fetch-master-employee-report`;
+                //    axios.post(url,selectedfilters).then(res => {
+                //     console.log(res.data.rows,"get value ");
+                //     employeeMaterReportSource.value = res.data.rows
+                //     console.log(employeeMaterReportSource.value," testings data");
+                //     res.data.headers.forEach(element => {
+                //         let format = {
+                //             title: element
+                //         }
+                //         Employee_MaterReportDynamicHeaders.value.push(format)
+                //         console.log(element);
+                //     });
+                //     console.log(Employee_MaterReportDynamicHeaders.value);
+
+                //     if (res.data.headers.length === 0) {
+                //         Swal.fire({
+                //             title: res.data.status = "failure",
+                //             text: "No employees found in this category",
+                //             icon: "error",
+                //             showCancelButton: false,
+                //         }).then((res) => {
+
+                //         })
+                //     }
+                // }).finally(()=>{
+                //     canShowLoading.value = false
+
+                // })
+
+                // }else{
+
+                //     let url = '/fetch-employee-ctc-report';
+
+                //     canShowLoading.value = true;
+
+                //     axios.post(url,selectedfilters).then(res => {
+                //         console.log(res.data.rows,"get value ");
+                //         employeeCTCReportSource.value = res.data.rows
+                //         console.log(employeeCTCReportSource.value," testings data");
+                //         res.data.headers.forEach(element => {
+                //             let format = {
+                //                 title: element
+                //             }
+                //             Employee_CTCReportDynamicHeaders.value.push(format)
+                //             console.log(element);
+                //         });
+                //         console.log(Employee_CTCReportDynamicHeaders.value);
+
+                //         if (res.data.rows.length === 0) {
+                //             Swal.fire({
+                //                 title: res.data.status = "failure",
+                //                 text: "No employees found in this category",
+                //                 icon: "error",
+                //                 showCancelButton: false,
+                //             }).then((res) => {
+
+                //             })
+                //         }
+                //     }).finally(()=>{
+                //         canShowLoading.value = false
+    
+                //     })
+                // }
 }
 
 
