@@ -385,7 +385,7 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                     } else
                         if (attendance_Type.value == 2) {
                             url = '/report/download-early-going-report'
-                            filename = "Attendance Early-coming Report"
+                            filename = "Attendance Early going Report"
                         } else
                             if (attendance_Type.value == 3) {
                                 url = '/report/download-absent-report'
