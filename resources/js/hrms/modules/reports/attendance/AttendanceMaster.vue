@@ -106,7 +106,7 @@
                                 </div>
 
                                 <div class="flex items-center pt-2 ml-2" v-if="Reports_store.activetab == 5">
-                                    <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Period : </h1>
+                                    <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Category : </h1>
                                     <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
                                         v-model="Reports_store.attendance_Type"
                                         placeholder="Select Type"
