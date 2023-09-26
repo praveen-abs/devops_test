@@ -7,7 +7,7 @@
                 <i class="mr-2 text-red-600 pi pi-exclamation-triangle" style="font-size: 1.3rem" />
                 <span class="my-auto">Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
-            <div class="flex w-full p-2 justify-left" v-if="reject == 'Reject'">
+            <div class="flex w-full p-2 justify-left">
                 <Textarea v-model="reviewer_comment" rows="3" cols="30" class="border rounded-md" />
             </div>
             <template #footer>

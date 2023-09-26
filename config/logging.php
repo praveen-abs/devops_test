@@ -113,6 +113,29 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'birthday' => [
+
+            'driver' => 'single',
+
+            'path' => storage_path('logs/birthday.log'),
+
+            'level' => 'info',
+
+            'days' => 14,
+
+        ],
+
+        'anniversary' => [
+
+            'driver' => 'single',
+
+            'path' => storage_path('logs/anniversary.log'),
+
+            'level' => 'info',
+
+            'days' => 14,
+
+        ],
     ],
 
 ];

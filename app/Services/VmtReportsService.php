@@ -84,14 +84,14 @@ class VmtReportsservice
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id')->toArray();
+                $client_id =  $client_id;
             }
             // dd($client_id);
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -111,17 +111,20 @@ class VmtReportsservice
             $headings = array();
             $temp_ar = array();
             $headers = array();
-
+            
             $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                ->where('users.is_ssa','=','0')
+                ->where('users.active','=','1')
                 ->where('vmt_employee_details.doj', '<', $date_req)
                 ->whereIn('users.client_id', $client_id)
                 ->where('users.active', $active_status)
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
+
 
 
             foreach ($emp_ctc_detail as $singleemployeedata) {
@@ -158,7 +161,7 @@ class VmtReportsservice
                 $temp_ar['Special Allowance'] = round((int) $singleemployeedata->special_allowance) == 0 ? "0" : round((int) $singleemployeedata->special_allowance);
                 $temp_ar['Fixed Gross'] = round((int) $singleemployeedata->gross) == 0 ? "0" : round((int) $singleemployeedata->gross);
                 $temp_ar['EPFER'] = round((int) $singleemployeedata->epf_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->epf_employer_contribution);
-                $temp_ar['EDLI Charges'] = round((int) $singleemployeedata->epf_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->epf_employer_contribution);
+                $temp_ar['EDLI Charges'] = round((int) $singleemployeedata->edli_charges) == 0 ? "0" : round((int) $singleemployeedata->edli_charges);
                 $temp_ar['PF ADMIN Charges'] = round((int) $singleemployeedata->pf_admin_charges) == 0 ? "0" : round((int) $singleemployeedata->pf_admin_charges);
                 $temp_ar['ESICER'] = round((int) $singleemployeedata->esic_employer_contribution) == 0 ? "0" : round((int) $singleemployeedata->esic_employer_contribution);
                 $temp_ar['Insurance'] =  round((int) $singleemployeedata->insurance) == 0 ? "0" : round((int) $singleemployeedata->insurance);
@@ -197,9 +200,10 @@ class VmtReportsservice
         return $response;
     }
 
-    public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id,$date_req)
+    public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id, $date_req)
 
     {
+     
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
@@ -227,18 +231,18 @@ class VmtReportsservice
         }
 
         try {
-
+           
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id');
             } else {
-                $client_id = VmtClientMaster::where('id', $client_id)->pluck('id');
+                $client_id =  $client_id;
             }
 
 
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
-                $active_status = [$active_status];
+                $active_status = $active_status;
             }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
@@ -246,7 +250,7 @@ class VmtReportsservice
 
             if (empty($department_id)) {
                 $get_department = Department::pluck('id');
-            } else{
+            } else {
                 $get_department = $department_id;
             }
             $date = Carbon::now()->format('M-Y');
@@ -257,16 +261,18 @@ class VmtReportsservice
             $headings = array();
             $type = '';
             $temp_ar = array();
-           // dd($date_req);
-          // $date_req ='2022-05-01';
+            // dd($date_req);
+            // $date_req ='2022-05-01';
             $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
                 ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details as statutory', 'statutory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
+                ->where('users.is_ssa','=','0')
                 ->whereIn('users.client_id', $client_id)
-                ->where('employee.doj', '<', $date_req)
+                ->whereDate('employee.doj', '<', $date_req)
+                ->whereIn('users.active', $active_status)
                 ->whereIn('office.department_id', $get_department)
                 ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
@@ -276,11 +282,11 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-               //  dd( $emp_master_detail);
+                
             foreach ($emp_master_detail as $single_details) {
-               // dd($single_details);
+                // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
-               // dd(  $temp_ar);
+                // dd(  $temp_ar);
                 $temp_ar['Employee Name'] = $single_details->name;
                 $temp_ar['Gender'] = strtoupper($single_details->gender);
                 $temp_ar['DOB'] = Carbon::parse($single_details->dob)->format('d-M-Y');
@@ -291,6 +297,7 @@ class VmtReportsservice
                     $temp_ar['Employee Status'] = "Exit";
                 } else if ($single_details->active == 0) {
                     $temp_ar['Employee Status'] = 'Not Yet Active';
+                
                 }
                 $temp_ar['Last Working Day'] = carbon::parse($single_details->dol)->format('d-M-Y');
                 $temp_ar['NATIONALITY'] = $single_details->nationality;
@@ -304,13 +311,13 @@ class VmtReportsservice
                 $temp_ar['Office Mobile Number'] = $single_details->official_mobile;
                 $temp_ar['Reporting Managers Employee Code'] = $single_details->l1_manager_code;
                 //for   Reporting Manager Name
-                if ($single_details->l1_manager_code!=null || $single_details->l1_manager_code!='undefined'||!empty($single_details->l1_manager_code)) {
-                    if(empty(user::where('user_code', $single_details->l1_manager_code)->first()->name)){
+
+                if ($single_details->l1_manager_code != null || $single_details->l1_manager_code != 'undefined' || !empty($single_details->l1_manager_code)) {
+                    if (empty(user::where('user_code', $single_details->l1_manager_code)->first()->name)) {
                         $temp_ar['Reporting Managers Name'] = null;
-                    }else{
+                    } else {
                         $temp_ar['Reporting Managers Name'] = user::where('user_code', $single_details->l1_manager_code)->first()->name;
                     }
-                   
                 } else {
                     $temp_ar['Reporting Managers Name'] = null;
                 }
@@ -333,11 +340,25 @@ class VmtReportsservice
                 //for father mother detail need dob also
                 $user_id = User::where('user_code', $single_details->user_code)->first()->id;
                 $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
+                $temp_ar['Father Name']='';
+                $temp_ar['Mother Name']='';
+                $temp_ar['Spouse Name']='';
+                $temp_ar['Children Name'] ='';
                 foreach ($family_details as $singleFamilyDetails) {
-                    $temp_ar[$singleFamilyDetails->relationship . " Name"] = $singleFamilyDetails->name;
+                    if (strtolower($singleFamilyDetails->relationship) == 'father') {
+                        $temp_ar['Father Name'] = $singleFamilyDetails->name;
+                    } else if (strtolower($singleFamilyDetails->relationship) == 'mother') {
+                        $temp_ar['Mother Name'] = $singleFamilyDetails->name;
+                    } else if (strtolower($singleFamilyDetails->relationship) == 'spouse') {
+                        $temp_ar['Spouse Name'] = $singleFamilyDetails->name;
+                    } else if (strtolower($singleFamilyDetails->relationship) == 'children') {
+                        $temp_ar['Children Name'] = $singleFamilyDetails->name;
+                    }
                 }
                 $temp_ar['No of Children'] = $single_details->no_of_children;
                 $temp_ar['Marital Status'] = VmtMaritalStatus::where('id', $single_details->marital_status_id)->first()->name ?? '';
+                // if ($temp_ar['Employee Code'] == 'DM034')
+                //     dd($temp_ar);
                 $temp_ar['Marriage Date'] = $single_details->wedding_date;
                 $temp_ar['Present Address'] = $single_details->present_address;
                 $temp_ar['Permanent Address'] = $single_details->permanent_address;
@@ -349,30 +370,30 @@ class VmtReportsservice
                 $temp_ar['Food Allowance'] = $single_details->food_allowance;
                 $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
                 // $temp_ar['Uniform Allowance'] = $single_details->; 
-                $temp_ar['Special Allowance'] = $single_details->special_allowance;
-                $temp_ar['STATUTORY BONUS'] = $single_details->Statutory_bonus;
-                $temp_ar['Other Allowance'] = $single_details->other_allowance;
-                $temp_ar['Leave Travel Allowance (LTA)'] = $single_details->lta;
+                $temp_ar['Special Allowance'] = round((int) $single_details->special_allowance) == 0 ? "0" : round((int) $single_details->special_allowance);
+                $temp_ar['STATUTORY BONUS'] = round((int) $single_details->Statutory_bonus) == 0 ? "0" : round((int) $single_details->Statutory_bonus);
+                $temp_ar['Other Allowance'] = round((int) $single_details->other_allowance) == 0 ? "0" : round((int) $single_details->other_allowance);
+                $temp_ar['Leave Travel Allowance (LTA)'] = round((int) $single_details->lta) == 0 ? "0" : round((int) $single_details->lta);
                 // $temp_ar['Telephone Reimbursement'] = $single_details->;
                 // $temp_ar['vehicle Reimbursement'] = $single_details->;
                 $temp_ar['Driver Salary'] = $single_details->driver_salary;
-                $temp_ar['Fixed Gross'] = $single_details->gross;
+                $temp_ar['Fixed Gross'] = round((int) $single_details->gross) == 0 ? "0" : round((int) $single_details->gross);
                 // $temp_ar['Pf Wages'] = $single_details->;
-                $temp_ar['EPFER'] = $single_details->epf_employer_contribution;
-                $temp_ar['EDLI Charges'] = $single_details->edli_charges;
-                $temp_ar['PF ADMIN Charges'] = $single_details->pf_admin_charges;
-                $temp_ar['ESICR'] = $single_details->esic_employer_contribution;
+                $temp_ar['EPFER'] = round((int) $single_details->epf_employer_contribution) == 0 ? "0" : round((int) $single_details->epf_employer_contribution);
+                $temp_ar['EDLI Charges'] = round((int) $single_details->edli_charges) == 0 ? "0" : round((int) $single_details->edli_charges);
+                $temp_ar['PF ADMIN Charges'] = round((int) $single_details->pf_admin_charges) == 0 ? "0" : round((int) $single_details->pf_admin_charges);
+                $temp_ar['ESICER'] = round((int) $single_details->esic_employer_contribution) == 0 ? "0" : round((int) $single_details->esic_employer_contribution);
                 // $temp_ar[' employer Insurance'] = $single_details->;
-                $temp_ar['LWFER'] = $single_details->labour_welfare_fund;
-                $temp_ar['CTC'] = $single_details->cic;
-                $temp_ar['EPFEE'] = $single_details->epf_employee;
-                $temp_ar['ESICEE'] = $single_details->esic_employee;
-                $temp_ar['Professional Tax'] = $single_details->professional_tax;
-                $temp_ar['Income Tax'] = $single_details->Income_tax;
-                $temp_ar['LWFEE'] = $single_details->lwfee;
+                $temp_ar['LWFER'] = round((int)$single_details->labour_welfare_fund) == 0 ? "0" : round((int) $single_details->labour_welfare_fund);
+                $temp_ar['CTC'] = round((int) $single_details->cic) == 0 ? "0" : round((int) $single_details->cic);
+                $temp_ar['EPFEE'] = round((int)  $single_details->epf_employee) == 0 ? "0" : round((int) $single_details->epf_employee);
+                $temp_ar['ESICEE'] = round((int)$single_details->esic_employee) == 0 ? "0" : round((int) $single_details->esic_employee);
+                $temp_ar['Professional Tax'] = round((int) $single_details->professional_tax) == 0 ? "0" : round((int) $single_details->professional_tax);
+                $temp_ar['Income Tax'] = round((int)$single_details->Income_tax) == 0 ? "0" : round((int) $single_details->Income_tax);
+                $temp_ar['LWFEE'] = round((int)$single_details->lwfee) == 0 ? "0" : round((int) $single_details->lwfee);
                 // $temp_ar[' employee Insurance'] = $single_details->;
-                $temp_ar['Total Deduction'] =    (int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE'];
-                $temp_ar['NET Pay '] =  $single_details->net_income;
+                $temp_ar['Total Deduction'] = round((int)$temp_ar['EPFEE'] + (int)$temp_ar['ESICEE'] +  (int)$temp_ar['Income Tax'] + (int)$temp_ar['Professional Tax'] + (int)$temp_ar['LWFEE']);
+                $temp_ar['NET Pay '] = round((int)$single_details->net_income) == 0 ? "0" : round((int) $single_details->net_income);
 
 
 
@@ -398,10 +419,10 @@ class VmtReportsservice
                 array_push($processed_array, $temp_ar);
                 unset($temp_ar);
             }
-           
+
             if ($processed_array) {
                 foreach ($processed_array[0] as $key => $value) {
-                    array_push($headings,$key);
+                    array_push($headings, $key);
                 }
                 $response['headers'] = $headings;
                 $response['rows'] = $processed_array;
@@ -414,11 +435,11 @@ class VmtReportsservice
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
-                'line'=>$e->getTraceAsString(),
+                'line' => $e->getTraceAsString(),
                 'error_verbose' => $e->getLine()
             ];
         }
-       // dd($response);
+        // dd($response);
         return $response;
     }
 }

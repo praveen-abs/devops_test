@@ -122,7 +122,9 @@ class VmtPMSModuleController extends Controller
 
         $loggedInUser = Auth::user();
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','allEmployeesWithoutLoggedUserList','loggedInUser','calendar_type','year','frequency','assignment_period'));
+        $canShowOverallScoreCard_SelfAppraisal_Dashboard = fetchPMSConfigValue('can_show_overallscorecard_in_selfappraisal_dashboard');
+
+        return view('pms.vmt_pms_dashboard_v2', compact('canShowOverallScoreCard_SelfAppraisal_Dashboard','dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','allEmployeesWithoutLoggedUserList','loggedInUser','calendar_type','year','frequency','assignment_period'));
     }
 
     // function uised for get KPI Form Names in Dashboard Dropdown  through AJAX
@@ -208,7 +210,10 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         $flowCheck = 2;
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser','loggedManagerEmployeesIDs','calendar_type','year','frequency','assignment_period'));
+
+        $canShowOverallScoreCard_SelfAppraisal_Dashboard = fetchPMSConfigValue('can_show_overallscorecard_in_selfappraisal_dashboard');
+
+        return view('pms.vmt_pms_dashboard_v2', compact('canShowOverallScoreCard_SelfAppraisal_Dashboard','dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser','loggedManagerEmployeesIDs','calendar_type','year','frequency','assignment_period'));
     }
 
     // flow 3 pms V2

@@ -1,12 +1,15 @@
 <template>
-    <div>
+    <!-- <div>
         <button @click="downloadExcelFile">Download Excel</button>
-    </div>
+    </div> -->
+    <module_settings />
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import * as ExcelJS from 'exceljs'
+
+import module_settings from '../hrms/modules/configurations/module_settings/module_settings.vue';
 
 const dataArray = ref([
     { Name: 'John', Age: 28, Email: 'john@example.com' },

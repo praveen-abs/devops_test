@@ -291,12 +291,13 @@ class VmtProfilePagesService
         unset($response['id']);
         //dd($response['getEmployeeDetails']);
         if(!empty($response['getEmployeeDetails'])){
-
             foreach ($response['getEmployeeDetails']->toArray() as $key => $value) {
                 if ($value == null || empty($value) || $value == 'none') {
                     $response['getEmployeeDetails'][$key] = '';
                 }
             }
+            $response['getEmployeeDetails']['current_address_line_1'] = $response['getEmployeeDetails']['current_address_line_1'].','.$response['getEmployeeDetails']['current_address_line_2'];
+            $response['getEmployeeDetails']['permanent_address_line_1'] =  $response['getEmployeeDetails']['permanent_address_line_1'].','.$response['getEmployeeDetails']['permanent_address_line_2'];
            }
             //dd($response['getEmployeeDetails']);
         if(!empty($response['getEmployeeOfficeDetails'])){
