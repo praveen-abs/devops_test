@@ -89,10 +89,10 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         let url;
         let subUrl;
 
-        // if (active_status == 1) {
-        //     // Detailed Reports
-        //     url = `/fetch-detailed-attendance-data`;
-        // } else
+        if (active_status == 1) {
+            // Detailed Reports
+            url = `/fetch-detailed-attendance-data`;
+        } else
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
@@ -147,6 +147,89 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
         // canShowLoading.value = true;
 
+        // if (url) {
+        //     useEmployeeMaster.canShowLoading = true
+        //     axios.post(url, selectedfilters).then(res => {
+        //         AttendanceReportSource.value = res.data.rows;
+        //         res.data.headers.forEach(element => {
+        //             let format = {
+        //                 title: element
+        //             }
+        //             AttendanceReportDynamicHeaders.value.push(format);
+
+        //             if (res.data.rows.length === 0) {
+        //                 Swal.fire({
+        //                     title: res.data.status = "failure",
+        //                     text: "No employees found in this category",
+        //                     // "Salary Advance Succesfully",
+        //                     icon: "error",
+        //                     showCancelButton: false,
+        //                 }).then((res) => {
+        //                     // blink_UI.value = res.data.data;
+
+        //                 })
+
+        //             }
+        //         });
+        //     }).finally(() => {
+        //         useEmployeeMaster.canShowLoading = false
+        //         useEmployeeMaster.selectedfilters.active_status="";
+        //         useEmployeeMaster.selectedfilters.date="";
+        //         useEmployeeMaster.selectedfilters.department_id="";
+        //         useEmployeeMaster.selectedfilters.legal_entity="";
+        
+        //         useEmployeeMaster.legal_Entity="";
+        //         useEmployeeMaster.Department="";
+        //         useEmployeeMaster.period_Date="";
+        //         useEmployeeMaster.select_Category=""
+        //     })
+
+        // }
+
+
+    }
+
+    function updateAttendanceReports(active_status){
+        let url ;
+
+        console.log(active_status,"url ");
+
+        if (active_status == 2) {
+            // Muster Reports
+            url = `/fetch-attendance-data`;
+        } else
+        if (active_status == 4) {
+            // Overtime Reports
+            url = `/fetch-overtime-report-data`;
+        } else
+            if (active_status == 5) {
+                if (attendance_Type.value) {
+                    if (attendance_Type.value == 1) {
+                        url = '/fetch-LC-report-data'
+                    } else
+                        if (attendance_Type.value == 2) {
+                            url = '/fetch-EG-report-data'
+                        } else
+                            if (attendance_Type.value == 3) {
+                                url = '/fetch-absent-report-data'
+                            } else
+                                    if (attendance_Type.value ==4) {
+                                        url = '/fetch-half-day-report'
+                                    }
+                } else {
+                    Swal.fire({
+                        title: "error",
+                        text: "selected report type",
+                        icon: "error",
+                        showCancelButton: false,
+                    })
+
+                    useEmployeeMaster.period_Date = null
+                    useEmployeeMaster.Department = null
+                    useEmployeeMaster.legal_Entity = null
+                }
+            }
+
         if (url) {
             useEmployeeMaster.canShowLoading = true
             axios.post(url, selectedfilters).then(res => {
@@ -185,7 +268,6 @@ export const UseReports_store = defineStore("UseReports_store", () => {
             })
 
         }
-
 
     }
 
@@ -240,40 +322,40 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                         console.log(selectedfilters);
                     } 
 
-                    if(active_status !== 1 && selectedfilters.start_date && selectedfilters.end_date){
+                    // if(active_status !== 1 && selectedfilters.start_date && selectedfilters.end_date){
 
-                        console.log("success");
+                    //     console.log("success");
 
-                        useEmployeeMaster.canShowLoading = true
-                        axios.post(url, selectedfilters).then(res => {
-                            AttendanceReportSource.value = res.data.rows;
-                            res.data.headers.forEach(element => {
-                                let format = {
-                                    title: element
-                                }
-                                AttendanceReportDynamicHeaders.value.push(format);
+                    //     useEmployeeMaster.canShowLoading = true
+                    //     axios.post(url, selectedfilters).then(res => {
+                    //         AttendanceReportSource.value = res.data.rows;
+                    //         res.data.headers.forEach(element => {
+                    //             let format = {
+                    //                 title: element
+                    //             }
+                    //             AttendanceReportDynamicHeaders.value.push(format);
             
-                                if (res.data.rows.length === 0) {
-                                    Swal.fire({
-                                        title: res.data.status = "failure",
-                                        text: "No employees found in this category",
-                                        // "Salary Advance Succesfully",
-                                        icon: "error",
-                                        showCancelButton: false,
-                                    }).then((res) => {
-                                        // blink_UI.value = res.data.data;
+                    //             if (res.data.rows.length === 0) {
+                    //                 Swal.fire({
+                    //                     title: res.data.status = "failure",
+                    //                     text: "No employees found in this category",
+                    //                     // "Salary Advance Succesfully",
+                    //                     icon: "error",
+                    //                     showCancelButton: false,
+                    //                 }).then((res) => {
+                    //                     // blink_UI.value = res.data.data;
             
-                                    })
+                    //                 })
             
-                                }
-                            });
-                        }).finally(() => {
-                            useEmployeeMaster.canShowLoading = false
-                        })
+                    //             }
+                    //         });
+                    //     }).finally(() => {
+                    //         useEmployeeMaster.canShowLoading = false
+                    //     })
 
-                    }else{
-                        console.log("testing start date and end date ::",selectedfilters);
-                    }
+                    // }else{
+                    //     console.log("testing start date and end date ::",selectedfilters);
+                    // }
 
     }
 
@@ -416,7 +498,10 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         attendance_Type,
         downloadAttendanceReports,
         clearDataTable,
-        select_StartAndEnd_Date
+        select_StartAndEnd_Date,
+
+        // apply filter ::
+        updateAttendanceReports 
     }
 
 });

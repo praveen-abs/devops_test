@@ -155,8 +155,15 @@ const getEmployeeCTC = () => {
 function updateEmployeeApplyFilter(active_status){
     console.log("active_status: ",active_status);
 
+    Employee_MaterReportDynamicHeaders.value.splice(0, Employee_MaterReportDynamicHeaders.value.length);
+    employeeMaterReportSource.value.splice(0,employeeMaterReportSource.value.length);
+
+    employeeCTCReportSource.value.splice(0,employeeCTCReportSource.value.length);
+    Employee_CTCReportDynamicHeaders.value.splice(0,
+        Employee_CTCReportDynamicHeaders.value.length);
+
       if(active_status == 1){
-                    // canShowLoading.value = true;
+                    canShowLoading.value = true;
                    let url = `/fetch-master-employee-report`;
                    axios.post(url,selectedfilters).then(res => {
                     console.log(res.data.rows,"get value ");
