@@ -13,7 +13,7 @@
 
                 <button class="p-2 mx-2 rounded-md w-[120px]" :class="[ !UseEmployeeMaster.employeeCTCReportSource.length == 0 ? 'bg-[#000] text-white':' !text-[#000] !bg-[#E6E6E6] ']"
                  @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download,UseEmployeeMaster.downloadEmployeeCTC() ">
-                        <p class=" relative left-2 font-['poppins']">Download</p>
+                        <p class=" relative left-2 font-['poppins']" :class="[!UseEmployeeMaster.employeeCTCReportSource.length == 0 ? 'bg-[#000] !text-[#ffff]' : '!text-[#000] !bg-[#E6E6E6]']">Download</p>
                         <div id="btn-download"  style=" position: absolute; right: 0;"
                             :class="[UseEmployeeMaster.btn_download == true ? toggleClass : ' ' ]">
                             <svg width="22px" height="16px" viewBox="0 0 22 16" :class="[ !UseEmployeeMaster.employeeCTCReportSource.length == 0 ? '!stroke-[#ffff] ':'!stroke-[#000]']" >

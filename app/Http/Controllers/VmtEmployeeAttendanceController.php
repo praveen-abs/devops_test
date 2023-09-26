@@ -26,6 +26,7 @@ use App\Exports\DetailedAttendanceExport;
 use App\Exports\OverTimeReportExport;
 use App\Exports\EarlyGoingReportExport;
 use App\Exports\HalfDayReportExport;
+use App\Exports\InvestmentsReportsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -43,7 +44,13 @@ class VmtEmployeeAttendanceController extends Controller
         }
         // $start_date ='2023-06-26';
         // $end_date ='2023-06-29';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status)), 'Detailed Attendance Report.xlsx');
+        $is_lc = false;
+        if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
+            $is_lc = true;
+        }
+        $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
+        // dd($data);
+        return Excel::download(new DetailedAttendanceExport($data, $is_lc), 'Detailed Attendance Report.xlsx');
     }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -135,7 +142,27 @@ class VmtEmployeeAttendanceController extends Controller
         }
         // dd($attendance_report_service->basicAttendanceReport($year)[0]);
         //return $attendance_report_service->basicAttendanceReport($year);
-        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($start_date,  $end_date, $client_domain)), 'Basic Attendance Report c  .xlsx');
+        $client_logo_path = session()->get('client_logo_url');
+        $public_client_logo_path = public_path($client_logo_path);
+
+
+        if (empty($request->active_status)) {
+            $active_status = 'Active,Resigned,Yet to activate';
+        } else {
+            $active_status = '';
+            foreach ($request->active_status as $single_sts) {
+                if ($single_sts == '0') {
+                    $active_status = $active_status . 'Yet to activate,';
+                } else if ($single_sts == '1') {
+                    $active_status = $active_status . 'Active,';
+                } else if ($single_sts == '-1') {
+                    $active_status = $active_status . 'Resigned,';
+                } else {
+                }
+            }
+        }
+       // dd($request->all());
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($request->start_date,  $request->end_date,$request->date,$request->department_id,$request->client_id,$request->active_status), $public_client_logo_path), 'Basic Attendance Report c  .xlsx');
     }
 
     public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -285,6 +312,14 @@ class VmtEmployeeAttendanceController extends Controller
         $response = $attendance_report_service->shiftTimeForEmployee($start_date, $end_date, $client_domain);
         return $response;
     }
+
+    public function downloadInvestmentReport(Request $request, VmtAttendanceReportsService $attendance_report_service)
+    {
+
+
+        return Excel::download(new InvestmentsReportsExport($attendance_report_service->fetchInvestmentTaxReports()), 'Investments Report.xlsx');
+    }
+
 
 
     public function showLateComingReport(Request $request)

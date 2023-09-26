@@ -6,7 +6,7 @@ import employee_CTC from "./employee_master_report/employee_CTC.vue";
 
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(),
     routes: [
         {
             path: "/testing_pradeesh",
@@ -14,7 +14,7 @@ const router = createRouter({
             component: employeeMaster,
             children: [{ path: '/', name: 'user', component: Employee_Master },
             { path: '/employee_CTC', name: 'user', component: employee_CTC },
-        
+
         ],
         },
         {

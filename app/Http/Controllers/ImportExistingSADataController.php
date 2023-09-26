@@ -113,10 +113,10 @@ class ImportExistingSADataController extends Controller
         }
         return (json_encode($approver_flow, true));
     }
-
-    public function storeBulkFinComponentsPayslips($data)
+ // public function storeBulkFinComponentsPayslips($data)
+    public function storeExistingLoanAmount(Request $request)
     {
-        // dd($data[0]);
+        dd($request->all());
 
         $max_loan_amount = array();
         $max_tenure = array();
