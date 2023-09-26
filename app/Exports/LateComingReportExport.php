@@ -10,9 +10,10 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Maatwebsite\Excel\Concerns\WithDrawings;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Carbon\Carbon;
 
-class LateComingReportExport implements FromArray,WithStrictNullComparison,WithHeadings,ShouldAutoSize,WithDrawings
+class LateComingReportExport implements FromArray,WithStrictNullComparison,WithHeadings,ShouldAutoSize,WithDrawings,WithCustomStartCell
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -20,15 +21,20 @@ class LateComingReportExport implements FromArray,WithStrictNullComparison,WithH
     protected $report;
     protected $last_row;
     protected $public_client_logo_path;
-    protected $client_name;
-
+    protected $last_header_column;
     private $headers;
-    public function __construct($data,$public_client_logo_path ,$client_name)
+    protected $client_name;
+    protected $date;
+
+
+    public function __construct($data,$client_name,$public_client_logo_path,$date)
     {
         $this->report = $data['rows'];
         $this->last_row=count($this->report)+2;
         $this->client_name = $client_name;
+        $this->date = $date;
         $this->public_client_logo_path = $public_client_logo_path;
+        $this->last_header_column = num2alpha(count($data['headers']) - 1);
         $this->headers = $data['headers'];
     }
     public function headings():array
@@ -51,13 +57,32 @@ class LateComingReportExport implements FromArray,WithStrictNullComparison,WithH
 
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
         
-        
 
         //For Remove Grid Lines
         $sheet->setShowGridlines(false);
 
-        //For First Row
         $sheet->mergeCells('C1:E1')->setCellValue('C1', "Legal Entity : " .$this->client_name);
+        $sheet->getStyle('C1:E1')->getFont()->setBold(true);
+
+        //For Second Row
+        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Employee CTC Report');
+        $sheet->getStyle('C2:E2')->getFont()->setBold(true);
+
+        //For Third Row
+        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".Carbon::parse($this->date)->format('d-M-Y'));
+        $sheet->getStyle('C3:E3')->getFont()->setBold(true);
+        //for fourth row
+        // $sheet->mergeCells('C4:E4')->setCellValue('C4', "Category : ". $this->category);
+        // $sheet->getStyle('C4:E4')->getFont()->setBold(true);
+
+        $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('002164');
+        $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFont()->setBold(true)
+            ->getColor()->setRGB('ffffff');
+        //for allignment
+        // $sheet->getStyle('E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $range = 'A1:'. $this->last_header_column.$this->last_row;
         $sheet->getStyle('C1:E1')->getFont()->setBold(true);
         $style = [
             'alignment' => [
@@ -72,11 +97,10 @@ class LateComingReportExport implements FromArray,WithStrictNullComparison,WithH
     public function drawings()
     {
         $drawing = new Drawing();
-        $drawing->setName($this->client_name);
-        $drawing->setDescription($this->client_name);
         $drawing->setPath($this->public_client_logo_path);
         $drawing->setHeight(1350);
         $drawing->setWidth(224);
         $drawing->setCoordinates('A1');    
+        return $drawing;
     }
 }

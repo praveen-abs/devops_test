@@ -204,18 +204,22 @@ class VmtEmployeeAttendanceController extends Controller
     }
     public function downloadLCReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
+      
         if (!empty($request->start_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
         } else {
             $date = $request->date;
-            $client_name = sessionGetSelectedClientName();
-            $client_logo_path = session()->get('client_logo_url');
+            $client_id = sessionGetSelectedClientid();
+            $client_details =VmtClientMaster::where('id',$client_id )->first();
+            $client_name =$client_details->client_name;
+            $client_logo_path = $client_details->client_logo;
             $public_client_logo_path = public_path($client_logo_path);
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return Excel::download(new LateComingReportExport($attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status),$public_client_logo_path, $client_name), 'Late Coming Report.xlsx');
+        $data=$attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
+        return Excel::download(new LateComingReportExport($data,$client_name,$public_client_logo_path, $request->date), 'Late Coming Report.xlsx');
     }
 
     public function fetchEGReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
