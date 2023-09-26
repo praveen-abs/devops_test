@@ -656,5 +656,13 @@ class HomeController extends Controller
 
     }
 
+    public function showModuleSettingsPage(){
+
+        return view('sidebar_module_settings');
+
+
+
+    }
+
 
 }
