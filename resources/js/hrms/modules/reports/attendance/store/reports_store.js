@@ -17,6 +17,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
     const getDepartment = ref();
     const getPeriodMonth = ref();
 
+    const dialog_customDate = ref(false);
+
 
     // v-model values
     const Legal_Entity = ref();
@@ -88,6 +90,15 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         console.log(selectedfilters);
         let url;
         let subUrl;
+
+        console.log(filterValue);
+
+        if(filterValue==="custom_date"){
+            dialog_customDate.value= true;
+        }
+        else{
+            dialog_customDate.value= false;
+        }
 
         if (active_status == 1) {
             // Detailed Reports
@@ -256,15 +267,15 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 });
             }).finally(() => {
                 useEmployeeMaster.canShowLoading = false
-                useEmployeeMaster.selectedfilters.active_status="";
-                useEmployeeMaster.selectedfilters.date="";
-                useEmployeeMaster.selectedfilters.department_id="";
-                useEmployeeMaster.selectedfilters.legal_entity="";
+                // useEmployeeMaster.selectedfilters.active_status="";
+                // useEmployeeMaster.selectedfilters.date="";
+                // useEmployeeMaster.selectedfilters.department_id="";
+                // useEmployeeMaster.selectedfilters.legal_entity="";
         
-                useEmployeeMaster.legal_Entity="";
-                useEmployeeMaster.Department="";
-                useEmployeeMaster.period_Date="";
-                useEmployeeMaster.select_Category=""
+                // useEmployeeMaster.legal_Entity="";
+                // useEmployeeMaster.Department="";
+                // useEmployeeMaster.period_Date="";
+                // useEmployeeMaster.select_Category=""
             })
 
         }
@@ -321,6 +332,9 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                         selectedfilters.end_date = filterValue
                         console.log(selectedfilters);
                     } 
+                    if(selectedfilters.start_date && selectedfilters.end_date){
+                        dialog_customDate.value= false;
+                    }
 
                     // if(active_status !== 1 && selectedfilters.start_date && selectedfilters.end_date){
 
@@ -501,7 +515,11 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         select_StartAndEnd_Date,
 
         // apply filter ::
-        updateAttendanceReports 
+        updateAttendanceReports ,
+
+        // custom date dialog box variable
+
+        dialog_customDate
     }
 
 });

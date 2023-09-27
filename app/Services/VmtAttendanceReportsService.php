@@ -1759,6 +1759,17 @@ class VmtAttendanceReportsService
                         $attendanceResponseArray[$key]['OT'],
                         $lc_mins . ' Minutes'
                     );
+
+                    //for decimal values
+                    // array_push(
+                    //     $arrayReport,
+                    //     $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkin_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkin_time'], 3, -3),
+                    //     $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkout_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkout_time'], 3, -3),
+                    //     $attendanceResponseArray[$key]['OT'],
+                    //     $lc_mins . ' Minutes'
+                    // );
+
+
                     // if($singleUser->id==206)
                     //  dd($arrayReport);
                     $current_date = Carbon::parse($attendanceResponseArray[$key]['date']);

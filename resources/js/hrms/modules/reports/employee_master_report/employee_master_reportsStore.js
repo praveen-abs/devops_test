@@ -258,7 +258,6 @@ function getSelectoption(key,filterValue,active_status){
                 if (key == "legal_entity") {
                     selectedfilters.legal_entity = filterValue
                 }
-
                 // if(active_status == 1){
                 //     // canShowLoading.value = true;
                 //    let url = `/fetch-master-employee-report`;
@@ -423,6 +422,21 @@ function getSelectoption(key,filterValue,active_status){
 
     }
 
+    function filterCustomDate(activetab){
+
+        if(activetab===4){
+           
+            console.log(PeriodMonth.value);
+            PeriodMonth.value.push({date: "custom_date", month: "Custom Date"});
+            console.log("Attendance Reports");
+        }else{
+            PeriodMonth.value.pop();
+            console.log("Employee Master Report");
+        }
+
+
+    }
+
     const resetChars = () =>{
         selectedfilters.active_status="";
         selectedfilters.date="";
@@ -489,7 +503,9 @@ function getSelectoption(key,filterValue,active_status){
         clearfilterBtn,
         testings,
         selectedfilters,
-        resetChars
+        resetChars,
+
+        filterCustomDate
 
 
 
