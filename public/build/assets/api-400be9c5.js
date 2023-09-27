@@ -1,0 +1,1 @@
+import{a as n}from"./index-362795f3.js";import{Q as t,ae as s}from"./inputnumber.esm-4a242a4c.js";const f={__name:"api",setup(c){const r=t([]),e=t(!0),o=async()=>{try{const a=await n.get("http://115.240.254.90:81/iclock/Main.aspx");r.value=a.data}catch(a){console.error("Error fetching data:",a)}finally{e.value=!1}};return s(()=>{o()}),(a,i)=>null}};export{f as default};
