@@ -18,10 +18,10 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const downloadShiftDetails = ref([])
 
 
-    const getAttendanceDashboardMainSource = () =>{
+    const getAttendanceDashboardMainSource = async() =>{
         canShowLoading.value = true
          let url = '/get-attendance-dashboard'
-        axios.get(url).then(res=>{
+       await axios.get(url).then(res=>{
             attendanceOverview.value = res.data.attendance_overview
             attendanceDashboardWorkShiftSource.value = res.data.work_shift
             // attendanceDashboardUpcoming.value = res.data.upcomings

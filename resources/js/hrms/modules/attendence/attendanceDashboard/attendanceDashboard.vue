@@ -106,10 +106,10 @@ import { saveAs } from "file-saver";
 
 const useDashboard = useAttendanceDashboardMainStore()
 
-onMounted(() => {
-    useDashboard.getAttendanceDashboardMainSource()
+onMounted(async () => {
+   await useDashboard.getAttendanceDashboardMainSource()
 })
-
+s
 
 const downloadExcelFile = async () => {
     const workbook = new ExcelJS.Workbook();

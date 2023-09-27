@@ -22,7 +22,7 @@
               <div class="w-[100%]">
                  <Topbar />
               </div>
-              <div class="h-screen w-[100%]  p-2 pb-11 overflow-y-auto">
+              <div class="h-screen w-[100%]  p-2 pb-11 overflow-y-auto main-content">
                  <RouterView></RouterView>
               </div>
            </div>
