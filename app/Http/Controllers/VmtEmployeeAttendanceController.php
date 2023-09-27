@@ -54,16 +54,16 @@ class VmtEmployeeAttendanceController extends Controller
     }
     public function downloadConsolidateReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
-        dd('hii');
+
         if (!empty($request->start_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
         } else {
             //$date = $request->date;
             $date = "2023-09-01";
-            $start_date = Carbon::parse($date)->subMonth()->addDay(1)->format('Y-m-d');
+            $start_date = Carbon::parse($date)->subMonth()->addDay(30)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(1)->format(('Y-m-d'));
-            dd($start_date,$end_date);
+// dd( $start_date,$end_date );
         }
         // $start_date ='2023-06-26';
         // $end_date ='2023-06-29';
