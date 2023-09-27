@@ -425,13 +425,9 @@ function getSelectoption(key,filterValue,active_status){
     function filterCustomDate(activetab){
 
         if(activetab===4){
-           
-            console.log(PeriodMonth.value);
             PeriodMonth.value.push({date: "custom_date", month: "Custom Date"});
-            console.log("Attendance Reports");
         }else{
             PeriodMonth.value.pop();
-            console.log("Employee Master Report");
         }
 
 

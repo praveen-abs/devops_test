@@ -93,38 +93,57 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
         console.log(filterValue);
 
-        if(filterValue==="custom_date"){
-            dialog_customDate.value= true;
-        }
-        else{
-            dialog_customDate.value= false;
-        }
+      
+        // else if(filterValue=="custom_date" && active_status==5 ){
+        //      dialog_customDate.value= false;
+        // }
 
         if (active_status == 1) {
             // Detailed Reports
             url = `/fetch-detailed-attendance-data`;
+            if(filterValue==="custom_date"){
+                dialog_customDate.value= true;
+            }
         } else
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
+                if(filterValue==="custom_date"){
+                    dialog_customDate.value= true;
+                }
             } else
             if (active_status == 4) {
                 // Overtime Reports
                 url = `/fetch-overtime-report-data`;
+                if(filterValue==="custom_date"){
+                    dialog_customDate.value= true;
+                }
             } else
                 if (active_status == 5) {
                     if (attendance_Type.value) {
                         if (attendance_Type.value == 1) {
-                            url = '/fetch-LC-report-data'
+                            url = '/fetch-LC-report-data';
+                            if(filterValue==="custom_date"){
+                                dialog_customDate.value= true;
+                            }
                         } else
                             if (attendance_Type.value == 2) {
-                                url = '/fetch-EG-report-data'
+                                url = '/fetch-EG-report-data';
+                                if(filterValue==="custom_date"){
+                                    dialog_customDate.value= true;
+                                }
                             } else
                                 if (attendance_Type.value == 3) {
-                                    url = '/fetch-absent-report-data'
+                                    url = '/fetch-absent-report-data';
+                                    if(filterValue==="custom_date"){
+                                        dialog_customDate.value= true;
+                                    }
                                 } else
                                         if (attendance_Type.value ==4) {
-                                            url = '/fetch-half-day-report'
+                                            url = '/fetch-half-day-report';
+                                            if(filterValue==="custom_date"){
+                                                dialog_customDate.value= true;
+                                            }
                                         }
                     } else {
                         Swal.fire({

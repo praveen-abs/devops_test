@@ -172,7 +172,7 @@
                     <transition enter-active-class="transition duration-200 ease-out transform"
                         enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                         leave-active-class="transition duration-100 ease-in transform"
-                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
+                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"  @mouseleave="useDashboard.canShowCurrentEmployee = false" >
                         <div v-if="useDashboard.canShowCurrentEmployee"
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14">
                             <!-- Dropdown content goes here -->
