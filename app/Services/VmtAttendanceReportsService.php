@@ -47,7 +47,20 @@ class VmtAttendanceReportsService
     }
     public function canCalculateOt($user_code)
     {
-        $ot_ids = array('DM007', 'DM009', 'DM012', 'DM016', 'DM018', 'DM019', 'DM022', 'DM028', 'DM029', 'DM032', 'DM034', 'DM038', 'DM045', 'DM054', 'DM059', 'DM069', 'DM088', 'DM091', 'DM101', 'DM103', 'DM104', 'DM107', 'DM112', 'DM113', 'DM120', 'DM123', 'DM124', 'DM125', 'DM127', 'DM128', 'DM134', 'DM140', 'DM145', 'DM146', 'DM148', 'DM149', 'DM150', 'DM151', 'DM153', 'DM156', 'DM160', 'DM161', 'DM162', 'DM163', 'DM165', 'DM166', 'DM167', 'DM169', 'DM170', 'DM175', 'DM176', 'DM177', 'DM178', 'DM179', 'DM180', 'DM181', 'DM182', 'DM183', 'DMC069', 'DMC072', 'DMC083', 'DMC084', 'DMC086', 'DMC087', 'DMC089', 'DMC090', 'DMC091', 'DMC092', 'DMC093', 'DMC094', 'DMC095', 'DMC097', 'DMC101', 'DMC102', 'DMC103', 'DMC104', 'DMC105', 'DMC106', 'DMC107', 'DMC108', 'DMC110', 'DMC111', 'DMC114', 'DMC115', 'DMC116', 'DMC118', 'DMC119', 'DMC120', 'DMC121', 'DMC123', 'DMC124', 'DMC125', 'DMC126', 'DMC128', 'DMC129', 'DMC130', 'DMC133', 'DMC136', 'DMC137', 'DMC138', 'DMC139', 'DMC142', 'DMC143', 'DMC144', 'DMC145', 'DMC146', 'DMC147', 'DMC148', 'DMC149', 'DMC150', 'DMC151', 'DMC152', 'DMC153', 'DMC154', 'DMC155', 'DMC156', 'DMC158', 'DMC159', 'DMC161', 'DMC162', 'DMC163', 'DMC164', 'DMC165', 'DMC166', 'DMC168', 'DMC169', 'DMC170', 'DMC173', 'DMC174', 'DMC176', 'DMC177');
+        $ot_ids = array(
+            'DM007', 'DM009', 'DM012', 'DM016', 'DM018', 'DM019', 'DM022', 'DM028', 'DM029', 'DM032', 'DM034', 'DM038',
+            'DM045', 'DM054', 'DM059', 'DM069', 'DM088', 'DM091', 'DM101', 'DM103', 'DM104', 'DM107', 'DM112', 'DM113', 'DM120', 'DM123',
+            'DM124', 'DM125', 'DM127', 'DM128', 'DM134', 'DM140', 'DM145', 'DM146', 'DM148', 'DM149', 'DM150', 'DM151', 'DM153', 'DM156',
+            'DM160', 'DM161', 'DM162', 'DM163', 'DM165', 'DM166', 'DM167', 'DM169', 'DM170', 'DM175', 'DM176', 'DM177', 'DM178', 'DM179',
+            'DM180', 'DM181', 'DM182', 'DM183', 'DMC069', 'DMC072', 'DMC083', 'DMC084', 'DMC086', 'DMC087', 'DMC089', 'DMC090', 'DMC091',
+            'DMC092', 'DMC093', 'DMC094', 'DMC095', 'DMC097', 'DMC101', 'DMC102', 'DMC103', 'DMC104', 'DMC105', 'DMC106', 'DMC107', 'DMC108',
+            'DMC110', 'DMC111', 'DMC114', 'DMC115', 'DMC116', 'DMC118', 'DMC119', 'DMC120', 'DMC121', 'DMC123', 'DMC124', 'DMC125', 'DMC126',
+            'DMC128', 'DMC129', 'DMC130', 'DMC133', 'DMC136', 'DMC137', 'DMC138', 'DMC139', 'DMC142', 'DMC143', 'DMC144', 'DMC145', 'DMC146',
+            'DMC147', 'DMC148', 'DMC149', 'DMC150', 'DMC151', 'DMC152', 'DMC153', 'DMC154', 'DMC155', 'DMC156', 'DMC158', 'DMC159', 'DMC161',
+            'DMC162', 'DMC163', 'DMC164', 'DMC165', 'DMC166', 'DMC168', 'DMC169', 'DMC170', 'DMC173', 'DMC174', 'DMC176', 'DMC177',
+            'DM192', 'DM194', 'DM195', 'DM196', 'DM197', 'DM198', 'DM199', 'DM200', 'DM201', 'DM202', 'DM203', 'DM205', 'DM207', 'DM208', 'DM209',
+            'DM211', 'DM212', 'DM213', 'DM214', 'DM215',
+        );
         if (sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "DMC") {
             if (in_array($user_code,  $ot_ids)) {
                 return true;
@@ -1865,16 +1878,16 @@ class VmtAttendanceReportsService
                 // foreach ($attendanceResponseArray as $key => $value) {
 
                 // }
-
-                if ($total_OT > 0) {
+                if ($this->canCalculateOt($singleUser->user_code)) {
                     //dd( $total_OT);
                     $total_OT = CarbonInterval::minutes($total_OT)->cascade();
                     $total_hours = (int)$total_OT->totalHours;
                     $total_minutes = $total_OT->toArray()['minutes'];
                     $total_OT =  $total_hours . '.' . $total_minutes;
                     // dd(  $total_OT );
+                } else {
+                    $total_OT = 0;
                 }
-
 
                 array_push($arrayReport, $total_weekoff, $total_holidays, $total_OT, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD,);
                 if ($attendance_setting_details['lc_status'] == 1) {
@@ -2631,7 +2644,7 @@ class VmtAttendanceReportsService
                     if ($value['isMIP'] != null || $value['isLC'] != null) {
                         $temp_ar['Employee Code'] = $value['user_code'];
                         $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = $value['date_day'];
+                        $temp_ar['Date'] = Carbon::parse($key)->format('d-M-Y');
                         $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
                         $temp_ar['Shift Name'] =   $current_shift->shift_name;
                         $regularized_sts = 'No';
@@ -2646,11 +2659,12 @@ class VmtAttendanceReportsService
                         }
                         $out_punch = $value['checkout_time'];
                         if ($in_punch  != null) {
-                            $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
+                            $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch));
                             $lc_ar = CarbonInterval::minutes($lc1_total_mins)->cascade();
                             $lc_hrs = (int) $lc_ar->totalHours;
                             $lc_mins = $lc_ar->toArray()['minutes'];
                             $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
+                            // $lc1_total_mins =     $lc_ar->forHumans(); 
                         } else {
                             $LCDuration  = '-';
                         }
@@ -2706,11 +2720,14 @@ class VmtAttendanceReportsService
             );
             $response['rows'] = $lcData;
         } catch (\Exception $e) {
-            $response = [
+            return  $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+                'trace line' => $e->getTraceAsString(),
+                'data' => $single_data[$key],
+                'lc_total_mins' => $lc1_total_mins
             ];
         }
         return $response;
@@ -2780,7 +2797,7 @@ class VmtAttendanceReportsService
                     if ($value['isMOP'] != null || $value['isEG'] != null) {
                         $temp_ar['Employee Code'] = $value['user_code'];
                         $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = $value['date_day'];
+                        $temp_ar['Date'] = Carbon::parse($key)->format('d-M-Y');
                         $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
                         $temp_ar['Shift Name'] =   $current_shift->shift_name;
                         $regularized_sts = 'No';
@@ -2797,7 +2814,7 @@ class VmtAttendanceReportsService
 
                         if ($out_punch   != null) {
                             // $EGDuration = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . ' Mins';
-                            $eg1_total_mins = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . 'Mins';
+                            $eg1_total_mins = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time));
                             $eg_ar = CarbonInterval::minutes($eg1_total_mins)->cascade();
                             $eg_hrs = (int) $eg_ar->totalHours;
                             $eg_mins = $eg_ar->toArray()['minutes'];
@@ -2853,11 +2870,13 @@ class VmtAttendanceReportsService
             );
             $response['rows'] =  $ecData;
         } catch (\Exception $e) {
-            $response = [
+            return  $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+                'trace line' => $e->getTraceAsString(),
+                'data' => $single_data[$key]
             ];
         }
         return $response;
@@ -3140,7 +3159,5 @@ class VmtAttendanceReportsService
 
     public function fetchConsolidateReportData($start_date, $end_date, $department_id, $client_id, $active_status)
     {
-       
     }
-
 }
