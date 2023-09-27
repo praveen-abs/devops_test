@@ -2,7 +2,7 @@
     <!-- {{ activeSettings ? findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 ?[]:null:null}} -->
     <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
     <div class=" bg-white h-[60px]"
-        @mouseleave="useDashboard.canShowConfiguration = false, useDashboard.canShowClients = false">
+        @mouseleave="useDashboard.canShowConfiguration = false">
         <div class="grid items-center justify-between grid-cols-12 ">
             <!-- Organization List  -->
             <div class="relative col-span-4 px-2 py-2 mx-2 border-1 border-x-gray-300">
