@@ -1765,22 +1765,22 @@ class VmtAttendanceReportsService
                         $lc_mins = Carbon::parse($attendanceResponseArray[$key]['checkin_time'])->diffInMinutes($attendanceResponseArray[$key]['shift_start_time']);
                         $total_LC_mins =  $total_LC_mins + $lc_mins;
                     }
-                    array_push(
-                        $arrayReport,
-                        $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : $attendanceResponseArray[$key]['checkin_time'],
-                        $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : $attendanceResponseArray[$key]['checkout_time'],
-                        $attendanceResponseArray[$key]['OT'],
-                        $lc_mins . ' Minutes'
-                    );
-
-                    //for decimal values
                     // array_push(
                     //     $arrayReport,
-                    //     $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkin_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkin_time'], 3, -3),
-                    //     $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkout_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkout_time'], 3, -3),
+                    //     $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : $attendanceResponseArray[$key]['checkin_time'],
+                    //     $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : $attendanceResponseArray[$key]['checkout_time'],
                     //     $attendanceResponseArray[$key]['OT'],
                     //     $lc_mins . ' Minutes'
                     // );
+
+                    //for decimal values
+                    array_push(
+                        $arrayReport,
+                        $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkin_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkin_time'], 3, -3),
+                        $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkout_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkout_time'], 3, -3),
+                        $attendanceResponseArray[$key]['OT'],
+                        $lc_mins . ' Minutes'
+                    );
 
 
                     // if($singleUser->id==206)
@@ -3049,7 +3049,7 @@ class VmtAttendanceReportsService
             // dd($client_id);
 
             if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
+                $active_status = ['1'];
             } else {
                 $active_status = $active_status;
             }

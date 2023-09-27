@@ -43,7 +43,7 @@
     <Column field="holiday_date" header="Holiday Date">
     <template #body="slotProps"  >
         <!-- <div> -->
-            {{ dayjs(slotProps.data.holiday_date).format('DD/MM/YYYY')  }}
+            {{ dayjs(slotProps.data.holiday_date).format('DD/MM/YYYY')}}  {{  dayjs(slotProps.data.holiday_date).format('ddd')  }}
         <!-- </div> -->
     </template>
     </Column>
