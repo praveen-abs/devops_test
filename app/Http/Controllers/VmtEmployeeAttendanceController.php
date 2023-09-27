@@ -52,6 +52,29 @@ class VmtEmployeeAttendanceController extends Controller
         // dd($data);
         return Excel::download(new DetailedAttendanceExport($data, $is_lc), 'Detailed Attendance Report.xlsx');
     }
+    public function downloadConsolidateReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
+    {
+
+        if (!empty($request->start_date) && !empty($request->end_date)) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+        } else {
+            //$date = $request->date;
+            $date = "2023-09-01";
+            $start_date = Carbon::parse($date)->subMonth()->addDay(30)->format('Y-m-d');
+            $end_date = Carbon::parse($date)->addDay(1)->format(('Y-m-d'));
+// dd( $start_date,$end_date );
+        }
+        // $start_date ='2023-06-26';
+        // $end_date ='2023-06-29';
+        $is_lc = false;
+        if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
+            $is_lc = true;
+        }
+        $data = $attendance_report_service->fetchConsolidateReportData($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
+        // dd($data);
+        return Excel::download(new DetailedAttendanceExport($data, $is_lc), 'Detailed Attendance Report.xlsx');
+    }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
@@ -261,6 +284,9 @@ class VmtEmployeeAttendanceController extends Controller
         return Excel::download(new EarlyGoingReportExport($lc_data, $public_client_logo_path, $client_name), 'Early Going Report.xlsx');
        // return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Early Going Report.xlsx');
     }
+
+
+
     public function fetchHalfDayReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         if (!empty($request->start_date) && !empty($request->end_date)) {

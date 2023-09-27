@@ -1407,7 +1407,7 @@ class VmtAttendanceReportsService
                     }
                     array_push($header_2, 'Staus');
                     $attendanceResponseArray[$fulldate] = array(
-                        //"user_id"=>$request->user_id, 
+                        //"user_id"=>$request->user_id,
                         $dojformat = carbon::parse($singleUser->doj)->format('d-m-Y'),
                         "user_id" => $singleUser->id, "DOJ" => $dojformat, "isAbsent" => false, "isLeave" => false,
                         "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false,
@@ -3143,4 +3143,10 @@ class VmtAttendanceReportsService
         $response['rows'] = $otData;
         return $response;
     }
+
+    public function fetchConsolidateReportData($start_date, $end_date, $department_id, $client_id, $active_status)
+    {
+       
+    }
+
 }
