@@ -23,7 +23,13 @@ use App\Models\VmtClientMaster;
 <body>
 
     @vite('resources/js/hrms/modules/reports/employee_master_report/employee_master_report.js')
-    <div id="employee_master_report"></div>
+    {{-- <div id="employee_master_report"></div> --}}
+
+    @vite('resources/js/hrms/modules/reports/ReportsMaster.js')
+    <div id="ReportsMaster"></div>
+
+    @vite('resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js')
+    {{-- <div id="payslipPreview"></div> --}}
 
 
 

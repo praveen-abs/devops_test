@@ -87,6 +87,10 @@
                     <InputText v-model="data[field]" />
                 </template>
             </Column>
+            <template #footer>
+                <button class="flex justify-center mx-auto btn btn-orange"
+                    @click="useStore.uploadOnboardingFile(useStore.EmployeeSalaryAdvanceSource)">Upload</button>
+            </template>
         </DataTable>
 
     </div>

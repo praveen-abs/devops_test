@@ -107,14 +107,16 @@ class VmtDashboardService
         $leave_count = 0;
 
         //Get monthly attendance report data
-        $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
+        $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth_v2($user_code, $year, $month);
 
 
-       //If there is some error in above line, then throw failure message
-        if(!empty($attendance_DailyReport_PerMonth["status"]) && $attendance_DailyReport_PerMonth["status"] == 'failure')
-        {
+        //If there is some error in above line, then throw failure message
+        if (!empty($attendance_DailyReport_PerMonth["status"]) && $attendance_DailyReport_PerMonth["status"] == 'failure') {
             return $attendance_DailyReport_PerMonth;
         }
+
+        //Get the Month details array only.
+        $array_att_month_details = $attendance_DailyReport_PerMonth['data'];
 
         for ($i = 01; $i <= $day; $i++) {
             $month = date('m');
@@ -122,10 +124,10 @@ class VmtDashboardService
                 $i = '0' . $i;
             }
             $date = $year . '-' . $month . '-' . $i;
-            if ($attendance_DailyReport_PerMonth[$date]['checkin_time'] || $attendance_DailyReport_PerMonth[$date]['checkout_time']) {
+            if ($array_att_month_details[$date]['checkin_time'] || $array_att_month_details[$date]['checkout_time']) {
                 $present_count++;
-            } else if ($attendance_DailyReport_PerMonth[$date]['isAbsent']) {
-                if ($attendance_DailyReport_PerMonth[$date]['absent_status'] == 'Approved') {
+            } else if ($array_att_month_details[$date]['isAbsent']) {
+                if ($array_att_month_details[$date]['absent_status'] == 'Approved') {
                     $leave_count++;
                 } else {
                     $is_sunday_or_holiday = $this->checkingGivenDateHolidayOrNot($year, $month, $i);
@@ -936,14 +938,14 @@ class VmtDashboardService
 
     public function getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period)
     {
-        // TODO:: Which Leave Types we Have to Find Avalied And Balance //Need To Change In Setting Page
+        // TODO:: Which Leave Types we Have to Find availed And Balance //Need To Change In Setting Page
 
         //  $visible_leave_types = array('Casual/Sick Leave'=>1,'Earned Leave'=>2);
 
         try {
 
             $leave_balance_for_all_types = array();
-            $avalied_leaves = array();
+            $availed_leaves = array();
             $response = array();
             $accrued_leave_types = VmtLeaves::get();
             $temp_leave = array();
@@ -951,7 +953,7 @@ class VmtDashboardService
             foreach ($accrued_leave_types as $single_leave_types) {
                 if ($single_leave_types->is_finite == 1) {
                     if ($single_leave_types->is_carry_forward != 1) {
-                        $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
+                        $total_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                             ->whereBetween('start_date', [$start_time_period, $end_time_period])
                             ->where('leave_type_id', $single_leave_types->id)
                             ->whereIn('status', array('Approved', 'Pending'))
@@ -963,50 +965,50 @@ class VmtDashboardService
                         if ($single_leave_types->leave_type == 'Compensatory Off') {
                             $leave_balance = count($this->fetchUnusedCompensatoryOffDays($user_id));
                         } else {
-                            $leave_balance =  $total_accrued -  $total_avalied_leaves;
+                            $leave_balance =  $total_accrued -  $total_availed_leaves;
                             $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
-                            $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves;
+                            $availed_leaves[$single_leave_types->leave_type] =  $total_availed_leaves;
                         }
                         $temp_leave['leave_type'] = $single_leave_types->leave_type;
                         $temp_leave['leave_balance'] = $leave_balance;
-                        $temp_leave['avalied_leaves'] = $total_avalied_leaves;
+                        $temp_leave['availed_leaves'] = $total_availed_leaves;
                         // $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
-                        // $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
-                        //$temp_leave=array('leave_type'=>$single_leave_types->leave_type,'leave_balance'=>$leave_balance,'avalied_leaves'=>$total_avalied_leaves);
+                        // $availed_leaves[$single_leave_types->leave_type] =  $total_availed_leaves ;
+                        //$temp_leave=array('leave_type'=>$single_leave_types->leave_type,'leave_balance'=>$leave_balance,'availed_leaves'=>$total_availed_leaves);
 
                     } else if ($single_leave_types->is_carry_forward == 1) {
 
                         $total_accrued = VmtEmployeesLeavesAccrued::where('user_id', $user_id)
                             ->where('leave_type_id', $single_leave_types->id)
                             ->sum('accrued_leave_count');
-                        $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
+                        $total_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                             ->whereBetween('start_date', [$start_time_period, $end_time_period])
                             ->where('leave_type_id', $single_leave_types->id)
                             ->whereIn('status', array('Approved', 'Pending'))
                             ->sum('total_leave_datetime');
-                        $leave_balance =  $total_accrued - $total_avalied_leaves;
+                        $leave_balance =  $total_accrued - $total_availed_leaves;
                         // $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
-                        // $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                        // $availed_leaves[$single_leave_types->leave_type] =  $total_availed_leaves ;
                         $temp_leave['leave_type'] = $single_leave_types->leave_type;
                         $temp_leave['leave_balance'] = $leave_balance;
-                        $temp_leave['avalied_leaves'] = $total_avalied_leaves;
+                        $temp_leave['availed_leaves'] = $total_availed_leaves;
                     }
                 } else {
-                    $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
+                    $total_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                         ->whereBetween('start_date', [$start_time_period, $end_time_period])
                         ->where('leave_type_id', $single_leave_types->id)
                         ->whereIn('status', array('Approved', 'Pending'))
                         ->sum('total_leave_datetime');
-                    $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves;
+                    $availed_leaves[$single_leave_types->leave_type] =  $total_availed_leaves;
                     $temp_leave['leave_type'] = $single_leave_types->leave_type;
                     $temp_leave['leave_balance'] = 0;
-                    $temp_leave['avalied_leaves'] = $total_avalied_leaves;
+                    $temp_leave['availed_leaves'] = $total_availed_leaves;
                 }
                 array_push($response, $temp_leave);
 
                 unset($temp_leave);
             }
-            $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'Avalied Leaves' => $avalied_leaves);
+            $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'availed Leaves' => $availed_leaves);
             // return $response;
 
             return response()->json([
@@ -1489,16 +1491,43 @@ class VmtDashboardService
 
             $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']); //foractiveemployee
 
-            $emp_details_count['total_employee_count'] = user::where('is_ssa', '0')->where('active', '!=', '-1')->count(); //fortotalemployee
 
-            $emp_details_count['new_employee_count'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
+            $emp_details_count['total_employees'] = User::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
+                ->where('users.is_ssa', '0')->where('users.active', '!=', '-1')
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['total_employee_count'] = $emp_details_count['total_employees']->count(); //fortotalemployee
+
+            $emp_details_count['new_employees'] = user::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->wheredate('det.doj',   $current_date)->where('users.is_ssa', '!=', '1')->where('users.active', '=', '1')
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['new_employee_count'] =    $emp_details_count['new_employees']->count();
 
             // dd( $emp_details_count['newEmpCount']);
-            $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->get()->count();
+            $emp_details_count['active_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
+                ->join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->where('users.active', '1')
+                ->where('users.is_ssa', '0')
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['active_employee_count'] = $emp_details_count['active_employees']->count();
 
-            $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->get()->count();
+            $emp_details_count['yet_to_active_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
+                ->join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->where('users.active', '0')
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['yet_to_active_employee_count'] = $emp_details_count['yet_to_active_employees']->count();
 
-            $emp_details_count['exit_employee_count'] = User::where('active', '-1')->get()->count();
+            $emp_details_count['exit_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
+                ->join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->where('users.active', '-1')
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['exit_employee_count'] =  $emp_details_count['exit_employees']->count();
 
             $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
 
@@ -1518,16 +1547,47 @@ class VmtDashboardService
         } else if ($user_data['org_role'] == "4") {
 
             $employees_data = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get(['user_id as id']);
+            $emp_details_count['total_employees'] = User::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
+                ->where('users.is_ssa', '0')->where('users.active', '!=', '-1')->where('off.l1_manager_code', $user_code)
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['total_employee_count'] =  $emp_details_count['total_employees']->count();
 
-            $emp_details_count['total_employee_count'] = VmtEmployeeOfficeDetails::join("users", "users.id", "=", "vmt_employee_office_details.user_id")->where('l1_manager_code', $user_code)->where('active', '!=', '-1')->get(['user_id']); //formanagertotalemployeecount
 
-            $emp_details_count['new_employee_count'] = user::join('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->wheredate('vmt_employee_details.doj',   $current_date)->where('is_ssa', '!=', '1')->where('active', '=', '1')->count();
+            $emp_details_count['new_employees'] = user::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->wheredate('det.doj',   $current_date)->where('users.is_ssa', '!=', '1')->where('users.active', '=', '1')
+                ->whereIn('users.id', $employees_data)
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['new_employee_count'] = $emp_details_count['new_employees']->count();
 
-            $emp_details_count['active_employee_count'] = User::where('active', '1')->where('is_ssa', '0')->whereIn('id', $employees_data)->get()->count();
+            $emp_details_count['active_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
+                ->join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->where('users.active', '1')
+                ->where('users.is_ssa', '0')
+                ->whereIn('users.id', $employees_data)
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['active_employee_count'] =   $emp_details_count['active_employees']->count();
 
-            $emp_details_count['yet_to_active_employee_count'] = User::where('active', '0')->whereIn('id', $employees_data)->get()->count();
+            $emp_details_count['yet_to_active_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
+                ->join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->where('users.active', '0')
+                ->whereIn('users.id', $employees_data)
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['yet_to_active_employee_count'] =  $emp_details_count['yet_to_active_employees']->count();
 
-            $emp_details_count['exit_employee_count'] = User::where('active', '-1')->whereIn('id', $employees_data)->get()->count();
+
+            $emp_details_count['exit_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
+                ->join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+                ->where('users.active', '-1')
+                ->whereIn('users.id', $employees_data)
+                ->get(['users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            $emp_details_count['exit_employee_count'] =  $emp_details_count['exit_employees']->count();
 
             // $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
 
@@ -1605,7 +1665,7 @@ class VmtDashboardService
             }
         }
 
-        $pending_request_count['employee_absent_count'] =  $absent_count;
+        // $pending_request_count['employee_absent_count'] =  $absent_count;
 
 
         foreach ($employees_data as $key => $single_user_data) {
@@ -1624,7 +1684,7 @@ class VmtDashboardService
         $pending_request_count['Document Approvals'] = $doc_count;
         $pending_request_count['Attendance Regularization'] = $reg_count;
 
-        $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count,'graph_chart_count'=>$graph_chart_count];
+        $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count];
 
         return ($response);
     }
@@ -1636,8 +1696,6 @@ class VmtDashboardService
         $user_code =  auth()->user()->user_code;
 
         $user_data = User::where("user_code", $user_code)->first();
-
-
     }
 
 

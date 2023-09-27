@@ -845,7 +845,7 @@
                                         <span> Investment Settings</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('showMobileSettingsPage') }}" class="py-1 nav-link sidebar">
+                                    <a href="{{ route('Settings-Mobile') }}" class="py-1 nav-link sidebar">
                                         <span> Mobile Settings</span></a>
                                 </li>
                                 <li class="nav-item">

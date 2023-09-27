@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, reactive ,watch } from "vue";
 import axios from "axios";
-import {Service} from '../../Service/Service';
 
 export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
 

@@ -23,7 +23,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const EmployeeQuickOnboardingSource = ref()
     const EmployeeQuickOnboardingDynamicHeader = ref()
+    const currentlyImportedFileHeaders = ref()
     const selectedFile = ref()
+
 
     const totalRecordsCount = ref([])
     const errorRecordsCount = ref([])
@@ -44,27 +46,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         console.log(onboardingType);
         if (selectedFile.value) {
-            canShowloading.value = true
 
             var file = selectedFile.value;
             // var file = e.target.files[0];
             // input canceled, return
             if (!file) return;
-            setTimeout(() => {
-                if (onboardingType == 'quick') {
-                    type.value = 'quick'
-                    router.push({ path: `/import/${'quickOnboarding'}` })
-                } else
-                    if (onboardingType == 'bulk') {
-                        type.value = 'bulk'
-                        router.push({ path: `/import/${'bulkOnboarding'}` })
-                    } else {
-                        type.value = ''
-
-                    }
-                canShowloading.value = false
-            }, 500);
-
             /* reading excel file into Array of object */
 
             var reader = new FileReader();
@@ -74,6 +60,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 
                 // Dynamically Find header's from imported excel sheet
+                let currentlyImportFileHeaders = []
                 let excelHeaders = []
                 const headers = {};
                 const range = XLSX.utils.decode_range(firstSheet['!ref']);
@@ -88,6 +75,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                     if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
                     headers[C] = hdr;
 
+                    currentlyImportFileHeaders.push(headers[C])
+
                     let form = {
                         title: headers[C],
                         value: headers[C]
@@ -96,7 +85,44 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                     !headers[C].includes("UNKNOWN") ? excelHeaders.push(form) : ''
                 }
                 EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
-                console.log(excelHeaders);
+                currentlyImportedFileHeaders.value = currentlyImportFileHeaders
+                console.log(currentlyImportFileHeaders);
+
+                canShowloading.value = true
+                setTimeout(() => {
+                    if (onboardingType == 'quick') {
+                        if (validateArrays(currentlyImportFileHeaders, quickOnboardingHeaders.value)) {
+                            type.value = 'quick'
+                            router.push({ path: `/import/${'quickOnboarding'}` }
+                            )
+                            canShowloading.value = false
+                        } else {
+                            canShowloading.value = false
+                            toast.add({
+                                severity: "error",
+                                summary: 'Fields are not matched',
+                                detail: "fill",
+                                life: 2000,
+                            })
+                        }
+                    } else
+                        if (onboardingType == 'bulk') {
+                            type.value = 'bulk'
+                            if (validateArrays(currentlyImportFileHeaders, bulkOnboardingHeaders.value)) {
+                                router.push({ path: `/import/${'bulkOnboarding'}` })
+                                canShowloading.value = false
+                            } else {
+                                canShowloading.value = false
+                                toast.add({
+                                    severity: "error",
+                                    summary: 'Fields are not matched',
+                                    detail: "fill",
+                                    life: 2000,
+                                })
+                            }
+                        }
+
+                }, 1000);
 
                 // header: 1 instructs xlsx to create an 'array of arrays'
                 // var result = XLSX.utils.sheet_to_json(firstSheet, { raw: false, header: 1, dateNF: "dd/mm/yyyy" });
@@ -243,6 +269,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const existingMartialStatus = ref()
     const legalEntityDropdown = ref()
     const existingLegalEntity = ref([])
+    const quickOnboardingHeaders = ref()
+    const bulkOnboardingHeaders = ref()
 
     const getExistingOnboardingDocuments = () => {
 
@@ -265,6 +293,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 legalEntityDropdown.value ? legalEntityDropdown.value.forEach(ele => {
                     existingLegalEntity.value.push(ele.client_fullname);
                 }) : null
+                quickOnboardingHeaders.value = element.quick_onboard_column_data
+                bulkOnboardingHeaders.value = element.bulk_onboard_column_data
 
             });
         })
@@ -571,6 +601,28 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             }
 
         return errorMessages;
+    }
+
+
+    function validateArrays(arr1, arr2) {
+
+        console.log(arr1, arr2);
+
+        // Check if the arrays have the same length
+        if (arr1.length !== arr2.length) {
+            console.log("length is not equal");
+            return false;
+        }
+
+        // Iterate through the elements and compare them
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                console.log("not matched");
+                return false;
+            }
+        }
+        // If all elements are equal, the arrays are valid
+        return true;
     }
 
 

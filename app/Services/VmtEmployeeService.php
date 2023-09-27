@@ -242,7 +242,7 @@ class VmtEmployeeService
     private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
         try {
-            
+
             $newUser = new User;
             $newUser->name = $data['employee_name'];
             $newUser->email = empty($data["email"]) ? '' : $data["email"];
@@ -250,15 +250,15 @@ class VmtEmployeeService
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
             if($onboard_type == 'normal'){
-                $client_data =VmtMasterConfig::where("config_name","client_id")->first('config_value');
-                $newUser->client_id = $client_data['config_value'];
+
+                $newUser->client_id = sessionGetSelectedClientid();
             }else{
                 $emp_client_code = trim($data['legal_entity']);
-                
+
                 $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
 
 
-               
+
             }
 
             $newUser->active = '0';
@@ -527,7 +527,7 @@ class VmtEmployeeService
     {
 
         try {
-          
+
 
             $user_id = $user_data->id;
 
@@ -1236,7 +1236,7 @@ class VmtEmployeeService
                 'vmt_employee_documents.doc_url as doc_url'
             ]);
 
-           
+
         // //store all the documents in single key
         foreach ($query_pending_onboard_docs as $single_pending_docs) {
 
@@ -1417,6 +1417,52 @@ class VmtEmployeeService
                 'status' => 'failure',
                 'message' => "Error[ getEmployeeRole() ] ",
                 'data' => $e
+            ]);
+        }
+    }
+    public function updateMasterConfigClientCode($client_id)
+    {
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+            ],
+            $rules = [
+                "client_id" => 'required|exists:vmt_client_master,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+             $client_data =VmtClientMaster::where('id',$client_id)->first();
+
+            $update_master_config  = VmtMasterConfig::where('config_name','employee_code_prefix')->first();
+            $update_master_config->config_value = $client_data->client_code ;
+            $update_master_config->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "client code updated successfully",
+                'data' => $update_master_config
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "",
+                'data' => $e->getmessage()
             ]);
         }
     }

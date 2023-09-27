@@ -47,6 +47,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js',
                 'resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js',
                 'resources/js/hrms/modules/reports/employee_master_report/employee_master_report.js',
+                'resources/js/hrms/modules/reports/ReportsMaster.js',
 
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
@@ -136,6 +137,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/roles_permission/RolesPermission.js',
                 'resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js',
                 'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_settings.js',
 
                 // super Admin screen
                 'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
@@ -186,7 +188,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js',
 
             //  payslipPreview
-            'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
+            // 'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
+
+            // salary details 
+            'resources/js/hrms/modules/paycheck/salary_details/salary_details.js'
 
 
             ],

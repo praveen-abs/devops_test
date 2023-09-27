@@ -136,6 +136,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
         Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
 
         Route::post('/employee-documents-details', 'getEmployeeAllDocumentDetails')->name('employee-documents-details');
+     //change client_code on masterconfig
+        Route::get('/update-MasterConfig-ClientCode', 'updateMasterConfigClientCode')->name('updateMasterConfigClientCode');
     });
 
 
@@ -150,6 +152,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('/attendance-leavesettings', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveSettings'])->name('attendance-leavesettings');
     Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
+
 
     Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showTimesheet'])->name('attendance-timesheet');
 
@@ -232,7 +235,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/save-work-shift', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'saveWorkShiftSettings'])->name('saveWorkShiftSettings');
 
     //Ajax For Leave withdraw
-    Route::get('/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
+    Route::post('/leave/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
+
     //Leave Policy
     Route::get('/fetch-holidays', [App\Http\Controllers\VmtLeavePolicyController::class, 'fetchHolidays'])->name('fetch-getHolidays');
 
@@ -510,6 +514,10 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('get_comp_value', [App\Http\Controllers\VmtPayrollTaxController::class, 'getEmpCompValues']);
 
     Route::get('annualProjection', [App\Http\Controllers\VmtPayrollTaxController::class, 'annualProjection']);
+
+    Route::get('downloadInvestmentReport', [App\Http\Controllers\VmtPayrollTaxController::class, 'downloadInvestmentReport']);
+
+    Route::get('downloadInvestReport', [App\Http\Controllers\VmtPayrollTaxController::class, 'downloadInvestReport']);
 
 
 
@@ -794,27 +802,23 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     ///for current year
 
     Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
+    Route::get('/reports',[App\Http\Controllers\VmtReportsController::class,'showReportsPage'])->name('showReportsPage');
 
-    Route::get('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
+    Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
     Route::get('/filter-client-ids', [App\Http\Controllers\VmtReportsController::class, 'filterClient'])->name('filterClient');
-    ///basic report
+    ///for ctc  report
     Route::post('/fetch-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
-    //for master detail
-    Route::get('/fetch-employee-master-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterDetails');
+    Route::post('/generate-employee-ctc-report', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
     //payroll reports
-
-    Route::get('/reports', function () {
-        return view('reports.vmt_reports_page');
-    })->name('reports-page');
 
     Route::get('/reports-payroll', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
     Route::get('/reports/generatePayrollReports', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
-    //employeectcreports
-    Route::get('/fetch_employee_ctc_report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesCTCDetails'])->name('getEmployeesCTCDetails');
-    Route::get('/generate-employees-ctc-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesCTCReportData'])->name('generateEmployeesCTCReportData');
+    //employeemasterreports
+    Route::post('/fetch-master-employee-report', [App\Http\Controllers\VmtReportsController::class, 'getEmployeesMasterCTCData'])->name('getEmployeesMasterCTCDatas');
+    Route::post('/generate-master-employee-report-data', [App\Http\Controllers\VmtReportsController::class, 'generateEmployeesMasterDetails'])->name('generateEmployeesMasterDetails');
     //Ajax For Fetch Month For Given Year for payroll
     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
@@ -832,10 +836,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports-half-dayabsent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showHalfdayAbsentReport'])->name('showHalfdayAbsentReport');
 
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
-    Route::post('/fetch-detailed-attendance-data', [
-        App\Http\Controllers\VmtEmployeeAttendanceController::class,
-        'fetchDetailedAttendancedata'
-    ]);
+    Route::post('/fetch-detailed-attendance-data', [ App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchDetailedAttendancedata'])->name('fetchDetailedAttendancedata');
     Route::post('/fetch-overtime-report-data', [\App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchOvertimeReportData']);
     Route::post('/fetch-EG-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchEGReportData']);
     Route::post('/fetch-absent-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAbsentReportData']);
@@ -891,14 +892,16 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/addElbalancewithjsonString', [App\Http\Controllers\VmtCorrectionController::class, 'addElbalancewithjsonString'])->name('addElbalancewithjsonString');
     Route::get('/changeAttendanceBioMatricIdToHrmsUserid', [App\Http\Controllers\VmtCorrectionController::class, 'changeAttendanceBioMatricIdToHrmsUserid'])->name('changeAttendanceBioMatricIdToHrmsUserid');
     Route::get('/adding-work-shift-for-all-employees', [App\Http\Controllers\VmtCorrectionController::class, 'addingWorkShiftForAllEmployees'])->name('addingWorkShiftForAllEmployees');
-    //MasterImport
+    // Import
     Route::get('/updateMasterdataUploads', [App\Http\Controllers\VmtCorrectionController::class, 'updateMasterdataUploads'])->name('updateMasterdataUploads');
     Route::post('/vmt_employess/Master_upload', [App\Http\Controllers\VmtCorrectionController::class, 'importMasetrEmployeesExcelData'])->name('masterEmployeeOnboarding');
 
     Route::get('/salary_adv', [App\Http\Controllers\VmtCorrectionController::class, 'setFinanceidHrid'])->name('setFinanceidHrid');
 
+    Route::get('/saveEmployeeAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'saveEmployeeAnnualProjection'])->name('saveEmployeeAnnualProjection');
+    Route::get('/convert-user-code-to-user-id', [App\Http\Controllers\VmtCorrectionController::class, 'convertUserCodeToUserId'])->name('convertUserCodeToUserId');
     Route::get('/setAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'setAnnualProjection'])->name('setAnnualProjection');
-    
+
     Route::get('/adding-doj-dol', [App\Http\Controllers\VmtCorrectionController::class, 'addingDOLandDOJ'])->name('addingDOLandDOJ');
 
     Route::get('/testing-excel',[App\Http\Controllers\VmtAttendanceControllerV2::class,'downloadDetailedAttendanceReport'])->name('downloadDetailedAttendanceReport');
@@ -913,10 +916,12 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/getAllDropdownFilterSetting', [App\Http\Controllers\VmtMasterConfigController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/GetAllEmpModuleActiveStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'GetAllEmpModuleActiveStatus'])->name('GetAllEmpModuleActiveStatus');
     Route::post('/getClient_MobileModulePermissionDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_MobileModulePermissionDetails'])->name('getClient_MobileModulePermissionDetails');
-    Route::get('/showMobileSettingsPage', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
-    Route::post('/getClient_AllModulePermissionDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModulePermissionDetails'])->name('getClient_AllModulePermissionDetails');
-    Route::get('/permissions/getEmployee_AllModulePermissionsDetails', [HRMSBaseAPIController::class, 'getEmployee_AllModulePermissionsDetails'])->name('getEmployee_AllModulePermissionsDetails');
-    Route::get('/permissions/getEmployee_MobileModulePermissionsDetails', [HRMSBaseAPIController::class, 'getEmployee_MobileModulePermissionsDetails'])->name('getClient_getEmployee_MobileModulePermissionsDetailsAllModulePermissionDetails');
+    Route::get('/Settings-Mobile', [App\Http\Controllers\VmtMasterConfigController::class, 'showMobileSettingsPage'])->name('showMobileSettingsPage');
+    Route::get('/getClient_AllModulePermissionDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModulePermissionDetails'])->name('getClient_AllModulePermissionDetails');
+    Route::get('/getClient_AllModuleDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModuleDetails'])->name('getClient_AllModuleDetails');
+    Route::post('/update_AllClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'update_AllClientModuleStatus'])->name('update_AllClientModuleStatus');
+
+
 
     //Configrations
     ////Attendance Settings
@@ -997,6 +1002,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/monthTaxDeductionDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'monthTaxDeductionDetails']);
     Route::get('/grossEarningsFromEmployment', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'grossEarningsFromEmployment']);
     Route::get('/taxableIncomeFromAllHeads', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxableIncomeFromAllHeads']);
+    Route::get('/annual_projection', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'annual_projection']);
 
 
     //Salary Advance
@@ -1017,7 +1023,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/salAdvSettingEdit', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingEdit']);
     Route::post('/salAdvSettingDelete', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingDelete']);
     Route::get('/salAdvAmtApprovedEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvAmtApprovedEmp']);
-    Route::post('imporExistingSalaryAdvanceData', [App\Http\Controllers\ImportExistingSADataController::class, 'imporExistingSalaryAdvanceData'])->name('imporExistingSalaryAdvanceData');
+    Route::post('imporExistingSalaryAdvanceData', [App\Http\Controllers\ImportExistingSADataController::class, 'storeExistingLoanAmount'])->name('imporExistingSalaryAdvanceData');
     Route::get('saveSalaryAdvanceUploadPage', [App\Http\Controllers\ImportExistingSADataController::class, 'saveSalaryAdvanceUploadPage'])->name('saveSalaryAdvanceUploadPage');
     Route::get('getActiveEmployeedata', [App\Http\Controllers\VmtEmployeeController::class, 'getEmployeeLoanDetails'])->name('getEmployeeLoanDetails');
     //Travel Advance

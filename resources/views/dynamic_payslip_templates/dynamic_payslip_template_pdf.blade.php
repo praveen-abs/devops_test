@@ -6,7 +6,11 @@
 
  $abs_public_logo  =  public_path($date_month['abs_logo']);
 
-$abs_logo  = base64_encode(file_get_contents($abs_public_logo));
+ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
+
+ $date=date_create($personal_details[0]['doj']);
+
+ $doj  =  date_format($date ,"d-m-Y");
 
 ?>
 
@@ -53,8 +57,8 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
     <table style="width: 100%;  border-collapse: collapse; background:#fff;  ">
             <tr>
                 <td colspan="3" style="margin-top:-10px" >
-                    <h3 style="color:#000; ">PAYSLIP <span style="color:#383838; font-weight:500;   font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
-                    <p style="color:#000;font-size:10px; margin-top:-10px;">{{$client_details[0]['client_fullname']}}</p>
+                    <h3 style="color:#000; ">PAYSLIP <span style="color:#6b7280; font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
+                    <h1 style="color:#000;font-size:10px; margin-top:-10px;">{{$client_details[0]['client_fullname']}}</h1>
                     <div style=" text-align: justify; width:200px;">
                         <p style="color:#000; font-size:9px;  text-align:left; margin-top:-10px;">{{ $client_details[0]['address'] }}</p>
                     </div>
@@ -80,8 +84,8 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                 <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['user_code'] ?? "-"}}</p>
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:#383838; margin-top:-2px">Date Joined</p>
-                <p style="font-size:11px; margin-top:-8px">{{ $personal_details[0]['doj'] ?? '-'}}</p>
+                <p style="font-size:10px;color:gray; margin-top:-4px">Date Joined</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $doj ?? " - "}}</p>
             </td>
             <td style="width:25%;">
                 <p style="font-size:10px;color:#383838; margin-top:-2px">Department</p>
@@ -176,9 +180,9 @@ $abs_logo  = base64_encode(file_get_contents($abs_public_logo));
                 @endfor
             </td>
             <td style="width:25%;">
-                <p style="font-size:10px;color:#383838;">Avalied</p>
+                <p style="font-size:10px;color:#383838;">Availed</p>
                 @for ($i=0; $i<count($leave_data); $i++)
-                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['avalied'] }}</p>
+                <p style="font-size:11px; margin-top:-8px">{{ $leave_data[$i]['availed'] }}</p>
                 @endfor
             </td>
             <td style="width:25%;">

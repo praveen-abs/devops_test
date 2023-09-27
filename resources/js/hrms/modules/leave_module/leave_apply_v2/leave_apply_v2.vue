@@ -21,7 +21,7 @@
                                 leave_balance.leave_type }} </h6>
                             <div class="mx-auto">
                                 <h6 class="text-2xl font-bold text-center dark:text-white">{{
-                                    leave_balance.avalied_leaves }}
+                                    leave_balance.availed_leaves }}
                                     <span class="text-sm">days</span>
                                 </h6>
                             </div>

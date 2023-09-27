@@ -25,7 +25,7 @@
                     <p class="text-[#4d4d4d] my-2">Pay Period :</p>
                     <p class="text-[#4d4d4d] my-2">Pay Date :</p>
                     <p class="text-[#4d4d4d] my-2">Bank Account No:</p>
-                </div> 
+                </div>
                 <div class="col-3">
                     <p class="text-[#4d4d4d] my-2 text-left">-</p>
                     <p class="text-[#4d4d4d] my-2">-</p>
@@ -33,17 +33,17 @@
                     <p class="text-[#4d4d4d] my-2">-</p>
                     <p class="text-[#4d4d4d] my-2">-</p>
                     <p class="text-[#4d4d4d] my-2">-</p>
-                </div> 
+                </div>
                 <div class="col-5">
                     <p class="text-center text-[16px]">Employee Net Pay</p>
                     <p class="text-center text-[34px] font-semibold flex items-center"><span class="text-[34px] font-sans mx-2 ">₹</span> 82,54,82,500.00</p>
                     <p class="text-center text-[16px]">Paid Days : 30 | LOP Day : 0 | ARREAR DAYS</p>
-                </div> 
-            </div>   
+                </div>
+            </div>
 
             <div class="border-[#f9be00] border-[1px] w-[100%] my-2">
             </div>
-            
+
             <div class="row">
                 <div class="col-6">
                     <h1 class="text-[#f9be00]  font-semibold">EARNINGS</h1>
@@ -73,12 +73,12 @@
                     <h1 class=" text-[#000] my-2 ">-</h1>
                     <h1 class=" text-[#000] my-2 ">-</h1>
 
-                </div>  
+                </div>
             </div>
 
             <div class="border-[#f9be00] border-[1px] w-[100%] my-2">
             </div>
-            
+
             <div class="row">
                 <div class="col-6">
                     <h1 class="text-[#f9be00] font-semibold">DEDUCTIONS</h1>
@@ -105,7 +105,7 @@
                     <h1 class="my-2">-</h1>
                 </div>
             </div>
-            
+
             <div class="row bg-[#fff6db] p-2">
                 <div class="col-6">
                     <h1 class="text-[#f9be00] font-semibold text-[16px]">NET PAY (<span class=" text-[12px]">Gross Earnings - Total Deduction</span> )</h1>
@@ -132,7 +132,7 @@
                     <p>-</p>
                 </div>
                 <div class="col-3">
-                    <p>Avalied</p>
+                    <p>availed</p>
                     <p>-</p>
                 </div>
                 <div class="col-3">
@@ -140,10 +140,10 @@
                     <p>-</p>
                 </div>
             </div>
-            
+
             <div class="border-[#f9be00] border-[1px] w-[100%] my-2">
             </div>
-            
+
             <div class="row my-[40px]">
                 <div class="col"><p class="text-center ">- This is a system generated payslip, hence the signature is not required.-</p></div>
             </div>

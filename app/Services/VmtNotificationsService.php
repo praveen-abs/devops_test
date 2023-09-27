@@ -40,9 +40,9 @@ class VmtNotificationsService {
                             "title" => "Leave Status",
                             "body" => "has rejected your leave request. Kindly check."
                         ],
-                        "manager_withdraw_leave" => [
+                        "manager_revokes_leave" => [
                             "title" => "Leave Status",
-                            "body" => "has withdrawn his/her leave approval. Kindly check your updated leave status."
+                            "body" => "has revokes his/her leave approval. Kindly check your updated leave status."
                         ],
 
         ];
@@ -273,7 +273,7 @@ class VmtNotificationsService {
                    return $response;
 
           }
-          else if($leave_module_type =='manager_approves_leave' || $leave_module_type =='manager_withdraw_leave' ||$leave_module_type =='manager_rejects_leave')
+          else if($leave_module_type =='manager_approves_leave' || $leave_module_type =='manager_revokes_leave' ||$leave_module_type =='manager_rejects_leave')
            {
             $notif_body=$manager_data->name.' '.$notif_body;
 

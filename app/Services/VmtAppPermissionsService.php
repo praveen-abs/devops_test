@@ -337,7 +337,7 @@ class VmtAppPermissionsService
 
             $employee_all_modules_details = array();
             $i = 0;
-            $sub_module_details['sub_module_details'] =array();
+            $sub_module_details['sub_module_details'] = array();
 
             // ['sub_module_details']
             foreach ($single_emp_config_data as $module_key => $single_module_data) {
@@ -361,10 +361,9 @@ class VmtAppPermissionsService
 
                 $i++;
             }
-          // array_push($employee_all_modules_details, $sub_module_details['sub_module_details']);
+            // array_push($employee_all_modules_details, $sub_module_details['sub_module_details']);
 
             return $employee_all_modules_details;
-
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
@@ -419,6 +418,7 @@ class VmtAppPermissionsService
                     ->get([
                         "vmt_app_modules.module_name",
                         "vmt_app_sub_modules.sub_module_name",
+                        "vmt_client_sub_modules.id as sub_module_id",
                         "vmt_client_sub_modules.status as sub_module_status"
                     ])->toarray();
 
@@ -467,20 +467,23 @@ class VmtAppPermissionsService
 
     */
     //getClientPermissions
-    public function getClient_MobileModulePermissionDetails($user_code, $module_id)
+    public function getClient_MobileModulePermissionDetails($client_id, $module_id, $user_code)
     {
 
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_code,
+                'client_id' => $client_id,
                 'module_id' => $module_id,
+                'user_code' => $user_code,
             ],
             $rules = [
-                'client_id' => 'required|exists:users,user_code',
+                'client_id' => 'required|exists:vmt_client_master,id',
                 'module_id' => 'required|exists:vmt_app_modules,id',
+                'user_code' => 'nullable|exists:users,user_code',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
+                'exists' => 'Field <b>:attribute</b> is invalid',
             ]
 
         );
@@ -493,10 +496,15 @@ class VmtAppPermissionsService
         }
         try {
 
+            if (!empty($user_code)) {
+                $user_data = User::where('user_code', $user_code)->first();
+                $client_id = $user_data->client_id;
+            } else {
+                $client_id = $client_id;
+            }
 
-             $user_data = User::where('user_code',$user_code)->first();
 
-            $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($user_data->client_id, $module_id);
+            $mobile_settings_data = $this->getClient_SingleModulePermissionDetails($client_id, $module_id);
 
             return response()->json([
                 "status" => "success",
@@ -572,11 +580,7 @@ class VmtAppPermissionsService
                 $mobile_settings_data[$key]['employee_count'] =  $emp_count;
             }
 
-            return response()->json([
-                "status" => "success",
-                "message" => "Data fetch successfully",
-                "data" => $mobile_settings_data,
-            ]);
+            return $mobile_settings_data;
         } catch (\Exception $e) {
 
             return response()->json([
@@ -588,7 +592,174 @@ class VmtAppPermissionsService
         }
     }
 
+    public function getClient_AllModuleDetails($client_id)
+    {
 
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+            ],
+            $rules = [
+
+                'client_id' => 'required|exists:vmt_client_master,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+
+
+            $all_module_id = VmtAppModules::pluck('id');
+
+            $client_all_modules_details = array();
+
+            foreach ($all_module_id as $key => $single_module_id) {
+
+                $single_client_config_data = VmtAppSubModuleslink::join("vmt_app_sub_modules", "vmt_app_sub_modules.id", "=", "vmt_app_sub_modules_links.sub_module_id")
+                    ->join("vmt_app_modules", "vmt_app_modules.id", "=", "vmt_app_sub_modules_links.module_id")
+                    ->join("vmt_client_sub_modules", "vmt_client_sub_modules.app_sub_module_link_id", "=", "vmt_app_sub_modules_links.id")
+                    ->where("vmt_app_sub_modules_links.module_id", $single_module_id)
+                    ->where("vmt_client_sub_modules.client_id", "=", $client_id)
+                    ->get([
+
+                        "vmt_app_modules.id",
+                        "vmt_app_modules.module_name",
+                        "vmt_app_sub_modules.sub_module_name",
+                        "vmt_client_sub_modules.id as sub_module_id",
+                        "vmt_client_sub_modules.status as sub_module_status"
+                    ])->toarray();
+
+                $client_single_modules_data = array();
+                $i = 0;
+
+                foreach ($single_client_config_data as $module_key => $single_module_data) {
+                    $module_id = "";
+                    $module_status = "";
+                    $module_data = VmtClientModules::where('module_id', $single_module_data['id'])->where('client_id', $client_id);
+
+                    if ($module_data->exists()) {
+
+                        $module_data = $module_data->first();
+                        $module_id = $module_data->id;
+                        $module_status = $module_data->status;
+                    }
+
+                    $client_single_modules_data['module_id'] = $module_id;
+                    $client_single_modules_data['module_name'] = $single_module_data["module_name"];
+                    $client_single_modules_data['module_status'] = $module_status;
+                    $client_single_modules_data['sub_module_details'][$i]['module_id'] = $module_id;
+                    $client_single_modules_data['sub_module_details'][$i]['sub_module_name'] = $single_module_data["sub_module_name"];
+                    $client_single_modules_data['sub_module_details'][$i]['sub_module_id'] = $single_module_data["sub_module_id"];
+                    $client_single_modules_data['sub_module_details'][$i]['sub_module_status'] = $single_module_data["sub_module_status"];
+
+                    $i++;
+                }
+                array_push($client_all_modules_details, $client_single_modules_data);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Employee config data fetch successfully ",
+                "data" => $client_all_modules_details,
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error fetching employee Config data",
+                "data" => $e->getmessage() . " error_line " . $e->getline(),
+            ]);
+        }
+    }
+
+    public function update_AllClientModuleStatus($client_id,$module_id,$sub_module_id ,$module_status ,$sub_module_status)
+    {
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'module_id' => $module_id,
+                'sub_module_id' => $sub_module_id,
+                'module_status' => $module_status,
+                'sub_module_status' => $sub_module_status,
+            ],
+            $rules = [
+                'module_id' => 'nullable',
+                'sub_module_id' => 'nullable',
+                'module_status' => 'nullable',
+                'sub_module_status' => 'nullable',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+
+            $app_config_data = "";
+            if(!empty($module_id)){
+
+                $app_config_data = VmtClientModules::where('client_id', $client_id)->where("module_id", $module_id);
+            }
+            if(!empty($sub_module_id)){
+
+                $app_config_data = VmtClientSubModules::where('client_id', $client_id)->where("id", $sub_module_id);
+            }
+
+
+
+            if ($app_config_data->exists()) {
+
+                $app_config_data = $app_config_data->first();
+
+                $app_config_data->status = $module_status ?? $sub_module_status;
+                
+                $app_config_data->save();
+
+                $response = ([
+                    "status" => "success",
+                    "message" => "Configuration done successfully",
+                    "data" => "",
+                ]);
+            } else {
+
+                $response = ([
+                    "status" => "failure",
+                    "message" => "data not found",
+                    "data" => "",
+                ]);
+            }
+
+            return $response;
+        } catch (\Exception $e) {
+
+            return $response = ([
+
+                "status" => "failure",
+                "message" => "error while Configuration",
+                "data" => $e->getmessage(),
+
+            ]);
+        }
+    }
     function getAllDropdownFilterSetting()
     {
 

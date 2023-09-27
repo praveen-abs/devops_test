@@ -7,7 +7,7 @@
 
         <div class="grid grid-cols-12">
             <div class="col-span-6">
-                <ul class="nav nav-pills  nav-tabs-dashed" id="pills-tab" role="tablist">
+                <!-- <ul class="nav nav-pills  nav-tabs-dashed" id="pills-tab" role="tablist">
                     <li class="mx-2 nav-item ember-view" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
@@ -27,12 +27,12 @@
                             <p class="text-sm font-semibold"> Consolidate</p>
                         </a>
                     </li>
-                </ul>
+                </ul> -->
             </div>
-            <div class="col-span-6  grid grid-cols-12 place-content-end  ">
+            <div class="col-span-6  gap-8 grid grid-cols-12 place-content-end  ">
                 <!-- <div class="flex gap-3 col-span-3 justify-end">
                 </div> -->
-                <div class="flex gap-3 col-span-2 justify-end items-center">
+                <div class="flex gap-3 col-span-6 justify-end items-center">
                     <div>
                         <p class="text-sm font-semibold">Period:</p>
                     </div>
@@ -44,7 +44,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="flex gap-3 col-span-5 justify-end items-center">
+                <!-- <div class="flex gap-3 col-span-5 justify-end items-center">
                     <div>
                         <p class="text-sm font-semibold">Legal Entity :
                         </p>
@@ -52,7 +52,7 @@
                     <div>
                         <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" />
                     </div>
-                </div>
+                </div> -->
                 <div class="flex gap-3 col-span-5 justify-end  items-center">
                     <div>
                         <p class="text-sm font-semibold ">Department:</p>
@@ -100,12 +100,12 @@
                 <div class="grid grid-cols-12 gap-6 col-span-6 place-items-center">
                     <div class="col-span-4">
                         <p class="font-semibold text-sm my-1">Start date</p>
-                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-8"
+                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" style="height: 2.5rem;"
                             v-model="variable.start_date" />
                     </div>
                     <div class="col-span-4">
                         <p class="font-semibold text-sm my-1">End date</p>
-                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-8"
+                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" style="height: 2.5rem;"
                             v-model="variable.end_date" />
                     </div>
                     <div class="col-span-4 mt-4">
