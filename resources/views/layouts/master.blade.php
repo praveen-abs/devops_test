@@ -173,10 +173,8 @@ clearstatcache();
         <div id="loading-content" class="loading-content"></div>
     </section> -->
 {{-- @yield('loading') --}}
-@vite('resources/js/hrms/modules/Home/Home.js')
-<div id="Home"></div>
-
-
+@vite('resources/js/hrms/app.js')
+<div id="app"></div>
 <div style="z-index: 11">
     <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body">

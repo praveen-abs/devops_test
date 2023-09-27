@@ -257,6 +257,8 @@ const getTime = () => {
         });
 };
 
+const isDataReceived = ref(true)
+
 const checkInMessege = ref()
 const getEmployeeDetials = async () => {
     let url = "/fetchEmpLastAttendanceStatus";
@@ -277,7 +279,11 @@ const getEmployeeDetials = async () => {
 };
 onMounted(() => {
     getSession();
-    getEmployeeDetials();
+    if(isDataReceived){
+        getEmployeeDetials().finally(()=>{
+            isDataReceived.value = false
+        });
+    }
 });
 
 

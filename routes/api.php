@@ -15,8 +15,7 @@ use App\Http\Controllers\Api\VmtAPIReimbursementsController;
 use App\Http\Controllers\Api\VmtAPILoanAndSalaryAdvanceController;
 use App\Imports\VmtEmployee;
 use App\Http\Controllers\VmtProfilePagesController;
-
-
+use Illuminate\Support\Facades\Cache;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,6 +36,7 @@ Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/send-passwordresetlink', [AuthController::class, 'sendPasswordResetLink']);
 Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
+Route::post('/clearCache',function(){ Cache::flush(); return response()->json(['message' => 'Cache cleared successfully']);});
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {

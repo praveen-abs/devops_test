@@ -1,0 +1,99 @@
+import { createRouter, createWebHistory } from 'vue-router';
+
+const routes = [
+
+    // {
+    //     path: '/login',
+    //     name: 'login',
+    //     component: () => import('../hrms/modules/login_Page/login_Page.vue'),
+    //     meta: { requiresAuth: false }, // Protect this route
+    // },
+
+    {
+        path: '/',
+        name: 'home',
+        component: () => import('../hrms/modules/Home/Home.vue'),
+        // meta: { requiresAuth: true }, // Protect this route
+        children: [
+            // Define your other routes here
+            {
+                path: '/',
+                name: '',
+                component: () => import('../hrms/modules/dashboard/dashboard.vue'),
+
+            },
+            {
+                path: '/attendance-dashboard',
+                name: 'attendance-dashboard',
+                component: () => import('../hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue'),
+            },
+            {
+                path: '/attendance-timesheet',
+                name: 'attendance-timesheet',
+                component: () => import('../hrms/modules/attendence/AttendanceModule.vue'),
+                // meta: { requiresAuth: true }, // Protect this route
+            },
+            {
+                path: '/attendance-leave',
+                name: 'Attendance',
+                component: () => import('../hrms/modules/leave_module/LeaveModule.vue'),
+                // meta: { requiresAuth: true }, // Protect this route
+            },
+            {
+                path: '/Approvals/Onboarding-documents',
+                name: 'approvals-documents',
+                component: () => import('../hrms/modules/approvals/onboarding/review_document.vue'),
+            },
+            {
+                path: '/Approvals/Attendance-regularization',
+                name: 'approvals-regularization',
+                component: () => import('../hrms/modules/approvals/att_regularization/AttRegularizationApproval.vue'),
+            },
+            {
+                path: '/Approvals/Reimbursements',
+                name: 'approvals-documents',
+                component: () => import('../hrms/modules/approvals/reimbursements/ReimbursementsApproval.vue'),
+            },
+            {
+                path: '/Approvals/Employee-Details',
+                name: 'approvals-employee-Details',
+                component: () => import('../hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue'),
+            },
+            {
+                path: '/testing',
+                name: 'testing',
+                component: () => import('../testings/api.vue'),
+            },
+            // Other routes go here
+        ],
+        // meta: { requiresAuth: true }, // Protect this route
+    },
+
+];
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
+});
+
+
+// Global navigation guard
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // Check if the user is authenticated by validating the access_token
+    const accessToken = localStorage.getItem('access_token'); // Retrieve the access_token from local storage (you can use cookies or a different storage mechanism)
+
+    if (!accessToken) {
+      // If the access_token is not present, redirect to the login page
+      next('/login');
+    } else {
+      // User is authenticated, proceed to the requested route
+      next();
+    }
+  } else {
+    // For routes that don't require authentication, proceed
+    next();
+  }
+});
+
+
+export default router;

@@ -1,15 +1,33 @@
 <template>
     <!-- <loadingSpinner /> -->
-    <div class="flex flex-row h-screen overflow-hidden relative ">
+    <!-- <div class="flex flex-row h-screen overflow-hidden relative ">
         <Sidebar />
         <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
-        <!-- <Topbar /> -->
-            <!-- Main content -->
-            <div class="overflow-x-scroll">
+        <Topbar />
+            <div class="overflow-auto">
                 <RouterView></RouterView>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <div id="app">
+        <!--Sidebar with Dimmer -->
+        <div class="flex flex-row h-screen fixed w-screen">
+           <!-- Sidebar -->
+           <div>
+              <Sidebar />
+           </div>
+           <!-- Page Content -->
+           <div class="bg-gray-100  text-gray-700 h-screen w-[100%] ">
+              <div class="w-[100%]">
+                 <Topbar />
+              </div>
+              <div class="h-screen w-[100%]  p-2 pb-11 overflow-y-auto">
+                 <RouterView></RouterView>
+              </div>
+           </div>
+        </div>
+     </div>
 </template>
 
 

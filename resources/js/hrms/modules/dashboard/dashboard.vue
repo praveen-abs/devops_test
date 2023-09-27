@@ -73,11 +73,6 @@
             :class="[useDashboard.currentDashboard === 1 ? 'bg-green-200 text-black border border-black' : 'bg-white text-slate-700 border border-black']"
             @click="useDashboard.currentDashboard = 1">Org-dashboard</button>
     </div>
-
-    <RouterLink to="/">dashboard</RouterLink>
-    <RouterLink to="dashboard" >Attendance dashboard</RouterLink>
-    <RouterLink to="timesheet">Attendance timesheet</RouterLink>
-    <RouterLink to="leave">Leave</RouterLink>
     <loadingSpinner v-if="useDashboard.canShowLoading" />
 
     <transition v-else-if="useDashboard.currentDashboard == 1"
@@ -135,7 +130,7 @@ import * as ExcelJS from 'exceljs'
 
 import loadingSpinner from '../../components/LoadingSpinner.vue'
 import { useMainDashboardStore } from './stores/dashboard_service'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { Service } from '../Service/Service'
 import Hr_dashboard from './hr_dashboard/hr_dashboard.vue';
 
@@ -143,15 +138,32 @@ const useDashboard = useMainDashboardStore();
 const canShowLoadingScreen = ref();
 const service = Service()
 
+
+// Watch for changes in receivedData
+const stopWatchingData = watch(useDashboard.allEventSource, (newValue, oldValue) => {
+    if (newValue !== null) {
+        handleData(newValue);
+    }
+});
+
 onMounted(async () => {
-    canShowLoadingScreen.value = true;
-    await useDashboard.getMainDashboardData();
-    useDashboard.getHrDashboardMainSource()
-    // await useDashboard.getAttendanceStatus();
-    Service();
-    canShowLoadingScreen.value = false;
+    if (useDashboard.isDashboardDataReceived && useDashboard.isHrDashboardDataReceived) {
+        canShowLoadingScreen.value = true;
+        await useDashboard.getMainDashboardData();
+        await useDashboard.getHrDashboardMainSource()
+        // await useDashboard.getAttendanceStatus();
+        Service();
+        canShowLoadingScreen.value = false;
+    }
 
 })
+
+// Clean up the watcher when the component is unmounted
+onUnmounted(() => {
+    stopWatchingData();
+});
+
+
 
 
 const downloadExcelFile = async () => {

@@ -28,6 +28,9 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const attenanceReportPerMonth = ref([])
     const canShowLoading = ref(true)
 
+    const isDashboardDataReceived  = ref(true)
+    const isHrDashboardDataReceived  = ref(true)
+
 
     // Subscribe Main DashBoard Data Source
     // const getMainDashboardSource = (async () => {
@@ -55,6 +58,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         }).finally(() => {
             canShowLoading.value = false
+            isDashboardDataReceived.value = false
         });
     }
 
@@ -134,9 +138,9 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
 
 
-    const getHrDashboardMainSource = () => {
+    const getHrDashboardMainSource = async() => {
         canShowLoading.value = true
-        axios.get('/get-employees_count-detail').then(res => {
+        await axios.get('/get-employees_count-detail').then(res => {
             console.log(res.data.pending_request_count);
             orgEmployeeDetailCount.value = res.data.employee_details_count
             // hrPendingRequestCount.value.push(res.data.pending_request_count)
@@ -161,12 +165,14 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         }).finally(() => {
             canShowLoading.value = false
+            isHrDashboardDataReceived.value = false
+
         })
     }
 
     return {
         // varaible Declarations
-        service, canShowLoading, open,
+        service, canShowLoading, open,isDashboardDataReceived,isHrDashboardDataReceived,
         canShowClients, canShowConfiguration, canShowCurrentEmployee, canShowOrganization, canShowTopbar,
 
         // Welcome Card

@@ -247,8 +247,6 @@ const teamListLength = ref(0);
 const orgListLength = ref(0);
 
 onMounted(async() => {
-    Service()
-
     await useTimesheet.getTeamList(service.current_user_code).then(res => {
         teamList.value = Object.values(res.data)
         teamListLength.value = res.data.length

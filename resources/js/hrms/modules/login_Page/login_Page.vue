@@ -42,7 +42,7 @@
                             </div>
                             <div class="w-full mt-[24px]">
                                 <span class="p-float-label">
-                                    <Password v-model="value" toggleMask />
+                                    <Password v-model="password" toggleMask />
                                     <label for="username"
                                         class="pl-[18] text-blue-800 font-['Poppins'] cursor-pointer flex">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -61,7 +61,8 @@
 
                             </div>
 
-                            <button class=" mt-[4px] h-[35px] rounded-[20px] w-full text-[16px] font-['Poppins']"
+                            <button @click="login"
+                                class=" mt-[4px] h-[35px] rounded-[20px] w-full text-[16px] font-['Poppins']"
                                 style="background-color: #001820;color:#CCCCCC;">
                                 Login
                             </button>
@@ -118,6 +119,7 @@
 
 
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 
 const name = ref();
@@ -125,6 +127,13 @@ const email = ref();
 const password = ref();
 const accept = ref();
 const value = ref(null);
+
+const login = (username, pass) => {
+    axios.post('/api/auth/login', {
+        user_code: name.value,
+        password: password.value
+    })
+}
 
 
 </script>
