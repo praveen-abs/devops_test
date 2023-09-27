@@ -218,7 +218,7 @@ class VmtAttendanceReportsService
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
-            ->whereIn('active',  $active_status)
+            ->where('active',  "1")
             ->whereIn('client_id', $client_id)
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
@@ -2664,7 +2664,7 @@ class VmtAttendanceReportsService
                             $lc_hrs = (int) $lc_ar->totalHours;
                             $lc_mins = $lc_ar->toArray()['minutes'];
                             $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
-                            // $lc1_total_mins =     $lc_ar->forHumans(); 
+                            // $lc1_total_mins =     $lc_ar->forHumans();
                         } else {
                             $LCDuration  = '-';
                         }
