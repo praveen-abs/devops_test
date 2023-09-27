@@ -39,10 +39,46 @@ const routes = [
                 component: () => import('../hrms/modules/leave_module/LeaveModule.vue'),
                 // meta: { requiresAuth: true }, // Protect this route
             },
+
+            // Organization
+
+            {
+                path: '/Organization/manage-employees',
+                name: 'manage-employees',
+                component: () => import('../hrms/modules/Organization/manage_employee/ManageEmployee.vue'),
+            },
+            {
+                path: '/Organization/employee-onboarding',
+                name: 'employee-onboarding',
+                component: () => import('../hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.vue'),
+            },
+            {
+                path: '/Organization/bulk-onboarding',
+                name: 'bulk-onboarding',
+                component: () => import('../hrms/modules/Organization/BulkOnboarding/BulkOnboarding.vue'),
+            },
+            {
+                path: '/Organization/quick-onboarding',
+                name: 'quick-onboarding',
+                component: () => import('../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'),
+            },
+            {
+                path: '/Organization/manage-welcome-mails',
+                name: 'manage-welcome-mails',
+                component: () => import('../hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.vue'),
+            },
+
+            // Approvals
+
             {
                 path: '/Approvals/Onboarding-documents',
-                name: 'approvals-documents',
+                name: 'Onboarding-documents',
                 component: () => import('../hrms/modules/approvals/onboarding/review_document.vue'),
+            },
+            {
+                path: '/Approvals/leave',
+                name: 'approval-leave',
+                component: () => import('../hrms/modules/approvals/leaves/LeaveApproval.vue'),
             },
             {
                 path: '/Approvals/Attendance-regularization',
@@ -51,7 +87,7 @@ const routes = [
             },
             {
                 path: '/Approvals/Reimbursements',
-                name: 'approvals-documents',
+                name: 'approvals-Reimbursements',
                 component: () => import('../hrms/modules/approvals/reimbursements/ReimbursementsApproval.vue'),
             },
             {

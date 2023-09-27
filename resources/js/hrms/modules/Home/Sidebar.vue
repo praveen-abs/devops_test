@@ -102,7 +102,6 @@ const toggleMenu = (index) => {
 };
 
 
-
 const isOpen = (index) => {
     return activeMenuIndex.value === index;
 };
@@ -184,12 +183,12 @@ onMounted(() => {
                 {
                     label: 'Organization',
                     subItems: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? [
-                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.MANAGE_EMPLOYEES === 1 ? { label: 'Manage Employees', to: 'manageEmployees' } : null : null,
+                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.MANAGE_EMPLOYEES === 1 ? { label: 'Manage Employees', to: 'Organization/manage-employees' } : null : null,
                         findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ORG_STRUCTURE === 1 ? { label: 'ORG structure', to: 'employee-hierarchy' } : null : null,
-                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING === 1 ? { label: 'Onboarding', to: 'employee-onboarding' } : null : null,
-                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING_BULK_UPLOAD === 1 ? { label: 'Onboarding Bulk Upload', to: 'bulkEmployeeOnboarding' } : null : null,
-                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING_QUICK_UPLOAD === 1 ? { label: 'Onboarding Quick Upload', to: 'quickEmployeeOnboarding' } : null : null,
-                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.MANAGE_WELCOMEMAIL_STATUS === 1 ? { label: 'Manage WelcomeMail Status', to: 'manage_welcome_mails_status' } : null : null,
+                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING === 1 ? { label: 'Onboarding', to: 'Organization/employee-onboarding' } : null : null,
+                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING_BULK_UPLOAD === 1 ? { label: 'Onboarding Bulk Upload', to: 'Organization/bulk-onboarding' } : null : null,
+                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING_QUICK_UPLOAD === 1 ? { label: 'Onboarding Quick Upload', to: 'Organization/quick-onboarding' } : null : null,
+                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.MANAGE_WELCOMEMAIL_STATUS === 1 ? { label: 'Manage WelcomeMail Status', to: 'Organization/manage-welcome-mails' } : null : null,
                         findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ROLES_AND_PERMISSION === 1 ? { label: 'Roles & Permissions', to: 'roles_permissions' } : null : null
                     ] : null,
                     arrow_icon: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? 'pi pi-angle-right' : null,
@@ -204,12 +203,12 @@ onMounted(() => {
                 {
                     label: 'Approvals',
                     subItems: [
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.ONBOARDING === 1 ? { label: 'Onboarding', to: 'approvals-documents' } : null : null : null,
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.LEAVES === 1 ? { label: 'Leaves', to: 'attendance-leave-approvals' } : null : null : null,
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.ATTENDANCE_REGULARIZATION === 1 ? { label: 'Attendance Regularization', to: 'attendance-regularization-approvals' } : null : null : null,
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.REIMBURSEMENT === 1 ? { label: 'Reimbursement', to: 'approval_reimbursements' } : null : null : null,
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.ONBOARDING === 1 ? { label: 'Onboarding', to: 'Approvals/Onboarding-documents' } : null : null : null,
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.LEAVES === 1 ? { label: 'Leaves', to: 'Approvals/leave' } : null : null : null,
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.ATTENDANCE_REGULARIZATION === 1 ? { label: 'Attendance Regularization', to: 'Approvals/Attendance-regularization' } : null : null : null,
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.REIMBURSEMENT === 1 ? { label: 'Reimbursement', to: 'Approvals/Reimbursements' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.TAXATIONS === 1 ? { label: 'Taxations ', to: '' } : null : null : null,
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.EMPLOYEE_DETAILS === 1 ? { label: 'Employee Details', to: 'Employee-Details-approvals' } : null : null : null,
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.EMPLOYEE_DETAILS === 1 ? { label: 'Employee Details', to: 'Approvals/Employee-Details' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.LOAN_AND_SALARY_ADVANCE === 1 ? { label: 'Loan And Salary Advance ', to: 'showSAapprovalView' } : null : null : null
                     ],
                     arrow_icon: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? 'pi pi-angle-right' : null,
