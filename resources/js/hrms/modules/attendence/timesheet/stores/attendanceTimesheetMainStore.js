@@ -210,7 +210,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const applyEgRegularization = () => {
-        classicTimesheetSidebar.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
             .then((res) => {
@@ -246,7 +245,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyMipRegularization = () => {
-        classicTimesheetSidebar.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
             .then((res) => {
@@ -278,7 +276,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const applyMopRegularization = () => {
-        classicTimesheetSidebar.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mopDetails.value, 'MOP'))
             .then((res) => {
@@ -307,7 +304,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     //  Applying for Absent  Regularization
     const applyAbsentRegularization = () => {
-        classicTimesheetSidebar.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-absent-regularization', {
             user_code: service.current_user_code,
@@ -356,6 +352,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     // Time conversion
 
     const convertTime = (inputTime) => {
+        if(inputTime){
         const [time, period] = inputTime.split(' ');
         const [hours, minutes] = time.split(':');
         let convertedHours = parseInt(hours);
@@ -366,6 +363,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         }
         let convertFormat = `${convertedHours.toString().padStart(2, '0')}:${minutes}:00`;
         return convertFormat
+    }
     };
 
     //  Finding Difference between start date and end date
