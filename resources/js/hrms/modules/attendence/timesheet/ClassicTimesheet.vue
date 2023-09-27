@@ -99,7 +99,7 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Mode</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin) }}
+                    <p class="font-semibold fs-6 ">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin) }}
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkin)"></i> -->
@@ -113,7 +113,7 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check In Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ capitalizeFLetter(findCheckInStatus('checkin', currentlySelectedCellRecord)) }}
+                    <p class="font-semibold fs-6 whitespace-nowrap">{{ capitalizeFLetter(findCheckInStatus('checkin', currentlySelectedCellRecord)) }}
 
                     </p>
                 </div>
@@ -149,7 +149,7 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check Out Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ findCheckInStatus('checkout', currentlySelectedCellRecord) }}</p>
+                    <p class="font-semibold fs-6 whitespace-nowrap">{{ findCheckInStatus('checkout', currentlySelectedCellRecord) }}</p>
                 </div>
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Approval Status</p>
@@ -169,7 +169,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isLC">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Late Coming</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Late Coming</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isLC, currentlySelectedCellRecord.lc_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
@@ -180,7 +180,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isMIP">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Missed in punch</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Missed in punch</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isMIP, currentlySelectedCellRecord.mip_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
@@ -191,7 +191,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isEG">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Early going</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Early going</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isEG, currentlySelectedCellRecord.eg_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
@@ -202,7 +202,7 @@
             <AccordionTab v-if="currentlySelectedCellRecord.isMOP">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
-                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Missed out punch</span>
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Missed out punch</span>
                         <p class="text-right px-4"><i
                                 :class="icons(currentlySelectedCellRecord.isMOP, currentlySelectedCellRecord.mop_status)"
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
