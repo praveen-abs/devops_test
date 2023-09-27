@@ -2631,7 +2631,7 @@ class VmtAttendanceReportsService
                     if ($value['isMIP'] != null || $value['isLC'] != null) {
                         $temp_ar['Employee Code'] = $value['user_code'];
                         $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = $value['date_day'];
+                        $temp_ar['Date'] = Carbon::parse($key)->format('d-M-Y');
                         $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
                         $temp_ar['Shift Name'] =   $current_shift->shift_name;
                         $regularized_sts = 'No';
@@ -2646,11 +2646,12 @@ class VmtAttendanceReportsService
                         }
                         $out_punch = $value['checkout_time'];
                         if ($in_punch  != null) {
-                            $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch)) . ' Mins';
+                            $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch));
                             $lc_ar = CarbonInterval::minutes($lc1_total_mins)->cascade();
                             $lc_hrs = (int) $lc_ar->totalHours;
                             $lc_mins = $lc_ar->toArray()['minutes'];
                             $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
+                           // $lc1_total_mins =     $lc_ar->forHumans(); 
                         } else {
                             $LCDuration  = '-';
                         }
@@ -2706,11 +2707,14 @@ class VmtAttendanceReportsService
             );
             $response['rows'] = $lcData;
         } catch (\Exception $e) {
-            $response = [
+            return  $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+                'trace line'=>$e->getTraceAsString(),
+                'data'=>$single_data[$key],
+                'lc_total_mins'=>$lc1_total_mins
             ];
         }
         return $response;
@@ -2780,7 +2784,7 @@ class VmtAttendanceReportsService
                     if ($value['isMOP'] != null || $value['isEG'] != null) {
                         $temp_ar['Employee Code'] = $value['user_code'];
                         $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = $value['date_day'];
+                        $temp_ar['Date'] = Carbon::parse($key)->format('d-M-Y');
                         $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
                         $temp_ar['Shift Name'] =   $current_shift->shift_name;
                         $regularized_sts = 'No';
@@ -2797,7 +2801,7 @@ class VmtAttendanceReportsService
 
                         if ($out_punch   != null) {
                             // $EGDuration = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . ' Mins';
-                            $eg1_total_mins = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . 'Mins';
+                            $eg1_total_mins = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time));
                             $eg_ar = CarbonInterval::minutes($eg1_total_mins)->cascade();
                             $eg_hrs = (int) $eg_ar->totalHours;
                             $eg_mins = $eg_ar->toArray()['minutes'];
@@ -2853,11 +2857,13 @@ class VmtAttendanceReportsService
             );
             $response['rows'] =  $ecData;
         } catch (\Exception $e) {
-            $response = [
+          return  $response = [
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+                'trace line'=>$e->getTraceAsString(),
+                'data'=>$single_data[$key]
             ];
         }
         return $response;
