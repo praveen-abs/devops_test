@@ -161,6 +161,8 @@ class VmtAttendanceServiceV2
                         $attendance_mode_checkin = null;
                         $attendance_mode_checkout = null;
                         $is_holiday = false;
+                        $is_leave = false;
+                        $is_half_day = false;
                         $checking_date = null;
                         $checking_time = null;
                         $checkout_date = null;
@@ -279,6 +281,32 @@ class VmtAttendanceServiceV2
                             }
                         }
 
+                        //here checking for leave 
+                        if (!$week_off_sts && !$is_holiday && $checking_time != null && $checkout_time != null) {
+                            $start_leave_list = VmtEmployeeLeaves::where('user_id', $single_user->id)
+                                ->WhereBetween(
+                                    'start_date',
+                                    [$start_date, $end_date]
+                                )->where('status', 'Approved')->get();
+                            $end_leave_list = VmtEmployeeLeaves::where('user_id', $single_user->id)
+                                ->WhereBetween(
+                                    'end_date',
+                                    [$start_date, $end_date]
+                                )->where('status', 'Approved')->get();
+                            $leave_list =  $start_leave_list->merge($end_leave_list);
+                            if (count($leave_list) > 0) {
+                                foreach ($leave_list as $single_emp_leave) {
+                                   // dd($current_date->addHour(23));
+                                    dd($current_date->addHour(23)->betweenIncluded(Carbon::parse($single_emp_leave->start_date), Carbon::parse($end_date)));
+                                    dd($single_emp_leave);
+                                }
+                            }
+                            dd();
+
+                            dd($leave_list);
+                            dd($current_date);
+                        }
+
                         if ($checking_time != null) {
                             $checking_date  = substr($checking_time, 0, 10);
                             $checking_time = substr($checking_time, 11);
@@ -293,7 +321,10 @@ class VmtAttendanceServiceV2
                             $checkout_date = null;
                         }
 
-
+                        $existing_record_query = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->where('date', $current_date);
+                        if ($existing_record_query->exists()) {
+                            $existing_record_query->delete();
+                        }
 
                         $attendance_table = new VmtEmployeeAttendanceV2;
                         $attendance_table->user_id = $single_user->id;
@@ -389,7 +420,7 @@ class VmtAttendanceServiceV2
             $heading_dates_2 = array();
             while ($header_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                 array_push($heading_dates, $header_date->format('d') . ' - ' .  $header_date->format('l'));
-                array_push($heading_dates_2,$header_date->format('d') . ' - ' .  $header_date->format('l'));
+                array_push($heading_dates_2, $header_date->format('d') . ' - ' .  $header_date->format('l'));
                 $header_date->addDay();
             }
             //dd(count($users));
@@ -397,8 +428,8 @@ class VmtAttendanceServiceV2
                 $current_date = Carbon::parse($start_date);
                 array_push($header_2, 'InPunch', 'OutPunch', 'OT');
                 if ($attendance_setting_details['lc_status'] == 1) {
-                    array_push($header_2, 'LC Minutes','Status');
-                }else{
+                    array_push($header_2, 'LC Minutes', 'Status');
+                } else {
                     array_push($header_2, 'Status');
                 }
                 $temp_ar = array();
