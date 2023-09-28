@@ -162,7 +162,9 @@ class VmtAttendanceServiceV2
                         $attendance_mode_checkout = null;
                         $is_holiday = false;
                         $is_leave = false;
+                        $leave_type = null;
                         $is_half_day = false;
+
                         $checking_date = null;
                         $checking_time = null;
                         $checkout_date = null;
@@ -296,15 +298,16 @@ class VmtAttendanceServiceV2
                             $leave_list =  $start_leave_list->merge($end_leave_list);
                             if (count($leave_list) > 0) {
                                 foreach ($leave_list as $single_emp_leave) {
-                                   // dd($current_date->addHour(23));
-                                    dd($current_date->addHour(23)->betweenIncluded(Carbon::parse($single_emp_leave->start_date), Carbon::parse($end_date)));
+                                    // dd($current_date->addHour(23));
+                                    if ($current_date->addHour(23)->betweenIncluded(Carbon::parse($single_emp_leave->start_date), Carbon::parse($end_date))) {
+                                        $is_leave = true;
+                                        break;
+                                    }
+
                                     dd($single_emp_leave);
                                 }
                             }
-                            dd();
 
-                            dd($leave_list);
-                            dd($current_date);
                         }
 
                         if ($checking_time != null) {
