@@ -146,7 +146,7 @@ class VmtAttendanceController extends Controller
             $request->record_id,
             auth()->user()->user_code,
             $request->status,
-            $request->user_type,
+            $user_type ="manager",
             $request->review_comment,
             $serviceNotificationsService
         );
@@ -993,13 +993,13 @@ class VmtAttendanceController extends Controller
             $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')->where('users.active', '1')
                 ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
-    
-    
+
+
             //dd($reportees_details->toArray());
             foreach ($reportees_details as $singleItem) {
                 $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
             }
-        
+
 
         return $reportees_details;
     }

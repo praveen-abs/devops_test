@@ -2616,7 +2616,7 @@ class VmtAttendanceService
                     $image_view,
                     $status_text,
                     $status,
-                    $user_type = "",
+                    $user_type = "manager",
 
                 ));
 
@@ -2700,7 +2700,7 @@ class VmtAttendanceService
             //Send mail to Employee
 
             $mail_status = "";
-            if ($user_type == "Admin") {
+            if (!empty($user_type) && $user_type == "Admin") {
 
                 //Get employee details
                 $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
@@ -2723,7 +2723,8 @@ class VmtAttendanceService
                     request()->getSchemeAndHttpHost(),
                     $image_view,
                     $status_text,
-                    $status
+                    $status,
+                    "Admin"
                 ));
 
                 if ($isSent) {
@@ -2752,7 +2753,8 @@ class VmtAttendanceService
                     request()->getSchemeAndHttpHost(),
                     $image_view,
                     $status_text,
-                    $status
+                    $status,
+                    "manager"
                 ));
 
                 if ($isSent) {
