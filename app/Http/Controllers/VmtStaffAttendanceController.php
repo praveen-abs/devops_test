@@ -17,21 +17,35 @@ class VmtStaffAttendanceController extends Controller
     */
     public function syncStaffAttendanceFromDeviceDatabase(){
 
-        $recentDeviceData  = VmtStaffAttendanceDevice::orderBy('date', 'DESC')->first();
+        try{
+            $recentDeviceData  = VmtStaffAttendanceDevice::orderBy('date', 'DESC')->first();
 
-        if($recentDeviceData){
-            $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->where('date', '>', $recentDeviceData->date)->get();
-        }else{
-            $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->get();
+            if($recentDeviceData){
+                $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->where('date', '>', $recentDeviceData->date)->get();
+            }else{
+                $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->get();
+            }
+
+            $data_count = 0;
+            foreach ($attendanceData as $key => $value) {
+                // code...
+                $this->insertDataFromExternalAttendanceTable($value);
+                $data_count++;
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Pulled data count : '.$data_count;
+            ];
         }
+        catch(\Exception $e){
+            return [
+                "status" => "failure",
+                "message" => "Error [ syncStaffAttendanceFromDeviceDatabase() ] : ".$e->getMessage(),
+                "data" => $e,
 
-
-        foreach ($attendanceData as $key => $value) {
-            // code...
-            $this->insertDataFromExternalAttendanceTable($value);
+            ];
         }
-
-        return array('status' => true, 'msg' => 'success');
     }
 
     // inserting device data in to vmt_staff_attenndance_device table
