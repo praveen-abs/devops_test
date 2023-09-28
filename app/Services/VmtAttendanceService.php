@@ -440,7 +440,7 @@ class VmtAttendanceService
         $leave_type_name,
         $leave_reason,
         $notifications_users_id,
-        VmtNotificationsService $serviceNotificationsService
+        $serviceNotificationsService
     ) {
 
         $validator = Validator::make(
@@ -485,8 +485,8 @@ class VmtAttendanceService
                     leave_type_name: $leave_type_name,
                     leave_reason: $leave_reason,
                     notifications_users_id: $notifications_users_id,
-                    user_type: "admin",
-                    serviceVmtNotificationsService: $serviceNotificationsService
+                    user_type: "Admin",
+                    serviceNotificationsService:$serviceNotificationsService,
                 );
 
                 if ($response['status'] == "success") {
@@ -501,28 +501,32 @@ class VmtAttendanceService
                         record_id: $record_id->id,
                         status: "Approved",
                         review_comment: "---",
-                        user_type: "admin",
-                        serviceVmtNotificationsService: $serviceVmtNotificationsService
+                        user_type: "Admin",
+                        serviceVmtNotificationsService:$serviceVmtNotificationsService
+
 
                     );
                 }
             } else {
                 return response()->json([
                     'status' => 'failure',
-                    'message' => $validator->errors()->all()
+                    'message' => $validator->errors()->all(),
+                    'data' => ""
                 ]);
             }
+             return $response;
+
         } catch (\Exception $e) {
-            $response = [
+           return $response = [
                 'status' => 'failure',
                 'message' => 'Error while applying leave request',
                 'mail_status' => 'failure',
                 'notification' => '',
-                'error' =>  $e->getMessage(),
+                'data' =>  $e->getMessage(),
                 'error_verbose' => $e->getTraceAsString()
             ];
 
-            return $response;
+
         }
     }
 
@@ -548,8 +552,9 @@ class VmtAttendanceService
         $leave_reason,
         $notifications_users_id,
         $user_type,
-        VmtNotificationsService $serviceNotificationsService
-    ) {
+        $serviceNotificationsService
+    )
+    {
 
         $validator = Validator::make(
             $data = [
@@ -590,6 +595,7 @@ class VmtAttendanceService
         try {
             //Core values needed
             $query_user = User::where('user_code', $user_code)->first();
+
             $compensatory_leavetype_id = VmtLeaves::where('leave_type', 'LIKE', '%Compensatory%')->first()->id;
             $leave_type_id = VmtLeaves::where('leave_type', $leave_type_name)->first()->id;
 
@@ -606,6 +612,7 @@ class VmtAttendanceService
             }
 
             $query_manager = User::where('user_code', $manager_emp_code)->first();
+
             $manager_name = $query_manager->name;
             $manager_id = $query_manager->id;
 
@@ -865,8 +872,6 @@ class VmtAttendanceService
                 'message' => 'Leave Request applied successfully',
                 'mail_status' => $mail_status,
                 'notification' => $res_notification,
-                'error' => '',
-                'error_verbose' => ''
             ];
 
             return $response;
@@ -877,7 +882,7 @@ class VmtAttendanceService
                 'mail_status' => 'failure',
                 'notification' => $res_notification ?? '',
                 'error' => $e->getMessage(),
-                'error_verbose' => $e->getline(),
+                'error_verbose' => $e->getTraceAsString(),
             ];
 
             return $response;
@@ -895,7 +900,7 @@ class VmtAttendanceService
         }
     }
 
-    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $user_type, $review_comment, VmtNotificationsService $serviceNotificationsService)
+    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $user_type, $review_comment, $serviceNotificationsService)
     {
 
         $validator = Validator::make(
@@ -986,7 +991,7 @@ class VmtAttendanceService
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id), true);
 
-            if (!empty($user_type) && $user_type == "admin") {
+            if (!empty($user_type) && $user_type == "Admin") {
 
                 $isSent    = \Mail::to($employee_mail)->send(
                     new ApproveRejectLeaveMail(
@@ -1025,7 +1030,6 @@ class VmtAttendanceService
                     )
 
                 );
-
                 if ($isSent) {
                     $mail_status = "success";
                 } else {
@@ -2143,7 +2147,7 @@ class VmtAttendanceService
                 ->where('user_id',  $user_id);
 
             if ($query_att->exists()) {
-                return response()->json([
+                return $response=([
                     'status' => 'failure',
                     'message' => 'Absent Regularization already applied for the given date',
                     'data' => ''
@@ -2201,7 +2205,8 @@ class VmtAttendanceService
                         request()->getSchemeAndHttpHost(),
                         $image_view,
                         $custom_reason,
-                        "Pending"
+                        "Pending",
+                        "",
                     ));
                 }
 
@@ -2212,7 +2217,7 @@ class VmtAttendanceService
                 }
             }
 
-            return response()->json([
+            return $response=([
                 'status' => 'success',
                 'message' => 'Absent Regularization applied successfully',
                 'mail_status' => $mail_status,
@@ -2407,7 +2412,7 @@ class VmtAttendanceService
 
 
             ////Send mail to Manager
-
+            $res_notification="";
             $mail_status = "";
             $isSent = "";
 
@@ -2791,14 +2796,14 @@ class VmtAttendanceService
                     'message' => 'Absent Regularization approval successful',
                     'mail_status' => 'failure',
                     'error' => $e->getMessage(),
-                    'error_verbose' => $e
+                    'error_verbose' => $e->getTraceAsString()
                 ]
             );
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error while doing absent regularization",
-                'data' => $e->getMessage()
+                'data' => $e->getMessage()."  ".$e->getTraceAsString()
             ]);
         }
     }
