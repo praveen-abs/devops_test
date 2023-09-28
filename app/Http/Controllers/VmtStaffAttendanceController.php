@@ -35,7 +35,7 @@ class VmtStaffAttendanceController extends Controller
 
             return [
                 'status' => 'success',
-                'message' => 'Pulled data count : '.$data_count;
+                'message' => 'Pulled data count : '.$data_count
             ];
         }
         catch(\Exception $e){
