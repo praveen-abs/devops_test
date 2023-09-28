@@ -17,6 +17,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
     const getDepartment = ref();
     const getPeriodMonth = ref();
 
+    const dialog_customDate = ref(false);
+
 
     // v-model values
     const Legal_Entity = ref();
@@ -89,31 +91,59 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         let url;
         let subUrl;
 
+        console.log(filterValue);
+
+      
+        // else if(filterValue=="custom_date" && active_status==5 ){
+        //      dialog_customDate.value= false;
+        // }
+
         if (active_status == 1) {
             // Detailed Reports
             url = `/fetch-detailed-attendance-data`;
+            if(filterValue==="custom_date"){
+                dialog_customDate.value= true;
+            }
         } else
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
+                if(filterValue==="custom_date"){
+                    dialog_customDate.value= true;
+                }
             } else
             if (active_status == 4) {
                 // Overtime Reports
                 url = `/fetch-overtime-report-data`;
+                if(filterValue==="custom_date"){
+                    dialog_customDate.value= true;
+                }
             } else
                 if (active_status == 5) {
                     if (attendance_Type.value) {
                         if (attendance_Type.value == 1) {
-                            url = '/fetch-LC-report-data'
+                            url = '/fetch-LC-report-data';
+                            if(filterValue==="custom_date"){
+                                dialog_customDate.value= true;
+                            }
                         } else
                             if (attendance_Type.value == 2) {
-                                url = '/fetch-EG-report-data'
+                                url = '/fetch-EG-report-data';
+                                if(filterValue==="custom_date"){
+                                    dialog_customDate.value= true;
+                                }
                             } else
                                 if (attendance_Type.value == 3) {
-                                    url = '/fetch-absent-report-data'
+                                    url = '/fetch-absent-report-data';
+                                    if(filterValue==="custom_date"){
+                                        dialog_customDate.value= true;
+                                    }
                                 } else
                                         if (attendance_Type.value ==4) {
-                                            url = '/fetch-half-day-report'
+                                            url = '/fetch-half-day-report';
+                                            if(filterValue==="custom_date"){
+                                                dialog_customDate.value= true;
+                                            }
                                         }
                     } else {
                         Swal.fire({
@@ -256,15 +286,15 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 });
             }).finally(() => {
                 useEmployeeMaster.canShowLoading = false
-                useEmployeeMaster.selectedfilters.active_status="";
-                useEmployeeMaster.selectedfilters.date="";
-                useEmployeeMaster.selectedfilters.department_id="";
-                useEmployeeMaster.selectedfilters.legal_entity="";
+                // useEmployeeMaster.selectedfilters.active_status="";
+                // useEmployeeMaster.selectedfilters.date="";
+                // useEmployeeMaster.selectedfilters.department_id="";
+                // useEmployeeMaster.selectedfilters.legal_entity="";
         
-                useEmployeeMaster.legal_Entity="";
-                useEmployeeMaster.Department="";
-                useEmployeeMaster.period_Date="";
-                useEmployeeMaster.select_Category=""
+                // useEmployeeMaster.legal_Entity="";
+                // useEmployeeMaster.Department="";
+                // useEmployeeMaster.period_Date="";
+                // useEmployeeMaster.select_Category=""
             })
 
         }
@@ -321,6 +351,9 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                         selectedfilters.end_date = filterValue
                         console.log(selectedfilters);
                     } 
+                    if(selectedfilters.start_date && selectedfilters.end_date){
+                        dialog_customDate.value= false;
+                    }
 
                     // if(active_status !== 1 && selectedfilters.start_date && selectedfilters.end_date){
 
@@ -501,7 +534,11 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         select_StartAndEnd_Date,
 
         // apply filter ::
-        updateAttendanceReports 
+        updateAttendanceReports ,
+
+        // custom date dialog box variable
+
+        dialog_customDate
     }
 
 });
