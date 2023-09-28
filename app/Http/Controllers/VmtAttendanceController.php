@@ -240,12 +240,8 @@ class VmtAttendanceController extends Controller
     public function applyLeaveRequest_AdminRole(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
+        $response = null;
         try {
-            $admin_user_code = $request->admin_user_code;
-
-            $is_admin = User::where('user_code', $admin_user_code)->where('org_role', "2")->first();
-
-            if (!empty($is_admin)) {
 
 
                 $response = $serviceVmtAttendanceService->applyLeaveRequest_AdminRole(
@@ -263,14 +259,13 @@ class VmtAttendanceController extends Controller
                     $request->notifications_users_id,
                     $serviceVmtNotificationsService
                 );
-            }
 
-            return $response = [
-                'status' => $response["status"],
-                'message' =>  $response["message"],
-                'mail_status' => $response['mail_status'] ?? "",
-                'data' => $response['data']??" ",
-            ];
+
+
+
+
+            return $response;
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
