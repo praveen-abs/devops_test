@@ -5,7 +5,7 @@
                 placeholder="Search Employees..">
             <button class="list_employee_attendance  p-3 px-1 flex hover:bg-gray-300 rounded-lg w-full focus:bg-gray-300"
                 v-for="(employee, index) in globalSearch(query, source)"
-                @click="isTeam ? useTimesheet.getSelectedEmployeeTeamDetails(employee.id, isTeam) : useTimesheet.getSelectedEmployeeOrgDetails(employee.id, isTeam,employee.user_code)">
+                @click="isTeam ? useTimesheet.getSelectedEmployeeTeamDetails(employee.id, isTeam,employee.user_code) : useTimesheet.getSelectedEmployeeOrgDetails(employee.id, isTeam,employee.user_code)">
                 <div class="col-auto me-2">
 
                     <p v-if="JSON.parse(employee.employee_avatar).type == 'shortname'"
