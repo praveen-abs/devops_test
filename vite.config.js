@@ -192,9 +192,10 @@ export default defineConfig({
 
             // salary details
             'resources/js/hrms/modules/paycheck/salary_details/salary_details.js',
+            // module setting
+            'resources/js/hrms/modules/configurations/module_settings/module_settings.js',
 
-            'resources/js/hrms/modules/configurations/module_settings/module_settings.js'
-
+          
 
             ],
             refresh: ['resources/views/**'],

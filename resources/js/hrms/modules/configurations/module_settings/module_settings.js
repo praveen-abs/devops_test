@@ -1,6 +1,7 @@
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import '../../../assests/tailwind.css';
 
 
 
@@ -27,9 +28,9 @@ import Calendar from "primevue/calendar";
 import Checkbox from 'primevue/checkbox';
 import { createPinia } from "pinia";
 
-import ModuleSettings from './module_settings.vue'
+import module_settings from './module_settings.vue'
 
-const app = createApp(ModuleSettings);
+const app = createApp(module_settings);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -55,5 +56,5 @@ app.component('ProgressSpinner',ProgressSpinner);
 app.component('InputText', InputText)
 app.component('Calendar', Calendar)
 
-app.mount("#ModuleSettings");
+app.mount("#module_settings");
 
