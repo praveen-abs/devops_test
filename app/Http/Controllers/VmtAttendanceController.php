@@ -999,7 +999,7 @@ class VmtAttendanceController extends Controller
 
         $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('users.is_ssa', '0')->where('users.active', '1')
-            ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
+            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation']);
 
 
         //dd($reportees_details->toArray());
@@ -1166,12 +1166,8 @@ class VmtAttendanceController extends Controller
                 }
             }
 
-            return $response = [
-                'status' => 'success',
-                'message' => 'Regularization done successfully!',
-                'mail_status' => $response['mail_status'] ?? "",
-                'data' => "",
-            ];
+            return $response ;
+            
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -1232,20 +1228,10 @@ class VmtAttendanceController extends Controller
                     );
                 }
             }
-    if($response_data['status'] ="success" ){
-            return $response = [
-                'status' => 'success',
-                'message' => 'Regularization done successfully!',
-                'mail_status' => $response_data['mail_status'] ?? "",
-                'data' => "",
-            ];
-        }else{
-            return $response = [
-                'status' => 'failure',
-                'message' => 'Error while regularize data',
-                'data' => "",
-            ];
-        }
+  
+            return $response ;
+             
+    
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
