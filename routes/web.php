@@ -918,7 +918,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/getClient_AllModuleDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModuleDetails'])->name('getClient_AllModuleDetails');
     Route::post('/update_AllClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'update_AllClientModuleStatus'])->name('update_AllClientModuleStatus');
 
+  //sidebar module settings
 
+  Route::post('/Module-settings', [App\Http\Controllers\HomeController::class, 'showModuleSettingsPage'])->name('showModuleSettingsPage');
 
     //Configrations
     ////Attendance Settings
