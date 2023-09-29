@@ -190,8 +190,10 @@ export default defineConfig({
             //  payslipPreview
             // 'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
 
-            // salary details 
-            'resources/js/hrms/modules/paycheck/salary_details/salary_details.js'
+            // salary details
+            'resources/js/hrms/modules/paycheck/salary_details/salary_details.js',
+
+            'resources/js/hrms/modules/configurations/module_settings/module_settings.js'
 
 
             ],

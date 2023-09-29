@@ -79,6 +79,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     /* Get currently selected team employee daily attendance */
     const getSelectedEmployeeTeamDetails = (user_id, isteam) => {
+
         isTeamOrg.value = isteam
         canShowLoading.value = true
         currentlySelectedTeamMemberUserId.value = user_id
@@ -93,9 +94,11 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     /* Get currently selected organization employee daily attendance */
 
     const getSelectedEmployeeOrgDetails = (user_id, isteam,currentlySelectedUser) => {
-        isTeamOrg.value = isteam
-        canShowLoading.value = true;
+        isTeamOrg.value = isteam;
         CurrentlySelectedUser.value = currentlySelectedUser;
+        console.log("employee list select function  ::" ,CurrentlySelectedUser.value);
+        canShowLoading.value = true;
+    
         currentlySelectedOrgMemberUserId.value = user_id
         getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             // console.log(Object.values(res.data));
@@ -362,7 +365,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const applyAbsentRegularization = () => {
         canShowLoading.value = true;
 
-        let currentlySelectedUser= CurrentlySelectedUser.value
+        let currentlySelectedUser= CurrentlySelectedUser.value;
+        console.log(`currentlySelectedUser :: `,currentlySelectedUser);
 
         let url;
         if(CurrentlySelectedUser && service.current_user_role == 2){
