@@ -11,7 +11,7 @@
             </div>
         </div>
         <!-- {{ source }} -->
-        <div class="col-12" v-if="type == 'LC'">
+        <div class="col-12 my-2.5" v-if="type == 'LC'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
@@ -19,13 +19,13 @@
                 <div class="col-6">
                     <p v-if="source.lc_status.includes('Approved')"> {{ source.checkin_time }} </p>
                     <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
-                        class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                        class="border p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
                         v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
 
             </div>
         </div>
-        <div class="col-12" v-if="type == 'MIP'">
+        <div class="col-12 my-2.5" v-if="type == 'MIP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
@@ -40,7 +40,7 @@
         </div>
 
 
-        <div class=" col-12" v-if="type == 'EG'">
+        <div class=" col-12 my-2.5" v-if="type == 'EG'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class=" col-12" v-if="type == 'MOP'">
+        <div class=" col-12 my-2.5" v-if="type == 'MOP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>

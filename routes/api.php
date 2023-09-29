@@ -120,6 +120,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/payroll/payslip/sendEmployeePayslipMail', [VmtAPIPaySlipController::class, 'sendEmployeePayslipMail']);
     Route::post('/payroll/payslip/getEmployeeAllPayslipList', [VmtAPIPaySlipController::class, 'getEmployeeAllPayslipList']);
     Route::post('/payroll/getEmployeeCompensatoryDetails', [VmtAPIPaySlipController::class, 'getEmployeeCompensatoryDetails']);
+    Route::post('/payroll/getEmployeeYearlyAndMonthlyCTC',[VmtAPIPaySlipController::class,'getEmployeeYearlyAndMonthlyCTC']);
 
 
 
@@ -174,4 +175,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //loanandadvance
     Route::post('/loanandsalaryadvance/getEmpLoanAndSalaryAdvance', [VmtAPILoanAndSalaryAdvanceController::class, 'getEmpLoanAndSalaryAdvance']);
+    Route::post('checkAbsentEmployeeAdminStatus', [App\Http\Controllers\VmtAttendanceController::class, 'checkAbsentEmployeeAdminStatus'])->name('checkAbsentEmployeeAdminStatus');
+    Route::post('checkAttendanceEmployeeAdminStatus', [App\Http\Controllers\VmtAttendanceController::class, 'checkAttendanceEmployeeAdminStatus'])->name('checkAttendanceEmployeeAdminStatus');
+    Route::post('applyLeaveRequest_AdminRole', [App\Http\Controllers\VmtAttendanceController::class, 'applyLeaveRequest_AdminRole'])->name('applyLeaveRequest_AdminRole');
+
 });
