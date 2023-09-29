@@ -35,7 +35,8 @@ export const EmployeeMasterStore = defineStore("EmployeeMasterStore", ()=>{
         date:"",
         department_id:"",
         legal_entity:"",
-        active_status:""
+        active_status:"",
+        type:""
     });
 
     const employeeMaterReportSource = ref([]);
@@ -70,7 +71,7 @@ const getEmployeeCTC = () => {
 
     function fetchFilterClientIds(){
         canShowLoading.value = true;
-        axios.get('/clients-fetchAll').then((res)=>{
+        axios.get('/filter-client-ids').then((res)=>{
             client_ids.value = res.data;
             console.log(" testing client id",client_ids.value);
         }).finally(()=>{
@@ -84,6 +85,7 @@ const getEmployeeCTC = () => {
      }).finally(()=>{
          canShowLoading.value = false;
      })
+     
  }
  function getPeriodMonth(){
      // let date = Date;
@@ -111,12 +113,10 @@ const getEmployeeCTC = () => {
             personalDetail.value = "detailed";
             console.log(personalDetail.value);
         };
+        
+        selectedfilters.type =   personalDetail.value;
 
-        let type =   personalDetail.value;
-
-        axios.post('/fetch-employee-ctc-report',{
-            type:type
-        }).then(res => {
+        axios.post('/fetch-employee-ctc-report',selectedfilters).then(res => {
             console.log(res.data.rows,"get value ");
             employeeCTCReportSource.value = res.data.rows
             console.log(employeeCTCReportSource.value," testings data");
@@ -217,6 +217,7 @@ function getSelectoption(key,filterValue,active_status){
     Employee_CTCReportDynamicHeaders.value.splice(0,
         Employee_CTCReportDynamicHeaders.value.length);
 
+        canShowLoading.value = true
     if (key == "department") {
         selectedfilters.department_id = filterValue;
 
@@ -258,13 +259,16 @@ function getSelectoption(key,filterValue,active_status){
 
                         })
                     }
+                }).finally(()=>{
+                    canShowLoading.value = false
+
                 })
 
                 }else{
 
                     let url = '/fetch-employee-ctc-report';
 
-                    // canShowLoading.value = true;
+                    canShowLoading.value = true;
 
                     axios.post(url,selectedfilters).then(res => {
                         console.log(res.data.rows,"get value ");
@@ -289,6 +293,9 @@ function getSelectoption(key,filterValue,active_status){
 
                             })
                         }
+                    }).finally(()=>{
+                        canShowLoading.value = false
+    
                     })
                 }
 }
@@ -376,6 +383,8 @@ function getSelectoption(key,filterValue,active_status){
 
         }
 
+     
+
 
     }
 
@@ -386,6 +395,18 @@ function getSelectoption(key,filterValue,active_status){
             console.log("2",val);
         }
 
+    }
+
+    const resetChars = () =>{
+        selectedfilters.active_status="";
+        selectedfilters.date="";
+        selectedfilters.department_id="";
+        selectedfilters.legal_entity="";
+    // variable
+        legal_Entity.value="";
+        Department.value="";
+        period_Date.value="";
+        select_Category.value="";
     }
 
 
@@ -440,7 +461,9 @@ function getSelectoption(key,filterValue,active_status){
         getSelectoption,
 
         clearfilterBtn,
-        testings
+        testings,
+        selectedfilters,
+        resetChars
 
 
 

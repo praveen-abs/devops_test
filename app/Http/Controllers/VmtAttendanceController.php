@@ -981,19 +981,25 @@ class VmtAttendanceController extends Controller
 
     public function fetchTeamMembers(Request $request)
     {
+
         //Get the team members of the given user
-        $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
-
-        $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')->where('users.active', '1')
-            ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
-
-
-
-        //dd($reportees_details->toArray());
-        foreach ($reportees_details as $singleItem) {
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
+        if(!empty($request->user_code)){
+            $user_code = $request->user_code;
+        }else{
+            $user_code = auth()->user()->user_code;
         }
+        $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get('user_id');
+
+            $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')->where('users.active', '1')
+                ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
+    
+    
+            //dd($reportees_details->toArray());
+            foreach ($reportees_details as $singleItem) {
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
+            }
+        
 
         return $reportees_details;
     }
