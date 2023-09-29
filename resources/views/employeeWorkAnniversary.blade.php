@@ -134,7 +134,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                     <tr>
                       <td style="text-align: center;">
                         <p class="sm-text-sm" style="margin: 0; font-size: 18px; color: #334155">Cheers,</p>
-                        <p class="sm-text-sm" style="margin: 0; font-size: 18px; font-weight: 600; color: #f97316">ABS_OKR Automated System</p>
+                        <p class="sm-text-sm" style="margin: 0; font-size: 18px; font-weight: 600; color: #f97316">ABShrms Automated System</p>
                         <table class="sm-w-full" style="margin: 0 auto; width: 600px" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td style="width: 25%;">
