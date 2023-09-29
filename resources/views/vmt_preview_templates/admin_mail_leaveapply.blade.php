@@ -118,13 +118,12 @@ $bank_names = \DB::table('vmt_banks')->get();
                                 <p class="text-strong " style="margin: 0px 0px 0px "><span><b>Dear
                                     {{ $employeeName }}</span></p>
                                 <p class="" style="  ">
-                                    We would like to notify you that your attendance regularization request has been submitted by
-                                   <span><b>{{ $managerName }}</span> on your behalf. The system has automatically approved this request according to the HRMS configuration.
-                                    For further information, please feel free to reach out to your designated admin.Furthermore, it is essential for us,
-                                    as employees, to strictly follow all compliance requirements and adhere to timelines to ensure the timely processing of the payroll.</p>
-
+                                    We would like to notify you that your Leave regularization request has been submitted by <span><b>{{ $managerName }}</span> on your behalf.
+                                    The system has automatically approved this request according to the HRMS configuration. For further information, please feel free to reach out to your designated admin.
+                                    Furthermore, it is essential for us, as employees, to strictly follow all compliance requirements and adhere to timelines to ensure the timely processing of the payroll.</p>
                             </td>
                         </tr>
+
 
                         </table>
                       </td>

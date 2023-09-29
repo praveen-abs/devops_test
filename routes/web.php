@@ -154,13 +154,17 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
 
     Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showTimesheet'])->name('attendance-timesheet');
-
     Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'applyRequestAttendanceRegularization'])->name('attendance-req-regularization');
     Route::post('/attendance-req-absent-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'applyRequestAbsentRegularization'])->name('attendance-req-absent-regularization');
     Route::post('/approveRejectAbsentRegularization', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAbsentRegularization'])->name('approveRejectAbsentRegularization');
     Route::post('/attendance/getAttendanceRegularizationStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceRegularizationStatus'])->name('getAttendanceRegularizationStatus');
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
     Route::get('/getAttendanceStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceStatus'])->name('getAttendanceStatus');
+
+    //Admin Apply Access
+    Route::post('checkAbsentEmployeeAdminStatus', [App\Http\Controllers\VmtAttendanceController::class, 'checkAbsentEmployeeAdminStatus'])->name('checkAbsentEmployeeAdminStatus');
+    Route::post('checkAttendanceEmployeeAdminStatus', [App\Http\Controllers\VmtAttendanceController::class, 'checkAttendanceEmployeeAdminStatus'])->name('checkAttendanceEmployeeAdminStatus');
+    Route::post('applyLeaveRequest_AdminRole', [App\Http\Controllers\VmtAttendanceController::class, 'applyLeaveRequest_AdminRole'])->name('applyLeaveRequest_AdminRole');
 
 
     Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');
@@ -796,6 +800,16 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::get('dayWiseStaffAttendance', [App\Http\Controllers\VmtAttendanceController::class, 'dayWiseStaffAttendance'])->name('dayWiseStaffAttendance');
 
+
+    //--- PMS v3 START ---
+    Route::get('/performance', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'showPMSDashboard']);
+
+
+
+
+
+
+    //--- PMS v3 END ---
 
     ////Reports
     ///for current year
