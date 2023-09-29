@@ -27,7 +27,9 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
-import Calendar from 'primevue/calendar'
+import Calendar from 'primevue/calendar';
+import Sidebar from 'primevue/sidebar';
+
 
 import pms_master from './pms_master.vue'
 const app = createApp(pms_master);
@@ -56,5 +58,6 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
+app.component('Sidebar', Sidebar)
 
 app.mount("#pms_master");
