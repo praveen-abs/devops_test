@@ -4,6 +4,7 @@ import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
 import { Service } from "../../Service/Service";
+import {useAttendanceTimesheetMainStore} from "../../attendence/timesheet/stores/attendanceTimesheetMainStore";
 const swal = inject("$swal");
 
 
@@ -12,6 +13,8 @@ export const useLeaveService = defineStore("useLeaveService", () => {
     // Notification service
     const toast = useToast();
     const service = Service()
+
+    const AttendanceTimesheetMainStore = useAttendanceTimesheetMainStore();
 
     // Variable Declarations
     const leave_data = reactive({
@@ -405,9 +408,64 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
 
         // data_checking.value=true
-        axios.post('/applyLeaveRequest', {
+
+        let url;
+
+        if( service.current_user_role == 2 && AttendanceTimesheetMainStore.CurrentlySelectedUser  )
+        {
+            console.log(AttendanceTimesheetMainStore.CurrentlySelectedUser);
+            url = `applyLeaveRequest_AdminRole`;
+
+            axios.post(url, {
+                "admin_user_code": service.current_user_code,
+                "user_code":AttendanceTimesheetMainStore.CurrentlySelectedUser,
+               "leave_request_date": leave_Request_data.leave_Request_date,
+                "leave_type_name": leave_Request_data.leave_type_name,
+                "leave_session": leave_Request_data.leave_session,
+                "start_date": leave_Request_data.start_date,
+                "end_date": leave_Request_data.end_date,
+                "no_of_days": leave_Request_data.no_of_days,
+                "hours_diff": leave_Request_data.hours_diff,
+                "compensatory_work_days_ids": leave_Request_data.compensatory_leave_id,
+                "notify_to": leave_Request_data.notify_to,
+                "leave_reason": leave_Request_data.leave_reason,
+                "user_type": leave_Request_data.user_type,
+            }).then(res => {
+                data_checking.value = false
+                console.log(res.data.messege);
+                if (res.data.status == 'success') {
+                    Swal.fire(
+                        'Success',
+                        res.data.message,
+                        'success'
+                    )
+    
+                }
+                if (res.data.status == 'failure') {
+                    Swal.fire(
+                        'Failure',
+                        res.data.message,
+                        'error'
+                    )
+                }
+    
+                console.log("Email status" + res.data.status);
+    
+            }).catch(err => {
+                console.log(err);
+            }).finally(() => {
+                leaveApplyDailog.value = false
+    
+            })
+
+
+         }else{
+            
+        url = `/applyLeaveRequest`;
+
+        axios.post(url, {
             "user_code": service.current_user_code,
-            "leave_request_date": leave_Request_data.leave_Request_date,
+           "leave_request_date": leave_Request_data.leave_Request_date,
             "leave_type_name": leave_Request_data.leave_type_name,
             "leave_session": leave_Request_data.leave_session,
             "start_date": leave_Request_data.start_date,
@@ -445,6 +503,13 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             leaveApplyDailog.value = false
 
         })
+
+
+
+
+         }
+
+
 
     };
 

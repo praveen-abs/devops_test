@@ -2788,7 +2788,7 @@ class VmtAttendanceService
 
             return $responseJSON = [
                 'status' => 'success',
-                'message' => 'Regularization done successfully!',
+                'message' => 'Absent Regularization done successfully!',
                 'mail_status' => $mail_status,
                 'data' => [],
             ];
