@@ -1,16 +1,33 @@
 <template>
     <!-- <loadingSpinner /> -->
-    <div class="flex flex-row h-screen overflow-hidden relative ">
+    <!-- <div class="flex flex-row h-screen overflow-hidden relative ">
         <Sidebar />
         <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
-            <Topbar />
-            <!-- Main content -->
-            <div class="overflow-x-scroll">
-                <Dashboard />
+        <Topbar />
+            <div class="overflow-auto">
+                <RouterView></RouterView>
             </div>
-
         </div>
-    </div>
+    </div> -->
+
+    <div id="app">
+        <!--Sidebar with Dimmer -->
+        <div class="flex flex-row h-screen fixed w-screen">
+           <!-- Sidebar -->
+           <div>
+              <Sidebar />
+           </div>
+           <!-- Page Content -->
+           <div class="bg-gray-100  text-gray-700 h-screen w-[100%] main-content  ">
+              <div class="w-[100%]">
+                 <Topbar />
+              </div>
+              <div class="h-screen p-2 !pb-20 overflow-y-auto ">
+                 <RouterView></RouterView>
+              </div>
+           </div>
+        </div>
+     </div>
 </template>
 
 
@@ -48,13 +65,15 @@ onMounted(() => {
 <style>
 /* This is optional if you are using Tailwind via CDN or importing it in your project. */
 
-.dot {
+.dot
+{
     /* Move the dot to the right when the switch is toggled on */
     transform: translateX(0);
 }
 
 /* Update the appearance of the switch when it's checked (on) */
-#toggle:checked+.dot {
+#toggle:checked+.dot
+{
     transform: translateX(6rem);
 }
 </style>

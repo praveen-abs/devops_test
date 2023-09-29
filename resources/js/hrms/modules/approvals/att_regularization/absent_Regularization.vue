@@ -154,8 +154,8 @@ onUpdated(() => {
     canShowConfirmation ? reviewer_comment.value = null : ''
 })
 
-onMounted(() => {
-    getAbsentRegularization();
+onMounted(async() => {
+    await getAbsentRegularization();
 })
 
 async function getAbsentRegularization() {

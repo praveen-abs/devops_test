@@ -106,8 +106,8 @@ import { saveAs } from "file-saver";
 
 const useDashboard = useAttendanceDashboardMainStore()
 
-onMounted(() => {
-    useDashboard.getAttendanceDashboardMainSource()
+onMounted(async () => {
+   await useDashboard.getAttendanceDashboardMainSource()
 })
 
 

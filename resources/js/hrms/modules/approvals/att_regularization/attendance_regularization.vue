@@ -44,7 +44,7 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="attendance_date" header="Date" :sortable="true" style="min-width: 10rem;" >
+                <Column field="attendance_date" header="Date" :sortable="true" style="min-width: 10rem;">
                     <template #body="slotProps">
                         <h1 class="text-right "> {{ moment(slotProps.data.attendance_date).format('DD-MM-YYYY') }}</h1>
                     </template>
@@ -136,7 +136,7 @@ import { useToast } from "primevue/usetoast";
 import moment from "moment";
 import { Service } from "../../Service/Service";
 import LoadingSpinner from '../../../components/LoadingSpinner.vue';
-import {UseAttendanceStore} from "./AttendanceStore";
+import { UseAttendanceStore } from "./AttendanceStore";
 
 const UseAttendance = UseAttendanceStore();
 
@@ -173,19 +173,19 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
-onMounted(() => {
-    ajax_GetAttRegularizationData();
+onMounted(async () => {
+    await ajax_GetAttRegularizationData();
 });
 
-function ajax_GetAttRegularizationData() {
+async function ajax_GetAttRegularizationData() {
     UseAttendance.canShowLoadingScreen = true
     let url = window.location.origin + "/fetch-att-regularization-data";
     // console.log("AJAX URL : " + url);
-    axios.get(url).then((response) => {
+    await axios.get(url).then((response) => {
         // console.log("Axios : " + response.data);
         att_regularization.value = Object.values(response.data);
     }).finally(() => {
-        UseAttendance.canShowLoadingScreen  = false
+        UseAttendance.canShowLoadingScreen = false
     });
 }
 
@@ -198,7 +198,7 @@ function showConfirmDialog(selectedRowData, status) {
 }
 
 function hideConfirmDialog(canClearData) {
-    canShowConfirmation.value  = false;
+    canShowConfirmation.value = false;
     if (canClearData) resetVars();
 }
 
@@ -226,7 +226,7 @@ const getSeverity = (status) => {
 
 function processApproveReject() {
     hideConfirmDialog(false);
-    UseAttendance.canShowLoadingScreen  = true;
+    UseAttendance.canShowLoadingScreen = true;
     // console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
     axios
@@ -262,12 +262,12 @@ function processApproveReject() {
             resetVars();
         })
         .catch((error) => {
-            UseAttendance.canShowLoadingScreen  = false;
+            UseAttendance.canShowLoadingScreen = false;
             resetVars();
             // console.log(error.toJSON());
         }).finally(() => {
             reviewer_comment.value = null
-            UseAttendance.canShowLoadingScreen  = false;
+            UseAttendance.canShowLoadingScreen = false;
             ajax_GetAttRegularizationData();
         });
 }
@@ -275,7 +275,8 @@ function processApproveReject() {
 
 
 <style>
-.page-content {
+.page-content
+{
     padding: calc(30px + 1.5rem) calc(1.5rem / 2) 60px calc(1.5rem / 2);
 }
 </style>

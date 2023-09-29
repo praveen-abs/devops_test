@@ -11,14 +11,7 @@ export default defineConfig({
 
                 'resources/scss/main.scss',
                 'resources/scss/views/main_dashboard.scss',
-
-                'resources/js/app.js',
-
-                // Home
-                'resources/js/hrms/modules/Home/Home.js',
-                'resources/js/hrms/modules/Home/Sidebar.js',
-                'resources/js/hrms/modules/Home/Topbar.js',
-
+                'resources/js/hrms/app.js',
 
                 //Main dashboard
                 'resources/js/hrms/modules/dashboard/dashboard.js',
@@ -187,23 +180,17 @@ export default defineConfig({
 
                 'resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js',
 
-            //  payslipPreview
-            // 'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
+                //  payslipPreview
+                // 'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
 
-            // salary details 
-            'resources/js/hrms/modules/paycheck/salary_details/salary_details.js',
-
-
-            // pms master 
-            
-            'resources/js/hrms/modules/pms/pms_master.js'
+                // salary details
+                'resources/js/hrms/modules/paycheck/salary_details/salary_details.js'
 
 
             ],
             refresh: ['resources/views/**'],
         }),
     ],
-
     resolve: {
         dedupe: ['vue', 'vue-router'],
     },

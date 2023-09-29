@@ -247,8 +247,6 @@ const teamListLength = ref(0);
 const orgListLength = ref(0);
 
 onMounted(async() => {
-    Service()
-
     await useTimesheet.getTeamList(service.current_user_code).then(res => {
         teamList.value = Object.values(res.data)
         teamListLength.value = res.data.length
@@ -310,5 +308,11 @@ const emp = ref([
 .page-content
 {
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+}
+
+.p-sidebar-right .p-sidebar
+{
+    width: 28rem;
+    height: 100%;
 }
 </style>
