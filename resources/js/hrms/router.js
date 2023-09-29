@@ -174,7 +174,7 @@ const routes = [
             {
                 path: '/testing',
                 name: 'testing',
-                component: () => import('../testings/api.vue'),
+                component: () => import('../hrms/modules/pms/pms_master.vue'),
             },
             // Other routes go here
         ],

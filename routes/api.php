@@ -179,4 +179,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('checkAttendanceEmployeeAdminStatus', [App\Http\Controllers\VmtAttendanceController::class, 'checkAttendanceEmployeeAdminStatus'])->name('checkAttendanceEmployeeAdminStatus');
     Route::post('applyLeaveRequest_AdminRole', [App\Http\Controllers\VmtAttendanceController::class, 'applyLeaveRequest_AdminRole'])->name('applyLeaveRequest_AdminRole');
 
+
 });
+
+// PMS
+Route::post('/saveKpiForm', [VmtAPIPMSModuleController::class, 'saveKpiForm']);
+Route::post('/getKpiFormAsDropdown/{author_id}', [VmtAPIPMSModuleController::class, 'getKpiFormAsDropdown']);

@@ -9,7 +9,7 @@ class VmtPMS_KPIFormModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'vmt_pms_kpiform';
+protected $table = 'vmt_pms_kpiform';
 
     function getPmsKpiFormAssignedDetails(){
         return $this->hasMany(VmtPMS_KPIFormAssignedModel::class);
