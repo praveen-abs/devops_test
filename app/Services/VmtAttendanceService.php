@@ -45,7 +45,7 @@ class VmtAttendanceService
 {
 
 
-    public function fetchAttendanceRegularizationData($month, $year, $manager_user_code = null)
+    public function fetchAttendanceRegularizationData($month, $year,$manager_user_code = null)
     {
 
         $validator = Validator::make(
@@ -69,10 +69,11 @@ class VmtAttendanceService
 
         try {
             $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
-
+          // dd( $map_allEmployees);
             $allEmployees_lateComing = null;
 
             //If manager ID not set, then show all employees
+           // dd($manager_user_code);
             if (empty($manager_user_code)) {
                 if (empty($month) && empty($year))
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
@@ -84,7 +85,7 @@ class VmtAttendanceService
                 //If manager ID set, then show only the team level employees
 
                 $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
-
+                // dd( $employees_id );
 
                 if (empty($month) && empty($year))
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)->get();
@@ -140,7 +141,6 @@ class VmtAttendanceService
     public function fetchAbsentRegularizationData($month, $year, $manager_user_code = null)
     {
 
-
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
         $allEmployees_lateComing = null;
@@ -195,7 +195,7 @@ class VmtAttendanceService
         //     "message"=>"",
         //     "data"=>$allEmployees_lateComing
         // ];
-
+          
         return $allEmployees_lateComing;
     }
 

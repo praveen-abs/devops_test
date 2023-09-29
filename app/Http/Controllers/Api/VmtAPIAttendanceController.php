@@ -346,7 +346,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData(manager_user_code: $request->manager_user_code, month: $request->month, year: $request->year);
+        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData(month: $request->month, year: $request->year,manager_user_code: $request->manager_user_code);
 
         return response()->json([
             'status' => 'success',

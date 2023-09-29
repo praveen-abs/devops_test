@@ -1026,12 +1026,14 @@ class VmtAttendanceController extends Controller
     {
 
         $response = null;
-
+         
         //Check whether the current employee is Manager
-
+           // dd(Str::contains(currentLoggedInUserRole(), ['Manager']));
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAttendanceRegularizationData(auth()->user()->user_code, null, null);
+          //  dd(auth()->user()->user_code);
+            $response = $attendanceService->fetchAttendanceRegularizationData( null, null,auth()->user()->user_code);
+
         } else {
 
             //Fetch all data
@@ -1055,7 +1057,7 @@ class VmtAttendanceController extends Controller
 
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAbsentRegularizationData(auth()->user()->user_code, null, null);
+            $response = $attendanceService->fetchAbsentRegularizationData( null, null,auth()->user()->user_code);
         } else {
 
             //Fetch all data
