@@ -1569,9 +1569,9 @@ class VmtCorrectionController extends Controller
                                         $salary_project_data->earned_hra = $payslip_details['earned_hra'];
                                         $salary_project_data->hra_arrear = $payslip_details['hra_arrear'];
                                         $salary_project_data->earned_child_edu_allowance = $payslip_details['earned_child_edu_allowance'];
-                                        $salary_project_data->earned_child_edu_allowance = $payslip_details['child_edu_allowance_arrear'];
+                                        $salary_project_data->child_edu_allowance_arrear = $payslip_details['child_edu_allowance_arrear'];
                                         $salary_project_data->earned_spl_alw = $payslip_details['earned_spl_alw'];
-                                        $salary_project_data->earned_spl_alw = $payslip_details['spl_alw_arrear'];
+                                        $salary_project_data->spl_alw_arrear = $payslip_details['spl_alw_arrear'];
                                         $salary_project_data->overtime = $payslip_details['overtime'];
                                         $salary_project_data->total_earned_gross = $payslip_details['total_earned_gross'];
                                         $salary_project_data->pf_wages = $payslip_details['pf_wages'];

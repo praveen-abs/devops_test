@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
@@ -16,33 +15,42 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-
-
-
-class InvestmentsReportsExport implements FromArray,ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles,WithEvents,WithStrictNullComparison
+class AnnualProjectionexport implements FromArray,ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles,WithEvents,WithStrictNullComparison,WithTitle
 {
+    /**
+    * @return \Illuminate\Support\Collection
+    */
 
-    private $heading_dates;
-    private $reportresponse;
+      protected $data;
+
+      private $heading_dates;
+      private $reportresponse;
 
     public function __construct($data)
     {
 
-          $this->heading_dates=$data[0];
-          $this->total_column = num2alpha(count($data[0])-1);
-          $this->reportresponse=$data[1];
+        $this->headings=$data[0];
+        $this->total_column = num2alpha(count($data[0])-1);
+        $this->reportresponse=$data[1];
+        $this->title=$data[2];
     }
-    public function headings():array
-    {
-        return[
-            $this->heading_dates
-        ];
-     }
+
+    public function headings():array{
+        return [$this->headings];
+    }
+
     public function startCell(): string
     {
         return 'A1';
     }
+
+    public function title(): string
+    {
+        return $this->title;
+    }
+
     public function styles(Worksheet $sheet)
     {
         //For First Row
@@ -55,8 +63,6 @@ class InvestmentsReportsExport implements FromArray,ShouldAutoSize, WithHeadings
         $sheet->getStyle('A1:'.$this->total_column.'1')->getAlignment()->setWrapText(true);
 
     }
-
-
 
     public function registerEvents(): array {
         return [
@@ -81,8 +87,7 @@ class InvestmentsReportsExport implements FromArray,ShouldAutoSize, WithHeadings
 
     public function array(): array
     {
-        return ($this->reportresponse);
+        return [$this->reportresponse];
     }
 
-    }
-
+}

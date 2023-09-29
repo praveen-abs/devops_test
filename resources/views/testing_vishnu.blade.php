@@ -917,11 +917,13 @@ foreach ($v_form_template as $form_key => $single_emp_form_data) {
         }
     }
 }
-if (!in_array("Section 80CCE Total",$tax_reports_Section_column )) {
 
-array_push($tax_reports_Section_column, 'Section 80CCE Total');
 
-}
+    if (!in_array("Section 80CCE Total",$tax_reports_Section_column )) {
+            array_push($tax_reports_Section_column, 'Section 80CCE Total');
+    }
+
+
      foreach ($v_form_template as $form_key => $single_emp_form_data) {
         foreach ($single_emp_form_data as $key => $single_user_data) {
          if (trim($single_user_data['section_group']) == 'Other Excemptions') {
@@ -944,6 +946,7 @@ array_push($tax_reports_Section_column, 'Section 80CCE Total');
             }
         }
 }
+
 if (!in_array('10.Aggregate of deductible amount under Chapter VI-A',$tax_reports_Excemption_column )) {
 
 array_push($tax_reports_Excemption_column, '10.Aggregate of deductible amount under Chapter VI-A');
