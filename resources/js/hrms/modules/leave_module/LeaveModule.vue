@@ -107,8 +107,8 @@ const service = Service()
 
 const apply = ref(false)
 
-onMounted(() => {
-    useLeaveStore.getEmployeeLeaveBalance()
+onMounted(async () => {
+   await useLeaveStore.getEmployeeLeaveBalance()
 })
 </script>
 

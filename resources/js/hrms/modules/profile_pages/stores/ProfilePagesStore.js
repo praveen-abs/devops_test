@@ -1,7 +1,8 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { Service } from "../../Service/Service";
-
+import { useRouter, useRoute } from "vue-router";
+import { onMounted, onUpdated } from 'vue';
 import { ref } from "vue";
 
 /*
@@ -18,6 +19,8 @@ export const profilePagesStore = defineStore("employeeService", () => {
 
     const loading_screen = ref(true)
 
+    const router = useRouter();
+    const route = useRoute();
     const profile = ref();
 
     const user_code = ref()
@@ -30,12 +33,9 @@ export const profilePagesStore = defineStore("employeeService", () => {
 
     let url = '/profile-pages-getEmpDetails';
 
-    if (urlParams.has('uid'))
+    if (urlParams.has('uid')) {
         url = url + '?uid=' + urlParams.get('uid');
-    console.log("id" + url);
-
-    let url_param_UID =  new URL(document.location).searchParams.get('uid');
-
+    }
 
 
     const getProfilePhoto = () => {
@@ -44,7 +44,7 @@ export const profilePagesStore = defineStore("employeeService", () => {
                 user_code: user_code.value
             })
             .then((res) => {
-                console.log( "profile :?",res.data.data);
+                console.log("profile :?", res.data.data);
                 profile.value = res.data.data;
             })
             .finally(() => {
@@ -60,18 +60,18 @@ export const profilePagesStore = defineStore("employeeService", () => {
             console.log("fetchEmployeeDetails() : " + res.data);
             loading_screen.value = false
             employeeDetails.value = res.data
-            console.log("Current User code :"+ res.data.user_code);
-            if(url_param_UID)
-            {
-                user_code.value =res.data.user_code
-            }else{
+            console.log("Current User code :" + res.data.user_code);
+            if (url_param_UID) {
+                user_code.value = res.data.user_code
+            } else {
                 console.log("user not code");
                 user_code.value = service.current_user_code
             }
 
-        }).catch(e => console.log(e)).finally((res) =>{
+        }).catch(e => console.log(e)).finally((res) => {
             getProfilePhoto()
-         console.log("completed")})
+            console.log("completed")
+        })
 
 
     }

@@ -920,7 +920,7 @@ onUpdated(() => {
     width: 150px;
     top: 80px;
     left: 25px;
-
+    z-index: 9999;
 }
 
 .hp:hover+.hop {

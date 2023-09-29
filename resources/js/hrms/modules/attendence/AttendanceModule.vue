@@ -309,4 +309,10 @@ const emp = ref([
 {
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
+
+.p-sidebar-right .p-sidebar
+{
+    width: 28rem;
+    height: 100%;
+}
 </style>

@@ -108,13 +108,14 @@
 //     flex-wrap: wrap;
 //   }
 .p-paginator {
-    color: #003056 !important;
+    color: black !important;
     justify-content: left !important;
 
     .p-dropdown {
         position: absolute;
             right: 0px;
         height: 2.5rem !important;
+        color: black !important;
 
         &:hover {
             box-shadow: 0 0 0 0.2rem #00305663 !important;
@@ -189,7 +190,7 @@
     }
 
     .p-column-filter-menu-button {
-        color: black;
+        color: black !important;
         margin-left: 10px;
     }
 

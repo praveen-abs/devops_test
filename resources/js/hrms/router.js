@@ -23,6 +23,17 @@ const routes = [
 
             },
             {
+                path: '/profile-page',
+                name: 'profile-page',
+                component: () => import('../hrms/modules/profile_pages/ProfilePageNew.vue'),
+            },
+            {
+                path: '/profile-page/:user_code',
+                name: 'profile-page-search',
+                component: () => import('../hrms/modules/profile_pages/ProfilePageNew.vue'),
+
+            },
+            {
                 path: '/attendance-dashboard',
                 name: 'attendance-dashboard',
                 component: () => import('../hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue'),
