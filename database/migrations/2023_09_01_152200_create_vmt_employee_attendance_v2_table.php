@@ -35,7 +35,14 @@ return new class extends Migration
             $table->text('checkin_lat_long')->nullable();
             $table->text('checkout_lat_long')->nullable();
             //$table->integer('overtime')->nullable(); # can be calculated from current shifttime and checkout time + limit 
-
+            $table->integer('emp_leave_id')->nullable();
+            $table->text('overtime')->nullable();
+            $table->integer('lc_id')->nullable();
+            $table->text('lc_minutes')->nullable();
+            $table->text('eg_id')->nullable();
+            $table->text('eg_minutes')->nullable();
+            $table->integer('mip_id')->nullable();
+            $table->integer('mop_id')->nullable();
             #only during approvals
             // $table->integer('lc_status')->nullable();
             //  $table->integer('eg_status')->nullable();
