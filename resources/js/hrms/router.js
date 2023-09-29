@@ -95,6 +95,71 @@ const routes = [
                 name: 'approvals-employee-Details',
                 component: () => import('../hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue'),
             },
+
+            // Paycheck
+            {
+                path: '/Paycheck/Salary-Details',
+                name: 'Paycheck-Salary-Details',
+                component: () => import('../hrms/modules/paycheck/salary_details/salary_details.vue'),
+            },
+            {
+                path: '/Paycheck/Investments',
+                name: 'Paycheck-Investments',
+                component: () => import('../hrms/modules/paycheck/investments/investment.vue'),
+            },
+            {
+                path: '/Paycheck/Loan-and-salary-advance',
+                name: 'Paycheck-Loan-and-salary-advance',
+                component: () => import('../hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue'),
+            },
+
+            // Reports
+            {
+                path: '/Reports',
+                name: 'Reports',
+                component: () => import('../hrms/modules/reports/ReportsMaster.vue'),
+            },
+
+            // Configuration
+            {
+                path: '/Configuration/Client-onboarding',
+                name: 'Client-onboarding',
+                component: () => import('../hrms/modules/configurations/client_onboarding/client_onboarding_master.vue'),
+            },
+            // {
+            //     path: '/Configuration/Document-template',
+            //     name: 'Document-template',
+            //     component: () => import('../hrms/modules/reports/ReportsMaster.vue'),
+            // },
+            {
+                path: '/Configuration/Document-settings',
+                name: 'Document-settings',
+                component: () => import('../hrms/modules/configurations/emp_documents/DocumentsSettings.vue'),
+            },
+            {
+                path: '/Configuration/Attendance-settings',
+                name: 'Attendance-settings',
+                component: () => import('../hrms/modules/configurations/attendance_settings/Attendance_setting_Master.vue'),
+            },
+            // {
+            //     path: '/Configuration/Investment-settings',
+            //     name: 'Investment-settings',
+            //     component: () => import('../hrms/modules/configurations/'),
+            // },
+            {
+                path: '/Configuration/Mobile-settings',
+                name: 'Mobile-settings',
+                component: () => import('../hrms/modules/configurations/mobile_settings/MobileSettings.vue'),
+            },
+            {
+                path: '/Configuration/Module-settings',
+                name: 'Module-settings',
+                component: () => import('../hrms/modules/configurations/module_settings/module_settings.vue'),
+            },
+
+
+
+
             {
                 path: '/testing',
                 name: 'testing',
@@ -114,21 +179,21 @@ const router = createRouter({
 
 // Global navigation guard
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    // Check if the user is authenticated by validating the access_token
-    const accessToken = localStorage.getItem('access_token'); // Retrieve the access_token from local storage (you can use cookies or a different storage mechanism)
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        // Check if the user is authenticated by validating the access_token
+        const accessToken = localStorage.getItem('access_token'); // Retrieve the access_token from local storage (you can use cookies or a different storage mechanism)
 
-    if (!accessToken) {
-      // If the access_token is not present, redirect to the login page
-      next('/login');
+        if (!accessToken) {
+            // If the access_token is not present, redirect to the login page
+            next('/login');
+        } else {
+            // User is authenticated, proceed to the requested route
+            next();
+        }
     } else {
-      // User is authenticated, proceed to the requested route
-      next();
+        // For routes that don't require authentication, proceed
+        next();
     }
-  } else {
-    // For routes that don't require authentication, proceed
-    next();
-  }
 });
 
 

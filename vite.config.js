@@ -10,7 +10,6 @@ export default defineConfig({
             input: [
 
                 'resources/scss/main.scss',
-                'resources/scss/views/main_dashboard.scss',
                 'resources/js/hrms/app.js',
 
                 //Main dashboard

@@ -259,9 +259,9 @@ onMounted(() => {
             findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.IS_ENABLED === 1 ?
                 {
                     label: 'Paycheck',
-                    subItems: [findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.SALARY_DETAILS === 1 ? { label: 'Salary Details', to: 'salary_details' } : null : null, findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.INVESTMENTS === 1 ? { label: 'Investments', to: 'investments_details' } : null
+                    subItems: [findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.SALARY_DETAILS === 1 ? { label: 'Salary Details', to: 'Paycheck/Salary-Details' } : null : null, findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.INVESTMENTS === 1 ? { label: 'Investments', to: 'Paycheck/Investments' } : null
                         : null, findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.FORM_16 === 1 ? { label: 'Form 16', to: 'form16_details' } : null : null,
-                    findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.LOAN_AND_SALARY_ADVANCE === 1 ? { label: 'Loan And Salary Advance', to: 'showSAemployeeView' } : null : null
+                    findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK') ? findSelectedModuleIsEnabled(res.data.data, 'PAYCHECK').sub_module_name.LOAN_AND_SALARY_ADVANCE === 1 ? { label: 'Loan And Salary Advance', to: 'Paycheck/Loan-and-salary-advance' } : null : null
                     ]
                     ,
                     // { label: 'Investment Form Mgmt', to: 'showInvestmentsFormMgmtPage' }

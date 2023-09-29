@@ -277,10 +277,10 @@ const getEmployeeDetials = async () => {
         usedashboard.canShowTopbar = true
     });
 };
-onMounted(() => {
+onMounted(async () => {
     getSession();
     if(isDataReceived){
-        getEmployeeDetials().finally(()=>{
+        await getEmployeeDetials().finally(()=>{
             isDataReceived.value = false
         });
     }

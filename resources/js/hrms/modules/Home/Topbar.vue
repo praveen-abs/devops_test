@@ -95,7 +95,8 @@
                 </transition>
             </div>
             <div class="flex justify-end col-span-4">
-                <button v-tooltip="'Settings'" v-if=" service.current_user_role == 1 ||service.current_user_role == 2 || service.current_user_role == 3"
+                <button v-tooltip="'Settings'"
+                    v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3"
                     class="p-2 mx-2 transition duration-700 ease-in-out transform bg-gray-100 rounded-full hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="w-6 h-6">
@@ -110,31 +111,41 @@
                         @mouseleave="useDashboard.canShowConfiguration = false">
                         <!-- Dropdown content goes here -->
 
-                        <a href="config-master" v-if= "  findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 "
+                        <!-- <RouterLink  v-if= "findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Master config</a>
+                            Master config</RouterLink> -->
 
-                        <a href="clientOnboarding" v-if=" findSelectedModuleIsEnabled(activeSettings,'CLIENT ONBOARDING').sub_module_name.IS_ENABLED ===1 "
+                        <RouterLink to="/Configuration/Client-onboarding"
+                            v-if="findSelectedModuleIsEnabled(activeSettings, 'CLIENT ONBOARDING').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Client onboarding</a>
-                        <a href="document_preview" v-if=" findSelectedModuleIsEnabled(activeSettings,'DOCUMENT TEMPLATES').sub_module_name.IS_ENABLED ===1 "
+                            Client onboarding</RouterLink>
+                        <!-- <RouterLink to="/Configuration/Client-onboarding"
+                            v-if="findSelectedModuleIsEnabled(activeSettings, 'DOCUMENT TEMPLATES').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Document template</a>
-                        <a href="documents_settings" v-if=" findSelectedModuleIsEnabled(activeSettings,'DOCUMENT SETTINGS').sub_module_name.IS_ENABLED ===1 "
+                            Document template</RouterLink> -->
+                        <RouterLink to="/Configuration/Document-settings"
+                            v-if="findSelectedModuleIsEnabled(activeSettings, 'DOCUMENT SETTINGS').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Document settings</a>
-                        <a href="attendance-leavesettings" v-if=" findSelectedModuleIsEnabled(activeSettings,'LEAVE SETTINGS').sub_module_name.IS_ENABLED ===1 "
+                            Document settings</RouterLink>
+                        <!-- <RouterLink to="/Configuration/Client-onboarding"
+                            v-if="findSelectedModuleIsEnabled(activeSettings, 'LEAVE SETTINGS').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Leave setting</a>
-                        <a href="attendance_settings" v-if=" findSelectedModuleIsEnabled(activeSettings,'ATTENDANCE SETTINGS').sub_module_name.IS_ENABLED ===1 "
+                            Leave setting</RouterLink> -->
+                        <RouterLink to="/Configuration/Attendance-settings"
+                            v-if="findSelectedModuleIsEnabled(activeSettings, 'ATTENDANCE SETTINGS').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Attendance setting</a>
-                        <a href="investment_settings" v-if=" findSelectedModuleIsEnabled(activeSettings,'INVESTMENT SETTINGS').sub_module_name.IS_ENABLED ===1 "
+                            Attendance setting</RouterLink>
+                        <!-- <RouterLink to="/Configuration/Mobile-settings"
+                            v-if="findSelectedModuleIsEnabled(activeSettings, 'INVESTMENT SETTINGS').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Investment setting</a>
-                        <a href="Settings-Mobile" v-if=" findSelectedModuleIsEnabled(activeSettings,'MOBILE APP SETTINGS').sub_module_name.IS_ENABLED ===1 "
+                            Investment setting</RouterLink> -->
+                        <RouterLink to="/Configuration/Mobile-settings"
+                            v-if="findSelectedModuleIsEnabled(activeSettings, 'MOBILE APP SETTINGS').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-                            Mobile setting</a>
+                            Mobile setting</RouterLink>
+                        <RouterLink to="/Configuration/Module-settings"
+                            class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Module setting</RouterLink>
                         <!--  <a href="showSAsettingsView"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting
@@ -462,17 +473,15 @@ const getBackgroundColor = (index) => {
 
 function findSelectedModuleIsEnabled(array, idToFind) {
 
-return array.find(obj => obj.module_name === idToFind);
+    return array.find(obj => obj.module_name === idToFind);
 }
 
 </script>
 
 
-<style>
-.p-sidebar-right .p-sidebar
+<style>.p-sidebar-right .p-sidebar
 {
     width: 28rem;
     height: 100%;
-}
-</style>
+}</style>
 

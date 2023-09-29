@@ -18,11 +18,11 @@
               <Sidebar />
            </div>
            <!-- Page Content -->
-           <div class="bg-gray-100  text-gray-700 h-screen w-[100%] ">
+           <div class="bg-gray-100  text-gray-700 h-screen w-[100%] main-content  ">
               <div class="w-[100%]">
                  <Topbar />
               </div>
-              <div class="h-screen w-[100%]  p-2 pb-11 overflow-y-auto main-content">
+              <div class="h-screen  p-2 mb-14  overflow-y-auto ">
                  <RouterView></RouterView>
               </div>
            </div>
