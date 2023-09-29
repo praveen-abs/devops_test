@@ -1722,9 +1722,6 @@ $valueof_80ee = [];
            }
         }
 
-        // dd($sum_execption);
-        // dd($professinal_income);
-
         $income = [];
 
         foreach($inv_emp as $key11 => $single_inv_users){
@@ -1740,8 +1737,36 @@ $valueof_80ee = [];
              }
          }
 
-        // dd($income);
+        $tax_amount = [];
+        foreach($inv_emp as $key11 => $single_inv_users){
+             foreach($income as $key => $single_value){
+                if($single_inv_users == $key){
+                    if($professinal_income[$key11]["Regime"] == "old" || $professinal_income[$key11]["Regime"] == ""){
+                        $tax_amount[$single_inv_users] =   $this->getTaxCalculation($income[$single_inv_users],"58")['Tax on total Income'];
+                    }
+                    else if ($professinal_income[$key11]["Regime"] == "new"){
+                      $tax_amount[$single_inv_users] =  $this->newregimetaxcal($income[$single_inv_users])['Tax on total Income'];
+                    }
+                }
+             }
+         }
 
+
+        $rebate_amt = [];
+        foreach($inv_emp as $key11 => $single_inv_users){
+             foreach($sum_execption as $key => $single_value){
+                if($single_inv_users == $key){
+                    if($professinal_income[$key11]["Regime"] == "old" || $professinal_income[$key11]["Regime"] == ""){
+                        $rebate_amt[$single_inv_users] =  $this->rebateUs87acalc("old",$income[$single_inv_users],$tax_amount[$single_inv_users]);
+                    }
+                    else if ($professinal_income[$key11]["Regime"] == "new"){
+                      $rebate_amt[$single_inv_users] = $this->rebateUs87acalc("new",$income[$single_inv_users],$tax_amount[$single_inv_users]);
+                    }
+                }
+             }
+         }
+
+         dd($rebate_amt);
 
         array_push( $salary_data['headers'] ,
         '11.Total Income (8-10)',
@@ -1762,8 +1787,8 @@ $valueof_80ee = [];
         foreach ($Employee_details as $key => $single_user) {
             if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
             $employee_salary_details[$key]['11.Total Income (8-10)'] = $income[$single_inv_users];
-            $employee_salary_details[$key]['12.Tax on total income'] = round($this->getTaxCalculation($employee_salary_details[$key]['11.Total Income (8-10)'],40)['Tax on total Income']);
-            $employee_salary_details[$key]['13. Rebate'] = round($this->rebateUs87acalc("old" ,$employee_salary_details[$key]['11.Total Income (8-10)'],$employee_salary_details[$key]['12.Tax on total income']));
+            $employee_salary_details[$key]['12.Tax on total income'] = $tax_amount[$single_inv_users];
+            $employee_salary_details[$key]['13. Rebate'] = $rebate_amt[$single_inv_users];
             $employee_salary_details[$key]['14.Total Income Tax'] = round($employee_salary_details[$key]['12.Tax on total income'] - $employee_salary_details[$key]['13. Rebate']);
             $employee_salary_details[$key]['15.Surcharge'] = round($this->subChargeCalculation($employee_salary_details[$key]['11.Total Income (8-10)']));
             $employee_salary_details[$key]['16.Education Cess @4% (On Tax computed at (14 & 15)'] = round(($employee_salary_details[$key]['14.Total Income Tax'] + $employee_salary_details[$key]['15.Surcharge']) * 0.04);
@@ -1814,7 +1839,7 @@ $valueof_80ee = [];
 
         array_push($reportsdata,$salary_data['headers'],$final_ar);
 
-        return dd($reportsdata,$income);
+        return ($reportsdata);
 
 
 }
@@ -1958,50 +1983,40 @@ $annual_salary_projection =array();
 
     if ($total_income > 300000) {
 
-        $deducted_total_income['Exception ₹300000 and the balance amount'] = $total_income - 300000;
-        $deducted_total_income_1s = $total_income - 300000;
+        $deducted_total_income['Exception ₹300000 and the balance amount'] = $total_income;
+        $deducted_total_income_1s = $total_income;
 
 
-        if ($deducted_total_income_1s > 300000) {
-            $deducted_total_income['For ₹300000 : Tax - 5% Tax Amount'] = 15000;
-            $deducted_total_income_2s = $deducted_total_income_1s - 300000;
-
-            if ($deducted_total_income_2s < 600000) {
-                $deducted_total_income['For ' . '₹' . $deducted_total_income_2s . ' : Tax - 10% Tax Amount'] = $deducted_total_income_2s * 0.10;
-            }
-
-            if ($deducted_total_income_2s > 600000) {
-                $deducted_total_income['For ₹600000 : Tax - 10% Tax Amount'] = 60000;
-                $deducted_total_income_3s = $deducted_total_income_2s - 600000;
-
-                if ($deducted_total_income_3s < 900000) {
-                    $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' : Tax - 15% Tax Amount'] = $deducted_total_income_3s  * 0.15;
-                }
-
-                if ($deducted_total_income_3s > 900000) {
-                    $deducted_total_income['For ₹900000 : Tax - 15% Tax Amount'] = 135000;
-                    $deducted_total_income_4s = $deducted_total_income_3s - 900000;
-
-                    if($deducted_total_income_4s < 1200000){
-                        $deducted_total_income['For ' . '₹' . $deducted_total_income_4s . ' : Tax - 20% Tax Amount'] = $deducted_total_income_4s * 0.20;
-                    }
-
-                    if($deducted_total_income_4s > 1200000){
-                        $deducted_total_income['For ₹12000000 : Tax - 20% Tax Amount'] = 240000;
-                        $deducted_total_income_5s = $deducted_total_income_4s - 1200000;
-
-                        if($deducted_total_income_5s < 1500000){
-                            $deducted_total_income['For ' . '₹' . $deducted_total_income_5s . ' : Tax - 30% Tax Amount'] = $deducted_total_income_5s * 0.30;
-                        }
-
-                        if($deducted_total_income_5s > 1500000){
-                            $deducted_total_income['For ' . '₹' . $deducted_total_income_5s . ' : Tax - 30% Tax Amount'] = $deducted_total_income_5s * 0.30;
-                        }
-
-                    }
-                }
-            }
+        if ($deducted_total_income_1s > 300000 && $deducted_total_income_1s < 600000) {
+            $deducted_total_income['For ₹'. $deducted_total_income_1s . ' - ₹600000 : Tax - 5% Tax Amount'] = abs($deducted_total_income_1s - 300000) * 0.05;
         }
+
+        if($deducted_total_income_1s > 600000 && $deducted_total_income_1s < 900000){
+            $deducted_total_income['For ₹300000 - ₹600000 : Tax - 5% Tax Amount'] = abs(600000 - 300000) * 0.05;
+            $deducted_total_income['For ₹600000 - '.$deducted_total_income_1s.' : Tax - 10% Tax Amount'] = abs($deducted_total_income_1s - 600000) * 0.10;
+        }
+
+        if($deducted_total_income_1s > 900000 && $deducted_total_income_1s < 1200000){
+            $deducted_total_income['For ₹300000 - ₹600000 : Tax - 5% Tax Amount'] = abs(600000 - 300000) * 0.05;
+            $deducted_total_income['For ₹600000 - ₹900000 : Tax - 10% Tax Amount'] = abs(900000 - 600000) * 0.10;
+            $deducted_total_income['For ₹900000 - '.$deducted_total_income_1s.' : Tax - 15% Tax Amount'] = abs($deducted_total_income_1s - 900000) * 0.15;
+        }
+
+        if($deducted_total_income_1s > 1200000 && $deducted_total_income_1s < 1500000){
+            $deducted_total_income['For ₹300000 - ₹600000 : Tax - 5% Tax Amount'] = abs(600000 - 300000) * 0.05;
+            $deducted_total_income['For ₹600000 - ₹900000 : Tax - 10% Tax Amount'] = abs(900000 - 600000) * 0.10;
+            $deducted_total_income['For ₹900000 - ₹1200000 : Tax - 15% Tax Amount'] = abs(1200000 - 900000) * 0.15;
+            $deducted_total_income['For ₹1200000 - '.$deducted_total_income_1s.' : Tax - 20% Tax Amount'] = abs($deducted_total_income_1s - 1200000) * 0.20;
+        }
+
+        if($deducted_total_income_1s > 1500000){
+            $deducted_total_income['For ₹300000 - ₹600000 : Tax - 5% Tax Amount'] = abs(600000 - 300000) * 0.05;
+            $deducted_total_income['For ₹600000 - ₹900000 : Tax - 10% Tax Amount'] = abs(900000 - 600000) * 0.10;
+            $deducted_total_income['For ₹900000 - ₹1200000 : Tax - 15% Tax Amount'] = abs(1200000 - 900000) * 0.15;
+            $deducted_total_income['For ₹1200000 - ₹1500000 : Tax - 20% Tax Amount'] = abs(1500000 - 1200000) * 0.20;
+            $deducted_total_income['For 1500000 - '.$deducted_total_income_1s.' : Tax - 30% Tax Amount'] = abs(1500000 - $deducted_total_income_1s) * 0.30;
+        }
+
     }
 
     $sumOftax = 0;
@@ -2021,64 +2036,6 @@ $annual_salary_projection =array();
         return $deducted_total_income;
 
   }
-
-
-  public function newRegimeTaxCalculation($regime, $total_income)
-  {
-
-      if ($regime == 'new') {
-          // Employeer Income Is Greater than 300000 and Less Than  600000
-          if ($total_income > 300000 && $total_income <= 600000) {
-              $taxable_amount = ($total_income - 300000) * 5 / 100;
-              $total_amount = round($taxable_amount);
-              $subcharge = $this->subChargeCalculation($total_income);
-              $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
-              $final_value = $total_amount + $subcharge + $heath_and_education;
-              return round($final_value);
-          } else
-              // Employeer Income Is Greater than 600000 and Less Than  900000
-              if ($total_income > 600000 && $total_income <= 900000) {
-                  $taxable_amount = ($total_income - 600000) * 10 / 100;
-                  $total_amount = round($taxable_amount + 15000);
-                  $subcharge = $this->subChargeCalculation($total_income);
-                  $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
-                  $final_value = $total_amount + $subcharge + $heath_and_education;
-                  return round($final_value);
-              } else
-                  // Employeer Income Is Greater than 900000 and Less Than  1200000
-                  if ($total_income > 900000 && $total_income <= 1200000) {
-                      $taxable_amount = ($total_income - 900000) * 15 / 100;
-                      $total_amount = floor($taxable_amount + 45000);
-                      $subcharge = $this->subChargeCalculation($total_income);
-                      $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
-                      $final_value = $total_amount + $subcharge + $heath_and_education;
-                      return floor($final_value);
-                  } else
-                      // Employeer Income Is Greater than 1200000 and Less Than  1500000
-                      if ($total_income > 1200000 && $total_income < 1500000) {
-                          $taxable_amount = ($total_income - 1200000) * 20 / 100;
-                          $total_amount = floor($taxable_amount + 90000);
-                          $subcharge = $this->subChargeCalculation($total_income);
-                          $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
-                          $final_value = $total_amount + $subcharge + $heath_and_education;
-                          return floor($final_value);
-                      } else
-                          // Employeer Income Is Greater than 1500000
-                          if ($total_income > 1500000) {
-
-                              $taxable_amount = ($total_income - 1500000) * 30 / 100;
-                              $total_amount = floor($taxable_amount + 150000);
-                              $subcharge = $this->subChargeCalculation($total_income);
-                              $heath_and_education = $subcharge ? ($total_amount + $subcharge) * 4 / 100 : $total_amount * 4 / 100;
-                              $final_value = $total_amount + $subcharge + $heath_and_education;
-                              return floor($final_value);
-                          }
-      }
-  }
-
-
-
-
 
 
 
