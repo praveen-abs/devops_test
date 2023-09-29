@@ -489,6 +489,8 @@ class VmtAttendanceService
                     serviceNotificationsService:$serviceNotificationsService,
                 );
 
+                //dd($response);
+
                 if ($response['status'] == "success") {
 
 
@@ -502,7 +504,7 @@ class VmtAttendanceService
                         status: "Approved",
                         review_comment: "---",
                         user_type: "Admin",
-                        serviceVmtNotificationsService:$serviceVmtNotificationsService
+                        serviceNotificationsService:$serviceNotificationsService
 
 
                     );
@@ -990,6 +992,7 @@ class VmtAttendanceService
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id), true);
+            $text_status = '';
 
             if (!empty($user_type) && $user_type == "Admin") {
 
@@ -1035,6 +1038,7 @@ class VmtAttendanceService
                 } else {
                     $mail_status = "failure";
                 }
+
 
                 if ($status == "Approved") {
                     $text_status = "approved";
