@@ -9,6 +9,7 @@ export const Service = defineStore("Service", () => {
     const current_user_code = ref()
     const current_user_name = ref()
     const current_user_role = ref()
+    const current_user_is_ssa= ref()
 
 
      axios.get('/currentUser').then(res => {
@@ -18,6 +19,12 @@ export const Service = defineStore("Service", () => {
 
     axios.get('/currentUserName').then(res => {
         current_user_name.value = res.data
+        //  console.log("service class" + res.data);
+
+    })
+
+    axios.get('/currentUseris_ssa').then(res => {
+        current_user_is_ssa.value = res.data
         //  console.log("service class" + res.data);
 
     })
@@ -106,6 +113,7 @@ export const Service = defineStore("Service", () => {
         current_user_name,
         current_user_code,
         current_user_role,
+        current_user_is_ssa,
 
         getCurrentUserCode,
         getBankList,

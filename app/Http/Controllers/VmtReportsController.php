@@ -665,20 +665,19 @@ class VmtReportsController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
-        return Excel::download(new EmployeeBasicCtcExport($request->type, $emp_ctc_data['rows'], $emp_ctc_data['headers'], $client_name, $public_client_logo_path, $request->date,$period_date, $active_status), 'Employees CTC Report.xlsx');
+        return Excel::download(new EmployeeBasicCtcExport($request->type, $emp_ctc_data['rows'], $emp_ctc_data['headers'], $client_name, $public_client_logo_path, $request->date, $period_date, $active_status), 'Employees CTC Report.xlsx');
     }
     public function getEmployeesMasterCTCData(Request $request, VmtReportsservice $reportsService)
     {
 
         return  $reportsService->getEmployeesMasterDetails($request->type, $request->legal_entity, $request->active_status, $request->department_id, $request->date);
-
     }
 
     public function generateEmployeesMasterDetails(Request $request, VmtReportsservice $reportsService)
     {
         $date = Carbon::now()->format('M-y');
         $emp_mas_ctc_data = $reportsService->getEmployeesMasterDetails($request->type, $request->legal_entity, $request->active_status, $request->department_id, $request->date);
-        // dd($request->date);
+        // dd( $request->legal_entity);
         if (empty($request->active_status)) {
             $active_status = 'Active,Resigned,Yet to activate';
         } else {
@@ -694,11 +693,22 @@ class VmtReportsController extends Controller
                 }
             }
         }
-        $client_name = sessionGetSelectedClientName();
+        if (empty($request->legal_entity)) {
+            $client_name = 'All';
+        } else {
+            $client_name = '';
+            foreach ($request->legal_entity as $single_id) {
+                $single_client_name = VmtClientMaster::where('id', $single_id)->first()->client_name;
+                if ($single_client_name != 'All') {
+                    $client_name =   $client_name . $single_client_name . ', ';
+                }
+            }
+        }
+        //  $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
         // dd($emp_mas_ctc_data);
-        return Excel::download(new EmployeeMasterExport($request->type, $emp_mas_ctc_data['rows'], $emp_mas_ctc_data['headers'], $client_name, $public_client_logo_path, $request->date,$active_status), 'Employees Master Report.xlsx');
+        return Excel::download(new EmployeeMasterExport($request->type, $emp_mas_ctc_data['rows'], $emp_mas_ctc_data['headers'], $client_name, $public_client_logo_path, $request->date, $active_status), 'Employees Master Report.xlsx');
     }
 
     public function getCurrentFinancialYear()
@@ -726,7 +736,7 @@ class VmtReportsController extends Controller
         // } else {
         //     return VmtClientMaster::where('client_fullname', sessionGetSelectedClientName())->get(['id', 'abs_client_code', 'client_fullname']);
         // }
-          return VmtClientMaster::get(['id', 'abs_client_code', 'client_fullname']);
+        return VmtClientMaster::get(['id', 'abs_client_code', 'client_fullname']);
     }
 
 
