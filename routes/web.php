@@ -919,9 +919,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/getClient_AllModuleDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModuleDetails'])->name('getClient_AllModuleDetails');
     Route::post('/update_AllClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'update_AllClientModuleStatus'])->name('update_AllClientModuleStatus');
 
-  //sidebar module settings
+    //sidebar module settings
 
-  Route::post('/Module-settings', [App\Http\Controllers\HomeController::class, 'showModuleSettingsPage'])->name('showModuleSettingsPage');
+    Route::get('module-settings', [App\Http\Controllers\HomeController::class, 'showModuleSettingsPage'])->name('showModuleSettingsPage');
 
     //Configrations
     ////Attendance Settings
@@ -1182,7 +1182,6 @@ Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtSta
 //// SASS TESTING
 
 Route::get('TestingMail', [App\Http\Controllers\VmtTestingController::class, 'TestingMail']);
-Route::get('sendEmployeeBirthdayMail', [App\Http\Controllers\VmtTestingController::class, 'sendEmployeeBirthdayMail']);
 
 Route::get('/testing_sass', function () {
 

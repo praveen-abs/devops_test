@@ -1,6 +1,6 @@
 <template>
     <LoadingSpinner v-if="canShowLoadingScreen" class="absolute z-50 bg-white" />
-    <div class="w-full bg-white p-2 rounded-lg">
+    <div class="w-full p-2 bg-white rounded-lg">
         <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
             <h6 class="my-2 text-lg font-semibold">Leave Approvals</h6>
         </div>
@@ -29,13 +29,13 @@
 
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '450px' }" :modal="true">
-            <div class="confirmation-content d-flex justify-content-start align-items-center mt-3 ml-3">
-                <i class="mr-3 pi pi-exclamation-triangle text-red-600" style="font-size: 2rem" />
+            <div class="mt-3 ml-3 confirmation-content d-flex justify-content-start align-items-center">
+                <i class="mr-3 text-red-600 pi pi-exclamation-triangle" style="font-size: 2rem" />
                 <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
-            <div class="w-full d-flex justify-content-start align-items-center mt-4 pl-3" style="margin-bottom: -12px;">
+            <div class="w-full pl-3 mt-4 d-flex justify-content-start align-items-center" style="margin-bottom: -12px;">
                 <Textarea v-if="currentlySelectedStatus == 'Reject'" name="" id="" v-model="reviewer_comments"
-                    class="border p-2 rounded" cols="45" rows="4" autoResize placeholder="Add Comment" />
+                    class="p-2 border rounded" cols="45" rows="4" autoResize placeholder="Add Comment" />
                 {{ reviewer_comments }}
             </div>
             <template #footer>
@@ -65,16 +65,16 @@
 
                 <Column class="font-bold" field="employee_name" header="Employee Name" style="min-width: 18em;">
                     <template #body="slotProps">
-                        <div class="flex justify-center items-center">
+                        <div class="flex items-center justify-center">
                             <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'"
-                                class="p-2 w-11 fs-6 font-semibold rounded-full  text-white"
+                                class="p-2 font-semibold text-white rounded-full w-11 fs-6"
                                 :class="service.getBackgroundColor(slotProps.index)">
                                 {{ JSON.parse(slotProps.data.employee_avatar).data }} </p>
-                            <img v-else class="rounded-circle img-md w-10  userActive-status profile-img"
+                            <img v-else class="w-10 rounded-circle img-md userActive-status profile-img"
                                 style="height: 30px !important;"
                                 :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset=""
                                 alt="" />
-                            <p class=" text-left pl-2 font-semibold fs-6">{{ slotProps.data.employee_name }} </p>
+                            <p class="pl-2 font-semibold text-left fs-6">{{ slotProps.data.employee_name }} </p>
                         </div>
                     </template>
 
@@ -90,8 +90,8 @@
                 </Column>
                 <Column field="leave_type" header="Leave Type">
                     <template #body="slotProps">
-                        <h1 v-if="slotProps.data.leave_type == 'Casual/Sick Leave'">
-                            SL/CL
+                        <h1>
+                            {{slotProps.data.leave_type}}
                         </h1>
                         <div>
 
