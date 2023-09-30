@@ -22,6 +22,7 @@ import Dashboard from '../dashboard/dashboard.vue'
 
 
 import { onMounted, ref } from 'vue';
+import axios from 'axios';
 
 const isOpen = ref(false);
 const isOpens = ref(false);
@@ -36,6 +37,9 @@ const toggleDayNight = () => {
 const loading = ref(true)
 
 onMounted(() => {
+    axios.get('/clear_cache').then((res) => {
+        console.log(res.data);
+    })
     setTimeout(() => {
         loading.value = false
     }, 2000);
@@ -48,13 +52,15 @@ onMounted(() => {
 <style>
 /* This is optional if you are using Tailwind via CDN or importing it in your project. */
 
-.dot {
+.dot
+{
     /* Move the dot to the right when the switch is toggled on */
     transform: translateX(0);
 }
 
 /* Update the appearance of the switch when it's checked (on) */
-#toggle:checked+.dot {
+#toggle:checked+.dot
+{
     transform: translateX(6rem);
 }
 </style>
