@@ -40,7 +40,7 @@
                     paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                     currentPageReportTemplate="{first} to {last} of {totalRecords}">
                     <Column class="" v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title"
-                        :field="col.title" :header="col.title"  style="white-space: nowrap;text-align: left; !important;width:15rem !important; marign-right:1rem !important ;"  resizableColumns columnResizeMode="fit">
+                        :field="col.title" :header="col.title"  style="text-align: left; !important;width:15rem !important; marign-right:1rem !important ;"  resizableColumns columnResizeMode="fit">
                     </Column>
                 </DataTable>
 

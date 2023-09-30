@@ -725,6 +725,9 @@ class VmtReportsController extends Controller
             array_push($response, $temp_ar);
             unset($temp_ar);
         }
+        // $temp_ar['date'] = 'custom_date';
+        // $temp_ar['month'] = 'Custom Date';
+        // array_push($response, $temp_ar);
         return $response;
     }
 

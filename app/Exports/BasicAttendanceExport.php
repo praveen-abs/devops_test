@@ -34,7 +34,7 @@ class BasicAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, 
 
     private $heading_dates;
     private $reportresponse;
-    private $total_column ;
+    private $total_column;
     private $client_name;
     private $period;
     private $category;
@@ -42,17 +42,17 @@ class BasicAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, 
     private $last_row;
     private $public_client_logo_path;
 
-    public function __construct($data, $public_client_logo_path)
+    public function __construct($data, $public_client_logo_path, $active_status, $period,$client_name)
     {
         $this->heading_dates = $data[0];
         $this->total_column = num2alpha(count($data[0]) - 1);
         $this->reportresponse = $data[1];
-        $this->client_name = 'Client 1';
-        $this->period = 'date - 1 to date 2';
-        $this->category = 'Active';
-        $this->last_header_column = num2alpha(count($this->heading_dates)-1);
+        $this->client_name = $client_name;
+        $this->period = $period;
+        $this->category = $active_status;
+        $this->last_header_column = num2alpha(count($this->heading_dates) - 1);
         $this->last_row = count($data[1]) + 7;
-        $this->public_client_logo_path =$public_client_logo_path;
+        $this->public_client_logo_path = $public_client_logo_path;
     }
 
     public function title(): string

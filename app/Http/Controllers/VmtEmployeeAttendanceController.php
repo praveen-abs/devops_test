@@ -52,6 +52,29 @@ class VmtEmployeeAttendanceController extends Controller
         // dd($data);
         return Excel::download(new DetailedAttendanceExport($data, $is_lc), 'Detailed Attendance Report.xlsx');
     }
+    public function downloadConsolidateReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
+    {
+
+        if (!empty($request->start_date) && !empty($request->end_date)) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+        } else {
+            //$date = $request->date;
+            $date = "2023-09-01";
+            $start_date = Carbon::parse($date)->subMonth()->addDay(30)->format('Y-m-d');
+            $end_date = Carbon::parse($date)->addDay(1)->format(('Y-m-d'));
+// dd( $start_date,$end_date );
+        }
+        // $start_date ='2023-06-26';
+        // $end_date ='2023-06-29';
+        $is_lc = false;
+        if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
+            $is_lc = true;
+        }
+        $data = $attendance_report_service->fetchConsolidateReportData($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
+        // dd($data);
+        return Excel::download(new DetailedAttendanceExport($data, $is_lc), 'Detailed Attendance Report.xlsx');
+    }
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
@@ -124,21 +147,18 @@ class VmtEmployeeAttendanceController extends Controller
     {
 
         $client_domain = $request->getHttpHost();
-        if ($request->start_date == null || $request->end_date == null) {
-            $current_date = Carbon::now();
-            $current_month = $current_date->format('m');
-            $last_month =  $current_month - 1;
-            $date = 26;
-            $year =  $current_date->format('Y');
-            $start_date =  Carbon::parse($year . '-' . $last_month . '-' . $date)->format('Y-m-d');
-            if ($current_date->lt(Carbon::parse($year . '-' .   $current_month . '-' . 25))) {
-                $end_date = Carbon::parse($year . '-' .   $current_month . '-' . 25)->format('Y-m-d');
+        if (empty($request->start_date)  || empty($request->end_date)) {
+            if (empty($request->date)) {
+                $date = Carbon::now()->format('Y-m-d');
+                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
             } else {
-                $end_date =   $current_date->format('Y-m-d');
+                $start_date = Carbon::parse($request->date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($request->date)->addDay(24)->format(('Y-m-d'));
             }
         } else {
-            $start_date = Carbon::parse($request->start_date)->addDay()->format('Y-m-d');
-            $end_date = Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
+            $start_date = Carbon::parse($request->start_date);
+            $end_date = Carbon::parse($request->end_date);
         }
         // dd($attendance_report_service->basicAttendanceReport($year)[0]);
         //return $attendance_report_service->basicAttendanceReport($year);
@@ -161,8 +181,9 @@ class VmtEmployeeAttendanceController extends Controller
                 }
             }
         }
-       // dd($request->all());
-        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($request->start_date,  $request->end_date,$request->date,$request->department_id,$request->client_id,$request->active_status), $public_client_logo_path), 'Basic Attendance Report c  .xlsx');
+        // dd($request->all());
+        $period = Carbon::parse($start_date)->format('d-M-Y') . ' - ' . Carbon::parse($end_date)->format('d-M-Y');
+        return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status), $public_client_logo_path, $active_status, $period,sessionGetSelectedClientName() ), 'Basic Attendance Report c  .xlsx');
     }
 
     public function fetchAbsentReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -188,6 +209,10 @@ class VmtEmployeeAttendanceController extends Controller
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
+        $client_query = VmtClientMaster::where('id',sessionGetSelectedClientid())->first();
+        $client_name = sessionGetSelectedClientName();
+        $client_logo_path = session()->get('client_logo_url');
+        $public_client_logo_path = public_path($client_logo_path);
         return Excel::download(new AbsentReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Absent Report.xlsx');
     }
 
@@ -206,15 +231,23 @@ class VmtEmployeeAttendanceController extends Controller
     }
     public function downloadLCReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
+       // dd($request->all());
         if (!empty($request->start_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
         } else {
             $date = $request->date;
+            // $client_logo_path = session()->get('client_logo_url');
+          //  $public_client_logo_path = public_path($client_logo_path);
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return Excel::download(new LateComingReportExport($attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Late Coming Report.xlsx');
+        $client_name = sessionGetSelectedClientName();
+        $client_logo_path = VmtClientMaster::where('id',sessionGetSelectedClientid())->first()->client_logo;
+        $public_client_logo_path = public_path($client_logo_path);
+
+        $lc_data = $attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
+        return Excel::download(new LateComingReportExport($lc_data, $public_client_logo_path, $client_name), 'Late Coming Report.xlsx');
     }
 
     public function fetchEGReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -243,8 +276,17 @@ class VmtEmployeeAttendanceController extends Controller
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Early Going Report.xlsx');
+        $client_name = sessionGetSelectedClientName();
+        $client_logo_path = VmtClientMaster::where('id',sessionGetSelectedClientid())->first()->client_logo;
+        $public_client_logo_path = public_path($client_logo_path);
+
+        $lc_data = $attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
+        return Excel::download(new EarlyGoingReportExport($lc_data, $public_client_logo_path, $client_name), 'Early Going Report.xlsx');
+       // return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Early Going Report.xlsx');
     }
+
+
+
     public function fetchHalfDayReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
         if (!empty($request->start_date) && !empty($request->end_date)) {
