@@ -920,7 +920,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //sidebar module settings
 
-    Route::get('/module-settings', [App\Http\Controllers\HomeController::class, 'showModuleSettingsPage'])->name('showModuleSettingsPage');
+    Route::get('module-settings', [App\Http\Controllers\HomeController::class, 'showModuleSettingsPage'])->name('showModuleSettingsPage');
 
     //Configrations
     ////Attendance Settings
