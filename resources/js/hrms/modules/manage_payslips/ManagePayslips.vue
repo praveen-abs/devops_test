@@ -1,8 +1,8 @@
 <template>
-    <LoadingSpinner v-if="managePayslipStore.loading" class=" absolute z-50 bg-white" />
+    <LoadingSpinner v-if="managePayslipStore.loading" class="absolute z-50 bg-white " />
     <div class="flex justify-between ">
         <div>
-            <h6 class="mb-2 font-semibold text-lg">Manage Employee Payslips</h6>
+            <h6 class="mb-2 text-lg font-semibold">Manage Employee Payslips</h6>
         </div>
         <div class="d-flex justify-content-end">
             <label for="" class="my-2 text-lg font-semibold">Select Month</label>
@@ -37,11 +37,11 @@
                             @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
 
                         <!-- {{slotProps.data.is_payslip_released}} -->
-                        <h1 v-if="slotProps.data.is_payslip_released == 1" class="text-success mt-2">
+                        <h1 v-if="slotProps.data.is_payslip_released == 1" class="mt-2 text-success">
                             Released
                         </h1>
                         <h1 v-if="slotProps.data.is_payslip_released == 0 || slotProps.data.is_payslip_released == null"
-                            class="text-danger mt-2">
+                            class="mt-2 text-danger">
                             Not Released
                         </h1>
                         <!-- {{is_payslip_released}} -->
@@ -69,12 +69,12 @@
                             <OverlayPanel ref="op"
                                 style="width: 160px;margin-top:12px !important;margin-right: 20px !important; "
                                 class="p-0 m-0 !z-0 ">
-                                <div class=" d-flex flex-column p-0 m-0 ">
+                                <div class="p-0 m-0 d-flex flex-column">
                                     <!-- bg-green-200 -->
-                                    <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
+                                    <button class="p-2 text-black fw-semibold hover:bg-gray-200 border-bottom-1"
                                     @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)">Download</button>
                                     <!-- bg-blue-500 -->
-                                    <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
+                                    <button class="p-2 text-black fw-semibold hover:bg-gray-200"
                                     @click="showPaySlipHTMLView(slotProps.data.user_code)">View</button>
                                 </div>
                             </OverlayPanel>
@@ -107,10 +107,10 @@
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-            <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check" @click="sendMail(selectedUserCode)"
+            <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check" @click="sendMail(selectedUserCode)"
                 autofocus />
 
-            <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text py-2"
+            <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="py-2 p-button-text"
                 autofocus />
 
         </div>
@@ -129,11 +129,11 @@
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-            <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check"
+            <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
                 @click="UpdateWithDrawStatus(selectedUserCode)" autofocus />
 
             <Button label="No" icon="pi pi-times" @click="show_withdraw_dialogConfirmation = false"
-                class="p-button-text py-2" autofocus />
+                class="py-2 p-button-text" autofocus />
 
         </div>
 
@@ -149,11 +149,11 @@
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-            <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
+            <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
                 @click="updatePayslipReleaseStatus(selectedUserCode)" autofocus />
 
             <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false"
-                class="p-button-text  py-2" autofocus />
+                class="py-2 p-button-text" autofocus />
 
         </div>
 
@@ -172,18 +172,23 @@
                 @click="downloadPayslip(selectedUserCode, selectedUsername)" autofocus />
 
             <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false"
-                class="p-button-text  py-2" autofocus />
+                class="py-2 p-button-text" autofocus />
 
         </div>
 
     </Dialog>
 
     <Sidebar position="right" v-model:visible="viewpayslip" modal header="Payslip" :style="{ width: '58vw' }">
+
+        <button class=" flex items-center p-2 absolute top-5 border-[1px] mx-2 text-[#000]  rounded-md h-[33px] "
+        @click="downloadPayslip(selectedUserCode, selectedUsername)"> <i class="pi pi-download"></i></button>
+
+
         <div class=" flex justify-center w-[100%] my-3 rounded-lg">
         <div class="w-[95%] h-[90%] shadow-lg p-4 ">
             <div class="w-[100%] flex justify-between">
                 <div class="flex flex-col">
-                    <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">MAR 2023</span></h1>
+                    <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">{{managePayslipStore.paySlipHTMLView.data.date_month.Month}} </span></h1>
                     <h2 class=" text-[16px] mt-[10px] text-[#000]" v-for="item in managePayslipStore.paySlipHTMLView.data.client_details" :key="item">{{item.client_fullname }}</h2>
                     <p class=" w-[300px] mt-[10px]"  v-for="item in managePayslipStore.paySlipHTMLView.data.client_details" :key="item">{{ item.address}}</p>
                 </div>
@@ -237,7 +242,7 @@
                     </div>
                     <div class="col-3">
                         <p>ESIC</p>
-                        <p class=" text-[#000]">Date Joined</p>
+                        <p class=" text-[#000]">{{'-'}}</p>
                     </div>
                     <div class="col-3">
                         <p>UAN</p>
@@ -343,7 +348,7 @@
                        <!-- {{ managePayslipStore.paySlipHTMLView.data.Tax_Deduction}} -->
                         <tr class="w-[100%]">
                             <td >
-                                <h1 class="font-semibold ">Tax Duductions</h1>
+                                <h1 class="font-semibold ">Tax Deduction</h1>
                                 <p class=" my-2 text-[#000]"  v-for="(value, key, index) in managePayslipStore.paySlipHTMLView.data.Tax_Deduction[0]" :key="index" :class="[key == 'Total Deduction'? 'text-[18px] ' : ' text-black']" >{{ key }}</p>
                             </td>
                             <td>
@@ -374,6 +379,9 @@
 
 
         </div>
+
+        <!-- <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check"
+                @click="downloadPayslip(selectedUserCode, selectedUsername)" autofocus /> -->
        </div>
     </Sidebar>
 
@@ -403,7 +411,7 @@ const toggle = (event) => {
 const selectedUserCode = ref();
 const selectedUsername = ref();
 const viewpayslip = ref(false);
-const payslipSource = ref()
+const payslipSource = ref();
 
 onMounted(() => {
     managePayslipStore.selectedPayRollDate = new Date()
@@ -417,7 +425,7 @@ onMounted(() => {
 async function showPaySlipHTMLView(selected_user_code) {
     console.log("Showing payslip html for (user_code, month): " + selected_user_code + " , " + parseInt(managePayslipStore.selectedPayRollDate.getMonth() + 1));
 
-    await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+    await managePayslipStore.getEmployeePayslipDetailsAsHTML(selectedUserCode.value, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     viewpayslip.value = true;
     toggle()
 
@@ -444,10 +452,8 @@ function saveusercode(selected_user_code){
 }
 
 
-function showdownloadPayslipConfirmationDialog(selected_user_code) {
-    // console.log("selected_user_code",selected_user_code);
-    // selectedUserCode.value = selected_user_code;
-
+function showdownloadPayslipConfirmationDialog() {
+ 
     show_downloadPayslip_dialogconfirmation.value = true;
 }
 
@@ -473,9 +479,9 @@ async function UpdateWithDrawStatus(selectedUserCode) {
 
 }
 
-async function downloadPayslip(selectedUserCode) {
+async function downloadPayslip() {
     show_downloadPayslip_dialogconfirmation.value = false;
-    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+    await managePayslipStore.downloadPayslip(selectedUserCode.value, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     toggle()
 
 }
