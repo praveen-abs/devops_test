@@ -28,6 +28,9 @@ use App\Models\VmtClientMaster;
     @vite('resources/js/hrms/modules/reports/ReportsMaster.js')
     <div id="ReportsMaster"></div>
 
+    @vite('resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js')
+    {{-- <div id="payslipPreview"></div> --}}
+
 
 
 </body>

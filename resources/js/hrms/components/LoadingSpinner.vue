@@ -1,6 +1,6 @@
 
 <template>
-    <div class='loading-spinner-container' >
+    <div class='loading-spinner-container !z-[100]' >
         <div class='loading-spinner-loader'>
             <div class='loader--dot'></div>
             <div class='loader--dot'></div>

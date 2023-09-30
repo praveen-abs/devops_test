@@ -17,11 +17,15 @@ export const UseReports_store = defineStore("UseReports_store", () => {
     const getDepartment = ref();
     const getPeriodMonth = ref();
 
+    const dialog_customDate = ref(false);
+
 
     // v-model values
     const Legal_Entity = ref();
     const Department = ref();
     const PeriodMonth = ref();
+    const Start_Date = ref();
+    const End_Date = ref();
     const attendance_Type = ref();
 
     // const
@@ -37,6 +41,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         department_id: "",
         client_id: "",
         active_status: "",
+        start_date:"",
+        end_date:""
     });
 
     const AttendanceReportSource = ref([]);
@@ -85,31 +91,59 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         let url;
         let subUrl;
 
-        // if (active_status == 1) {
-        //     // Detailed Reports
-        //     url = `/fetch-detailed-attendance-data`;
-        // } else
+        console.log(filterValue);
+
+      
+        // else if(filterValue=="custom_date" && active_status==5 ){
+        //      dialog_customDate.value= false;
+        // }
+
+        if (active_status == 1) {
+            // Detailed Reports
+            url = `/fetch-detailed-attendance-data`;
+            if(filterValue==="custom_date"){
+                dialog_customDate.value= true;
+            }
+        } else
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
+                if(filterValue==="custom_date"){
+                    dialog_customDate.value= true;
+                }
             } else
             if (active_status == 4) {
                 // Overtime Reports
-                url = `/fetch-overtime-report-data'`;
+                url = `/fetch-overtime-report-data`;
+                if(filterValue==="custom_date"){
+                    dialog_customDate.value= true;
+                }
             } else
                 if (active_status == 5) {
                     if (attendance_Type.value) {
                         if (attendance_Type.value == 1) {
-                            url = '/fetch-LC-report-data'
+                            url = '/fetch-LC-report-data';
+                            if(filterValue==="custom_date"){
+                                dialog_customDate.value= true;
+                            }
                         } else
                             if (attendance_Type.value == 2) {
-                                url = '/fetch-EG-report-data'
+                                url = '/fetch-EG-report-data';
+                                if(filterValue==="custom_date"){
+                                    dialog_customDate.value= true;
+                                }
                             } else
                                 if (attendance_Type.value == 3) {
-                                    url = '/fetch-absent-report-data'
+                                    url = '/fetch-absent-report-data';
+                                    if(filterValue==="custom_date"){
+                                        dialog_customDate.value= true;
+                                    }
                                 } else
                                         if (attendance_Type.value ==4) {
-                                            url = '/fetch-half-day-report'
+                                            url = '/fetch-half-day-report';
+                                            if(filterValue==="custom_date"){
+                                                dialog_customDate.value= true;
+                                            }
                                         }
                     } else {
                         Swal.fire({
@@ -143,6 +177,89 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
         // canShowLoading.value = true;
 
+        // if (url) {
+        //     useEmployeeMaster.canShowLoading = true
+        //     axios.post(url, selectedfilters).then(res => {
+        //         AttendanceReportSource.value = res.data.rows;
+        //         res.data.headers.forEach(element => {
+        //             let format = {
+        //                 title: element
+        //             }
+        //             AttendanceReportDynamicHeaders.value.push(format);
+
+        //             if (res.data.rows.length === 0) {
+        //                 Swal.fire({
+        //                     title: res.data.status = "failure",
+        //                     text: "No employees found in this category",
+        //                     // "Salary Advance Succesfully",
+        //                     icon: "error",
+        //                     showCancelButton: false,
+        //                 }).then((res) => {
+        //                     // blink_UI.value = res.data.data;
+
+        //                 })
+
+        //             }
+        //         });
+        //     }).finally(() => {
+        //         useEmployeeMaster.canShowLoading = false
+        //         useEmployeeMaster.selectedfilters.active_status="";
+        //         useEmployeeMaster.selectedfilters.date="";
+        //         useEmployeeMaster.selectedfilters.department_id="";
+        //         useEmployeeMaster.selectedfilters.legal_entity="";
+        
+        //         useEmployeeMaster.legal_Entity="";
+        //         useEmployeeMaster.Department="";
+        //         useEmployeeMaster.period_Date="";
+        //         useEmployeeMaster.select_Category=""
+        //     })
+
+        // }
+
+
+    }
+
+    function updateAttendanceReports(active_status){
+        let url ;
+
+        console.log(active_status,"url ");
+
+        if (active_status == 2) {
+            // Muster Reports
+            url = `/fetch-attendance-data`;
+        } else
+        if (active_status == 4) {
+            // Overtime Reports
+            url = `/fetch-overtime-report-data`;
+        } else
+            if (active_status == 5) {
+                if (attendance_Type.value) {
+                    if (attendance_Type.value == 1) {
+                        url = '/fetch-LC-report-data'
+                    } else
+                        if (attendance_Type.value == 2) {
+                            url = '/fetch-EG-report-data'
+                        } else
+                            if (attendance_Type.value == 3) {
+                                url = '/fetch-absent-report-data'
+                            } else
+                                    if (attendance_Type.value ==4) {
+                                        url = '/fetch-half-day-report'
+                                    }
+                } else {
+                    Swal.fire({
+                        title: "error",
+                        text: "selected report type",
+                        icon: "error",
+                        showCancelButton: false,
+                    })
+
+                    useEmployeeMaster.period_Date = null
+                    useEmployeeMaster.Department = null
+                    useEmployeeMaster.legal_Entity = null
+                }
+            }
+
         if (url) {
             useEmployeeMaster.canShowLoading = true
             axios.post(url, selectedfilters).then(res => {
@@ -169,19 +286,109 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 });
             }).finally(() => {
                 useEmployeeMaster.canShowLoading = false
-                useEmployeeMaster.selectedfilters.active_status="";
-                useEmployeeMaster.selectedfilters.date="";
-                useEmployeeMaster.selectedfilters.department_id="";
-                useEmployeeMaster.selectedfilters.legal_entity="";
+                // useEmployeeMaster.selectedfilters.active_status="";
+                // useEmployeeMaster.selectedfilters.date="";
+                // useEmployeeMaster.selectedfilters.department_id="";
+                // useEmployeeMaster.selectedfilters.legal_entity="";
         
-                useEmployeeMaster.legal_Entity="";
-                useEmployeeMaster.Department="";
-                useEmployeeMaster.period_Date="";
-                useEmployeeMaster.select_Category=""
+                // useEmployeeMaster.legal_Entity="";
+                // useEmployeeMaster.Department="";
+                // useEmployeeMaster.period_Date="";
+                // useEmployeeMaster.select_Category=""
             })
 
         }
 
+    }
+
+    function select_StartAndEnd_Date(key, filterValue, active_status){
+        let url;
+        let subUrl;
+
+
+            if (active_status == 2) {
+                // Muster Reports
+                url = `/fetch-attendance-data`;
+            } else
+            if (active_status == 4) {
+                // Overtime Reports
+                url = `/fetch-overtime-report-data`;
+            } else
+                if (active_status == 5) {
+                    if (attendance_Type.value) {
+                        if (attendance_Type.value == 1) {
+                            url = '/fetch-LC-report-data'
+                        } else
+                            if (attendance_Type.value == 2) {
+                                url = '/fetch-EG-report-data'
+                            } else
+                                if (attendance_Type.value == 3) {
+                                    url = '/fetch-absent-report-data'
+                                } else
+                                        if (attendance_Type.value ==4) {
+                                            url = '/fetch-half-day-report'
+                                        }
+                    } else {
+                        Swal.fire({
+                            title: "error",
+                            text: "selected report type",
+                            icon: "error",
+                            showCancelButton: false,
+                        })
+
+                        useEmployeeMaster.period_Date = null
+                        useEmployeeMaster.Department = null
+                        useEmployeeMaster.legal_Entity = null
+                    }
+                }
+
+                if (key == "start_date") {
+                    selectedfilters.start_date = filterValue;
+                    console.log(selectedfilters);
+        
+                } else
+                    if (key == "end_date") {
+                        selectedfilters.end_date = filterValue
+                        console.log(selectedfilters);
+                    } 
+                    if(selectedfilters.start_date && selectedfilters.end_date){
+                        dialog_customDate.value= false;
+                    }
+
+                    // if(active_status !== 1 && selectedfilters.start_date && selectedfilters.end_date){
+
+                    //     console.log("success");
+
+                    //     useEmployeeMaster.canShowLoading = true
+                    //     axios.post(url, selectedfilters).then(res => {
+                    //         AttendanceReportSource.value = res.data.rows;
+                    //         res.data.headers.forEach(element => {
+                    //             let format = {
+                    //                 title: element
+                    //             }
+                    //             AttendanceReportDynamicHeaders.value.push(format);
+            
+                    //             if (res.data.rows.length === 0) {
+                    //                 Swal.fire({
+                    //                     title: res.data.status = "failure",
+                    //                     text: "No employees found in this category",
+                    //                     // "Salary Advance Succesfully",
+                    //                     icon: "error",
+                    //                     showCancelButton: false,
+                    //                 }).then((res) => {
+                    //                     // blink_UI.value = res.data.data;
+            
+                    //                 })
+            
+                    //             }
+                    //         });
+                    //     }).finally(() => {
+                    //         useEmployeeMaster.canShowLoading = false
+                    //     })
+
+                    // }else{
+                    //     console.log("testing start date and end date ::",selectedfilters);
+                    // }
 
     }
 
@@ -211,7 +418,7 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                     } else
                         if (attendance_Type.value == 2) {
                             url = '/report/download-early-going-report'
-                            filename = "Attendance Early-coming Report"
+                            filename = "Attendance Early going Report"
                         } else
                             if (attendance_Type.value == 3) {
                                 url = '/report/download-absent-report'
@@ -232,7 +439,20 @@ export const UseReports_store = defineStore("UseReports_store", () => {
                 link.download = `${filename}.xlsx`;
                 link.click();
             }).finally(() => {
-                useEmployeeMaster.canShowLoading = false
+                useEmployeeMaster.canShowLoading = false;
+                useEmployeeMaster.selectedfilters.active_status="";
+                useEmployeeMaster.selectedfilters.date="";
+                useEmployeeMaster.selectedfilters.department_id="";
+                useEmployeeMaster.selectedfilters.legal_entity="";
+        
+                useEmployeeMaster.legal_Entity="";
+                useEmployeeMaster.Department="";
+                useEmployeeMaster.period_Date="";
+                useEmployeeMaster.select_Category=""
+                Start_Date.value=""
+                End_Date.value= ""
+                selectedfilters.end_date=""
+                 selectedfilters.start_date=""
 
             })
         }
@@ -262,6 +482,17 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
     }
 
+    function clearDataTable(){
+        AttendanceReportSource.value.splice(0,AttendanceReportSource.value.length);
+        AttendanceReportDynamicHeaders.value.splice(0,
+                AttendanceReportDynamicHeaders.value.length);
+                attendance_Type.value = null;
+                Start_Date.value=""
+                End_Date.value= ""
+                selectedfilters.end_date=""
+                 selectedfilters.start_date=""
+    }
+
 
 
 
@@ -273,6 +504,8 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         Legal_Entity,
         Department,
         PeriodMonth,
+        Start_Date,
+        End_Date,
 
         btn_download,
 
@@ -296,7 +529,16 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         AttendanceReportDynamicHeaders,
         getEmployeeAttendanceReports,
         attendance_Type,
-        downloadAttendanceReports
+        downloadAttendanceReports,
+        clearDataTable,
+        select_StartAndEnd_Date,
+
+        // apply filter ::
+        updateAttendanceReports ,
+
+        // custom date dialog box variable
+
+        dialog_customDate
     }
 
 });

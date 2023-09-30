@@ -1832,7 +1832,9 @@ class VmtEmployeeController extends Controller
 
     public function fetchManagerName(){
         $reportingManagers=User::join('vmt_org_roles','vmt_org_roles.id','=','users.org_role')
-                                 ->whereIn('vmt_org_roles.id',[3,4])
+                                 //->whereIn('vmt_org_roles.id',[3,4])
+                                 ->where('users.is_ssa',0)
+                                 ->where('users.active',1)
                                  ->get(['users.user_code','users.name']);
                                // dd($reportingManagers);
         return $reportingManagers;

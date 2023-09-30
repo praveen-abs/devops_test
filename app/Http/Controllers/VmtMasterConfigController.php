@@ -116,13 +116,23 @@ class VmtMasterConfigController extends Controller
 
     public function getClient_MobileModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-         $module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->pluck('id');
+         $module_id =VmtAppModules::where('module_name',"MOBILE APP SETTINGS")->pluck('id');
 
         return  $serviceVmtAppPermissionsService->getClient_MobileModulePermissionDetails($request->client_id,$module_id,$user_code=null);
     }
     public function getClient_AllModulePermissionDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
-                    $client_id =sessionGetSelectedClientid();
+
+        $client_id =sessionGetSelectedClientid();
+
         return  $serviceVmtAppPermissionsService->getClient_AllModulePermissionDetails($client_id);
+
+    }
+    public function getClient_AllModuleDetails( Request $request ,VmtAppPermissionsService $serviceVmtAppPermissionsService){
+
+        $client_id =sessionGetSelectedClientid();
+
+
+        return  $serviceVmtAppPermissionsService->getClient_AllModuleDetails($client_id);
     }
 
     public function getAllDropdownFilterSetting(Request $request,VmtAppPermissionsService $serviceVmtAppPermissionsService){
@@ -132,6 +142,15 @@ class VmtMasterConfigController extends Controller
 
     }
 
+    public function  update_AllClientModuleStatus(Request $request,VmtAppPermissionsService $serviceVmtMasterConfigService){
+
+        $client_id = sessionGetSelectedClientid();
+
+       $response = $serviceVmtMasterConfigService->update_AllClientModuleStatus( $client_id,$request->module_id,$request->sub_module_id ,$request->module_status ,$request->sub_module_status);
+
+       return response()->json($response);
+
+   }
     public function getEmployeesFilterData(Request $request){
 
         $filtered_data = $this->employees_filter_data($request->department_id , $request->designation, $request->work_location, $request->client_name,$request->sub_module_id);

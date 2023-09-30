@@ -1,7 +1,9 @@
 <template>
+
+    <!-- {{ activeSettings ? findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 ?[]:null:null}} -->
     <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
     <div class=" bg-white h-[60px]"
-        @mouseleave="useDashboard.canShowConfiguration = false, useDashboard.canShowClients = false">
+        @mouseleave="useDashboard.canShowConfiguration = false">
         <div class="grid items-center justify-between grid-cols-12 ">
             <!-- Organization List  -->
             <div class="relative col-span-4 px-2 py-2 mx-2 border-1 border-x-gray-300">
@@ -27,7 +29,7 @@
                     enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                     leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
                     leave-to-class="translate-y-2 opacity-0" @mouseleave="useDashboard.canShowClients = false">
-                <!-- <transition enter-active-class="transition duration-200 ease-out transform"
+                    <!-- <transition enter-active-class="transition duration-200 ease-out transform"
                     v-if="service.current_user_role == 2 || service.current_user_role == 4"
                     enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                     leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
@@ -94,12 +96,12 @@
                 </transition>
             </div>
             <div class="flex justify-end col-span-4">
-                <button v-tooltip="'Settings'" v-if="service.current_user_role == 2 || service.current_user_role == 4"
+                <button v-tooltip="'Settings'" v-if=" service.current_user_role == 1 ||service.current_user_role == 2 || service.current_user_role == 3"
                     class="p-2 mx-2 transition duration-700 ease-in-out transform bg-gray-100 rounded-full hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                     @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
                     <img src="./assests/icons/setting.svg" alt="" class="w-6 h-6">
                 </button>
-                <transition enter-active-class="transition duration-200 ease-out transform"
+                <transition enter-active-class="transition duration-200 ease-out transform" v-if="activeSettings"
                     enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                     leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
                     leave-to-class="translate-y-2 opacity-0" @mouseleave="useDashboard.canShowConfiguration = false">
@@ -108,31 +110,36 @@
                         class="absolute top-0 z-50 p-2 mt-16 bg-white rounded shadow-lg right-40 w-60 "
                         @mouseleave="useDashboard.canShowConfiguration = false">
                         <!-- Dropdown content goes here -->
-                        <a href="config-master"
+
+                        <a href="config-master" v-if= "  findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Master config</a>
-                        <a href="clientOnboarding"
+
+                        <a href="clientOnboarding" v-if=" findSelectedModuleIsEnabled(activeSettings,'CLIENT ONBOARDING').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Client onboarding</a>
-                        <a href="document_preview"
+                        <a href="document_preview" v-if=" findSelectedModuleIsEnabled(activeSettings,'DOCUMENT TEMPLATES').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Document template</a>
-                        <a href="documents_settings"
+                        <a href="documents_settings" v-if=" findSelectedModuleIsEnabled(activeSettings,'DOCUMENT SETTINGS').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Document settings</a>
-                        <a href="attendance-leavesettings"
+                        <a href="attendance-leavesettings" v-if=" findSelectedModuleIsEnabled(activeSettings,'LEAVE SETTINGS').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Leave setting</a>
-                        <a href="attendance_settings"
+                        <a href="attendance_settings" v-if=" findSelectedModuleIsEnabled(activeSettings,'ATTENDANCE SETTINGS').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Attendance setting</a>
-                        <a href="investment_settings"
+                        <a href="investment_settings" v-if=" findSelectedModuleIsEnabled(activeSettings,'INVESTMENT SETTINGS').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Investment setting</a>
-                         <a href="Settings-Mobile"
+                        <a href="Settings-Mobile" v-if=" findSelectedModuleIsEnabled(activeSettings,'MOBILE APP SETTINGS').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Mobile setting</a>
-                      <!--  <a href="showSAsettingsView"
+                            <a href="module-settings" v-if=" service.current_user_is_ssa == 1"
+                            class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Module setting</a>
+                        <!--  <a href="showSAsettingsView"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting
                         </a> -->
@@ -169,7 +176,7 @@
                     <transition enter-active-class="transition duration-200 ease-out transform"
                         enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                         leave-active-class="transition duration-100 ease-in transform"
-                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
+                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"  @mouseleave="useDashboard.canShowCurrentEmployee = false" >
                         <div v-if="useDashboard.canShowCurrentEmployee"
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14">
                             <!-- Dropdown content goes here -->
@@ -379,12 +386,21 @@ const readNotification = (notification_id) => {
 }
 
 
-function updateMasterConfigClientCode(){
-        axios.get('/update-MasterConfig-ClientCode',{
-        }).then(()=>{
-        });
+function updateMasterConfigClientCode() {
+    axios.get('/update-MasterConfig-ClientCode', {
+    }).then(() => {
+    });
 
-    }
+}
+
+const activeSettings = ref()
+function getActiveSettings() {
+    axios.get('/getClient_AllModulePermissionDetails', {
+    }).then((res) => {
+        activeSettings.value = res.data.data
+    });
+
+}
 
 
 
@@ -397,6 +413,7 @@ onMounted(() => {
         canShowLoading.value = true
     }, 2000);
     getNotifications()
+    getActiveSettings()
 
 })
 
@@ -447,6 +464,10 @@ const getBackgroundColor = (index) => {
 };
 
 
+function findSelectedModuleIsEnabled(array, idToFind) {
+
+return array.find(obj => obj.module_name === idToFind);
+}
 
 </script>
 

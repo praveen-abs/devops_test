@@ -42,6 +42,7 @@ use App\Models\Bank;
 
 use Mail;
 use App\Mail\PayslipMail;
+use Illuminate\Support\Facades\Storage;
 
 class VmtEmployeePayCheckService
 {
@@ -1317,6 +1318,9 @@ class VmtEmployeePayCheckService
                     [
                         'vmt_employee_compensatory_details.basic as Basic',
                         'vmt_employee_compensatory_details.hra as HRA',
+                        'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
+                        'vmt_employee_compensatory_details.special_allowance as Special Allowance',
+                        'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
 
                     ]
                 )->toArray();
@@ -1456,7 +1460,6 @@ class VmtEmployeePayCheckService
                 $html = view('dynamic_payslip_templates.dynamic_payslip_template_view', $getpersonal);
 
                 $response = base64_encode($html);
-
             } else if ($type == "mail") {
 
                 $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
@@ -1694,7 +1697,9 @@ class VmtEmployeePayCheckService
                     [
                         'vmt_employee_compensatory_details.basic as Basic',
                         'vmt_employee_compensatory_details.hra as HRA',
-
+                        'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
+                        'vmt_employee_compensatory_details.special_allowance as Special Allowance',
+                        'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
                     ]
                 )->toArray();
 
@@ -1813,6 +1818,57 @@ class VmtEmployeePayCheckService
                 'status' => 'failure',
                 'message' => "Error while fetchingdata ",
                 'data' => $e->getMessage()
+            ]);
+        }
+    }
+    public function getEmployeeYearlyAndMonthlyCTC($user_code)
+    {
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+            $profile_pic = null;
+            //Get the user record and update avatar column
+            $user_query =  User::where('user_code', $user_code)->first();
+            $avatar_filename = $user_query->avatar;
+            //Get the image from PRIVATE disk and send as BASE64
+            $profile_pic = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar_filename);
+            if ($profile_pic) {
+                $profile_pic = base64_encode($profile_pic);
+            }
+            $compensatory_query = Compensatory::where('user_id', $user_query->id)->first();
+            $response['profile_pic'] = $profile_pic;
+            $response['profile_name'] = $user_query->name;
+            $response['monthly_ctc'] = $compensatory_query->cic;
+            $response['yearly_ctc'] =   $response['monthly_ctc'] * 12;
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error in [getEmployeeYearlyAndMonthlyCTC()]",
+                "data" => $e
             ]);
         }
     }

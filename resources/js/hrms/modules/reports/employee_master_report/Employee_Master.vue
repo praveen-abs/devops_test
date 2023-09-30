@@ -2,7 +2,7 @@
     <div>
         <!-- !bg-[#E6E6E6]/ -->
         <div>
-            <div class="flex justify-between p-2 bg-white">
+            <div class="flex justify-between bg-white py-1">
                 <!-- v-model="filters['global'].value" -->
                 <div>
                     <InputText placeholder="Search" v-model="filters['global'].value" class="border-color !h-10 my-2"
@@ -10,9 +10,9 @@
                 </div>
                 <div class="flex items-center">
                     <button class=" p-2 mx-2 rounded-md w-[120px] "
-                        :class="[!UseEmployeeMaster.employeeMaterReportSource.length == 0 ? 'bg-[#000] text-white' : ' !text-[#000] !bg-[#E6E6E6] ']"
+                        :class="[!UseEmployeeMaster.employeeMaterReportSource.length == 0 ? 'bg-[#000] !text-[#ffff]' : '!text-[#000] !bg-[#E6E6E6]']"
                         @click="UseEmployeeMaster.btn_download = !UseEmployeeMaster.btn_download, UseEmployeeMaster.downloadEmployeeMaster()">
-                        <p class=" relative left-2 font-['poppins']">Download</p>
+                        <p class=" relative left-2 font-['poppins']" :class="[!UseEmployeeMaster.employeeMaterReportSource.length == 0 ? 'bg-[#000] !text-[#ffff]' : '!text-[#000] !bg-[#E6E6E6]']">Download</p>
                         <div id="btn-download" style=" position: absolute; right: 0;"
                             :class="[UseEmployeeMaster.btn_download == true ? toggleClass : '']">
                             <svg width="22px" height="16px" viewBox="0 0 22 16"
@@ -34,14 +34,13 @@
 
             </div>
             <!-- overflow-y-auto -->
-            <div class=" !h-[400px] ">
-
+            <div class="">
                 <DataTable :value="UseEmployeeMaster.employeeMaterReportSource" paginator :rows="5"
-                    :rowsPerPageOptions="[5, 10, 20, 50]" responsiveLayout="scroll"
+                    :rowsPerPageOptions="[5, 10, 20, 50]" responsiveLayout="scroll" scrollable scrollHeight="240px"
                     paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                     currentPageReportTemplate="{first} to {last} of {totalRecords}">
                     <Column class="" v-for="col of UseEmployeeMaster.Employee_MaterReportDynamicHeaders" :key="col.title"
-                        :field="col.title" :header="col.title" style="white-space:nowrap;text-align: left !important;  ">
+                        :field="col.title" :header="col.title"  style="text-align: left; !important;width:15rem !important; marign-right:1rem !important ;"  resizableColumns columnResizeMode="fit">
                     </Column>
                 </DataTable>
 

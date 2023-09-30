@@ -72,7 +72,7 @@ class VmtPayRunService
             $user = $user->where('client_id',  $client_id);
         }
         if ($department) {
-            $user = $user->where('vmt_employee_office_details.department_id', '=', $department)->get();
+            $user = $user->whereIn('vmt_employee_office_details.department_id', $department)->get();
            
         }
         
@@ -100,7 +100,7 @@ class VmtPayRunService
             $arrayReport['Emp Code'] = $singleUser->user_code;
             $arrayReport['Name'] = $singleUser->name;
             $arrayReport['Designation'] = $singleUser->designation;
-            $arrayReport['DOJ'] = $singleUser->doj;
+            $arrayReport['DOJ'] = Carbon::parse($singleUser->doj)->format('d-M-Y');
 
             $firstDateStr = $start_date;
             $lastAttendanceDate = Carbon::parse($end_date);

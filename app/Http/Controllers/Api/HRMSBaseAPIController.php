@@ -38,7 +38,7 @@ class HRMSBaseAPIController extends Controller
 
     public function getEmployee_MobileModulePermissionsDetails(Request $request, VmtAppPermissionsService $serviceVmtAppPermissionsService){
 
-        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE_APP_SETTINGS")->first('id');
+        $mobile_module_id =VmtAppModules::where('module_name',"MOBILE APP SETTINGS")->first('id');
         $response = $serviceVmtAppPermissionsService->getEmployee_MobileModulePermissionsDetails($request->user_code,$mobile_module_id['id']);
 
         return $response;

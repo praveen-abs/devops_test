@@ -566,14 +566,19 @@ class VmtEmployeeOnboardingController extends Controller
         $status = 'failure';
         try {
             $isEmailSent = "";
-
-            $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: 'quick');
+            $existing_user_id = User::where('user_code', $row['employee_code']);
+            if($existing_user_id->exists()){
+                $existing_user_id = $existing_user_id->first()->id;
+            }else{
+                $existing_user_id =null;
+            }
+            $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: $existing_user_id, onboard_type: 'quick');
 
             $status = $response['status'];
 
             if ($response['status'] == "success") {
                 $message =  $row['employee_code'] . ' added successfully';
-                $VmtClientMaster = VmtClientMaster::first();
+                $VmtClientMaster = VmtClientMaster::where('id', sessionGetSelectedClientid())->first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
@@ -700,7 +705,14 @@ class VmtEmployeeOnboardingController extends Controller
 
         try {
 
-            $response = $employeeService->createOrUpdate_BulkOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: "bulk");
+            $existing_user_id = User::where('user_code', $row['employee_code']);
+            if($existing_user_id->exists()){
+                $existing_user_id = $existing_user_id->first()->id;
+            }else{
+                $existing_user_id =null;
+            }
+
+            $response = $employeeService->createOrUpdate_BulkOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: $existing_user_id, onboard_type: "bulk");
 
             $mail_message = '';
 
@@ -752,10 +764,10 @@ class VmtEmployeeOnboardingController extends Controller
         } catch (\Exception $e) {
 
             return $rowdata_response = [
-                'status' => $status,
-                'message' => $message,
+                'status' => "failure",
+                'message' => 'error while save employee data',
                 'mail_status' => 'failure',
-                'data' => json_encode(['error' => $e->getMessage()]),
+                'data' => json_encode(['error' => $e->getMessage()."  ".$e->getline()]),
             ];
         }
     }

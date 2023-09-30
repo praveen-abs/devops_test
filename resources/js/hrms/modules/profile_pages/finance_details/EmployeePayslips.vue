@@ -1,7 +1,7 @@
 <template>
     <LoadingSpinner v-if="employeePayslipStore.loading" class="absolute z-50 bg-white" />
     <div class="w-full">
-        <h2 class="font-semibold text-lg my-2">Salary Details</h2>
+        <h2 class="my-2 text-lg font-semibold">Salary Details</h2>
         <DataTable :value="employeePayslipStore.array_employeePayslips_list" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]" sortField="PAYROLL_MONTH" :sortOrder="-1"
@@ -29,7 +29,7 @@
             <Column header="Action">
 
                 <template #body="slotProps">
-                                    <button class="bg-black text-white rounded-md p-2 mx-2"
+                                    <button class="p-2 mx-2 text-white bg-black rounded-md"
                                     @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)">Download</button>
                                     <!-- bg-blue-500 -->
                                     <button class=" border-[2px] border-[#000] py-2 px-3 rounded-md"
@@ -45,15 +45,17 @@
     </div> -->
     <!-- dialog for show details -->
 
-    <Sidebar position="right" v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Payslip"
-        :style="{ width: '58vw' }">
-
+    <Sidebar position="right" v-model:visible="employeePayslipStore.canShowPayslipView" v-if="employeePayslipStore.canShowPayslipView" modal header="Payslip"
+        :style="{ width: '70vw' }">
+        <button class=" flex items-center p-2 absolute top-5 border-[1px] mx-2 text-[#000]  rounded-md h-[33px] "
+                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', employeePayslipStore.Payroll_month)"> <i class="pi pi-download"></i></button>
         <div class=" flex justify-center w-[100%] my-3 rounded-lg">
+            <!-- {{employeePayslipStore.paySlipHTMLView.data.personal_details}} -->
             <div class="w-[95%] h-[90%] shadow-lg p-4 ">
                 <div class="w-[100%] flex justify-between">
                     <div class="flex flex-col">
-                        <h1 class=" text-[25px] ">PAYSLIP <span class=" text-gray-500 text-[25px]">MAR 2023</span></h1>
-                        <h2 class=" text-[16px] mt-[10px] text-[#000]"
+                        <h1 class=" text-[25px] flex items-center " >PAYSLIP <span class=" text-gray-500 text-[25px]" > {{employeePayslipStore.paySlipHTMLView.data.date_month.Month}} {{employeePayslipStore.paySlipHTMLView.data.date_month.Year  }}</span></h1>
+                        <h2 class=" text-[16px] mt-[10px] text-[#000] font-semibold "
                             v-for="item in employeePayslipStore.paySlipHTMLView.data.client_details" :key="item">
                             {{ item.client_fullname }}</h2>
                         <p class=" w-[300px] mt-[10px]"
@@ -115,7 +117,7 @@
                         </div>
                         <div class="col-3">
                             <p>ESIC</p>
-                            <p class=" text-[#000]">Date Joined</p>
+                            <p class=" text-[#000]">{{'-'}}</p>
                         </div>
                         <div class="col-3">
                             <p>UAN</p>
@@ -189,11 +191,11 @@
                         <div class="row">
                             <div class="col-6">
                                 <h1 class="font-semibold ">Earnings</h1>
-                                    <h1 class="my-3 flex items-center"
+                                    <h1 class="flex items-center my-3"
                                         v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.earnings[0]"
                                         :key="index"
                                         :class="[key == 'Total Earnings' ? `text-black font-semibold` : 'text-black']"> {{ key }}  <span v-if=" key == 'Total Earnings'"
-                                        class="text-black font-semibold" >(A)</span>
+                                        class="font-semibold text-black" >(A)</span>
                                     </h1>
                             </div>
                             <div class="col-2" >
@@ -236,7 +238,7 @@
                             <!-- {{ employeePayslipStore.paySlipHTMLView.data.Tax_Deduction}} -->
                             <tr class="w-[100%]">
                                 <td>
-                                    <h1 class="font-semibold ">Tax Duductions</h1>
+                                    <h1 class="font-semibold ">Tax Deduction</h1>
                                     <p class=" my-2 text-[#000] flex items-center"
                                         v-for="(value, key, index) in employeePayslipStore.paySlipHTMLView.data.Tax_Deduction[0]"
                                         :key="index" :class="[key == 'Total Deduction' ? 'text-[14px] text-[#000] font-semibold' : ' text-black']">{{
@@ -260,7 +262,7 @@
                     <div class="my-2 col-6">
                         <p class="text-[#000]"  :class="[key == 'Net Salary Payable'|| key ==  'Net Salary in words' ? 'text-black text-[14px] font-semibold' : '']">{{ key }}
                             <span v-if=" key == 'Net Salary Payable'"
-                                        class="text-black font-semibold " >(A-B-C)</span>
+                                        class="font-semibold text-black " >(A-B-C)</span>
                         </p>
                     </div>
                     <div class="my-2 col-6">
@@ -282,7 +284,10 @@
 
 
             </div>
+
+           
         </div>
+        
 
 </Sidebar>
 </template>
@@ -303,9 +308,9 @@ const employeePayslipStore = useEmployeePayslipStore()
 const viewpayslip = ref(true);
 const op = ref();
 
-onMounted(async () => {
-    console.log("EmployeePayslips,vue loaded");
-    await employeePayslipStore.getEmployeeAllPayslipList();
+onMounted( () => {
+    console.log("EmployeePayslips,vue loaded"); 
+    employeePayslipStore.getEmployeeAllPayslipList();
 
 });
 
