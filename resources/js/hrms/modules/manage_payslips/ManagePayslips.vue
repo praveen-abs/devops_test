@@ -433,16 +433,14 @@ async function showPaySlipHTMLView(selected_user_code) {
 
 function showConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
-
     show_dialogconfirmation.value = true;
-
 }
 
 function showReleasePayslipConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
 
     show_releasePayslip_dialogconfirmation.value = true;
-    toggle()
+    // toggle()
 }
 
 function saveusercode(selected_user_code){
