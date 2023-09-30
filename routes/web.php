@@ -4,6 +4,7 @@ use App\Http\Controllers\PMS\VmtPMSModuleController;
 use App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HRMSBaseAPIController;
+use App\Http\Controllers\VmtMainDashboardController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -1190,6 +1191,8 @@ Route::get('/testing_sass', function () {
 
     return view('testing_views.sassTest');
 });
+
+Route::get('/clear_cache',[App\Http\Controllers\VmtMainDashboardController::class,'clearCache'] )->name('clearCache');
 
 
 //DONT WRITE ANT ROUTES BELOW THIS
