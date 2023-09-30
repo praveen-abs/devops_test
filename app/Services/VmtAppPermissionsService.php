@@ -657,6 +657,7 @@ class VmtAppPermissionsService
                     $client_single_modules_data['module_id'] = $module_id;
                     $client_single_modules_data['module_name'] = $single_module_data["module_name"];
                     $client_single_modules_data['module_status'] = $module_status;
+                    $client_single_modules_data['sub_module_details'][$i]['module_id'] = $module_id;
                     $client_single_modules_data['sub_module_details'][$i]['sub_module_name'] = $single_module_data["sub_module_name"];
                     $client_single_modules_data['sub_module_details'][$i]['sub_module_id'] = $single_module_data["sub_module_id"];
                     $client_single_modules_data['sub_module_details'][$i]['sub_module_status'] = $single_module_data["sub_module_status"];

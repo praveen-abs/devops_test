@@ -337,6 +337,7 @@ class VmtOrgTreeController extends Controller
                             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
                             // ->where('users.org_role','<>','1')
                             ->where('vmt_employee_office_details.l1_manager_code',$user_code)
+                            ->where('users.active','1')
                             ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation', 'vmt_employee_office_details.department_id')
                             ->get();
 
