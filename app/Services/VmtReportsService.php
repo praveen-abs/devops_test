@@ -131,6 +131,7 @@ class VmtReportsservice
                 $temp_ar['Employee Name'] = $singleemployeedata->name;
                 $temp_ar['Gender'] = strtoupper($singleemployeedata->gender);
                 $temp_ar['Designation'] = $singleemployeedata->designation;
+                $temp_ar['Department'] = Department::where('id', $singleemployeedata->department_id)->first()->name ?? '';
                 if ($singleemployeedata->active == 1) {
                     $temp_ar['Employee Status'] = "Active";
                 } else if ($singleemployeedata->active == -1) {
