@@ -92,6 +92,10 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
         return auth()->user()->org_role;
     });
+    Route::get('/currentUseris_ssa', function () {
+
+        return auth()->user()->is_ssa;
+    });
     Route::get('/getClientName', [App\Http\Controllers\VmtMainDashboardController::class, 'getCurrentClientName'])->name('getCurrentClientName');
 
 
