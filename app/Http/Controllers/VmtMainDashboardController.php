@@ -42,6 +42,7 @@ use App\Models\VmtPraise;
 use App\Http\Controllers\VmtEmployeeController;
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
@@ -762,5 +763,14 @@ public function getEmployeesCountDetails(Request $request, VmtDashboardService $
         $client_name = VmtClientMaster::all()->value('client_name');
         //dd($client_name);
         return $client_name;
+    }
+
+    public function clearCache()
+    {
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('route:clear');
+
+        return response()->json(['message' => 'Cache cleared successfully']);
     }
 }
