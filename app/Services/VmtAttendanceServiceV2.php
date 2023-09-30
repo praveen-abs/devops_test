@@ -20,6 +20,7 @@ use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtOrgTimePeriod;
 use Carbon\CarbonInterval;
+use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Single;
 
 class VmtAttendanceServiceV2
 {
@@ -162,6 +163,7 @@ class VmtAttendanceServiceV2
                         $attendance_mode_checkout = null;
                         $is_holiday = false;
                         $is_leave = false;
+                        $leave_type = '/leave';
                         $leave_type = null;
                         $is_half_day = false;
 
@@ -217,8 +219,12 @@ class VmtAttendanceServiceV2
                         $web_checkin_time = null;
                         $web_checkout_time = null;
                         if (!empty($web_attendance)) {
-                            $web_checkin_time = $web_attendance->checkin_time;
-                            $web_checkout_time = $web_attendance->checkout_time;
+                            if ($web_attendance->checkout_date == null) {
+                                $web_attendance->checkout_date = $current_date->format('Y-m-d');
+                            }
+
+                            $web_checkin_time = $web_attendance->date . ' ' . $web_attendance->checkin_time;
+                            $web_checkout_time = $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time;
                         }
                         if ($web_checkin_time != null) {
                             $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time, 'attendance_mode' => $web_attendance->attendance_mode_checkin]);
@@ -259,8 +265,8 @@ class VmtAttendanceServiceV2
                             $attendance_mode_checkout =    $checkout_time_ar['attendance_mode'];
                         }
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
-                        $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
-                        $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
+                        $shiftStartTime  = Carbon::parse($current_date->format('Y-m-d') . ' ' . $shift_settings->shift_start_time);
+                        $shiftEndTime  = Carbon::parse($current_date->format('Y-m-d') . ' ' . $shift_settings->shift_end_time);
                         if ($checking_time != null &&  $checkout_time != null &&  $checkout_time ==  $checking_time) {
                             $attendance_time = $this->findMIPOrMOP($checking_time, $shiftStartTime, $shiftEndTime);
 
@@ -283,6 +289,52 @@ class VmtAttendanceServiceV2
                             }
                         }
 
+                        //Code For Check LC And MOP
+                        if ($checking_time != null) {
+                            if ($checkout_time == null) {
+                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'LC');
+                                $lc_id = $regularization_status['id'];
+                                if ($regularization_status['sts'] != 'Approved') {
+                                    $lc_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                }
+                            }
+                            $parsedCheckIn_time  = Carbon::parse($checking_time);
+                            //Check whether checkin done on-time
+                            // dd($shiftStartTime);
+                            $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+
+                            if ($isCheckin_done_ontime) {
+                                //employee came on time....
+                            } else {
+                                //dd("Checkin NOT on-time");
+                                //check whether regularization applied.
+                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'LC');
+                                $lc_id = $regularization_status['id'];
+                                if ($regularization_status['sts'] != 'Approved') {
+                                    $lc_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                }
+
+                                // dd( $regularization_status );
+                                //  $attendanceResponseArray[$key]["isLC"] = $regularization_status;
+                            }
+                        }
+                        //Code For Check EG And MIP
+                        if (!empty($checkout_time != null)) {
+                            $parsedCheckOut_time  = Carbon::parse($checkout_time);
+                            //Check whether checkin out on-time
+                            $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
+                            if ($isCheckout_done_ontime) {
+                                //employee left early on time....
+                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
+                                $eg_id = $regularization_status['id'];
+                                if ($regularization_status['sts'] != 'Approved') {
+                                    $eg_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                }
+                            } else {
+                                //employee left late....
+                            }
+                        }
+
                         //here checking for leave 
                         if (!$week_off_sts && !$is_holiday && $checking_time != null && $checkout_time != null) {
                             $start_leave_list = VmtEmployeeLeaves::where('user_id', $single_user->id)
@@ -298,16 +350,54 @@ class VmtAttendanceServiceV2
                             $leave_list =  $start_leave_list->merge($end_leave_list);
                             if (count($leave_list) > 0) {
                                 foreach ($leave_list as $single_emp_leave) {
-                                    // dd($current_date->addHour(23));
                                     if ($current_date->addHour(23)->betweenIncluded(Carbon::parse($single_emp_leave->start_date), Carbon::parse($end_date))) {
+                                        $current_leave_type = VmtLeaves::where('id', $single_emp_leave->leave_type_id)->first()->leave_type;
+                                        switch ($current_leave_type) {
+                                            case 'Sick Leave / Casual Leave';
+                                                $leave_type = 'SL/CL';
+                                                break;
+                                            case 'Casual/Sick Leave';
+                                                $leave_type = 'CL/SL';
+                                                break;
+                                            case 'LOP Leave';
+                                                $leave_type = 'LOP LE';
+                                                break;
+                                            case 'Earned Leave';
+                                                $leave_type = 'EL';
+                                                break;
+                                            case 'Maternity Leave';
+                                                $leave_type = 'ML';
+                                                break;
+                                            case 'Paternity Leave';
+                                                $leave_type = 'PTL';
+                                                break;
+                                            case 'On Duty';
+                                                $leave_type = 'OD';
+                                                break;
+                                            case 'Permission';
+                                                $leave_type = 'PI';
+                                                break;
+                                            case 'Compensatory Off';
+                                                $leave_type = 'CO';
+                                                break;
+                                            case 'Casual Leave';
+                                                $leave_type = 'CL';
+                                                break;
+                                            case 'Sick Leave';
+                                                $leave_type = 'SL';
+                                                break;
+                                            case 'Compensatory Leave';
+                                                $leave_type = 'CO';
+                                                break;
+                                            case 'Compensatory Leave';
+                                                $leave_type = 'FO L';
+                                                break;
+                                        }
                                         $is_leave = true;
                                         break;
                                     }
-
-                                    dd($single_emp_leave);
                                 }
                             }
-
                         }
 
                         if ($checking_time != null) {
@@ -376,12 +466,17 @@ class VmtAttendanceServiceV2
     }
     public function isRegularizationRequestApplied($user_id, $date, $regularizeType)
     {
-        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $date)
+        $res['sts'] = null;
+        $res['id'] = null;
+        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $date->format('Y-m-d'))
             ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
+        // if($user_id==200 && $regularizeType=='LC' && $date->format('Y-m-d')=='2023-07-26')
         if ($regularize_record->exists()) {
-            return $regularize_record->value('status');
+            $res['sts'] = $regularize_record->value('status');
+            $res['id'] = $regularize_record->value('id');
+            return $res;
         } else {
-            return 'Not Applied';
+            return $res;
         }
     }
     public function canCalculateOt($user_code)
