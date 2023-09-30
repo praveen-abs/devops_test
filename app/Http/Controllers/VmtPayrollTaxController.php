@@ -94,7 +94,7 @@ public function oldRegimeTaxReportCalculation(Request $request, VmtPayrollTaxSer
 {
     $regime = "old";
     $age = 58;
-    $total_income = 1908400;
+    $total_income = 637900;
     return $vmtPayrollTaxService->newregimetaxcal($total_income);
 }
 

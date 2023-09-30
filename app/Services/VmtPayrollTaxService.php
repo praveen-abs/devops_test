@@ -1766,7 +1766,7 @@ $valueof_80ee = [];
              }
          }
 
-         dd($rebate_amt);
+        //  dd($rebate_amt);
 
         array_push( $salary_data['headers'] ,
         '11.Total Income (8-10)',
@@ -1839,7 +1839,7 @@ $valueof_80ee = [];
 
         array_push($reportsdata,$salary_data['headers'],$final_ar);
 
-        return ($reportsdata);
+        return dd($reportsdata);
 
 
 }
@@ -1993,20 +1993,20 @@ $annual_salary_projection =array();
 
         if($deducted_total_income_1s > 600000 && $deducted_total_income_1s < 900000){
             $deducted_total_income['For ₹300000 - ₹600000 : Tax - 5% Tax Amount'] = abs(600000 - 300000) * 0.05;
-            $deducted_total_income['For ₹600000 - '.$deducted_total_income_1s.' : Tax - 10% Tax Amount'] = abs($deducted_total_income_1s - 600000) * 0.10;
+            $deducted_total_income['For ₹600000 - ₹'.$deducted_total_income_1s.' : Tax - 10% Tax Amount'] = abs($deducted_total_income_1s - 600000) * 0.10;
         }
 
         if($deducted_total_income_1s > 900000 && $deducted_total_income_1s < 1200000){
             $deducted_total_income['For ₹300000 - ₹600000 : Tax - 5% Tax Amount'] = abs(600000 - 300000) * 0.05;
             $deducted_total_income['For ₹600000 - ₹900000 : Tax - 10% Tax Amount'] = abs(900000 - 600000) * 0.10;
-            $deducted_total_income['For ₹900000 - '.$deducted_total_income_1s.' : Tax - 15% Tax Amount'] = abs($deducted_total_income_1s - 900000) * 0.15;
+            $deducted_total_income['For ₹900000 - ₹'.$deducted_total_income_1s.' : Tax - 15% Tax Amount'] = abs($deducted_total_income_1s - 900000) * 0.15;
         }
 
         if($deducted_total_income_1s > 1200000 && $deducted_total_income_1s < 1500000){
             $deducted_total_income['For ₹300000 - ₹600000 : Tax - 5% Tax Amount'] = abs(600000 - 300000) * 0.05;
             $deducted_total_income['For ₹600000 - ₹900000 : Tax - 10% Tax Amount'] = abs(900000 - 600000) * 0.10;
             $deducted_total_income['For ₹900000 - ₹1200000 : Tax - 15% Tax Amount'] = abs(1200000 - 900000) * 0.15;
-            $deducted_total_income['For ₹1200000 - '.$deducted_total_income_1s.' : Tax - 20% Tax Amount'] = abs($deducted_total_income_1s - 1200000) * 0.20;
+            $deducted_total_income['For ₹1200000 - ₹'.$deducted_total_income_1s.' : Tax - 20% Tax Amount'] = abs($deducted_total_income_1s - 1200000) * 0.20;
         }
 
         if($deducted_total_income_1s > 1500000){
@@ -2014,7 +2014,7 @@ $annual_salary_projection =array();
             $deducted_total_income['For ₹600000 - ₹900000 : Tax - 10% Tax Amount'] = abs(900000 - 600000) * 0.10;
             $deducted_total_income['For ₹900000 - ₹1200000 : Tax - 15% Tax Amount'] = abs(1200000 - 900000) * 0.15;
             $deducted_total_income['For ₹1200000 - ₹1500000 : Tax - 20% Tax Amount'] = abs(1500000 - 1200000) * 0.20;
-            $deducted_total_income['For 1500000 - '.$deducted_total_income_1s.' : Tax - 30% Tax Amount'] = abs(1500000 - $deducted_total_income_1s) * 0.30;
+            $deducted_total_income['For ₹1500000 - ₹'.$deducted_total_income_1s.' : Tax - 30% Tax Amount'] = abs(1500000 - $deducted_total_income_1s) * 0.30;
         }
 
     }
