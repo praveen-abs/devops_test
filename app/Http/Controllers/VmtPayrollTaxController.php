@@ -39,7 +39,11 @@ public function annualProjection(Request $request, VmtPayrollTaxService $vmtPayr
 
 public function downloadInvestmentReport(Request $request, VmtPayrollTaxService $vmtPayrollTaxService)
 {
-    return Excel::download(new InvestmentsReportsExport($vmtPayrollTaxService->fetchInvestmentTaxReports()),'Investments Report.xlsx');
+    $client_details = VmtClientMaster::where('id',sessionGetSelectedClientid())->first();
+    $client_name = $client_details->client_name;
+    $client_logo_path = $client_details->client_logo;
+    $public_client_logo_path = public_path($client_logo_path);
+    return Excel::download(new InvestmentsReportsExport($vmtPayrollTaxService->fetchInvestmentTaxReports(),$client_name,$public_client_logo_path),'Investments Report.xlsx');
 }
 public function downloadInvestReport(Request $request, VmtPayrollTaxService $vmtPayrollTaxService)
 {

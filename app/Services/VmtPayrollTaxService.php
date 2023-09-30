@@ -472,7 +472,7 @@ class VmtPayrollTaxService
         // dd($total_income_9_10);
         // 12) Tax Calculation
 
-        $tax_calculation['particular'] = $this->getTaxCalculation($total_income_9_10['total'], 40);
+        $tax_calculation['particular'] = $this->oldRegimeTaxCalc($total_income_9_10['total'], 40);
         $tax_calculation['actual'] = 0;
         $tax_calculation['projection'] = 0;
         $tax_calculation['total'] = 0;
@@ -532,129 +532,6 @@ class VmtPayrollTaxService
         $pdf->render();
 
         $pdf->stream('tds_pdf');
-    }
-
-
-
-
-
-    public function getTaxCalculation($total_income, $age)
-    {
-
-        // $cur = '₹';
-
-        if ($age < 60) {
-            if ($total_income <= 250000) {
-                return $overall_deduction = 0;
-            } else
-                if ($total_income > 250000) {
-
-                $deducted_total_income['Exception ₹250000 and the balance amount'] = $total_income - 250000;
-                $deducted_total_income_1s = $total_income - 250000;
-
-
-                if ($deducted_total_income_1s > 250000) {
-                    $deducted_total_income['For ₹250000 : Tax - 5% Tax Amount'] = 12500;
-                    $deducted_total_income_2s = $deducted_total_income_1s - 250000;
-
-                    if ($deducted_total_income_2s < 500000) {
-                        $deducted_total_income['For ' . '₹' . $deducted_total_income_2s . ' : Tax - 20% Tax Amount'] = $deducted_total_income_2s * 0.20;
-                    }
-
-                    if ($deducted_total_income_2s > 500000) {
-                        $deducted_total_income['For ₹500000 : Tax - 20% Tax Amount'] = 100000;
-                        $deducted_total_income_3s = $deducted_total_income_2s - 500000;
-
-                        if ($deducted_total_income_3s < 1000000) {
-                            $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' : Tax - 30% Tax Amount'] = $deducted_total_income_3s * 0.30;
-                        }
-
-                        if ($deducted_total_income_3s > 1000000) {
-                            $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' : Tax - 30% Tax Amount'] = $deducted_total_income_3s * 0.30;
-                        }
-                    }
-                }
-            }
-        } else if ($age >= 60 && $age <= 80) {
-
-            if ($total_income < 300000) {
-                return $overall_deduction = 0;
-            } else
-                if ($total_income > 300000) {
-                $deducted_total_income['For ₹300000 : Tax - 5% Tax Amount'] = 15000;
-                $deducted_total_income_2s = $total_income - 300000;
-
-                if ($deducted_total_income_2s < 500000) {
-                    $deducted_total_income['For ' . $deducted_total_income_2s . ' Tax 5% Tax Amount'] = $deducted_total_income_2s * 0.05;
-                }
-
-                if ($deducted_total_income_2s > 500000) {
-                    $deducted_total_income['For ₹500000 : Tax - 20% Tax Amount'] = 100000;
-                    $deducted_total_income_3s = $deducted_total_income_2s - 500000;
-
-                    if ($deducted_total_income_3s < 1000000) {
-                        $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' Tax 20% Tax Amount'] = $deducted_total_income_3s * 0.20;
-                    }
-
-                    if ($deducted_total_income_3s > 1000000) {
-                        $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' Tax 30% Tax Amount'] = $deducted_total_income_3s * 0.30;
-                    }
-                }
-            }
-        } else if ($age > 80) {
-
-            if ($total_income < 500000) {
-                return $overall_deduction = 0;
-            } else
-                if ($total_income > 500000) {
-                $deducted_total_income['For ₹500000 : Tax - 20% Tax Amount'] = 100000;
-                $deducted_total_income_2s = $total_income - 500000;
-
-                if ($deducted_total_income_2s < 1000000) {
-                    $deducted_total_income['For_' . '₹' . $deducted_total_income_2s . ' : Tax - 20% Tax Amount'] = $deducted_total_income_2s * 0.20;
-                }
-
-                if ($deducted_total_income_2s > 1000000) {
-                    $deducted_total_income['For_' . '₹' . $deducted_total_income_2s . ' Tax - 30% Tax Amount'] = $deducted_total_income_2s * 0.30;
-                }
-            }
-        }
-
-        $sumOftax = 0;
-        foreach ($deducted_total_income as $key => $tax_calculate) {
-            if ($key == 'Exception ₹250000 and the balance amount') {
-                $sumOftax += 0;
-            } else {
-                $sumOftax += $tax_calculate;
-            }
-        }
-        $deducted_total_income['Tax on total Income'] = $sumOftax;
-
-        $deducted_total_income['Less : Rebate Under Section 87A'] = 0;
-
-        $deducted_total_income['Note : if taxable income is less than ₹500000, tax rebate of a maximum of ₹12500 is provided under Section 87A'] = 0;
-
-        return $deducted_total_income;
-    }
-
-
-    private function subChargeCalculation($total_income)
-    {
-        if ($total_income < 5000000) {
-            return $subcharge = 0;
-        } else if ($total_income >= 5000000 && $total_income < 10000000) {
-            $subcharge = $total_income * 10 / 100;
-            return $subcharge;
-        } else if ($total_income >= 10000000 && $total_income < 20000000) {
-            $subcharge = $total_income * 15 / 100;
-            return $subcharge;
-        } else if ($total_income >= 20000000 && $total_income < 50000000) {
-            $subcharge = $total_income * 25 / 100;
-            return $subcharge;
-        } else if ($total_income > 50000000) {
-            $subcharge = $total_income * 37 / 100;
-            return $subcharge;
-        }
     }
 
 
@@ -1142,73 +1019,6 @@ class VmtPayrollTaxService
     }
 
 
-    public function newRegimeTaxReportCalculation($regime, $total_income)
-    {
-
-        if ($regime == 'new') {
-            // Employeer Income Is Greater than 300000 and Less Than  600000
-            if ($total_income > 300000 && $total_income <= 600000) {
-                $taxable_amount = ($total_income - 300000) * 5 / 100;
-                return $taxable_amount;
-            } else
-                // Employeer Income Is Greater than 600000 and Less Than  900000
-                if ($total_income > 600000 && $total_income <= 900000) {
-                    $taxable_amount = ($total_income - 600000) * 10 / 100;
-                    return $taxable_amount;
-                } else
-                    // Employeer Income Is Greater than 900000 and Less Than  1200000
-                    if ($total_income > 900000 && $total_income <= 1200000) {
-                        $taxable_amount = ($total_income - 900000) * 15 / 100;
-                        return $taxable_amount;
-                    } else
-                        // Employeer Income Is Greater than 1200000 and Less Than  1500000
-                        if ($total_income > 1200000 && $total_income < 1500000) {
-                            $taxable_amount = ($total_income - 1200000) * 20 / 100;
-                            return $taxable_amount;
-                        } else
-                            // Employeer Income Is Greater than 1500000
-                            if ($total_income > 1500000) {
-
-                                $taxable_amount = ($total_income - 1500000) * 30 / 100;
-                                $total_amount = floor($taxable_amount + 150000);
-                                return $total_amount;
-                            }
-                    }
-     }
-
-
-        public function rebateUs87acalc($regime,$taxable_income,$tax_income){
-
-            if($regime == "new"){
-                if($taxable_income > 700000){
-                    $rebate = 0;
-                    return $rebate;
-                }else{
-                    if($tax_income >= 25000){
-                        $rebate = 25000;
-                        return $rebate;
-                    }elseif($tax_income < 25000){
-                        $rebate = $tax_income;
-                        return $rebate;
-                    }
-                }
-            }elseif($regime == "old"){
-                if($taxable_income > 500000){
-                    $rebate = 0;
-                    return $rebate;
-                }else{
-                    if($tax_income >= 12500){
-                        $rebate = 12500;
-                        return $rebate;
-                    }elseif($tax_income < 12500){
-                        $rebate = $tax_income;
-                        return $rebate;
-                    }
-                }
-            }
-        }
-
-
     public function fetchInvestmentTaxReports()
     {
         $reportsdata = array();
@@ -1278,7 +1088,7 @@ class VmtPayrollTaxService
                 $employee_salary_details[$key]["Date Of Joining"] =Carbon::parse($single_user['Date Of Joining'])->format('d-m-Y');
                 $employee_salary_details[$key]["Tax Regime"] = ucfirst($single_user['Tax Regime'])." Regime";
                 $professinal_income[$key]["Regime"] = $single_user['Tax Regime'];
-                $employee_salary_details[$key]["Basic"] =$employee_projected_salary->sum('earned_basic');
+                $employee_salary_details[$key]["Basic"] = $employee_projected_salary->sum('earned_basic');
                 $employee_salary_details[$key]["Basic Arrears"] =$employee_projected_salary->sum('basic_arrear');
                 $employee_salary_details[$key]["Dearness Allowance"] =$employee_projected_salary->sum('dearness_allowance_earned');
                 $employee_salary_details[$key]["Dearness Allowance Arrears"] =$employee_projected_salary->sum('dearness_allowance_arrear');
@@ -1302,11 +1112,11 @@ class VmtPayrollTaxService
                 $employee_salary_details[$key]["Special Allowance Arrears"] =$employee_projected_salary->sum('spl_alw_arrear');
                 $employee_salary_details[$key]["Other Allowance"] =$employee_projected_salary->sum('other_allowance_earned');
                 $employee_salary_details[$key]["Other Allowance Arrears"] =$employee_projected_salary->sum('other_allowance_arrear');
-                $employee_salary_details[$key]["Washing Allowance"] =$employee_projected_salary->sum('washing_allowance_earned');
+                $employee_salary_details[$key]["Washing Allowance"] =$employee_projected_salary->sum('washing_allowance_earned') ;
                 $employee_salary_details[$key]["Washing Allowance Arrears"] =$employee_projected_salary->sum('washing_allowance_arrear');
                 $employee_salary_details[$key]["Uniform Allowance"] =$employee_projected_salary->sum('uniform_allowance_earned');
-                $employee_salary_details[$key]["Uniform Allowance Arrears"] =$employee_projected_salary->sum('uniform_allowance_arrear');
-                $employee_salary_details[$key]["Vehicle Reimbursement"] =$employee_projected_salary->sum('vehicle_reimbursement_earned');
+                $employee_salary_details[$key]["Uniform Allowance Arrears"] =$employee_projected_salary->sum('uniform_allowance_arrear') ;
+                $employee_salary_details[$key]["Vehicle Reimbursement"] =$employee_projected_salary->sum('vehicle_reimbursement_earned') ;
                 $employee_salary_details[$key]["Vehicle Reimbursement Arrears"] =$employee_projected_salary->sum('vehicle_reimbursement_arrear');
                 $employee_salary_details[$key]["Driver Salary Reimbursement"] =$employee_projected_salary->sum('driver_salary_earned');
                 $employee_salary_details[$key]["Driver Salary Reimbursement Arrears"] =$employee_projected_salary->sum('driver_salary_arrear');
@@ -1321,7 +1131,7 @@ class VmtPayrollTaxService
                                                             + $employee_projected_salary->sum('washing_allowance_arrear') + $employee_projected_salary->sum('uniform_allowance_arrear') + $employee_projected_salary->sum('vehicle_reimbursement_arrear') +$employee_projected_salary->sum('driver_salary_arrear');
 
 
-                $employee_salary_details[$key]["Incentive"] =$employee_projected_salary->sum('incentive');;
+                $employee_salary_details[$key]["Incentive"] =$employee_projected_salary->sum('incentive');
                 $employee_salary_details[$key]["Other Earnings"] =$employee_projected_salary->sum('other_earnings');
                 $employee_salary_details[$key]["Referral Bonus"] =$employee_projected_salary->sum('referral_bonus');
                 $employee_salary_details[$key]["Annual Statutory Bonus"] =$employee_projected_salary->sum('earned_stats_bonus');
@@ -1330,16 +1140,17 @@ class VmtPayrollTaxService
                 $employee_salary_details[$key]["Daily Allowance"] =$employee_projected_salary->sum('daily_allowance');
                 $employee_salary_details[$key]["Leave Encashments"] =$employee_projected_salary->sum('leave_encashment');
                 $employee_salary_details[$key]["Gift"] =$employee_projected_salary->sum('gift_payment');
-                $employee_salary_details[$key]["Annual Gross Salary"] =$employee_projected_salary->sum('earned_basic') + $employee_projected_salary->sum('dearness_allowance_earned') + $employee_projected_salary->sum('vda_earned')
-                                                                     +$employee_projected_salary->sum('earned_hra') +$employee_projected_salary->sum('earned_child_edu_allowance') + $employee_projected_salary->sum('medical_allowance_earned')
-                                                                     + $employee_projected_salary->sum('communication_allowance_earned')+ $employee_projected_salary->sum('earned_lta') +$employee_projected_salary->sum('food_allowance_earned')
-                                                                     +$employee_projected_salary->sum('earned_spl_alw')+$employee_projected_salary->sum('other_allowance_earned')+$employee_projected_salary->sum('washing_allowance_earned')+
-                                                                     $employee_projected_salary->sum('uniform_allowance_earned') +
-                                                                     $employee_projected_salary->sum('basic_arrear')+ $employee_projected_salary->sum('dearness_allowance_arrear') + $employee_projected_salary->sum('vda_arrear') + $employee_projected_salary->sum('hra_arrear')+$employee_projected_salary->sum('hra_arrear') +
-                                                                     $employee_projected_salary->sum('child_edu_allowance_arrear') + $employee_projected_salary->sum('earned_stats_arrear') + $employee_projected_salary->sum('medical_allowance_arrear')
-                                                                     +$employee_projected_salary->sum('communication_allowance_arrear')  + $employee_projected_salary->sum('food_allowance_arrear') + $employee_projected_salary->sum('lta_arrear') + $employee_projected_salary->sum('spl_alw_arrear') + $employee_projected_salary->sum('other_allowance_arrear')
-                                                                     + $employee_projected_salary->sum('washing_allowance_arrear') + $employee_projected_salary->sum('uniform_allowance_arrear') + $employee_projected_salary->sum('vehicle_reimbursement_arrear') +$employee_projected_salary->sum('driver_salary_arrear');
-
+                $employee_salary_details[$key]["Annual Gross Salary"] =   $employee_projected_salary->sum('earned_basic') + $employee_projected_salary->sum('basic_arrear') +  $employee_projected_salary->sum('dearness_allowance_earned') +
+                 $employee_projected_salary->sum('dearness_allowance_arrear') + $employee_projected_salary->sum('vda_earned') + $employee_projected_salary->sum('vda_arrear') +
+                $employee_projected_salary->sum('earned_hra') + $employee_projected_salary->sum('hra_arrear') + $employee_projected_salary->sum('earned_child_edu_allowance') + $employee_projected_salary->sum('child_edu_allowance_arrear') +
+                $employee_projected_salary->sum('earned_stats_bonus') + $employee_projected_salary->sum('earned_stats_arrear') + $employee_projected_salary->sum('medical_allowance_earned') + $employee_projected_salary->sum('medical_allowance_arrear') +
+                 $employee_projected_salary->sum('communication_allowance_earned') + $employee_projected_salary->sum('communication_allowance_arrear') + $employee_projected_salary->sum('earned_lta') + $employee_projected_salary->sum('lta_arrear') +
+                 $employee_projected_salary->sum('food_allowance_earned') + $employee_projected_salary->sum('food_allowance_arrear') + $employee_projected_salary->sum('earned_spl_alw') + $employee_projected_salary->sum('spl_alw_arrear') +
+                 $employee_projected_salary->sum('other_allowance_earned') +  $employee_projected_salary->sum('other_allowance_arrear') +  $employee_projected_salary->sum('washing_allowance_earned') + $employee_projected_salary->sum('washing_allowance_arrear') +
+                 $employee_projected_salary->sum('uniform_allowance_earned') + $employee_projected_salary->sum('uniform_allowance_arrear') + $employee_projected_salary->sum('vehicle_reimbursement_earned') + $employee_projected_salary->sum('vehicle_reimbursement_arrear') +
+                 $employee_projected_salary->sum('driver_salary_earned') + $employee_projected_salary->sum('driver_salary_arrear') + $employee_projected_salary->sum('overtime') + $employee_projected_salary->sum('overtime_arrear') + $employee_projected_salary->sum('incentive') +
+                 $employee_projected_salary->sum('other_earnings') + $employee_projected_salary->sum('referral_bonus') + $employee_projected_salary->sum('earned_stats_bonus') + $employee_projected_salary->sum('ex_gratia') + $employee_projected_salary->sum('attendance_bonus') +
+                 $employee_projected_salary->sum('daily_allowance') + $employee_projected_salary->sum('leave_encashment') + $employee_projected_salary->sum('gift_payment');
             }
 
         }
@@ -1742,10 +1553,10 @@ $valueof_80ee = [];
              foreach($income as $key => $single_value){
                 if($single_inv_users == $key){
                     if($professinal_income[$key11]["Regime"] == "old" || $professinal_income[$key11]["Regime"] == ""){
-                        $tax_amount[$single_inv_users] =   $this->getTaxCalculation($income[$single_inv_users],"58")['Tax on total Income'];
+                        $tax_amount[$single_inv_users] =   $this->oldRegimeTaxCalc($income[$single_inv_users],"58")['Tax on total Income'];
                     }
                     else if ($professinal_income[$key11]["Regime"] == "new"){
-                      $tax_amount[$single_inv_users] =  $this->newregimetaxcal($income[$single_inv_users])['Tax on total Income'];
+                      $tax_amount[$single_inv_users] =  $this->newRegimeTaxCalc($income[$single_inv_users])['Tax on total Income'];
                     }
                 }
              }
@@ -1827,7 +1638,7 @@ $valueof_80ee = [];
         foreach($salary_data['rows'] as $single_emp){
             foreach($salary_data['headers'] as  $single_headers){
                 if(array_key_exists($single_headers,$single_emp)){
-                    $temp_ar[$single_headers]=$single_emp[$single_headers];
+                    $temp_ar[$single_headers]=(string)$single_emp[$single_headers];
                 }else {
                     $temp_ar[$single_headers]="0";
                 }
@@ -1839,7 +1650,7 @@ $valueof_80ee = [];
 
         array_push($reportsdata,$salary_data['headers'],$final_ar);
 
-        return dd($reportsdata);
+        return ($reportsdata);
 
 
 }
@@ -1978,8 +1789,9 @@ $annual_salary_projection =array();
 
   }
 
+  /* -------------  Formulas ----------------*/
 
-  public function newregimetaxcal($total_income){
+  private function newRegimeTaxCalc($total_income){
 
     if ($total_income > 300000) {
 
@@ -2037,7 +1849,154 @@ $annual_salary_projection =array();
 
   }
 
+  private function oldRegimeTaxCalc($total_income, $age){
 
+      // $cur = '₹';
+
+      if ($age < 60) {
+          if ($total_income <= 250000) {
+              return $overall_deduction = 0;
+          } else
+              if ($total_income > 250000) {
+
+              $deducted_total_income['Exception ₹250000 and the balance amount'] = $total_income - 250000;
+              $deducted_total_income_1s = $total_income - 250000;
+
+
+              if ($deducted_total_income_1s > 250000) {
+                  $deducted_total_income['For ₹250000 : Tax - 5% Tax Amount'] = 12500;
+                  $deducted_total_income_2s = $deducted_total_income_1s - 250000;
+
+                  if ($deducted_total_income_2s < 500000) {
+                      $deducted_total_income['For ' . '₹' . $deducted_total_income_2s . ' : Tax - 20% Tax Amount'] = $deducted_total_income_2s * 0.20;
+                  }
+
+                  if ($deducted_total_income_2s > 500000) {
+                      $deducted_total_income['For ₹500000 : Tax - 20% Tax Amount'] = 100000;
+                      $deducted_total_income_3s = $deducted_total_income_2s - 500000;
+
+                      if ($deducted_total_income_3s < 1000000) {
+                          $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' : Tax - 30% Tax Amount'] = $deducted_total_income_3s * 0.30;
+                      }
+
+                      if ($deducted_total_income_3s > 1000000) {
+                          $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' : Tax - 30% Tax Amount'] = $deducted_total_income_3s * 0.30;
+                      }
+                  }
+              }
+          }
+      } else if ($age >= 60 && $age <= 80) {
+
+          if ($total_income < 300000) {
+              return $overall_deduction = 0;
+          } else
+              if ($total_income > 300000) {
+              $deducted_total_income['For ₹300000 : Tax - 5% Tax Amount'] = 15000;
+              $deducted_total_income_2s = $total_income - 300000;
+
+              if ($deducted_total_income_2s < 500000) {
+                  $deducted_total_income['For ' . $deducted_total_income_2s . ' Tax 5% Tax Amount'] = $deducted_total_income_2s * 0.05;
+              }
+
+              if ($deducted_total_income_2s > 500000) {
+                  $deducted_total_income['For ₹500000 : Tax - 20% Tax Amount'] = 100000;
+                  $deducted_total_income_3s = $deducted_total_income_2s - 500000;
+
+                  if ($deducted_total_income_3s < 1000000) {
+                      $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' Tax 20% Tax Amount'] = $deducted_total_income_3s * 0.20;
+                  }
+
+                  if ($deducted_total_income_3s > 1000000) {
+                      $deducted_total_income['For ' . '₹' . $deducted_total_income_3s . ' Tax 30% Tax Amount'] = $deducted_total_income_3s * 0.30;
+                  }
+              }
+          }
+      } else if ($age > 80) {
+
+          if ($total_income < 500000) {
+              return $overall_deduction = 0;
+          } else
+              if ($total_income > 500000) {
+              $deducted_total_income['For ₹500000 : Tax - 20% Tax Amount'] = 100000;
+              $deducted_total_income_2s = $total_income - 500000;
+
+              if ($deducted_total_income_2s < 1000000) {
+                  $deducted_total_income['For_' . '₹' . $deducted_total_income_2s . ' : Tax - 20% Tax Amount'] = $deducted_total_income_2s * 0.20;
+              }
+
+              if ($deducted_total_income_2s > 1000000) {
+                  $deducted_total_income['For_' . '₹' . $deducted_total_income_2s . ' Tax - 30% Tax Amount'] = $deducted_total_income_2s * 0.30;
+              }
+          }
+      }
+
+      $sumOftax = 0;
+      foreach ($deducted_total_income as $key => $tax_calculate) {
+          if ($key == 'Exception ₹250000 and the balance amount') {
+              $sumOftax += 0;
+          } else {
+              $sumOftax += $tax_calculate;
+          }
+      }
+      $deducted_total_income['Tax on total Income'] = $sumOftax;
+
+      $deducted_total_income['Less : Rebate Under Section 87A'] = 0;
+
+      $deducted_total_income['Note : if taxable income is less than ₹500000, tax rebate of a maximum of ₹12500 is provided under Section 87A'] = 0;
+
+      return $deducted_total_income;
+  }
+
+  private function subChargeCalculation($total_income){
+      if ($total_income < 5000000) {
+          return $subcharge = 0;
+      } else if ($total_income >= 5000000 && $total_income < 10000000) {
+          $subcharge = $total_income * 10 / 100;
+          return $subcharge;
+      } else if ($total_income >= 10000000 && $total_income < 20000000) {
+          $subcharge = $total_income * 15 / 100;
+          return $subcharge;
+      } else if ($total_income >= 20000000 && $total_income < 50000000) {
+          $subcharge = $total_income * 25 / 100;
+          return $subcharge;
+      } else if ($total_income > 50000000) {
+          $subcharge = $total_income * 37 / 100;
+          return $subcharge;
+      }
+  }
+
+  private function rebateUs87acalc($regime,$taxable_income,$tax_income){
+
+    if($regime == "new"){
+        if($taxable_income > 700000){
+            $rebate = 0;
+            return $rebate;
+        }else{
+            if($tax_income >= 25000){
+                $rebate = 25000;
+                return $rebate;
+            }elseif($tax_income < 25000){
+                $rebate = $tax_income;
+                return $rebate;
+            }
+        }
+    }elseif($regime == "old"){
+        if($taxable_income > 500000){
+            $rebate = 0;
+            return $rebate;
+        }else{
+            if($tax_income >= 12500){
+                $rebate = 12500;
+                return $rebate;
+            }elseif($tax_income < 12500){
+                $rebate = $tax_income;
+                return $rebate;
+            }
+        }
+    }
+}
+
+ /* ------------- End ----------------*/
 
 
 
