@@ -184,7 +184,9 @@ export default defineConfig({
                 // 'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
 
                 // salary details
-                'resources/js/hrms/modules/paycheck/salary_details/salary_details.js'
+                'resources/js/hrms/modules/paycheck/salary_details/salary_details.js',
+
+                'resources/js/hrms/modules/pms/pms_master.js',
 
 
             ],
