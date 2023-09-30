@@ -75,10 +75,14 @@ class VmtAPIPaySlipController extends Controller
 
 
     public function getEmployeeCompensatoryDetails(Request $request, VmtEmployeePayCheckService $serviceEmployeePayCheckService){
-
         $response = $serviceEmployeePayCheckService->getEmployeeCompensatoryDetails( user_code : $request->user_code);
 
          return $response;
+    }
+
+    public function getEmployeeYearlyAndMonthlyCTC(Request $request, VmtEmployeePayCheckService $serviceEmployeePayCheckService){
+       $response =  $serviceEmployeePayCheckService->getEmployeeYearlyAndMonthlyCTC($request->user_code);
+       return $response;
     }
 
 

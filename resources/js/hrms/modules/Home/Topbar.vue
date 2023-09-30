@@ -135,6 +135,9 @@
                         <a href="Settings-Mobile" v-if=" findSelectedModuleIsEnabled(activeSettings,'MOBILE APP SETTINGS').sub_module_name.IS_ENABLED ===1 "
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Mobile setting</a>
+                            <a href="module-settings" v-if=" service.current_user_role == 1"
+                            class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Module setting</a>
                         <!--  <a href="showSAsettingsView"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting
