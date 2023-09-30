@@ -308,8 +308,11 @@ async function getclientname() {
 }
 
 function findSelectedModuleIsEnabled(array, idToFind) {
+    if(array){
+        return array.find(obj => obj.module_name === idToFind);
+    }
 
-    return array.find(obj => obj.module_name === idToFind);
+ 
 }
 
 </script>

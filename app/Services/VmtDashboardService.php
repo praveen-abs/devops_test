@@ -936,6 +936,43 @@ class VmtDashboardService
         }
     }
 
+    public function readNotification($record_id){
+
+        $validator = Validator::make(
+            $data = [
+                'record_id' => $record_id,
+            ],
+            $rules = [
+                'record_id' => 'required|exists:vmt_notifications,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+    
+           $get_notification =  VmtNotifications::where('id',$record_id)->first();
+
+            if($get_notification){
+                $get_notification->is_read = "1";
+                $get_notification->save();
+            }
+
+    }
+
+
+
+
+
     public function getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period)
     {
         // TODO:: Which Leave Types we Have to Find availed And Balance //Need To Change In Setting Page
@@ -1462,7 +1499,7 @@ class VmtDashboardService
     // }
 
 
-
+        
 
 
 

@@ -257,8 +257,6 @@ class VmtEmployeeService
 
                 $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
 
-
-
             }
 
             $newUser->active = '0';
@@ -528,7 +526,6 @@ class VmtEmployeeService
 
         try {
 
-
             $user_id = $user_data->id;
 
             $newEmployee = VmtEmployee::where('userid', $user_id);
@@ -545,7 +542,7 @@ class VmtEmployeeService
 
             $newEmployee->userid   =    $user_id;
             $newEmployee->marital_status_id = $data["marital_status"] ?? '';
-            $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
+            //$newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob, $user_id) : '';
             $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
            // $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj, $user_id) : '';
             $newEmployee->gender   =    $data["gender"] ?? '';

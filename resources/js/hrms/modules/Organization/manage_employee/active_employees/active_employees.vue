@@ -5,7 +5,7 @@
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                 :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu"
-                :loading="canShowLoadingScreen" :globalFilterFields="['emp_name', 'emp_code', 'status']">
+                :loading="canShowLoadingScreen" :globalFilterFields="['emp_name', 'emp_code','emp_designation','reporting_manager_name', 'status']">
                 <template #empty> No customers found.</template>
                 <template #loading> Loading customers data. Please wait. </template>
                 <Column class="font-bold" field="emp_name" header="Employee Name"
@@ -28,14 +28,24 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_code" header="Employee Code" class="" style="min-width: 2rem !important;">
+                <Column field="emp_code" header="Employee Code" class="" style="">
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
-                <Column field="reporting_manager_name" header="Reporting Manager"></Column>
+                <Column field="emp_designation" header="Designation"  class="" >
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
+                <Column field="reporting_manager_name" header="Reporting Manager">
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
                 <Column field="doj" header="DOJ" style="min-width: 10rem;">
                     <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
                 </Column>
@@ -107,6 +117,18 @@ const filters = ref({
         matchMode: FilterMatchMode.EQUALS,
         matchMode: FilterMatchMode.CONTAINS,
     },
+    emp_designation: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    reporting_manager_name: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
 
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
@@ -151,5 +173,9 @@ async function openProfilePage(uid) {
 .btnt:hover
 {
     transform: translateY(-2px);
+}
+.p-column-header-content{
+    display: flex;
+    justify-items: center;
 }
 </style>
