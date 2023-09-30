@@ -103,7 +103,6 @@ class VmtReportsservice
                 $get_department = $department_id;
             }
 
-
             $dates = Carbon::now()->format('Y-m-d');
             // $Category = 'All';
             $processed_array = array();
@@ -117,11 +116,11 @@ class VmtReportsservice
                 ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                // ->leftJoin('vmt_department ', 'vmt_department .id', '=', 'vmt_employee_office_details.department_id')
                 ->where('users.is_ssa','=','0')
-                ->where('users.active','=','1')
                 ->where('vmt_employee_details.doj', '<', $date_req)
                 ->whereIn('users.client_id', $client_id)
-                ->where('users.active', $active_status)
+                ->whereIn('users.active', $active_status)
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
@@ -300,7 +299,7 @@ class VmtReportsservice
                 
                 }
                 $temp_ar['Last Working Day'] = carbon::parse($single_details->dol)->format('d-M-Y');
-                $temp_ar['NATIONALITY'] = $single_details->nationality;
+                $temp_ar['Nationality'] = $single_details->nationality;
                 // $temp_ar['legal entity'] = $single_details->;
                 $temp_ar['Designation'] = $single_details->designation;
                 $temp_ar['Department'] = Department::where('id', $single_details->department_id)->first()->name ?? '';
@@ -371,7 +370,7 @@ class VmtReportsservice
                 $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
                 // $temp_ar['Uniform Allowance'] = $single_details->; 
                 $temp_ar['Special Allowance'] = round((int) $single_details->special_allowance) == 0 ? "0" : round((int) $single_details->special_allowance);
-                $temp_ar['STATUTORY BONUS'] = round((int) $single_details->Statutory_bonus) == 0 ? "0" : round((int) $single_details->Statutory_bonus);
+                $temp_ar['Statutory Bonus'] = round((int) $single_details->Statutory_bonus) == 0 ? "0" : round((int) $single_details->Statutory_bonus);
                 $temp_ar['Other Allowance'] = round((int) $single_details->other_allowance) == 0 ? "0" : round((int) $single_details->other_allowance);
                 $temp_ar['Leave Travel Allowance (LTA)'] = round((int) $single_details->lta) == 0 ? "0" : round((int) $single_details->lta);
                 // $temp_ar['Telephone Reimbursement'] = $single_details->;
