@@ -148,7 +148,6 @@ const stopWatchingData = watch(useDashboard.allEventSource, (newValue, oldValue)
 });
 
 onMounted(async () => {
-<<<<<<< HEAD
     if (useDashboard.isDashboardDataReceived && useDashboard.isHrDashboardDataReceived) {
         canShowLoadingScreen.value = true;
         await useDashboard.getMainDashboardData();
@@ -157,17 +156,6 @@ onMounted(async () => {
         Service();
         canShowLoadingScreen.value = false;
     }
-=======
-    await axios.get('/clear_cache').then((res) => {
-        console.log(res.data);
-    })
-    canShowLoadingScreen.value = true;
-    await useDashboard.getMainDashboardData();
-    useDashboard.getHrDashboardMainSource()
-    // await useDashboard.getAttendanceStatus();
-    Service();
-    canShowLoadingScreen.value = false;
->>>>>>> a7255283726bf7239cfaabaf7651d11170b57016
 
 
 })

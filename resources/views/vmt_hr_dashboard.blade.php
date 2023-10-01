@@ -23,6 +23,4 @@
 @endsection
 
 @section('content')
-@vite('resources/js/hrms/modules/dashboard/dashboard.js')
-<div id="Dashboard"></div>
 @endsection
