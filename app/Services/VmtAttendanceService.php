@@ -4346,6 +4346,7 @@ class VmtAttendanceService
         $present_emps = array();
         $lc_count = 0;
         $lc_emps = array();
+        $leave_emps = array();
         $eg_count = 0;
         $eg_emps = array();
         $mip_count = 0;
@@ -4421,6 +4422,7 @@ class VmtAttendanceService
                     $leave_date = $single_date->format('Y-m-d');
 
                     if ($leave_date == $current_date) {
+                        array_push($leave_emps,$single_user_data);
                         $leave_employee_count[$i]['id'] =  $single_user_data['id'];
                         $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
                         $leave_employee_count[$i]['user_name'] =  $user_data->name;
