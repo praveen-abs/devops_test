@@ -13,40 +13,31 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Carbon\Carbon;
 
-class InvestmentReportsExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithDrawings, WithCustomStartCell, WithTitle
+class InvestmentReportsExport implements FromArray, ShouldAutoSize, WithHeadings, WithStyles, WithDrawings, WithCustomStartCell,WithColumnFormatting
 {
     protected $data;
-    protected $headers;
+    protected $header;
+    protected $header1;
     protected $last_header_column;
     protected $public_client_logo_path;
     protected $client_name;
-    protected $type;
     protected $last_row;
-    protected $regime_type;
-
-    protected $category;
 
 
-    public function __construct($type, $data, $headers, $client_name, $public_client_logo_path, $active_status,$regime_type)
+    public function __construct($data,$client_name,$public_client_logo_path)
     {
-        $this->type = $type;
-        $this->data = $data;
-        $this->headers = $headers;
+        $this->header = $data[0]['headers'];
+        $this->header1 = $data[1]['headers1'];
+        $this->data = $data[2];
         $this->client_name = $client_name;
         $this->public_client_logo_path = $public_client_logo_path;
-        $this->last_header_column = num2alpha(count($headers) - 1);
+        $this->last_header_column = num2alpha(count($data[0]['headers']) - 1);
+        $this->header2count = num2alpha(count($data[1]['headers1']) - 1);
         $this->last_row = count($this->data) + 7;
-        $this->category = $active_status;
-        $this->regime_type = $regime_type;
-    }
-
-    public function title(): string
-    {
-
-        return $this->type;
     }
 
     public function startCell(): string
@@ -55,12 +46,24 @@ class InvestmentReportsExport implements FromArray, ShouldAutoSize, WithHeadings
     }
     public function headings(): array
     {
-        return [$this->headers];
+        return [
+                $this->header1,
+                $this->header
+            ];
     }
     public function array(): array
     {
         return [$this->data];
     }
+
+    public function columnFormats(): array
+    {
+        return [
+            'H:DW'=>'_ "₹" * #,##0.00_ ;_ "₹" * -#,##0.00_ ;_ "₹" * "-"??_ ;_ @_ ',
+        //    'J' => '[$₹-4009] * #,##0.00;-[$₹-4009] * #,##0.00_-;_-[$₹-4009] * "-"??_-;_-@_-',
+        ];
+    }
+
     public function styles(Worksheet $sheet)
     {
         $sheet->getParent()->getActiveSheet()->getPageSetup()->setpaperSize(1);
@@ -70,7 +73,7 @@ class InvestmentReportsExport implements FromArray, ShouldAutoSize, WithHeadings
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
 
         //For Remove Grid Lines
-        $sheet->setShowGridlines(false);
+        $sheet->setShowGridlines(true);
 
         //For First Row
         $sheet->mergeCells('C1:D1')->setCellValue('C1', "Legal Entity : " . $this->client_name);
@@ -80,20 +83,35 @@ class InvestmentReportsExport implements FromArray, ShouldAutoSize, WithHeadings
         $sheet->mergeCells('C2:D2')->setCellValue('C2', "Report Type : " . ' Employee CTC Report');
         $sheet->getStyle('C2:D2')->getFont()->setBold(true);
 
-        //For Third Row
-        $sheet->mergeCells('C3:D3')->setCellValue('C3', "Category : " . $this->category);
-        $sheet->getStyle('C3:D3')->getFont()->setBold(true);
-        
-
-        //For fourth Row
-        $sheet->mergeCells('C4:D4')->setCellValue('C4', "Regime : " . $this->regime_type);
-        $sheet->getStyle('C4:D4')->getFont()->setBold(true);
+        // //For Third Row
+        // $sheet->mergeCells('C3:D3')->setCellValue('C3', "Category : " . $this->category);
+        // $sheet->getStyle('C3:D3')->getFont()->setBold(true);
 
 
-        $sheet->getStyle('A6:' . $this->last_header_column . '6')->getFill()
+        // //For fourth Row
+        // $sheet->mergeCells('C4:D4')->setCellValue('C4', "Regime : " . $this->regime_type);
+        // $sheet->getStyle('C4:D4')->getFont()->setBold(true);
+
+        // for($i=0; $i<count($this->header1); $i++){
+        //     if($this->header1 == ""){
+
+        //     }
+        // }
+
+        // For header1 color
+
+        $sheet->getStyle('A6:' . $this->header2count . '6')->getFill()
+        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('678391');
+    $sheet->getStyle('A6:' . $this->header2count . '6')->getFont()->setBold(true)
+        ->getColor()->setRGB('ffffff');
+
+        // For header2 color
+
+        $sheet->getStyle('A7:' . $this->last_header_column . '7')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002164');
-        $sheet->getStyle('A6:' . $this->last_header_column . '6')->getFont()->setBold(true)
+        $sheet->getStyle('A7:' . $this->last_header_column . '7')->getFont()->setBold(true)
             ->getColor()->setRGB('ffffff');
         //for allignment
         $range = 'A1:' . $this->last_header_column . $this->last_row;

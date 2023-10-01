@@ -1442,6 +1442,264 @@ $valueof_80ee = [];
 
 }
 
+public function fetchInvestmentsReports()
+{
+
+    $payroll_month = "2023-08-01";
+
+    $user_details = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+    ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+    ->join('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.user_id','=','users.id')
+    ->where("users.active", "1");
+
+    $Employee_details = $user_details->get([
+        'users.id as user_id',
+        'users.user_code as Employee Code',
+        'users.name as Employee Name',
+        'vmt_employee_details.gender as Gender',
+        'vmt_employee_details.pan_number as PAN Number',
+        'vmt_employee_details.dob as Date Of Birth',
+        'vmt_employee_details.doj as Date Of Joining',
+        'vmt_employee_statutory_details.tax_regime as Tax Regime'
+    ])->toArray();
+
+    $inv_emp = $user_details->pluck("users.id")->toarray();
+
+    foreach ($inv_emp as $single_inv_users) {
+
+    $v_form_template[] = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+    ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+    ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+    ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
+    ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
+    ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
+    ->where('vmt_inv_f_emp_assigned.user_id', $single_inv_users)
+    ->get(
+        [
+           'vmt_inv_f_emp_assigned.user_id',
+            'vmt_inv_section_group.section_group',
+            'vmt_inv_section.section',
+            'vmt_inv_section.particular',
+            'vmt_inv_emp_formdata.dec_amount',
+            'vmt_inv_section.max_amount',
+            'vmt_inv_emp_formdata.json_popups_value',
+            'vmt_inv_f_emp_assigned.regime',
+            'vmt_inv_f_emp_assigned.updated_at',
+            'vmt_employee_compensatory_details.gross',
+            'vmt_employee_compensatory_details.basic',
+            'vmt_employee_compensatory_details.hra',
+            'vmt_employee_compensatory_details.special_allowance',
+            'vmt_employee_compensatory_details.professional_tax',
+            'vmt_employee_compensatory_details.child_education_allowance',
+            'vmt_employee_compensatory_details.lta',
+            'vmt_employee_details.doj',
+            'vmt_employee_details.dob',
+        ]
+    )->toArray();
+
+        }
+
+        $salary_data['headers'] = array('Employee Code','Employee Name','Gender','PAN Number','Date Of Birth','Date Of Joining','Tax Regime');
+
+        $inv_section['headers1'] = array('Employee Details','Employee Details','Employee Details','Employee Details','Employee Details','Employee Details','Employee Details');
+
+        foreach ($Employee_details as $key => $single_user) {
+
+                  $employee_salary_details[$key]["Employee Code"] =$single_user['Employee Code'];
+                  $employee_salary_details[$key]["Employee Name"] =$single_user['Employee Name'];
+                  $employee_salary_details[$key]["Gender"] =$single_user['Gender'];
+                  $employee_salary_details[$key]["PAN Number"] =$single_user['PAN Number'];
+                  $employee_salary_details[$key]["Date Of Birth"] =Carbon::parse($single_user['Date Of Birth'])->format('d-m-Y');
+                  $employee_salary_details[$key]["Date Of Joining"] =Carbon::parse($single_user['Date Of Joining'])->format('d-m-Y');
+                  $employee_salary_details[$key]["Tax Regime"] = ucfirst($single_user['Tax Regime'])." Regime";
+
+          }
+
+
+          // get all investment section header
+
+          $v_form_template_header = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+          ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+          ->get()->toArray();
+
+        //   dd($v_form_template_header);
+
+           // get emp investment HRA data
+
+          foreach($v_form_template_header as $single_value){
+              if($single_value['section_group'] == "HRA"){
+              array_push( $salary_data['headers'] ,$single_value['particular']);
+              array_push( $inv_section['headers1'] ,$single_value['section']);
+              }
+          }
+
+          foreach($inv_emp as $single_inv_users){
+                  foreach($v_form_template as $dec_amt){
+                      foreach($dec_amt as $single_value){
+                          if(in_array($single_inv_users,$single_value)){
+                          if($single_value['section_group'] == 'HRA'){
+                              foreach ($Employee_details as $key => $single_user) {
+                                  if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                                      $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+
+
+           // get emp investment Section 80C & 80CC data
+
+          foreach($v_form_template_header as $single_value){
+              if($single_value['section_group'] == "Section 80C & 80CC "){
+              array_push( $salary_data['headers'] ,$single_value['particular']);
+              array_push( $inv_section['headers1'] ,$single_value['section']);
+              }
+          }
+
+          foreach($inv_emp as $single_inv_users){
+                  foreach($v_form_template as $dec_amt){
+                      foreach($dec_amt as $single_value){
+                          if(in_array($single_inv_users,$single_value)){
+                          if($single_value['section_group'] == 'Section 80C & 80CC '){
+                              foreach ($Employee_details as $key => $single_user) {
+                                  if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                                      $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+
+
+           // get emp investment other excemptions  data
+
+          foreach($v_form_template_header as $single_value){
+            if($single_value['section_group'] == "Other Excemptions "){
+            array_push( $salary_data['headers'] ,$single_value['particular']);
+            array_push( $inv_section['headers1'] ,$single_value['section']);
+            }
+        }
+
+        foreach($inv_emp as $single_inv_users){
+                foreach($v_form_template as $dec_amt){
+                    foreach($dec_amt as $single_value){
+                        if(in_array($single_inv_users,$single_value)){
+                        if($single_value['section_group'] == 'Other Excemptions '){
+                            foreach ($Employee_details as $key => $single_user) {
+                                if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                                    $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+            // get emp investment House Properties  data
+
+          foreach($v_form_template_header as $single_value){
+            if($single_value['section_group'] == "House Properties "){
+            array_push( $salary_data['headers'] ,$single_value['particular']);
+            array_push( $inv_section['headers1'] ,$single_value['section']);
+            }
+        }
+
+        foreach($inv_emp as $single_inv_users){
+                foreach($v_form_template as $dec_amt){
+                    foreach($dec_amt as $single_value){
+                        if(in_array($single_inv_users,$single_value)){
+                        if($single_value['section_group'] == 'House Properties '){
+                            foreach ($Employee_details as $key => $single_user) {
+                                if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                                    $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+            // get emp investment Previous Employer Income  data
+
+          foreach($v_form_template_header as $single_value){
+            if($single_value['section_group'] == "Previous Employer Income"){
+            array_push( $salary_data['headers'] ,$single_value['particular']);
+            array_push( $inv_section['headers1'] ,$single_value['section']);
+            }
+        }
+
+        foreach($inv_emp as $single_inv_users){
+                foreach($v_form_template as $dec_amt){
+                    foreach($dec_amt as $single_value){
+                        if(in_array($single_inv_users,$single_value)){
+                        if($single_value['section_group'] == 'Previous Employer Income'){
+                            foreach ($Employee_details as $key => $single_user) {
+                                if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                                    $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // get emp investment other source of income  data
+
+        foreach($v_form_template_header as $single_value){
+            if($single_value['section_group'] == "Other Source Of  Income"){
+            array_push( $salary_data['headers'] ,$single_value['particular']);
+            array_push( $inv_section['headers1'] ,$single_value['section']);
+            }
+        }
+
+        foreach($inv_emp as $single_inv_users){
+            foreach($v_form_template as $dec_amt){
+                foreach($dec_amt as $single_value){
+                    if(in_array($single_inv_users,$single_value)){
+                    if($single_value['section_group'] == 'Other Source Of  Income'){
+                        foreach ($Employee_details as $key => $single_user) {
+                            if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
+                                $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+        // header arr key set all emp array key
+
+        $temp_ar = array();
+        $final_ar = array();
+        foreach($employee_salary_details as $single_emp){
+            foreach($salary_data['headers'] as  $single_headers){
+                if(array_key_exists($single_headers,$single_emp)){
+                    $temp_ar[$single_headers]= (string)$single_emp[$single_headers];
+                }else {
+                    $temp_ar[$single_headers]="0";
+                }
+            }
+            array_push($final_ar,$temp_ar);
+            unset($temp_ar);
+        }
+
+
+        return ([$salary_data,$inv_section,$final_ar]);
+
+}
+
 
   public function annualSalaryReport(){
 
