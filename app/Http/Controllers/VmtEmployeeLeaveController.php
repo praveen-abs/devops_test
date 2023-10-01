@@ -13,6 +13,8 @@ use PhpParser\Node\Stmt\Catch_;
 use App\Models\VmtOrgTimePeriod;
 use App\Models\VmtEmployeesLeavesAccrued;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use App\Imports\ImportExistingLeaveBalanceData;
 
 
 class VmtEmployeeLeaveController extends Controller
@@ -86,7 +88,7 @@ class VmtEmployeeLeaveController extends Controller
                         $temp_date =  Carbon::parse($start_date)->addMonths($j);
                         $year =  $temp_date->format('Y');
                         $month = $temp_date->format('m');
-                      
+
                         if (!VmtEmployeesLeavesAccrued::where('user_id', $user->first()->id)
                             ->whereYear('date', $year)
                             ->whereMonth('date', $month)
@@ -134,5 +136,62 @@ class VmtEmployeeLeaveController extends Controller
             'status' => 'success',
             'message' => 'Leave Balance Uploaded Sucessfully',
         ]);
+    }
+
+    public function showEmployeeLeaveBalanceDatapage()
+    {
+
+        return view('vmt_importEmployeeLeaveBalancedata');
+    }
+
+    // public function ImportExistingLeaveBalanceData(Request $request)
+    // {
+
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xls,xlsx'
+    //     ]);
+
+    //     $importDataArry = \Excel::toArray(new ImportExistingLeaveBalanceData, request()->file('file'));
+
+    //     return $this->updateEmployeeLeaveBalanceData($importDataArry);
+    // }
+
+
+    public function updateEmployeeLeaveBalanceData(Request $request)
+    {
+
+        try {
+            $data =$request->all();
+
+            foreach ($data as $key => $single_data) {
+
+              $start_date = Carbon::parse($single_data['date']);
+              $CL_count =(integer)$single_data['CL'];
+              $end_date =  Carbon::parse($single_data['date'])->subMonths($CL_count);
+              $end_date = Carbon::parse($end_date);
+
+              $date_range = CarbonPeriod::create( $end_date->startOfMonth()->format('Y-m-d'), '1 month',$start_date->endOfMonth()->format('Y-m-d'),);
+
+                 $leave_upload_date =array();
+                foreach ($date_range as $single_date) {
+                    $leave_upload_date[]= $single_date->format('Y-m-15');
+                }
+
+
+            }
+
+
+
+
+
+
+
+        } catch (\Exception $e) {
+            return $response = ([
+                'status' => 'failure',
+                'message' => 'Error while saving data',
+                'data' => $e->getmessage(),
+            ]);
+        }
     }
 }
