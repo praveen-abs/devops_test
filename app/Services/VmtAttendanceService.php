@@ -4505,6 +4505,7 @@ class VmtAttendanceService
         $attendanceOverview['present_count'] = $present_count;
         $attendanceOverview['present_emps'] = $present_emps;
         $attendanceOverview['leave_emp_count'] = count($leave_employee_count);
+        $attendanceOverview['leave_emps'] = $leave_emps;
         $attendanceOverview['lg_count'] = $lc_count;
         $attendanceOverview['lc_emps'] = $lc_emps;
         $attendanceOverview['eg_count'] = $eg_count;
