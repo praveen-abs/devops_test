@@ -85,7 +85,7 @@ public function downloadInvestReport(Request $request, VmtPayrollTaxService $vmt
         $client_logo_path = $client_details->client_logo;
         $public_client_logo_path = public_path($client_logo_path);
 
-        return Excel::download(new InvestmentReportsExport($employee_investments_data,$client_name,$public_client_logo_path), 'Employees Master Report.xlsx');
+        return Excel::download(new InvestmentReportsExport($employee_investments_data,$client_name,$public_client_logo_path), 'Investment Report.xlsx');
 
 }
 

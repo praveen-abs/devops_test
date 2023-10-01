@@ -80,7 +80,7 @@ class InvestmentReportsExport implements FromArray, ShouldAutoSize, WithHeadings
         $sheet->getStyle('C1:D1')->getFont()->setBold(true);
 
         //For Second Row
-        $sheet->mergeCells('C2:D2')->setCellValue('C2', "Report Type : " . ' Employee CTC Report');
+        $sheet->mergeCells('C2:D2')->setCellValue('C2', "Report Type : " . ' Investment Report');
         $sheet->getStyle('C2:D2')->getFont()->setBold(true);
 
         // //For Third Row

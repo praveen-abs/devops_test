@@ -1540,7 +1540,7 @@ public function fetchInvestmentsReports()
                           if($single_value['section_group'] == 'HRA'){
                               foreach ($Employee_details as $key => $single_user) {
                                   if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
-                                      $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                                      $employee_salary_details[$key][$single_value['particular']] = json_decode($single_value['json_popups_value'], true)['total_rent_paid'];
                                   }
                               }
                           }
@@ -1618,7 +1618,7 @@ public function fetchInvestmentsReports()
                         if($single_value['section_group'] == 'House Properties '){
                             foreach ($Employee_details as $key => $single_user) {
                                 if($single_inv_users == User::where('user_code',$single_user['Employee Code'])->first()->id){
-                                    $employee_salary_details[$key][$single_value['particular']] = $single_value['dec_amount'];
+                                    $employee_salary_details[$key][$single_value['particular']] = json_decode($single_value['json_popups_value'], true)['income_loss'];
                                 }
                             }
                         }
