@@ -1,24 +1,31 @@
 <template>
+
     <div class="bg-white rounded-lg p-2 border">
-        <p class="font-semibold text-[14px] text-[#000] font-['Poppins] text-center">Attendance Analytics</p>
+        <p class="font-semibold text-[14px] text-[#000] font-['Poppins] text-center">Check-In & Out Analytics  </p>
         <div class=" grid grid-cols-2 gap-4 my-2.5">
             <div class="h-full ">
-                <Chart type="pie" :data="chartData" :options="chartOptions" />
+                <Chart type="doughnut" :data="chartData" :options="chartOptions" />
             </div>
             <div class="flex items-center">
-               <div class="my-auto">
-                <div>
-                    <button class="orange_btn font-semibold text-sm"
-                        :class="[currentDashboard === 1 ? 'bg-white text-slate-600 border border-black' : 'text-slate-600']"
-                        @click="currentDashboard = 0">Check In </button>
-                    <button class="Enable_btn font-semibold text-sm"
-                        :class="[currentDashboard === 1 ? 'bg-[#d4d4d4] text-slate-600' : 'text-slate-600']"
-                        @click="currentDashboard = 1">Check Out </button>
-                </div>
-                <div>
+                <div class="my-auto">
+                    <div class="mb-3">
+                        <button class="active_btn font-semibold text-sm"
+                            :class="[currentDashboard === 1 ? 'bg-white text-slate-600 border border-black' : 'text-slate-600']"
+                            @click="currentDashboard = 0">Check In </button>
+                        <button class="disable_btn font-semibold text-sm"
+                            :class="[currentDashboard === 1 ? 'bg-[#d4d4d4] text-slate-600' : 'text-slate-600']"
+                            @click="currentDashboard = 1">Check Out </button>
+                    </div>
+                    <div class="flex items-center gap-3" v-for="(item, index) in chartDetails">
+                        <div :style="{ backgroundColor: item.backgroundColor }" class="rounded-lg h-2 w-2 p-1.5"></div>
+                        <div>
+                            {{ item.label }}
+                        </div>
+                    </div>
+                    <div>
 
+                    </div>
                 </div>
-               </div>
             </div>
         </div>
     </div>
@@ -36,6 +43,12 @@ onMounted(() => {
 const chartData = ref();
 const chartOptions = ref();
 const currentDashboard = ref(0);
+
+const chartDetails = ref([
+    { label: 'Bio-Metric', backgroundColor: 'rgba(122, 94, 162, 1)' },
+    { label: 'Mobile', backgroundColor: 'rgba(255, 177, 184, 1)' },
+    { label: 'Web', backgroundColor: 'rgba(107, 183, 192, 1)' },
+])
 
 const setChartData = () => {
     const documentStyle = getComputedStyle(document.body);
@@ -97,17 +110,17 @@ const setChartOptions = () => {
     --navy: #002f56;
 }
 
-.orange_btn
+.active_btn
 {
     background-color: var(--disable);
-    padding: 3px 10px;
+    padding: 3px 5px;
     border-radius: 4px 0 0 4px;
 }
 
-.Enable_btn
+.disable_btn
 {
     border: 1px solid var(--navy);
-    padding: 3px 10px;
+    padding: 3px 5px;
     border-radius: 0 4px 4px 0;
 }
 </style>

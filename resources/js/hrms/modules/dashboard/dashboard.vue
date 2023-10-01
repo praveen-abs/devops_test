@@ -152,9 +152,13 @@ onMounted(async () => {
         canShowLoadingScreen.value = true;
         await useDashboard.getMainDashboardData();
         await useDashboard.getHrDashboardMainSource()
+
         // await useDashboard.getAttendanceStatus();
         Service();
         canShowLoadingScreen.value = false;
+        axios.get('/clear_cache').then(res=>{
+            console.log(res.data);
+        })
     }
 
 
