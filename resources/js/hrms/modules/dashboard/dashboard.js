@@ -33,7 +33,8 @@ import BadgeDirective from 'primevue/badgedirective';
 import Carousel from 'primevue/carousel';
 import Galleria from 'primevue/galleria';
 import Chart from 'primevue/chart';
-import Sidebar from 'primevue/sidebar'
+import Sidebar from 'primevue/sidebar';
+
 
 
 

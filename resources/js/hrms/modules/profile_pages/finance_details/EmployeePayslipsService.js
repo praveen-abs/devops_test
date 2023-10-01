@@ -11,7 +11,8 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
     // Variable Declarations
     const array_employeePayslips_list = ref()
 
-    const paySlipHTMLView = ref()
+    const paySlipHTMLView = ref();
+    const Payroll_month =  ref('');
 
     const canShowPayslipView = ref(false);
 
@@ -46,6 +47,7 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
         loading.value = true;
 
         //split the payroll_month into month and year
+        Payroll_month.value = payroll_month;
         let month = parseInt(dayjs(payroll_month).month()) + 1;
         let year = dayjs(payroll_month).year();
         // /payroll/paycheck/getEmployeePayslipDetailsAsHTML
@@ -78,7 +80,8 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
     async function getEmployeePayslipDetailsAsPDF(user_code, payroll_month) {
         loading.value = true;
 
-        documentService.loading = true
+        documentService.loading = true;
+        payroll_month;
         console.log("Downloading payslip PDF.....");
 
         let month = parseInt(dayjs(payroll_month).month()) + 1;
@@ -130,6 +133,9 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
     return {
 
         // Varaible Declartion
+
+        // payroll_month
+        Payroll_month,
 
         array_employeePayslips_list, paySlipHTMLView, canShowPayslipView,loading,
 

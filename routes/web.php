@@ -4,6 +4,7 @@ use App\Http\Controllers\PMS\VmtPMSModuleController;
 use App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HRMSBaseAPIController;
+use App\Http\Controllers\VmtMainDashboardController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -91,6 +92,10 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/currentUserRole', function () {
 
         return auth()->user()->org_role;
+    });
+    Route::get('/currentUseris_ssa', function () {
+
+        return auth()->user()->is_ssa;
     });
     Route::get('/getClientName', [App\Http\Controllers\VmtMainDashboardController::class, 'getCurrentClientName'])->name('getCurrentClientName');
 
@@ -864,6 +869,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/report/download-late-coming-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadLCReport']);
     Route::post('/report/download-over-time-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadOvertimeReport']);
     Route::post('/report/download-half-day-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadHalfDayReport']);
+    Route::get('/report/download-consolidate-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadConsolidateReport']);
 
     Route::get('/shiftwork', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'shiftTimeForEmployee']);
 
@@ -928,7 +934,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/getClient_AllModuleDetails', [App\Http\Controllers\VmtMasterConfigController::class, 'getClient_AllModuleDetails'])->name('getClient_AllModuleDetails');
     Route::post('/update_AllClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'update_AllClientModuleStatus'])->name('update_AllClientModuleStatus');
 
+    //sidebar module settings
 
+    Route::get('module-settings', [App\Http\Controllers\HomeController::class, 'showModuleSettingsPage'])->name('showModuleSettingsPage');
 
     //Configrations
     ////Attendance Settings
@@ -1194,6 +1202,8 @@ Route::get('/testing_sass', function () {
 
     return view('testing_views.sassTest');
 });
+
+Route::get('/clear_cache',[App\Http\Controllers\VmtMainDashboardController::class,'clearCache'] )->name('clearCache');
 
 
 //DONT WRITE ANT ROUTES BELOW THIS

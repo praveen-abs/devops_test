@@ -4,11 +4,14 @@
     <div class="px-2">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Employee Master Report</h1>
-            <div>
+            <div class="flex item-center">
         
                 <button @click="useEmployeeReport.clearfilterBtn(activetab)"
                     class="my-2 flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-times"></i> Clear Filter</button>
+                        <button @click="useEmployeeReport.updateEmployeeApplyFilter(activetab)"
+                    class="my-2 flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] !bg-[#E6E6E6] mx-2 rounded-[4px] "><i
+                        class="mr-2 pi pi-filter"></i> Run</button>
             </div>
         </div>
 
@@ -44,7 +47,7 @@
                         <Dropdown optionLabel="month" optionValue="date" :options="useEmployeeReport.PeriodMonth"
                             v-model="useEmployeeReport.period_Date"
                             @change="useEmployeeReport.getSelectoption('date', useEmployeeReport.period_Date, activetab)"
-                            placeholder="Select period"
+                            placeholder="   -- Select --"
                             class="w-[150px]  mx-1 !h-10  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
 
                     </li>
@@ -53,7 +56,7 @@
                             Department : </h1>
 
                         <MultiSelect v-model="useEmployeeReport.Department" :options="useEmployeeReport.department"
-                            optionLabel="name" placeholder="Department"
+                            optionLabel="name" placeholder=" -- Select --"
                             @change="useEmployeeReport.getSelectoption('department', useEmployeeReport.Department, activetab)"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]   !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
@@ -64,7 +67,7 @@
                         <MultiSelect
                             @change="useEmployeeReport.getSelectoption('legal_entity', useEmployeeReport.legal_Entity, activetab)"
                             v-model="useEmployeeReport.legal_Entity" :options="useEmployeeReport.client_ids"
-                            optionLabel="client_fullname" placeholder="Legal Entity" optionValue="id" :maxSelectedLabels="3"
+                            optionLabel="client_fullname" placeholder=" -- Select --" optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center my-1">
@@ -73,7 +76,7 @@
                         <MultiSelect
                             @change="useEmployeeReport.getSelectoption('Category', useEmployeeReport.select_Category, activetab)"
                             v-model="useEmployeeReport.select_Category" optionValue="id" :options="dropdown"
-                            optionLabel="name" placeholder="Select Category" :maxSelectedLabels="3"
+                            optionLabel="name" placeholder="-- Select --" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[150px]  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6] mx-2 " />
                     </li>
                 </ul>

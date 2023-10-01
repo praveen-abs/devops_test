@@ -133,6 +133,7 @@ import { useMainDashboardStore } from './stores/dashboard_service'
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { Service } from '../Service/Service'
 import Hr_dashboard from './hr_dashboard/hr_dashboard.vue';
+import axios from 'axios'
 
 const useDashboard = useMainDashboardStore();
 const canShowLoadingScreen = ref();
@@ -147,6 +148,7 @@ const stopWatchingData = watch(useDashboard.allEventSource, (newValue, oldValue)
 });
 
 onMounted(async () => {
+<<<<<<< HEAD
     if (useDashboard.isDashboardDataReceived && useDashboard.isHrDashboardDataReceived) {
         canShowLoadingScreen.value = true;
         await useDashboard.getMainDashboardData();
@@ -155,6 +157,18 @@ onMounted(async () => {
         Service();
         canShowLoadingScreen.value = false;
     }
+=======
+    await axios.get('/clear_cache').then((res) => {
+        console.log(res.data);
+    })
+    canShowLoadingScreen.value = true;
+    await useDashboard.getMainDashboardData();
+    useDashboard.getHrDashboardMainSource()
+    // await useDashboard.getAttendanceStatus();
+    Service();
+    canShowLoadingScreen.value = false;
+>>>>>>> a7255283726bf7239cfaabaf7651d11170b57016
+
 
 })
 

@@ -183,9 +183,17 @@ export default defineConfig({
                 //  payslipPreview
                 // 'resources/js/hrms/modules/configurations/payslip_preview/payslipPreview.js'
 
+<<<<<<< HEAD
                 // salary details
                 'resources/js/hrms/modules/paycheck/salary_details/salary_details.js'
+=======
+            // salary details
+            'resources/js/hrms/modules/paycheck/salary_details/salary_details.js',
+            // module setting
+            'resources/js/hrms/modules/configurations/module_settings/module_settings.js',
+>>>>>>> a7255283726bf7239cfaabaf7651d11170b57016
 
+          
 
             ],
             refresh: ['resources/views/**'],

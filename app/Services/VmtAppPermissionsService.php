@@ -559,11 +559,11 @@ class VmtAppPermissionsService
                     "vmt_client_sub_modules.app_sub_module_link_id as id",
                     "vmt_app_sub_modules_links.module_id",
                     "vmt_app_sub_modules_links.sub_module_id",
-                    "vmt_app_modules.module_name",
-                    "vmt_app_sub_modules.sub_module_name",
+                    "vmt_app_modules.title as module_name",
+                    "vmt_app_sub_modules.title as sub_module_name",
                     "vmt_client_sub_modules.status",
                     "vmt_client_sub_modules.client_id"
-                ]);
+                ])->splice(1);
 
 
             foreach ($mobile_settings_data as $key => $single_value) {
@@ -634,7 +634,9 @@ class VmtAppPermissionsService
 
                         "vmt_app_modules.id",
                         "vmt_app_modules.module_name",
+                        "vmt_app_modules.title as module_title",
                         "vmt_app_sub_modules.sub_module_name",
+                        "vmt_app_sub_modules.title as sub_module_title",
                         "vmt_client_sub_modules.id as sub_module_id",
                         "vmt_client_sub_modules.status as sub_module_status"
                     ])->toarray();
@@ -655,10 +657,10 @@ class VmtAppPermissionsService
                     }
 
                     $client_single_modules_data['module_id'] = $module_id;
-                    $client_single_modules_data['module_name'] = $single_module_data["module_name"];
+                    $client_single_modules_data['module_name'] = $single_module_data["module_title"];
                     $client_single_modules_data['module_status'] = $module_status;
                     $client_single_modules_data['sub_module_details'][$i]['module_id'] = $module_id;
-                    $client_single_modules_data['sub_module_details'][$i]['sub_module_name'] = $single_module_data["sub_module_name"];
+                    $client_single_modules_data['sub_module_details'][$i]['sub_module_name'] = $single_module_data["sub_module_title"];
                     $client_single_modules_data['sub_module_details'][$i]['sub_module_id'] = $single_module_data["sub_module_id"];
                     $client_single_modules_data['sub_module_details'][$i]['sub_module_status'] = $single_module_data["sub_module_status"];
 
@@ -666,6 +668,7 @@ class VmtAppPermissionsService
                 }
                 array_push($client_all_modules_details, $client_single_modules_data);
             }
+
 
             return response()->json([
                 "status" => "success",
@@ -731,7 +734,7 @@ class VmtAppPermissionsService
                 $app_config_data = $app_config_data->first();
 
                 $app_config_data->status = $module_status ?? $sub_module_status;
-                
+
                 $app_config_data->save();
 
                 $response = ([

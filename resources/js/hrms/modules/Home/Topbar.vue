@@ -1,7 +1,13 @@
 <template>
+
     <!-- {{ activeSettings ? findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 ?[]:null:null}} -->
     <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
+<<<<<<< HEAD
     <div class=" bg-white h-[60px]">
+=======
+    <div class=" bg-white h-[60px]"
+        @mouseleave="useDashboard.canShowConfiguration = false">
+>>>>>>> a7255283726bf7239cfaabaf7651d11170b57016
         <div class="grid items-center justify-between grid-cols-12 ">
             <!-- Organization List  -->
             <div class="relative col-span-4 px-2 py-2 mx-2 border-1 border-x-gray-300">
@@ -145,10 +151,17 @@
                         <RouterLink to="/Configuration/Mobile-settings"
                             v-if="findSelectedModuleIsEnabled(activeSettings, 'MOBILE APP SETTINGS').sub_module_name.IS_ENABLED === 1"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+<<<<<<< HEAD
                             Mobile setting</RouterLink>
                         <RouterLink to="/Configuration/Module-settings"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Module setting</RouterLink>
+=======
+                            Mobile setting</a>
+                            <a href="module-settings" v-if=" service.current_user_is_ssa == 1"
+                            class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+                            Module setting</a>
+>>>>>>> a7255283726bf7239cfaabaf7651d11170b57016
                         <!--  <a href="showSAsettingsView"
                             class="block w-full p-2 text-black transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                             Loan and salary advance setting
@@ -186,7 +199,7 @@
                     <transition enter-active-class="transition duration-200 ease-out transform"
                         enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                         leave-active-class="transition duration-100 ease-in transform"
-                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
+                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"  @mouseleave="useDashboard.canShowCurrentEmployee = false" >
                         <div v-if="useDashboard.canShowCurrentEmployee"
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14">
                             <!-- Dropdown content goes here -->
