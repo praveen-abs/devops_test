@@ -209,7 +209,7 @@ onMounted(() => {
 }
 .p-sidebar-right .p-sidebar
 {
-    width: 50rem !important;
+    width: 50rem;
     height: 100%;
 }
 </style>

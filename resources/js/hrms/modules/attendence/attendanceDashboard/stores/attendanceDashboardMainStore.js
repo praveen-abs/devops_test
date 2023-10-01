@@ -12,10 +12,13 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const attendanceOverview = ref()
     const attendanceDashboardWorkShiftSource = ref()
     const canShowShiftDetails = ref(false)
+    const canShowAttendanceOverview = ref(false)
+    const selectedAttendanceOverviewReport= ref()
     const currentlySelectedShiftDetails = ref([])
     const currentlySelectedShiftName = ref()
     const attendanceDashboardUpcoming = ref()
     const downloadShiftDetails = ref([])
+    const downloadAttendanceOverviewDetails = ref([])
     const overallEmployeeCountForExceptionAnalytics = ref()
     const overallEmployeeCountForExceptionAnalyticsForGraph = ref([])
     const totalEmployeeInOrganization = ref()
@@ -83,7 +86,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
         attendanceOverview, totalEmployeeInOrganization,chartDetails,
 
-        canShowShiftDetails, currentlySelectedShiftDetails, currentlySelectedShiftName, downloadShiftDetails,
+        canShowShiftDetails,canShowAttendanceOverview,selectedAttendanceOverviewReport, currentlySelectedShiftDetails, currentlySelectedShiftName, downloadShiftDetails,downloadAttendanceOverviewDetails,
 
         attendanceDashboardUpcoming, overallEmployeeCountForExceptionAnalytics, overallEmployeeCountForExceptionAnalyticsForGraph
 

@@ -109,7 +109,8 @@
             </div>
         </template>
         <div class="mt-6" v-if="useDashboard.ShowEmployeeStatuswise">
-            <DataTable :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
+            <DataTable  scrollable scrollHeight="450px"
+             :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
                 <Column field="user_code" header="User code"></Column>
                 <Column field="name" header="Name" style="text-align: left !important;white-space: no !important;"></Column>
                 <Column field="department_name" header="Department"
