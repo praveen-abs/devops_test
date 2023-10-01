@@ -164,7 +164,6 @@ class VmtAttendanceServiceV2
                         $is_holiday = false;
                         $is_leave = false;
                         $leave_type = '/leave';
-                        $leave_type = null;
                         $is_half_day = false;
                         $mop_id = null;
                         $mip_id = null;
@@ -172,6 +171,8 @@ class VmtAttendanceServiceV2
                         $eg_id = null;
                         $regz_checkin_time = null;
                         $regz_checkout_time = null;
+                        $ot_mins = 0;
+
 
                         $checking_date = null;
                         $checking_time = null;
@@ -348,6 +349,7 @@ class VmtAttendanceServiceV2
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
                                 $eg_id = $regularization_status['id'];
                                 if ($regularization_status['sts'] == 'Approved') {
+                                    $reg_checkout_time = $regularization_status['reg_time'];
                                 } else {
                                     $eg_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
                                 }
@@ -355,6 +357,10 @@ class VmtAttendanceServiceV2
                                 //employee left late....
                             }
                         }
+
+                        //Calculting Ot minutes
+                        dd($shift_settings);
+
 
                         //here checking for leave 
                         if (!$week_off_sts && !$is_holiday && $checking_time != null && $checkout_time != null) {

@@ -22,8 +22,10 @@ return new class extends Migration
             $table->date('date');
             $table->text('checkin_time')->nullable();
             $table->date('checkin_date')->nullable();
+            $table->text('regularized_checkin_time')->nullable();
             $table->text('checkout_time')->nullable();
             $table->date('checkout_date')->nullable();
+            $table->text('regularized_checkout_time')->nullable();
             $table->text('status');
             $table->text('work_mode')->nullable(); #work, office
             $table->text('selfie_checkin')->nullable();
