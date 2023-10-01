@@ -1154,7 +1154,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     // invest excell
     Route::view('/sample', 'testing.testings')->name('sample');
-    Route::post('/sendhratestingsss', [App\Http\Controllers\VmtTestingController::class, 'importexcell']);
+    Route::get('/sendhratestingsss', [App\Http\Controllers\VmtTestingController::class, 'importexcell']);
 
 
     Route::get('/testinginestmentsectionss', [App\Http\Controllers\VmtTestingController::class, 'testinginestmentsection']);

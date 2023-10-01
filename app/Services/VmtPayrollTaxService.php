@@ -42,37 +42,6 @@ class VmtPayrollTaxService
     {
 
 
-        // $get_payroll_data = VmtSnapchatEmpPaysheet::all()->toArray();
-
-        // $res1 = [];
-        // for ($i = 0; $i < count($get_payroll_data); $i++) {
-        //     $simma = json_decode($get_payroll_data[$i]['payslip_data'], true);
-        //     array_push($res1, $simma);
-        // }
-
-        // dd($res1);
-
-
-
-        // $get_emp_value = VmtPaygroup::join('vmt_paygroup_comps', 'vmt_paygroup_comps.paygroup_id', '=', 'vmt_paygroup.id')
-        //     ->join('vmt_payroll_components', 'vmt_payroll_components.id', '=', 'vmt_paygroup_comps.comp_id')
-        //     ->join('vmt_emp_paygroupcomp_value', 'vmt_emp_paygroupcomp_value.paygroup_comp_id', '=', 'vmt_paygroup_comps.id')
-        //     ->where('vmt_emp_paygroupcomp_value.user_id', '1')
-        //     ->get(
-        //         [
-        //             'vmt_paygroup.paygroup_name',
-        //             'vmt_paygroup.description',
-        //             'vmt_payroll_components.comp_name',
-        //             'vmt_emp_paygroupcomp_value.user_id',
-        //             'vmt_emp_paygroupcomp_value.payroll_month',
-        //             'vmt_emp_paygroupcomp_value.value',
-        //         ]
-        //     )->toArray();
-        // dd($get_emp_value);
-
-
-        // $user_id = 144;
-
         $inv_users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->join('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.user_id', '=', 'users.id')
@@ -472,7 +441,7 @@ class VmtPayrollTaxService
         // dd($total_income_9_10);
         // 12) Tax Calculation
 
-        $tax_calculation['particular'] = $this->oldRegimeTaxCalc($total_income_9_10['total'], 40);
+        $tax_calculation['particular'] = $this->newRegimeTaxCalc($total_income_9_10['total']);
         $tax_calculation['actual'] = 0;
         $tax_calculation['projection'] = 0;
         $tax_calculation['total'] = 0;
@@ -595,358 +564,177 @@ class VmtPayrollTaxService
     public function getAnnualProjection($user_id, $month)
     {
 
+        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
+        $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
+        $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
+        $end_date = Carbon::parse($end_date)->format('Y-m-d');
+        $current_date = Carbon::now()->format('Y-m-01');
+        $current_date_sub1 = Carbon::now()->subMonth()->format('Y-m-01');
+
+        // dd($current_date_addM);
+
         $single_user_id = User::where('id', $user_id)->first();
 
             $payroll_date = VmtPayroll::where('payroll_date',  $month)->where('client_id', $single_user_id->client_id)->first();
 
             if (!empty($payroll_date)) {
-
                 $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $user_id);
-
             }
 
             if ($emp_payroll->exists()) {
                  $emp_payroll =$emp_payroll->first();
-                 $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id)->get();
-
+                 $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
+                 $employee_projected = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
             }
 
-    //     $start_date = $month;
-    //     $single_users = $user_id;
+            $actual_months_datas  = $employee_projected_salary->whereBetween('payroll_months', [$start_date, $current_date_sub1]);
+            $projection_months_datas  = $employee_projected->whereBetween('payroll_months', [$current_date, $end_date]);
 
-    //     $single_user_id = User::where('id', $single_users)->first();
+            /*------------ sum of actual month salary --------------*/
 
-    //     $payslip_id = VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
-    //             ->where('vmt_payroll.payroll_date', $start_date)
-    //             ->where('vmt_payroll.client_id', $single_user_id->client_id)
-    //             ->where('vmt_emp_payroll.user_id', $single_users)
-    //             ->first([
-    //                 'vmt_emp_payroll.id as id'
-    //             ]);
+            $employee_actual_details["Basic"] = $actual_months_datas->sum('earned_basic');
+            $employee_actual_details["Basic Arrears"] =$actual_months_datas->sum('basic_arrear');
+            $employee_actual_details["Dearness Allowance"] =$actual_months_datas->sum('dearness_allowance_earned');
+            $employee_actual_details["Dearness Allowance Arrears"] =$actual_months_datas->sum('dearness_allowance_arrear');
+            $employee_actual_details["Variable Dearness Allowance"] =$actual_months_datas->sum('vda_earned');
+            $employee_actual_details["Variable Dearness Allowance Arrears"] =$actual_months_datas->sum('vda_arrear');
+            $employee_actual_details["HRA"] =$actual_months_datas->sum('earned_hra');
+            $employee_actual_details["HRA Arrears"] =$actual_months_datas->sum('hra_arrear');
+            $employee_actual_details["Child Education Allowance"] =$actual_months_datas->sum('earned_child_edu_allowance');
+            $employee_actual_details["Child Education Allowance Arrears"] =$actual_months_datas->sum('child_edu_allowance_arrear');
+            $employee_actual_details["Statutory Bonus"] =$actual_months_datas->sum('earned_stats_bonus');
+            $employee_actual_details["Statutory Bonus Arrears"] =$actual_months_datas->sum('earned_stats_arrear');
+            $employee_actual_details["Medical Allowance"] =$actual_months_datas->sum('medical_allowance_earned');
+            $employee_actual_details["Medical Allowance Arrears"] =$actual_months_datas->sum('medical_allowance_arrear');
+            $employee_actual_details["Communicaton Allowance"] =$actual_months_datas->sum('communication_allowance_earned');
+            $employee_actual_details["Communication Allowance Arrears"] =$actual_months_datas->sum('communication_allowance_arrear');
+            $employee_actual_details["Leave Travel Allowance"] =$actual_months_datas->sum('earned_lta');
+            $employee_actual_details["Leave Travel Allowance Arrears"] =$actual_months_datas->sum('lta_arrear');
+            $employee_actual_details["Food Allowance"] =$actual_months_datas->sum('food_allowance_earned');
+            $employee_actual_details["Food Allowance Arrears"] =$actual_months_datas->sum('food_allowance_arrear');
+            $employee_actual_details["Special Allowance"] =$actual_months_datas->sum('earned_spl_alw');
+            $employee_actual_details["Special Allowance Arrears"] =$actual_months_datas->sum('spl_alw_arrear');
+            $employee_actual_details["Other Allowance"] =$actual_months_datas->sum('other_allowance_earned');
+            $employee_actual_details["Other Allowance Arrears"] =$actual_months_datas->sum('other_allowance_arrear');
+            $employee_actual_details["Washing Allowance"] =$actual_months_datas->sum('washing_allowance_earned') ;
+            $employee_actual_details["Washing Allowance Arrears"] =$actual_months_datas->sum('washing_allowance_arrear');
+            $employee_actual_details["Uniform Allowance"] =$actual_months_datas->sum('uniform_allowance_earned');
+            $employee_actual_details["Uniform Allowance Arrears"] =$actual_months_datas->sum('uniform_allowance_arrear') ;
+            $employee_actual_details["Vehicle Reimbursement"] =$actual_months_datas->sum('vehicle_reimbursement_earned') ;
+            $employee_actual_details["Vehicle Reimbursement Arrears"] =$actual_months_datas->sum('vehicle_reimbursement_arrear');
+            $employee_actual_details["Driver Salary Reimbursement"] =$actual_months_datas->sum('driver_salary_earned');
+            $employee_actual_details["Driver Salary Reimbursement Arrears"] =$actual_months_datas->sum('driver_salary_arrear');
+            $professinal_income["Professional Tax"] =$actual_months_datas->sum('prof_tax');
+            $professinal_income["Income Tax"] =$actual_months_datas->sum('income_tax');
+            $employee_actual_details["Overtime"] =$actual_months_datas->sum('overtime');
+            $employee_actual_details["Overtime Arrears"] =$actual_months_datas->sum('overtime_arrear');
+            $employee_actual_details["Incentive"] =$actual_months_datas->sum('incentive');
+            $employee_actual_details["Other Earnings"] =$actual_months_datas->sum('other_earnings');
+            $employee_actual_details["Referral Bonus"] =$actual_months_datas->sum('referral_bonus');
+            $employee_actual_details["Annual Statutory Bonus"] =$actual_months_datas->sum('earned_stats_bonus');
+            $employee_actual_details["Ex-Gratia"] =$actual_months_datas->sum('ex_gratia');
+            $employee_actual_details["Attendance Bonus"] =$actual_months_datas->sum('attendance_bonus');
+            $employee_actual_details["Daily Allowance"] =$actual_months_datas->sum('daily_allowance');
+            $employee_actual_details["Leave Encashments"] =$actual_months_datas->sum('leave_encashment');
+            $employee_actual_details["Gift"] =$actual_months_datas->sum('gift_payment');
 
+            /* --------------------- sum of projection month salary ---------------*/
 
-    //  $payslip_details  = AbsSalaryProjection::where('vmt_emp_payroll_id',$payslip_id->id)->get()->toarray();
-
-
-
-        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
-        $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
-
-        $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
-        $end_date = Carbon::parse($end_date)->format('Y-m-d');
-        $current_date = Carbon::now()->subMonth(2);
-
-        $date_range = CarbonPeriod::create($start_date, '1 month', $end_date);
-
-        $date = [];
-        foreach ($date_range as $key => $value) {
-            $date[] = $value;
-        }
-
-        $actual = [];
-        $projection = [];
-        $compensatory_value = [];
-        $payroll_value = [];
-
-        $single_basic = 0;
-        $single_hra = 0;
-        $single_cld_all = 0;
-        $single_spl_alw = 0;
-        $single_total_fixed_gross = 0;
-        $single_earned_basic = 0;
-        $single_basic_arrear = 0;
-        $single_earned_hra  = 0;
-        $single_hra_arrear  = 0;
-        $single_earned_child_edu_allowance = 0;
-        $single_child_edu_allowance_arrear  = 0;
-        $single_earned_spl_alw = 0;
-        $single_spl_alw_arrear = 0;
-        $single_overtime = 0;
-        $single_total_earned_gross = 0;
-        $single_pf_wages = 0;
-        $single_pf_wages_arrear_epfr = 0;
-        $single_epfr = 0;
-        $single_epfr_arrear = 0;
-        $single_edli_charges = 0;
-        $single_edli_charges_arrears = 0;
-        $single_pf_admin_charges = 0;
-        $single_pf_admin_charges_arrears = 0;
-        $single_employer_esi = 0;
-        $single_employer_lwf  = 0;
-        $single_ctc = 0;
-        $single_epf_ee  = 0;
-        $single_epf_ee_arrear = 0;
-        $single_employee_esic = 0;
-        $single_prof_tax  = 0;
-        $single_income_tax  = 0;
-        $single_sal_adv = 0;
-        $single_canteen_dedn  = 0;
-        $single_other_deduc  = 0;
-        $single_lwf  = 0;
-        $single_stats_bonus  = 0;
-        $single_earned_stats_bonus = 0;
-        $single_earned_stats_bonus_arrear = 0;
-        $single_travel_conveyence  = 0;
-        $single_earned_stats_bonus = 0;
-
-        $single_basic1 = 0;
-        $single_hra1 = 0;
-        $single_cld_all1 = 0;
-        $single_spl_alw1 = 0;
-        $single_total_fixed_gross1 = 0;
-        $single_earned_basic1 = 0;
-        $single_basic_arrear1 = 0;
-        $single_earned_hra1 = 0;
-        $single_hra_arrear1 = 0;
-        $single_earned_child_edu_allowance1 = 0;
-        $single_child_edu_allowance_arrear1 = 0;
-        $single_earned_spl_alw1 = 0;
-        $single_spl_alw_arrear1 = 0;
-        $single_overtime1 = 0;
-        $single_total_earned_gross1 = 0;
-        $single_pf_wages1 = 0;
-        $single_pf_wages_arrear_epfr1 = 0;
-        $single_epfr1 = 0;
-        $single_epfr_arrear1 = 0;
-        $single_edli_charges1 = 0;
-        $single_edli_charges_arrears1 = 0;
-        $single_pf_admin_charges1 = 0;
-        $single_pf_admin_charges_arrears1 = 0;
-        $single_employer_esi1 = 0;
-        $single_employer_lwf1 = 0;
-        $single_ctc1 = 0;
-        $single_epf_ee1 = 0;
-        $single_epf_ee_arrear1 = 0;
-        $single_employee_esic1 = 0;
-        $single_prof_tax1 = 0;
-        $single_income_tax1 = 0;
-        $single_sal_adv1 = 0;
-        $single_canteen_dedn1 = 0;
-        $single_other_deduc1 = 0;
-        $single_lwf1 = 0;
-        $single_stats_bonus1 = 0;
-        $single_earned_stats_bonus1 = 0;
-        $single_earned_stats_bonus_arrear1 = 0;
-        $single_travel_conveyence1 = 0;
-        $single_earned_stats_bonus1 = 0;
+             $employee_projection_details["Basic"] = $projection_months_datas->sum('earned_basic');
+             $employee_projection_details["Basic Arrears"] =$projection_months_datas->sum('basic_arrear');
+             $employee_projection_details["Dearness Allowance"] =$projection_months_datas->sum('dearness_allowance_earned');
+             $employee_projection_details["Dearness Allowance Arrears"] =$projection_months_datas->sum('dearness_allowance_arrear');
+             $employee_projection_details["Variable Dearness Allowance"] =$projection_months_datas->sum('vda_earned');
+             $employee_projection_details["Variable Dearness Allowance Arrears"] =$projection_months_datas->sum('vda_arrear');
+             $employee_projection_details["HRA"] =$projection_months_datas->sum('earned_hra');
+             $employee_projection_details["HRA Arrears"] =$projection_months_datas->sum('hra_arrear');
+             $employee_projection_details["Child Education Allowance"] =$projection_months_datas->sum('earned_child_edu_allowance');
+             $employee_projection_details["Child Education Allowance Arrears"] =$projection_months_datas->sum('child_edu_allowance_arrear');
+             $employee_projection_details["Statutory Bonus"] =$projection_months_datas->sum('earned_stats_bonus');
+             $employee_projection_details["Statutory Bonus Arrears"] =$projection_months_datas->sum('earned_stats_arrear');
+             $employee_projection_details["Medical Allowance"] =$projection_months_datas->sum('medical_allowance_earned');
+             $employee_projection_details["Medical Allowance Arrears"] =$projection_months_datas->sum('medical_allowance_arrear');
+             $employee_projection_details["Communicaton Allowance"] =$projection_months_datas->sum('communication_allowance_earned');
+             $employee_projection_details["Communication Allowance Arrears"] =$projection_months_datas->sum('communication_allowance_arrear');
+             $employee_projection_details["Leave Travel Allowance"] =$projection_months_datas->sum('earned_lta');
+             $employee_projection_details["Leave Travel Allowance Arrears"] =$projection_months_datas->sum('lta_arrear');
+             $employee_projection_details["Food Allowance"] =$projection_months_datas->sum('food_allowance_earned');
+             $employee_projection_details["Food Allowance Arrears"] =$projection_months_datas->sum('food_allowance_arrear');
+             $employee_projection_details["Special Allowance"] =$projection_months_datas->sum('earned_spl_alw');
+             $employee_projection_details["Special Allowance Arrears"] =$projection_months_datas->sum('spl_alw_arrear');
+             $employee_projection_details["Other Allowance"] =$projection_months_datas->sum('other_allowance_earned');
+             $employee_projection_details["Other Allowance Arrears"] =$projection_months_datas->sum('other_allowance_arrear');
+             $employee_projection_details["Washing Allowance"] =$projection_months_datas->sum('washing_allowance_earned') ;
+             $employee_projection_details["Washing Allowance Arrears"] =$projection_months_datas->sum('washing_allowance_arrear');
+             $employee_projection_details["Uniform Allowance"] =$projection_months_datas->sum('uniform_allowance_earned');
+             $employee_projection_details["Uniform Allowance Arrears"] =$projection_months_datas->sum('uniform_allowance_arrear') ;
+             $employee_projection_details["Vehicle Reimbursement"] =$projection_months_datas->sum('vehicle_reimbursement_earned') ;
+             $employee_projection_details["Vehicle Reimbursement Arrears"] =$projection_months_datas->sum('vehicle_reimbursement_arrear');
+             $employee_projection_details["Driver Salary Reimbursement"] =$projection_months_datas->sum('driver_salary_earned');
+             $employee_projection_details["Driver Salary Reimbursement Arrears"] =$projection_months_datas->sum('driver_salary_arrear');
+             $professinal_income["Professional Tax"] =$projection_months_datas->sum('prof_tax');
+             $professinal_income["Income Tax"] =$projection_months_datas->sum('income_tax');
+             $employee_projection_details["Overtime"] =$projection_months_datas->sum('overtime');
+             $employee_projection_details["Overtime Arrears"] =$projection_months_datas->sum('overtime_arrear');
+             $employee_projection_details["Incentive"] =$projection_months_datas->sum('incentive');
+             $employee_projection_details["Other Earnings"] =$projection_months_datas->sum('other_earnings');
+             $employee_projection_details["Referral Bonus"] =$projection_months_datas->sum('referral_bonus');
+             $employee_projection_details["Annual Statutory Bonus"] =$projection_months_datas->sum('earned_stats_bonus');
+             $employee_projection_details["Ex-Gratia"] =$projection_months_datas->sum('ex_gratia');
+             $employee_projection_details["Attendance Bonus"] =$projection_months_datas->sum('attendance_bonus');
+             $employee_projection_details["Daily Allowance"] =$projection_months_datas->sum('daily_allowance');
+             $employee_projection_details["Leave Encashments"] =$projection_months_datas->sum('leave_encashment');
+             $employee_projection_details["Gift"] =$projection_months_datas->sum('gift_payment');
 
 
-    foreach($date as $single_dates){
-        if($single_dates->lte($current_date)){
-            foreach($employee_projected_salary as $key => $single_value){
-
-                    // dd($single_value);
-                    if ($single_value['payroll_months'] == $single_dates->format('Y-m-d')) {
-
-                        $single_basic += $single_value['basic'];
-                        // $payroll_value['Basic'] = $single_basic;
-                        // $single_hra += $single_value['hra'];
-                        // $payroll_value['Hra'] = $single_hra;
-                        $single_cld_all  +=  $single_value['child_edu_allowance'];
-                        $payroll_value['Child_allowance'] = $single_cld_all;
-                        $single_spl_alw  +=  $single_value['spl_alw'];
-                        $payroll_value['Special_allowance'] = $single_spl_alw;
-                        // $single_total_fixed_gross  += $single_value['total_fixed_gross'];
-                        // $payroll_value['total_Fixed_Gross'] = $single_total_fixed_gross;
-                        $single_earned_basic +=  $single_value['earned_basic'];
-                        $payroll_value['Basic'] = $single_earned_basic;
-                        $single_basic_arrear +=  $single_value['basic_arrear'];
-                        $payroll_value['basic_arrear'] = $single_basic_arrear;
-                        $single_earned_hra  += $single_value['earned_hra'];
-                        $payroll_value['Hra'] = $single_earned_hra;
-                        $single_hra_arrear  += $single_value['hra_arrear'];
-                        $payroll_value['hra_arrear'] = $single_hra_arrear;
-                        $single_earned_child_edu_allowance += $single_value['earned_child_edu_allowance'];
-                        $payroll_value['earned_child_allowance'] = $single_earned_child_edu_allowance;
-                        $single_child_edu_allowance_arrear   += $single_value['child_edu_allowance_arrear'];
-                        $payroll_value['children_allw_arrear'] = $single_child_edu_allowance_arrear;
-                        $single_earned_spl_alw   +=  $single_value['earned_spl_alw'];
-                        $payroll_value['earned_spl_alw'] = $single_earned_spl_alw;
-                        $single_spl_alw_arrear  +=   $single_value['spl_alw_arrear'];
-                        $payroll_value['arrear_spl_alw'] = $single_spl_alw_arrear;
-                        $single_overtime  +=   $single_value['overtime'];
-                        $payroll_value['over_time'] = $single_overtime;
-                        $single_total_earned_gross  +=  $single_value['total_earned_gross'];
-                        // $payroll_value['total_gross'] = $single_total_earned_gross;
-                        // $single_pf_wages  +=   $single_value['pf_wages'];
-                        // $payroll_value['pf_wages'] = $single_pf_wages;
-                        // $single_pf_wages_arrear_epfr  +=  $single_value['pf_wages_arrear_epfr'];
-                        $payroll_value['pf_wages_arrear'] = $single_pf_wages_arrear_epfr;
-                        $single_epfr  +=  $single_value['epfr'];
-                        // $payroll_value['epfr'] = $single_epfr;
-                        // $single_epfr_arrear  +=  $single_value['epfr_arrear'];
-                        $payroll_value['epfr_arrear'] = $single_epfr_arrear;
-                        $single_edli_charges  +=  $single_value['edli_charges'];
-                        // $payroll_value['edli_charges'] = $single_edli_charges;
-                        // $single_edli_charges_arrears +=  $single_value['edli_charges_arrears'];
-                        $payroll_value['edli_charges_arrears'] = $single_edli_charges_arrears;
-                        $single_pf_admin_charges  +=  $single_value['pf_admin_charges'];
-                        // $payroll_value['pf_admin'] = $single_pf_admin_charges;
-                        // $single_pf_admin_charges_arrears +=   $single_value['pf_admin_charges_arrears'];
-                        $payroll_value['arrear_charges'] = $single_pf_admin_charges_arrears;
-                        // $single_employer_esi  +=  $single_value['employer_esi'];
-                        // $payroll_value['emp_esic'] = $single_employer_esi;
-                        $single_employer_lwf  +=  (int)($single_value['employer_lwf']);
-                        $payroll_value['lef'] = $single_employer_lwf;
-                        // $single_ctc  +=  $single_value['ctc'];
-                        // $payroll_value['ctc'] = $single_ctc;
-                        // $single_epf_ee  +=  $single_value['epf_ee'];
-                        // $payroll_value['epf_ee'] = $single_epf_ee;
-                        // $single_epf_ee_arrear  +=  $single_value['epf_ee_arrear'];
-                        // $payroll_value['epf_ee_arrear'] = $single_epf_ee_arrear;
-                        // $single_employee_esic  +=  $single_value['employee_esic'];
-                        // $payroll_value['employee_esic'] = $single_employee_esic;
-                        // $single_prof_tax  +=  $single_value['prof_tax'];
-                        // $payroll_value['prof_tax'] = $single_prof_tax;
-                        // $single_income_tax  +=  $single_value['income_tax'];
-                        // $payroll_value['income_tax'] = $single_prof_tax;
-                        $single_sal_adv  +=  $single_value['sal_adv'];
-                        $payroll_value['sal_adv'] = $single_sal_adv;
-                        $single_canteen_dedn  +=  $single_value['canteen_dedn'];
-                        $payroll_value['canteen_dedn'] = $single_canteen_dedn;
-                        $single_other_deduc  +=  $single_value['other_deduc'];
-                        $payroll_value['otehr_dec'] = $single_other_deduc;
-                        $single_lwf  +=  $single_value['lwf'];
-                        $payroll_value['lwf'] = $single_lwf;
-                        $single_stats_bonus  +=  $single_value['stats_bonus'];
-                        $payroll_value['stats_bonus'] = $single_stats_bonus;
-                        $single_earned_stats_bonus  +=  $single_value['earned_stats_bonus'];
-                        $payroll_value['earned_stats_bonus'] = $single_earned_stats_bonus;
-                        $single_earned_stats_bonus_arrear  +=  $single_value['earned_stats_arrear'];
-                        $payroll_value['earned_stats_arrear'] = $single_earned_stats_bonus_arrear;
-                        $single_travel_conveyence  +=  $single_value['travel_conveyance'];
-                        $payroll_value['travel_conveyence'] = $single_travel_conveyence;
-                        $single_earned_stats_bonus +=   $single_value['other_earnings'];
-                        $payroll_value['earned_stats_bonus'] = $single_earned_stats_bonus;
+              /* --------------------- End ---------------*/
 
 
-                        $actual[] = $single_value;
-                    }
-                }
-            } else {
+            // remove empty and null value in actual data
 
-            foreach($employee_projected_salary as $key => $single_value){
-                if($single_value['payroll_months'] == $single_dates->format('Y-m-d')){
-
-                        // $single_basic1 += $single_value['basic'];
-                        // $compensatory_value['Basic'] = $single_basic1;
-                        // $single_hra1 += $single_value['hra'];
-                        // $compensatory_value['Hra'] = $single_hra1;
-                        $single_cld_all1  +=  $single_value['child_edu_allowance'];
-                        $compensatory_value['Child_allowance'] = $single_cld_all1;
-                        $single_spl_alw1  +=  $single_value['spl_alw'];
-                        $compensatory_value['Special_allowance'] = $single_spl_alw1;
-                        // $single_total_fixed_gross1  += $single_value['total_fixed_gross'];
-                        // $compensatory_value['total_Fixed_Gross'] = $single_total_fixed_gross1;
-                        $single_earned_basic1 +=  $single_value['earned_basic'];
-                        $compensatory_value['Basic'] = $single_earned_basic1;
-                        $single_basic_arrear1 +=  $single_value['basic_arrear'];
-                        $compensatory_value['basic_arrear'] = $single_basic_arrear1;
-                        $single_earned_hra1  += $single_value['earned_hra'];
-                        $compensatory_value['Hra'] = $single_earned_hra1;
-                        $single_hra_arrear1  += $single_value['hra_arrear'];
-                        $compensatory_value['hra_arrear'] = $single_hra_arrear1;
-                        $single_earned_child_edu_allowance1 += $single_value['earned_child_edu_allowance'];
-                        $compensatory_value['earned_child_allowance'] = $single_earned_child_edu_allowance1;
-                        $single_child_edu_allowance_arrear1   += $single_value['child_edu_allowance_arrear'];
-                        $compensatory_value['children_allw_arrear'] = $single_child_edu_allowance_arrear1;
-                        $single_earned_spl_alw1   +=  $single_value['earned_spl_alw'];
-                        $compensatory_value['earned_spl_alw'] = $single_earned_spl_alw1;
-                        $single_spl_alw_arrear1  +=   $single_value['spl_alw_arrear'];
-                        $compensatory_value['arrear_spl_alw'] = $single_spl_alw_arrear1;
-                        $single_overtime1 +=   $single_value['overtime'];
-                        $compensatory_value['over_time'] = $single_overtime1;
-                        // $single_total_earned_gross1  +=  $single_value['total_earned_gross'];
-                        // $compensatory_value['total_gross'] = $single_total_earned_gross1;
-                        // $single_pf_wages1  +=   $single_value['pf_wages'];
-                        // $compensatory_value['pf_wages'] = $single_pf_wages1;
-                        // $single_pf_wages_arrear_epfr1  +=  $single_value['pf_wages_arrear_epfr'];
-                        // $compensatory_value['pf_wages_arrear'] = $single_pf_wages_arrear_epfr1;
-                        // $single_epfr1  +=  $single_value['epfr'];
-                        // $compensatory_value['epfr'] = $single_epfr1;
-                        // $single_epfr_arrear1  +=  $single_value['epfr_arrear'];
-                        // $compensatory_value['epfr_arrear'] = $single_epfr_arrear1;
-                        // $single_edli_charges1  +=  $single_value['edli_charges'];
-                        // $compensatory_value['edli_charges'] = $single_edli_charges1;
-                        // $single_edli_charges_arrears1 +=  $single_value['edli_charges_arrears'];
-                        // $compensatory_value['edli_charges_arrears'] = $single_edli_charges_arrears1;
-                        // $single_pf_admin_charges1  +=  $single_value['pf_admin_charges'];
-                        // $compensatory_value['pf_admin'] = $single_pf_admin_charges1;
-                        // $single_pf_admin_charges_arrears1 +=   $single_value['pf_admin_charges_arrears'];
-                        // $compensatory_value['arrear_charges'] = $single_pf_admin_charges_arrears1;
-                        // $single_employer_esi1  +=  $single_value['employer_esi'];
-                        // $compensatory_value['emp_esic'] = $single_employer_esi1;
-                        // $single_employer_lwf1  +=  (int)($single_value['employer_lwf']);
-                        // $compensatory_value['lef'] = $single_employer_lwf1;
-                        // $single_ctc1  +=  $single_value['ctc'];
-                        // $compensatory_value['ctc'] = $single_ctc1;
-                        // $single_epf_ee1  +=  $single_value['epf_ee'];
-                        // $compensatory_value['epf_ee'] = $single_epf_ee1;
-                        // $single_epf_ee_arrear1  +=  $single_value['epf_ee_arrear'];
-                        // $compensatory_value['epf_ee_arrear'] = $single_epf_ee_arrear1;
-                        // $single_employee_esic1  +=  $single_value['employee_esic'];
-                        // $compensatory_value['employee_esic'] = $single_employee_esic1;
-                        // $single_prof_tax1  +=  $single_value['prof_tax'];
-                        // $compensatory_value['prof_tax'] = $single_prof_tax1;
-                        // $single_income_tax1  +=  $single_value['income_tax'];
-                        // $compensatory_value['income_tax'] = $single_prof_tax1;
-                        $single_sal_adv1  +=  $single_value['sal_adv'];
-                        $compensatory_value['sal_adv'] = $single_sal_adv1;
-                        $single_canteen_dedn1  +=  $single_value['canteen_dedn'];
-                        $compensatory_value['canteen_dedn'] = $single_canteen_dedn1;
-                        $single_other_deduc1  +=  $single_value['other_deduc'];
-                        $compensatory_value['otehr_dec'] = $single_other_deduc1;
-                        $single_lwf1  +=  $single_value['lwf'];
-                        $compensatory_value['lwf'] = $single_lwf1;
-                        $single_stats_bonus1  +=  $single_value['stats_bonus'];
-                        $compensatory_value['stats_bonus'] = $single_stats_bonus1;
-                        $single_earned_stats_bonus1  +=  $single_value['earned_stats_bonus'];
-                        $compensatory_value['earned_stats_bonus'] = $single_earned_stats_bonus1;
-                        $single_earned_stats_bonus_arrear1  +=  $single_value['earned_stats_arrear'];
-                        $compensatory_value['earned_stats_arrear'] = $single_earned_stats_bonus_arrear1;
-                        $single_travel_conveyence1  +=  $single_value['travel_conveyance'];
-                        $compensatory_value['travel_conveyence'] = $single_travel_conveyence1;
-                        $single_earned_stats_bonus1 +=   $single_value['other_earnings'];
-                        $compensatory_value['earned_stats_bonus'] = $single_earned_stats_bonus1;
-
-
-                    $projection[] = $single_value;
-
-                }
-            }
-        }
-}
-
-        // dd($projection);
-
-        foreach ($payroll_value as $key => $single_details) {
+        foreach ($employee_actual_details as $key => $single_details) {
             if ($single_details == "0" || $single_details == null || $single_details == 0) {
-                unset($payroll_value[$key]);
+                unset($employee_actual_details[$key]);
             }
         }
 
-        foreach ($compensatory_value as $key => $single_details) {
+         // remove empty and null value in projection data
+
+        foreach ($employee_projection_details as $key => $single_details) {
             if ($single_details == "0" || $single_details == null) {
-                unset($compensatory_value[$key]);
+                unset($employee_projection_details[$key]);
             }
         }
+
+        // if diff key set zero value
+
+        $emp_projection_value = [];
+        foreach ($employee_actual_details as $key => $value) {
+            if (isset($employee_projection_details[$key])) {
+                $emp_projection_value[$key]  =  $employee_projection_details[$key];
+            } else {
+                $emp_projection_value[$key]  = 0;
+            }
+        }
+
+
+            //  if same key sum of actual and projection value
 
         $res = [];
-        $res1 = [];
-        foreach ($payroll_value as $key => $value) {
-            if (isset($compensatory_value[$key])) {
-                $res[$key]  =  $compensatory_value[$key] - $payroll_value[$key];
+        foreach ($employee_actual_details as $key => $value) {
+            if (isset($emp_projection_value[$key])) {
+                $res[$key]  =  $emp_projection_value[$key] + $employee_actual_details[$key];
             } else {
-                $res1[$key]  = $payroll_value[$key];
+                $res[$key]  = $employee_actual_details[$key];
             }
         }
 
-        $total_income = 0;
-        foreach ($res as $single_value) {
-            $total_income  += $single_value;
-        }
+        // sum of array value
 
-        return ["Actual" => $payroll_value, "Projection" => $compensatory_value, "Total" => $res, "Total Income" => $total_income];
+          $total_income  = array_sum(array_values($res));
+
+
+        return (["Actual" => $employee_actual_details, "Projection" => $emp_projection_value, "Total" => $res, "Total Income" => $total_income]);
     }
 
 
@@ -955,7 +743,6 @@ class VmtPayrollTaxService
 
         $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
         $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
-
         $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
         $end_date = Carbon::parse($end_date)->format('Y-m-d');
 
@@ -971,15 +758,15 @@ class VmtPayrollTaxService
 
         // dd($annual);
 
-        if (isset($annual['Total']['arrear_Hra'])) {
-            $annual_Hra =  $annual['Total']['arrear_Hra'] + $annual['Total']['Hra'];
+        if (isset($annual['Total']['HRA Arrears'])) {
+            $annual_Hra =  $annual['Total']['HRA Arrears'] + $annual['Total']['HRA'];
         } else {
-            $annual_Hra = $annual['Total']['Hra'];
+            $annual_Hra = $annual['Total']['HRA'];
         }
 
 
-        if (isset($annual['Total']['arrear_basic'])) {
-            $annual_basic =  $annual['Total']['arrear_basic'] + $annual['Total']['Basic'];
+        if (isset($annual['Total']['Basic Arrears'])) {
+            $annual_basic =  $annual['Total']['Basic Arrears'] + $annual['Total']['Basic'];
         } else {
             $annual_basic = $annual['Total']['Basic'];
         }
