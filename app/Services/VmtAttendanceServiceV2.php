@@ -166,11 +166,19 @@ class VmtAttendanceServiceV2
                         $leave_type = '/leave';
                         $leave_type = null;
                         $is_half_day = false;
+                        $mop_id = null;
+                        $mip_id = null;
+                        $lc_id = null;
+                        $eg_id = null;
+                        $regz_checkin_time = null;
+                        $regz_checkout_time = null;
 
                         $checking_date = null;
                         $checking_time = null;
                         $checkout_date = null;
                         $checkout_time = null;
+                        $reg_checking_time = null;
+                        $reg_checkout_time = null;
                         $client_code = VmtClientMaster::where('id', $single_user->client_id)->first()->client_code;
                         if (
                             $client_code == "DM" ||  $client_code == 'VASA' || $client_code == 'LAL'
@@ -292,10 +300,11 @@ class VmtAttendanceServiceV2
                         //Code For Check LC And MOP
                         if ($checking_time != null) {
                             if ($checkout_time == null) {
-                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'LC');
-                                $lc_id = $regularization_status['id'];
-                                if ($regularization_status['sts'] != 'Approved') {
-                                    $lc_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'MOP');
+                                $mop_id = $regularization_status['id'];
+                                if ($regularization_status['sts'] == 'Approved') {
+                                    $reg_checkout_time = $regularization_status['reg_time'];
+                                } else {
                                 }
                             }
                             $parsedCheckIn_time  = Carbon::parse($checking_time);
@@ -310,7 +319,9 @@ class VmtAttendanceServiceV2
                                 //check whether regularization applied.
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'LC');
                                 $lc_id = $regularization_status['id'];
-                                if ($regularization_status['sts'] != 'Approved') {
+                                if ($regularization_status['sts'] == 'Approved') {
+                                    $reg_checking_time = $regularization_status['reg_time'];
+                                } else {
                                     $lc_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
                                 }
 
@@ -319,7 +330,16 @@ class VmtAttendanceServiceV2
                             }
                         }
                         //Code For Check EG And MIP
-                        if (!empty($checkout_time != null)) {
+                        if ($checkout_time != null) {
+
+                            if ($checking_time == null) {
+                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'MIP');
+                                $mop_id = $regularization_status['id'];
+                                if ($regularization_status['sts'] == 'Approved') {
+                                    $reg_checking_time = $regularization_status['reg_time'];
+                                } else {
+                                }
+                            }
                             $parsedCheckOut_time  = Carbon::parse($checkout_time);
                             //Check whether checkin out on-time
                             $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
@@ -327,7 +347,8 @@ class VmtAttendanceServiceV2
                                 //employee left early on time....
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
                                 $eg_id = $regularization_status['id'];
-                                if ($regularization_status['sts'] != 'Approved') {
+                                if ($regularization_status['sts'] == 'Approved') {
+                                } else {
                                     $eg_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
                                 }
                             } else {
@@ -468,12 +489,14 @@ class VmtAttendanceServiceV2
     {
         $res['sts'] = null;
         $res['id'] = null;
+        $res['reg_time'] = null;
         $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $date->format('Y-m-d'))
             ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
         // if($user_id==200 && $regularizeType=='LC' && $date->format('Y-m-d')=='2023-07-26')
         if ($regularize_record->exists()) {
             $res['sts'] = $regularize_record->value('status');
             $res['id'] = $regularize_record->value('id');
+            $res['reg_time'] = $regularize_record->value('regularize_time');
             return $res;
         } else {
             return $res;
