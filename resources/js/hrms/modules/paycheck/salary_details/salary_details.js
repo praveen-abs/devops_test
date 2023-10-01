@@ -31,6 +31,7 @@ import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
+import Sidebar from 'primevue/sidebar';
 
 
 import salary_details from './salary_details.vue'
@@ -67,5 +68,6 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
+app.component('Sidebar', Sidebar);
 
 app.mount("#salary_details");

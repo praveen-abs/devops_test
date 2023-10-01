@@ -78,7 +78,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             data_reimbursements.value = response.data;
             console.log(response.data);
             loading_spinner.value = false;
-        });
+        })
     };
 
     // Reimbursement Claim types
@@ -226,6 +226,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             })
             .finally(res => {
                 console.log("Finally Response : "+res);
+                employee_reimbursement = null
             });
 
 

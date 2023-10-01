@@ -103,7 +103,6 @@ class VmtReportsservice
                 $get_department = $department_id;
             }
 
-
             $dates = Carbon::now()->format('Y-m-d');
             // $Category = 'All';
             $processed_array = array();
@@ -113,16 +112,15 @@ class VmtReportsservice
             $headers = array();
             
             $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                ->rightJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 // ->leftJoin('vmt_department ', 'vmt_department .id', '=', 'vmt_employee_office_details.department_id')
                 ->where('users.is_ssa','=','0')
-                ->where('users.active','=','1')
                 ->where('vmt_employee_details.doj', '<', $date_req)
                 ->whereIn('users.client_id', $client_id)
-                ->where('users.active', $active_status)
+                ->whereIn('users.active', $active_status)
                 ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
@@ -133,6 +131,7 @@ class VmtReportsservice
                 $temp_ar['Employee Name'] = $singleemployeedata->name;
                 $temp_ar['Gender'] = strtoupper($singleemployeedata->gender);
                 $temp_ar['Designation'] = $singleemployeedata->designation;
+                $temp_ar['Department'] = Department::where('id', $singleemployeedata->department_id)->first()->name ?? '';
                 if ($singleemployeedata->active == 1) {
                     $temp_ar['Employee Status'] = "Active";
                 } else if ($singleemployeedata->active == -1) {

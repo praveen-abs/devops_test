@@ -650,6 +650,7 @@ class VmtMainDashboardController extends Controller
 
         //Fetch the data
         // $request->record_id = "23";
+        
         return $serviceVmtDashboardService->readNotification($request->record_id);
     }
 
