@@ -475,6 +475,7 @@ class VmtDashboardService
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
     {
         try {
+
             //Get the user_code
             $user_id = User::where('user_code', $user_code)->first()->id;
 
@@ -554,6 +555,7 @@ class VmtDashboardService
             // attendance details from vmt_employee_attenndance table
             $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $user_id)
                 ->whereMonth('date', $month)
+                ->whereYear('date', $month)
                 ->orderBy('checkin_time', 'asc')
                 ->get(['date', 'checkin_time', 'checkout_time', 'attendance_mode_checkin', 'attendance_mode_checkout', 'selfie_checkin', 'selfie_checkout']);
 
@@ -577,7 +579,6 @@ class VmtDashboardService
                     $date = $i;
 
                 $fulldate = $year . "-" . $month . "-" . $date;
-
 
                 $attendanceResponseArray[$fulldate] = array(
                     "user_id" => $user_id, "isAbsent" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null,
@@ -604,6 +605,7 @@ class VmtDashboardService
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
             //dd($merged_attendanceData);
             //dd($dateWiseData);
+
             foreach ($dateWiseData  as $key => $value) {
 
                 // dd($value[0]);
@@ -681,6 +683,7 @@ class VmtDashboardService
             $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
             $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
 
+
             //dd($regularTime);
             ////Logic to check LC,EG,MIP,MOP,Leave status
             foreach ($attendanceResponseArray as $key => $value) {
@@ -715,7 +718,6 @@ class VmtDashboardService
                     }
                 }
 
-
                 //EG Check
                 //check if its EG
                 if (!empty($checkout_time)) {
@@ -749,7 +751,7 @@ class VmtDashboardService
 
                     //Check whether leave is applied or not.
                     $t_leaveRequestDetails = $this->isLeaveRequestApplied($user_id, $key, $year, $month);
-                    // dd($t_leaveRequestDetails);
+
                     if (empty($t_leaveRequestDetails)) {
 
                         $attendanceResponseArray[$key]["absent_status"] = "Not Applied";
@@ -761,6 +763,7 @@ class VmtDashboardService
                 } elseif ($checkin_time != null && $checkout_time == null) {
 
                     //Since its MOP
+
                     $attendanceResponseArray[$key]["isMOP"] = true;
 
                     ////Is any permission applied
@@ -800,18 +803,26 @@ class VmtDashboardService
             $count1 = 0;
             $count2 = 0;
 
-            foreach ($attendanceResponseArray as $attendancedash) {
+// dd($attendanceResponseArray);
+            foreach ($attendanceResponseArray as $key =>$attendancedash) {
 
-                if ($attendancedash['isAbsent']) {
+                $dayStr = Carbon::parse($key)->format('l');
+
+                $is_holiday =VmtHolidays::where('holiday_date',$key);
+
+                if ($attendancedash['isAbsent'] &&$attendancedash['absent_status'] != "Approved"&& $dayStr != "Sunday" && $is_holiday->doesntExist()) {
                     $count++;
                 }
-                if (!$attendancedash['isAbsent']) {
+                if (!$attendancedash['isAbsent'] || $attendancedash['absent_status'] == "Approved"||$dayStr == "Sunday" || $is_holiday->exists()) {
                     $count1++;
                 }
-                if ($attendancedash['absent_status'] == "Not Applied") {
+
+                if (($attendancedash['absent_status'] == "Not Applied" || $attendancedash['absent_status'] == "Approved") &&  $dayStr != "Sunday" && $is_holiday->doesntExist()) {
                     $count2++;
                 }
+
             }
+
             $current_mnth = ["absent" => $count, "present" => $count1, "not_applied" => $count2];
 
             //array_push($res, $current_mnth);
@@ -826,7 +837,7 @@ class VmtDashboardService
             return response()->json([
                 "status" => "failure",
                 "message" => "Unable to fetch attenance report per_month",
-                "data" => $e,
+                "data" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -849,26 +860,30 @@ class VmtDashboardService
 
     public function isLeaveRequestApplied($user_id, $attendance_date, $year, $month)
     {
-        // dd($year);
+        // dd($attendance_date);
 
         $leave_Details = VmtEmployeeLeaves::join('vmt_leaves', 'vmt_leaves.id', '=', 'vmt_employee_leaves.leave_type_id')
-            ->where('user_id', "146")
-            ->whereYear('end_date', "2023")
-            ->whereMonth('end_date', "06")
+            ->where('user_id', $user_id)
+            ->whereYear('end_date', $year)
+            ->whereMonth('end_date', $month)
             ->get(['start_date', 'end_date', 'status', 'vmt_leaves.leave_type', 'total_leave_datetime']);
+
+            // dd($leave_Details);
 
         if ($leave_Details->count() == 0) {
             return null;
         } else {
+            $single_leave_details="";
             foreach ($leave_Details as $single_leave_details) {
                 $startDate = Carbon::parse($single_leave_details->start_date)->subDay();
                 $endDate = Carbon::parse($single_leave_details->end_date);
                 $currentDate =  Carbon::parse($attendance_date);
                 // echo $currentDate;
-                // dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
+                //dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
                 if ($currentDate->gt($startDate) && $currentDate->lte($endDate)) {
 
                     return $single_leave_details;
+
                 } else {
                     $single_leave_details = null;
                 }
@@ -1182,7 +1197,6 @@ class VmtDashboardService
             $getAllEvent = $this->getAllEventsDashboard();
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
-
 
             //dd($getAttenanceReportpermonth->content());
 
