@@ -1,6 +1,7 @@
 <template>
     <loadingSpinner v-if="useDashboard.canShowLoading" />
-    <div class="">
+
+    <div class="" v-if="!useDashboard.canShowLoading" >
         <div class="pt-1 pb-0 ">
             <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
                 <li class="nav-item " role="presentation">
@@ -23,7 +24,7 @@
         </div>
     </div>
 
-    <div class="tab-content " id="pills-tabContent">
+    <div class="tab-content " id="pills-tabContent" v-if="!useDashboard.canShowLoading" >
 
         <div class="tab-pane  fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
             <div>

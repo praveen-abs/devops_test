@@ -71,11 +71,10 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
             let desiredHeaders = ["absent_count", "present_count", "leave_emp_count", "lg_count", "eg_count", "mop_count", "mip_count"]
 
-            overallEmployeeCountForExceptionAnalytics.value.forEach(element => {
+            overallEmployeeCountForExceptionAnalytics.value.forEach(async element => {
                 if (overallEmployeeCountForExceptionAnalyticsForGraph.value.length < 7) {
                     if (desiredHeaders.includes(element.title)) {
-                        console.log(element.title);
-                        overallEmployeeCountForExceptionAnalyticsForGraph.value.push(element.value)
+                         overallEmployeeCountForExceptionAnalyticsForGraph.value.push(element.value)
                     }
 
                 }

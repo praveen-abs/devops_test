@@ -32,7 +32,9 @@ const useDashboard = useAttendanceDashboardMainStore()
 
 
 
-onMounted(() => {
+onMounted(async () => {
+    await useDashboard.attendanceOverview
+    useDashboard.overallEmployeeCountForExceptionAnalyticsForGraph
     // chartData.value = setChartData();
     chartOptions.value = setChartOptions();
     // chartData.value.datasets[0].data = [20, 20, 20]

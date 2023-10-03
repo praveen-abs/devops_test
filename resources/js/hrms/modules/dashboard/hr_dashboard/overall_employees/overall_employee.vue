@@ -11,7 +11,8 @@ import { useMainDashboardStore } from '../../stores/dashboard_service';
 
 const useDashboard = useMainDashboardStore()
 
-onMounted(() => {
+onMounted(async () => {
+    // await useDashboard.overallEmployeeCountForGraph
     // chartData.value = setChartData();
     chartOptions.value = setChartOptions();
     // chartData.value.datasets[0].data = [20, 20, 20]
@@ -19,7 +20,7 @@ onMounted(() => {
         console.log(useDashboard.overallEmployeeCountForGraph);
         chartData.value.datasets[0].data = useDashboard.overallEmployeeCountForGraph
         // updateChartLabels()
-    }, 3000);
+    }, 8000);
 
 });
 

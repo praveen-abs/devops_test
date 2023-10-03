@@ -40,18 +40,6 @@
         </div>
     </div>
 
-    <!--
-    <Dialog header="Shift Details" v-model:visible="useDashboard.canShowShiftDetails"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '50vw' }" :modal="true" :closable="true"
-        :closeOnEscape="true">
-        <DataTable :value="useDashboard.currentlySelectedShiftDetails">
-            <Column field="user_code" header="User code"></Column>
-            <Column field="name" header="Name"></Column>
-            <Column field="shift_start_time" header="Shift start time"></Column>
-            <Column field="shift_end_time" header="Shift end time"></Column>
-            <Column field="grace_time" header="Grace time"></Column>
-        </DataTable>
-    </Dialog> -->
     <Sidebar v-model:visible="useDashboard.canShowShiftDetails" position="right" class="w-full">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">{{ useDashboard.currentlySelectedShiftDetails ?
