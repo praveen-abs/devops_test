@@ -163,12 +163,18 @@ class VmtAttendanceServiceV2
                         $attendance_mode_checkout = null;
                         $is_holiday = false;
                         $is_leave = false;
-                        $leave_type = '/leave';
+                        $leave_type = 'leave';
                         $is_half_day = false;
+                        $lc_mins = 0;
+                        $eg_mins =0;
                         $mop_id = null;
+                        $is_mop = false;
                         $mip_id = null;
+                        $is_mip = false;
                         $lc_id = null;
+                        $is_lc = false;
                         $eg_id = null;
+                        $is_eg = false;
                         $regz_checkin_time = null;
                         $regz_checkout_time = null;
                         $ot_mins = 0;
@@ -301,11 +307,13 @@ class VmtAttendanceServiceV2
                         //Code For Check LC And MOP
                         if ($checking_time != null) {
                             if ($checkout_time == null) {
+
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'MOP');
                                 $mop_id = $regularization_status['id'];
                                 if ($regularization_status['sts'] == 'Approved') {
-                                    $reg_checkout_time = $regularization_status['reg_time'];
+                                    $regz_checkout_time = $regularization_status['reg_time'];
                                 } else {
+                                    $is_mop = true;
                                 }
                             }
                             $parsedCheckIn_time  = Carbon::parse($checking_time);
@@ -319,11 +327,13 @@ class VmtAttendanceServiceV2
                                 //dd("Checkin NOT on-time");
                                 //check whether regularization applied.
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'LC');
+                                //   dd($current_date);
                                 $lc_id = $regularization_status['id'];
                                 if ($regularization_status['sts'] == 'Approved') {
-                                    $reg_checking_time = $regularization_status['reg_time'];
+                                    $regz_checkin_time = $regularization_status['reg_time'];
                                 } else {
                                     $lc_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                    $is_lc = true;
                                 }
 
                                 // dd( $regularization_status );
@@ -335,10 +345,11 @@ class VmtAttendanceServiceV2
 
                             if ($checking_time == null) {
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'MIP');
-                                $mop_id = $regularization_status['id'];
+                                $mip_id = $regularization_status['id'];
                                 if ($regularization_status['sts'] == 'Approved') {
-                                    $reg_checking_time = $regularization_status['reg_time'];
+                                    $regz_checkin_time = $regularization_status['reg_time'];
                                 } else {
+                                    $is_mip = true;
                                 }
                             }
                             $parsedCheckOut_time  = Carbon::parse($checkout_time);
@@ -349,9 +360,10 @@ class VmtAttendanceServiceV2
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
                                 $eg_id = $regularization_status['id'];
                                 if ($regularization_status['sts'] == 'Approved') {
-                                    $reg_checkout_time = $regularization_status['reg_time'];
+                                    $regz_checkout_time = $regularization_status['reg_time'];
                                 } else {
                                     $eg_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                    $is_eg = true;
                                 }
                             } else {
                                 //employee left late....
@@ -359,7 +371,32 @@ class VmtAttendanceServiceV2
                         }
 
                         //Calculting Ot minutes
-                        dd($shift_settings);
+                        $emp_ot_sts = VmtEmployeeWorkShifts::where('user_id', $single_user->id)
+                            ->where('work_shift_id', $shift_settings->id)->first()->can_calculate_ot;
+                        if ($emp_ot_sts == 1) {
+                            // if($checking_time!=null){
+                            //     dd($single_user->id);
+                            //     dd($checking_time);
+                            // }
+                            //  dd();
+                            // dd($regz_checkin_time);
+                            if ($regz_checkin_time != null) {
+                                $checkin_time_ot = substr($checking_time, 0, 10) . ' ' . $regz_checkin_time;
+                                // $checkin_time_ot
+                            } else {
+                                $checkin_time_ot = $checking_time;
+                            }
+                            if ($regz_checkout_time != null) {
+                                $checkout_time_ot = substr($checkout_time, 0, 10) . ' ' . $regz_checkin_time;
+                                // $checkin_time_ot 
+                            } else {
+                                $checkout_time_ot = $checkout_time;
+                            }
+                            if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot) && $checkout_time_ot != null) {
+                                $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                            }
+                        }
+                        // dd($emp_ot_sts);
 
 
                         //here checking for leave 
@@ -441,7 +478,7 @@ class VmtAttendanceServiceV2
                             $checkout_date = null;
                         }
 
-                        $existing_record_query = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->where('date', $current_date);
+                        $existing_record_query = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date);
                         if ($existing_record_query->exists()) {
                             $existing_record_query->delete();
                         }
@@ -453,23 +490,43 @@ class VmtAttendanceServiceV2
                         $attendance_table->checkin_time =   $checking_time;
                         $attendance_table->checkin_date =  $checking_date;
                         $attendance_table->checkout_time =  $checkout_time;
-                        // if ($single_user->id == 223)
-                        // dd(  $attendance_table);
                         $attendance_table->checkout_date = $checkout_date;
-
+                        $attendance_table->regularized_checkin_time = $regz_checkin_time;
+                        $attendance_table->regularized_checkout_time = $regz_checkout_time;
 
                         if ($checking_time != null ||  $checkout_time != null) {
                             $attendance_status = 'P';
+                            if ($is_lc) {
+                                $attendance_status =  $attendance_status . '/LC';
+                            }
+                            if ($is_mip) {
+                                $attendance_status =  $attendance_status . '/MIP';
+                            }
+                            if ($is_eg) {
+                                $attendance_status =  $attendance_status . '/EG';
+                            }
+                            if ($is_mop) {
+                                $attendance_status =  $attendance_status . '/MOP';
+                            }
                         } else if ($week_off_sts) {
                             $attendance_status = 'WO';
                         } else if ($is_holiday) {
                             $attendance_status = 'HO';
+                        } else if ($is_leave) {
+                            $attendance_status = $leave_type;
                         }
                         $attendance_table->status = $attendance_status;
                         $attendance_table->attendance_mode_checkin = $attendance_mode_checkin;
                         $attendance_table->attendance_mode_checkout = $attendance_mode_checkout;
                         $attendance_table->checkin_lat_long = $checkin_lat_long;
                         $attendance_table->checkout_lat_long = $checkout_lat_long;
+                        $attendance_table->overtime = $ot_mins;
+                        $attendance_table->lc_id = $lc_id;
+                        $attendance_table->lc_minutes  = $lc_mins;
+                        $attendance_table->eg_id = $eg_id;
+                        $attendance_table->eg_minutes = $eg_mins;
+                        $attendance_table->mip_id = $mip_id;
+                        $attendance_table->mop_id = $mop_id;
                         $attendance_table->save();
 
                         // $employee_attendance
@@ -478,15 +535,13 @@ class VmtAttendanceServiceV2
                     }
                     // dd($single_user);
                 }
-
                 $current_date->addDay();
-                //  dd(  $current_date);
             }
             dd('done');
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "attendanceJobs",
+                'message' => $e->getMessage(),
                 'data' => $e->getTraceAsString(),
             ]);
         }
@@ -496,9 +551,9 @@ class VmtAttendanceServiceV2
         $res['sts'] = null;
         $res['id'] = null;
         $res['reg_time'] = null;
-        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $date->format('Y-m-d'))
+        $regularize_record = VmtEmployeeAttendanceRegularization::whereDate('attendance_date', $date->format('Y-m-d'))
             ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
-        // if($user_id==200 && $regularizeType=='LC' && $date->format('Y-m-d')=='2023-07-26')
+        // dd($regularize_record->exists());
         if ($regularize_record->exists()) {
             $res['sts'] = $regularize_record->value('status');
             $res['id'] = $regularize_record->value('id');
