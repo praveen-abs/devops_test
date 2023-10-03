@@ -85,7 +85,7 @@
                         <!-- Dropdown content goes here -->
                         <div class="w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                             v-for="employee in globalSearch(query, orgList ? orgList : [])"
-                            @click="openProfilePage(employee.enc_user_id),query = null">
+                            @click="openProfilePage(employee.emp_code),query = null">
                             <div class="flex">
                                 <p class="text-sm font-bold text-gray-900">{{ employee.emp_name }} <span
                                         class="float-right text-xs font-bold text-gray-600">{{ employee.emp_code }}</span>
@@ -192,7 +192,7 @@
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14">
                             <!-- Dropdown content goes here -->
                             <RouterLink class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
-                                to="profile-page">View profile</RouterLink>
+                                :to="`/profile-page`">View profile</RouterLink>
                             <a @click="canShowLogout = true"
                                 class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Log
                                 out</a>
@@ -381,7 +381,6 @@ const getClientList = () => {
 
 const getSessionClient = () => {
     axios.get('session-sessionselectedclient').then(res => {
-        console.log(res.data);
         currentlySelectedClient.value = res.data
     }).finally(() => {
         updateMasterConfigClientCode()
@@ -494,7 +493,7 @@ async function logout() {
 
 async function openProfilePage(uid) {
     // window.location.href = "/pages-profile-new?uid=" + uid;
-    router.replace(`/profile-page/?uid=${uid}`)
+    router.replace(`/profile-page/${uid}`)
 }
 
 const filterNotificationLength = (value) => {

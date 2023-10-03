@@ -74,7 +74,7 @@
                 </Column>
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                         <button  @click="openProfilePage(slotProps.data)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</button>
+                         <RouterLink :to="`/profile-page/${slotProps.data.user_id}`" click="openProfilePage(slotProps.data)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</RouterLink>
                     </template>
                 </Column>
             </DataTable>

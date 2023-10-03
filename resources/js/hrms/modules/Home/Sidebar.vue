@@ -125,7 +125,7 @@ const toggleSwitch = () => {
 }
 
 const redirectModule = (link) => {
-    router.replace(`/${link}`)
+    router.push(`/${link}`)
     // window.location.replace(window.location.origin + '/' + link)
 }
 
@@ -315,7 +315,7 @@ function findSelectedModuleIsEnabled(array, idToFind) {
         return array.find(obj => obj.module_name === idToFind);
     }
 
- 
+
 }
 
 </script>

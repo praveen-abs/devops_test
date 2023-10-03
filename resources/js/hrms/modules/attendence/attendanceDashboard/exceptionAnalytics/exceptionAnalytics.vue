@@ -1,5 +1,4 @@
 <template>
-    <!-- {{ useDashboard.chartDetails }} -->
     <div class="bg-white rounded-lg p-2 border" v-if="useDashboard.chartDetails">
         <p class="font-semibold text-[14px] text-[#000] font-['Poppins] text-center">Attendance Analytics</p>
         <div class=" grid grid-cols-2 gap-4 my-2.5">
@@ -16,7 +15,6 @@
                                 {{ item.label }}
                                 -
                                 <span class="font-semibold text-lg">{{ findPercentage(item.count, useDashboard.totalEmployeeInOrganization)}}</span>%
-
                             </div>
                         </div>
                     </div>
@@ -64,7 +62,7 @@ const chartData = ref({
                 '#000000',
                 '#000000',
             ],
-            data: [0, 0, 0, 0, 0, 0]
+            data: [0, 0, 0, 0, 0, 0,0]
         },
     ],
 });
@@ -120,7 +118,7 @@ const updateChartLabels = () => {
 
 const findPercentage = (part, whole) => {
     const percentage = (part / whole) * 100;
-    return `${percentage}`;
+    return `${percentage.toFixed(0)}`;
 }
 
 

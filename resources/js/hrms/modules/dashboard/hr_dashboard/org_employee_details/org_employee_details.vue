@@ -12,7 +12,7 @@
                         {{ useDashboard.orgEmployeeDetailCount.total_employee_count ? useDashboard.orgEmployeeDetailCount.total_employee_count : 0 }}
                     </span>
                 </div>
-                <p class=" text-lg font-semibold text-center text-gray-500">Total Employees</p>
+                <p class=" text-lg font-semibold text-center text-gray-500">Active Employees</p>
             </div>
             <div class=" bg-[#F6F6F6] rounded-lg p-2 transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100 cursor-pointer "  @click="useDashboard.canShowSidebar = true,useDashboard.ShowEmployeeStatuswise = {...useDashboard.orgEmployeeDetailCount.new_employees},useDashboard.reportName = `new_employee_reports_${new Date()}`">
                 <div class="px-auto flex justify-center">

@@ -13,7 +13,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const attendanceDashboardWorkShiftSource = ref()
     const canShowShiftDetails = ref(false)
     const canShowAttendanceOverview = ref(false)
-    const selectedAttendanceOverviewReport= ref()
+    const selectedAttendanceOverviewReport = ref()
     const currentlySelectedShiftDetails = ref([])
     const currentlySelectedShiftName = ref()
     const attendanceDashboardUpcoming = ref()
@@ -24,13 +24,13 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const totalEmployeeInOrganization = ref()
 
     const chartDetails = ref([
-        { label: 'Absent', backgroundColor: '#FFB1B8' ,count:null },
-        { label: 'Present', backgroundColor: '#7A5EA2' ,count:null  },
-        { label: 'Leave', backgroundColor: '#8D98B5',count:null  },
-        { label: 'Late coming', backgroundColor: '#D9AA63',count:null },
-        { label: 'Early going', backgroundColor: '#6BB7C0',count:null  },
-        { label: 'Missed out punch', backgroundColor: '#000000' ,count:null },
-        { label: 'Missed in punch', backgroundColor: '#000000' ,count:null },
+        { label: 'Absent', backgroundColor: '#FFB1B8', count: null },
+        { label: 'Present', backgroundColor: '#7A5EA2', count: null },
+        { label: 'Leave', backgroundColor: '#8D98B5', count: null },
+        { label: 'Late coming', backgroundColor: '#D9AA63', count: null },
+        { label: 'Early going', backgroundColor: '#6BB7C0', count: null },
+        { label: 'Missed out punch', backgroundColor: '#000000', count: null },
+        { label: 'Missed in punch', backgroundColor: '#000000', count: null },
     ])
 
 
@@ -69,9 +69,15 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
             })
             overallEmployeeCountForExceptionAnalytics.value = graph
 
+            let desiredHeaders = ["absent_count", "present_count", "leave_emp_count", "lg_count", "eg_count", "mop_count", "mip_count"]
+
             overallEmployeeCountForExceptionAnalytics.value.forEach(element => {
-                if (overallEmployeeCountForExceptionAnalytics.value.length > overallEmployeeCountForExceptionAnalyticsForGraph.value.length) {
-                    overallEmployeeCountForExceptionAnalyticsForGraph.value.push(element.value)
+                if (overallEmployeeCountForExceptionAnalyticsForGraph.value.length < 7) {
+                    if (desiredHeaders.includes(element.title)) {
+                        console.log(element.title);
+                        overallEmployeeCountForExceptionAnalyticsForGraph.value.push(element.value)
+                    }
+
                 }
             });
         }).finally(() => {
@@ -84,9 +90,9 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
         canShowLoading,
         attendanceDashboardWorkShiftSource, getAttendanceDashboardMainSource,
 
-        attendanceOverview, totalEmployeeInOrganization,chartDetails,
+        attendanceOverview, totalEmployeeInOrganization, chartDetails,
 
-        canShowShiftDetails,canShowAttendanceOverview,selectedAttendanceOverviewReport, currentlySelectedShiftDetails, currentlySelectedShiftName, downloadShiftDetails,downloadAttendanceOverviewDetails,
+        canShowShiftDetails, canShowAttendanceOverview, selectedAttendanceOverviewReport, currentlySelectedShiftDetails, currentlySelectedShiftName, downloadShiftDetails, downloadAttendanceOverviewDetails,
 
         attendanceDashboardUpcoming, overallEmployeeCountForExceptionAnalytics, overallEmployeeCountForExceptionAnalyticsForGraph
 

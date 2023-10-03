@@ -1,91 +1,47 @@
 <template>
-    <!-- <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog> -->
-    <!-- <div class="row">
-        <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-                    <Events />
-
-                </div>
-            </div>
+    <loadingSpinner v-if="useDashboard.canShowLoading" />
+    <div class="">
+        <div class="pt-1 pb-0 ">
+            <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
+                <li class="nav-item " role="presentation">
+                    <a class="nav-link active " id="" data-bs-toggle="pill" href="" data-bs-target="#employee_details"
+                        role="tab" aria-controls="pills-home" aria-selected="true">
+                        Self-dashboard</a>
+                </li>
+                <li class="mx-4 nav-item" role="presentation"
+                    v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3">
+                    <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#family_det"
+                        role="tab" aria-controls="pills-home" aria-selected="true">
+                        Org-dashboard</a>
+                </li>
+                <li class="nav-item " role="presentation"  v-if="service.current_user_role == 1">
+                    <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#experience_det"
+                        role="tab" aria-controls="pills-home" aria-selected="true">
+                        Announcement</a>
+                </li>
+            </ul>
         </div>
-    </div> -->
+    </div>
 
+    <div class="tab-content " id="pills-tabContent">
 
-    <!-- <div class="dashboard-wrapper mt-30">
-        <div class="mb-2 card left-line">
-            <div class="pt-1 pb-0 card-body">
-                <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                    <li class="nav-item text-muted me-5" role="presentation">
-                        <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#dashboard" aria-selected="true"
-                            role="tab">
-                            Dashboard
-                        </a>
-                    </li>
-
-                    <li class="nav-item text-muted" role="presentation">
-                        <a class="pb-2 nav-link" data-bs-toggle="tab" href="#hrDashboard" aria-selected="true" role="tab">
-                            HR Dashboard
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div> -->
-
-    <!-- <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane show fade active " id="dashboard" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div class="tab-pane  fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
+            <div>
                 <employee_dashboard />
             </div>
-            <div class="tab-pane show fade " id="hrDashboard" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <hr_dashboard />
+        </div>
+
+        <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
+            <Hr_dashboard />
+        </div>
+
+        <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
+            <div class="flex justify-center">
+                <img class="h-[430px] mx-auto" src="../../assests/images/Page-is-under-construction.svg" alt="" srcset="">
             </div>
-
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-                            <Events />
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </div> -->
-    <!-- </div> -->
-    <div class="col"
-        v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3">
-        <button class=" font-semibold text-sm p-1.5 rounded-l-lg"
-            :class="[useDashboard.currentDashboard === 0 ? 'bg-green-200 text-black border border-black' : 'bg-white text-slate-700 border border-black']"
-            @click="useDashboard.currentDashboard = 0">Self-dashboard</button>
-        <button class=" font-semibold text-sm p-1.5 rounded-r-lg"
-            :class="[useDashboard.currentDashboard === 1 ? 'bg-green-200 text-black border border-black' : 'bg-white text-slate-700 border border-black']"
-            @click="useDashboard.currentDashboard = 1">Org-dashboard</button>
+            <p class="font-semibold text-lg text-center">Page is Under construction</p>
+        </div>
     </div>
-    <loadingSpinner v-if="useDashboard.canShowLoading" />
-
-    <transition v-else-if="useDashboard.currentDashboard == 1"
-        enter-active-class="transition ease-out transform duration-600" enter-class="translate-y-2 opacity-0"
-        enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in transform"
-        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
-        <Hr_dashboard />
-    </transition>
-    <transition v-else enter-active-class="transition ease-out transform duration-600" enter-class="translate-y-2 opacity-0"
-        enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in transform"
-        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0">
-        <employee_dashboard />
-    </transition>
 
     <Sidebar v-model:visible="useDashboard.canShowSidebar" position="right" class="w-full">
         <template #header>
@@ -108,18 +64,23 @@
                 </button>
             </div>
         </template>
-        <div class="mt-6" v-if="useDashboard.ShowEmployeeStatuswise">
-            <DataTable  scrollable scrollHeight="450px"
-             :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
-                <Column field="user_code" header="User code"></Column>
-                <Column field="name" header="Name" style="text-align: left !important;white-space: no !important;"></Column>
-                <Column field="department_name" header="Department"
+        <!-- {{ useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : [] }} -->
+        <div class="" v-if="Object.values(useDashboard.ShowEmployeeStatuswise).length >= 1">
+            <DataTable scrollable scrollHeight="450px"
+                :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
+                <Column field="Employee Code" header="Employee Code"></Column>
+                <Column field="Employee Name" header="Employee Name"
                     style="text-align: left !important;white-space: no !important;"></Column>
-                <Column field="process" header="Process" style="text-align: left !important;white-space: no !important;">
+                <Column field="Department" header="Department"
+                    style="text-align: left !important;white-space: no !important;"></Column>
+                <Column field="Process" header="Process" style="text-align: left !important;white-space: no !important;">
                 </Column>
-                <Column field="location" header="Work location"
+                <Column field="Location" header="Work location"
                     style="text-align: left !important;white-space: no !important;"></Column>
             </DataTable>
+        </div>
+        <div v-else class="flex justify-center">
+            <img class="h-[450px]" src="../../assests/images/no-data.svg" alt="" srcset="">
         </div>
     </Sidebar>
 </template>
@@ -153,11 +114,10 @@ onMounted(async () => {
         canShowLoadingScreen.value = true;
         await useDashboard.getMainDashboardData();
         await useDashboard.getHrDashboardMainSource()
-
         // await useDashboard.getAttendanceStatus();
         Service();
         canShowLoadingScreen.value = false;
-        axios.get('/clear_cache').then(res=>{
+        axios.get('/clear_cache').then(res => {
             console.log(res.data);
         })
     }
@@ -179,8 +139,8 @@ const downloadExcelFile = async () => {
 
     // Specify the headers you want to include in the Excel file
     // const desiredHeaders = ['user_code', 'user_code', 'shift_start_time', 'shift_end_time', 'shift_end_time'];
-    const desiredHeaders = ['user_code', 'name', 'department', 'process', 'location'];
-    const authorMessage = 'this report generated by ABShrms payroll software ';
+    const desiredHeaders = ['Employee Code', 'Employee Name', 'Department', 'Process', 'Location'];
+    const authorMessage = 'This report generated by ABShrms payroll software ';
     // Add headers to the worksheet
     // const headers = Object.keys(useDashboard.ShowEmployeeStatuswise[0]);
     const headers = desiredHeaders
@@ -261,7 +221,7 @@ const toggleClass = ref('downloaded');
 <style>
 .p-sidebar-right .p-sidebar
 {
-    width: 80%;
+    width: 60% !important;
     height: 100%;
 }
 </style>

@@ -4370,7 +4370,7 @@ class VmtAttendanceService
             ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
             ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
             ->where('users.is_ssa', '0')->where('users.active', '1')
-            ->get(['users.id as id', 'users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
 
         foreach ($employees_data as $key => $single_user_data) {
             $user_code = $single_user_data->user_code;
