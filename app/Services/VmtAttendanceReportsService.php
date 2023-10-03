@@ -110,7 +110,7 @@ class VmtAttendanceReportsService
     {
 
         $emp_work_shift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->get();
-
+    
         if (count($emp_work_shift) == 1) {
             $regularTime  = VmtWorkShifts::where('id', $emp_work_shift->first()->work_shift_id)->first();
             return  $regularTime;

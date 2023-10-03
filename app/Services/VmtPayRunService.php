@@ -19,16 +19,15 @@ class VmtPayRunService
     {
         $this->attendance_report_service = $attendance_report_service;
     }
-    public function fetch_attendance_data($start_date, $end_date, $department,$client_id, $type, $active_status)
+    public function fetch_attendance_data($start_date, $end_date, $department_id,$client_id, $type, $active_status)
     {
-
         ini_set('max_execution_time', 300);
         $validator = Validator::make(
             $data = [   
                 'client_id' => $client_id,
                 'type' => $type,
                 'active_status' => $active_status,
-                'department_id' => $department,
+                'department_id' => $department_id,
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
@@ -50,8 +49,6 @@ class VmtPayRunService
         }
 
         try {
-
-
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
@@ -66,15 +63,15 @@ class VmtPayRunService
         $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('is_ssa', '0')
-            ->where('active', '1')
+            ->where('active', $active_status)
             ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
-        if ( $client_id) {
-            $user = $user->where('client_id',  $client_id);
-        }
-        if ($department) {
-            $user = $user->whereIn('vmt_employee_office_details.department_id', $department)->get();
-           
-        }
+
+            if (!empty($client_id)) {
+                $user = $user->whereIn('client_id', $client_id);
+            }
+            if (!empty($department_id)) {
+                $user = $user->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
         
         $user = $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
       
@@ -185,16 +182,14 @@ class VmtPayRunService
             //$days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
             //dd($totalDays );
             //For Excel Sheet Headers
-            $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
 
+            $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
 
             for ($i = 0; $i <= $totalDays; $i++) {
                 $fulldate = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
                 $date = Carbon::parse($firstDateStr)->addDay($i)->format('d');
-
                 $date_day = $date . ' - ' . Carbon::parse($fulldate)->format('l');
                 array_push($heading_dates, $date_day);
-
                 $attendanceResponseArray[$fulldate] = array(
                     //"user_id"=>$request->user_id,
                     "user_id" => $singleUser->id, "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false,
@@ -309,6 +304,10 @@ class VmtPayRunService
                 //get Shift Time for day
 
                 $shift_settings =  $this->attendance_report_service->getShiftTimeForEmployee($singleUser->id, $value['checkin_time'], $value['checkout_time']);
+              
+               if( empty($shift_settings)){
+               dd( $value['user_id']);
+               }
                 $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                 $weekOffDays =  $shift_settings->week_off_days;
@@ -567,13 +566,12 @@ class VmtPayRunService
                 $arrayReport['Total EG'] =   $total_EG;
             }
             $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday + $total_OD) - $total_lop;
-
             $arrayReport['Total Payable Days'] =  $total_payable_days;
             array_push($reportresponse, $arrayReport);
             unset($arrayReport);
         }
-        $data['headers'] =$heading_dates;
-        $data['rows'] =  $reportresponse;
+        $response['headers'] =$heading_dates;
+        $response['rows'] =  $reportresponse;
         }
         catch (\Exception $e) {
             $response = [
@@ -584,7 +582,7 @@ class VmtPayRunService
                 'error_verbose' => $e->getLine()
             ];
         }
-        return $data;
+        return $response;
     }
 }
     
