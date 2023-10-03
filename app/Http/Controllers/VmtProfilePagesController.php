@@ -758,21 +758,21 @@ class VmtProfilePagesController extends Controller
         // $user_id == Crypt::decrypt($request->uid);
         // return redirect()->route('profile-page-v3', ['uid' =>$request->uid]);
 
-        return view('profilePage_new', compact('user', 'user_full_details', 'reportingManager', 'profileCompletenessValue', 'data', 'employees'));
+        // return view('profilePage_new', compact('user', 'user_full_details', 'reportingManager', 'profileCompletenessValue', 'data', 'employees'));
     }
 
-    public function fetchEmployeeProfilePagesDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
+    public function fetchEmployeeProfilePagesDetails($user_id, VmtProfilePagesService $serviceVmtProfilePagesService)
     {
 
-        $user_id = null;
+        // $user_id = null;
 
-        //If empty, then show current user profile page
-        if (empty($request->uid)) {
-            $user_id = auth()->user()->id;
-        } else {
-            $user_id = User::find(Crypt::decryptString($request->uid))->id;
-            //dd("Enc User details from request : ".$user);
-        }
+        // //If empty, then show current user profile page
+        // if (empty($request->uid)) {
+        //     $user_id = auth()->user()->id;
+        // } else {
+        //     $user_id = User::find(Crypt::decryptString($request->uid))->id;
+        //     //dd("Enc User details from request : ".$user);
+        // }
 
         return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
@@ -1010,39 +1010,38 @@ class VmtProfilePagesController extends Controller
         return   $response;
     }
     public function saveDocumentDetails(Request $request)
-    { 
+    {
         // dd($request->all());
-       try{
-        $emp_doc_details = VmtEmployee::where('userid', $request->userid)->first();
-        // dd( $emp_doc_details);
-        if ($emp_doc_details->exists()) {
-            $emp_doc_details->aadhar_enrollment_number = $request->aadhar_enrollment_number;
-            $emp_doc_details->voter_id_number = $request->voter_id_number;
-            $emp_doc_details->voter_id_issued_on = $request->voter_id_issued_on;
-            $emp_doc_details->degree = $request->degree;
-            $emp_doc_details->dc_branch_specialization = $request->dc_branch_specialization;
-            $emp_doc_details->dc_year_of_completion = $request->dc_year_of_completion;
-            $emp_doc_details->dc_cgpa_percentage =$request->dc_cgpa_percentage;
-            $emp_doc_details->dc_university_school = $request->dc_university_school;
-            $emp_doc_details->passport_country_code =$request->passport_country_code;
-            $emp_doc_details->passport_type = $request->passport_type;
-            $emp_doc_details->passport_date_of_issue = $request->passport_date_of_issue;
-            $emp_doc_details->passport_place_of_issue = $request->passport_place_of_issue;
-            $emp_doc_details->passport_place_of_birth = $request->passport_place_of_birth;
-            $emp_doc_details->passport_expire_on = $request->passport_expire_on;
-            $emp_doc_details->save();
-            return $response =([
-                'status' =>"success",
-                'message'=>" saved successfully",
+        try {
+            $emp_doc_details = VmtEmployee::where('userid', $request->userid)->first();
+            // dd( $emp_doc_details);
+            if ($emp_doc_details->exists()) {
+                $emp_doc_details->aadhar_enrollment_number = $request->aadhar_enrollment_number;
+                $emp_doc_details->voter_id_number = $request->voter_id_number;
+                $emp_doc_details->voter_id_issued_on = $request->voter_id_issued_on;
+                $emp_doc_details->degree = $request->degree;
+                $emp_doc_details->dc_branch_specialization = $request->dc_branch_specialization;
+                $emp_doc_details->dc_year_of_completion = $request->dc_year_of_completion;
+                $emp_doc_details->dc_cgpa_percentage = $request->dc_cgpa_percentage;
+                $emp_doc_details->dc_university_school = $request->dc_university_school;
+                $emp_doc_details->passport_country_code = $request->passport_country_code;
+                $emp_doc_details->passport_type = $request->passport_type;
+                $emp_doc_details->passport_date_of_issue = $request->passport_date_of_issue;
+                $emp_doc_details->passport_place_of_issue = $request->passport_place_of_issue;
+                $emp_doc_details->passport_place_of_birth = $request->passport_place_of_birth;
+                $emp_doc_details->passport_expire_on = $request->passport_expire_on;
+                $emp_doc_details->save();
+                return $response = ([
+                    'status' => "success",
+                    'message' => " saved successfully",
+                ]);
+            }
+        } catch (\Exception $e) {
+            return $response = ([
+                'status' => "success",
+                'message' => "error while fetching data successfully",
+                'data' => $e->getmessage() . "  Line " . $e->getline(),
             ]);
         }
-    }catch(\Exception $e){
-        return $response =([
-             'status' =>"success",
-             'message'=>"error while fetching data successfully",
-             'data'=>$e->getmessage()."  Line ".$e->getline(),
-         ]); 
     }
-}
-
 }

@@ -39,6 +39,7 @@ import Dashboard from '../dashboard/dashboard.vue'
 
 
 import { onMounted, ref } from 'vue';
+import axios from 'axios';
 
 const isOpen = ref(false);
 const isOpens = ref(false);
@@ -53,6 +54,9 @@ const toggleDayNight = () => {
 const loading = ref(true)
 
 onMounted(() => {
+    axios.get('/clear_cache').then((res) => {
+        console.log(res.data);
+    })
     setTimeout(() => {
         loading.value = false
     }, 2000);

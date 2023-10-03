@@ -31,17 +31,41 @@
                 class="mt-3 mb-2 !rounded-[20px] shadow-sm !h-[180px]"
                 style="width: 100%; margin-bottom: 10px;position: relative;right: 0;  bottom :10px; display: block;"
                 :alt="slotProps.item.holiday_name" />
+                <button class=" text-[#fff] absolute right-4 top-2 px-3 text-['poppins'] rounded-lg p-1 bg-[#00000067] "  @click="visibleRight = true">View List</button>
         </template>
+
     </Galleria>
+    <Sidebar v-model:visible="visibleRight" position="right">
+    <!-- <h2>Right Sidebar</h2> -->
+
+    <DataTable :value="holidays" tableStyle="min-width: 50rem">
+    <Column field="holiday_name" header="Holiday Name"></Column>
+    <Column field="holiday_date" header="Holiday Date">
+    <template #body="slotProps"  >
+        <!-- <div> -->
+            {{ dayjs(slotProps.data.holiday_date).format('DD-MMM-YYYY')}}  {{  dayjs(slotProps.data.holiday_date).format('ddd')  }}
+        <!-- </div> -->
+    </template>
+    </Column>
+    <Column field="holiday_description" header="Holiday Description "></Column>
+</DataTable>
+
+</Sidebar>
 </template>
 
 <script setup>
 import axios from 'axios';
 import { ref, computed, onMounted } from 'vue';
+import dayjs from 'dayjs';
 
 const currentIndex = ref();
 const holidays = ref()
-const currentImage = ref()
+const currentImage = ref();
+
+
+const visibleRight = ref(false);
+
+
 
 
 const getHolidays = () => {
@@ -182,5 +206,10 @@ onMounted(() => {
 {
     position: absolute;
     top: 55px !important;
+}
+.p-sidebar-right .p-sidebar
+{
+    width: 50rem;
+    height: 100%;
 }
 </style>

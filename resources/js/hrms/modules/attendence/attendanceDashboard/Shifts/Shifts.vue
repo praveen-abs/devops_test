@@ -3,7 +3,7 @@
     <div class="bg-white p-2 rounded-lg border" v-if="useDashboard.attendanceDashboardWorkShiftSource">
         <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Shift</span>
         <div class="grid grid-cols-6 gap-2 my-2">
-            <div class="bg-gray-100 w-[180px] h-[200px] rounded-lg cursor-pointer"
+            <div class="bg-gray-100 w-[180px] h-[200px] rounded-lg cursor-pointer transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100"
                 @click="useDashboard.canShowShiftDetails = true, useDashboard.currentlySelectedShiftDetails = { ...shift.work_shift_employee_data },useDashboard.downloadShiftDetails.push({ ...shift.work_shift_employee_data })"
                 v-for="(shift, index) in useDashboard.attendanceDashboardWorkShiftSource " :key="index">
                 <div class="w-full bg-gray-200 p-2 rounded-lg" >

@@ -1770,4 +1770,9 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
 
         return ["Actual" => $payroll_value, "Projection" => $compensatory_value, "Total" => $res, "Total Income" => $total_income];
     }
+    public function sendEmployeeBirthdayMail()
+    {
+
+       $data = (new VmtEmployeeBirthdayController)->sendBirthdayNotificationtoEmployee();
+    }
 }

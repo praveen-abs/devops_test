@@ -2,10 +2,14 @@
     <div class="px-2">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Attendance Reports</h1>
-            <div>
-                <button @click="EmployeeMaster.clearfilterBtn(activetab),Reports_store.clearDataTable()"
+            <div class="flex items-center ">
+                <button @click="EmployeeMaster.clearfilterBtn(Reports_store.activetab),Reports_store.clearDataTable()"
                     class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-times"></i> Clear Filter</button>
+                        <!-- useEmployeeReport.updateEmployeeApplyFilter(activetab) -->
+                        <button @click="Reports_store.updateAttendanceReports(Reports_store.activetab)"
+                    class="my-2 flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] !bg-[#E6E6E6] mx-2 rounded-[4px] "><i
+                        class="mr-2 pi pi-filter"></i> Run</button>
             </div>
         </div>
         <div style="position: relative;">
@@ -66,13 +70,13 @@
                         <Dropdown optionLabel="month" optionValue="date" :options="EmployeeMaster.PeriodMonth"
                             v-model="EmployeeMaster.period_Date"
                             @change="Reports_store.getSelectoption('date', EmployeeMaster.period_Date, Reports_store.activetab)"
-                            placeholder="Select period"
+                            placeholder="-- Select --"
                             class="w-[120px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                     </li>
                     <li class="flex items-center">
                         <h1 class="text-[12px] text-black mx-2 font-semibold  font-['poppins']">Department : </h1>
                         <MultiSelect v-model="EmployeeMaster.Department" :options="EmployeeMaster.department"
-                            optionLabel="name" placeholder="Department"
+                            optionLabel="name" placeholder="-- Select --"
                             @change="Reports_store.getSelectoption('department', EmployeeMaster.Department, Reports_store.activetab)"
                             optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
@@ -82,7 +86,7 @@
                         <MultiSelect
                             @change="Reports_store.getSelectoption('legal_entity', EmployeeMaster.legal_Entity, Reports_store.activetab)"
                             v-model="EmployeeMaster.legal_Entity" :options="EmployeeMaster.client_ids"
-                            optionLabel="client_fullname" placeholder="Legal Entity" optionValue="id" :maxSelectedLabels="3"
+                            optionLabel="client_fullname" placeholder="-- Select --" optionValue="id" :maxSelectedLabels="3"
                             class="min-w-[100px] w-[140px] my-1  !font-semibold !font-['poppins'] !h-10 text-[#000] !bg-[#E6E6E6]" />
                     </li>
                 </ul>
@@ -106,17 +110,13 @@
                                 </div>
 
                                 <div class="flex items-center pt-2 ml-2" v-if="Reports_store.activetab == 5">
-                                    <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Period : </h1>
+                                    <h1 class="text-[12px] text-black mx-1 font-semibold font-['poppins'] ">Category : </h1>
                                     <Dropdown optionLabel="type" optionValue="id" :options="attendanceReportType"
                                         v-model="Reports_store.attendance_Type"
                                         placeholder="Select Type"
                                         class="w-[120px] text-[10px]  mx-1 !h-10 my-1  !font-semibold !font-['poppins'] !text-[#000] !bg-[#E6E6E6]" />
                                 </div>
-                                <div>
-                                    <Calendar v-model="Reports_store.Start_Date" @date-select="Reports_store.select_StartAndEnd_Date('start_date',dayjs(Reports_store.Start_Date).format('YYYY-MM-DD'), Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
-                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @date-select="Reports_store.select_StartAndEnd_Date('end_date',dayjs(Reports_store.End_Date).format('YYYY-MM-DD') , Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
 
-                                </div>
 
 
 
@@ -156,6 +156,15 @@
                                     style="white-space: nowrap;text-align: left; !important;width:15rem !important; marign-right:1rem !important ;">
                                 </Column>
                             </DataTable>
+
+                            <Dialog v-model:visible="Reports_store.dialog_customDate" modal header="Custom Date" :style="{ width: '30vw' }">
+                                <div>
+                                    <div class="flex items-center">
+                                    <Calendar v-model="Reports_store.Start_Date" @date-select="Reports_store.select_StartAndEnd_Date('start_date',dayjs(Reports_store.Start_Date).format('YYYY-MM-DD'), Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
+                                    <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @date-select="Reports_store.select_StartAndEnd_Date('end_date',dayjs(Reports_store.End_Date).format('YYYY-MM-DD') , Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
+                                 </div>
+                                </div>                                
+                            </Dialog>
 
                         </div>
                     </div>

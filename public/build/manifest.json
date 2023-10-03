@@ -11,101 +11,49 @@
     "file": "assets/color-473bc8ca.png",
     "src": "node_modules/primevue/resources/images/color.png"
   },
+  "resources/js/hrms/assests/images/no-data.svg": {
+    "file": "assets/no-data-64d4a326.svg",
+    "src": "resources/js/hrms/assests/images/no-data.svg"
+  },
   "node_modules/primeicons/fonts/primeicons.woff2": {
     "file": "assets/primeicons-3824be50.woff2",
     "src": "node_modules/primeicons/fonts/primeicons.woff2"
+  },
+  "resources/js/hrms/assests/images/Page-is-under-construction.svg": {
+    "file": "assets/Page-is-under-construction-5d6792b4.svg",
+    "src": "resources/js/hrms/assests/images/Page-is-under-construction.svg"
   },
   "node_modules/primeicons/fonts/primeicons.woff": {
     "file": "assets/primeicons-90a58d3a.woff",
     "src": "node_modules/primeicons/fonts/primeicons.woff"
   },
-  "node_modules/primeicons/fonts/primeicons.ttf": {
-    "file": "assets/primeicons-131bc3bf.ttf",
-    "src": "node_modules/primeicons/fonts/primeicons.ttf"
-  },
-  "node_modules/primeicons/fonts/primeicons.svg": {
-    "file": "assets/primeicons-5e10f102.svg",
-    "src": "node_modules/primeicons/fonts/primeicons.svg"
-  },
-  "resources/js/hrms/assests/printer.svg": {
-    "file": "assets/printer-d58eef0b.svg",
-    "src": "resources/js/hrms/assests/printer.svg"
-  },
-  "resources/js/hrms/assests/download.svg": {
-    "file": "assets/download-ca50c50b.svg",
-    "src": "resources/js/hrms/assests/download.svg"
-  },
   "resources/js/hrms/assests/images/svg_oops.svg": {
     "file": "assets/svg_oops-cc560542.svg",
     "src": "resources/js/hrms/assests/images/svg_oops.svg"
   },
-  "resources/js/hrms/assests/images/no-data.svg": {
-    "file": "assets/no-data-dc25b94b.svg",
-    "src": "resources/js/hrms/assests/images/no-data.svg"
+  "node_modules/primeicons/fonts/primeicons.ttf": {
+    "file": "assets/primeicons-131bc3bf.ttf",
+    "src": "node_modules/primeicons/fonts/primeicons.ttf"
   },
   "resources/js/hrms/assests/images/requirement.png": {
     "file": "assets/requirement-5048f466.png",
     "src": "resources/js/hrms/assests/images/requirement.png"
   },
-  "resources/js/hrms/assests/images/login-page-img.png": {
-    "file": "assets/login-page-img-867cdee4.png",
-    "src": "resources/js/hrms/assests/images/login-page-img.png"
-  },
-  "resources/js/hrms/assests/images/Google_logo.png": {
-    "file": "assets/Google_logo-5240924b.png",
-    "src": "resources/js/hrms/assests/images/Google_logo.png"
-  },
-  "resources/js/hrms/assests/images/Linkedin_logo.png": {
-    "file": "assets/Linkedin_logo-f2ea4fc6.png",
-    "src": "resources/js/hrms/assests/images/Linkedin_logo.png"
-  },
-  "resources/js/hrms/assests/images/evangelist.png": {
-    "file": "assets/evangelist-53e907c8.png",
-    "src": "resources/js/hrms/assests/images/evangelist.png"
-  },
-  "resources/js/hrms/assests/images/Microsoft_logo.png": {
-    "file": "assets/Microsoft_logo-0727a635.png",
-    "src": "resources/js/hrms/assests/images/Microsoft_logo.png"
-  },
-  "resources/js/hrms/assests/images/Playstore_Logo.png": {
-    "file": "assets/Playstore_Logo-74aa15ba.png",
-    "src": "resources/js/hrms/assests/images/Playstore_Logo.png"
-  },
-  "resources/js/hrms/assests/images/App_Store_Logo.png": {
-    "file": "assets/App_Store_Logo-8c7b0075.png",
-    "src": "resources/js/hrms/assests/images/App_Store_Logo.png"
-  },
-  "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg": {
-    "file": "assets/noData-99184d53.svg",
-    "src": "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg"
-  },
-  "resources/js/hrms/assests/icons/edit.svg": {
-    "file": "assets/edit-fdffc648.svg",
-    "src": "resources/js/hrms/assests/icons/edit.svg"
-  },
-  "resources/js/hrms/modules/payroll/assests/calendar.svg": {
-    "file": "assets/calendar-11742259.svg",
-    "src": "resources/js/hrms/modules/payroll/assests/calendar.svg"
-  },
-  "resources/js/hrms/components/logo.jpg": {
-    "file": "assets/logo-dbabb993.jpg",
-    "src": "resources/js/hrms/components/logo.jpg"
-  },
-  "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg": {
-    "file": "assets/femaleDashboardImage-7f53f6fa.svg",
-    "src": "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg"
+  "node_modules/primeicons/fonts/primeicons.svg": {
+    "file": "assets/primeicons-5e10f102.svg",
+    "src": "node_modules/primeicons/fonts/primeicons.svg"
   },
   "resources/js/hrms/modules/Home/assests/icons/setting.svg": {
     "file": "assets/setting-7207a137.svg",
     "src": "resources/js/hrms/modules/Home/assests/icons/setting.svg"
   },
-  "resources/js/hrms/modules/Home/assests/images/ABS_small_logo_yellow.png": {
-    "file": "assets/ABS_small_logo_yellow-e2f94255.png",
-    "src": "resources/js/hrms/modules/Home/assests/images/ABS_small_logo_yellow.png"
-  },
   "resources/js/hrms/modules/Home/assests/icons/notification.svg": {
     "file": "assets/notification-429a4257.svg",
     "src": "resources/js/hrms/modules/Home/assests/icons/notification.svg"
+  },
+  "resources/js/hrms/modules/Home/assests/images/ABS_small_logo_yellow.png": {
+    "file": "assets/ABS_small_logo_yellow-e2f94255.png",
+    "src": "resources/js/hrms/modules/Home/assests/images/ABS_small_logo_yellow.png"
   },
   "resources/js/hrms/modules/Home/assests/icons/exit.svg": {
     "file": "assets/exit-9e7ca153.svg",
@@ -115,879 +63,136 @@
     "file": "assets/ABS_logo_Yellow-7e4e368e.png",
     "src": "resources/js/hrms/modules/Home/assests/images/ABS_logo_Yellow.png"
   },
+  "resources/js/hrms/assests/icons/edit.svg": {
+    "file": "assets/edit-fdffc648.svg",
+    "src": "resources/js/hrms/assests/icons/edit.svg"
+  },
+  "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg": {
+    "file": "assets/noData-99184d53.svg",
+    "src": "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg"
+  },
+  "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg": {
+    "file": "assets/femaleDashboardImage-7f53f6fa.svg",
+    "src": "resources/js/hrms/modules/dashboard/dashboard/femaleDashboardImage.svg"
+  },
+  "resources/js/hrms/components/logo.jpg": {
+    "file": "assets/logo-dbabb993.jpg",
+    "src": "resources/js/hrms/components/logo.jpg"
+  },
   "resources/scss/main.scss": {
-    "file": "assets/main-f940cf02.css",
+    "file": "assets/main-cdb876e9.css",
     "src": "resources/scss/main.scss",
     "isEntry": true
   },
-  "resources/js/hrms/modules/reports/ReportsModule.css": {
-    "file": "assets/ReportsModule-cbb90b06.css",
-    "src": "resources/js/hrms/modules/reports/ReportsModule.css"
+  "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.css": {
+    "file": "assets/ReimbursementsApproval-4aab514e.css",
+    "src": "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.css"
   },
-  "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.css": {
+  "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.css": {
+    "file": "assets/attendanceDashboard-56668a9f.css",
+    "src": "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.css"
+  },
+  "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.css": {
     "file": "assets/AttRegularizationApproval-d3a26226.css",
-    "src": "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.css"
+    "src": "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.css"
   },
-  "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.css": {
-    "file": "assets/QuickOnboarding-8d71cc7b.css",
-    "src": "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.css"
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.css": {
-    "file": "assets/attendanceEarlygoingReports-0edb536b.css",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.css"
-  },
-  "resources/js/hrms/modules/attendence/AttendanceModule.css": {
-    "file": "assets/AttendanceModule-317774b9.css",
-    "src": "resources/js/hrms/modules/attendence/AttendanceModule.css"
+  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.css": {
+    "file": "assets/ManageWelcomeMailStatus-30877a33.css",
+    "src": "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.css"
   },
   "LoadingSpinner.css": {
     "file": "assets/LoadingSpinner-404d9c4d.css",
     "src": "LoadingSpinner.css"
   },
-  "Holidays_Lists.css": {
-    "file": "assets/Holidays_Lists-40ab7ac1.css",
-    "src": "Holidays_Lists.css"
+  "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.css": {
+    "file": "assets/BulkOnboarding-3c93c1ff.css",
+    "src": "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.css"
+  },
+  "resources/js/hrms/modules/Home/Home.css": {
+    "file": "assets/Home-a8e31151.css",
+    "src": "resources/js/hrms/modules/Home/Home.css"
+  },
+  "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.css": {
+    "file": "assets/NormalOnboarding-3db61c62.css",
+    "src": "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.css"
+  },
+  "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.css": {
+    "file": "assets/QuickOnboarding-8d71cc7b.css",
+    "src": "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.css"
   },
   "resources/scss/views/main_dashboard.scss": {
     "file": "assets/main_dashboard-a9c1194b.css",
     "src": "resources/scss/views/main_dashboard.scss",
     "isEntry": true
   },
-  "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.css": {
-    "file": "assets/GeneralShift-c7489012.css",
-    "src": "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.css"
-  },
-  "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.css": {
-    "file": "assets/NormalOnboarding-3b7bfcc1.css",
-    "src": "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.css"
-  },
-  "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.css": {
-    "file": "assets/ReimbursementsApproval-4aab514e.css",
-    "src": "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.css"
-  },
-  "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.css": {
-    "file": "assets/ManageEmployee-9dbea983.css",
-    "src": "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.css"
-  },
-  "BulkOnboarding.css": {
-    "file": "assets/BulkOnboarding-3c93c1ff.css",
-    "src": "BulkOnboarding.css"
-  },
-  "resources/js/hrms/modules/reports/ReportsMaster.css": {
-    "file": "assets/ReportsMaster-33549ea3.css",
-    "src": "resources/js/hrms/modules/reports/ReportsMaster.css"
-  },
-  "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.css": {
-    "file": "assets/attendanceDashboard-88ea12b9.css",
-    "src": "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.css"
-  },
-  "resources/js/hrms/modules/profile_pages/ProfilePageNew.css": {
-    "file": "assets/ProfilePageNew-6646363c.css",
-    "src": "resources/js/hrms/modules/profile_pages/ProfilePageNew.css"
-  },
-  "resources/js/hrms/modules/exit/exit.css": {
-    "file": "assets/exit-5c44c6ea.css",
-    "src": "resources/js/hrms/modules/exit/exit.css"
-  },
-  "employee_master_report.css": {
-    "file": "assets/employee_master_report-c1751524.css",
-    "src": "employee_master_report.css"
-  },
   "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.css": {
     "file": "assets/employee_salary_loan-b07edfe9.css",
     "src": "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.css"
   },
-  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.css": {
-    "file": "assets/ManageWelcomeMailStatus-30877a33.css",
-    "src": "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.css"
+  "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.css": {
+    "file": "assets/module_settings-9de977fc.css",
+    "src": "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.css"
   },
-  "dashboard.css": {
-    "file": "assets/dashboard-3afbf6c2.css",
-    "src": "dashboard.css"
-  },
-  "primevue.css": {
-    "file": "assets/primevue-1edf30fd.css",
-    "src": "primevue.css"
-  },
-  "client_onboarding.css": {
-    "file": "assets/client_onboarding-a22c9f12.css",
-    "src": "client_onboarding.css"
-  },
-  "EmployeePayslips.css": {
-    "file": "assets/EmployeePayslips-e458536d.css",
-    "src": "EmployeePayslips.css"
-  },
-  "finance_setting.css": {
-    "file": "assets/finance_setting-9ededded.css",
-    "src": "finance_setting.css"
-  },
-  "resources/js/hrms/modules/payroll/payRun/payRun.css": {
-    "file": "assets/payRun-b153a26c.css",
-    "src": "resources/js/hrms/modules/payroll/payRun/payRun.css"
+  "resources/js/hrms/modules/reports/ReportsMaster.css": {
+    "file": "assets/ReportsMaster-20e428ed.css",
+    "src": "resources/js/hrms/modules/reports/ReportsMaster.css"
   },
   "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.css": {
     "file": "assets/DocumentsSettings-7780b246.css",
     "src": "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.css"
   },
-  "LeaveApply.css": {
-    "file": "assets/LeaveApply-1353210a.css",
-    "src": "LeaveApply.css"
-  },
-  "AssignEmployee.css": {
-    "file": "assets/AssignEmployee-bf3ec3c0.css",
-    "src": "AssignEmployee.css"
-  },
-  "declaration.css": {
-    "file": "assets/declaration-9f00f2c8.css",
-    "src": "declaration.css"
+  "EmployeePayslips.css": {
+    "file": "assets/EmployeePayslips-e458536d.css",
+    "src": "EmployeePayslips.css"
   },
   "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.css": {
     "file": "assets/salary_advance_excel_import-99461bca.css",
     "src": "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.css"
   },
-  "resources/js/hrms/modules/configurations/module_settings/module_settings.css": {
-    "file": "assets/MobileSettings-9de977fc.css",
-    "src": "resources/js/hrms/modules/configurations/module_settings/module_settings.css"
+  "resources/js/hrms/modules/profile_pages/ProfilePageNew.css": {
+    "file": "assets/ProfilePageNew-6646363c.css",
+    "src": "resources/js/hrms/modules/profile_pages/ProfilePageNew.css"
   },
-  "resources/js/hrms/modules/login_Page/login_Page.css": {
-    "file": "assets/login_Page-7382a47b.css",
-    "src": "resources/js/hrms/modules/login_Page/login_Page.css"
+  "dashboard.css": {
+    "file": "assets/dashboard-79f72e79.css",
+    "src": "dashboard.css"
   },
-  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css": {
-    "file": "assets/client_onboarding_master-1737d69d.css",
-    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css"
-  },
-  "tailwind.css": {
-    "file": "assets/tailwind-2302f4e7.css",
-    "src": "tailwind.css"
-  },
-  "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.css": {
-    "file": "assets/approvals_salary_advance-ea4c8158.css",
-    "src": "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.css"
-  },
-  "investments_and_exemption.css": {
-    "file": "assets/investments_and_exemption-afa7657a.css",
-    "src": "investments_and_exemption.css"
-  },
-  "resources/js/hrms/modules/Home/Home.css": {
-    "file": "assets/Home-a8e31151.css",
-    "src": "resources/js/hrms/modules/Home/Home.css"
-  },
-  "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.css": {
-    "file": "assets/RolesAndPermission-e3b0c442.css",
-    "src": "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.css"
-  },
-  "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.css": {
-    "file": "assets/InvFormsMgmt-1b4cda05.css",
-    "src": "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.css"
-  },
-  "resources/js/hrms/modules/manage_payslips/ManagePayslips.css": {
-    "file": "assets/ManagePayslips-711e7645.css",
-    "src": "resources/js/hrms/modules/manage_payslips/ManagePayslips.css"
-  },
-  "resources/js/hrms/modules/paycheck/investments/investment.css": {
-    "file": "assets/investment-0c5b2b0e.css",
-    "src": "resources/js/hrms/modules/paycheck/investments/investment.css"
-  },
-  "theme.css": {
-    "file": "assets/theme-b1eccad1.css",
-    "src": "theme.css"
-  },
-  "payroll_setting.css": {
-    "file": "assets/payroll_setting-bd218eaf.css",
-    "src": "payroll_setting.css"
+  "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.css": {
+    "file": "assets/ManageEmployee-ef41e864.css",
+    "src": "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.css"
   },
   "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_Master.css": {
-    "file": "assets/Attendance_setting_Master-cb68c4ae.css",
+    "file": "assets/Attendance_setting_Master-6122fc32.css",
     "src": "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_Master.css"
   },
-  "primeicons.css": {
-    "file": "assets/primeicons-e2c0657a.css",
-    "src": "primeicons.css"
+  "resources/js/hrms/modules/attendence/AttendanceModule.css": {
+    "file": "assets/AttendanceModule-317774b9.css",
+    "src": "resources/js/hrms/modules/attendence/AttendanceModule.css"
   },
-  "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.css": {
-    "file": "assets/PMSApprovalTable-87bb6bce.css",
-    "src": "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.css"
+  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css": {
+    "file": "assets/client_onboarding_master-a1540bd2.css",
+    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css"
   },
-  "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.css": {
-    "file": "assets/payroll_setup-a3e5d574.css",
-    "src": "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.css"
+  "resources/js/hrms/modules/paycheck/investments/investment.css": {
+    "file": "assets/investment-bd1dfceb.css",
+    "src": "resources/js/hrms/modules/paycheck/investments/investment.css"
   },
-  "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.css": {
-    "file": "assets/salary_loan_setting-b1d7f00a.css",
-    "src": "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.css"
+  "AssignEmployee.css": {
+    "file": "assets/AssignEmployee-bf3ec3c0.css",
+    "src": "AssignEmployee.css"
   },
-  "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.css": {
-    "file": "assets/EmployeePayablesDetails-d3947eed.css",
-    "src": "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.css"
+  "LeaveApply.css": {
+    "file": "assets/LeaveApply-1353210a.css",
+    "src": "LeaveApply.css"
   },
-  "resources/js/hrms/modules/roles_permission/RolesPermission.css": {
-    "file": "assets/RolesPermission-0da1b364.css",
-    "src": "resources/js/hrms/modules/roles_permission/RolesPermission.css"
+  "resources/js/hrms/app.css": {
+    "file": "assets/app-e3763a2a.css",
+    "src": "resources/js/hrms/app.css"
   },
-  "attendanceBasicReports.css": {
-    "file": "assets/attendanceBasicReports-54518081.css",
-    "src": "attendanceBasicReports.css"
-  },
-  "primeflex.css": {
-    "file": "assets/primeflex-00f3202e.css",
-    "src": "primeflex.css"
-  },
-  "_confirmationservice.esm-c87db23e.js": {
-    "file": "assets/confirmationservice.esm-c87db23e.js",
-    "imports": [
-      "_toastservice.esm-c9da6ad1.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_row.esm-6ebc942e.js": {
-    "file": "assets/row.esm-6ebc942e.js"
-  },
-  "__plugin-vue_export-helper-c27b6911.js": {
-    "file": "assets/_plugin-vue_export-helper-c27b6911.js"
-  },
-  "_ProfilePagesStore-fdbd5911.js": {
-    "file": "assets/ProfilePagesStore-fdbd5911.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_Service-27f748d6.js",
-      "_vue-router-35bf78e1.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js": {
-    "file": "assets/attendanceBasicReports-3375a1c4.js",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceBasicReports/attendanceBasicReports.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_attendanceBasicReports-18f0fdcb.js",
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_no-data-d6f55554.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_Service-27f748d6.js",
-      "_pinia-4be28dc8.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_selectbutton.esm-82736b8b.js": {
-    "file": "assets/selectbutton.esm-82736b8b.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_progressspinner.esm-0bd742f8.js": {
-    "file": "assets/progressspinner.esm-0bd742f8.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_dialogservice.esm-85bfcd0f.js": {
-    "file": "assets/dialogservice.esm-85bfcd0f.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/reports/ReportsMaster.js": {
-    "file": "assets/ReportsMaster-31620ee5.js",
-    "src": "resources/js/hrms/modules/reports/ReportsMaster.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_sidebar.esm-606bc956.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_tag.esm-d4508f23.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_selectbutton.esm-82736b8b.js",
-      "resources/js/hrms/modules/reports/ReportsMaster.vue",
-      "_vue-router-35bf78e1.js",
-      "_employee_master_report-e9547735.js",
-      "_attendanceBasicReports-18f0fdcb.js",
-      "_index-362795f3.js",
-      "_lodash-facb8280.js",
-      "_dayjs.min-2f06af28.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_no-data-d6f55554.js",
-      "_Service-27f748d6.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_sidebar.esm-606bc956.js": {
-    "file": "assets/sidebar.esm-606bc956.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_download-5ba6c221.js": {
-    "file": "assets/download-5ba6c221.js",
+  "_no-data-17442c4e.js": {
+    "file": "assets/no-data-17442c4e.js",
     "assets": [
-      "assets/download-ca50c50b.svg"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.js": {
-    "file": "assets/QuickOnboarding-2d4b0471.js",
-    "src": "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_textarea.esm-c978610f.js",
-      "_inputmask.esm-ab587525.js",
-      "_router-6a1669fd.js",
-      "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue",
-      "_vue-router-35bf78e1.js",
-      "_index-362795f3.js",
-      "_ImportQuickOnboarding-32d7440c.js",
-      "_Service-27f748d6.js",
-      "_xlsx-4ad528ac.js",
-      "_NormalOnboardingMainStore-5f1943d2.js",
-      "_index.esm-ddbf59fa.js",
-      "_dayjs.min-2f06af28.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/BulkOnboarding-3c93c1ff.css"
-    ]
-  },
-  "resources/js/hrms/modules/reports/employee_master_report/employee_master_report.js": {
-    "file": "assets/employee_master_report-d84ae237.js",
-    "src": "resources/js/hrms/modules/reports/employee_master_report/employee_master_report.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_employee_master_report-e9547735.js",
-      "_index-362795f3.js",
-      "_lodash-facb8280.js",
-      "_pinia-4be28dc8.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_LoadingSpinner-bbcf6d6b.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js": {
-    "file": "assets/ManageEmployee-dc4b717e.js",
-    "src": "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_progressbar.esm-f3391934.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.vue",
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_Service-27f748d6.js",
-      "_vue-router-35bf78e1.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_EmployeeDocumentsManagerService-8c6ec0ef.js": {
-    "file": "assets/EmployeeDocumentsManagerService-8c6ec0ef.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_Service-27f748d6.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_password.esm-11ff2031.js": {
-    "file": "assets/password.esm-11ff2031.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js": {
-    "file": "assets/employee_salary_loan-0e3f65d3.js",
-    "src": "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_selectbutton.esm-82736b8b.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_checkbox.esm-8057af04.js",
-      "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue",
-      "_svg_oops-db663e6e.js",
-      "_index.esm-ddbf59fa.js",
-      "_index-362795f3.js",
-      "_lodash-facb8280.js",
-      "_dayjs.min-2f06af28.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js": {
-    "file": "assets/payroll_setting-d24bd789.js",
-    "src": "resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_inputswitch.esm-c10deee4.js",
-      "_payroll_setting-db8f3b17.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js",
-      "_index-362795f3.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "_accordiontab.esm-90d64af4.js": {
-    "file": "assets/accordiontab.esm-90d64af4.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/leave_module/LeaveModule.js": {
-    "file": "assets/LeaveModule-1e45532e.js",
-    "src": "resources/js/hrms/modules/leave_module/LeaveModule.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_checkbox.esm-8057af04.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_textarea.esm-c978610f.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_sidebar.esm-606bc956.js",
-      "resources/js/hrms/modules/leave_module/LeaveModule.vue",
-      "_Service-27f748d6.js",
-      "_index-362795f3.js",
-      "_moment-fbc5633a.js",
-      "_dayjs.min-2f06af28.js",
-      "_LeaveApply-f15bd940.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_index.esm-ddbf59fa.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_printer-346f1800.js": {
-    "file": "assets/printer-346f1800.js",
-    "assets": [
-      "assets/printer-d58eef0b.svg"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.vue": {
-    "file": "assets/BulkOnboarding-9cb6d36f.js",
-    "src": "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_ImportQuickOnboarding-32d7440c.js",
-      "_vue-router-35bf78e1.js",
-      "_NormalOnboardingMainStore-5f1943d2.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_Service-27f748d6.js",
-      "_xlsx-4ad528ac.js",
-      "_dayjs.min-2f06af28.js",
-      "_index.esm-ddbf59fa.js"
-    ],
-    "css": [
-      "assets/BulkOnboarding-3c93c1ff.css"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js": {
-    "file": "assets/ReimbursementsApproval-354a71d2.js",
-    "src": "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_moment-fbc5633a.js",
-      "_checkbox.esm-8057af04.js",
-      "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.vue",
-      "_index-362795f3.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_pinia-4be28dc8.js": {
-    "file": "assets/pinia-4be28dc8.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "__baseToString-68774409.js": {
-    "file": "assets/_baseToString-68774409.js",
-    "imports": [
-      "_index-362795f3.js"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue": {
-    "file": "assets/QuickOnboarding-e6aa4e33.js",
-    "src": "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_ImportQuickOnboarding-32d7440c.js",
-      "_vue-router-35bf78e1.js",
-      "_NormalOnboardingMainStore-5f1943d2.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_Service-27f748d6.js",
-      "_xlsx-4ad528ac.js",
-      "_dayjs.min-2f06af28.js",
-      "_index.esm-ddbf59fa.js"
-    ],
-    "css": [
-      "assets/QuickOnboarding-8d71cc7b.css"
-    ]
-  },
-  "resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js": {
-    "file": "assets/PMSFormsDownloadTable-c18428dd.js",
-    "src": "resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.vue": {
-    "file": "assets/client_onboarding_master-7b8900ac.js",
-    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_client_onboarding-70ccc27f.js",
-      "_index.esm-ddbf59fa.js"
-    ],
-    "css": [
-      "assets/client_onboarding_master-1737d69d.css"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.vue": {
-    "file": "assets/ManageWelcomeMailStatus-bafab281.js",
-    "src": "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_pinia-4be28dc8.js",
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/ManageWelcomeMailStatus-30877a33.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_dynamicdialog.esm-ff159ee0.js": {
-    "file": "assets/dynamicdialog.esm-ff159ee0.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_dialogservice.esm-85bfcd0f.js"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.vue": {
-    "file": "assets/MobileSettings-46b67507.js",
-    "src": "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_AssignEmployee-b714e456.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js"
-    ],
-    "css": [
-      "assets/MobileSettings-9de977fc.css"
-    ]
-  },
-  "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js": {
-    "file": "assets/salary_advance_excel_import-0338492d.js",
-    "src": "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_selectbutton.esm-82736b8b.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_checkbox.esm-8057af04.js",
-      "_organizationchart.esm-986e00b3.js",
-      "_vue-router-35bf78e1.js",
-      "_index-362795f3.js",
-      "_xlsx-4ad528ac.js",
-      "_dayjs.min-2f06af28.js",
-      "_Service-27f748d6.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/salary_advance_excel_import-99461bca.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "_chips.esm-7a523133.js": {
-    "file": "assets/chips.esm-7a523133.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.vue": {
-    "file": "assets/DocumentsSettings-b7cc2280.js",
-    "src": "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_Service-27f748d6.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/DocumentsSettings-7780b246.css"
-    ]
-  },
-  "_checkbox.esm-8057af04.js": {
-    "file": "assets/checkbox.esm-8057af04.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js": {
-    "file": "assets/AttRegularizationApproval-3e4939e5.js",
-    "src": "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_tag.esm-d4508f23.js",
-      "_textarea.esm-c978610f.js",
-      "_pinia-4be28dc8.js",
-      "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.vue",
-      "_index-362795f3.js",
-      "_moment-fbc5633a.js",
-      "_Service-27f748d6.js",
-      "_dayjs.min-2f06af28.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/payroll/payRun/payRun.js": {
-    "file": "assets/payRun-f2db8eac.js",
-    "src": "resources/js/hrms/modules/payroll/payRun/payRun.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_vue-router-35bf78e1.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_index-362795f3.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_tag.esm-d4508f23.js"
-    ],
-    "css": [
-      "assets/payRun-b153a26c.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ],
-    "assets": [
-      "assets/calendar-11742259.svg"
-    ]
-  },
-  "_textarea.esm-c978610f.js": {
-    "file": "assets/textarea.esm-c978610f.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
+      "assets/no-data-64d4a326.svg"
     ]
   },
   "_svg_oops-db663e6e.js": {
@@ -996,1225 +201,15 @@
       "assets/svg_oops-cc560542.svg"
     ]
   },
-  "resources/js/hrms/modules/approvals/onboarding/review_document.vue": {
-    "file": "assets/review_document-e3f017e7.js",
-    "src": "resources/js/hrms/modules/approvals/onboarding/review_document.vue",
-    "isDynamicEntry": true,
+  "_Service-2e0fbc76.js": {
+    "file": "assets/Service-2e0fbc76.js",
     "imports": [
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_dayjs.min-2f06af28.js",
-      "_map-a1368670.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__baseToString-68774409.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_tag.esm-d4508f23.js": {
-    "file": "assets/tag.esm-d4508f23.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_steps.esm-3d3ae003.js": {
-    "file": "assets/steps.esm-3d3ae003.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js": {
-    "file": "assets/Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_moment-fbc5633a.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/Holidays_Lists-40ab7ac1.css"
-    ]
-  },
-  "_client_onboarding-70ccc27f.js": {
-    "file": "assets/client_onboarding-70ccc27f.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_index-362795f3.js",
-      "_index.esm-ddbf59fa.js"
-    ],
-    "css": [
-      "assets/client_onboarding-a22c9f12.css"
-    ]
-  },
-  "_galleria.esm-b4308faf.js": {
-    "file": "assets/galleria.esm-b4308faf.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_fileupload.esm-08a98c5c.js": {
-    "file": "assets/fileupload.esm-08a98c5c.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js": {
-    "file": "assets/GeneralShift-188a3643.js",
-    "src": "resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_accordiontab.esm-90d64af4.js"
-    ],
-    "css": [
-      "assets/GeneralShift-c7489012.css",
-      "assets/primeflex-00f3202e.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "__commonjs-dynamic-modules-302442b1.js": {
-    "file": "assets/_commonjs-dynamic-modules-302442b1.js"
-  },
-  "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js": {
-    "file": "assets/investments_and_exemption-feab40c8.js",
-    "src": "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_investments_and_exemption-9b0cbace.js",
-      "_investmentMainStore-00003546.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "_dayjs.min-2f06af28.js",
-      "_index.esm-ddbf59fa.js",
-      "_moment-fbc5633a.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_vue-router-35bf78e1.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/dashboard/dashboard.js": {
-    "file": "assets/dashboard-eb7bb587.js",
-    "src": "resources/js/hrms/modules/dashboard/dashboard.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_badge.esm-c75556ed.js",
-      "_galleria.esm-b4308faf.js",
-      "_chart.esm-865e6d1a.js",
-      "_sidebar.esm-606bc956.js",
-      "resources/js/hrms/modules/dashboard/dashboard.vue",
-      "_Service-27f748d6.js",
-      "_index-362795f3.js",
-      "_dashboard.vue_vue_type_style_index_1_scoped_8309e156_lang-07d5b278.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "_dayjs.min-2f06af28.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_moment-fbc5633a.js",
-      "_exceljs.min-edd65134.js",
-      "__commonjs-dynamic-modules-302442b1.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_printer-e0530634.js": {
-    "file": "assets/printer-e0530634.js",
-    "assets": [
-      "assets/printer-d58eef0b.svg"
-    ]
-  },
-  "_AssignEmployee-b714e456.js": {
-    "file": "assets/AssignEmployee-b714e456.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js"
-    ],
-    "css": [
-      "assets/AssignEmployee-bf3ec3c0.css"
-    ]
-  },
-  "_Holidays_Lists-1fd19acf.js": {
-    "file": "assets/Holidays_Lists-1fd19acf.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_dayjs.min-2f06af28.js",
-      "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-      "_Holidays_Master-741e99b6.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_dashboard.vue_vue_type_style_index_1_scoped_8309e156_lang-07d5b278.js": {
-    "file": "assets/dashboard.vue_vue_type_style_index_1_scoped_8309e156_lang-07d5b278.js",
-    "imports": [
-      "_pinia-4be28dc8.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/dashboard-3afbf6c2.css"
-    ]
-  },
-  "resources/js/hrms/modules/attendence/AttendanceModule.js": {
-    "file": "assets/AttendanceModule-4f7a9057.js",
-    "src": "resources/js/hrms/modules/attendence/AttendanceModule.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_sidebar.esm-606bc956.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_tag.esm-d4508f23.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_selectbutton.esm-82736b8b.js",
-      "resources/js/hrms/modules/attendence/AttendanceModule.vue",
-      "_svg_oops-db663e6e.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_dayjs.min-2f06af28.js",
-      "_moment-fbc5633a.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_LeaveApply-f15bd940.js",
-      "_index.esm-ddbf59fa.js",
-      "_LoadingSpinner-bbcf6d6b.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js": {
-    "file": "assets/EmployeeDocumentsManager-249c2fa9.js",
-    "src": "resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_progressbar.esm-f3391934.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_checkbox.esm-8057af04.js",
-      "_index-362795f3.js",
-      "_EmployeeDocumentsManagerService-8c6ec0ef.js",
-      "_Service-27f748d6.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_vue-router-35bf78e1.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "_radiobutton.esm-9a5d27ab.js": {
-    "file": "assets/radiobutton.esm-9a5d27ab.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/reports/ReportsMaster.vue": {
-    "file": "assets/ReportsMaster-2d03f69d.js",
-    "src": "resources/js/hrms/modules/reports/ReportsMaster.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_employee_master_report-e9547735.js",
-      "_index-362795f3.js",
-      "_lodash-facb8280.js",
-      "_pinia-4be28dc8.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_dayjs.min-2f06af28.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/ReportsMaster-33549ea3.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_inputmask.esm-ab587525.js": {
-    "file": "assets/inputmask.esm-ab587525.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js": {
-    "file": "assets/LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-    "imports": [
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_index-362795f3.js",
-      "_moment-fbc5633a.js",
-      "_Service-27f748d6.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/LeaveApply-1353210a.css"
-    ],
-    "assets": [
-      "assets/logo-dbabb993.jpg"
-    ]
-  },
-  "resources/js/hrms/modules/login_Page/login_Page.js": {
-    "file": "assets/login_Page-88cbafec.js",
-    "src": "resources/js/hrms/modules/login_Page/login_Page.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_calendar.esm-1a4d557f.js",
-      "_password.esm-11ff2031.js",
-      "_pinia-4be28dc8.js",
+      "resources/js/hrms/app.js",
       "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/login_Page-7382a47b.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ],
-    "assets": [
-      "assets/login-page-img-867cdee4.png",
-      "assets/evangelist-53e907c8.png",
-      "assets/Google_logo-5240924b.png",
-      "assets/Linkedin_logo-f2ea4fc6.png",
-      "assets/Microsoft_logo-0727a635.png",
-      "assets/Playstore_Logo-74aa15ba.png",
-      "assets/App_Store_Logo-8c7b0075.png"
     ]
   },
-  "_overlaypanel.esm-05139ee9.js": {
-    "file": "assets/overlaypanel.esm-05139ee9.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_organizationchart.esm-986e00b3.js": {
-    "file": "assets/organizationchart.esm-986e00b3.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/reports/ReportsModule.js": {
-    "file": "assets/ReportsModule-63b77e25.js",
-    "src": "resources/js/hrms/modules/reports/ReportsModule.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_sidebar.esm-606bc956.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_tag.esm-d4508f23.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_selectbutton.esm-82736b8b.js",
-      "_printer-346f1800.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/ReportsModule-cbb90b06.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ],
-    "assets": [
-      "assets/download-ca50c50b.svg"
-    ]
-  },
-  "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue": {
-    "file": "assets/attendanceDashboard-eae6c94d.js",
-    "src": "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_dayjs.min-2f06af28.js",
-      "_exceljs.min-edd65134.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__commonjs-dynamic-modules-302442b1.js"
-    ],
-    "css": [
-      "assets/attendanceDashboard-88ea12b9.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.js": {
-    "file": "assets/attendanceDashboard-c346f47a.js",
-    "src": "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_sidebar.esm-606bc956.js",
-      "_chart.esm-865e6d1a.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_row.esm-6ebc942e.js",
-      "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue",
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_exceljs.min-edd65134.js",
-      "__commonjs-dynamic-modules-302442b1.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_LoadingSpinner-bbcf6d6b.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_badge.esm-c75556ed.js": {
-    "file": "assets/badge.esm-c75556ed.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js": {
-    "file": "assets/DocumentsSettings-d5ba4c37.js",
-    "src": "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_calendar.esm-1a4d557f.js",
-      "_checkbox.esm-8057af04.js",
-      "_pinia-4be28dc8.js",
-      "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.vue",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "_blockui.esm-0ae655a3.js": {
-    "file": "assets/blockui.esm-0ae655a3.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_finance_setting-8713d0ef.js": {
-    "file": "assets/finance_setting-8713d0ef.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/finance_setting-9ededded.css"
-    ]
-  },
-  "_index.esm-ddbf59fa.js": {
-    "file": "assets/index.esm-ddbf59fa.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_calendar.esm-1a4d557f.js": {
-    "file": "assets/calendar.esm-1a4d557f.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_LoadingSpinner-bbcf6d6b.js": {
-    "file": "assets/LoadingSpinner-bbcf6d6b.js",
-    "imports": [
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_moment-fbc5633a.js": {
-    "file": "assets/moment-fbc5633a.js"
-  },
-  "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js": {
-    "file": "assets/EmpDetails_approvals-9e028689.js",
-    "src": "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_moment-fbc5633a.js",
-      "_checkbox.esm-8057af04.js",
-      "_tag.esm-d4508f23.js",
-      "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue",
-      "_index-362795f3.js",
-      "_map-a1368670.js",
-      "__baseToString-68774409.js",
-      "_Service-27f748d6.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/leaves/LeaveApproval.js": {
-    "file": "assets/LeaveApproval-4330810c.js",
-    "src": "resources/js/hrms/modules/approvals/leaves/LeaveApproval.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_tag.esm-d4508f23.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "resources/js/hrms/modules/approvals/leaves/LeaveApproval.vue",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_pinia-4be28dc8.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_employee_master_report-e9547735.js": {
-    "file": "assets/employee_master_report-e9547735.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_lodash-facb8280.js",
-      "_pinia-4be28dc8.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_LoadingSpinner-bbcf6d6b.js"
-    ],
-    "css": [
-      "assets/employee_master_report-c1751524.css"
-    ]
-  },
-  "_Service-27f748d6.js": {
-    "file": "assets/Service-27f748d6.js",
-    "imports": [
-      "_pinia-4be28dc8.js",
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_inputswitch.esm-c10deee4.js": {
-    "file": "assets/inputswitch.esm-c10deee4.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/holidays/CreateNewHolidaysList.js": {
-    "file": "assets/CreateNewHolidaysList-e754ae90.js",
-    "src": "resources/js/hrms/modules/configurations/holidays/CreateNewHolidaysList.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-      "_pinia-4be28dc8.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_moment-fbc5633a.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js": {
-    "file": "assets/OnboardingFormMgmt-9f895262.js",
-    "src": "resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_progressbar.esm-f3391934.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js": {
-    "file": "assets/MobileSettings-8241903f.js",
-    "src": "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_calendar.esm-1a4d557f.js",
-      "_checkbox.esm-8057af04.js",
-      "_pinia-4be28dc8.js",
-      "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.vue",
-      "_AssignEmployee-b714e456.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.vue": {
-    "file": "assets/ManageEmployee-ca2ddd11.js",
-    "src": "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_dayjs.min-2f06af28.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_pinia-4be28dc8.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_vue-router-35bf78e1.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/ManageEmployee-9dbea983.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js": {
-    "file": "assets/attendanceLatecomingReports-6debf396.js",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/attendanceEarlygoingReports-0edb536b.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js": {
-    "file": "assets/EmployeePayslips-e1356847.js",
-    "src": "resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_EmployeePayslips-c77f5359.js",
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_EmployeeDocumentsManagerService-8c6ec0ef.js",
-      "_Service-27f748d6.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_vue-router-35bf78e1.js"
-    ],
-    "css": [
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_treetable.esm-17266b9c.js": {
-    "file": "assets/treetable.esm-17266b9c.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_datatable.esm-eb498605.js"
-    ]
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js": {
-    "file": "assets/attendanceEarlygoingReports-5c906981.js",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/attendanceEarlygoingReports-0edb536b.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/onboarding/review_document.js": {
-    "file": "assets/review_document-bc05c649.js",
-    "src": "resources/js/hrms/modules/approvals/onboarding/review_document.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_moment-fbc5633a.js",
-      "_checkbox.esm-8057af04.js",
-      "_tag.esm-d4508f23.js",
-      "resources/js/hrms/modules/approvals/onboarding/review_document.vue",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_map-a1368670.js",
-      "__baseToString-68774409.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/holidays/Holidays_Master.js": {
-    "file": "assets/Holidays_Master-3cf8f003.js",
-    "src": "resources/js/hrms/modules/configurations/holidays/Holidays_Master.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_Holidays_Master-741e99b6.js",
-      "_pinia-4be28dc8.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-      "_moment-fbc5633a.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js": {
-    "file": "assets/Holidays_Lists-0b63dffd.js",
-    "src": "resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_Holidays_Lists-1fd19acf.js",
-      "_pinia-4be28dc8.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-      "_moment-fbc5633a.js",
-      "_Holidays_Master-741e99b6.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js": {
-    "file": "assets/EmployeeDocsUpload-53bbfd77.js",
-    "src": "resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_progressbar.esm-f3391934.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/leave_module/LeaveModule.vue": {
-    "file": "assets/LeaveModule-9b4ec8fd.js",
-    "src": "resources/js/hrms/modules/leave_module/LeaveModule.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_Service-27f748d6.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_moment-fbc5633a.js",
-      "_pinia-4be28dc8.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_LeaveApply-f15bd940.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_index.esm-ddbf59fa.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js": {
-    "file": "assets/Attendance_setting_master-fa120824.js",
-    "src": "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_checkbox.esm-8057af04.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_Master.vue",
-      "_index-362795f3.js",
-      "_moment-fbc5633a.js",
-      "_lodash-facb8280.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_Holidays_Lists-1fd19acf.js",
-      "_dayjs.min-2f06af28.js",
-      "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-      "_Holidays_Master-741e99b6.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/profile_pages/ProfilePageNew.js": {
-    "file": "assets/ProfilePageNew-139face3.js",
-    "src": "resources/js/hrms/modules/profile_pages/ProfilePageNew.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "_progressbar.esm-f3391934.js",
-      "_sidebar.esm-606bc956.js",
-      "resources/js/hrms/modules/profile_pages/ProfilePageNew.vue",
-      "_lodash-facb8280.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_vue-router-35bf78e1.js",
-      "_index.esm-ddbf59fa.js",
-      "_dayjs.min-2f06af28.js",
-      "_moment-fbc5633a.js",
-      "_EmployeePayslips-c77f5359.js",
-      "_EmployeeDocumentsManagerService-8c6ec0ef.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/paycheck/salary_details/salary_details.vue": {
-    "file": "assets/salary_details-bde90e14.js",
-    "src": "resources/js/hrms/modules/paycheck/salary_details/salary_details.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_EmployeePayslips-c77f5359.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_EmployeeDocumentsManagerService-8c6ec0ef.js",
-      "_Service-27f748d6.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_vue-router-35bf78e1.js"
-    ],
-    "css": [
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/paycheck/investments/declaration/declaration.js": {
-    "file": "assets/declaration-e5e499ea.js",
-    "src": "resources/js/hrms/modules/paycheck/investments/declaration/declaration.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_declaration-492012e3.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_investmentMainStore-00003546.js",
-      "_Service-27f748d6.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "_declaration-492012e3.js": {
-    "file": "assets/declaration-492012e3.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_investmentMainStore-00003546.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/declaration-9f00f2c8.css"
-    ]
-  },
-  "_NormalOnboardingMainStore-5f1943d2.js": {
-    "file": "assets/NormalOnboardingMainStore-5f1943d2.js",
-    "imports": [
-      "_pinia-4be28dc8.js",
-      "_Service-27f748d6.js",
-      "_index.esm-ddbf59fa.js",
-      "_index-362795f3.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_Holidays_Master-741e99b6.js": {
-    "file": "assets/Holidays_Master-741e99b6.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js": {
-    "file": "assets/client_onboarding_master-d2727f95.js",
-    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.vue",
-      "_index-362795f3.js",
-      "_client_onboarding-70ccc27f.js",
-      "_index.esm-ddbf59fa.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/testings/api.vue": {
-    "file": "assets/api-28a51840.js",
-    "src": "resources/js/testings/api.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_EmployeePayslips-c77f5359.js": {
-    "file": "assets/EmployeePayslips-c77f5359.js",
-    "imports": [
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_EmployeeDocumentsManagerService-8c6ec0ef.js"
-    ],
-    "css": [
-      "assets/EmployeePayslips-e458536d.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/paycheck/investments/investment.js": {
-    "file": "assets/investment-33267334.js",
-    "src": "resources/js/hrms/modules/paycheck/investments/investment.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_tag.esm-d4508f23.js",
-      "resources/js/hrms/modules/paycheck/investments/investment.vue",
-      "_declaration-492012e3.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_investmentMainStore-00003546.js",
-      "_Service-27f748d6.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_investments_and_exemption-9b0cbace.js",
-      "_index.esm-ddbf59fa.js",
-      "_moment-fbc5633a.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_vue-router-35bf78e1.js",
-      "_LoadingSpinner-bbcf6d6b.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
+  "_index-362795f3.js": {
+    "file": "assets/index-362795f3.js"
   },
   "_dayjs.min-2f06af28.js": {
     "file": "assets/dayjs.min-2f06af28.js",
@@ -2222,440 +217,179 @@
       "_index-362795f3.js"
     ]
   },
-  "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue": {
-    "file": "assets/employee_salary_loan-d00f6bf9.js",
-    "src": "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue",
+  "resources/js/hrms/modules/paycheck/salary_details/salary_details.vue": {
+    "file": "assets/salary_details-9042f305.js",
+    "src": "resources/js/hrms/modules/paycheck/salary_details/salary_details.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_svg_oops-db663e6e.js",
-      "_index.esm-ddbf59fa.js",
-      "_index-362795f3.js",
-      "_lodash-facb8280.js",
-      "_pinia-4be28dc8.js",
+      "_EmployeePayslips-5400d309.js",
+      "resources/js/hrms/app.js",
       "_dayjs.min-2f06af28.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
+      "_index-362795f3.js",
+      "_Service-2e0fbc76.js",
+      "_ProfilePagesStore-3d1f6cb3.js"
     ],
     "css": [
-      "assets/employee_salary_loan-b07edfe9.css",
       "assets/LoadingSpinner-404d9c4d.css"
     ]
   },
-  "_investmentMainStore-00003546.js": {
-    "file": "assets/investmentMainStore-00003546.js",
+  "resources/js/hrms/modules/leave_module/LeaveModule.vue": {
+    "file": "assets/LeaveModule-924be843.js",
+    "src": "resources/js/hrms/modules/leave_module/LeaveModule.vue",
+    "isDynamicEntry": true,
     "imports": [
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_Service-27f748d6.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "_dayjs.min-2f06af28.js"
-    ]
-  },
-  "_progressbar.esm-f3391934.js": {
-    "file": "assets/progressbar.esm-f3391934.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_map-a1368670.js": {
-    "file": "assets/map-a1368670.js",
-    "imports": [
-      "__baseToString-68774409.js"
-    ]
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js": {
-    "file": "assets/AttendanceReport_Detailed-c6191c83.js",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceDetailReports/AttendanceReport_Detailed.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_index-362795f3.js",
+      "_Service-2e0fbc76.js",
+      "resources/js/hrms/app.js",
       "_moment-fbc5633a.js",
-      "_dayjs.min-2f06af28.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js": {
-    "file": "assets/attendanceAbsentReports-6d545c0d.js",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/attendanceEarlygoingReports-0edb536b.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js": {
-    "file": "assets/on_run_client_onboarding-0a007d33.js",
-    "src": "resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_inputmask.esm-ab587525.js",
-      "_client_onboarding-70ccc27f.js",
       "_index-362795f3.js",
-      "_index.esm-ddbf59fa.js"
+      "_dayjs.min-2f06af28.js",
+      "_LeaveApply-39b1c205.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang-92136dd2.js",
+      "_LoadingSpinner-4e2a0991.js",
+      "_index.esm-1560b3a4.js"
     ],
     "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
+      "assets/LoadingSpinner-404d9c4d.css"
     ]
   },
-  "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.vue": {
-    "file": "assets/ReimbursementsApproval-52dcab0e.js",
-    "src": "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.vue",
+  "resources/js/hrms/modules/approvals/onboarding/review_document.vue": {
+    "file": "assets/review_document-3d1cd158.js",
+    "src": "resources/js/hrms/modules/approvals/onboarding/review_document.vue",
     "isDynamicEntry": true,
     "imports": [
       "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_moment-fbc5633a.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
+      "resources/js/hrms/app.js",
+      "_dayjs.min-2f06af28.js",
+      "_map-c58f9075.js",
+      "_LoadingSpinner-4e2a0991.js"
     ],
     "css": [
-      "assets/ReimbursementsApproval-4aab514e.css",
       "assets/LoadingSpinner-404d9c4d.css"
     ]
   },
-  "_LeaveApply-f15bd940.js": {
-    "file": "assets/LeaveApply-f15bd940.js",
+  "_LoadingSpinner-4e2a0991.js": {
+    "file": "assets/LoadingSpinner-4e2a0991.js",
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_index-362795f3.js",
-      "_index.esm-ddbf59fa.js"
+      "resources/js/hrms/app.js"
+    ],
+    "css": [
+      "assets/LoadingSpinner-404d9c4d.css"
     ]
   },
-  "_no-data-d6f55554.js": {
-    "file": "assets/no-data-d6f55554.js",
-    "assets": [
-      "assets/no-data-dc25b94b.svg"
+  "_ProfilePagesStore-3d1f6cb3.js": {
+    "file": "assets/ProfilePagesStore-3d1f6cb3.js",
+    "imports": [
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js"
+    ]
+  },
+  "_ImportQuickOnboarding-2128e70c.js": {
+    "file": "assets/ImportQuickOnboarding-2128e70c.js",
+    "imports": [
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js",
+      "_xlsx-4ad528ac.js",
+      "_NormalOnboardingMainStore-23faf8d0.js",
+      "_dayjs.min-2f06af28.js"
+    ]
+  },
+  "resources/js/testings/api.vue": {
+    "file": "assets/api-f2457e9c.js",
+    "src": "resources/js/testings/api.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js"
+    ]
+  },
+  "_LeaveApply-39b1c205.js": {
+    "file": "assets/LeaveApply-39b1c205.js",
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang-92136dd2.js",
+      "_index-362795f3.js",
+      "_index.esm-1560b3a4.js"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/leaves/LeaveApproval.vue": {
+    "file": "assets/LeaveApproval-2501152e.js",
+    "src": "resources/js/hrms/modules/approvals/leaves/LeaveApproval.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue": {
+    "file": "assets/EmpDetails_approvals-ec446bd7.js",
+    "src": "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js",
+      "_map-c58f9075.js",
+      "_Service-2e0fbc76.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "_map-c58f9075.js": {
+    "file": "assets/map-c58f9075.js",
+    "imports": [
+      "_index-362795f3.js"
+    ]
+  },
+  "_NormalOnboardingMainStore-23faf8d0.js": {
+    "file": "assets/NormalOnboardingMainStore-23faf8d0.js",
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js",
+      "_index.esm-1560b3a4.js",
+      "_index-362795f3.js"
+    ]
+  },
+  "_index.esm-1560b3a4.js": {
+    "file": "assets/index.esm-1560b3a4.js",
+    "imports": [
+      "resources/js/hrms/app.js"
     ]
   },
   "resources/js/hrms/modules/dashboard/dashboard.vue": {
-    "file": "assets/dashboard-2d883315.js",
+    "file": "assets/dashboard-a7a980e3.js",
     "src": "resources/js/hrms/modules/dashboard/dashboard.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_Service-27f748d6.js",
-      "_dashboard.vue_vue_type_style_index_1_scoped_8309e156_lang-07d5b278.js",
+      "_no-data-17442c4e.js",
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js",
+      "_dashboard.vue_vue_type_style_index_1_scoped_cc76b90e_lang-b10e35aa.js",
       "_index-362795f3.js",
       "_dayjs.min-2f06af28.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_exceljs.min-edd65134.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_pinia-4be28dc8.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_moment-fbc5633a.js",
-      "__commonjs-dynamic-modules-302442b1.js"
+      "_LeaveApply.vue_vue_type_style_index_0_lang-92136dd2.js",
+      "_exceljs.min-1f699027.js",
+      "_LoadingSpinner-4e2a0991.js",
+      "_autoprefixer-cf16e9d7.js",
+      "_moment-fbc5633a.js"
     ],
     "css": [
       "assets/LoadingSpinner-404d9c4d.css"
     ],
     "assets": [
+      "assets/Page-is-under-construction-5d6792b4.svg",
       "assets/femaleDashboardImage-7f53f6fa.svg"
     ]
   },
-  "_salaryAdvanceSettingMainStore-9a345cf4.js": {
-    "file": "assets/salaryAdvanceSettingMainStore-9a345cf4.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_chart.esm-865e6d1a.js": {
-    "file": "assets/chart.esm-865e6d1a.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "dynamicImports": [
-      "node_modules/chart.js/auto/auto.mjs"
-    ]
-  },
-  "resources/js/hrms/modules/exit/exit.js": {
-    "file": "assets/exit-f2a66ae3.js",
-    "src": "resources/js/hrms/modules/exit/exit.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_tag.esm-d4508f23.js",
-      "_no-data-d6f55554.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/exit-5c44c6ea.css",
-      "assets/primeflex-00f3202e.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.vue": {
-    "file": "assets/AttRegularizationApproval-63e79b0e.js",
-    "src": "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_moment-fbc5633a.js",
-      "_Service-27f748d6.js",
-      "_pinia-4be28dc8.js",
-      "_dayjs.min-2f06af28.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/AttRegularizationApproval-d3a26226.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_index-362795f3.js": {
-    "file": "assets/index-362795f3.js"
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js": {
-    "file": "assets/attendanceOvertimeReports-17434734.js",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/attendanceEarlygoingReports-0edb536b.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.vue": {
-    "file": "assets/NormalOnboarding-96018f4f.js",
-    "src": "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_NormalOnboardingMainStore-5f1943d2.js",
-      "_index.esm-ddbf59fa.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_Service-27f748d6.js",
-      "_toastservice.esm-c9da6ad1.js"
-    ],
-    "css": [
-      "assets/NormalOnboarding-3db61c62.css"
-    ],
-    "assets": [
-      "assets/requirement-5048f466.png"
-    ]
-  },
-  "_router-6a1669fd.js": {
-    "file": "assets/router-6a1669fd.js",
-    "imports": [
-      "_vue-router-35bf78e1.js",
-      "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue",
-      "_index-362795f3.js",
-      "_ImportQuickOnboarding-32d7440c.js",
-      "_NormalOnboardingMainStore-5f1943d2.js"
-    ],
-    "css": [
-      "assets/BulkOnboarding-3c93c1ff.css"
-    ]
-  },
-  "resources/js/hrms/modules/profile_pages/ProfilePageNew.vue": {
-    "file": "assets/ProfilePageNew-57dfcf90.js",
-    "src": "resources/js/hrms/modules/profile_pages/ProfilePageNew.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_lodash-facb8280.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_index.esm-ddbf59fa.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_dayjs.min-2f06af28.js",
-      "_moment-fbc5633a.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_EmployeePayslips-c77f5359.js",
-      "_EmployeeDocumentsManagerService-8c6ec0ef.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_pinia-4be28dc8.js",
-      "_vue-router-35bf78e1.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/ProfilePageNew-6646363c.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ],
-    "assets": [
-      "assets/edit-fdffc648.svg"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.js": {
-    "file": "assets/BulkOnboarding-3070c0ac.js",
-    "src": "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_textarea.esm-c978610f.js",
-      "_inputmask.esm-ab587525.js",
-      "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.vue",
-      "_router-6a1669fd.js",
-      "_ImportQuickOnboarding-32d7440c.js",
-      "_index-362795f3.js",
-      "_vue-router-35bf78e1.js",
-      "_Service-27f748d6.js",
-      "_xlsx-4ad528ac.js",
-      "_NormalOnboardingMainStore-5f1943d2.js",
-      "_index.esm-ddbf59fa.js",
-      "_dayjs.min-2f06af28.js",
-      "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/BulkOnboarding-3c93c1ff.css"
-    ]
-  },
-  "_toastservice.esm-c9da6ad1.js": {
-    "file": "assets/toastservice.esm-c9da6ad1.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js": {
-    "file": "assets/NormalOnboarding-76957d1e.js",
-    "src": "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_dynamicdialog.esm-ff159ee0.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_calendar.esm-1a4d557f.js",
-      "_checkbox.esm-8057af04.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_inputswitch.esm-c10deee4.js",
-      "_inputmask.esm-ab587525.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_textarea.esm-c978610f.js",
-      "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.vue",
-      "_NormalOnboardingMainStore-5f1943d2.js",
-      "_Service-27f748d6.js",
-      "_index-362795f3.js",
-      "_index.esm-ddbf59fa.js"
-    ],
-    "css": [
-      "assets/NormalOnboarding-3b7bfcc1.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "_vue-router-35bf78e1.js": {
-    "file": "assets/vue-router-35bf78e1.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "_datatable.esm-eb498605.js": {
-    "file": "assets/datatable.esm-eb498605.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
+  "_moment-fbc5633a.js": {
+    "file": "assets/moment-fbc5633a.js"
   },
   "_lodash-facb8280.js": {
     "file": "assets/lodash-facb8280.js",
@@ -2663,185 +397,133 @@
       "_index-362795f3.js"
     ]
   },
-  "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js": {
-    "file": "assets/testing_table-6dd99bd8.js",
-    "src": "resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_index-362795f3.js",
-      "__baseToString-68774409.js"
-    ],
-    "css": [
-      "assets/primeflex-00f3202e.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
+  "node_modules/chart.js/auto/auto.mjs": {
+    "file": "assets/auto-0e6b2b23.js",
+    "src": "node_modules/chart.js/auto/auto.mjs",
+    "isDynamicEntry": true
   },
-  "resources/js/hrms/modules/approvals/leaves/LeaveApproval.vue": {
-    "file": "assets/LeaveApproval-b7070190.js",
-    "src": "resources/js/hrms/modules/approvals/leaves/LeaveApproval.vue",
-    "isDynamicEntry": true,
+  "_autoprefixer-cf16e9d7.js": {
+    "file": "assets/autoprefixer-cf16e9d7.js",
     "imports": [
-      "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_Service-27f748d6.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_pinia-4be28dc8.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_multiselect.esm-2bf6a7fc.js": {
-    "file": "assets/multiselect.esm-2bf6a7fc.js",
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js": {
-    "file": "assets/InvFormsMgmt-70330140.js",
-    "src": "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_pinia-4be28dc8.js",
       "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/InvFormsMgmt-1b4cda05.css",
-      "assets/primeflex-00f3202e.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
     ]
   },
-  "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js": {
-    "file": "assets/approvals_salary_advance-88ddc9d9.js",
-    "src": "resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js",
-    "isEntry": true,
+  "_xlsx-4ad528ac.js": {
+    "file": "assets/xlsx-4ad528ac.js"
+  },
+  "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.vue": {
+    "file": "assets/BulkOnboarding-ec17cf08.js",
+    "src": "resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.vue",
+    "isDynamicEntry": true,
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_selectbutton.esm-82736b8b.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_checkbox.esm-8057af04.js",
-      "_overlaypanel.esm-05139ee9.js",
+      "resources/js/hrms/app.js",
+      "_ImportQuickOnboarding-2128e70c.js",
+      "_NormalOnboardingMainStore-23faf8d0.js",
       "_index-362795f3.js",
-      "_index.esm-ddbf59fa.js",
+      "_Service-2e0fbc76.js",
+      "_xlsx-4ad528ac.js",
       "_dayjs.min-2f06af28.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
+      "_index.esm-1560b3a4.js"
     ],
     "css": [
-      "assets/approvals_salary_advance-ea4c8158.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
+      "assets/BulkOnboarding-3c93c1ff.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue": {
+    "file": "assets/QuickOnboarding-edbfd357.js",
+    "src": "resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_ImportQuickOnboarding-2128e70c.js",
+      "_NormalOnboardingMainStore-23faf8d0.js",
+      "_index-362795f3.js",
+      "_Service-2e0fbc76.js",
+      "_xlsx-4ad528ac.js",
+      "_dayjs.min-2f06af28.js",
+      "_index.esm-1560b3a4.js"
+    ],
+    "css": [
+      "assets/QuickOnboarding-8d71cc7b.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.vue": {
+    "file": "assets/ManageWelcomeMailStatus-c74599c4.js",
+    "src": "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/ManageWelcomeMailStatus-30877a33.css",
       "assets/LoadingSpinner-404d9c4d.css"
     ]
   },
-  "resources/js/hrms/modules/configurations/module_settings/module_settings.vue": {
-    "file": "assets/module_settings-4605d70b.js",
-    "src": "resources/js/hrms/modules/configurations/module_settings/module_settings.vue",
+  "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.vue": {
+    "file": "assets/ReimbursementsApproval-40742b5f.js",
+    "src": "resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AssignEmployee-b714e456.js",
-      "_pinia-4be28dc8.js",
       "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js"
+      "resources/js/hrms/app.js",
+      "_moment-fbc5633a.js",
+      "_LoadingSpinner-4e2a0991.js"
     ],
     "css": [
-      "assets/MobileSettings-9de977fc.css"
+      "assets/ReimbursementsApproval-4aab514e.css",
+      "assets/LoadingSpinner-404d9c4d.css"
     ]
   },
-  "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js": {
-    "file": "assets/RolesAndPermission-6b27cf46.js",
-    "src": "resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js",
-    "isEntry": true,
+  "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.vue": {
+    "file": "assets/AttRegularizationApproval-fd71e9d4.js",
+    "src": "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.vue",
+    "isDynamicEntry": true,
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_treetable.esm-17266b9c.js",
-      "_multiselect.esm-2bf6a7fc.js",
       "_index-362795f3.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js"
+      "resources/js/hrms/app.js",
+      "_moment-fbc5633a.js",
+      "_Service-2e0fbc76.js",
+      "_dayjs.min-2f06af28.js",
+      "_LoadingSpinner-4e2a0991.js"
     ],
     "css": [
-      "assets/RolesAndPermission-e3b0c442.css",
-      "assets/primeflex-00f3202e.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
+      "assets/AttRegularizationApproval-d3a26226.css",
+      "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue": {
+    "file": "assets/attendanceDashboard-bbbf556d.js",
+    "src": "resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_no-data-17442c4e.js",
+      "_dayjs.min-2f06af28.js",
+      "_exceljs.min-1f699027.js",
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/attendanceDashboard-56668a9f.css",
+      "assets/LoadingSpinner-404d9c4d.css"
     ]
   },
   "resources/js/hrms/modules/Home/Home.vue": {
-    "file": "assets/Home-9db15ab8.js",
+    "file": "assets/Home-e8018d84.js",
     "src": "resources/js/hrms/modules/Home/Home.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
+      "resources/js/hrms/app.js",
       "_index-362795f3.js",
-      "_dashboard.vue_vue_type_style_index_1_scoped_8309e156_lang-07d5b278.js",
-      "_Service-27f748d6.js",
-      "_vue-router-35bf78e1.js",
+      "_dashboard.vue_vue_type_style_index_1_scoped_cc76b90e_lang-b10e35aa.js",
+      "_Service-2e0fbc76.js",
       "_dayjs.min-2f06af28.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_exceljs.min-edd65134.js",
-      "_pinia-4be28dc8.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_moment-fbc5633a.js",
-      "__commonjs-dynamic-modules-302442b1.js"
+      "_LeaveApply.vue_vue_type_style_index_0_lang-92136dd2.js",
+      "_exceljs.min-1f699027.js",
+      "_autoprefixer-cf16e9d7.js",
+      "_moment-fbc5633a.js"
     ],
     "css": [
       "assets/Home-a8e31151.css",
@@ -2855,318 +537,288 @@
       "assets/ABS_logo_Yellow-7e4e368e.png"
     ]
   },
-  "resources/js/hrms/modules/manage_payslips/ManagePayslips.js": {
-    "file": "assets/ManagePayslips-203a9650.js",
-    "src": "resources/js/hrms/modules/manage_payslips/ManagePayslips.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_calendar.esm-1a4d557f.js",
-      "_sidebar.esm-606bc956.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_pinia-4be28dc8.js",
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/ManagePayslips-711e7645.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/paycheck/investments/investment.vue": {
-    "file": "assets/investment-e712b246.js",
-    "src": "resources/js/hrms/modules/paycheck/investments/investment.vue",
+  "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.vue": {
+    "file": "assets/NormalOnboarding-b6fe4a9a.js",
+    "src": "resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_declaration-492012e3.js",
-      "_investments_and_exemption-9b0cbace.js",
+      "resources/js/hrms/app.js",
+      "_NormalOnboardingMainStore-23faf8d0.js",
+      "_index.esm-1560b3a4.js",
       "_index-362795f3.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_investmentMainStore-00003546.js",
-      "_Service-27f748d6.js",
-      "_dayjs.min-2f06af28.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_index.esm-ddbf59fa.js",
-      "_moment-fbc5633a.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_autoprefixer-6d6f7a0f.js",
-      "_vue-router-35bf78e1.js"
+      "_Service-2e0fbc76.js"
     ],
     "css": [
-      "assets/investment-0c5b2b0e.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_ImportQuickOnboarding-32d7440c.js": {
-    "file": "assets/ImportQuickOnboarding-32d7440c.js",
-    "imports": [
-      "_index-362795f3.js",
-      "_vue-router-35bf78e1.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_Service-27f748d6.js",
-      "_xlsx-4ad528ac.js",
-      "_NormalOnboardingMainStore-5f1943d2.js",
-      "_dayjs.min-2f06af28.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js": {
-    "file": "assets/AdminRolesPermission-6857f958.js",
-    "src": "resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_treetable.esm-17266b9c.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_index-362795f3.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js"
+      "assets/NormalOnboarding-3db61c62.css"
     ],
-    "css": [
-      "assets/primeflex-00f3202e.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
+    "assets": [
+      "assets/requirement-5048f466.png"
     ]
   },
-  "resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js": {
-    "file": "assets/HalfDayAbsentReport-2daed056.js",
-    "src": "resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.js",
-    "isEntry": true,
+  "resources/js/hrms/modules/configurations/module_settings/module_settings.vue": {
+    "file": "assets/module_settings-06d6db5e.js",
+    "src": "resources/js/hrms/modules/configurations/module_settings/module_settings.vue",
+    "isDynamicEntry": true,
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_printer-346f1800.js",
-      "_download-5ba6c221.js",
+      "_AssignEmployee-432e7e6b.js",
+      "resources/js/hrms/app.js",
       "_index-362795f3.js"
     ],
     "css": [
-      "assets/attendanceEarlygoingReports-0edb536b.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
+      "assets/module_settings-9de977fc.css"
     ]
   },
-  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js": {
-    "file": "assets/ManageWelcomeMailStatus-670f1afc.js",
-    "src": "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_calendar.esm-1a4d557f.js",
-      "_pinia-4be28dc8.js",
-      "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.vue",
-      "_index-362795f3.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/paycheck/salary_details/salary_details.js": {
-    "file": "assets/salary_details-1e08efe8.js",
-    "src": "resources/js/hrms/modules/paycheck/salary_details/salary_details.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "resources/js/hrms/modules/paycheck/salary_details/salary_details.vue",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js",
-      "_EmployeePayslips-c77f5359.js",
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_EmployeeDocumentsManagerService-8c6ec0ef.js",
-      "_Service-27f748d6.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_vue-router-35bf78e1.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_settings.js": {
-    "file": "assets/finance_settings-6ef185bb.js",
-    "src": "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_settings.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_steps.esm-3d3ae003.js",
-      "_inputswitch.esm-c10deee4.js",
-      "_finance_setting-8713d0ef.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/reimbursements/EmployeeReimbursements.js": {
-    "file": "assets/EmployeeReimbursements-2ff245da.js",
-    "src": "resources/js/hrms/modules/reimbursements/EmployeeReimbursements.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_index-362795f3.js",
-      "__commonjs-dynamic-modules-302442b1.js",
-      "_Service-27f748d6.js",
-      "_moment-fbc5633a.js",
-      "_index.esm-ddbf59fa.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue": {
-    "file": "assets/EmpDetails_approvals-736d3895.js",
-    "src": "resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue",
+  "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.vue": {
+    "file": "assets/DocumentsSettings-0951f03a.js",
+    "src": "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
       "_index-362795f3.js",
-      "_map-a1368670.js",
-      "_Service-27f748d6.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__baseToString-68774409.js",
-      "__plugin-vue_export-helper-c27b6911.js"
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js"
     ],
     "css": [
+      "assets/DocumentsSettings-7780b246.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.vue": {
+    "file": "assets/MobileSettings-0b49a3a1.js",
+    "src": "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_AssignEmployee-432e7e6b.js",
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js"
+    ],
+    "css": [
+      "assets/module_settings-9de977fc.css"
+    ]
+  },
+  "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue": {
+    "file": "assets/salary_advance_excel_import-60529fb3.js",
+    "src": "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js",
+      "_xlsx-4ad528ac.js",
+      "_dayjs.min-2f06af28.js",
+      "_Service-2e0fbc76.js"
+    ],
+    "css": [
+      "assets/salary_advance_excel_import-99461bca.css"
+    ]
+  },
+  "_dashboard.vue_vue_type_style_index_1_scoped_cc76b90e_lang-b10e35aa.js": {
+    "file": "assets/dashboard.vue_vue_type_style_index_1_scoped_cc76b90e_lang-b10e35aa.js",
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js",
+      "_Service-2e0fbc76.js",
+      "_autoprefixer-cf16e9d7.js"
+    ],
+    "css": [
+      "assets/dashboard-79f72e79.css"
+    ]
+  },
+  "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.vue": {
+    "file": "assets/ManageEmployee-1249becd.js",
+    "src": "resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_dayjs.min-2f06af28.js",
+      "resources/js/hrms/app.js",
+      "_ProfilePagesStore-3d1f6cb3.js",
+      "_index-362795f3.js",
+      "_Service-2e0fbc76.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/ManageEmployee-ef41e864.css",
       "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "_EmployeePayslips-5400d309.js": {
+    "file": "assets/EmployeePayslips-5400d309.js",
+    "imports": [
+      "_dayjs.min-2f06af28.js",
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js",
+      "_ProfilePagesStore-3d1f6cb3.js"
+    ],
+    "css": [
+      "assets/EmployeePayslips-e458536d.css",
+      "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "_AssignEmployee-432e7e6b.js": {
+    "file": "assets/AssignEmployee-432e7e6b.js",
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js"
+    ],
+    "css": [
+      "assets/AssignEmployee-bf3ec3c0.css"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.vue": {
+    "file": "assets/client_onboarding_master-fc9d1ef8.js",
+    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js",
+      "_index.esm-1560b3a4.js"
+    ],
+    "css": [
+      "assets/client_onboarding_master-a1540bd2.css"
+    ]
+  },
+  "_LeaveApply.vue_vue_type_style_index_0_lang-92136dd2.js": {
+    "file": "assets/LeaveApply.vue_vue_type_style_index_0_lang-92136dd2.js",
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js",
+      "_moment-fbc5633a.js",
+      "_Service-2e0fbc76.js"
+    ],
+    "css": [
+      "assets/LeaveApply-1353210a.css"
+    ],
+    "assets": [
+      "assets/logo-dbabb993.jpg"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue": {
+    "file": "assets/employee_salary_loan-4ca3c3c5.js",
+    "src": "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_svg_oops-db663e6e.js",
+      "_index.esm-1560b3a4.js",
+      "_index-362795f3.js",
+      "_lodash-facb8280.js",
+      "_dayjs.min-2f06af28.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/employee_salary_loan-b07edfe9.css",
+      "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "resources/js/hrms/modules/reports/ReportsMaster.vue": {
+    "file": "assets/ReportsMaster-f7a68ab9.js",
+    "src": "resources/js/hrms/modules/reports/ReportsMaster.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-362795f3.js",
+      "resources/js/hrms/app.js",
+      "_lodash-facb8280.js",
+      "_LoadingSpinner-4e2a0991.js",
+      "_dayjs.min-2f06af28.js"
+    ],
+    "css": [
+      "assets/ReportsMaster-20e428ed.css",
+      "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "resources/js/hrms/modules/profile_pages/ProfilePageNew.vue": {
+    "file": "assets/ProfilePageNew-35a61010.js",
+    "src": "resources/js/hrms/modules/profile_pages/ProfilePageNew.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_lodash-facb8280.js",
+      "_index-362795f3.js",
+      "_Service-2e0fbc76.js",
+      "_ProfilePagesStore-3d1f6cb3.js",
+      "_index.esm-1560b3a4.js",
+      "resources/js/hrms/app.js",
+      "_dayjs.min-2f06af28.js",
+      "_moment-fbc5633a.js",
+      "_EmployeePayslips-5400d309.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/ProfilePageNew-6646363c.css",
+      "assets/LoadingSpinner-404d9c4d.css"
+    ],
+    "assets": [
+      "assets/edit-fdffc648.svg"
+    ]
+  },
+  "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_Master.vue": {
+    "file": "assets/Attendance_setting_Master-b044531f.js",
+    "src": "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_Master.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/hrms/app.js",
+      "_index-362795f3.js",
+      "_moment-fbc5633a.js",
+      "_lodash-facb8280.js",
+      "_dayjs.min-2f06af28.js"
+    ],
+    "css": [
+      "assets/Attendance_setting_Master-6122fc32.css"
+    ]
+  },
+  "resources/js/hrms/modules/paycheck/investments/investment.vue": {
+    "file": "assets/investment-cf391f75.js",
+    "src": "resources/js/hrms/modules/paycheck/investments/investment.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-362795f3.js",
+      "_dayjs.min-2f06af28.js",
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js",
+      "_autoprefixer-cf16e9d7.js",
+      "_index.esm-1560b3a4.js",
+      "_moment-fbc5633a.js",
+      "_ProfilePagesStore-3d1f6cb3.js",
+      "_LoadingSpinner-4e2a0991.js"
+    ],
+    "css": [
+      "assets/investment-bd1dfceb.css",
+      "assets/LoadingSpinner-404d9c4d.css"
+    ]
+  },
+  "resources/js/hrms/modules/attendence/AttendanceModule.vue": {
+    "file": "assets/AttendanceModule-bac7f3ac.js",
+    "src": "resources/js/hrms/modules/attendence/AttendanceModule.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_svg_oops-db663e6e.js",
+      "_LeaveApply.vue_vue_type_style_index_0_lang-92136dd2.js",
+      "resources/js/hrms/app.js",
+      "_Service-2e0fbc76.js",
+      "_dayjs.min-2f06af28.js",
+      "_moment-fbc5633a.js",
+      "_LeaveApply-39b1c205.js",
+      "_LoadingSpinner-4e2a0991.js",
+      "_index-362795f3.js",
+      "_index.esm-1560b3a4.js"
+    ],
+    "css": [
+      "assets/AttendanceModule-317774b9.css",
+      "assets/LoadingSpinner-404d9c4d.css"
+    ],
+    "assets": [
+      "assets/noData-99184d53.svg"
+    ]
+  },
+  "_exceljs.min-1f699027.js": {
+    "file": "assets/exceljs.min-1f699027.js",
+    "imports": [
+      "_index-362795f3.js"
     ]
   },
   "resources/js/hrms/app.js": {
-    "file": "assets/app-0e527a96.js",
+    "file": "assets/app-1d702269.js",
     "src": "resources/js/hrms/app.js",
     "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_dynamicdialog.esm-ff159ee0.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_badge.esm-c75556ed.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_calendar.esm-1a4d557f.js",
-      "_galleria.esm-b4308faf.js",
-      "_checkbox.esm-8057af04.js",
-      "_chips.esm-7a523133.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_datatable.esm-eb498605.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_inputswitch.esm-c10deee4.js",
-      "_inputmask.esm-ab587525.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_organizationchart.esm-986e00b3.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_password.esm-11ff2031.js",
-      "_progressbar.esm-f3391934.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_row.esm-6ebc942e.js",
-      "_selectbutton.esm-82736b8b.js",
-      "_treetable.esm-17266b9c.js",
-      "_sidebar.esm-606bc956.js",
-      "_steps.esm-3d3ae003.js",
-      "_textarea.esm-c978610f.js",
-      "_tag.esm-d4508f23.js",
-      "_chart.esm-865e6d1a.js",
-      "_vue-router-35bf78e1.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
     "dynamicImports": [
+      "node_modules/chart.js/auto/auto.mjs",
       "resources/js/hrms/modules/Home/Home.vue",
       "resources/js/hrms/modules/dashboard/dashboard.vue",
       "resources/js/hrms/modules/profile_pages/ProfilePageNew.vue",
@@ -3187,6 +839,7 @@
       "resources/js/hrms/modules/paycheck/salary_details/salary_details.vue",
       "resources/js/hrms/modules/paycheck/investments/investment.vue",
       "resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue",
+      "resources/js/hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue",
       "resources/js/hrms/modules/reports/ReportsMaster.vue",
       "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.vue",
       "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.vue",
@@ -3196,342 +849,20 @@
       "resources/js/testings/api.vue"
     ],
     "css": [
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "_payroll_setting-db8f3b17.js": {
-    "file": "assets/payroll_setting-db8f3b17.js",
-    "imports": [
-      "_index-362795f3.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/payroll_setting-bd218eaf.css"
-    ]
-  },
-  "_inputnumber.esm-a7c5b1f0.js": {
-    "file": "assets/inputnumber.esm-a7c5b1f0.js"
-  },
-  "_investments_and_exemption-9b0cbace.js": {
-    "file": "assets/investments_and_exemption-9b0cbace.js",
-    "imports": [
-      "_investmentMainStore-00003546.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_index.esm-ddbf59fa.js",
-      "_moment-fbc5633a.js",
-      "_ProfilePagesStore-fdbd5911.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_dayjs.min-2f06af28.js"
-    ],
-    "css": [
-      "assets/investments_and_exemption-afa7657a.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "_autoprefixer-6d6f7a0f.js": {
-    "file": "assets/autoprefixer-6d6f7a0f.js",
-    "imports": [
-      "_index-362795f3.js"
-    ]
-  },
-  "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_Master.vue": {
-    "file": "assets/Attendance_setting_Master-533d9a95.js",
-    "src": "resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_Master.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_index-362795f3.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_moment-fbc5633a.js",
-      "_lodash-facb8280.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_Holidays_Lists-1fd19acf.js",
-      "_dayjs.min-2f06af28.js",
-      "_Holidays_Lists.vue_vue_type_style_index_0_lang-cb6a0b88.js",
-      "_Holidays_Master-741e99b6.js"
-    ],
-    "css": [
-      "assets/Attendance_setting_Master-cb68c4ae.css"
-    ]
-  },
-  "resources/js/hrms/modules/attendence/AttendanceModule.vue": {
-    "file": "assets/AttendanceModule-dcf22656.js",
-    "src": "resources/js/hrms/modules/attendence/AttendanceModule.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_svg_oops-db663e6e.js",
-      "_pinia-4be28dc8.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js",
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_dayjs.min-2f06af28.js",
-      "_moment-fbc5633a.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_LeaveApply.vue_vue_type_style_index_0_lang-9d0c03c3.js",
-      "_LeaveApply-f15bd940.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_index.esm-ddbf59fa.js"
-    ],
-    "css": [
-      "assets/AttendanceModule-317774b9.css",
-      "assets/LoadingSpinner-404d9c4d.css"
+      "assets/app-e3763a2a.css"
     ],
     "assets": [
-      "assets/noData-99184d53.svg"
+      "assets/color-473bc8ca.png",
+      "assets/hue-024cc884.png",
+      "assets/primeicons-ce852338.eot",
+      "assets/primeicons-3824be50.woff2",
+      "assets/primeicons-90a58d3a.woff",
+      "assets/primeicons-131bc3bf.ttf",
+      "assets/primeicons-5e10f102.svg"
     ]
   },
-  "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.js": {
-    "file": "assets/PMSFormsMgmt-e36a516b.js",
-    "src": "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_pinia-4be28dc8.js",
-      "_dayjs.min-2f06af28.js",
-      "_index-362795f3.js",
-      "_Service-27f748d6.js"
-    ],
-    "css": [
-      "assets/AttRegularizationApproval-d3a26226.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js": {
-    "file": "assets/PMSApprovalTable-6aa2e0e7.js",
-    "src": "resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/PMSApprovalTable-87bb6bce.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "node_modules/chart.js/auto/auto.mjs": {
-    "file": "assets/auto-0e6b2b23.js",
-    "src": "node_modules/chart.js/auto/auto.mjs",
-    "isDynamicEntry": true
-  },
-  "_xlsx-4ad528ac.js": {
-    "file": "assets/xlsx-4ad528ac.js"
-  },
-  "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js": {
-    "file": "assets/payroll_setup-22545016.js",
-    "src": "resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_steps.esm-3d3ae003.js",
-      "_inputswitch.esm-c10deee4.js",
-      "_vue-router-35bf78e1.js",
-      "_payroll_setting-db8f3b17.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_salaryAdvanceSettingMainStore-9a345cf4.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_finance_setting-8713d0ef.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js"
-    ],
-    "css": [
-      "assets/payroll_setup-a3e5d574.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js": {
-    "file": "assets/EmployeePayablesDetails-b846c96e.js",
-    "src": "resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_selectbutton.esm-82736b8b.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_checkbox.esm-8057af04.js",
-      "_organizationchart.esm-986e00b3.js",
-      "__plugin-vue_export-helper-c27b6911.js",
-      "_index-362795f3.js"
-    ],
-    "css": [
-      "assets/EmployeePayablesDetails-d3947eed.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css"
-    ]
-  },
-  "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js": {
-    "file": "assets/salary_loan_setting-28085858.js",
-    "src": "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_blockui.esm-0ae655a3.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_selectbutton.esm-82736b8b.js",
-      "_radiobutton.esm-9a5d27ab.js",
-      "_checkbox.esm-8057af04.js",
-      "_organizationchart.esm-986e00b3.js",
-      "_salaryAdvanceSettingMainStore-9a345cf4.js",
-      "_index.esm-ddbf59fa.js",
-      "_index-362795f3.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "__plugin-vue_export-helper-c27b6911.js"
-    ],
-    "css": [
-      "assets/salary_loan_setting-b1d7f00a.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primeicons-e2c0657a.css",
-      "assets/tailwind-2302f4e7.css",
-      "assets/LoadingSpinner-404d9c4d.css"
-    ]
-  },
-  "resources/js/hrms/modules/roles_permission/RolesPermission.js": {
-    "file": "assets/RolesPermission-d8b4c63c.js",
-    "src": "resources/js/hrms/modules/roles_permission/RolesPermission.js",
-    "isEntry": true,
-    "imports": [
-      "_inputnumber.esm-a7c5b1f0.js",
-      "_pinia-4be28dc8.js",
-      "_toastservice.esm-c9da6ad1.js",
-      "_datatable.esm-eb498605.js",
-      "_dialogservice.esm-85bfcd0f.js",
-      "_confirmationservice.esm-c87db23e.js",
-      "_progressspinner.esm-0bd742f8.js",
-      "_row.esm-6ebc942e.js",
-      "_fileupload.esm-08a98c5c.js",
-      "_calendar.esm-1a4d557f.js",
-      "_textarea.esm-c978610f.js",
-      "_chips.esm-7a523133.js",
-      "_overlaypanel.esm-05139ee9.js",
-      "_accordiontab.esm-90d64af4.js",
-      "_treetable.esm-17266b9c.js",
-      "_multiselect.esm-2bf6a7fc.js",
-      "_index-362795f3.js",
-      "_progressbar.esm-f3391934.js",
-      "_badge.esm-c75556ed.js"
-    ],
-    "css": [
-      "assets/RolesPermission-0da1b364.css",
-      "assets/theme-b1eccad1.css",
-      "assets/primevue-1edf30fd.css",
-      "assets/primeicons-e2c0657a.css"
-    ]
-  },
-  "_attendanceBasicReports-18f0fdcb.js": {
-    "file": "assets/attendanceBasicReports-18f0fdcb.js",
-    "imports": [
-      "_printer-e0530634.js",
-      "_download-5ba6c221.js",
-      "_no-data-d6f55554.js",
-      "_index-362795f3.js",
-      "_dayjs.min-2f06af28.js",
-      "_Service-27f748d6.js",
-      "_LoadingSpinner-bbcf6d6b.js",
-      "_inputnumber.esm-a7c5b1f0.js"
-    ],
-    "css": [
-      "assets/attendanceBasicReports-54518081.css"
-    ]
-  },
-  "_exceljs.min-edd65134.js": {
-    "file": "assets/exceljs.min-edd65134.js",
-    "imports": [
-      "_index-362795f3.js",
-      "__commonjs-dynamic-modules-302442b1.js"
-    ]
-  },
-  "resources/js/hrms/assests/icons/printer.svg": {
-    "file": "assets/printer-d58eef0b.svg",
-    "src": "resources/js/hrms/assests/printer.svg"
-  },
-  "resources/js/hrms/assests/icons/download.svg": {
-    "file": "assets/download-ca50c50b.svg",
-    "src": "resources/js/hrms/assests/download.svg"
-  },
-  "resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.css": {
-    "file": "assets/AttRegularizationApproval-d3a26226.css",
-    "src": "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.css"
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceEarlygoingReports/attendanceEarlygoingReports.css": {
-    "file": "assets/attendanceEarlygoingReports-0edb536b.css",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.css"
-  },
-  "resources/js/hrms/modules/reports/attendance/HalfDayAbsentReport/HalfDayAbsentReport.css": {
-    "file": "assets/attendanceEarlygoingReports-0edb536b.css",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.css"
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceLatecomingReports/attendanceLatecomingReports.css": {
-    "file": "assets/attendanceEarlygoingReports-0edb536b.css",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.css"
-  },
-  "resources/js/hrms/modules/reports/attendance/attendanceOvertimeReports/attendanceOvertimeReports.css": {
-    "file": "assets/attendanceEarlygoingReports-0edb536b.css",
-    "src": "resources/js/hrms/modules/reports/attendance/attendanceAbsentReports/attendanceAbsentReports.css"
-  },
-  "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.css": {
-    "file": "assets/MobileSettings-9de977fc.css",
-    "src": "resources/js/hrms/modules/configurations/module_settings/module_settings.css"
+  "resources/js/hrms/modules/configurations/module_settings/module_settings.css": {
+    "file": "assets/module_settings-9de977fc.css",
+    "src": "resources/js/hrms/modules/configurations/mobile_settings/MobileSettings.css"
   }
 }

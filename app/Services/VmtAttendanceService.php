@@ -69,10 +69,11 @@ class VmtAttendanceService
 
         try {
             $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
-
+            // dd( $map_allEmployees);
             $allEmployees_lateComing = null;
 
             //If manager ID not set, then show all employees
+            // dd($manager_user_code);
             if (empty($manager_user_code)) {
                 if (empty($month) && empty($year))
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
@@ -84,7 +85,7 @@ class VmtAttendanceService
                 //If manager ID set, then show only the team level employees
 
                 $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
-
+                // dd( $employees_id );
 
                 if (empty($month) && empty($year))
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)->get();
@@ -139,7 +140,6 @@ class VmtAttendanceService
 
     public function fetchAbsentRegularizationData($month, $year, $manager_user_code = null)
     {
-
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
@@ -486,7 +486,7 @@ class VmtAttendanceService
                     leave_reason: $leave_reason,
                     notifications_users_id: $notifications_users_id,
                     user_type: "Admin",
-                    serviceNotificationsService:$serviceNotificationsService,
+                    serviceNotificationsService: $serviceNotificationsService,
                 );
 
                 //dd($response);
@@ -504,7 +504,7 @@ class VmtAttendanceService
                         status: "Approved",
                         review_comment: "---",
                         user_type: "Admin",
-                        serviceNotificationsService:$serviceNotificationsService
+                        serviceNotificationsService: $serviceNotificationsService
 
 
                     );
@@ -516,10 +516,9 @@ class VmtAttendanceService
                     'data' => ""
                 ]);
             }
-             return $response;
-
+            return $response;
         } catch (\Exception $e) {
-           return $response = [
+            return $response = [
                 'status' => 'failure',
                 'message' => 'Error while applying leave request',
                 'mail_status' => 'failure',
@@ -527,8 +526,6 @@ class VmtAttendanceService
                 'data' =>  $e->getMessage(),
                 'error_verbose' => $e->getTraceAsString()
             ];
-
-
         }
     }
 
@@ -555,8 +552,7 @@ class VmtAttendanceService
         $notifications_users_id,
         $user_type,
         $serviceNotificationsService
-    )
-    {
+    ) {
 
         $validator = Validator::make(
             $data = [
@@ -2151,7 +2147,7 @@ class VmtAttendanceService
                 ->where('user_id',  $user_id);
 
             if ($query_att->exists()) {
-                return $response=([
+                return $response = ([
                     'status' => 'failure',
                     'message' => 'Absent Regularization already applied for the given date',
                     'data' => ''
@@ -2221,7 +2217,7 @@ class VmtAttendanceService
                 }
             }
 
-            return $response=([
+            return $response = ([
                 'status' => 'success',
                 'message' => 'Absent Regularization applied successfully',
                 'mail_status' => $mail_status,
@@ -2416,7 +2412,7 @@ class VmtAttendanceService
 
 
             ////Send mail to Manager
-            $res_notification="";
+            $res_notification = "";
             $mail_status = "";
             $isSent = "";
 
@@ -2664,7 +2660,7 @@ class VmtAttendanceService
                     'message' => 'Attendance Regularization approval successful',
                     'mail_status' => 'failure',
                     'error' => $e->getMessage(),
-                    'error_string'=>$e->getTraceAsString(),
+                    'error_string' => $e->getTraceAsString(),
                     'error_verbose' => $e->getline(),
                 ]
             );
@@ -2672,7 +2668,7 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ approveRejectAttendanceRegularization() ) ] ",
-                'error_string'=>$e->getTraceAsString(),
+                'error_string' => $e->getTraceAsString(),
                 'data' => $e->getMessage(),
                 'error_line' => $e->getline(),
             ]);
@@ -2788,7 +2784,7 @@ class VmtAttendanceService
 
             return $responseJSON = [
                 'status' => 'success',
-                'message' => 'Regularization done successfully!',
+                'message' => 'Absent Regularization done successfully!',
                 'mail_status' => $mail_status,
                 'data' => [],
             ];
@@ -2807,7 +2803,7 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error while doing absent regularization",
-                'data' => $e->getMessage()."  ".$e->getTraceAsString()
+                'data' => $e->getMessage() . "  " . $e->getTraceAsString()
             ]);
         }
     }
@@ -4345,26 +4341,39 @@ class VmtAttendanceService
         $employees_data = array();
 
         $absent_count = 0;
-
+        $absent_emps = array();
         $present_count = 0;
+        $present_emps = array();
         $lc_count = 0;
+        $lc_emps = array();
+        $leave_emps = array();
         $eg_count = 0;
+        $eg_emps = array();
         $mip_count = 0;
+        $mip_emps = array();
         $mop_count = 0;
+        $mop_emps = array();
         $isLC = null;
+        $lc_emps = array();
         $isMIP = null;
+        $mip_emps = array();
         $isMOP = null;
+        $mop_emps = array();
         $isEG = null;
+        $eg_emps = array();
 
         $leave_employee_count = array();
         $response = array();
         $i = 0;
 
-        $employees_data = user::where('is_ssa', '0')->where('active', '=', '1')->get(['id']);
-
+        $employees_data = User::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+            ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
+            ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
+            ->where('users.is_ssa', '0')->where('users.active', '1')
+            ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
 
         foreach ($employees_data as $key => $single_user_data) {
-            $user_code = User::where('id', $single_user_data->id)->first()->user_code;
+            $user_code = $single_user_data->user_code;
             $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
             $emp_bio_attendance = $this->getBioMetricAttendanceData($user_code, $current_date);
 
@@ -4377,14 +4386,14 @@ class VmtAttendanceService
                 $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $current_date);
 
                 if (empty($emp_bio_attendance)) {
-
+                    array_push($absent_emps, $single_user_data);
                     $absent_count++;
                 }
             }
             if (!empty($absent_present_employee_data)) {
 
                 $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
-
+                array_push($present_emps, $single_user_data);
                 $present_count++;
             } else {
                 $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
@@ -4392,7 +4401,7 @@ class VmtAttendanceService
                 $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code['user_code'], $current_date);
 
                 if (!empty($emp_bio_attendance)) {
-
+                    array_push($present_emps, $single_user_data);
                     $present_count++;
                 }
             }
@@ -4413,6 +4422,7 @@ class VmtAttendanceService
                     $leave_date = $single_date->format('Y-m-d');
 
                     if ($leave_date == $current_date) {
+                        array_push($leave_emps,$single_user_data);
                         $leave_employee_count[$i]['id'] =  $single_user_data['id'];
                         $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
                         $leave_employee_count[$i]['user_name'] =  $user_data->name;
@@ -4448,10 +4458,12 @@ class VmtAttendanceService
             }
 
             if ($isLC == 'Not Applied' || $isLC == 'Pending' || $isLC == 'Rejected') {
+                array_push($lc_emps, $single_user_data);
                 $lc_count++;
             }
 
             if ($isMIP == 'Not Applied' ||  $isMIP == 'Pending' ||  $isMIP == 'Rejected') {
+                array_push($mip_emps, $single_user_data);
                 $mip_count++;
             }
 
@@ -4478,21 +4490,30 @@ class VmtAttendanceService
             }
 
             if ($isEG == 'Not Applied' || $isEG == 'Pending' || $isEG == 'Rejected') {
+                array_push($eg_emps, $single_user_data);
                 $eg_count++;
             }
 
             if ($isMOP == 'Not Applied' ||  $isMOP == 'Pending' ||  $isMOP == 'Rejected') {
                 $mop_count++;
+                array_push($mop_emps, $single_user_data);
             }
         }
         // $attendanceOverview['absent_count'] = $absent_count;
         $attendanceOverview['absent_count'] = $absent_count;
+        $attendanceOverview['absent_emps'] = $absent_emps;
         $attendanceOverview['present_count'] = $present_count;
+        $attendanceOverview['present_emps'] = $present_emps;
         $attendanceOverview['leave_emp_count'] = count($leave_employee_count);
+        $attendanceOverview['leave_emps'] = $leave_emps;
         $attendanceOverview['lg_count'] = $lc_count;
+        $attendanceOverview['lc_emps'] = $lc_emps;
         $attendanceOverview['eg_count'] = $eg_count;
+        $attendanceOverview['eg_emps'] = $eg_emps;
         $attendanceOverview['mop_count'] = $mop_count;
+        $attendanceOverview['mop_emps'] = $mop_emps;
         $attendanceOverview['mip_count'] = $mip_count;
+        $attendanceOverview['mip_emps'] = $mip_emps;
 
         $shifts = $this->getWorkShiftDetails();
         $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())

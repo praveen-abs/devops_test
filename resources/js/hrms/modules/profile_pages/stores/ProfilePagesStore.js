@@ -27,17 +27,6 @@ export const profilePagesStore = defineStore("employeeService", () => {
 
     const service = Service()
 
-    const urlParams = new URLSearchParams(window.location.search);
-
-
-
-    let url = '/profile-pages-getEmpDetails';
-
-    if (urlParams.has('uid')) {
-        url = url + '?uid=' + urlParams.get('uid');
-    }
-
-
     const getProfilePhoto = () => {
         axios
             .post("/profile-pages/getProfilePicture", {
@@ -52,22 +41,14 @@ export const profilePagesStore = defineStore("employeeService", () => {
             });
     };
 
-    async function fetchEmployeeDetails() {
-
+    async function fetchEmployeeDetails(user_id) {
+        let url = '/profile-pages-getEmpDetails'
         console.log("Getting employee details")
-        await axios.get(url).then(res => {
-
+        await axios.get(`${url}/${user_id}`).then(res => {
             console.log("fetchEmployeeDetails() : " + res.data);
             loading_screen.value = false
             employeeDetails.value = res.data
             console.log("Current User code :" + res.data.user_code);
-            if (url_param_UID) {
-                user_code.value = res.data.user_code
-            } else {
-                console.log("user not code");
-                user_code.value = service.current_user_code
-            }
-
         }).catch(e => console.log(e)).finally((res) => {
             getProfilePhoto()
             console.log("completed")

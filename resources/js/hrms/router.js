@@ -123,6 +123,11 @@ const routes = [
                 name: 'Paycheck-Loan-and-salary-advance',
                 component: () => import('../hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.vue'),
             },
+            {
+                path: '/Paycheck/Import-loan-and-salary-advance',
+                name: 'Paycheck-Import-loan-and-salary-advance',
+                component: () => import('../hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue'),
+            },
 
             // Reports
             {

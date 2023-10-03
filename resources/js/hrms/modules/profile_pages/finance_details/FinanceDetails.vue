@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details">
         <div class="">
             <div class="">
                 <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">

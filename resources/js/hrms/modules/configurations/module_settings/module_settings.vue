@@ -11,6 +11,8 @@
     </Dialog>
     <!-- {{ useStore.arrayMobileSetDetails ? useStore.arrayMobileSetDetails : [] }} -->
     <!-- <LoadingSpinner  v-if="useStore.canshowloading"  class="absolute z-50 bg-white w-[100%] h-[100%]"/> -->
+    
+    <!-- {{ useStore.arrayModuleSettingsDetails }} -->
     <div class="w-full">
         <h1 class="text-[18px] text-[#000] my-2">Module Settings</h1>
         <!-- {{ useStore.arrayMobileSetDetails }} -->
@@ -54,7 +56,7 @@
     <Accordion>
         <AccordionTab v-for="(item, index) in useStore.arrayModuleSettingsDetails" :key="index">
             <template #header>
-                <div class="grid grid-cols-2 w-full items-center">
+                <div class="grid items-center w-full grid-cols-2">
                     <div class="my-auto">
                         <h1 class="text-[#000] text-[14px] my-auto">{{ item.module_name }}</h1>
                     </div>
