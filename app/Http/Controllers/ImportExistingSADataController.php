@@ -25,58 +25,6 @@ class ImportExistingSADataController extends Controller
         return view('vmt_importSalaryAdvancedata');
     }
 
-    public function loanTransectionRecord($loan_type, $loan_detail_id, $paid_emi, $emi)
-    {
-
-        try {
-            if ($loan_type == 'InterestFreeLoan') {
-                // dd($record_id);
-                $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id', $loan_detail_id)->first();
-                $borrowed_amount = $loan_details->borrowed_amount;
-                $tenure_months =  $loan_details->tenure_months;
-                $deduction_starting_month = $loan_details->deduction_starting_month;
-                for ($i = 0; $i < $tenure_months; $i++) {
-                    $loan_detail = new VmtInterestFreeLoanTransaction;
-                    $loan_detail->emp_loan_details_id = $loan_detail_id;
-                    $loan_detail->expected_emi = $emi;
-                    if ($i == 0) {
-                        $loan_detail->payroll_date =  $deduction_starting_month;
-                        $loan_detail->expected_emi =  $borrowed_amount / $tenure_months;
-                        $loan_detail->paid_emi =  $paid_emi;
-                    }
-                    $loan_detail->payroll_date = Carbon::parse($deduction_starting_month)->addMonth($i);
-                    $loan_detail->save();
-                }
-            } else if ($loan_type == 'InterestWithLoan') {
-                $loan_details = VmtEmpInterestLoanDetails::where('id', $loan_detail_id)->first();
-                $borrowed_amount = $loan_details->borrowed_amount;
-                $tenure_months =  $loan_details->tenure_months;
-                $deduction_starting_month = $loan_details->deduction_starting_month;
-                for ($i = 0; $i < $tenure_months; $i++) {
-                    $loan_detail = new VmtInterestFreeLoanTransaction;
-                    $loan_detail->emp_loan_details_id = $loan_detail_id;
-                    $loan_detail->expected_emi = $emi;
-                    if ($i == 0) {
-                        $loan_detail->payroll_date =  $deduction_starting_month;
-                        $loan_detail->expected_emi =  $borrowed_amount / $tenure_months;
-                        $loan_detail->expected_emi =  $paid_emi;
-                    }
-                    $loan_detail->payroll_date = Carbon::parse($deduction_starting_month)->addMonth($i);
-                }
-            } else {
-                return response()->json([
-                    'status' => 'failure',
-                    'message' => 'Undefined Loan type'
-                ]);
-            }
-        } catch (Exception $e) {
-            return response()->json([
-                "status" => "failure",
-                "message" => "Employee Loan History",
-                "data" => $e->getMessage(),
-            ]);
-        }
-    }
 
     public function imporExistingSalaryAdvanceData(Request $request)
     {
@@ -116,24 +64,35 @@ class ImportExistingSADataController extends Controller
  // public function storeBulkFinComponentsPayslips($data)
     public function storeExistingLoanAmount(Request $request)
     {
-        dd($request->all());
+     try{
+
+      $loan_data =$request->all();
+
+      $data = array();
+      foreach ($loan_data   as $key => $excelRowdata) {
+
+          $excelRowdata = array_combine(array_map('trim', array_keys( $excelRowdata)), array_values($excelRowdata));
+          $processed_data = str_replace(array(' '), array('_'),array_keys( $excelRowdata));
+          $Emp_data = array_combine(array_map('strtolower', $processed_data), array_values($excelRowdata));
+          array_push($data, $Emp_data);
+      }
 
         $max_loan_amount = array();
         $max_tenure = array();
         $emp_code = array();
         $userss = array();
-        for ($i = 0; $i < count($data[0]); $i++) {
-            $max_loan_amount[] = $data[0][$i]['loan_amount'];
-            $max_tenure[] = $data[0][$i]['tenure'];
-            $emp_code = $data[0][$i]['employee_code'];
+        foreach ($data as $key => $single_data) {
 
-            $userss[]  = User::where('user_code', $emp_code)->get('client_id')->toArray();
+            $max_loan_amount[] = $single_data['loan_amount'];
+            $max_tenure[] = $single_data['tenure'];
+            $emp_code = $single_data['employee_code'];
+
+            $user_data  = User::where('user_code', $emp_code);
+            if($user_data->exists()){
+                $userss[] =$user_data->first()->client_id;
+            }
         }
-        $value = [];
-        for ($i = 1; $i < count($userss); $i++) {
-            $value[] = $userss[$i][0]['client_id'];
-        }
-        $unique = array_unique($value);
+        $unique = array_unique($userss);
 
         $json_flow  =  [
             [
@@ -166,15 +125,32 @@ class ImportExistingSADataController extends Controller
 
 
 
-        $users_details = $data[0];
+        $users_details = $data;
         // dd($data[0]);
         //  dd( $users_details);
-        for ($i = 1; $i < count($users_details); $i++) {
+        for ($i = 0; $i < count($users_details); $i++) {
+
             $emp_code = $users_details[$i]['employee_code'];
             $users =  User::where('user_code', $emp_code)->first();
+            if(!empty($users)){
+                $user_id  =  $users->id;
+            }else{
+
+              return ['status'=>'failure',
+                      'message'=>'User data not found',
+                      'data'=> $emp_code ];
+            }
+
             $user_id  =  $users->id;
             $client_id =    $users->client_id;
-            $deduction_starting_month = Carbon::parse(VmtPayroll::where('client_id', $client_id)->orderBy('payroll_date', 'DESC')->first()->payroll_date);
+            $payroll_date =VmtPayroll::where('client_id', $client_id)->orderBy('payroll_date', 'DESC');
+            if($payroll_date->exists()){
+                $payroll_date =$payroll_date->first()->payroll_date;
+            }else{
+                $payroll_date=carbon::now()->addMonth()->format('Y-m-01');
+            }
+            $deduction_starting_month = Carbon::parse($payroll_date);
+
             //  $deduction_ending_month  =   $deduction_starting_month->addMonth($users_details[$i]['tenure']+1);
             foreach ($loan_settings_ids as $single_id) {
                 if ($single_id['client_id'] == $client_id) {
@@ -200,7 +176,7 @@ class ImportExistingSADataController extends Controller
             }
 
             $emp_interest_free_loan =  new VmtEmployeeInterestFreeLoanDetails;
-            //  dd($user_id);
+
             $emp_interest_free_loan->user_id =  $user_id;
             $emp_interest_free_loan->vmt_int_free_loan_id = $loan_stg_id;
             $emp_interest_free_loan->request_id = $requestid;
@@ -221,12 +197,73 @@ class ImportExistingSADataController extends Controller
             $emp_interest_free_loan->loan_category = $users_details[$i]['category'];
             $emp_interest_free_loan->UTR_number = null;
             $emp_interest_free_loan->save();
-            $this->loanTransectionRecord('InterestFreeLoan', $emp_interest_free_loan->id, $users_details[$i]['repayment_made'], $users_details[$i]['emi']);
+
+            $loan_transaction_data = $this->loanTransectionRecord('InterestFreeLoan', $emp_interest_free_loan->id, $users_details[$i]['repayment_made'], $users_details[$i]['emi']);
         }
         return "saved";
+    }catch(\Exception $e){
+          return $response=([
+            'status'=>'failure',
+            'message'=>'error while saving data',
+            'data'=>$e->getMessage() . " " .$e->getTraceAsString()
+          ]);
+    }
+    }
+
+    public function loanTransectionRecord($loan_type, $loan_detail_id, $paid_emi, $emi)
+    {
+
+        try {
+            if ($loan_type == 'InterestFreeLoan') {
+                // dd($record_id);
+                $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id', $loan_detail_id)->first();
+                $borrowed_amount = $loan_details->borrowed_amount;
+                $tenure_months =  $loan_details->tenure_months;
+                $deduction_starting_month = $loan_details->deduction_starting_month;
+                for ($i = 0; $i < $tenure_months; $i++) {
+                    $loan_detail = new VmtInterestFreeLoanTransaction;
+                    $loan_detail->emp_loan_details_id = $loan_detail_id;
+                    $loan_detail->expected_emi = $emi;
+                    if ($i == 0) {
+                        $loan_detail->payroll_date =  $deduction_starting_month;
+                        $loan_detail->expected_emi = $borrowed_amount / $tenure_months;
+                        $loan_detail->paid_emi =  $paid_emi;
+                    }
+                    $loan_detail->payroll_date = Carbon::parse($deduction_starting_month)->addMonth($i);
+                    $loan_detail->save();
+                }
+            } else if ($loan_type == 'InterestWithLoan') {
+                $loan_details = VmtEmpInterestLoanDetails::where('id', $loan_detail_id)->first();
+                $borrowed_amount = $loan_details->borrowed_amount;
+                $tenure_months =  $loan_details->tenure_months;
+                $deduction_starting_month = $loan_details->deduction_starting_month;
+                for ($i = 0; $i < $tenure_months; $i++) {
+                    $loan_detail = new VmtInterestFreeLoanTransaction;
+                    $loan_detail->emp_loan_details_id = $loan_detail_id;
+                    $loan_detail->expected_emi = $emi;
+                    if ($i == 0) {
+                        $loan_detail->payroll_date =  $deduction_starting_month;
+                        $loan_detail->expected_emi =  $borrowed_amount / $tenure_months;
+                        $loan_detail->expected_emi =  $paid_emi;
+                    }
+                    $loan_detail->payroll_date = Carbon::parse($deduction_starting_month)->addMonth($i);
+                }
+            } else {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Undefined Loan type'
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Employee Loan History",
+                "data" => $e->getMessage(),
+            ]);
+        }
     }
 
     public function loanAndAdvanceImportFormat(){
-        
+
     }
 }

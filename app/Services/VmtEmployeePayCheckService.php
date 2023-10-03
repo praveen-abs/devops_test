@@ -84,7 +84,7 @@ class VmtEmployeePayCheckService
 
         $data = array_filter($data);
 
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 3000);
         //For output jsonresponse
         $data_array = [];
         //For validation
@@ -294,7 +294,7 @@ class VmtEmployeePayCheckService
 
             $client_id = User::where('user_code', $row['emp_no'])->first()->client_id;
 
-            $payroll_date = \DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
+            $payroll_date = \DateTime::createFromFormat('Y-m-d', $row["payroll_month"])->format('Y-m-d');
             //check already exist or not
             $Payroll_data = VmtPayroll::where('client_id', $client_id)->where('payroll_date', $payroll_date)->first();
             if (empty($Payroll_data)) {

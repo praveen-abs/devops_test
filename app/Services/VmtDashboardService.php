@@ -805,7 +805,7 @@ class VmtDashboardService
 
 // dd($attendanceResponseArray);
             foreach ($attendanceResponseArray as $key =>$attendancedash) {
-
+//dd($attendanceResponseArray);
                 $dayStr = Carbon::parse($key)->format('l');
 
                 $is_holiday =VmtHolidays::where('holiday_date',$key);
@@ -817,7 +817,7 @@ class VmtDashboardService
                     $count1++;
                 }
 
-                if (($attendancedash['absent_status'] == "Not Applied" || $attendancedash['absent_status'] == "Approved") &&  $dayStr != "Sunday" && $is_holiday->doesntExist()) {
+                if ( $attendancedash['absent_status'] == "Approved" &&  $dayStr != "Sunday" && $is_holiday->doesntExist()) {
                     $count2++;
                 }
 
