@@ -341,6 +341,12 @@ class VmtEmployeePayCheckService
                 $empPaySlip->medical_allowance_arrear = $row["medical_allowance_arrear"] ?? 0;
                 $empPaySlip->earned_spl_alw = $row["earned_spl_alw"];
                 $empPaySlip->spl_alw_arrear = $row["spl_alw_arrear"];
+                $empPaySlip->communication_allowance = $row["communication_allowance"];
+                $empPaySlip->food_allowance = $row["food_allowance"];
+                $empPaySlip->vehicle_reimbursement = $row["vehicle_reimbursement"];
+                $empPaySlip->driver_salary = $row["driver_salary"];
+                $empPaySlip->lta = $row["lta"];
+                $empPaySlip->other_allowance = $row["other_allowance"];
                 $empPaySlip->overtime = $row["overtime"];
                 $empPaySlip->ovetime_hours = $row["ovetime_hours"] ?? 0;
                 $empPaySlip->daily_allowance = $row["daily_allowance"] ?? 0;
@@ -1273,6 +1279,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                         'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                         'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
+                        'vmt_employee_payslip_v2.communication_allowance as Communication Allowance',
+                        'vmt_employee_payslip_v2.food_allowance as Food Allowance',
+                        'vmt_employee_payslip_v2.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_payslip_v2.driver_salary as Driver Salary',
+                        'vmt_employee_payslip_v2.lta as Leave Travel Allowance',
+                        'vmt_employee_payslip_v2.other_allowance as Other Allowance',
                         'vmt_employee_payslip_v2.overtime as Overtime',
                     ]
                 )->toArray();
@@ -1321,7 +1333,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
                         'vmt_employee_compensatory_details.special_allowance as Special Allowance',
                         'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
-
+                        'vmt_employee_compensatory_details.communication_allowance as Communication Allowance',
+                        'vmt_employee_compensatory_details.food_allowance as Food Allowance',
+                        'vmt_employee_compensatory_details.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_compensatory_details.driver_salary as Driver Salary',
+                        'vmt_employee_compensatory_details.lta as Leave Travel Allowance',
+                        'vmt_employee_compensatory_details.other_allowance as Other Allowance',
                     ]
                 )->toArray();
 
@@ -1430,7 +1447,7 @@ class VmtEmployeePayCheckService
                 ];
             }
 
-            //dd($getpersonal);
+            // dd($getpersonal);
 
             $get_payslip =  AbsActivePayslip::where('is_active', '1')->first();
             $status = "";
@@ -1652,6 +1669,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                         'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                         'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
+                        'vmt_employee_payslip_v2.communication_allowance as Communication Allowance',
+                        'vmt_employee_payslip_v2.food_allowance as Food Allowance',
+                        'vmt_employee_payslip_v2.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_payslip_v2.driver_salary as Driver Salary',
+                        'vmt_employee_payslip_v2.lta as Leave Travel Allowance',
+                        'vmt_employee_payslip_v2.other_allowance as Other Allowance',
                         'vmt_employee_payslip_v2.overtime as Overtime',
                     ]
                 )->toArray();
@@ -1700,6 +1723,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
                         'vmt_employee_compensatory_details.special_allowance as Special Allowance',
                         'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
+                        'vmt_employee_compensatory_details.communication_allowance as Communication Allowance',
+                        'vmt_employee_compensatory_details.food_allowance as Food Allowance',
+                        'vmt_employee_compensatory_details.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_compensatory_details.driver_salary as Driver Salary',
+                        'vmt_employee_compensatory_details.lta as Leave Travel Allowance',
+                        'vmt_employee_compensatory_details.other_allowance as Other Allowance',
                     ]
                 )->toArray();
 
