@@ -29,8 +29,8 @@
             <Column header="Action">
 
                 <template #body="slotProps">
-                                    <button class="p-2 mx-2 text-white bg-black rounded-md"
-                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)">Download</button>
+                                    <!-- <button class="p-2 mx-2 text-white bg-black rounded-md"
+                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)">Download</button> -->
                                     <!-- bg-blue-500 -->
                                     <button class=" border-[2px] border-[#000] py-2 px-3 rounded-md"
                                     @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('', slotProps.data.PAYROLL_MONTH)">View</button>

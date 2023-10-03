@@ -322,7 +322,7 @@ class VmtPayCheckController extends Controller
 
      public function viewPayslipdetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService ,VmtAttendanceService $serviceVmtAttendanceService)
      {
-  
+
         return $employeePaySlipService->viewPayslipdetails($request->user_code,
         $request->month ,
          $request->year,$serviceVmtAttendanceService);
