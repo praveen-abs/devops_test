@@ -156,7 +156,7 @@
         </div>
     </Dialog>
     <Dialog v-model:visible="dailogDepartment" modal header="Edit Department"
-        :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
+        :style="{ width: '30vw' }">
         <!-- {{ employee_card.department  }} -->
         <Dropdown :options="departmentOption" optionLabel="name" v-model="employee_card.department"
             placeholder="Select Department" class="w-full form-selects" optionValue="id" />
@@ -169,7 +169,7 @@
         </template>
     </Dialog>
     <Dialog v-model:visible="dailogReporting" modal header="Edit Reporting Manager"
-        :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
+        :style="{ width: '30vw'}">
         <Dropdown optionLabel="name" :options="reportManagerOption" v-model="employee_card.reporting_manager"
             optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
         <template #footer>
@@ -182,7 +182,7 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw', borderTop: '5px solid #002f56', }"
+    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw' }"
         style=" @media (min-width:1024px){background-image:particular_ad_small.png;} ">
 
         <template #header>
@@ -346,7 +346,7 @@
     </Dialog>
 
     <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
-        :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        :style="{ width: '50vw'}">
         <template #header>
             <div>
                 <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
@@ -397,9 +397,9 @@
                                 Documents</label>
                             <div class="d-flex  justify-items-center align-items-center">
                                 <Toast />
-                                <label class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                <label class="cursor-pointer text-primary bg-[black] px-2 py-2 rounded-md d-flex align-items-center fs-5"
                                     style="width:100px ; " id="" for="uploadPassBook">
-                                    <i class="pi pi-arrow-circle-up fs-5 mr-2"></i>
+                                    <i class="pi pi-arrow-circle-up text-[white] mr-2 text-[18px]"></i>
                                     <h1 class="text-light">Upload</h1>
                                 </label>
 
