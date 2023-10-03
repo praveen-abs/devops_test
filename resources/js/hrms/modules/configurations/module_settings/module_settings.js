@@ -26,6 +26,9 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
 import Checkbox from 'primevue/checkbox';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+
 import { createPinia } from "pinia";
 
 import module_settings from './module_settings.vue'
@@ -46,6 +49,8 @@ app.directive('focustrap', FocusTrap);
 
 app.component('Checkbox', Checkbox);
 app.component('Button', Button);
+app.component('Accordion', Accordion);
+app.component('AccordionTab', AccordionTab);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ConfirmDialog',ConfirmDialog);

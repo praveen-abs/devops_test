@@ -10,10 +10,10 @@
 
        <Dialog v-model:visible="show" modal header="Calendar" :style="{ width: '30vw' }">
         <div class=" flex justify-center items-center w-[100%]">
-            <Calendar v-model="date" inline showWeek />
+            <Calendar v-model="date" inline  />
         </div>
             <!-- <template #footer> -->
-      <button @click="show = false"  class=" absolute top-4 right-4" ><i class="pi pi-times"></i></button>
+      <button @click="show = false"  class="absolute top-4 right-4" ><i class="pi pi-times"></i></button>
     <!-- </template> -->
       </Dialog>
 
@@ -48,8 +48,23 @@ const show = ref(false);
     color:#000 !important;
 }
 .p-datepicker-year{
-
     color:#000 !important;
-
 }
+.p-datepicker-weeknumber{
+    padding: 8px !important;
+}
+.p-datepicker-weekheader{
+    padding: 8px;
+}
+.p-datepicker{
+    padding: 8px !important;
+}
+.p-disabled{
+    /* padding: 8px !important; */
+}
+.p-datepicker table th{
+    padding: 4px 4px 4px 10px !important;
+}
+
+
 </style>

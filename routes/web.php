@@ -210,6 +210,11 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/get-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeLeaveBalance'])->name('getEmployeeLeaveBalance');
     Route::post('/is_leave_balance_available', [App\Http\Controllers\VmtAttendanceController::class, 'isLeaveBalanceAvailable'])->name('isLeaveBalanceAvailable');
 
+    //upload leave balance
+
+    Route::post('updateEmployeeLeaveBalanceData', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'updateEmployeeLeaveBalanceData'])->name('updateEmployeeLeaveBalanceData');
+    Route::get('uploadLeaveBalanceData', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'showEmployeeLeaveBalanceDatapage'])->name('uploadLeaveBalanceData');
+
     //Leave history pages
 
 

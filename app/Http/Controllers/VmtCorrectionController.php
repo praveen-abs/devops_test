@@ -1113,17 +1113,24 @@ class VmtCorrectionController extends Controller
 
             $status = $response['status'];
 
-            if ($response['status'] == "success")
+            if ($response['status'] == "success"){
                 $message = $row['employee_code'] . ' added successfully';
-            else
+            }
+            else{
                 $message = $row['employee_code'] . ' has failed';
+            }
+
+            $data_count =0;
+
+            $data_count =$response['data_count'] + $data_count;
 
             return $rowdata_response = [
 
                 'status' => $response['status'],
                 'message' => $message,
                 'mail_status' => '',
-                'data' => $response['data']
+                'data' => $response['data'],
+                'data_count' => $data_count
             ];
         } catch (\Exception $e) {
             //dd($e);
@@ -1143,7 +1150,7 @@ class VmtCorrectionController extends Controller
     {
         try {
 
-
+$count=0;
             $user_data = (["name" => "name", "email" => "email"]);
 
             $employee_data = ([
@@ -1216,7 +1223,7 @@ class VmtCorrectionController extends Controller
             $user_id = User::where('user_code', $data['employee_code'])->first();
 
             if (!empty($user_id)) {
-
+                $count++;
                 $user_id = $user_id->id;
 
                 foreach ($data as $data_key => $single_data) {
@@ -1445,7 +1452,8 @@ class VmtCorrectionController extends Controller
                 return $response = ([
                     'status' => 'success',
                     'message' => 'Master data updated successfully',
-                    'data' => ''
+                    'data' => '',
+                    'data_count' => $count
                 ]);
             }
         } catch (\Exception $e) {

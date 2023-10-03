@@ -2,7 +2,7 @@
     <div class="px-2">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Attendance Reports</h1>
-            <div class=" flex items-center">
+            <div class="flex items-center ">
                 <button @click="EmployeeMaster.clearfilterBtn(Reports_store.activetab),Reports_store.clearDataTable()"
                     class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-times"></i> Clear Filter</button>
