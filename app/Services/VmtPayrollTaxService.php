@@ -38,6 +38,158 @@ use Barryvdh\DomPDF\Facade as PDF;
 class VmtPayrollTaxService
 {
 
+
+
+    public function getEmpAnnualProjectionForPdf($user_id, $month)
+    {
+
+        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
+        $start_date = Carbon::parse($timeperiod->start_date)->format('Y-m-d');
+        $end_date = Carbon::parse($timeperiod->end_date)->format('Y-m-01');
+        $end_date = Carbon::parse($end_date)->format('Y-m-d');
+        $current_date = Carbon::now()->format('Y-m-01');
+        $current_date_sub1 = Carbon::now()->subMonth()->format('Y-m-01');
+
+        // dd($current_date_addM);
+
+        $single_user_id = User::where('id', $user_id)->first();
+
+            $payroll_date = VmtPayroll::where('payroll_date',  $month)->where('client_id', $single_user_id->client_id)->first();
+
+            if (!empty($payroll_date)) {
+                $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $user_id);
+            }
+
+            if ($emp_payroll->exists()) {
+                 $emp_payroll =$emp_payroll->first();
+                 $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
+                 $employee_projected = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id);
+            }
+
+            $actual_months_datas  = $employee_projected_salary->whereBetween('payroll_months', [$start_date, $current_date_sub1]);
+            $projection_months_datas  = $employee_projected->whereBetween('payroll_months', [$current_date, $end_date]);
+
+            /*------------ sum of actual month salary --------------*/
+
+            $employee_actual_details["Basic"] = $actual_months_datas->sum('earned_basic');
+            $employee_actual_details["Basic Arrears"] =$actual_months_datas->sum('basic_arrear');
+            $employee_actual_details["Dearness Allowance"] =$actual_months_datas->sum('dearness_allowance_earned');
+            $employee_actual_details["Dearness Allowance Arrears"] =$actual_months_datas->sum('dearness_allowance_arrear');
+            $employee_actual_details["Variable Dearness Allowance"] =$actual_months_datas->sum('vda_earned');
+            $employee_actual_details["Variable Dearness Allowance Arrears"] =$actual_months_datas->sum('vda_arrear');
+            $employee_actual_details["HRA"] =$actual_months_datas->sum('earned_hra');
+            $employee_actual_details["HRA Arrears"] =$actual_months_datas->sum('hra_arrear');
+            $employee_actual_details["Child Education Allowance"] =$actual_months_datas->sum('earned_child_edu_allowance');
+            $employee_actual_details["Child Education Allowance Arrears"] =$actual_months_datas->sum('child_edu_allowance_arrear');
+            $employee_actual_details["Statutory Bonus"] =$actual_months_datas->sum('earned_stats_bonus');
+            $employee_actual_details["Statutory Bonus Arrears"] =$actual_months_datas->sum('earned_stats_arrear');
+            $employee_actual_details["Medical Allowance"] =$actual_months_datas->sum('medical_allowance_earned');
+            $employee_actual_details["Medical Allowance Arrears"] =$actual_months_datas->sum('medical_allowance_arrear');
+            $employee_actual_details["Communicaton Allowance"] =$actual_months_datas->sum('communication_allowance_earned');
+            $employee_actual_details["Communication Allowance Arrears"] =$actual_months_datas->sum('communication_allowance_arrear');
+            $employee_actual_details["Leave Travel Allowance"] =$actual_months_datas->sum('earned_lta');
+            $employee_actual_details["Leave Travel Allowance Arrears"] =$actual_months_datas->sum('lta_arrear');
+            $employee_actual_details["Food Allowance"] =$actual_months_datas->sum('food_allowance_earned');
+            $employee_actual_details["Food Allowance Arrears"] =$actual_months_datas->sum('food_allowance_arrear');
+            $employee_actual_details["Special Allowance"] =$actual_months_datas->sum('earned_spl_alw');
+            $employee_actual_details["Special Allowance Arrears"] =$actual_months_datas->sum('spl_alw_arrear');
+            $employee_actual_details["Other Allowance"] =$actual_months_datas->sum('other_allowance_earned');
+            $employee_actual_details["Other Allowance Arrears"] =$actual_months_datas->sum('other_allowance_arrear');
+            $employee_actual_details["Washing Allowance"] =$actual_months_datas->sum('washing_allowance_earned') ;
+            $employee_actual_details["Washing Allowance Arrears"] =$actual_months_datas->sum('washing_allowance_arrear');
+            $employee_actual_details["Uniform Allowance"] =$actual_months_datas->sum('uniform_allowance_earned');
+            $employee_actual_details["Uniform Allowance Arrears"] =$actual_months_datas->sum('uniform_allowance_arrear') ;
+            $employee_actual_details["Vehicle Reimbursement"] =$actual_months_datas->sum('vehicle_reimbursement_earned') ;
+            $employee_actual_details["Vehicle Reimbursement Arrears"] =$actual_months_datas->sum('vehicle_reimbursement_arrear');
+            $employee_actual_details["Driver Salary Reimbursement"] =$actual_months_datas->sum('driver_salary_earned');
+            $employee_actual_details["Driver Salary Reimbursement Arrears"] =$actual_months_datas->sum('driver_salary_arrear');
+            $employee_actual_details["Professional Tax"] =$actual_months_datas->sum('prof_tax');
+            $employee_actual_details["Income Tax"] =$actual_months_datas->sum('income_tax');
+            $employee_actual_details["Overtime"] =$actual_months_datas->sum('overtime');
+            $employee_actual_details["Overtime Arrears"] =$actual_months_datas->sum('overtime_arrear');
+            $employee_actual_details["Incentive"] =$actual_months_datas->sum('incentive');
+            $employee_actual_details["Other Earnings"] =$actual_months_datas->sum('other_earnings');
+            $employee_actual_details["Referral Bonus"] =$actual_months_datas->sum('referral_bonus');
+            $employee_actual_details["Annual Statutory Bonus"] =$actual_months_datas->sum('earned_stats_bonus');
+            $employee_actual_details["Ex-Gratia"] =$actual_months_datas->sum('ex_gratia');
+            $employee_actual_details["Attendance Bonus"] =$actual_months_datas->sum('attendance_bonus');
+            $employee_actual_details["Daily Allowance"] =$actual_months_datas->sum('daily_allowance');
+            $employee_actual_details["Leave Encashments"] =$actual_months_datas->sum('leave_encashment');
+            $employee_actual_details["Gift"] =$actual_months_datas->sum('gift_payment');
+
+            /* --------------------- sum of projection month salary ---------------*/
+
+             $employee_projection_details["Basic"] = $projection_months_datas->sum('earned_basic');
+             $employee_projection_details["Basic Arrears"] =$projection_months_datas->sum('basic_arrear');
+             $employee_projection_details["Dearness Allowance"] =$projection_months_datas->sum('dearness_allowance_earned');
+             $employee_projection_details["Dearness Allowance Arrears"] =$projection_months_datas->sum('dearness_allowance_arrear');
+             $employee_projection_details["Variable Dearness Allowance"] =$projection_months_datas->sum('vda_earned');
+             $employee_projection_details["Variable Dearness Allowance Arrears"] =$projection_months_datas->sum('vda_arrear');
+             $employee_projection_details["HRA"] =$projection_months_datas->sum('earned_hra');
+             $employee_projection_details["HRA Arrears"] =$projection_months_datas->sum('hra_arrear');
+             $employee_projection_details["Child Education Allowance"] =$projection_months_datas->sum('earned_child_edu_allowance');
+             $employee_projection_details["Child Education Allowance Arrears"] =$projection_months_datas->sum('child_edu_allowance_arrear');
+             $employee_projection_details["Statutory Bonus"] =$projection_months_datas->sum('earned_stats_bonus');
+             $employee_projection_details["Statutory Bonus Arrears"] =$projection_months_datas->sum('earned_stats_arrear');
+             $employee_projection_details["Medical Allowance"] =$projection_months_datas->sum('medical_allowance_earned');
+             $employee_projection_details["Medical Allowance Arrears"] =$projection_months_datas->sum('medical_allowance_arrear');
+             $employee_projection_details["Communicaton Allowance"] =$projection_months_datas->sum('communication_allowance_earned');
+             $employee_projection_details["Communication Allowance Arrears"] =$projection_months_datas->sum('communication_allowance_arrear');
+             $employee_projection_details["Leave Travel Allowance"] =$projection_months_datas->sum('earned_lta');
+             $employee_projection_details["Leave Travel Allowance Arrears"] =$projection_months_datas->sum('lta_arrear');
+             $employee_projection_details["Food Allowance"] =$projection_months_datas->sum('food_allowance_earned');
+             $employee_projection_details["Food Allowance Arrears"] =$projection_months_datas->sum('food_allowance_arrear');
+             $employee_projection_details["Special Allowance"] =$projection_months_datas->sum('earned_spl_alw');
+             $employee_projection_details["Special Allowance Arrears"] =$projection_months_datas->sum('spl_alw_arrear');
+             $employee_projection_details["Other Allowance"] =$projection_months_datas->sum('other_allowance_earned');
+             $employee_projection_details["Other Allowance Arrears"] =$projection_months_datas->sum('other_allowance_arrear');
+             $employee_projection_details["Washing Allowance"] =$projection_months_datas->sum('washing_allowance_earned') ;
+             $employee_projection_details["Washing Allowance Arrears"] =$projection_months_datas->sum('washing_allowance_arrear');
+             $employee_projection_details["Uniform Allowance"] =$projection_months_datas->sum('uniform_allowance_earned');
+             $employee_projection_details["Uniform Allowance Arrears"] =$projection_months_datas->sum('uniform_allowance_arrear') ;
+             $employee_projection_details["Vehicle Reimbursement"] =$projection_months_datas->sum('vehicle_reimbursement_earned') ;
+             $employee_projection_details["Vehicle Reimbursement Arrears"] =$projection_months_datas->sum('vehicle_reimbursement_arrear');
+             $employee_projection_details["Driver Salary Reimbursement"] =$projection_months_datas->sum('driver_salary_earned');
+             $employee_projection_details["Driver Salary Reimbursement Arrears"] =$projection_months_datas->sum('driver_salary_arrear');
+             $employee_projection_details["Professional Tax"] =$projection_months_datas->sum('prof_tax');
+             $employee_projection_details["Income Tax"] =$projection_months_datas->sum('income_tax');
+             $employee_projection_details["Overtime"] =$projection_months_datas->sum('overtime');
+             $employee_projection_details["Overtime Arrears"] =$projection_months_datas->sum('overtime_arrear');
+             $employee_projection_details["Incentive"] =$projection_months_datas->sum('incentive');
+             $employee_projection_details["Other Earnings"] =$projection_months_datas->sum('other_earnings');
+             $employee_projection_details["Referral Bonus"] =$projection_months_datas->sum('referral_bonus');
+             $employee_projection_details["Annual Statutory Bonus"] =$projection_months_datas->sum('earned_stats_bonus');
+             $employee_projection_details["Ex-Gratia"] =$projection_months_datas->sum('ex_gratia');
+             $employee_projection_details["Attendance Bonus"] =$projection_months_datas->sum('attendance_bonus');
+             $employee_projection_details["Daily Allowance"] =$projection_months_datas->sum('daily_allowance');
+             $employee_projection_details["Leave Encashments"] =$projection_months_datas->sum('leave_encashment');
+             $employee_projection_details["Gift"] =$projection_months_datas->sum('gift_payment');
+
+
+              /* --------------------- End ---------------*/
+
+
+
+            //  if same key sum of actual and projection value
+
+        $res = [];
+        foreach ($employee_actual_details as $key => $value) {
+            if (isset($employee_projection_details[$key])) {
+                $res[$key]  =  $employee_projection_details[$key] + $employee_actual_details[$key];
+            } else {
+                $res[$key]  = $employee_actual_details[$key];
+            }
+        }
+
+        return $res;
+
+    }
+
+
+
+
+
+
     public function getEmpCompValues($user_id, $month)
     {
 
@@ -110,6 +262,9 @@ class VmtPayrollTaxService
 
         // User Details
 
+       $get_emp_annual =  $this->getEmpAnnualProjectionForPdf($user_id, $month);
+
+
         array_push($res["User_details"], $inv_users->toArray());
 
         // 1) Gross Earnings
@@ -129,7 +284,7 @@ class VmtPayrollTaxService
         $SumOfHousPropsInOld = 0;
         $tax_calc_new_redime = 0;
         foreach ($v_form_template as $dec_amt) {
-            $empBasic = $dec_amt['basic'] * 12;
+            $empBasic = $get_emp_annual['Basic'];
 
             if ($dec_amt['section_group'] == "HRA") {
                 $hraTotalRent = json_decode($dec_amt['json_popups_value'], true);
@@ -160,6 +315,7 @@ class VmtPayrollTaxService
 
 
         // 4) Taxable Income Under Previous employment
+
         $sumOfpreviousempincome = [];
         $pre_particular = [];
         $sumofprevalue = 0;
@@ -179,10 +335,10 @@ class VmtPayrollTaxService
 
 
 
-        $taxincome_preEmployment['particular'] = $pre_particular;
-        $taxincome_preEmployment['actual'] = $sumOfpreviousempincome;
+        $taxincome_preEmployment['particular'] = empty($pre_particular) ? ['i) Income After Exceptions','ii) Less: Professional Tax'] : $pre_particular;
+        $taxincome_preEmployment['actual'] = empty($sumOfpreviousempincome) ? ['0','0'] : $sumOfpreviousempincome;
         $taxincome_preEmployment['projection'] = 'Total taxable income under Previous employment';
-        $taxincome_preEmployment['total'] = $sumofprevalue;
+        $taxincome_preEmployment['total'] = empty($sumofprevalue) ? 0 : $sumofprevalue;
 
         // dd($taxincome_preEmployment);
 
@@ -754,55 +910,48 @@ class VmtPayrollTaxService
             $date[] = $value->format('M Y');
         }
 
-        $annual =  $this->getAnnualProjection($user_id, $month);
+        $single_user_id = User::where('id', $user_id)->first();
 
-        // dd($annual);
+        $payroll_date = VmtPayroll::where('payroll_date',  $month)->where('client_id', $single_user_id->client_id)->first();
 
-        if (isset($annual['Total']['HRA Arrears'])) {
-            $annual_Hra =  $annual['Total']['HRA Arrears'] + $annual['Total']['HRA'];
-        } else {
-            $annual_Hra = $annual['Total']['HRA'];
+        if (!empty($payroll_date)) {
+            $emp_payroll = VmtEmployeePayroll::where('payroll_id', $payroll_date->id)->where('user_id', $user_id);
+        }
+
+        if ($emp_payroll->exists()) {
+             $emp_payroll =$emp_payroll->first();
+             $employee_projected_salary = AbsSalaryProjection::where('vmt_emp_payroll_id', $emp_payroll->id)->get([
+                'earned_basic',
+                'basic_arrear',
+                'earned_hra',
+                'hra_arrear'
+             ]);
+
+        }
+
+        foreach($employee_projected_salary as $key => $single_value){
+                $emp_salary_hra[$key]['date'] = $date[$key];
+                $emp_salary_hra[$key]['Basic'] = ($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.50;
+                $emp_salary_hra[$key]['Hra'] = $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'];
+                $emp_salary_hra[$key]['excess_of_rent_paid'] = (($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.10) + $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'];
+                $emp_salary_hra[$key]['Excemption_amount'] = min([($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.50 ,  $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'] , (($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.10) + $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear']]);
         }
 
 
-        if (isset($annual['Total']['Basic Arrears'])) {
-            $annual_basic =  $annual['Total']['Basic Arrears'] + $annual['Total']['Basic'];
-        } else {
-            $annual_basic = $annual['Total']['Basic'];
-        }
+        $emp_basic = 0;
+        $emp_hra = 0;
+        $emp_Excess_rent = 0;
+        $emp_excp_amt = 0;
 
-        $annual_basic = $annual_basic * 0.5;
-
-        $annual_basic10per  = $annual_basic * 0.10;
-
-        $excessOfRentPaid = $annual_Hra - $annual_basic10per;
-
-
-        $res11 = ["total_earnedbasic" => $annual_basic, "total_hrareceived" => $annual_Hra, "Excess_of_rentpaid" => $excessOfRentPaid];
-
-        $total_excep  = min(array_values($res11));
-
-        $res = ["total_earnedbasic" => $annual_basic, "total_hrareceived" => $annual_Hra, "Excess_of_rentpaid" => $excessOfRentPaid, "total_exception_amt" => $total_excep];
-
-
-        foreach ($date as $single_date) {
-            $HraException['month'] = $single_date;
-            $HraException['Earned_basic'] = $annual_basic / 12;
-            $HraException['Hra_received'] =  round($annual_Hra / 12);
-            $HraException['rent_paid_over_10per'] = round(( $annual_Hra - $annual_basic10per) / 12);
-
-            array_push($res, $HraException);
+        foreach($emp_salary_hra as $key => $single_salary){
+               $emp_basic += $emp_salary_hra[$key]['Basic'];
+               $emp_hra += $emp_salary_hra[$key]['Hra'];
+               $emp_Excess_rent += $emp_salary_hra[$key]['excess_of_rent_paid'];
+               $emp_excp_amt += $emp_salary_hra[$key]['Excemption_amount'];
         }
 
 
-        foreach ($res as $key => $value) {
-            if (is_int($key)) {
-                $min_value  =  min(array_values($res[$key]));
-                $res[$key]['Exception_amt'] = $min_value;
-            }
-        }
 
-        return ($res);
     }
 
 
@@ -2048,3 +2197,4 @@ $annual_salary_projection =array();
 
 
 }
+
