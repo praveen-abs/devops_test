@@ -154,7 +154,7 @@
                 <table border="0.5" style="width:100%;border-collapse: collapse; border-color:black"></table>
             </td>
         </tr>
-
+        @if(!empty($leave_data))
         <tr class="td"  style="height:20px; marign:0px;">
             <td colspan="4" class="td"  border="2" style="marign:0px; padding-top:10px">
                 <p style="font-size: 12px; margin-bottom:2px ">LEAVE DETAILS</p>
@@ -199,6 +199,7 @@
                 <table style="border-bottom:0.4px solid rgb(175, 175, 175); width:100%;"></table>
             </td>
         </tr>
+        @endif
 
 
         <tr class="td"  style="height:20px; marign:0px;">

@@ -1170,16 +1170,16 @@ class VmtEmployeePayCheckService
         try {
 
             $user_data = User::where('user_code', $user_code)->first();
-            $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
-                ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
-                ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
-                ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
-                ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+            $payroll_data = VmtPayroll::leftJoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+                ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+                ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 ->where('user_code', $user_code)
                 ->whereYear('payroll_date', $year)
                 ->whereMonth('payroll_date', $month);
@@ -1582,20 +1582,18 @@ class VmtEmployeePayCheckService
 
             $user_data = User::where('user_code', $user_code)->first();
             $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
-                ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
-                ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
-                ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
-                ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+                ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 ->where('user_code', $user_code)
                 ->whereYear('payroll_date', $year)
                 ->whereMonth('payroll_date', $month);
-
-
 
 
             //get leave data
@@ -1836,6 +1834,8 @@ class VmtEmployeePayCheckService
                     ]
                 ];
             }
+
+            // dd($getpersonal);
 
             return response()->json([
                 'status' => 'success',
