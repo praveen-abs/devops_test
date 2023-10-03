@@ -123,7 +123,7 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
     //Upload selected file
     const uploadOnboardingFile = (data) => {
 
-        // let url = '/imporExistingSalaryAdvanceData'
+       // let url = '/imporExistingSalaryAdvanceData'
 
         let url = '/updateEmployeeLeaveBalanceData'
 
@@ -148,9 +148,9 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
                                 life: 3000,
                             });
                         });
-                        setTimeout(() => {
-                            window.location.replace(window.location.origin + '/manageEmployees')
-                        }, 4000);
+                     //setTimeout(() => {
+                        //     window.location.replace(window.location.origin + '/manageEmployees')
+                        // }, 4000);
                     }
             }).finally(() => {
             })
