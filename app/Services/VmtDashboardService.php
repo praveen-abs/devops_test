@@ -100,12 +100,12 @@ class VmtDashboardService
 
         //Get the current year and month
         $year = date("Y");
-        $month = str_replace('0', '', date("m"));
+        $month = date("m");
         $day = date('d');
         $present_count = 0;
         $absent_count = 0;
         $leave_count = 0;
-
+        //dd( $user_code, $year,$month);
         //Get monthly attendance report data
         $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth_v2($user_code, $year, $month);
 

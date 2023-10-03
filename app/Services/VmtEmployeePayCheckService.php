@@ -113,7 +113,7 @@ class VmtEmployeePayCheckService
             }
         }
         unset($Single_data);
-        dd($corrected_data);
+        //dd($corrected_data);
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
