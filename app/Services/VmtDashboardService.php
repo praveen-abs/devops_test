@@ -1068,7 +1068,6 @@ class VmtDashboardService
             }
             $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'availed Leaves' => $availed_leaves);
             // return $response;
-            dd($response);
             return response()->json([
                 "status" => "success",
                 "message" => "",
@@ -1204,8 +1203,6 @@ class VmtDashboardService
             $getAllEvent = $this->getAllEventsDashboard();
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
-            dd(json_decode($getEmpLeaveBalance->content(), true));
-
             //dd($getAttenanceReportpermonth->content());
 
             return response()->json(
