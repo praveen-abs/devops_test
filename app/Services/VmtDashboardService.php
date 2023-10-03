@@ -936,7 +936,8 @@ class VmtDashboardService
         }
     }
 
-    public function readNotification($record_id){
+    public function readNotification($record_id)
+    {
 
         $validator = Validator::make(
             $data = [
@@ -960,13 +961,12 @@ class VmtDashboardService
         }
 
 
-           $get_notification =  VmtNotifications::where('id',$record_id)->first();
+        $get_notification =  VmtNotifications::where('id', $record_id)->first();
 
-            if($get_notification){
-                $get_notification->is_read = "1";
-                $get_notification->save();
-            }
-
+        if ($get_notification) {
+            $get_notification->is_read = "1";
+            $get_notification->save();
+        }
     }
 
 
@@ -986,8 +986,29 @@ class VmtDashboardService
             $response = array();
             $accrued_leave_types = VmtLeaves::get();
             $temp_leave = array();
-
+            $gender = VmtEmployee::where('userid', $user_id);
+            if ($gender->exists()) {
+                $gender = $gender->first()->gender;
+            } else {
+                $gender = '';
+            }
+            if (empty($gender) || $gender == null) {
+                $gender = '';
+            } else {
+                $gender = strtolower($gender);
+            }
+            if ($gender == 'male') {
+                $remove_leave = 'Maternity Leave';
+            } else if ($gender == 'female') {
+                $remove_leave = 'Paternity Leave';
+            } else {
+                $remove_leave = 'no leave';
+            }
             foreach ($accrued_leave_types as $single_leave_types) {
+                if ($single_leave_types->leave_type == $remove_leave) {
+                    continue;
+                    // dd($single_leave_types->leave_type);
+                }
                 if ($single_leave_types->is_finite == 1) {
                     if ($single_leave_types->is_carry_forward != 1) {
                         $total_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
@@ -1047,7 +1068,6 @@ class VmtDashboardService
             }
             $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'availed Leaves' => $availed_leaves);
             // return $response;
-
             return response()->json([
                 "status" => "success",
                 "message" => "",
@@ -1059,6 +1079,7 @@ class VmtDashboardService
                 "status" => "failure",
                 "message" => "Unable to fetch LeaveBalance",
                 "data" => $e,
+                "line" => $e->getTraceAsString()
             ]);
         }
     }
@@ -1182,8 +1203,6 @@ class VmtDashboardService
             $getAllEvent = $this->getAllEventsDashboard();
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
-
-
             //dd($getAttenanceReportpermonth->content());
 
             return response()->json(
