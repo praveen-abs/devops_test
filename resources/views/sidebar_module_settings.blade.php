@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('content')
-@vite( 'resources/js/hrms/modules/attendence/attendanceDashboard/attendanceDashboard.js')
-<div id="AttendanceDashboard"></div>
+
+
+@vite('resources/js/hrms/modules/configurations/module_settings/module_settings.js')
+<div id="module_settings"></div>
+
 @endsection

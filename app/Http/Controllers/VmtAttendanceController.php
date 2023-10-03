@@ -52,6 +52,21 @@ class VmtAttendanceController extends Controller
 
         return view('attendance_dashboard', compact('Total_Active_Employees'));
     }
+    public function findMIPOrMOP($time, $shiftStartTime, $shiftEndTime)
+    {
+        $response = array();
+        $shift_start_time = $shiftStartTime->subHours(1)->format('Y-m-d H:i:0');
+        $first_half_end_time =  $shiftStartTime->addHours(5);
+
+        if (Carbon::parse($time)->between(Carbon::parse($shift_start_time), $first_half_end_time, true)) {
+            $response['checkin_time'] = $time;
+            $response['checkout_time'] = null;
+        } else {
+            $response['checkin_time'] = null;
+            $response['checkout_time'] = $time;
+        }
+        return $response;
+    }
 
     public function showAttendanceLeavePage(Request $request)
     {
@@ -146,7 +161,7 @@ class VmtAttendanceController extends Controller
             $request->record_id,
             auth()->user()->user_code,
             $request->status,
-            $request->user_type,
+            $user_type = "manager",
             $request->review_comment,
             $serviceNotificationsService
         );
@@ -240,49 +255,31 @@ class VmtAttendanceController extends Controller
     public function applyLeaveRequest_AdminRole(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
+        $response = null;
         try {
-            $admin_user_code = $request->admin_user_code;
-
-            $is_admin = User::where('user_code', $admin_user_code)->where('org_role', "2")->first();
-
-            if (!empty($is_admin)) {
 
 
-                $response = $serviceVmtAttendanceService->applyLeaveRequest(
-                    user_code: $request->user_code,
-                    attendance_date: $request->attendance_date,
-                    regularization_type: $request->regularization_type,
-                    user_time: $request->user_time,
-                    regularize_time: $request->regularize_time,
-                    reason: $request->reason,
-                    custom_reason: $request->custom_reason,
-                    user_type: "Admin",
-                    serviceVmtNotificationsService: $serviceVmtNotificationsService
-                );
+            $response = $serviceVmtAttendanceService->applyLeaveRequest_AdminRole(
+                $request->admin_user_code,
+                $request->user_code,
+                $request->leave_request_date,
+                $request->start_date,
+                $request->end_date,
+                $request->hours_diff,
+                $request->no_of_days,
+                $request->compensatory_work_days_ids,
+                $request->leave_session,
+                $request->leave_type_name,
+                $request->leave_reason,
+                $request->notifications_users_id,
+                $serviceVmtNotificationsService
+            );
 
-                if ($response['status'] == "success") {
 
-                    $user_data = User::where('user_code', $request->user_code)->first();
 
-                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->first();
 
-                    $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
-                        approver_user_code: $admin_user_code,
-                        record_id: $record_id->id,
-                        status: "Approved",
-                        status_text: "---",
-                        user_type: "Admin",
-                        serviceVmtNotificationsService: $serviceVmtNotificationsService
-                    );
-                }
-            }
 
-            return $response = [
-                'status' => 'success',
-                'message' => 'Regularization done successfully!',
-                'mail_status' => $response['mail_status'] ?? "",
-                'data' => "",
-            ];
+            return $response;
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -292,25 +289,24 @@ class VmtAttendanceController extends Controller
         }
     }
 
-    public function applyLeaveRequest(Request $request,VmtAttendanceService $serviceAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         return $serviceAttendanceService->applyLeaveRequest(
-            user_code : $request->user_code,
-            leave_request_date : $request->leave_request_date,
-            start_date : $request->start_date,
-            end_date : $request->end_date,
-            hours_diff  : $request->hours_diff,
-            no_of_days  : $request->no_of_days,
-            compensatory_work_days_ids : $request->compensatory_work_days_ids,
-            leave_session : $request->leave_session,
-            leave_type_name : $request->leave_type_name,
-            leave_reason : $request->leave_reason,
-            user_type: $request->user_type,
-            notifications_users_id : $request->notifications_users_id,
-            serviceNotificationsService : $serviceVmtNotificationsService
+            user_code: $request->user_code,
+            leave_request_date: $request->leave_request_date,
+            start_date: $request->start_date,
+            end_date: $request->end_date,
+            hours_diff: $request->hours_diff,
+            no_of_days: $request->no_of_days,
+            compensatory_work_days_ids: $request->compensatory_work_days_ids,
+            leave_session: $request->leave_session,
+            leave_type_name: $request->leave_type_name,
+            leave_reason: $request->leave_reason,
+            user_type: "Employee",
+            notifications_users_id: $request->notifications_users_id,
+            serviceNotificationsService: $serviceVmtNotificationsService
         );
-
     }
 
 
@@ -717,6 +713,13 @@ class VmtAttendanceController extends Controller
 
             $shift_time = $this->getShiftTimeForEmployee($value['user_id'], $value['checkin_time'], $value['checkout_time']);
 
+            if ($attendanceResponseArray[$key]['checkin_time'] != null && $attendanceResponseArray[$key]['checkout_time'] != null && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
+                $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], Carbon::parse($shift_time->shift_start_time), Carbon::parse($shift_time->shift_end_time));
+
+                $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
+                $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
+            }
+
             //If no shift assigned to user, then return null
             if (!$shift_time) {
                 return 0;
@@ -983,23 +986,23 @@ class VmtAttendanceController extends Controller
     {
 
         //Get the team members of the given user
-        if(!empty($request->user_code)){
+        if (!empty($request->user_code)) {
             $user_code = $request->user_code;
-        }else{
+        } else {
             $user_code = auth()->user()->user_code;
         }
         $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get('user_id');
 
-            $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')->where('users.active', '1')
-                ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
-    
-    
-            //dd($reportees_details->toArray());
-            foreach ($reportees_details as $singleItem) {
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
-            }
-        
+        $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')->where('users.active', '1')
+            ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
+
+
+        //dd($reportees_details->toArray());
+        foreach ($reportees_details as $singleItem) {
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
+        }
+
 
         return $reportees_details;
     }
@@ -1011,7 +1014,7 @@ class VmtAttendanceController extends Controller
 
         $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('users.is_ssa', '0')->where('users.active', '1')
-            ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
+            ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation']);
 
 
         //dd($reportees_details->toArray());
@@ -1043,12 +1046,14 @@ class VmtAttendanceController extends Controller
     {
 
         $response = null;
-
+         
         //Check whether the current employee is Manager
-
+           // dd(Str::contains(currentLoggedInUserRole(), ['Manager']));
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAttendanceRegularizationData(auth()->user()->user_code, null, null);
+          //  dd(auth()->user()->user_code);
+            $response = $attendanceService->fetchAttendanceRegularizationData( null, null,auth()->user()->user_code);
+
         } else {
 
             //Fetch all data
@@ -1072,7 +1077,7 @@ class VmtAttendanceController extends Controller
 
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAbsentRegularizationData(auth()->user()->user_code, null, null);
+            $response = $attendanceService->fetchAbsentRegularizationData( null, null,auth()->user()->user_code);
         } else {
 
             //Fetch all data
@@ -1165,7 +1170,7 @@ class VmtAttendanceController extends Controller
 
                     $user_data = User::where('user_code', $request->user_code)->first();
 
-                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->where('attendance_date',$request->attendance_date )->first();
+                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->where('attendance_date', $request->attendance_date)->first();
 
                     $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
                         approver_user_code: $admin_user_code,
@@ -1178,12 +1183,8 @@ class VmtAttendanceController extends Controller
                 }
             }
 
-            return $response = [
-                'status' => 'success',
-                'message' => 'Regularization done successfully!',
-                'mail_status' => $response['mail_status'] ?? "",
-                'data' => "",
-            ];
+            return $response ;
+            
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -1233,29 +1234,26 @@ class VmtAttendanceController extends Controller
 
                     $user_data = User::where('user_code', $request->user_code)->first();
 
-                    $record_id = VmtEmployeeAttendanceRegularization::where('user_id', $user_data->id)->where('attendance_date',$request->attendance_date)->first();
+                    $record_id = VmtEmployeeAbsentRegularization::where('user_id', $user_data->id)->where('attendance_date', $request->attendance_date)->first();
 
-                    return $serviceVmtAttendanceService->approveRejectAbsentRegularization(
+                    $response_data = $serviceVmtAttendanceService->approveRejectAbsentRegularization(
                         approver_user_code: $admin_user_code,
-                        record_id: $record_id,
+                        record_id: $record_id->id,
                         status: "Approved",
                         status_text: "---",
                         user_type: "Admin",
                     );
                 }
             }
-
-            return $response = [
-                'status' => 'success',
-                'message' => 'Regularization done successfully!',
-                'mail_status' => $response['mail_status'] ?? "",
-                'data' => "",
-            ];
+  
+            return $response ;
+             
+    
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error while doing regularization",
-                'data' => $e->getMessage()
+                'data' => $e->getTraceAsString(),
             ]);
         }
     }
@@ -1538,10 +1536,13 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
-    public function isLeaveBalanceAvailable(Request $request, VmtAttendanceService $serviceAttendanceService){
-        return $serviceAttendanceService->isLeaveBalanceAvailable(user_code : $request->user_code,
-                                                                    leave_type_name : $request->leave_type_name,
-                                                                    current_applied_leave_count : $request->current_applied_leave_count);
+    public function isLeaveBalanceAvailable(Request $request, VmtAttendanceService $serviceAttendanceService)
+    {
+        return $serviceAttendanceService->isLeaveBalanceAvailable(
+            user_code: $request->user_code,
+            leave_type_name: $request->leave_type_name,
+            current_applied_leave_count: $request->current_applied_leave_count
+        );
     }
 
     public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService)

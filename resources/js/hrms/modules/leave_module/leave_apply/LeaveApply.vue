@@ -466,10 +466,13 @@ import axios from "axios";
 import useValidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
 
-import { useLeaveService } from './leave_apply_service'
+import { useLeaveService } from './leave_apply_service';
+import { useAttendanceTimesheetMainStore } from "../../attendence/timesheet/stores/attendanceTimesheetMainStore";
 
 const visible = ref(false)
-const leave_types = ref()
+const leave_types = ref();
+
+const AttendanceTimesheetMainStore =useAttendanceTimesheetMainStore();
 
 //get first day of current month
 
@@ -487,7 +490,9 @@ onMounted(() => {
     service.get_user()
     service.get_leave_types()
     service.leave_data.custom_start_date = new Date()
-    service.leave_data.permission_start_time = new Date()
+    service.leave_data.permission_start_time = new Date();
+
+    console.log( "AttendanceTimesheetMainStore ::",AttendanceTimesheetMainStore.CurrentlySelectedUser);
 
 
 });
