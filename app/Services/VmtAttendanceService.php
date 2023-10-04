@@ -4514,6 +4514,7 @@ class VmtAttendanceService
         $attendanceOverview['mop_emps'] = $mop_emps;
         $attendanceOverview['mip_count'] = $mip_count;
         $attendanceOverview['mip_emps'] = $mip_emps;
+        $attendanceOverview['Checkin_mode'] = $this->getAllEmployeesCheckInCheckOutMode();
 
         $shifts = $this->getWorkShiftDetails();
         $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
@@ -4859,6 +4860,9 @@ class VmtAttendanceService
 
             $present_count =0;
             $absent_count =0;
+            $biometric_checkin_count =0;
+            $web_checkin_count =0;
+            $mobile_checkin_count =0;
 
         foreach ($work_shift_assigned_employees as $emp_key => $single_employee_data) {
 
@@ -4870,10 +4874,23 @@ class VmtAttendanceService
 
                 if($employee_attendance_data->exists()){
 
+                    $attendance_mode_data =$employee_attendance_data->first();
+
+                    if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'web'){
+
+                        $web_checkin_count++;
+
+                    }else if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'mobile'){
+                        $mobile_checkin_count++;
+                    }
                     $present_count++;
+
+
                 }else if(!empty($employee_biometric_data)){
 
                     $present_count++;
+                    $biometric_checkin_count++;
+
 
                 }else{
                     $absent_count++;
@@ -4888,4 +4905,56 @@ class VmtAttendanceService
 
         // return $work_shift->toArray();
     }
+
+    public function getAllEmployeesCheckInCheckOutMode(){
+
+        try{
+        $employees_data = User::where('active',1)->get(['id','user_code']);
+        $response =array();
+    $biometric_checkin_count =0;
+    $web_checkin_count =0;
+    $mobile_checkin_count =0;
+
+foreach ($employees_data as $emp_key => $single_employee_data) {
+
+        $current_date =carbon::now()->format('Y-m-d');
+
+        $employee_attendance_data =VmtEmployeeAttendance::where('user_id', $single_employee_data['id'])->where('date',$current_date);
+
+        $employee_biometric_data = $this->getBioMetricAttendanceData($single_employee_data['user_code'],$current_date );
+
+        if($employee_attendance_data->exists()){
+
+            $attendance_mode_data =$employee_attendance_data->first();
+
+            if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'web'){
+
+                $web_checkin_count++;
+
+            }else if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'mobile'){
+                $mobile_checkin_count++;
+            }
+        }else if(!empty($employee_biometric_data)){
+
+            $biometric_checkin_count++;
+
+        }
+    }
+    $response["web_checkin_count"] =$web_checkin_count ;
+    $response["mobile_checkin_count"] =$mobile_checkin_count ;
+    $response ["biometric_checkin_count"] =  $biometric_checkin_count ;
+
+    return $response;
+}catch(\Exception $e){
+
+    return $reponse =([
+        'status'=>'failure',
+        'message'=>'Error While Fetch Employees Data',
+        'data'=>' ',
+    ]);
 }
+
+}
+
+}
+
