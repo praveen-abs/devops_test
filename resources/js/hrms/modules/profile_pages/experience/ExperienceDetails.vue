@@ -491,4 +491,10 @@ span {
     padding: 0;
     z-index: 0 !important;
 }
+
+.p-sidebar-right .p-sidebar
+{
+    width: 30% !important;
+    height: 100%;
+}
 </style>
