@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Models\ConfigPms;
+use App\Models\User;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormModel;
+use Carbon\Carbon;
 
 class VmtPMSModuleService_v3
 {
@@ -12,12 +14,47 @@ class VmtPMSModuleService_v3
 
     public function getPMSConfig()
     {
+        $config = ConfigPms::first();
+        return $config->toArray();
     }
 
 
     //Todo : Need to pass all the params
     public function savePMSConfig()
     {
+    }
+
+    public function getEmployeeListForManger($user_id)
+    {
+        $currentEmpCode = User::whereIn('id', explode(',', $user_id))->pluck('user_code');
+
+        $employeesList = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->whereIn('vmt_employee_office_details.l1_manager_code', $currentEmpCode)
+            ->where('users.active', '1')
+            ->where('users.is_ssa', '0')
+            ->get(['users.name', 'users.id']);
+        // dd($currentEmpCode);
+
+        return $employeesList;
+    }
+
+    public function getManagersListForEmployees($employees_id)
+    {
+        //Fetch all the managers for the given employees_id list
+        // dd();
+        $managersList = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('vmt_employee_office_details.user_id', $employees_id)
+            ->distinct()->get(['vmt_employee_office_details.l1_manager_code'])
+            ->where('users.active', '1')
+            ->where('users.is_ssa', '0')
+            ->toArray();
+
+        // dd($managersList);
+
+        //Fetch the manager details from user table
+        $managersDetailList = User::wherein('user_code', $managersList)->get(['id', 'name']);
+
+        return $managersDetailList;
     }
 
     //Todo : Need to pass all the params
@@ -57,18 +94,23 @@ class VmtPMSModuleService_v3
 
     public function getKPIFormAsDropdown($author_id)
     {
-        // dd($author_id);
-        $kpiTable  = VmtPMS_KPIFormModel::where('author_id',$author_id)->get();
-        $response =array();
-        $id = 1;
-        foreach ($kpiTable as $key => $item) {
-            $form['id'] = $id++;
-            $form['form_name'] = $item['form_name'];
-            array_push($response,$form);
-        }
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $kpiTable  = VmtPMS_KPIFormModel::where('author_id', $author_id)
+            ->whereYear('created_at', '=', $currentYear)
+            ->whereMonth('created_at', '=', $currentMonth)
+            ->get();
+        // Don't Delete this is need for another purpose
 
-        return $response;
+        // $response = array();
+        // // $id = 1;
+        // foreach ($kpiTable as $key => $item) {
+        //     $form['id'] = $item['id'];
+        //     $form['form_name'] = $item['form_name'];
+        //     array_push($response, $form);
+        // }
 
+        return $kpiTable;
     }
 
     public function getPMSRatingCardDetails()

@@ -802,14 +802,25 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         }
     }
 
+
+    public function getPMSConfig(Request $request,VmtPMSModuleService_v3 $pmsModuleService)
+    {
+        return $pmsModuleService->getPMSConfig();
+    }
+    public function getEmployeeListForManger($User_id,VmtPMSModuleService_v3 $pmsModuleService)
+    {
+        return $pmsModuleService->getEmployeeListForManger($User_id);
+    }
+    public function getManagersListForEmployees($User_id,VmtPMSModuleService_v3 $pmsModuleService)
+    {
+        return $pmsModuleService->getManagersListForEmployees($User_id);
+    }
     public function saveKPIForm(Request $request,VmtPMSModuleService_v3 $pmsModuleService)
     {
-        // dd($request->all());
         return $pmsModuleService->saveKPIForm($request->all());
     }
     public function getKpiFormAsDropdown($author_id,VmtPMSModuleService_v3 $pmsModuleService)
     {
-        // dd($request->all());
         return $pmsModuleService->getKPIFormAsDropdown($author_id);
     }
 }

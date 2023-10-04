@@ -179,7 +179,7 @@ const routes = [
             {
                 path: '/testing',
                 name: 'testing',
-                component: () => import('../hrms/modules/pms/pms_master.vue'),
+                component: () => import('../hrms/modules/pms/pmsMaster.vue'),
             },
             // Other routes go here
         ],

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <!-- {{ useStore.pmsConfiguration }} -->
+        {{ useHelper.ManagerList }}
+        <!-- {{ useHelper.KpiForms }} -->
         <div class=" grid grid-cols-4 gap-4 px-4 mt-[20px] ">
             <div class=" !shadow-xl border-[1px] flex rounded-lg justify-around items-center ">
                 <img src="../assests/employee_goals.png" class=" w-[70px] " alt="">
@@ -73,7 +76,7 @@
 
         </div>
 
-        <div class="" v-if="activetab == 1" >
+        <div class="" v-if="activetab == 1">
             <DataTable paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" class=" w-[100%] ">
                 <Column field="name" header="Name" style="width: 25%"></Column>
                 <Column field="country.name" header="Country" style="width: 25%"></Column>
@@ -84,50 +87,50 @@
         <div class="" v-if="activetab == 2">
             <h1 class=" text-[20px] text-[#000]">completed</h1>
         </div>
-        <Sidebar v-model:visible="visibleRight" position="right"  class=" !w-[650px]" >
+        <Sidebar v-model:visible="visibleRight" position="right" class=" !w-[650px]">
             <h2 class=" text-[#000] text-[16px] font-semibold "> New Goals Assign</h2>
             <div class="grid grid-cols-2 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575] my-2">Calendar Type</label>
-                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]"  />
+                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
                 </div>
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Year</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]"  />
+                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575] my-2">Frequency</label>
-                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6]"  />
+                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Assigment Period</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]"  />
+                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575] my-2">Department</label>
-                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]"  />
+                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
                 </div>
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Employee</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]"  />
+                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Reviewer</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]"  />
+                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="  w-[100%] ">
-                <hr  class=" border-[1px] my-4 ">
+                <hr class=" border-[1px] my-4 ">
                 <h1 class=" text-[#000] font-semibold text-[16px]">Goals/ Arears of Development</h1>
                 <div class="flex items-center justify-between ">
                     <p class=" text-[12px] text-[#757575] w-[240px]">Select Existing Form from the Drop Down</p>
-                    <Dropdown optionLabel="name" placeholder="Select KPI form" class="h-10 mx-2 w-[250px]" />
+                    <Dropdown :options="useHelper.KpiForms" optionLabel="form_name"  optionValue="id" placeholder="Select KPI form" class="h-10 mx-2 w-[250px]" />
                     <button class=" bg-[#F9BE00] h-[33px] w-[144px] rounded-[8px] ">View From</button>
                 </div>
             </div>
@@ -135,24 +138,27 @@
 
 
             <div class=" flex items-center justify-center mt-[160px] left-[25%]">
-                <button class=" text-[#000] border-[1px] border-[#000] rounded-[8px] p-2 mx-4 w-[144px] h-[33px]" @click="Create_KPI_From = true ,visibleRight= false ">
+                <button class=" text-[#000] border-[1px] border-[#000] rounded-[8px] p-2 mx-4 w-[144px] h-[33px]"
+                    @click="Create_KPI_From = true, visibleRight = false">
                     Create KPI From
-                    </button>
-                    <button class="bg-[#F9BE00] text-[#000] rounded-[8px] p-2 w-[144px] h-[33px]" @click="visibleRight=false" > Publish</button>
+                </button>
+                <button class="bg-[#F9BE00] text-[#000] rounded-[8px] p-2 w-[144px] h-[33px]" @click="visibleRight = false">
+                    Publish</button>
 
             </div>
         </Sidebar>
 
-        <Sidebar v-model:visible="Create_KPI_From" position="right"  class=" !w-[1000px]" >
+        <Sidebar v-model:visible="Create_KPI_From" position="right" class=" !w-[1000px]">
             <h2 class=" text-[#000] text-[16px] font-semibold ">KPI From Creation</h2>
 
             <div class="  w-[100%] ">
                 <div class="flex flex-col ">
                     <h1 class=" text-[#000] font-semibold text-[16px]">Goals/ Arears of Development</h1>
                     <div class="flex items-center">
-                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" 
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf"
                             class=" w-[250px] form-control file" />
-                            <button class=" bg-[#F9BE00] h-[33px] w-[144px] rounded-[8px] mx-[20px]"> <i class="pi pi-upload"></i> Upload</button>
+                        <button class=" bg-[#F9BE00] h-[33px] w-[144px] rounded-[8px] mx-[20px]"> <i
+                                class="pi pi-upload"></i> Upload</button>
                     </div>
                 </div>
 
@@ -161,7 +167,7 @@
                 </div>
                 <div class="flex items-center my-2">
                     <h1 class="font-semibold "> Enter the From Name</h1>
-                    <InputText type="text" v-model="value" class="h-10 mx-4 w-[60%] " placeholder="Enter the From Name" />
+                    <InputText type="text" v-model="useStore.createKpiForm.name" class="h-10 mx-4 w-[60%] " placeholder="Enter the From Name" />
                 </div>
 
                 <!-- <div class="flex items-center justify-between">
@@ -169,72 +175,76 @@
                     <button class=" bg-[#F9BE00] h-[33px] w-[144px] rounded-[8px] ">View From</button>
                 </div> -->
 
-                <div>
-                    <div class="rounded-lg bg-[#FFF7EB] grid grid-cols-12 gap-4 p-4 mt-4 ">
-                   <div class="col-span-3" >
-                    <h1 class=" text-[16px] text-[#8B8B8B]">Objective 1</h1>
-                    <h1 class="text-[16px] text-[#000]  my-2"  >Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, aspernatur?</h1>
-                   </div>
-                   <div class="col-span-2" >
-                    <h1 class="text-[16px] text-[#8B8B8B]">KRA</h1>
-                    <p class="text-[16px] text-[#000] my-2 ">Better Prospect</p>
-                   </div>
-                   <div class="col-span-2" >
-                    <!-- <h1></h1> -->
-                    <h1 class="text-[16px] text-[#8B8B8B]">Frequency</h1>
-                    <p class="text-[16px] text-[#000]  my-2">Monthly</p>
-                   </div>
-                   <div class="col-span-2" >
-                    <h1 class="text-[16px] text-[#8B8B8B]">Target</h1>
-                    <p class="text-[16px] text-[#000] my-2">100</p>
-                    <!-- <i class="pi pi-ellipsis-v"></i> -->
-                   </div>
-                   <div class="col-span-2" >
-                    <h1 class="text-[16px] text-[#8B8B8B]">KPI Weigtage %</h1>
-                    <p class="text-[16px] text-[#000] my-2">100%</p>
-                    <!-- <i class="pi pi-ellipsis-v"></i> -->
-                   </div>
-                   <div class="flex items-center justify-end col-span-1" >
-                    <i class="font-semibold pi pi-ellipsis-v text-[14px]"></i>
-                   </div>
-                    
-                </div>
-                
-                <div class="rounded-lg bg-[#FFF7EB] grid grid-cols-12 gap-4 p-4 mt-4 ">
-                   <div class="col-span-3" >
-                    <h1 class=" text-[16px] text-[#8B8B8B]">Objective 1</h1>
-                    <h1 class="text-[16px] text-[#000]  my-2"  >Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, aspernatur?</h1>
-                   </div>
-                   <div class="col-span-2" >
-                    <h1 class="text-[16px] text-[#8B8B8B]">KRA</h1>
-                    <p class="text-[16px] text-[#000] my-2 ">Better Prospect</p>
-                   </div>
-                   <div class="col-span-2" >
-                    <!-- <h1></h1> -->
-                    <h1 class="text-[16px] text-[#8B8B8B]">Frequency</h1>
-                    <p class="text-[16px] text-[#000]  my-2">Monthly</p>
-                   </div>
-                   <div class="col-span-2" >
-                    <h1 class="text-[16px] text-[#8B8B8B]">Target</h1>
-                    <p class="text-[16px] text-[#000] my-2">100</p>
-                    <!-- <i class="pi pi-ellipsis-v"></i> -->
-                   </div>
-                   <div class="col-span-2" >
-                    <h1 class="text-[16px] text-[#8B8B8B]">KPI Weigtage %</h1>
-                    <p class="text-[16px] text-[#000] my-2">100%</p>
-                    <!-- <i class="pi pi-ellipsis-v"></i> -->
-                   </div>
-                   <div class="flex items-center justify-end col-span-1" >
-                    <i class="font-semibold pi pi-ellipsis-v text-[14px]"></i>
-                   </div>
-                    
-                </div>
-                    
+                <div v-if="useStore.createKpiForm.form_details">
+                    <div class="rounded-lg bg-[#FFF7EB] grid grid-cols-12 gap-4 p-4 my-2"
+                        v-for="(formDetails, index) in useStore.createKpiForm.form_details">
+                        <div class="col-span-3">
+                            <h1 class=" text-[16px] text-[#8B8B8B]">Objective {{ index + 1 }}</h1>
+                            <h1 class="text-[16px] text-[#000]  my-2">{{ formDetails.dimension }}</h1>
+                        </div>
+                        <div class="col-span-2">
+                            <h1 class="text-[16px] text-[#8B8B8B]">KRA</h1>
+                            <p class="text-[16px] text-[#000] my-2 ">{{ formDetails.kpi }}</p>
+                        </div>
+                        <div class="col-span-2">
+                            <!-- <h1></h1> -->
+                            <h1 class="text-[16px] text-[#8B8B8B]">Frequency</h1>
+                            <p class="text-[16px] text-[#000]  my-2">{{ formDetails.frequency }}</p>
+                        </div>
+                        <div class="col-span-2">
+                            <h1 class="text-[16px] text-[#8B8B8B]">Target</h1>
+                            <p class="text-[16px] text-[#000] my-2">{{ formDetails.target }}</p>
+                            <!-- <i class="pi pi-ellipsis-v"></i> -->
+                        </div>
+                        <div class="col-span-2">
+                            <h1 class="text-[16px] text-[#8B8B8B]">KPI Weigtage %</h1>
+                            <p class="text-[16px] text-[#000] my-2">{{ formDetails.kpi_weightage }}</p>
+                            <!-- <i class="pi pi-ellipsis-v"></i> -->
+                        </div>
+                        <div class="flex items-center justify-end col-span-1">
+                            <i class="font-semibold pi pi-ellipsis-v text-[14px]"></i>
+                        </div>
+
+                    </div>
                 </div>
 
-                
 
-                <div class=" w-[100%] flex justify-center mt-[20px]  ">
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                    <div class="flex flex-col ">
+                        <label for="" class=" text-[12px] text-[#757575] my-2">Objective</label>
+                        <InputText type="text" v-model="useStore.addKra.dimension"
+                            class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    </div>
+                    <div class="flex flex-col ">
+                        <label for="" class=" text-[12px] text-[#757575]  my-2">KRA</label>
+                        <InputText type="text" v-model="useStore.addKra.kpi" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                    <div class="flex flex-col ">
+                        <label for="" class=" text-[12px] text-[#757575] my-2">Frequency</label>
+                        <InputText type="text" v-model="useStore.addKra.frequency"
+                            class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    </div>
+                    <div class="flex flex-col ">
+                        <label for="" class=" text-[12px] text-[#757575]  my-2">Target</label>
+                        <InputText type="text" v-model="useStore.addKra.target"
+                            class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                    <div class="flex flex-col ">
+                        <label for="" class=" text-[12px] text-[#757575]  my-2">
+                            KPI Weigtage %</label>
+                        <InputText type="text" v-model="useStore.addKra.kpi_weightage"
+                            class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    </div>
+                </div>
+                <button class="mx-auto" @click="useStore.addFormDetails(useStore.addKra)">add more</button>
+                <button class="mx-auto" @click="useStore.saveKpiForm()">Save</button>
+
+
+                <!-- <div class=" w-[100%] flex justify-center mt-[20px]  ">
                     <div class=" w-[50%] flex justify-center">
                         <h1 class=" text-[#8B8B8B]">Objective</h1>
                         <Textarea v-model="value" rows="5" cols="50" placeholder="Enter Objective " />
@@ -243,9 +253,12 @@
                         <h1 class=" text-[#8B8B8B]">KRA </h1>
                         <Textarea v-model="value" rows="5" cols="50" />
                     </div>
-                </div>
-                
-                
+                </div> -->
+
+
+
+
+
             </div>
         </Sidebar>
 
@@ -258,11 +271,14 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import { usePmsMainStore } from '../stores/pmsMainStore'
+import { usePmsHelperStore } from '../stores/pmsHelperStore'
+
+const useStore = usePmsMainStore()
+const useHelper = usePmsHelperStore()
 
 const activetab = ref(1);
-
 const visibleRight = ref(false);
-
 const Create_KPI_From = ref(false);
 
 
@@ -275,5 +291,4 @@ const Create_KPI_From = ref(false);
     background: transparent;
     border: 0 none;
     margin-top: -6px;
-}
-</style>
+}</style>

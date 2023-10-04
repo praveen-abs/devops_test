@@ -183,5 +183,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 // PMS
+Route::get('/getPMSConfig', [VmtAPIPMSModuleController::class, 'getPMSConfig']);
 Route::post('/saveKpiForm', [VmtAPIPMSModuleController::class, 'saveKpiForm']);
-Route::post('/getKpiFormAsDropdown/{author_id}', [VmtAPIPMSModuleController::class, 'getKpiFormAsDropdown']);
+Route::get('/getKpiFormAsDropdown/{author_id}', [VmtAPIPMSModuleController::class, 'getKpiFormAsDropdown']);
+Route::get('/getEmployeeListForManger/{user_id}', [VmtAPIPMSModuleController::class, 'getEmployeeListForManger']);
+Route::get('/getManagersListForEmployees/{user_id}', [VmtAPIPMSModuleController::class, 'getManagersListForEmployees']);
