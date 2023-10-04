@@ -46,7 +46,7 @@ onMounted(() => {
 
     setTimeout(() => {
         chartData.value.datasets[0].data = useDashboard.AttendanceAnalyticsForGraph
-    }, 8000);
+    }, 3000);
 
 });
 

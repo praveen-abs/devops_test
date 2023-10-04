@@ -4530,7 +4530,12 @@ class VmtAttendanceService
             ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
         $upcomings['On duty'] =  $on_duty_count;
         $upcomings['Leave'] = $leave_count;
-        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings, "CheckInMode" => $this->getAllEmployeesCheckInCheckOutMode()];
+
+
+        $totalActiveEmployees = User::where('is_ssa',0)->where('active',1)->count();
+
+
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings, "CheckInMode" => $this->getAllEmployeesCheckInCheckOutMode(),"total_Employees" => $totalActiveEmployees];
         return $response;
 
     }catch(\Exception $e){

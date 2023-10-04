@@ -78,7 +78,6 @@ const visibleRight = ref(false);
 
 const getHolidays = () => {
     axios.get('/holiday/master-page').then(res => {
-        console.log(res.data);
         holidays.value = res.data
         let conditionPass = true
         res.data.forEach((element, i) => {

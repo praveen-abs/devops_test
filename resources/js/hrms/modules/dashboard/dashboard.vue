@@ -1,6 +1,4 @@
 <template>
-    <loadingSpinner v-if="useDashboard.canShowLoading" />
-
     <div class="" v-if="!useDashboard.canShowLoading" >
         <div class="pt-1 pb-0 ">
             <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">

@@ -42,7 +42,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
         await axios.get(url).then(res => {
             attendanceOverview.value = res.data.attendance_overview
 
-            totalEmployeeInOrganization.value = parseInt(attendanceOverview.value['present_count']) + parseInt(attendanceOverview.value['absent_count']) + parseInt(attendanceOverview.value['leave_emp_count'])
+            totalEmployeeInOrganization.value = res.data.total_Employees
             console.log(" totalEmployeeInOrganization.value" + totalEmployeeInOrganization.value);
             chartDetails.value[0].count = parseInt(attendanceOverview.value['absent_count'])
             chartDetails.value[1].count = parseInt(attendanceOverview.value['present_count'])
