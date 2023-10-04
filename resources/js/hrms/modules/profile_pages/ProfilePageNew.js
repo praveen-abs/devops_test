@@ -34,7 +34,8 @@ import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber';
 import InputMask from 'primevue/inputmask';
 import ProgressBar from 'primevue/progressbar';
-import Sidebar from 'primevue/sidebar'
+import Sidebar from 'primevue/sidebar';
+import OverlayPanel from 'primevue/overlaypanel';
 
 import profilePage from './ProfilePageNew.vue';
 
@@ -65,14 +66,15 @@ app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
-app.component('Calendar', Calendar)
-app.component('Textarea', Textarea)
-app.component('Chips', Chips)
+app.component('Calendar', Calendar);
+app.component('Textarea', Textarea);
+app.component('Chips', Chips);
 app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('ProgressBar', ProgressBar)
 app.component('InputMask', InputMask)
 app.component('Sidebar', Sidebar)
+app.component('OverlayPanel' ,OverlayPanel)
 
 app.mount("#profilePage");
 
