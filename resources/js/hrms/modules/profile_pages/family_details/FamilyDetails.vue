@@ -500,4 +500,10 @@ span {
     font-size: 1.25rem;
     color: #002f56;
 }
+
+.p-sidebar-right .p-sidebar
+{
+    width: 30% !important;
+    height: 100%;
+}
 </style>

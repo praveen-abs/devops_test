@@ -149,7 +149,7 @@
     </div>
 
     <Dialog header="Status" v-model:visible="canShowCompletionScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '350px' }" :modal="true">
+        :style="{ width: '350px' }" :modal="true" :closable="true" :closeOnEscape="true">
         <div class="confirmation-content">
             <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
             <span>{{ status_text_CompletionDialog }}</span>
@@ -168,7 +168,7 @@
             </div>
         </template>
     </Dialog>
-    <Dialog v-model:visible="dailogReporting" modal header="Edit Reporting Manager"
+    <Dialog v-model:visible="dailogReporting" :modal="true" :closable="true" :closeOnEscape="true" header="Edit Reporting Manager"
         :style="{ width: '30vw'}">
         <Dropdown optionLabel="name" :options="reportManagerOption" v-model="employee_card.reporting_manager"
             optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
@@ -345,7 +345,7 @@
         </template>
     </Dialog>
 
-    <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
+    <Dialog v-model:visible="dialog_emp_name_visible" :modal="true" :closable="true" :closeOnEscape="true" header=" "
         :style="{ width: '50vw'}">
         <template #header>
             <div>
@@ -760,6 +760,12 @@ $fontColor: rgb(250, 250, 250);
     color: black !important;
 }
 
+.p-sidebar-right .p-sidebar
+{
+    width: 50% !important;
+    height: 100%;
+}
+
 /* .p-progressbar-label{
 color: black !important;
 } */
@@ -778,269 +784,3 @@ color: black !important;
 }
 </style>
 
-
-
-
-<!-- <div class="mb-0 card top-line">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-12 text-end">
-                <button class="p-0 m-0 bg-transparent border-0 outline-none btn" @click="dialogIdCard = true">
-                    <i class="pi pi-id-card text-success fs-4" aria-hidden="true"></i>
-                </button>
-            </div>
-            <div class="text-center col-12">
-                <div class="mx-auto rounded-circle img-xl userActive-status profile-img d-flex  justify-content-center align-items-center"
-                    style=" "
-                    :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
-                     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; -->
-                    <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
-                        srcset="" style="border:6px solid #c2c2c2c2"> -->
-                   <!-- <img v-if="_instance_profilePagesStore.profile"
-                        class="rounded-circle img-xl userActive-status profile-img"
-                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" />
-                    <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4">{{
-                        _instance_profilePagesStore.employeeDetails.user_short_name }}</h1>
-
-                    <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
-                        data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
-                        <i class="fa fa-camera"></i></label>
-
-                    <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
-
-                </div>
-                <div class="mt-4">
-                    <div class="progress-wrapper border-bottom-liteAsh">
-                        <span class="mx-auto opacity-0 border-1"></span>
-                        <div class="mb-1  px-auto d-flex align-items-center justify-content-around ">
-                            <h6 class="text-center fw-bold fs-5  ">
-                                {{ _instance_profilePagesStore.employeeDetails.name }}
-                            </h6>
-                        </div>
-                        <span class="personal-edit position-absolute" style="top: 148px;right: 0px;">
-                                <a href="#" class="edit-icon "><i class="ri-pencil-fill"
-                                        @click="dialog_emp_name_visible = true"></i>
-                                </a>
-                            </span>
-
-
-                        <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
-                            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                            <template #header>
-                                <div>
-                                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
-                                        class="fw-bold fs-5">
-                                        Edit Employee Name</h5>
-                                </div>
-                            </template>
-                            <div>
-                                <div class="modal-body">
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3 form-group">
-                                                <label class="mb-2 font-semibold text-lg">Employee Name</label>
-                                             <InputMask @focusout="panCardExists" id="serial" mask="aaaaa9999a"
-                                                    v-model="employee_info.emp_name" placeholder="AHFCS1234F"
-                                                    style="text-transform: uppercase" class="form-controls pl-2" :class="[
-                                                        v$.emp_name.$error ? 'p-invalid' : '',
-                                                    ]" /> -->
-                                                <!--<InputText type="text" v-model="employee_info.emp_name"
-                                                    style="text-transform: uppercase" class="form-controls pl-2" :class="[
-                                                        v$.emp_name.$error ? 'p-invalid' : '',
-                                                    ]" />
-                                                <span v-if="v$.emp_name.$error" class="text-red-400 fs-6 font-semibold">
-                                                    {{ v$.emp_name.required.$message.replace("Value", "Employee Name")
-                                                    }}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class=" form-group">
-                                                <label for="" class="mb-1 mb-1 font-semibold text-lg">Documents</label>
-                                                <Dropdown v-model="employee_info.emp_doc_name" :options="doc_name"
-                                                    optionLabel="name" placeholder="Select a document "
-                                                    class="form-controls pl-2 w-full h-12" :class="[
-                                                        v$.emp_doc_name.$error ? 'p-invalid' : '',
-                                                    ]" />
-                                                <span v-if="v$.emp_doc_name.$error"
-                                                    class="text-red-400 fs-6 font-semibold">
-                                                    {{ v$.emp_doc_name.required.$message.replace("Value", "Documents")
-                                                    }}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 d-flex flex-column ">
-                                             flex-column -->
-                                           <!-- <div class="d-flex justify-items-center  flex-column ">
-                                                <label for="" class="float-label mb-2 font-semibold text-lg">Upload
-                                                    Documents</label>
-                                                <div class="d-flex  justify-items-center align-items-center">
-                                                    <Toast />
-                                                    <label
-                                                        class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
-                                                        style="width:100px ; " id="" for="uploadPassBook">
-                                                        <i class="pi pi-arrow-circle-up fs-5 mr-2"></i>
-                                                        <h1 class="text-light">Upload</h1>
-                                                    </label>
-
-                                                    <div v-if="employee_info.emp_upload_doc"
-                                                        class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
-                                                        {{ employee_info.emp_upload_doc.name }}</div>
-
-                                                    <input type="file" name="" id="uploadPassBook" hidden
-                                                        @change="UploadEmpDocsPhoto($event)" :class="[
-                                                            v$.emp_upload_doc.$error ? 'p-invalid' : '',
-                                                        ]" />
-                                                </div>
-                                                <span v-if="v$.emp_upload_doc.$error"
-                                                    class="text-red-400 fs-6 font-semibold">
-                                                    {{ v$.emp_upload_doc.required.$message.replace("Value", "document")
-                                                    }}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="text-right">
-                                            <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
-                                                @click="submitForm">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </Dialog>
-
-
-
-
-                        <div class="mx-auto mb-1 d-flex justify-content-between">
-                            <span class="text-muted f-12">Profile Completeness</span>
-                            <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
-                            </span>
-                        </div>
-                       <div class="mb-2 progress progress-bar-content">
-                                <div class="progress-bar " role="progressbar" id="profile_progressBar"
-                                    aria-valuenow="{{ 100 }}" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-
-
-                            </div> -->
-                         <!-- <ProgressBar  v-if="_instance_profilePagesStore.employeeDetails.profile_completeness <=39 "
-                            :value="_instance_profilePagesStore.employeeDetails.profile_completeness" :class="[_instance_profilePagesStore.employeeDetails.profile_completeness <=39 ? 'progressbar' : '' ]" >
-                        </ProgressBar>
-                        <ProgressBar  class="progressbar_val2" v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >=40 && _instance_profilePagesStore.employeeDetails.profile_completeness <=59"
-                        :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >=40 &&  _instance_profilePagesStore.employeeDetails.profile_completeness <=59]"  :value="_instance_profilePagesStore.employeeDetails.profile_completeness" >
-                        </ProgressBar>
-
-                        <ProgressBar class="progressbar_val3" v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >=60"
-                        :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >=60]"
-                            :value="_instance_profilePagesStore.employeeDetails.profile_completeness" >
-                        </ProgressBar>
-
-                        <p class="mb-2 text-muted f-10 text-start fw-bold">
-                            Your profile is completed
-                        </p>
-                    </div>
-
-
-                    <div class="mb-4 text-center profile-mid-right-content">
-                        <div class="py-2 border-bottom-liteAsh">
-                            <p class="text-muted f-12 fw-bold">Employee Status</p>
-                            <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="f-12 fw-bold">
-                                Active
-                            </p>
-                            <p v-else class="text-danger f-12 fw-bold">Not Active</p>
-                        </div>
-                        <div class="py-2 border-bottom-liteAsh">
-                            <p class="text-muted f-12 fw-bold">Employee Code</p>
-                            <p v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold">
-                                {{ _instance_profilePagesStore.employeeDetails.user_code }}
-                            </p>
-                            <p v-else class="f-12 fw-bold">-</p>
-                        </div>
-                        <div class="py-2 border-bottom-liteAsh">
-                            <p class="text-muted f-12 fw-bold">Designation</p>
-                            <p v-if="_instance_profilePagesStore.employeeDetails
-                                .get_employee_office_details.designation
-                                " class="f-12 fw-bold">
-                                {{
-                                    _instance_profilePagesStore.employeeDetails
-                                        .get_employee_office_details.designation
-                                }}
-                            </p>
-                            <p v-else class="f-12 fw-bold">-</p>
-                        </div>
-                        <div class="py-2 border-bottom-liteAsh">
-                            <p class="text-muted f-12 fw-bold">Location</p>
-                            <p v-if="_instance_profilePagesStore.employeeDetails
-                                        .get_employee_office_details.work_location
-                                    " class="f-12 fw-bold">
-                                {{
-                                    _instance_profilePagesStore.employeeDetails
-                                        .get_employee_office_details.work_location
-                                }}
-                            </p>
-                            <p v-else class="f-12 fw-bold">-</p>
-                        </div>
-                        <div class="py-2 border-bottom-liteAsh ml-3">
-                            <p class="text-muted f-12 fw-bold">
-                                Department
-                                <a href="#" class="edit-icon" v-if="_instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 1 ||_instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 3 " @click="dailogDepartment = true"><i class="ri-pencil-fill"></i></a>
-                            </p>
-                            <p v-if="_instance_profilePagesStore.employeeDetails
-                                .get_employee_office_details.department_id
-                                " class="f-12 fw-bold">
-                                {{
-                                    _instance_profilePagesStore.employeeDetails
-                                        .get_employee_office_details.department_name
-                                }}
-                            </p>
-                            <p v-else class="f-12 fw-bold">-</p>
-                        </div>
-                        <div class="py-2 border-bottom-liteAsh">
-                            <p class="text-muted f-12 fw-bold">
-                                Reporting To
-                                <a href="#" v-if="_instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 1 ||_instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
-                                .Current_login_user.org_role == 3  " class="edit-icon" @click="dailogReporting
-            = true"><i class="ri-pencil-fill"></i>
-
-                                </a>
-                            </p>
-
-                            <p v-if="_instance_profilePagesStore.employeeDetails
-                                .get_employee_office_details.l1_manager_code
-                                " class="f-12 fw-bold">
-                                {{
-                                    _instance_profilePagesStore.employeeDetails
-                                        .get_employee_office_details.l1_manager_name
-                                }}
-                                 {{ _instance_profilePagesStore.employeeDetails }} -->
-                              <!--  -
-                                {{
-                                    _instance_profilePagesStore.employeeDetails
-                                        .get_employee_office_details.l1_manager_code
-                                }}
-                            </p>
-                            <p v-else class="f-12 fw-bold">-</p>
-                        </div>
-                    </div>
-                    <div class="text-center profile-bottom-right-content">
-                         {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}} -->
-                        <!-- <button class="btn btn-danger">
-                            <i class="fa fa-sign-out me-1"></i> Action
-                        </button> -->
-                   <!-- </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
