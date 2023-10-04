@@ -24,6 +24,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
 import ProgressBar from 'primevue/progressbar';
+import OverlayPanel from 'primevue/overlaypanel';
 
 
 
@@ -72,6 +73,7 @@ app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('ProgressBar', ProgressBar)
 app.component('Checkbox', Checkbox);
+app.component('OverlayPanel', OverlayPanel);
 
 app.mount("#EmployeeDocumentManager");
 

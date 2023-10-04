@@ -226,7 +226,13 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             })
             .finally(res => {
                 console.log("Finally Response : "+res);
-                employee_reimbursement = null
+                employee_reimbursement.claim_amount = null
+                employee_reimbursement.claim_type = null
+                employee_reimbursement.date_of_dispatch = null
+                employee_reimbursement.eligible_amount = null
+                employee_reimbursement.employee_reimbursement_attachment = null
+                employee_reimbursement.proof_of_delivery = null
+                employee_reimbursement.reimbursment_remarks = null
             });
 
 

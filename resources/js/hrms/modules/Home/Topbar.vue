@@ -161,7 +161,17 @@
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <p class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
+                        <img  v-if="_profilePagesStore.profile_img" class=" forRounded w-[30px] h-[30px] rounded-full"
+                        :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output"
+                     />
+                  
+                    <!-- <h1
+                        class="rounded-full bg-blue-50  text-black font-semibold p-1.5 text-sm">
+                        {{ _profilePagesStore.employeeDetails.user_short_name }}
+                    </h1> -->
+          
+
+                        <p  v-else class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
 
                         <p class="px-2 mx-2 my-auto text-sm font-semibold text-black whitespace-nowrap"
@@ -287,11 +297,13 @@
 <script setup>
 
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
 import { Service } from '../Service/Service';
+import { profilePagesStore } from "../profile_pages/stores/ProfilePagesStore";
 
 const useDashboard = useMainDashboardStore()
+let _profilePagesStore = profilePagesStore();
 const service = Service();
 
 
@@ -413,9 +425,12 @@ onMounted(() => {
         canShowLoading.value = true
     }, 2000);
     getNotifications()
-    getActiveSettings()
+    getActiveSettings();
+    _profilePagesStore.fetchEmployeeDetails();
+     _profilePagesStore.getProfilePhoto();
+    // console.log("TopBar", _profilePagesStore.profile);
 
-})
+});
 
 
 // Your Vue component

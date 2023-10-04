@@ -132,18 +132,23 @@ import { useMainDashboardStore } from './stores/dashboard_service'
 import { ref, onMounted } from 'vue'
 import { Service } from '../Service/Service'
 import Hr_dashboard from './hr_dashboard/hr_dashboard.vue';
+import axios from 'axios'
 
 const useDashboard = useMainDashboardStore();
 const canShowLoadingScreen = ref();
 const service = Service()
 
 onMounted(async () => {
+    await axios.get('/clear_cache').then((res) => {
+        console.log(res.data);
+    })
     canShowLoadingScreen.value = true;
     await useDashboard.getMainDashboardData();
     useDashboard.getHrDashboardMainSource()
     // await useDashboard.getAttendanceStatus();
     Service();
     canShowLoadingScreen.value = false;
+
 
 })
 
