@@ -79,6 +79,7 @@
 
 
 <script setup>
+import {ref, onMounted } from 'vue'
 import EmployeeCard from './EmployeeCard/EmployeeCard.vue'
 import EmployeeDetails from './employee_details/EmployeeDetails.vue'
 import FamilyDetails from './family_details/FamilyDetails.vue'
@@ -88,7 +89,7 @@ import Documents from './documents/documents.vue'
 import LoadingSpinner from '../../components/LoadingSpinner.vue'
 import { Service } from '../Service/Service'
 import { profilePagesStore } from './stores/ProfilePagesStore'
-import { ref, onMounted } from 'vue'
+
 import { useRouter, useRoute } from "vue-router";
 
 
@@ -100,17 +101,18 @@ let _instance_profilePagesStore = profilePagesStore();
 
 onMounted(async () => {
     if (route.params.user_code) {
-        let user_code = route.params.user_code
-        console.log(user_code);
+
+        _instance_profilePagesStore.user_code = route.params.user_code
+        console.log( _instance_profilePagesStore.user_code );
         _instance_profilePagesStore.loading_screen = true
-        await _instance_profilePagesStore.fetchEmployeeDetails(user_code).finally(() => {
+        await _instance_profilePagesStore.fetchEmployeeDetails().finally(() => {
             _instance_profilePagesStore.loading_screen = false
         })
 
     } else {
-        let user_code = service.current_user_id
-        console.log(user_code);
-        await _instance_profilePagesStore.fetchEmployeeDetails(user_code)
+        _instance_profilePagesStore.user_code = service.current_user_id
+        console.log( _instance_profilePagesStore.user_code );
+        await _instance_profilePagesStore.fetchEmployeeDetails()
     }
 })
 </script>

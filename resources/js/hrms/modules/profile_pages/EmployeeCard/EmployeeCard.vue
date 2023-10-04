@@ -148,8 +148,8 @@
         </div>
     </div>
 
-    <Dialog header="Status" v-model:visible="canShowCompletionScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '350px' }" :modal="true" :closable="true" :closeOnEscape="true">
+    <Dialog header="Status" v-model:visible="canShowCompletionScreen" modal  :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '350px' }" >
         <div class="confirmation-content">
             <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
             <span>{{ status_text_CompletionDialog }}</span>
@@ -168,7 +168,7 @@
             </div>
         </template>
     </Dialog>
-    <Dialog v-model:visible="dailogReporting" :modal="true" :closable="true" :closeOnEscape="true" header="Edit Reporting Manager"
+    <Dialog v-model:visible="dailogReporting" modal  header="Edit Reporting Manager"
         :style="{ width: '30vw'}">
         <Dropdown optionLabel="name" :options="reportManagerOption" v-model="employee_card.reporting_manager"
             optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
@@ -335,7 +335,7 @@
 
 
     <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+        :style="{ width: '25vw' }" modal >
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
                 animationDuration="2s" aria-label="Custom ProgressSpinner" />
@@ -345,7 +345,7 @@
         </template>
     </Dialog>
 
-    <Dialog v-model:visible="dialog_emp_name_visible" :modal="true" :closable="true" :closeOnEscape="true" header=" "
+    <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
         :style="{ width: '50vw'}">
         <template #header>
             <div>

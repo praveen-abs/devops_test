@@ -636,7 +636,7 @@ function onClick_EditButton_GeneralInfo() {
 
 
 function saveGeneralInformationDetails() {
-    console.log(dialog_general_information.dob);
+    console.log(dialog_general_information);
 
     canShowLoading.value = true;
 
@@ -669,7 +669,7 @@ function saveGeneralInformationDetails() {
         .catch((err) => {
             console.log(err);
         }).finally(() => {
-            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.fetchEmployeeDetails(fetch_data.current_user_id)
             canShowLoading.value = false;
             visible_dialog.value =false;
             toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });

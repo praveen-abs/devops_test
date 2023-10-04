@@ -7,13 +7,13 @@
                 <li class="nav-item " role="presentation">
                     <a class="nav-link active " id="" data-bs-toggle="pill" href="" data-bs-target="#employee_details"
                         role="tab" aria-controls="pills-home" aria-selected="true">
-                        Self-dashboard</a>
+                        Self-Dashboard</a>
                 </li>
                 <li class="mx-4 nav-item" role="presentation"
                     v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3">
                     <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#family_det"
                         role="tab" aria-controls="pills-home" aria-selected="true">
-                        Org-dashboard</a>
+                        ORG-Dashboard</a>
                 </li>
                 <li class="nav-item " role="presentation"  v-if="service.current_user_role == 1">
                     <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#experience_det"
