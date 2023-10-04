@@ -78,7 +78,7 @@
             </DataTable>
         </div>
         <div v-else class="flex justify-center">
-            <img class="h-[450px]" src="../../assests/images/no-data.svg" alt="" srcset="">
+            <img class="h-[450px]" src="../../../../assests/images/no-data.svg" alt="" srcset="">
         </div>
     </Sidebar>
 </template>
