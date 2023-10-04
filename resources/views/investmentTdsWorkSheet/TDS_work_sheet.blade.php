@@ -210,12 +210,12 @@
                         <td colspan="2">
                             <p style="font-size:11px; marign-top:-11px"><b>4) Taxable Income under Previous employment</b></p>
                             @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
-                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            <p style="font-size:11px; " class="p-2 m-11">{{ $key }}</p>
                             @endforeach
                             <p style="font-size:11px; marign-top:-11px"><b>{{ $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["projection"] }}</b></p>
                         </td>
                         <td colspan="1">
-                            @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["actual"] as $key => $value)
+                            @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
                         </td>
@@ -285,7 +285,7 @@
                            <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
                            @endforeach
                            <p style="font-size:11px; marign-top:-11px"><b>Total Income From Other Sources</b></p>
-                           <p style="font-size:11px; marign-top:-11px">Note: A maximum of 12,00,000.000 is allowed as exemption for housing loan interest on Self Occupied House Property and Let Out Property</p>
+                           <p style="font-size:11px; marign-top:-11px">Note: A maximum of 12,00,000.000 is allowed as exemption <br> for housing loan interest on Self Occupied House Property <br> and Let Out Property</p>
                         </td>
                         <td colspan="1">
                             @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["actual"] as $key => $value)
@@ -426,11 +426,14 @@
                             <p style="font-size:11px; marign-top:-11px"><b>12) Tax Calculation</b></p>
                             @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] )
                             @foreach ( $Tax_Calculation["12) Tax Calculation"][0]["particular"] as $key => $value)
-
+                            @if($key != "Tax on total Income" && $key != "Less : Rebate Under Section 87A" && $key != 'Note : if taxable income is less than ₹500000, tax rebate of a maximum of ₹12500 is provided under Section 87A')
                             <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $key }} <span style="text-align: right;  float: right; padding-right:12px">₹ {{ $value }}</span></p>
-
+                            @endif
                             @endforeach
                             @endif
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ "Tax on total Income" }}</p>
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ "Less : Rebate Under Section 87A" }}</p>
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ "Note : if taxable income is less than ₹500000, tax rebate of a maximum of ₹12500 is provided under Section 87A" }}</p>
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
@@ -439,7 +442,16 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{ '---' }}</p>
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] )
+                            @foreach ( $Tax_Calculation["12) Tax Calculation"][0]["particular"] as $key => $value)
+                            @if($key == "Tax on total Income" || $key == "Less : Rebate Under Section 87A" || $key == 'Note : if taxable income is less than ₹500000, tax rebate of a maximum of ₹12500 is provided under Section 87A')
+                            <p style="font-size:11px; marign-top:-11px">₹ {{ $value }}</p>
+                            @else
+                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            @endif
+                            @endforeach
+                            @endif
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -568,29 +580,29 @@
                     <tr style="border-top:0px !important;">
                         <td colspan="1" style=" text-align: right;">
 
-                            @for ($i=0; $i< 12; $i++)
-                            <p style="font-size:11px; text-align: right;white-space: nowrap " class="p-2 m-11">{{ $Hra_exception_calc[0][$i]['month'] }}</p>
+                            @for ($i=0; $i< count($Hra_exception_calc[0]['hra_months']); $i++)
+                            <p style="font-size:11px; text-align: right;white-space: nowrap " class="p-2 m-11">{{ $Hra_exception_calc[0]['hra_months'][$i]['date'] }}</p>
                             @endfor
                         </td>
                         <td colspan="1">
-                            @for ($i=0; $i<12; $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['Earned_basic'] }}</p>
+                            @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['Basic'] }}</p>
                             @endfor
 
                         </td>
                         <td colspan="1">
-                            @for ($i=0; $i<12; $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['Hra_received'] }}</p>
+                            @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['Hra'] }}</p>
                             @endfor
                         </td>
                         <td colspan="1">
-                           @for ($i=0; $i<12; $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['rent_paid_over_10per'] }}</p>
+                           @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['excess_of_rent_paid'] }}</p>
                             @endfor
                         </td>
                         <td colspan="1">
-                            @for ($i=0; $i<12; $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0][$i]['Exception_amt'] }}</p>
+                            @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['Excemption_amount'] }}</p>
                             @endfor
                         </td>
                     </tr>
@@ -600,16 +612,16 @@
                             <p style="font-size:11px;text-align: right; " class="p-2 m-11">Total</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_earnedbasic'] }}</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_basic'] }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_hrareceived'] }}</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Hra'] }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Excess_of_rentpaid'] }}</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Excess_rent_10'] }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_exception_amt'] }}</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Expect_amt'] }}</p>
                         </td>
                     </tr>
 
@@ -621,7 +633,7 @@
                             <p  style="font-size:11px; margin-top:-10px;">Least amount of the three columns will be considered for tax exemption under HRA</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['total_exception_amt'] }}</p>
+                            <p style="font-size:11px; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Expect_amt'] }}</p>
                         </td>
                     </tr>
                 </table>

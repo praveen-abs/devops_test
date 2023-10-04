@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\AbsSalaryProjection;
+use App\Models\VmtEmployee;
 use App\Models\VmtEmployeePayroll;
 use App\Models\VmtOrgTimePeriod;
 use App\Models\VmtPaygroup;
@@ -278,29 +279,16 @@ class VmtPayrollTaxService
 
 
         //  2) Allowance to the extent exampt under section 10
-        $hraTotalRent = [];
-        $sumOfpreviousempincome = 0;
-        $sumOfHradeclared = 0;
-        $SumOfHousPropsInOld = 0;
-        $tax_calc_new_redime = 0;
-        foreach ($v_form_template as $dec_amt) {
-            $empBasic = $get_emp_annual['Basic'];
 
-            if ($dec_amt['section_group'] == "HRA") {
-                $hraTotalRent = json_decode($dec_amt['json_popups_value'], true);
-                $sumOfHradeclared += $hraTotalRent['total_rent_paid'];
-                $hraexamtions = intval($sumOfHradeclared) - intval($empBasic * 10 / 100);
-                $sumofsection10 = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) * 12;
-            }
-        }
+        $hra_excemption = $this->HraExceptionCalc($user_id,$month)['Total_Expect_amt'];
 
         $allowance_under_sec_10['particular'] = [
             "House Rent Allowance",
             "Note: Monthly splitup of HRA exemption can be found at the end of this tds sheet.",
             "Leave Encashment",
-            "Total of Allowance to the extent exempt under Section 10"
+            "Total of Allowance to the extent exempt under Section 10",
         ];
-        $allowance_under_sec_10['actual'] = $sumOfHradeclared;
+        $allowance_under_sec_10['actual'] = $hra_excemption;
         $allowance_under_sec_10['projection'] = 0;
         $allowance_under_sec_10['total'] = $allowance_under_sec_10['actual'] + $allowance_under_sec_10['projection'];
 
@@ -315,30 +303,37 @@ class VmtPayrollTaxService
 
 
         // 4) Taxable Income Under Previous employment
-
-        $sumOfpreviousempincome = [];
-        $pre_particular = [];
-        $sumofprevalue = 0;
+        $previous_gross = 0;
+        $previous_pt = 0;
+        $previous_std_deduction = 0;
+        $previous_income_tax = 0;
         foreach ($v_form_template as $dec_amt) {
-
             if ($dec_amt['section_group'] == "Previous Employer Income") {
-                $pre_particular[]  =  $dec_amt['particular'];
-                $sumOfpreviousempincome[] = $dec_amt['dec_amount'];
 
                 if ($dec_amt['particular'] == 'Previous Employer Gross') {
-                    $sumofprevalue +=  $dec_amt['dec_amount'];
-                } else {
-                    $sumofprevalue -= $dec_amt['dec_amount'];
+                    $previous_gross = $dec_amt['dec_amount'];
+                }
+                if ($dec_amt['particular'] == 'Previous Employer PT') {
+                    $previous_pt =  $dec_amt['dec_amount'];
+                }
+                if ($dec_amt['particular'] == 'Previous Employer Standard Deduction') {
+                    $previous_std_deduction +=  $dec_amt['dec_amount'];
+                }
+                if ($dec_amt['particular'] == 'Previous Employer Income Tax Deduction') {
+                    $previous_income_tax +=  $dec_amt['dec_amount'];
                 }
             }
         }
 
 
+        $taxincome_preEmployment['particular'] = [
+                                                'i) Income After Exception' => number_format($previous_gross,2),
+                                                'ii) Less: Professional Tax' => number_format($previous_pt,2),
+                                                ];
 
-        $taxincome_preEmployment['particular'] = empty($pre_particular) ? ['i) Income After Exceptions','ii) Less: Professional Tax'] : $pre_particular;
-        $taxincome_preEmployment['actual'] = empty($sumOfpreviousempincome) ? ['0','0'] : $sumOfpreviousempincome;
+        $taxincome_preEmployment['actual'] = 0;
         $taxincome_preEmployment['projection'] = 'Total taxable income under Previous employment';
-        $taxincome_preEmployment['total'] = empty($sumofprevalue) ? 0 : $sumofprevalue;
+        $taxincome_preEmployment['total'] = 0;
 
         // dd($taxincome_preEmployment);
 
@@ -346,51 +341,44 @@ class VmtPayrollTaxService
 
         // 5) Gross Total (3 - 4)
 
-        $Gross_total['total'] = $total_after_exemption['total'] + $taxincome_preEmployment['total'];
+        $Gross_total['total'] = number_format($total_after_exemption['total'] + $taxincome_preEmployment['total'],2);
+        $gross_income =  $total_after_exemption['total'] + $taxincome_preEmployment['total'];
         array_push($res["Gross_Total"]["5) Gross Total (3 - 4)"], $Gross_total);
 
         // 6) Under section 16
 
-        foreach ($v_form_template as $dec_amt) {
-            $pt_tax =  $dec_amt['professional_tax'] * 12;
-            $standardDeduction = $dec_amt['gross'] * 12;
+            $professional_tax  =  $get_emp_annual['Professional Tax'];
+            $Basic  =  $get_emp_annual['Basic'];
+            $income_tax  =  $get_emp_annual['Income Tax'];
 
-            if ($standardDeduction >= 50000) {
-                $standardDeducation = 50000;
-            } else {
-                $standardDeducation = intval($dec_amt['gross']);
-            }
-
-            if ($pt_tax > 2500) {
-                $max_pt = 2500;
-            } else {
-                $max_pt = $pt_tax;
-            }
-        }
+            $professinaltax = (($previous_pt ?? 0) + $professional_tax) > 2500 ? 2500 : $previous_pt + $professional_tax;
+            $std_deduc = (($previous_std_deduction ?? 0) + $Basic) > 50000 ? 50000 : $previous_std_deduction + $Basic;
 
         $undersection['particulars'] =
             [
                 'a) Entertainment allowance' => 0,
-                'b) Tax on employment' => $max_pt,
-                'c) Standard Deduction' => $standardDeducation,
+                'b) Tax on employment' => number_format($professinaltax,2),
+                'c) Standard Deduction' => number_format($std_deduc,2)
             ];
         $undersection['Total Under Section 16'] = 0;
         $undersection['projection'] = 0;
-        $undersection['total'] = $max_pt + $standardDeducation;
+        $undersection['total'] = number_format($professinaltax + $std_deduc,2);
+        $under_case_section = $professinaltax + $std_deduc;
 
         array_push($res["Under_section_16"]["6) Under section 16"], $undersection);
 
-
         // 7) Income Chargeable Under the Head Salaries (5 - 6)
 
-        $income_charge_head_salaries['total'] = $Gross_total['total'] + $undersection['total'];
+        $income_charge_head_salaries['total'] = $gross_income + $under_case_section;
         array_push($res["Under_the_Head_Salaries"]["7) Income Chargeable Under the Head Salaries (5 - 6)"], $income_charge_head_salaries);
 
+        // dd($res);
 
         // 8) Any other income reported by the employee
 
         $property_type = [];
         $property_value = [];
+        $SumOfHousPropsInOld =0 ;
         foreach ($v_form_template as $dec_amt) {
 
             if ($dec_amt['section_group'] == "House Properties ") {
@@ -597,7 +585,18 @@ class VmtPayrollTaxService
         // dd($total_income_9_10);
         // 12) Tax Calculation
 
-        $tax_calculation['particular'] = $this->newRegimeTaxCalc($total_income_9_10['total']);
+            $employee = VmtEmployee::where('userid',$user_id)->first();
+           $get_age =Carbon::createFromDate($employee->dob)->diff(Carbon::now())->format('%y');
+           $emp_assign =  VmtInvFEmpAssigned::where('user_id',$user_id)->first();
+
+            if($emp_assign->regime == "old" || $emp_assign->regime == ""){
+                $tax_amount = $this->oldRegimeTaxCalc($total_income_9_10['total'],$get_age);
+            }
+            else if ($emp_assign->regime == "new"){
+              $tax_amount =  $this->newRegimeTaxCalc($total_income_9_10['total']);
+            }
+
+        $tax_calculation['particular'] = $tax_amount;
         $tax_calculation['actual'] = 0;
         $tax_calculation['projection'] = 0;
         $tax_calculation['total'] = 0;
@@ -628,11 +627,11 @@ class VmtPayrollTaxService
         // 15) Tax Deduction at Source u/s 192
         $current_month =  Carbon::now()->format('F');
 
-        $tax_deduction_192['i) TDS till last month'] = 0;
-        $tax_deduction_192['ii) TDS for ' . $current_month] = 0;
-        $tax_deduction_192['iii) TDS by Previous Employer'] = 0;
-        $tax_deduction_192['A) Total Tax Deduction at Source (i + ii + iii)'] = 0;
-        $tax_deduction_192['Tax Payable / Refundable (14 - 15(A))'] = 0;
+        $tax_deduction_192['i) TDS till last month'] = $income_tax;
+        $tax_deduction_192['ii) TDS for ' . $current_month] = $tax_payable_ecucation['total'];
+        $tax_deduction_192['iii) TDS by Previous Employer'] = $previous_income_tax;
+        $tax_deduction_192['A) Total Tax Deduction at Source (i + ii + iii)'] =  ($income_tax) + ($tax_payable_ecucation['total']) + ($previous_income_tax) ;
+        $tax_deduction_192['Tax Payable / Refundable (14 - 15(A))'] = $tax_payable_ecucation['total'] - $income_tax;
 
         array_push($res["Source_us_192"]["15) Tax Deduction at Source u/s 192"], $tax_deduction_192);
 
@@ -937,7 +936,6 @@ class VmtPayrollTaxService
                 $emp_salary_hra[$key]['Excemption_amount'] = min([($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.50 ,  $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'] , (($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.10) + $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear']]);
         }
 
-
         $emp_basic = 0;
         $emp_hra = 0;
         $emp_Excess_rent = 0;
@@ -950,6 +948,9 @@ class VmtPayrollTaxService
                $emp_excp_amt += $emp_salary_hra[$key]['Excemption_amount'];
         }
 
+
+
+        return ['Total_basic' => $emp_basic , 'Total_Hra' => $emp_hra , 'Total_Excess_rent_10' => $emp_Excess_rent , 'Total_Expect_amt' => $emp_excp_amt , 'hra_months' => $emp_salary_hra ];
 
 
     }
@@ -1149,7 +1150,7 @@ class VmtPayrollTaxService
 
 
         foreach ($Employee_details as $key => $single_user) {
-            $value =  $this->HraExceptionCalc(User::where('user_code', $single_user['Employee Code'])->first()->id, $payroll_month)['total_exception_amt'];
+            $value =  $this->HraExceptionCalc(User::where('user_code', $single_user['Employee Code'])->first()->id, $payroll_month)['Total_Expect_amt'];
             $employee_salary_details[$key]["HRA Exceptions"] = $value;
             $employee_salary_details[$key]["CEA Exceptions"] = 0;
             $employee_salary_details[$key]["LTA Exceptions"] = 0;

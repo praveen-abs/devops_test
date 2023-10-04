@@ -96,10 +96,24 @@ public function annaulProjectionReport(Request $request, VmtPayrollTaxService $v
 }
 public function oldRegimeTaxReportCalculation(Request $request, VmtPayrollTaxService $vmtPayrollTaxService)
 {
-    $regime = "old";
-    $age = 58;
-    $total_income = 637900;
-    return $vmtPayrollTaxService->newregimetaxcal($total_income);
+    // $regime = "old";
+    // $age = 58;
+    // $total_income = 637900;
+
+    // $month = "2023-08-01";
+
+    // // $user_id = VmtInvFEmpAssigned::pluck('user_id')->toArray();
+
+    // $user_id = '149';
+
+    // return $vmtPayrollTaxService->getEmpAnnualProjectionForPdf($user_id,$month);
+
+    $number = 0;
+// setlocale(LC_MONETARY,"en_US");
+$emp  =  '₹'.number_format($number,2);
+
+    dd($emp);
+
 }
 
 
