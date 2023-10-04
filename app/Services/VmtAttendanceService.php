@@ -4526,11 +4526,6 @@ class VmtAttendanceService
         return $response;
     }
 
-
-
-
-
-
     public function getBioMetricAttendanceData($user_code, $current_date)
     {
 
@@ -4850,6 +4845,7 @@ class VmtAttendanceService
         $workshiftCount = array();
         $work_shift_details = VmtWorkShifts::all()->toArray();
 
+
         foreach ($work_shift_details as $key => $single_shift_id) {
 
             $work_shift_assigned_employees = VmtWorkShifts::join('vmt_employee_workshifts', 'vmt_employee_workshifts.work_shift_id', '=', 'vmt_work_shifts.id')
@@ -4860,8 +4856,33 @@ class VmtAttendanceService
             // $response ["work_shift_assigned_employees"][$key] = count( $work_shift_assigned_employees) ;
             $response[$key]["work_shift_assigned_employees"] = count($work_shift_assigned_employees);
             $response[$key]["work_shift_employee_data"] = $work_shift_assigned_employees;
+
+            $present_count =0;
+            $absent_count =0;
+
+        foreach ($work_shift_assigned_employees as $emp_key => $single_employee_data) {
+
+                $current_date =carbon::now()->format('Y-m-d');
+
+                $employee_attendance_data =VmtEmployeeAttendance::where('user_id', $single_employee_data['id'])->where('date',$current_date);
+
+                $employee_biometric_data = $this->getBioMetricAttendanceData($single_employee_data['user_code'],$current_date );
+
+                if($employee_attendance_data->exists()){
+
+                    $present_count++;
+                }else if(!empty($employee_biometric_data)){
+
+                    $present_count++;
+
+                }else{
+                    $absent_count++;
+                }
+            }
+        $response[$key]["present_count"] =$present_count ;
+        $response[$key] ["absent_count"] =  $absent_count ;
         }
-        // dd(count($workshiftCount));
+
 
         return $response;
 
