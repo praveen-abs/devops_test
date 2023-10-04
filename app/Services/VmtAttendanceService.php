@@ -4326,9 +4326,9 @@ class VmtAttendanceService
         }
     }
 
-    public function getAttendanceDashboardData()
+    public function getAttendanceDashboardData($department_id)
     {
-
+  try{
         $current_date = Carbon::now()->format('Y-m-d');
         $Current_month = Carbon::now()->format('m');
         $curent_year =  Carbon::now()->format('Y');
@@ -4369,8 +4369,15 @@ class VmtAttendanceService
         $employees_data = User::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
             ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
             ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
-            ->where('users.is_ssa', '0')->where('users.active', '1')
+            ->where('users.is_ssa', '0')->where('users.active', '1');
+
+     if(!empty($department_id)){
+        $employees_data = $employees_data->where('off.department_id', $department_id)
             ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+     }else{
+        $employees_data= $employees_data->where('off.department_id', $department_id)
+            ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+     }
 
         foreach ($employees_data as $key => $single_user_data) {
             $user_code = $single_user_data->user_code;
@@ -4525,6 +4532,16 @@ class VmtAttendanceService
         $upcomings['Leave'] = $leave_count;
         $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings];
         return $response;
+        
+    }catch(\Exception $e){
+
+        return $response =([
+            'status'=>'failure',
+            'message'=>'Error while fetch data',
+            'data'=> $e->getTraceAsString()
+        ]);
+    }
+
     }
 
     public function getBioMetricAttendanceData($user_code, $current_date)
@@ -4909,8 +4926,8 @@ class VmtAttendanceService
     public function getAllEmployeesCheckInCheckOutMode(){
 
         try{
-        $employees_data = User::where('active',1)->get(['id','user_code']);
-        $response =array();
+    $employees_data = User::where('active',1)->get(['id','user_code']);
+    $response =array();
     $biometric_checkin_count =0;
     $web_checkin_count =0;
     $mobile_checkin_count =0;
