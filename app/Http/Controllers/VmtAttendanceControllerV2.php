@@ -72,7 +72,7 @@ class VmtAttendanceControllerV2 extends Controller
             $lastAttendanceDate = Carbon::parse($end_date);
             $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($firstDateStr));
 
-
+            
             //dd($totalDays);
             // attendance details from vmt_staff_attenndance_device table
             $deviceData = [];
@@ -661,7 +661,7 @@ class VmtAttendanceControllerV2 extends Controller
         $start_date = '2023-07-26';
         $end_date = '2023-08-25';
         //return $attendance_services->downloadDetailedAttendanceReport($start_date, $end_date);
-        return Excel::download(new DetailedAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date)), 'Detailed Attendance Report.xlsx');
+        return Excel::download(new DetailedAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date),true), 'Detailed Attendance Report.xlsx');
       // return $data;
     }
 }
