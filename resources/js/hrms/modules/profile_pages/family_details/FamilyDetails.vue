@@ -2,12 +2,13 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="font-semibold text-lg">Family Information
-                <button type="button" class="float-right btn btn-orange" @click="DialogFamilyinfovisible = true">
+                <button type="button" class="float-right bg-[#000] text-[#fff] px-4 p-2 rounded-md"
+                    @click="DialogFamilyinfovisible = true">
                     Add New
                 </button>
+                <!-- v-model:visible="DialogFamilyinfovisible" -->
 
-                <Dialog v-model:visible="DialogFamilyinfovisible" modal
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
+                <Dialog modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                     <template #header>
                         <div>
                             <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
@@ -19,15 +20,11 @@
                     <div class="grid grid-cols-2">
                         <div class=" mr-[10px] ml-[8px]">
                             <span>Name <span class="text-danger">*</span></span>
-                            <!-- <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name"
-                                required > -->
                             <InputText type="text" v-model="familydetails.name" class="w-[94%] h-10" />
                         </div>
                         <div class=" ">
                             <span>Relationship<span class="text-danger">*</span></span>
-                            <!-- <input type="text" name="familyDetails_Relationship[]" v-model="familydetails.relationship"
-                                id="familyDetails_Relationship" pattern-data="alpha" required> -->
-                                <InputText type="text" v-model="familydetails.relationship" class="w-[90%] h-10" />
+                            <InputText type="text" v-model="familydetails.relationship" class="w-[90%] h-10" />
                         </div>
                     </div>
                     <div class="grid grid-cols-2 ">
@@ -40,8 +37,9 @@
 
                         <div class="ml-1">
                             <span>phone<span class="text-danger">*</span></span>
-                            
-                                <InputMask id="basic" mask="9999999999" placeholder="9999999999" class="h-10"  v-model="familydetails.phone_number" />
+
+                            <InputMask id="basic" mask="9999999999" placeholder="9999999999" class="h-10"
+                                v-model="familydetails.phone_number" />
                         </div>
                     </div>
 
@@ -71,7 +69,7 @@
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                    responsiveLayout="scroll">
+                    responsiveLayout="scroll" class=" z-0 ">
 
                     <Column header="Name" field="name" style="min-width: 8rem">
                     </Column>
@@ -111,16 +109,36 @@
                                         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
                             </button>
-                            <!--
-                            <button class="mr-3 btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
-                            <button class="btn btn-danger"  @click="diolog_DeleteFamilyDetails(slotProps.data)">Delete</button> -->
-
-
-                            <template>
-                            </template>
-                            <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
-                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
                         </template>
+                    </Column>
+
+                    <Column header="Action">
+                        <template #body="slotProps">
+                            <div class="relative flex justify-center">
+                                <button class="" type="button" @click="toggle(slotProps.data.id)"> <i
+                                        class="pi pi-ellipsis-v"></i>
+                                </button>
+
+                                <div v-if="op === slotProps.data.id"
+                                    class=" !z-[10000] absolute flex flex-col bg-white shadow-2xl top-4 right-4 "
+                                    @mouseleave=" op = ''"
+                                    style="width: 160px; margin-top:12px !important;margin-right: 20px !important; ">
+                                    <div class="p-0 m-0 d-flex flex-column">
+                                        <!-- bg-green-200 -->
+                                        <button
+                                            class=" h-[30px] p-2 text-black fw-semibold hover:bg-gray-200 border-bottom-1"
+                                            @click="diolog_DeleteFamilyDetails(slotProps.data)">delete</button>
+                                        <!-- bg-blue-500 -->
+                                        <button @click="diolog_EditFamilyDetails(slotProps.data)"
+                                            class=" !h-[33px]  border-[1px] text-black fw-semibold hover:bg-gray-200 ho">View</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </template>
+
+
+
                     </Column>
 
 
@@ -131,56 +149,78 @@
         </div>
     </div>
 
-
-
-    <Dialog v-model:visible="DialogEditInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-        <template #header>
-            <div>
-                <h5
-                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                    Family Information</h5>
-            </div>
-        </template>
-
-        <div class=" grid grid-cols-2">
-            <div class="">
+    <Sidebar v-model:visible="DialogFamilyinfovisible" position="right" class=" relative w-[500px] ">
+        <h5 class=" absolute top-6 font-semibold">Family Information</h5>
+        <div class=" p-2 ">
+            <div class="my-2">
                 <span>Name <span class="text-danger">*</span></span>
-                <InputText type="text" v-model="Editfamilydetails.name" class="h-10 w-[90%]" />
+                <InputText type="text" v-model="familydetails.name" class="w-[94%] h-10" />
             </div>
-            <div class="">
+            <div class="my-2">
                 <span>Relationship<span class="text-danger">*</span></span>
-                <!-- <input type="text" name="familyDetails_Relationship[]" pattern-data="alpha"
-                    v-model="Editfamilydetails.relationship" required> -->
-                    <InputText type="text" v-model="Editfamilydetails.relationship" class="h-10 w-[90%] ml-2"  />
+                <InputText type="text" v-model="familydetails.relationship" class="w-[90%] h-10" />
             </div>
-        </div>
-        <div class=" grid grid-cols-2">
-            <div class="mr-2">
+            <div class="my-2">
                 <span>Date of birth <span class="text-danger">*</span></span>
-                <Calendar v-model="Editfamilydetails.dob" min="2000-01-02" class="w-[100%] h-10 " />
-                <!-- <input type="date" id="datemin" name="familyDetails_dob[]"  v-model="Editfamilydetails.dob"> -->
+                <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob" class="h-10 w-[100%] relative right-2" :minDate="minDate"
+                    :maxDate="maxDate" />
             </div>
-
-            <div class="ml-2">
+            <div class="my-2">
                 <span>phone<span class="text-danger">*</span></span>
-                <!-- <input type="number"  size=20 maxlength=10  id="familyDetails_phoneNumber"
-                    name="familyDetails_phoneNumber[]"  > -->
-                    <InputMask id="basic" v-model="Editfamilydetails.phone_number" mask="9999999999" placeholder="999999999" class="h-10 m"  />
-                <!-- <InputNumber  inputId="minmax" :min="0" :max="10"  v-model="Editfamilydetails.phone_number" /> -->
+                <InputMask id="basic" mask="9999999999" placeholder="9999999999" class="h-10"
+                    v-model="familydetails.phone_number" />
             </div>
         </div>
 
-        <template #footer>
+        <!-- <template > -->
+        <div class="flex justify-center my-4 ">
             <Toast />
             <div>
-                <button type="button" class="submit_btn warning success" id="submit_button_family_details"
+                <button class=" px-4 p-2 bg-[#000]  text-[white] mt-[200px] rounded-lg"
+                    @click="saveFamilyDetails">submit</button>
+            </div>
+        </div>
+        <!-- </template> -->
+
+
+    </Sidebar>
+
+
+
+    <Sidebar v-model:visible="DialogEditInfovisible" position="right" class=" relative w-[500px] ">
+        <h5 class=" absolute top-6 font-semibold">Family Information</h5>
+        <div class=" p-2 ">
+            <div class="my-2">
+                <span>Name <span class="text-danger">*</span></span>
+                <InputText type="text" v-model="Editfamilydetails.name" class="h-10 w-[100%]" />
+            </div>
+            <div class="my-2">
+                <span>Relationship<span class="text-danger">*</span></span>
+                <InputText type="text" v-model="Editfamilydetails.relationship" class="h-10 w-[100%]" />
+            </div>
+            <div class="my-2  ">
+                <span>Date of birth <span class="text-danger">*</span></span>
+                <Calendar v-model="Editfamilydetails.dob" min="2000-01-02" class="w-[100%] h-10 relative right-2" />
+            </div>
+            <div class="my-2">
+                <span>phone<span class="text-danger">*</span></span>
+                <InputMask id="basic" v-model="Editfamilydetails.phone_number" mask="9999999999" placeholder="999999999"
+                    class="h-10 w-[100%] " />
+            </div>
+        </div>
+
+        <!-- <template > -->
+        <div class="flex justify-center my-4 ">
+            <Toast />
+            <div>
+                <button class=" px-4 p-2 bg-[#000]  text-[white] mt-[200px] rounded-lg"
                     @click="EditFamilyDetails">submit</button>
             </div>
+        </div>
+        <!-- </template> -->
 
-        </template>
 
-
-    </Dialog>
+    </Sidebar>
 </template>
 <script setup>
 import dayjs from 'dayjs';
@@ -199,6 +239,16 @@ const toast = useToast();
 
 const PersonalDocument = ref('');
 const DialogFamilyinfovisible = ref(false);
+
+const op = ref();
+const toggle = (event) => {
+    // op.value = event;
+    console.log(event);
+    if (event) {
+        op.value = event;
+    }
+
+}
 
 const DialogEditInfovisible = ref(false);
 

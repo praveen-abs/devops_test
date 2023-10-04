@@ -84,7 +84,7 @@ class VmtEmployeePayCheckService
 
         $data = array_filter($data);
 
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 3000);
         //For output jsonresponse
         $data_array = [];
         //For validation
@@ -294,7 +294,7 @@ class VmtEmployeePayCheckService
 
             $client_id = User::where('user_code', $row['emp_no'])->first()->client_id;
 
-            $payroll_date = \DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
+            $payroll_date = \DateTime::createFromFormat('Y-m-d', $row["payroll_month"])->format('Y-m-d');
             //check already exist or not
             $Payroll_data = VmtPayroll::where('client_id', $client_id)->where('payroll_date', $payroll_date)->first();
             if (empty($Payroll_data)) {
@@ -341,6 +341,12 @@ class VmtEmployeePayCheckService
                 $empPaySlip->medical_allowance_arrear = $row["medical_allowance_arrear"] ?? 0;
                 $empPaySlip->earned_spl_alw = $row["earned_spl_alw"];
                 $empPaySlip->spl_alw_arrear = $row["spl_alw_arrear"];
+                $empPaySlip->communication_allowance = $row["communication_allowance"];
+                $empPaySlip->food_allowance = $row["food_allowance"];
+                $empPaySlip->vehicle_reimbursement = $row["vehicle_reimbursement"];
+                $empPaySlip->driver_salary = $row["driver_salary"];
+                $empPaySlip->lta = $row["lta"];
+                $empPaySlip->other_allowance = $row["other_allowance"];
                 $empPaySlip->overtime = $row["overtime"];
                 $empPaySlip->ovetime_hours = $row["ovetime_hours"] ?? 0;
                 $empPaySlip->daily_allowance = $row["daily_allowance"] ?? 0;
@@ -1164,16 +1170,16 @@ class VmtEmployeePayCheckService
         try {
 
             $user_data = User::where('user_code', $user_code)->first();
-            $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
-                ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
-                ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
-                ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
-                ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+            $payroll_data = VmtPayroll::leftJoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+                ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+                ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 ->where('user_code', $user_code)
                 ->whereYear('payroll_date', $year)
                 ->whereMonth('payroll_date', $month);
@@ -1273,6 +1279,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                         'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                         'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
+                        'vmt_employee_payslip_v2.communication_allowance as Communication Allowance',
+                        'vmt_employee_payslip_v2.food_allowance as Food Allowance',
+                        'vmt_employee_payslip_v2.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_payslip_v2.driver_salary as Driver Salary',
+                        'vmt_employee_payslip_v2.lta as Leave Travel Allowance',
+                        'vmt_employee_payslip_v2.other_allowance as Other Allowance',
                         'vmt_employee_payslip_v2.overtime as Overtime',
                     ]
                 )->toArray();
@@ -1321,7 +1333,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
                         'vmt_employee_compensatory_details.special_allowance as Special Allowance',
                         'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
-
+                        'vmt_employee_compensatory_details.communication_allowance as Communication Allowance',
+                        'vmt_employee_compensatory_details.food_allowance as Food Allowance',
+                        'vmt_employee_compensatory_details.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_compensatory_details.driver_salary as Driver Salary',
+                        'vmt_employee_compensatory_details.lta as Leave Travel Allowance',
+                        'vmt_employee_compensatory_details.other_allowance as Other Allowance',
                     ]
                 )->toArray();
 
@@ -1430,7 +1447,7 @@ class VmtEmployeePayCheckService
                 ];
             }
 
-            //dd($getpersonal);
+            // dd($getpersonal);
 
             $get_payslip =  AbsActivePayslip::where('is_active', '1')->first();
             $status = "";
@@ -1565,20 +1582,18 @@ class VmtEmployeePayCheckService
 
             $user_data = User::where('user_code', $user_code)->first();
             $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
-                ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
-                ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
-                ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
-                ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+                ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
                 ->where('user_code', $user_code)
                 ->whereYear('payroll_date', $year)
                 ->whereMonth('payroll_date', $month);
-
-
 
 
             //get leave data
@@ -1652,6 +1667,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                         'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                         'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
+                        'vmt_employee_payslip_v2.communication_allowance as Communication Allowance',
+                        'vmt_employee_payslip_v2.food_allowance as Food Allowance',
+                        'vmt_employee_payslip_v2.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_payslip_v2.driver_salary as Driver Salary',
+                        'vmt_employee_payslip_v2.lta as Leave Travel Allowance',
+                        'vmt_employee_payslip_v2.other_allowance as Other Allowance',
                         'vmt_employee_payslip_v2.overtime as Overtime',
                     ]
                 )->toArray();
@@ -1700,6 +1721,12 @@ class VmtEmployeePayCheckService
                         'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
                         'vmt_employee_compensatory_details.special_allowance as Special Allowance',
                         'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
+                        'vmt_employee_compensatory_details.communication_allowance as Communication Allowance',
+                        'vmt_employee_compensatory_details.food_allowance as Food Allowance',
+                        'vmt_employee_compensatory_details.vehicle_reimbursement as Vehicle Reimbursement',
+                        'vmt_employee_compensatory_details.driver_salary as Driver Salary',
+                        'vmt_employee_compensatory_details.lta as Leave Travel Allowance',
+                        'vmt_employee_compensatory_details.other_allowance as Other Allowance',
                     ]
                 )->toArray();
 
@@ -1807,6 +1834,8 @@ class VmtEmployeePayCheckService
                     ]
                 ];
             }
+
+            // dd($getpersonal);
 
             return response()->json([
                 'status' => 'success',
