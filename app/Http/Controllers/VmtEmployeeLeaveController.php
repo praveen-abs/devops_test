@@ -161,31 +161,80 @@ class VmtEmployeeLeaveController extends Controller
     {
 
         try {
-            $data =$request->all();
+            $data = $request->all();
+            $updated_details = array();
 
             foreach ($data as $key => $single_data) {
 
-              $start_date = Carbon::parse($single_data['date']);
-              $CL_count =(integer)$single_data['CL'];
-              $end_date =  Carbon::parse($single_data['date'])->subMonths($CL_count);
-              $end_date = Carbon::parse($end_date);
+                $update_emp_CL_leave = $this->updateSingleEmployeeLeaveBalanceData($single_data['employee_code'], $single_data['date'], $single_data['Casual_Leave'], "Casual Leave");
+                $update_emp_SL_leave = $this->updateSingleEmployeeLeaveBalanceData($single_data['employee_code'], $single_data['date'], $single_data['Sick_Leave'], "Sick Leave");
+                $update_emp_EL_leave = $this->updateSingleEmployeeLeaveBalanceData($single_data['employee_code'], $single_data['date'], $single_data['Earned_Leave'], "Earned Leave");
+                if($update_emp_CL_leave['status']=='success'&& $update_emp_SL_leave['status']=='success'&& $update_emp_EL_leave['status']=='success'){
 
-              $date_range = CarbonPeriod::create( $end_date->startOfMonth()->format('Y-m-d'), '1 month',$start_date->endOfMonth()->format('Y-m-d'),);
-
-                 $leave_upload_date =array();
-                foreach ($date_range as $single_date) {
-                    $leave_upload_date[]= $single_date->format('Y-m-15');
+                    array_push($updated_details, $update_emp_EL_leave);
+                }else{
+                    array_push($updated_details, $update_emp_EL_leave);
                 }
-
-
             }
 
+            return $response = ([
+                'status' => 'success',
+                'message' => 'Data saved successfully',
+                'data' => $updated_details ?? " ",
+            ]);
+        } catch (\Exception $e) {
+            return $response = ([
+                'status' => 'failure',
+                'message' => 'Error while saving data',
+                'data' => $e->getmessage(),
+            ]);
+        }
+    }
+    public function updateSingleEmployeeLeaveBalanceData($emplyeee_code, $date, $leave_count, $leave_type)
+    {
 
+        try {
 
+            $start_date = Carbon::parse($date);
+            $no_of_leaves = (int)$leave_count;
+            $end_date =  Carbon::parse($date)->subMonths($no_of_leaves);
+            $end_date = Carbon::parse($end_date);
 
+            $date_range = CarbonPeriod::create($end_date->startOfMonth()->format('Y-m-d'), '1 month', $start_date->endOfMonth()->format('Y-m-d'),);
 
+            $monthWise_leave_date = array();
 
+            foreach ($date_range as $single_date) {
 
+                $monthWise_leave_date[] = $single_date->format('Y-m-15');
+            }
+
+            $user_data = User::where('user_code', $emplyeee_code)->first();
+
+            $leave_type = VmtLeaves::where('leave_type', $leave_type)->first();
+
+            foreach ($monthWise_leave_date as $key => $single_month) {
+
+                if (!empty($user_data)) {
+
+                    $emp_leave_details = VmtEmployeesLeavesAccrued::where('user_id', $user_data->id)->where('date', $single_month)->where('leave_type_id', $leave_type->id)->first();
+
+                    if (empty($emp_leave_details)) {
+                        $update_leave_details = new VmtEmployeesLeavesAccrued;
+                        $update_leave_details->user_id = $user_data->id;
+                        $update_leave_details->date = $single_month;
+                        $update_leave_details->leave_type_id = $leave_type->id;
+                        $update_leave_details->accrued_leave_count = 1;
+                        $update_leave_details->save();
+                    }
+                }
+            }
+            return $response = ([
+                'status' => 'success',
+                'message' => 'Data saved successfully',
+                'Employee_Name' => $user_data->name,
+                'data' => '',
+            ]);
         } catch (\Exception $e) {
             return $response = ([
                 'status' => 'failure',
