@@ -23,11 +23,11 @@
                 :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['emp_name', 'emp_code', 'status']">
                 <template #empty> No customers found.</template>
                 <template #loading> Loading customers data. Please wait. </template>
-                <Column class="font-bold" field="emp_name" header="Employee Name" style="min-width: 5rem; !important">
+                <Column class="font-bold" field="emp_name" header="Employee Name"  >
                     <template #body="slotProps">
                         <div class="flex items-center justify-center">
                             <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'"
-                                class="p-2 font-semibold text-white rounded-full w-11 fs-6"
+                                class="p-2 font-semibold text-white rounded-full w-[35px] fs-6"
                                 :class="service.getBackgroundColor(slotProps.index)">
                                 {{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
                             <img v-else class="w-10 rounded-circle img-md userActive-status profile-img"
@@ -42,19 +42,30 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_code" header="Employee Code" style="min-width: 2rem; !important">
+                <Column field="emp_code" header="Employee Code"  >
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
-                <Column field="reporting_manager_name" header="Reporting Manager"></Column>
-                <Column field="doj" header="DOJ" style="min-width: 10rem;">
+                <Column field="emp_designation" header="Designation"  >
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
+                <Column field="reporting_manager_name" header="Reporting Manager" >
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
+                <Column field="doj" header="DOJ">
                     <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
                 </Column>
                 <!-- <Column field="blood_group_name" header="Blood Group"></Column> -->
-                <Column field="profile_completeness" header="Profile Completeness">
+
+                <!-- <Column field="profile_completeness" header="Profile Completeness">
                     <template #body="slotProps">
 
                         <ProgressBar v-if="slotProps.data.profile_completeness <= 39"
@@ -72,8 +83,10 @@
                             :value="slotProps.data.profile_completeness">
                         </ProgressBar>
                     </template>
-                    <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
-                </Column>
+               
+                </Column> -->
+
+                     <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
                         <button  @click="openProfilePage(slotProps.data.enc_user_id)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</button>
@@ -114,6 +127,25 @@ const toast = useToast();
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     employee_name: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    emp_code: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    }
+    ,
+    emp_designation: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    reporting_manager_name: {
         value: null,
         matchMode: FilterMatchMode.STARTS_WITH,
         matchMode: FilterMatchMode.EQUALS,

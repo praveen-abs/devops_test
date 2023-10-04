@@ -4950,3 +4950,42 @@ class VmtAttendanceService
         }
     }
 }
+    public function checkEmployeeLcPermission($month, $year, $user_id)
+{
+    $validator = Validator::make(
+        $data = [
+            'manager_user_code' => $user_id,
+            'month' => $month,
+            'year' => $year,
+        ],
+        $rules = [
+            'user_code' => 'required|exists:users,user_code',
+            'month' => 'required',
+            'year' => 'required',
+        ],
+        $messages = [
+            'required' => 'Field :attribute is missing',
+            'exists' => 'Field :attribute is invalid',
+            'integer' => 'Field :attribute should be integer',
+            'in' => 'Field :attribute is invalid',
+        ]
+    );
+    try {
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+                $Employees_lateComing = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)
+                    ->whereYear('attendance_date', $year)
+                    ->whereMonth('attendance_date', $month)
+                    ->where('regularization_type','LC')
+                    ->where('reason_type','Permission')
+                    ->whereIn('status',['Approved','Pending'])
+                    ->get();
+                    // dd($Employees_lateComing);
+    } catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error while fetching Attendance Regularization LC data",
+            "data" => $e,
+        ]);
+    }
+}
+}
