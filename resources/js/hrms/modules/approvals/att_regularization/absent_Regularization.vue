@@ -10,16 +10,19 @@
 
             <Column class="font-bold" field="employee_name" header="Employee Name">
                 <template #body="slotProps">
-                    <div class="flex justify-content-center align-items-center">
-                        <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'" if
-                            class="w-3 p-2 text-white bg-blue-900 rounded-full h-18 text-semibold">{{
-                                JSON.parse(slotProps.data.employee_avatar).data }} </p>
-
-                        <img v-else class="w-3 rounded-circle img-md userActive-status profile-img"
-                            style="height: 30px !important;"
-                            :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset=""
-                            alt="" />
-                        <p class="pl-2 text-left ">{{ slotProps.data.employee_name }} </p>
+                    <div class="flex items-center !justify-left ">
+                        <div>
+                            <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'"
+                                class="p-2 font-semibold text-white rounded-full w-[30px] text-[14px]"
+                                :class="service.getBackgroundColor(slotProps.index)">
+                                {{ JSON.parse(slotProps.data.employee_avatar).data }} </p>
+                            <img v-else class="rounded-circle userActive-status profile-img"
+                                style="height: 30px !important; width: 30px !important;"
+                                :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset="" alt="" />
+                        </div>
+                        <div>
+                            <p class="pl-2">{{ slotProps.data.employee_name }} </p>
+                        </div>
                     </div>
                 </template>
                 <template #filter="{ filterModel, filterCallback }">

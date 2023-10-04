@@ -41,9 +41,26 @@
 
             <Column :expander="true" />
             <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column>
-            <Column field="user_code" header="Employee Id" sortable></Column>
             <Column field="name" header="Employee Name">
+                <template #body="slotProps">
+                    <div class="flex items-center !justify-center ">
+                        <div>
+                            <p v-if="JSON.parse(slotProps.data.avatar).type == 'shortname'"
+                                class="p-2 font-semibold text-white rounded-full w-[30px] text-[14px]"
+                                :class="current_user_id.getBackgroundColor(slotProps.index)">
+                                {{ JSON.parse(slotProps.data.avatar).data }} </p>
+                            <img v-else class="rounded-circle userActive-status profile-img"
+                                style="height: 30px !important; width: 30px !important;"
+                                :src="`data:image/png;base64,${JSON.parse(slotProps.data.avatar).data}`" srcset="" alt="" />
+                        </div>
+                        <div>
+                            <p class="pl-2 font-semibold ">{{ slotProps.data.name }} </p>
+                        </div>
+                    </div>
+                </template>
             </Column>
+            <Column field="user_code" header="Employee Id" sortable></Column>
+
             <!-- <Column field="name" header="Employee New Name">
             </Column> -->
             <Column field="doc_status" header="Approval Status" :sortable="false">
@@ -114,7 +131,7 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseEmpDetailApprovalsStore } from "./EmpDetails_approvals_service";
 import axios from "axios";
 import map from 'lodash/map';
-import {Service}  from "../../Service/Service";
+import { Service } from "../../Service/Service";
 import LoadingSpinner from "../../../components/LoadingSpinner.vue";
 LoadingSpinner
 
@@ -226,7 +243,7 @@ const processBulkDocumentsApproveReject = () => {
 
 
     axios.post("/approvals/EmployeeProof-bulkdocs-approve-reject", {
-        approver_user_id:current_user_id.current_user_id,
+        approver_user_id: current_user_id.current_user_id,
         record_id: processed_doc_ids,
         status:
             currentlySelectedStatus == "Approve"
@@ -282,7 +299,7 @@ function empDetailsDocumentApproveReject() {
     hideConfirmDialog();
 
     axios.post("/approvals/EmployeeProof-docs-approve-reject", {
-        approver_user_id:current_user_id.current_user_id,
+        approver_user_id: current_user_id.current_user_id,
         record_id: currentlySelectedRowData.record_id,
         status:
             currentlySelectedStatus == "Approve"

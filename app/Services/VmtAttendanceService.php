@@ -1306,7 +1306,8 @@ class VmtAttendanceService
                     "isEG" => false, "eg_status" => null, "eg_reason" => null, "eg_reason_custom" => null, "eg_regularized_time" => null,
                     "isMIP" => false, "mip_status" => null, "mip_reason" => null, "mip_reason_custom" => null, "mip_regularized_time" => null,
                     "isMOP" => false, "mop_status" => null, "mop_reason" => null, "mop_reason_custom" => null, "mop_regularized_time" => null,
-                    "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null
+                    "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null,
+                    "is_holiday" => false, "holiday_name" => "" , "holiday_image_url" => ""
                 );
 
                 //echo "Date is ".$fulldate."\n";
@@ -1426,6 +1427,23 @@ class VmtAttendanceService
 
             ////Logic to check LC,EG,MIP,MOP,Leave status
             foreach ($attendanceResponseArray as $key => $value) {
+
+               //START : Check whether the given date is holiday or not..
+               $current_date =  strtotime($attendanceResponseArray[$key]["date"]);
+               //dd("Month:". date('m', $current_date) ." Date:". date('d', $current_date));
+
+               $query_holiday = vmtHolidays::whereMonth('holiday_date', date('m', $current_date) )
+                                ->whereDay('holiday_date', date('d', $current_date) )->first();
+
+                if(!empty($query_holiday))
+                {
+                    $attendanceResponseArray[$key]['is_holiday'] = true;
+                    $attendanceResponseArray[$key]['holiday_name'] = $query_holiday->holiday_name;
+                    $attendanceResponseArray[$key]['holiday_image_url'] = $query_holiday->image;
+                }
+
+                //END : Check whether the given date is holiday or not..
+                //dd($attendanceResponseArray);
 
                 $shift_time = $this->getShiftTimeForEmployee($value['user_id'], $value['checkin_time'], $value['checkout_time']);
 

@@ -43,7 +43,7 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_code" header="Employee Code" style="min-width: 2rem !important;">
+                <Column field="emp_code" header="Employee Code">
                     <template #body="slotProps">
                         {{ slotProps.data.emp_code }}
                     </template>
@@ -52,8 +52,18 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
-                <Column field="reporting_manager_name" header="Reporting Manager"></Column>
+                <Column field="emp_designation" header="Designation"  class="">
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
+                <Column field="reporting_manager_name" header="Reporting Manager">
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
                 <Column field="doj" header="DOJ" style="min-width: 10rem;">
                     <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
                 </Column>
@@ -154,6 +164,18 @@ const filters = ref({
         matchMode: FilterMatchMode.CONTAINS,
     },
     emp_code: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    emp_designation: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    reporting_manager_name: {
         value: null,
         matchMode: FilterMatchMode.STARTS_WITH,
         matchMode: FilterMatchMode.EQUALS,
