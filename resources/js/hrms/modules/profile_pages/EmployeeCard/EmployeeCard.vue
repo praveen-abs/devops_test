@@ -182,12 +182,12 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw' }"
+    <Sidebar position="right" v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw' }"
         style=" @media (min-width:1024px){background-image:particular_ad_small.png;} ">
 
         <template #header>
             <div>
-                <h5 class="fw-bolder fs-5"
+                <h5 class="absolute left-0 mx-4 font-semibold fs-5 "
                     :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
                     Digital Id Preview
                 </h5>
@@ -195,7 +195,7 @@
 
         </template>
         <div
-            class=" bg-blue-900  w-100  py-4 px-2 rounded-lg d-flex justify-content-around overflow-x-scroll ... lg:w-100 ">
+            class="w-100  py-4 px-2 rounded-lg d-flex justify-content-around overflow-x-scroll ... lg:w-100 ">
 
             <div class="card p-3 d-flex  justify-items-center align-items-center mr-2 :lg:mx-0 Digital_Id_Card_"
                 style="width: 260px; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
@@ -214,7 +214,7 @@
                             :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset=""
                             style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 80px; height: 80px;" />
 
-                        <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4">{{
+                        <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white font-semibold text-5xl ">{{
                             _instance_profilePagesStore.employeeDetails.user_short_name }}</h1>
                     </div>
 
@@ -330,7 +330,7 @@
 
         </div>
 
-    </Dialog>
+    </Sidebar>
 
 
 

@@ -172,7 +172,7 @@
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <img  v-if="_profilePagesStore.profile_img" class=" forRounded w-[30px] h-[30px] rounded-full"
+                        <img  v-if="service.current_user_code != 'SA_ABS' && _profilePagesStore.profile_img" class=" forRounded w-[30px] h-[30px] rounded-full"
                         :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output"
                      />
 
@@ -487,6 +487,11 @@ onMounted(() => {
     // console.log("TopBar", _profilePagesStore.profile);
 
 });
+
+
+onUpdated(()=>{
+    // _profilePagesStore.getProfilePhoto();
+})
 
 
 // Your Vue component

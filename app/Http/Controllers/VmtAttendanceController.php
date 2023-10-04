@@ -1048,12 +1048,11 @@ class VmtAttendanceController extends Controller
         $response = null;
 
         //Check whether the current employee is Manager
-           // dd(Str::contains(currentLoggedInUserRole(), ['Manager']));
+        // dd(Str::contains(currentLoggedInUserRole(), ['Manager']));
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-          //  dd(auth()->user()->user_code);
-            $response = $attendanceService->fetchAttendanceRegularizationData( null, null,auth()->user()->user_code);
-
+            //  dd(auth()->user()->user_code);
+            $response = $attendanceService->fetchAttendanceRegularizationData(null, null, auth()->user()->user_code);
         } else {
 
             //Fetch all data
@@ -1077,7 +1076,7 @@ class VmtAttendanceController extends Controller
 
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAbsentRegularizationData( null, null,auth()->user()->user_code);
+            $response = $attendanceService->fetchAbsentRegularizationData(null, null, auth()->user()->user_code);
         } else {
 
             //Fetch all data
@@ -1559,7 +1558,11 @@ class VmtAttendanceController extends Controller
         return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
     }
 
-    // public function getEmployeeUpcomingAppliedRequested(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
-    //     return $serviceVmtAttendanceService->getEmployeeUpcomingAppliedRequested();
-    // }
+    public function checkEmployeeLcPermission(Request $request,VmtAttendanceService $testingservice)
+    {
+        $month = Carbon::now()->format('m');
+        $year =  Carbon::now()->format('Y');
+        $user_id = $request->user_id;
+        return $testingservice->checkEmployeeLcPermission($month, $year, $request->user_id);
+    }
 }

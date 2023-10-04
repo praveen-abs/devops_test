@@ -4429,7 +4429,7 @@ class VmtAttendanceService
                     $leave_date = $single_date->format('Y-m-d');
 
                     if ($leave_date == $current_date) {
-                        array_push($leave_emps,$single_user_data);
+                        array_push($leave_emps, $single_user_data);
                         $leave_employee_count[$i]['id'] =  $single_user_data['id'];
                         $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
                         $leave_employee_count[$i]['user_name'] =  $user_data->name;
@@ -4521,7 +4521,7 @@ class VmtAttendanceService
         $attendanceOverview['mop_emps'] = $mop_emps;
         $attendanceOverview['mip_count'] = $mip_count;
         $attendanceOverview['mip_emps'] = $mip_emps;
-        $attendanceOverview['Checkin_mode'] = $this->getAllEmployeesCheckInCheckOutMode();
+
 
         $shifts = $this->getWorkShiftDetails();
         $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
@@ -4530,9 +4530,9 @@ class VmtAttendanceService
             ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()->id])->count();
         $upcomings['On duty'] =  $on_duty_count;
         $upcomings['Leave'] = $leave_count;
-        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings];
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings, "CheckInMode" => $this->getAllEmployeesCheckInCheckOutMode()];
         return $response;
-        
+
     }catch(\Exception $e){
 
         return $response =([
@@ -4875,46 +4875,41 @@ class VmtAttendanceService
             $response[$key]["work_shift_assigned_employees"] = count($work_shift_assigned_employees);
             $response[$key]["work_shift_employee_data"] = $work_shift_assigned_employees;
 
-            $present_count =0;
-            $absent_count =0;
-            $biometric_checkin_count =0;
-            $web_checkin_count =0;
-            $mobile_checkin_count =0;
+            $present_count = 0;
+            $absent_count = 0;
+            $biometric_checkin_count = 0;
+            $web_checkin_count = 0;
+            $mobile_checkin_count = 0;
 
-        foreach ($work_shift_assigned_employees as $emp_key => $single_employee_data) {
+            foreach ($work_shift_assigned_employees as $emp_key => $single_employee_data) {
 
-                $current_date =carbon::now()->format('Y-m-d');
+                $current_date = carbon::now()->format('Y-m-d');
 
-                $employee_attendance_data =VmtEmployeeAttendance::where('user_id', $single_employee_data['id'])->where('date',$current_date);
+                $employee_attendance_data = VmtEmployeeAttendance::where('user_id', $single_employee_data['id'])->where('date', $current_date);
 
-                $employee_biometric_data = $this->getBioMetricAttendanceData($single_employee_data['user_code'],$current_date );
+                $employee_biometric_data = $this->getBioMetricAttendanceData($single_employee_data['user_code'], $current_date);
 
-                if($employee_attendance_data->exists()){
+                if ($employee_attendance_data->exists()) {
 
-                    $attendance_mode_data =$employee_attendance_data->first();
+                    $attendance_mode_data = $employee_attendance_data->first();
 
-                    if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'web'){
+                    if (strtolower($attendance_mode_data['attendance_mode_checkin']) == 'web') {
 
                         $web_checkin_count++;
-
-                    }else if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'mobile'){
+                    } else if (strtolower($attendance_mode_data['attendance_mode_checkin']) == 'mobile') {
                         $mobile_checkin_count++;
                     }
                     $present_count++;
-
-
-                }else if(!empty($employee_biometric_data)){
+                } else if (!empty($employee_biometric_data)) {
 
                     $present_count++;
                     $biometric_checkin_count++;
-
-
-                }else{
+                } else {
                     $absent_count++;
                 }
             }
-        $response[$key]["present_count"] =$present_count ;
-        $response[$key] ["absent_count"] =  $absent_count ;
+            $response[$key]["present_count"] = $present_count;
+            $response[$key]["absent_count"] =  $absent_count;
         }
 
 
@@ -4923,7 +4918,8 @@ class VmtAttendanceService
         // return $work_shift->toArray();
     }
 
-    public function getAllEmployeesCheckInCheckOutMode(){
+    public function getAllEmployeesCheckInCheckOutMode()
+    {
 
         try{
     $employees_data = User::where('active',1)->get(['id','user_code']);
@@ -4932,46 +4928,81 @@ class VmtAttendanceService
     $web_checkin_count =0;
     $mobile_checkin_count =0;
 
-foreach ($employees_data as $emp_key => $single_employee_data) {
+            foreach ($employees_data as $emp_key => $single_employee_data) {
 
-        $current_date =carbon::now()->format('Y-m-d');
+                $current_date = carbon::now()->format('Y-m-d');
 
-        $employee_attendance_data =VmtEmployeeAttendance::where('user_id', $single_employee_data['id'])->where('date',$current_date);
+                $employee_attendance_data = VmtEmployeeAttendance::where('user_id', $single_employee_data['id'])->where('date', $current_date);
 
-        $employee_biometric_data = $this->getBioMetricAttendanceData($single_employee_data['user_code'],$current_date );
+                $employee_biometric_data = $this->getBioMetricAttendanceData($single_employee_data['user_code'], $current_date);
 
-        if($employee_attendance_data->exists()){
+                if ($employee_attendance_data->exists()) {
 
-            $attendance_mode_data =$employee_attendance_data->first();
+                    $attendance_mode_data = $employee_attendance_data->first();
 
-            if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'web'){
+                    if (strtolower($attendance_mode_data['attendance_mode_checkin']) == 'web') {
 
-                $web_checkin_count++;
+                        $web_checkin_count++;
+                    } else if (strtolower($attendance_mode_data['attendance_mode_checkin']) == 'mobile') {
+                        $mobile_checkin_count++;
+                    }
+                } else if (!empty($employee_biometric_data)) {
 
-            }else if(strtolower($attendance_mode_data['attendance_mode_checkin']) == 'mobile'){
-                $mobile_checkin_count++;
+                    $biometric_checkin_count++;
+                }
             }
-        }else if(!empty($employee_biometric_data)){
+            $response[] = ["title" => 'Boimetric', 'value' => intval($biometric_checkin_count)];
+            $response[] = ["title" => 'Mobile', 'value' => intval($mobile_checkin_count)];
+            $response[] = ["title" => 'Web', 'value' => intval($web_checkin_count)];
 
-            $biometric_checkin_count++;
 
+            return $response;
+        } catch (\Exception $e) {
+
+            return $reponse = ([
+                'status' => 'failure',
+                'message' => 'Error While Fetch Employees Data',
+                'data' => ' ',
+            ]);
         }
     }
-    $response["web_checkin_count"] =$web_checkin_count ;
-    $response["mobile_checkin_count"] =$mobile_checkin_count ;
-    $response ["biometric_checkin_count"] =  $biometric_checkin_count ;
-
-    return $response;
-}catch(\Exception $e){
-
-    return $reponse =([
-        'status'=>'failure',
-        'message'=>'Error While Fetch Employees Data',
-        'data'=>' ',
-    ]);
 }
-
+    public function checkEmployeeLcPermission($month, $year, $user_id)
+{
+    $validator = Validator::make(
+        $data = [
+            'manager_user_code' => $user_id,
+            'month' => $month,
+            'year' => $year,
+        ],
+        $rules = [
+            'user_code' => 'required|exists:users,user_code',
+            'month' => 'required',
+            'year' => 'required',
+        ],
+        $messages = [
+            'required' => 'Field :attribute is missing',
+            'exists' => 'Field :attribute is invalid',
+            'integer' => 'Field :attribute should be integer',
+            'in' => 'Field :attribute is invalid',
+        ]
+    );
+    try {
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+                $Employees_lateComing = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)
+                    ->whereYear('attendance_date', $year)
+                    ->whereMonth('attendance_date', $month)
+                    ->where('regularization_type','LC')
+                    ->where('reason_type','Permission')
+                    ->whereIn('status',['Approved','Pending'])
+                    ->get();
+                    // dd($Employees_lateComing);
+    } catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error while fetching Attendance Regularization LC data",
+            "data" => $e,
+        ]);
+    }
 }
-
 }
-
