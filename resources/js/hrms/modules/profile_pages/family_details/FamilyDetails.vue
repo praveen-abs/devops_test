@@ -89,7 +89,7 @@
                     </Column>
                     <Column field="phone_number" header="Phone" style="min-width: 12rem">
                     </Column>
-                    <Column :exportable="false" header="Action" style="min-width:20rem">
+                    <!-- <Column :exportable="false" header="Action" style="min-width:20rem">
                         <template #body="slotProps">
 
                             <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
@@ -110,29 +110,24 @@
                                 </svg>
                             </button>
                         </template>
-                    </Column>
+                    </Column> -->
 
                     <Column header="Action">
                         <template #body="slotProps">
                             <div class="relative flex justify-center">
-                                <button class="" type="button" @click="toggle(slotProps.data.id)"> <i
-                                        class="pi pi-ellipsis-v"></i>
+                                <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
                                 </button>
 
-                                <div v-if="op === slotProps.data.id"
-                                    class=" !z-[10000] absolute flex flex-col bg-white shadow-2xl top-4 right-4 "
-                                    @mouseleave=" op = ''"
-                                    style="width: 160px; margin-top:12px !important;margin-right: 20px !important; ">
-                                    <div class="p-0 m-0 d-flex flex-column">
-                                        <!-- bg-green-200 -->
-                                        <button
-                                            class=" h-[30px] p-2 text-black fw-semibold hover:bg-gray-200 border-bottom-1"
-                                            @click="diolog_DeleteFamilyDetails(slotProps.data)">delete</button>
-                                        <!-- bg-blue-500 -->
-                                        <button @click="diolog_EditFamilyDetails(slotProps.data)"
-                                            class=" !h-[33px]  border-[1px] text-black fw-semibold hover:bg-gray-200 ho">View</button>
+                                <OverlayPanel ref="op">
+                                    <div class="flex flex-col bg-white shadow-2xl w-40 py-1 rounded-lg">
+                                        <div class="p-0 m-0 d-flex flex-column ">
+                                            <button class="p-2 text-lg text-black font-semibold hover:bg-gray-200 divide-x"
+                                                @click="diolog_DeleteFamilyDetails(slotProps.data)">delete</button>
+                                            <button class="p-2 text-black text-lg font-semibold hover:bg-gray-200"
+                                                @click="diolog_EditFamilyDetails(slotProps.data)">View</button>
+                                        </div>
                                     </div>
-                                </div>
+                                </OverlayPanel>
                             </div>
 
                         </template>
@@ -162,8 +157,8 @@
             </div>
             <div class="my-2">
                 <span>Date of birth <span class="text-danger">*</span></span>
-                <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob" class="h-10 w-[100%] relative right-2" :minDate="minDate"
-                    :maxDate="maxDate" />
+                <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob" class="h-10 w-[100%] relative right-2"
+                    :minDate="minDate" :maxDate="maxDate" />
             </div>
             <div class="my-2">
                 <span>phone<span class="text-danger">*</span></span>
@@ -221,6 +216,7 @@
 
 
     </Sidebar>
+
 </template>
 <script setup>
 import dayjs from 'dayjs';
@@ -242,12 +238,7 @@ const DialogFamilyinfovisible = ref(false);
 
 const op = ref();
 const toggle = (event) => {
-    // op.value = event;
-    console.log(event);
-    if (event) {
-        op.value = event;
-    }
-
+    op.value.toggle(event);
 }
 
 const DialogEditInfovisible = ref(false);
