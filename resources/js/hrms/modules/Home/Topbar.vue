@@ -1,7 +1,5 @@
 <template>
 
-    <!-- {{ activeSettings ? findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 ?[]:null:null}} -->
-    <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
     <div class=" bg-white h-[60px]">
         <div class="grid items-center justify-between grid-cols-12 ">
             <!-- Organization List  -->
@@ -85,7 +83,7 @@
                         <!-- Dropdown content goes here -->
                         <div class="w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                             v-for="employee in globalSearch(query, orgList ? orgList : [])"
-                            @click="openProfilePage(employee.emp_code),query = null">
+                            @click="openProfilePage(employee.emp_code), query = null">
                             <div class="flex">
                                 <p class="text-sm font-bold text-gray-900">{{ employee.emp_name }} <span
                                         class="float-right text-xs font-bold text-gray-600">{{ employee.emp_code }}</span>
@@ -172,17 +170,17 @@
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <img  v-if="service.current_user_code != 'SA_ABS' && _profilePagesStore.profile_img" class=" forRounded w-[30px] h-[30px] rounded-full"
-                        :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output"
-                     />
+                        <img v-if="service.current_user_code != 'SA_ABS' && _profilePagesStore.profile_img"
+                            class=" forRounded w-[30px] h-[30px] rounded-full"
+                            :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output" />
 
-                    <!-- <h1
+                        <!-- <h1
                         class="rounded-full bg-blue-50  text-black font-semibold p-1.5 text-sm">
                         {{ _profilePagesStore.employeeDetails.user_short_name }}
                     </h1> -->
 
 
-                        <p  v-else class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
+                        <p v-else class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
 
                         <p class="px-2 mx-2 my-auto text-sm font-semibold text-black whitespace-nowrap"
@@ -197,11 +195,13 @@
                     <transition enter-active-class="transition duration-200 ease-out transform"
                         enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                         leave-active-class="transition duration-100 ease-in transform"
-                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"  @mouseleave="useDashboard.canShowCurrentEmployee = false" >
+                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"
+                        @mouseleave="useDashboard.canShowCurrentEmployee = false">
                         <div v-if="useDashboard.canShowCurrentEmployee"
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14">
                             <!-- Dropdown content goes here -->
-                            <RouterLink class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+                            <RouterLink
+                                class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                                 :to="`/profile-page`">View profile</RouterLink>
                             <a @click="canShowLogout = true"
                                 class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Log
@@ -370,7 +370,7 @@ const canShowLoading = ref(false)
 const canShowLogout = ref(false)
 const canSwitchLegalEntity = ref(false)
 const router = useRouter();
-    const route = useRoute();
+const route = useRoute();
 
 
 const Modules = ref([
@@ -457,7 +457,7 @@ const readNotification = (notification_id) => {
 
 function updateMasterConfigClientCode(client) {
     axios.post('/session-update-globalClient', {
-        client_id:client
+        client_id: client
     });
 }
 
@@ -483,13 +483,13 @@ onMounted(() => {
     getNotifications()
     getActiveSettings();
     _profilePagesStore.fetchEmployeeDetails();
-     _profilePagesStore.getProfilePhoto();
+    _profilePagesStore.getProfilePhoto();
     // console.log("TopBar", _profilePagesStore.profile);
 
 });
 
 
-onUpdated(()=>{
+onUpdated(() => {
     // _profilePagesStore.getProfilePhoto();
 })
 
@@ -498,6 +498,7 @@ onUpdated(()=>{
 
 async function logout() {
     try {
+        router.replace('/')
         const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
         await axios.post('/logout', null, {
             headers: {

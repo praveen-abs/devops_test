@@ -24,14 +24,14 @@
                                                 Timesheet</a>
                                         </li>
                                         <li class=" nav-item ember-view" role="presentation"
-                                            v-if="service.current_user_role == 2 || service.current_user_role == 4">
+                                            v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3 || service.current_user_role == 4">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#team" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
                                                 Team Timesheet</a>
                                         </li>
                                         <li class=" nav-item ember-view" role="presentation"
-                                            v-if="service.current_user_role == 2">
+                                            v-if="service.current_user_role == 1 ||service.current_user_role == 2 || service.current_user_role == 3">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#org" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
