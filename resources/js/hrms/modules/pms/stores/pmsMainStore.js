@@ -14,6 +14,10 @@ export const usePmsMainStore = defineStore("usePmsMainStore", () => {
     // Global declaration
     const canShowLoading = ref(false)
     const pmsConfiguration = ref()
+    const selfAppraisalDashboard = ref()
+    const departmentOptions = ref()
+    const existingKpiFormOptions = ref()
+    const EmployeeOptions = ref()
 
     const getPmsConfiguration = async () => {
         await axios.get('/api/getPMSConfig').then(res => {
@@ -21,7 +25,20 @@ export const usePmsMainStore = defineStore("usePmsMainStore", () => {
         })
     }
 
+    const getSelfAppraisalDashboardDetails = async (author_id) => {
+        await axios.get(`/api/selfDashboardDetails/${author_id}`).then(res => {
+            pmsConfiguration.value = res.data.Configuration
+            departmentOptions.value = res.data.Departments
+            existingKpiFormOptions.value = res.data.ExistingKPIForms
+            EmployeeOptions.value = res.data.Employees
+        }).finally(()=>{
+            if(pmsConfiguration.value){
+                createNewGoals.value = {...pmsConfiguration.value}
+            }
+        })
+    }
 
+    const createNewGoals = ref({})
     const createKpiForm = ref({
         form_details: []
     })
@@ -34,7 +51,14 @@ export const usePmsMainStore = defineStore("usePmsMainStore", () => {
 
     const saveKpiForm = () => {
         createKpiForm.value.user_id = 141
-         axios.post('/api/saveKpiForm',createKpiForm.value)
+        axios.post('/api/saveKpiForm', createKpiForm.value)
+    }
+
+    const getKPIFormDetails = (form_id) =>{
+        axios.get(`/api/getKPIFormDetails/${form_id}`).then(res=>{
+            createKpiForm.value = {...res.data.data.form}
+            createKpiForm.value.form_details = {...res.data.data.form_details}
+        })
     }
 
 
@@ -47,9 +71,21 @@ export const usePmsMainStore = defineStore("usePmsMainStore", () => {
 
         pmsConfiguration, getPmsConfiguration,
 
+        // General Variables
+
+        departmentOptions,EmployeeOptions,existingKpiFormOptions,
+
+        // Self Appraisal Dashboard Details
+
+        getSelfAppraisalDashboardDetails,
+
         // KPI Form creation
 
-        createKpiForm, addKra, addFormDetails,saveKpiForm
+        createKpiForm, addKra, addFormDetails, saveKpiForm,getKPIFormDetails,
+
+        // New Goals Creation
+
+        createNewGoals
 
     }
 })

@@ -188,3 +188,5 @@ Route::post('/saveKpiForm', [VmtAPIPMSModuleController::class, 'saveKpiForm']);
 Route::get('/getKpiFormAsDropdown/{author_id}', [VmtAPIPMSModuleController::class, 'getKpiFormAsDropdown']);
 Route::get('/getEmployeeListForManger/{user_id}', [VmtAPIPMSModuleController::class, 'getEmployeeListForManger']);
 Route::get('/getManagersListForEmployees/{user_id}', [VmtAPIPMSModuleController::class, 'getManagersListForEmployees']);
+Route::get('/getKPIFormDetails/{form_id}', [VmtAPIPMSModuleController::class, 'getKPIFormDetails']);
+Route::get('/selfDashboardDetails/{author_id}', [VmtAPIPMSModuleController::class, 'selfDashboardDetails']);

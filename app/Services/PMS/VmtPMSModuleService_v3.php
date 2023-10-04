@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Models\ConfigPms;
+use App\Models\Department;
 use App\Models\User;
+use App\Models\VmtEmployee;
+use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormModel;
 use Carbon\Carbon;
@@ -112,6 +115,82 @@ class VmtPMSModuleService_v3
 
         return $kpiTable;
     }
+
+    public function getKPIFormDetails($form_id)
+    {
+
+        $KpiForm      = VmtPMS_KPIFormModel::where('id', $form_id)->first();
+        $formDetails  = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $form_id)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => '',
+            'data'   => ["form" => $KpiForm, "form_details" => $formDetails]
+        ]);
+    }
+
+    public function selfDashboardDetails($author_id)
+    {
+
+        $table_pmsConfig = ConfigPms::find('1');
+        $configuration['calendar_type'] = $table_pmsConfig->calendar_type;
+        $configuration['year'] = $table_pmsConfig->year;
+        $configuration['frequency'] = $table_pmsConfig->frequency;
+        $configuration['assignment_period'] = $table_pmsConfig->assignment_period;
+
+        // checkConfigPms();
+
+        //Get existing KPI forms
+        $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $author_id)->get(['id', 'form_name']);
+
+        // get Departments data
+        $departments = Department::where('is_active', 1)->get();
+
+        $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'users.name as emp_name',
+                'users.id as id',
+                'users.avatar as avatar',
+            )
+            ->where('users.active', '1')
+            ->where('users.is_ssa', '0')
+            ->orderBy('vmt_employee_details.created_at', 'ASC')
+            ->get();
+
+
+
+        // $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orderBy('id','DESC')->get();
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->orderBy('id', 'DESC')->get();
+
+        $flowCheck = 1;
+
+
+        $allEmployeesList = User::leftJoin('vmt_employee_office_details', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->leftJoin('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select('users.name', 'users.id', 'users.user_code', 'vmt_employee_office_details.designation')
+            ->get();
+
+        $allEmployeesWithoutLoggedUserList = User::leftJoin('vmt_employee_office_details', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->leftJoin('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')
+            ->where('users.id', '!=', $author_id)
+            ->select('users.name', 'users.id', 'users.user_code', 'vmt_employee_office_details.designation')
+            ->get();
+
+        $canShowOverallScoreCard_SelfAppraisal_Dashboard = fetchPMSConfigValue('can_show_overallscorecard_in_selfappraisal_dashboard');
+
+        $response = [
+            "Configuration" => $configuration,
+            "ExistingKPIForms" => $existingKPIForms,
+            "Departments" => $departments,
+            "Employees" => $employees,
+            "canShowOverallScoreCard" => $canShowOverallScoreCard_SelfAppraisal_Dashboard
+        ];
+
+        return $response;
+
+    }
+
+
 
     public function getPMSRatingCardDetails()
     {

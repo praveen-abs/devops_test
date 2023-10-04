@@ -1,8 +1,9 @@
 <template>
     <div>
         <!-- {{ useStore.pmsConfiguration }} -->
-        {{ useHelper.ManagerList }}
+        <!-- {{ useHelper.ManagerList }} -->
         <!-- {{ useHelper.KpiForms }} -->
+        {{ useStore.createNewGoals }}
         <div class=" grid grid-cols-4 gap-4 px-4 mt-[20px] ">
             <div class=" !shadow-xl border-[1px] flex rounded-lg justify-around items-center ">
                 <img src="../assests/employee_goals.png" class=" w-[70px] " alt="">
@@ -87,42 +88,42 @@
         <div class="" v-if="activetab == 2">
             <h1 class=" text-[20px] text-[#000]">completed</h1>
         </div>
-        <Sidebar v-model:visible="visibleRight" position="right" class=" !w-[650px]">
+        <Sidebar v-model:visible="visibleRight" position="right">
             <h2 class=" text-[#000] text-[16px] font-semibold "> New Goals Assign</h2>
             <div class="grid grid-cols-2 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575] my-2">Calendar Type</label>
-                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
+                    <InputText type="text" v-model="useStore.createNewGoals.calendar_type" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
                 </div>
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Year</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
+                    <InputText type="text" v-model="useStore.createNewGoals.year" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575] my-2">Frequency</label>
-                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    <InputText type="text" v-model="useStore.createNewGoals.frequency" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Assigment Period</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    <InputText type="text" v-model="useStore.createNewGoals.assignment_period" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575] my-2">Department</label>
-                    <InputText type="text" v-model="value" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
+                    <Dropdown :options="useStore.departmentOptions" optionLabel="name"  optionValue="id" v-model="useStore.createNewGoals.department" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6] border-[1px]" />
                 </div>
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Employee</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    <Dropdown :options="useStore.EmployeeOptions" optionLabel="emp_name"  optionValue="id" v-model="useStore.createNewGoals.employee" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Reviewer</label>
-                    <InputText type="text" v-model="value" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    <Dropdown :options="useStore.EmployeeOptions" optionLabel="emp_name"  optionValue="id" v-model="useStore.createNewGoals.reviewer" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="  w-[100%] ">
@@ -130,8 +131,8 @@
                 <h1 class=" text-[#000] font-semibold text-[16px]">Goals/ Arears of Development</h1>
                 <div class="flex items-center justify-between ">
                     <p class=" text-[12px] text-[#757575] w-[240px]">Select Existing Form from the Drop Down</p>
-                    <Dropdown :options="useHelper.KpiForms" optionLabel="form_name"  optionValue="id" placeholder="Select KPI form" class="h-10 mx-2 w-[250px]" />
-                    <button class=" bg-[#F9BE00] h-[33px] w-[144px] rounded-[8px] ">View From</button>
+                    <Dropdown v-model="useStore.createNewGoals.form_id" :options="useStore.existingKpiFormOptions" optionLabel="form_name"  optionValue="id" placeholder="Select KPI form" class="h-10 mx-2 w-[250px]" />
+                    <button @click="Create_KPI_From = true,visibleRight = false,useStore.getKPIFormDetails(useStore.createNewGoals.form_id)" class=" bg-[#F9BE00] h-[33px] w-[144px] rounded-[8px] ">View From</button>
                 </div>
             </div>
 
@@ -149,6 +150,7 @@
         </Sidebar>
 
         <Sidebar v-model:visible="Create_KPI_From" position="right" class=" !w-[1000px]">
+
             <h2 class=" text-[#000] text-[16px] font-semibold ">KPI From Creation</h2>
 
             <div class="  w-[100%] ">
@@ -167,7 +169,7 @@
                 </div>
                 <div class="flex items-center my-2">
                     <h1 class="font-semibold "> Enter the From Name</h1>
-                    <InputText type="text" v-model="useStore.createKpiForm.name" class="h-10 mx-4 w-[60%] " placeholder="Enter the From Name" />
+                    <InputText type="text" v-model="useStore.createKpiForm.form_name" class="h-10 mx-4 w-[60%] " placeholder="Enter the From Name" />
                 </div>
 
                 <!-- <div class="flex items-center justify-between">
@@ -291,4 +293,10 @@ const Create_KPI_From = ref(false);
     background: transparent;
     border: 0 none;
     margin-top: -6px;
-}</style>
+}
+.p-sidebar-right .p-sidebar
+{
+    width: 50rem !important;
+    height: 100%;
+}
+</style>

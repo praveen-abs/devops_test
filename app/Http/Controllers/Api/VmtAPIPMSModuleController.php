@@ -44,21 +44,6 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         ]);
     }
 
-    public function getKPIFormDetails(Request $request)
-    {
-
-        $KpiForm      = VmtPMS_KPIFormModel::where('id', $request->form_id)->first();
-        $formDetails  = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $request->form_id)->get();
-
-        return response()->json([
-            'status' => true,
-            'message' => '',
-            'data'   => ["form" => $KpiForm, "form_details" => $formDetails]
-        ]);
-    }
-
-
-
     public function getAssigneeReviews(Request $request)
     {
         // Flow 1 HR creates Form and Assignee
@@ -822,5 +807,16 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
     public function getKpiFormAsDropdown($author_id,VmtPMSModuleService_v3 $pmsModuleService)
     {
         return $pmsModuleService->getKPIFormAsDropdown($author_id);
+    }
+
+    public function getKPIFormDetails($form_id,VmtPMSModuleService_v3 $pmsModuleService)
+    {
+        return $pmsModuleService->getKPIFormDetails($form_id);
+
+    }
+    public function selfDashboardDetails($author_id, VmtPMSModuleService_v3 $pmsModuleService)
+    {
+        return $pmsModuleService->selfDashboardDetails($author_id);
+
     }
 }
