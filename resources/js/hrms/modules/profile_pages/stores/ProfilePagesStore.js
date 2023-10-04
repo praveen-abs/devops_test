@@ -19,6 +19,7 @@ export const profilePagesStore = defineStore("employeeService", () => {
     const loading_screen = ref(true)
 
     const profile = ref();
+    const profile_img = ref();
 
     const user_code = ref()
 
@@ -46,9 +47,11 @@ export const profilePagesStore = defineStore("employeeService", () => {
             .then((res) => {
                 console.log( "profile :?",res.data.data);
                 profile.value = res.data.data;
+                profile_img.value = res.data.data;
             })
             .finally(() => {
-                console.log("profile Pic Fetched");
+                console.log("profile Pic Fetched" ,profile_img.value);
+                // fetchEmployeeDetails();
             });
     };
 
@@ -84,7 +87,8 @@ export const profilePagesStore = defineStore("employeeService", () => {
         loading_screen,
         user_code,
         getProfilePhoto,
-        profile
+        profile,
+        profile_img
 
     };
 });
