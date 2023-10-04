@@ -1,9 +1,9 @@
 <template>
-    <div class="card top-line">
+    <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Team Leave Balance</h6>
+                    <h6 class="mb-4 text-lg font-semibold text-gray-900">Team Leave Balance</h6>
                     <div class=" my-2 d-flex justify-content-between align-items-center">
                         <div></div>
                         <div class=" d-flex ">
@@ -83,7 +83,7 @@
                 <div class="card-body">
                     <div class="flex justify-between">
                         <div>
-                            <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Team Leave history</h6>
+                            <h6 class="mb-4 text-lg font-semibold text-gray-900 ">Team Leave history</h6>
                         </div>
                         <div class="d-flex justify-content-end">
                             <label for="" class="my-2 text-lg font-semibold">Select Month</label>

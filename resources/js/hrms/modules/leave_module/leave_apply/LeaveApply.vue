@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <Button label="Apply Leave" class="px-2 py-2 border-0 outline-none font-medium text-[2px] bg-black" @click="service.leaveApplyDailog = true" />
+    <Button label="Apply Leave" class="p-3 border-0 outline-none font-medium text-[2px] bg-black" @click="service.leaveApplyDailog = true" />
     <!-- <Transition name="modal" >
         <ABS_loading_spinner v-if="service.data_checking" />
     </Transition> -->

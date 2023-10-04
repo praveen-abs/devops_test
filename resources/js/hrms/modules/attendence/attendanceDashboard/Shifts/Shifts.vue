@@ -29,11 +29,15 @@
                     <div class="flex justify-between ">
                         <div>
                             <p class="font-semibold text-sm text-[#000] font-['Poppins]">Present</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
+                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">
+                                {{shift.present_count ? shift.present_count : 0   }}
+                            </p>
                         </div>
                         <div class="mx-3">
                             <p class="font-semibold text-sm text-[#000] font-['Poppins]">Absent</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
+                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">
+                                {{shift.absent_count ? shift.absent_count : 0  }}
+                            </p>
                         </div>
                     </div>
 

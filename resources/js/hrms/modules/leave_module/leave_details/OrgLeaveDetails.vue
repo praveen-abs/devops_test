@@ -1,77 +1,76 @@
 <template>
-    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 d-flex justify-content-between align-content-center">
-        <h6 class="h-7 mt-3 text-lg font-semibold text-gray-900 modal-title">Org Leave Balance</h6>
-        <div class=" my-2 d-flex justify-content-between align-items-center">
-            <div></div>
-            <div class=" d-flex ">
-                <div class="">
-                    <label for=" " class="text-lg font-semibold">Start Date</label>
-                    <Calendar v-model="leaveModuleStore.selectedStartDate" dateFormat="dd-mm-yy" class="pl-3"
-                        style="  border-radius: 7px; height: 30px; width: 100px;" :maxDate="new Date()" />
-                </div>
-                <div class="">
-                    <label for=" " class=" text-lg font-semibold mx-2 ">End Date</label>
-                    <Calendar class="mr-3" v-model="leaveModuleStore.selectedEndDate" dateFormat="dd-mm-yy"
-                        style="  border-radius: 7px; height: 30px;width: 100px;" :maxDate="new Date()" />
+    <div class="mb-0 card leave-history">
+        <div class="card-body">
+            <div class=" my-2 d-flex justify-content-between align-items-center">
+                <h6 class="h-7 mt-3 text-lg font-semibold text-gray-900 ">Org Leave Balance</h6>
+                <div class=" d-flex ">
+                    <div class="">
+                        <label for=" " class="text-lg font-semibold">Start Date</label>
+                        <Calendar v-model="leaveModuleStore.selectedStartDate" dateFormat="dd-mm-yy" class="pl-3"
+                            style="  border-radius: 7px; height: 30px; width: 100px;" :maxDate="new Date()" />
+                    </div>
+                    <div class="">
+                        <label for=" " class=" text-lg font-semibold mx-2 ">End Date</label>
+                        <Calendar class="mr-3" v-model="leaveModuleStore.selectedEndDate" dateFormat="dd-mm-yy"
+                            style="  border-radius: 7px; height: 30px;width: 100px;" :maxDate="new Date()" />
 
+                    </div>
+
+                    <button class=" btn-orange py-1  px-4 rounded" style="height: 30px;"
+                        @click="leaveModuleStore.getOrgLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD'), dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD'))">submit</button>
                 </div>
 
-                <button class=" btn-orange py-1  px-4 rounded" style="height: 30px;"
-                    @click="leaveModuleStore.getOrgLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD'), dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD'))">submit</button>
             </div>
+            <DataTable :value="leaveModuleStore.array_orgLeaveBalance" :paginator="true" :rows="10" class=""
+                dataKey="user_code" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
+                v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                :rowsPerPageOptions="[5, 10, 25]"
+                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+
+                <Column :expander="true" />
+                <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
+                <Column field="user_code" header="Employee Id" sortable></Column>
+                <Column field="name" header="Employee Name">
+                </Column>
+                <Column field="location" header="Location" :sortable="false">
+                </Column>
+                <Column field="department" header="Department">
+
+                </Column>
+                <Column field="total_leave_balance" header="Total Leave Balance"></Column>
+                <template #expansion="slotProps">
+                    <div>
+                        <DataTable :value="slotProps.data.leave_balance_details" responsiveLayout="scroll"
+                            v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                            @select-all-change="onSelectAllChange">
+                            <Column field="leave_type" header="Leave Type">{{ slotProps.data.leave_type }}</Column>
+                            <Column field="opening_balance" header="Opening Balance">
+
+                            </Column>
+                            <Column field="availed" header="availed">
+
+                            </Column>
+
+                            <Column field="closing_balance" header="Closing Balance">
+
+                            </Column>
+                        </DataTable>
+                    </div>
+                </template>
+
+            </DataTable>
 
         </div>
     </div>
 
 
-
-    <DataTable :value="leaveModuleStore.array_orgLeaveBalance" :paginator="true" :rows="10" class="" dataKey="user_code"
-        @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
-        v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
-        @row-select="onRowSelect" @row-unselect="onRowUnselect" :rowsPerPageOptions="[5, 10, 25]"
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
-
-        <Column :expander="true" />
-        <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
-        <Column field="user_code" header="Employee Id" sortable></Column>
-        <Column field="name" header="Employee Name">
-        </Column>
-        <Column field="location" header="Location" :sortable="false">
-        </Column>
-        <Column field="department" header="Department">
-
-        </Column>
-        <Column field="total_leave_balance" header="Total Leave Balance"></Column>
-        <template #expansion="slotProps">
-            <div>
-                <DataTable :value="slotProps.data.leave_balance_details" responsiveLayout="scroll"
-                    v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange">
-                    <Column field="leave_type" header="Leave Type">{{ slotProps.data.leave_type }}</Column>
-                    <Column field="opening_balance" header="Opening Balance">
-
-                    </Column>
-                    <Column field="availed" header="availed">
-
-                    </Column>
-
-                    <Column field="closing_balance" header="Closing Balance">
-
-                    </Column>
-                </DataTable>
-            </div>
-        </template>
-
-    </DataTable>
-
-
-
-
-    <div class="mt-3 row">
-        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
+    <div class="mt-3 row card">
+        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 card-body">
             <div class="flex justify-between">
                 <div>
-                    <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Org Leave history</h6>
+                    <h6 class="mb-4 text-lg font-semibold text-gray-900">Org Leave history</h6>
                 </div>
                 <div class="d-flex justify-content-end">
                     <label for="" class="my-2 text-lg font-semibold">Select Month</label>

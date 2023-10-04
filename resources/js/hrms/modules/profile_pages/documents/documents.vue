@@ -86,13 +86,13 @@
                 </button>
             </div>
         </div> -->
-        <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }" v-if="EmployeeDocumentManagerService.loading == false">
+        <Sidebar  position="right" v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }" v-if="EmployeeDocumentManagerService.loading == false">
             <div class="w-full h-full d-flex justify-content-center ">
                 <img :src="`data:image/png;base64,${documentPath}`" class="" alt="File not found"
                     style="object-fit: cover; max-width: 400px; , min-height: 350px; height:300px" />
             </div>
 
-        </Dialog>
+        </Sidebar>
 <!--
         <Dialog header="Header" v-model:visible="EmployeeDocumentManagerService.loading"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
