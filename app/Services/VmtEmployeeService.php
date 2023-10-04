@@ -1284,8 +1284,10 @@ class VmtEmployeeService
             ->where('vmt_temp_employee_proof_documents.status', '<>', "Approved")
             ->get([
                 'users.name as name',
+                'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
                 'users.user_code as user_code',
+                'users.id as id',
                 'vmt_documents.document_name as doc_name',
                 'vmt_temp_employee_proof_documents.id as record_id',
                 'vmt_temp_employee_proof_documents.status as doc_status',
@@ -1293,30 +1295,37 @@ class VmtEmployeeService
             ]);
 
         // //store all the documents in single key
-        foreach ($query_pending_onboard_docs as $single_pending_docs) {
+        foreach ($query_pending_onboard_docs as $key=> $single_pending_docs) {
 
             $user_code = $single_pending_docs->user_code;
 
             if (array_key_exists($user_code, $json_response)) {
+
+                $query_pending_onboard_docs['key'] ["avatar"] = getEmployeeAvatarOrShortName($single_pending_docs->id);
                 array_push($json_response[$user_code]["documents"], [
                     "record_id" => $single_pending_docs->record_id,
                     "doc_name" => $single_pending_docs->doc_name,
                     "doc_url" => $single_pending_docs->doc_url,
-                    "doc_status" => $single_pending_docs->doc_status
+                    "doc_status" => $single_pending_docs->doc_status,
+                   
+                    
                 ]);
             } else {
+                
                 $user_details = [
                     "name" => $single_pending_docs->name,
                     "user_code" =>  $single_pending_docs->user_code,
                     "doj" => $single_pending_docs->doj,
+                    "avatar" => getEmployeeAvatarOrShortName($single_pending_docs->id),
                     "documents" => array([
                         "record_id" => $single_pending_docs->record_id,
                         "doc_name" => $single_pending_docs->doc_name,
                         "doc_url" => $single_pending_docs->doc_url,
-                        "doc_status" => $single_pending_docs->doc_status
+                        "doc_status" => $single_pending_docs->doc_status,
+                       
                     ]),
                 ];
-
+             
                 $json_response[$user_code] = $user_details;
                 //array_push(, $user_details);
             }
