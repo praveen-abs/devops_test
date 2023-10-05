@@ -147,7 +147,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
 
    //Testing Attendance Shedule work
-   Route::get('/testing-schedue',[App\Http\Controllers\VmtAttendanceControllerV2::class,'testing']);
+   Route::get('/testing-schedue',[App\Http\Controllers\VmtAttendanceControllerV2::class,'attendanceJob']);
 
     //Attendance
     Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');

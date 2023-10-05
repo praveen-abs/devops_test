@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Models\VmtWorkShifts;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -21,6 +23,9 @@ class Kernel extends ConsoleKernel
         $schedule->call('App\Http\Controllers\VmtEmployeeBirthdayController@sendBirthdayNotificationtoEmployee')->daily();
 
         $schedule->call('App\Http\Controllers\VmtEmployeeBirthdayController@sendAniversaryNotificationtoEmployee')->daily();
+
+        $schedule->call('App\Http\Controllers\VmtAttendanceControllerV2@attendanceJob')->everyThirtyMinutes();
+        
     }
 
     /**
@@ -30,10 +35,8 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
 }
-
-
