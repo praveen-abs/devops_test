@@ -213,7 +213,8 @@ class VmtEmployeeAttendanceController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
-        return Excel::download(new AbsentReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Absent Report.xlsx');
+        $absent_data = $attendance_report_service->fetchAbsentReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
+        return Excel::download(new AbsentReportExport($absent_data,$client_name, $public_client_logo_path,$date),'Absent Report.xlsx');
     }
 
     public function fetchLCReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -245,9 +246,9 @@ class VmtEmployeeAttendanceController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = VmtClientMaster::where('id',sessionGetSelectedClientid())->first()->client_logo;
         $public_client_logo_path = public_path($client_logo_path);
-
+        // dd( $public_client_logo_path);
         $lc_data = $attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
-        return Excel::download(new LateComingReportExport($lc_data, $public_client_logo_path, $client_name), 'Late Coming Report.xlsx');
+        return Excel::download(new LateComingReportExport($lc_data, $client_name, $public_client_logo_path,$date), 'Late Coming Report.xlsx');
     }
 
     public function fetchEGReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -281,8 +282,7 @@ class VmtEmployeeAttendanceController extends Controller
         $public_client_logo_path = public_path($client_logo_path);
 
         $lc_data = $attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
-        return Excel::download(new EarlyGoingReportExport($lc_data, $public_client_logo_path, $client_name), 'Early Going Report.xlsx');
-       // return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Early Going Report.xlsx');
+        return Excel::download(new EarlyGoingReportExport($lc_data,$client_name, $public_client_logo_path,$date), 'Early Going Report.xlsx');
     }
 
 
@@ -309,11 +309,17 @@ class VmtEmployeeAttendanceController extends Controller
             $end_date = $request->end_date;
         } else {
             $date = $request->date;
+            $client_name = sessionGetSelectedClientName();
+            $client_logo_path = VmtClientMaster::where('id',sessionGetSelectedClientid())->first()->client_logo;
+            $public_client_logo_path = public_path($client_logo_path);
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return Excel::download(new HalfDayReportExport($attendance_report_service->fetchHalfDayReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Half Day Report.xlsx');
-    }
+
+        $halfday_data = $attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
+        return Excel::download(new HalfDayReportExport($halfday_data,$client_name, $public_client_logo_path,$date), 'Half Day Report.xlsx');
+
+      }
 
     public function fetchOvertimeReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {

@@ -151,7 +151,7 @@ class BasicAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, 
             ->getColor()->setRGB('ffffff');
         //for allignment
         // $sheet->getStyle('E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $range = 'A1:' . $this->last_header_column . $this->last_row;
+        $range = 'A5:' . $this->last_header_column . $this->last_row-1;
         $style = [
             'alignment' => [
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
