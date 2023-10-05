@@ -1193,7 +1193,7 @@ class VmtEmployeePayCheckService
              if($payroll_data->doesntExist()){
 
                 return response()->json([
-                    'status' => 'failure',
+                    'status' => 'success',
                     'message' => "payslip data not found",
                     'data' => ''
                 ]);
