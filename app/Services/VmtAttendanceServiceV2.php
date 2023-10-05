@@ -138,8 +138,8 @@ class VmtAttendanceServiceV2
     {
         ini_set('max_execution_time', 3000);
         $user = user::get();
-        $start_date = '2023-07-26';
-        $end_date = '2023-08-26';
+        // $start_date = '2023-07-26';
+        // $end_date = '2023-08-26';
         $current_date = Carbon::parse($start_date);
         try {
             while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
@@ -543,7 +543,10 @@ class VmtAttendanceServiceV2
                 }
                 $current_date->addDay();
             }
-            dd('done');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Attendance updated successfully'
+            ]);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failure',

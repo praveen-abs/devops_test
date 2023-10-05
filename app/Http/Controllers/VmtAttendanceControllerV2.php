@@ -50,6 +50,7 @@ class VmtAttendanceControllerV2 extends Controller
                 return $attendance_services->attendanceJobs($start_date, $end_date);
             }
         }
+        return 'No New Data ';
     }
 
 
