@@ -590,6 +590,9 @@ class VmtAttendanceServiceV2
     {
         try {
             $current_date = Carbon::parse($start_date);
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
+            }
             $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
@@ -740,18 +743,6 @@ class VmtAttendanceServiceV2
             return response()->json([
                 'status' => 'failure',
                 'message' => $e->getMessage(),
-                'data' => $e->getTraceAsString(),
-            ]);
-        }
-    }
-
-    public  function downloadDetailedAttendanceReportV2($start_date, $end_date)
-    {
-        try {
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => "downloadDetailedAttendanceReport",
                 'data' => $e->getTraceAsString(),
             ]);
         }
