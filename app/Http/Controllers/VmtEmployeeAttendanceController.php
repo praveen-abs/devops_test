@@ -309,11 +309,17 @@ class VmtEmployeeAttendanceController extends Controller
             $end_date = $request->end_date;
         } else {
             $date = $request->date;
+            $client_name = sessionGetSelectedClientName();
+            $client_logo_path = VmtClientMaster::where('id',sessionGetSelectedClientid())->first()->client_logo;
+            $public_client_logo_path = public_path($client_logo_path);
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return Excel::download(new HalfDayReportExport($attendance_report_service->fetchHalfDayReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Half Day Report.xlsx');
-    }
+
+        $halfday_data = $attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
+        return Excel::download(new HalfDayReportExport($halfday_data,$client_name, $public_client_logo_path,$date), 'Half Day Report.xlsx');
+
+      }
 
     public function fetchOvertimeReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {

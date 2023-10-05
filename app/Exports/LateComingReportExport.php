@@ -69,7 +69,7 @@ class LateComingReportExport implements FromArray,WithStrictNullComparison,WithH
         $sheet->getStyle('C1:E1')->getFont()->setBold(true);
 
         //For Second Row
-        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Employee CTC Report');
+        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' LateComing Report');
         $sheet->getStyle('C2:E2')->getFont()->setBold(true);
 
         //For Third Row
