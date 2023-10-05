@@ -141,7 +141,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
         Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
 
         Route::post('/employee-documents-details', 'getEmployeeAllDocumentDetails')->name('employee-documents-details');
-     //change client_code on masterconfig
+        //change client_code on masterconfig
         Route::get('/update-MasterConfig-ClientCode', 'updateMasterConfigClientCode')->name('updateMasterConfigClientCode');
     });
 
@@ -152,7 +152,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
     Route::get('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData'])->name('getAttendanceDashboardData');
     Route::get('/attendance-leave', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePage'])->name('attendance-leave');
-   // Route::get('/upcoming-employee-leaves', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeUpcomingAppliedRequested'])->name('getEmployeeUpcomingAppliedRequested');
+    // Route::get('/upcoming-employee-leaves', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeUpcomingAppliedRequested'])->name('getEmployeeUpcomingAppliedRequested');
 
     Route::get('/attendance-leavesettings', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveSettings'])->name('attendance-leavesettings');
     Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
@@ -508,7 +508,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     //get payroll dropdown data
 
     Route::get('getDropdownListDetails', [App\Http\Controllers\VmtPayrollSettingsController::class, 'getDropdownListDetails'])->name('getDropdownListDetails');
-
     //Get Attendance For run payroll
     Route::post('/fetch-attendance-data', [App\Http\Controllers\VmtPayRunController::class, 'fetch_attendance_data'])->name('fetch-attendance-data');
 
@@ -637,7 +636,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
-
+    //employee attendanceLCreport data
+    Route::get('/getEmployeeLcReportData', [App\Http\Controllers\VmtAttendanceController::class, 'checkEmployeeLcPermission'])->name('checkEmployeeLcPermission');
     // end
 
     Route::get('/config-pms', [App\Http\Controllers\ConfigPmsController::class, 'index'])->name('vmt_config_pms');
@@ -815,7 +815,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     ///for current year
 
     Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
-    Route::get('/reports',[App\Http\Controllers\VmtReportsController::class,'showReportsPage'])->name('showReportsPage');
+    Route::get('/reports', [App\Http\Controllers\VmtReportsController::class, 'showReportsPage'])->name('showReportsPage');
 
     Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
@@ -849,7 +849,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports-half-dayabsent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showHalfdayAbsentReport'])->name('showHalfdayAbsentReport');
 
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
-    Route::post('/fetch-detailed-attendance-data', [ App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchDetailedAttendancedata'])->name('fetchDetailedAttendancedata');
+    Route::post('/fetch-detailed-attendance-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchDetailedAttendancedata'])->name('fetchDetailedAttendancedata');
     Route::post('/fetch-overtime-report-data', [\App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchOvertimeReportData']);
     Route::post('/fetch-EG-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchEGReportData']);
     Route::post('/fetch-absent-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAbsentReportData']);
@@ -1198,7 +1198,7 @@ Route::get('/testing_sass', function () {
     return view('testing_views.sassTest');
 });
 
-Route::get('/clear_cache',[App\Http\Controllers\VmtMainDashboardController::class,'clearCache'] )->name('clearCache');
+Route::get('/clear_cache', [App\Http\Controllers\VmtMainDashboardController::class, 'clearCache'])->name('clearCache');
 
 
 //DONT WRITE ANT ROUTES BELOW THIS
