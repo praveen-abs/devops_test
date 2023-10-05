@@ -245,9 +245,9 @@ class VmtEmployeeAttendanceController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = VmtClientMaster::where('id',sessionGetSelectedClientid())->first()->client_logo;
         $public_client_logo_path = public_path($client_logo_path);
-
+        // dd( $public_client_logo_path);
         $lc_data = $attendance_report_service->fetchLCReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
-        return Excel::download(new LateComingReportExport($lc_data, $public_client_logo_path, $client_name), 'Late Coming Report.xlsx');
+        return Excel::download(new LateComingReportExport($lc_data, $client_name, $public_client_logo_path,$date), 'Late Coming Report.xlsx');
     }
 
     public function fetchEGReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
