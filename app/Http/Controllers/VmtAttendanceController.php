@@ -41,6 +41,27 @@ use Symfony\Component\Mailer\Exception\TransportException;
 
 class VmtAttendanceController extends Controller
 {
+    public function checkWeekOffStatus($date, $weekOffJson, $checkin_time, $checkout_time)
+    {
+        $days_for_per_week = array('Sunday' => 0, 'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6);
+        $date =  Carbon::parse($date);
+        $given_date_day = $date->format('l');
+        $day_in_number = number_format($date->format('d'));
+        $weekOffJson = json_decode($weekOffJson, true);
+        if ($weekOffJson[$days_for_per_week[$given_date_day]]['all_week'] == 1) {
+
+            return   $checkin_time == null && $checkout_time == null ? true : false;
+        } else {
+            //logic for nth week of day week off
+            $week_of_month = (int)(ceil($day_in_number / 7));
+            $week_of_month_in_string = 'week_' . $week_of_month;
+            if ($weekOffJson[$days_for_per_week[$given_date_day]][$week_of_month_in_string] == 1) {
+                return   $checkin_time == null && $checkout_time == null ? true : false;
+            } else {
+                return false;
+            }
+        }
+    }
 
     public function showDashboard(Request $request)
     {
@@ -590,7 +611,7 @@ class VmtAttendanceController extends Controller
                 "isEG" => false, "eg_status" => null, "eg_reason" => null, "eg_reason_custom" => null, "eg_regularized_time" => null,
                 "isMIP" => false, "mip_status" => null, "mip_reason" => null, "mip_reason_custom" => null, "mip_regularized_time" => null,
                 "isMOP" => false, "mop_status" => null, "mop_reason" => null, "mop_reason_custom" => null, "mop_regularized_time" => null,
-                "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null
+                "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null,'is_weekoff'=>false
             );
 
             //echo "Date is ".$fulldate."\n";
@@ -729,7 +750,8 @@ class VmtAttendanceController extends Controller
             $attendanceResponseArray[$key]['workshift_code'] = $shift_time->shift_code;
             $attendanceResponseArray[$key]['workshift_name'] = $shift_time->shift_name;
             //dd($attendanceResponseArray[$key]['vmt_employee_workshift_id']);
-
+            $attendanceResponseArray[$key]["is_weekoff"] = $this->checkWeekOffStatus($attendanceResponseArray[$key]['date'],$shift_time->week_off_days,$attendanceResponseArray[$key]['checkin_time'],$attendanceResponseArray[$key]['checkout_time']);
+             
             //dd($query_workShifts[$currentdate_workshift]->shift_start_time);
             //dd( $attendanceResponseArray);
             $checkin_time = $attendanceResponseArray[$key]["checkin_time"];

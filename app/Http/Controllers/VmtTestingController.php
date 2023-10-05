@@ -42,7 +42,8 @@ use App\Exports\AttenanceWorkShifttime;
 use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
-
+use App\Models\AbsActivePayslip;
+use DateTime;
 use Carbon\Carbon;
 use App\Http\Controllers\VmtEmployeeBirthdayController;
 use Carbon\CarbonPeriod;
@@ -1789,7 +1790,7 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                     "year" => $year,
                     "month" => $month,
                     "type" => $type,
-    
+
                 ],
                 $rules = [
                     "user_code" => 'required|exists:users,user_code',
@@ -1801,20 +1802,20 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                     'required' => 'Field :attribute is missing',
                     'exists' => 'Field :attribute is invalid',
                 ]
-    
+
             );
-    
-    
+
+
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 'failure',
                     'message' => $validator->errors()->all()
                 ]);
             }
-    
-    
+
+
             try {
-    
+
                 $user_data = User::where('user_code', $user_code)->first();
                 $payroll_data = VmtPayroll::leftJoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
                     ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
@@ -1830,42 +1831,42 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                     ->whereYear('payroll_date', $year)
                     ->whereMonth('payroll_date', $month);
 
-    
+
                 //get leave data
                 $start_date = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
-    
+
                 $end_date = Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
-    
+
                 $getleavedetails = $serviceVmtAttendanceService->leavetypeAndBalanceDetails($user_data->id, $start_date, $end_date, $month);
-    
+
                 $leave_data = array();
-    
+
                 foreach ($getleavedetails as $key => $single_leave_type) {
-    
+
                     if ($single_leave_type['leave_type']  <> "Sick Leave / Casual Leave" &&  $single_leave_type['leave_type'] <> "Earned Leave") {
-    
+
                         if ($single_leave_type['availed'] != 0) {
-    
+
                             array_push($leave_data, $single_leave_type);
                         }
                     } else {
                         array_push($leave_data, $single_leave_type);
                     }
                 }
-    
+
                 $getpersonal['leave_data'] = $leave_data;
-    
-    
+
+
                 // $financial_time   = VmtOrgTimePeriod::where('status','1')->first()->start_date;
                 // $start_date =  Carbon::parse($financial_time );
                 // $diff_months  = $start_date->diffInMonths(Carbon::now());
-    
+
                 // $months = [];
                 // for($i=0; $i<$diff_months; $i++){
                 //     $month = Carbon::parse($start_date)->addMonths($i)->format('Y-m-d');
                 //     array_push($months,$month);
                 // }
-    
+
                 // $months_details =[];
                 // for($i=0; $i<count($months); $i++){
                 // $vmt_payroll  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
@@ -1875,7 +1876,7 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                 //             ->get()->toArray();
                 //             array_push($months_details,$vmt_payroll);
                 // }
-    
+
                 $getpersonal['client_details'] = VmtClientMaster::where('id', $user_data->client_id)->get(
                     [
                         'client_fullname',
@@ -1883,8 +1884,8 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                         'address',
                     ]
                 )->toArray();
-    
-    
+
+
                 $getpersonal['personal_details'] = $payroll_data
                     ->get(
                         [
@@ -1903,8 +1904,8 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                             'vmt_department.name as department_name'
                         ]
                     )->toArray();
-    
-    
+
+
                 $getpersonal['salary_details'] = $payroll_data
                     ->get(
                         [
@@ -1914,7 +1915,7 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                             'vmt_employee_payslip_v2.lop',
                         ]
                     )->toArray();
-    
+
                 $getearnings = $payroll_data
                     ->get(
                         [
@@ -1934,8 +1935,8 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                             'vmt_employee_payslip_v2.overtime as Overtime',
                         ]
                     )->toArray();
-    
-    
+
+
                 $getarrears = $payroll_data
                     ->get(
                         [
@@ -1947,8 +1948,8 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                         ]
                     )->toArray();
                 //need  to add over_time arrears
-    
-    
+
+
                 $getcontribution = $payroll_data
                     ->get(
                         [
@@ -1957,8 +1958,8 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                             'vmt_employee_payslip_v2.vpf as VPF',
                         ]
                     )->toArray();
-    
-    
+
+
                 $gettaxdeduction = $payroll_data
                     ->get(
                         [
@@ -1970,7 +1971,7 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                             'vmt_employee_payslip_v2.other_deduc as Other Deduction',
                         ]
                     )->toArray();
-    
+
                 $getCompensatorydata = $payroll_data
                     ->get(
                         [
@@ -1987,20 +1988,20 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                             'vmt_employee_compensatory_details.other_allowance as Other Allowance',
                         ]
                     )->toArray();
-    
-    
+
+
                 $getpersonal['date_month'] = [
                     "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
                     "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
                     "abs_logo" => '/assets/clients/ess/logos/AbsLogo1.png',
                 ];
-    
+
                 // Total earnings
-    
+
                 $getpersonal['earnings'] = [];
                 foreach ($getearnings as $single_payslip) {
                     foreach ($single_payslip as $key => $single_details) {
-    
+
                         if ($single_details == "0" || $single_details == null || $single_details == "") {
                             unset($single_payslip[$key]);
                         }
@@ -2010,14 +2011,14 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                 $getpersonal['arrears'] = [];
                 foreach ($getarrears as $single_payslip) {
                     foreach ($single_payslip as $key => $single_details) {
-    
+
                         if ($single_details == "0" || $single_details == null || $single_details == "") {
                             unset($single_payslip[$key]);
                         }
                     }
                     array_push($getpersonal['arrears'], $single_payslip);
                 }
-    
+
                 if (!empty($getpersonal['earnings'])) {
                     $total_value = 0;
                     foreach ($getpersonal['earnings'][0] as $single_data) {
@@ -2025,66 +2026,66 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                     }
                     $getpersonal['earnings'][0]['Total Earnings'] = $total_value;
                 }
-    
+
                 // Total contribution
-    
+
                 $getpersonal['contribution'] = [];
                 foreach ($getcontribution as $single_payslip) {
                     foreach ($single_payslip as $key => $single_details) {
-    
+
                         if ($single_details == "0" || $single_details == null || $single_details == "") {
                             unset($single_payslip[$key]);
                         }
                     }
                     array_push($getpersonal['contribution'], $single_payslip);
                 }
-    
+
                 if (!empty($getpersonal['contribution'])) {
-    
+
                     $total_value = 0;
                     foreach ($getpersonal['contribution'][0] as $single_simma) {
                         $total_value += ((int) $single_simma);
                     }
                     $getpersonal['contribution'][0]['Total Contribution'] = $total_value;
                 }
-    
+
                 // Total deduction
-    
+
                 $getpersonal['Tax_Deduction'] = [];
                 foreach ($gettaxdeduction as $single_payslip) {
                     foreach ($single_payslip as $key => $single_details) {
-    
+
                         if ($single_details == "0" || $single_details == null || $single_details == "") {
                             unset($single_payslip[$key]);
                         }
                     }
                     array_push($getpersonal['Tax_Deduction'], $single_payslip);
                 }
-    
+
                 $getpersonal['compensatory_data'] = [];
                 foreach ($getCompensatorydata as $single_payslip) {
                     foreach ($single_payslip as $key => $single_details) {
-    
+
                         if ($single_details == "0" || $single_details == null || $single_details == "") {
                             unset($single_payslip[$key]);
                         }
                     }
                     array_push($getpersonal['compensatory_data'], $single_payslip);
                 }
-    
+
                 if (!empty($getpersonal['Tax_Deduction'])) {
-    
+
                     $total_value = 0;
                     foreach ($getpersonal['Tax_Deduction'][0] as $single_data) {
                         $total_value += ((int) $single_data);
                     }
                     $getpersonal['Tax_Deduction'][0]['Total Deduction'] = $total_value;
                 }
-    
-    
+
+
                 if (!empty($getpersonal['earnings']) && !empty($getpersonal['contribution']) && !empty($getpersonal['Tax_Deduction'])) {
                     $total_amount = ($getpersonal['earnings'][0]['Total Earnings']) - ($getpersonal['contribution'][0]['Total Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total Deduction']);
-    
+
                     $getpersonal['over_all'] = [
                         [
                             "Net Salary Payable" => $total_amount,
@@ -2092,26 +2093,26 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                         ]
                     ];
                 }
-    
-    
+
+
                 $get_payslip =  AbsActivePayslip::where('is_active', '1')->first();
                 $status = "";
                 $message = "";
-    
+
                 if ($type == "pdf") {
-    
+
                     $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
-    
+
                     $options = new Options();
                     $options->set('isHtml5ParserEnabled', true);
                     $options->set('isRemoteEnabled', true);
-    
+
                     $pdf = new Dompdf($options);
                     $pdf->loadhtml($html, 'UTF-8');
                     $pdf->setPaper('A4', 'portrait');
                     $pdf->render();
                     // $pdf->stream("payslip.pdf");
-    
+
                     $response['user_code'] = $user_code;
                     $response['month'] = $month;
                     $response['year'] = $year;
@@ -2119,26 +2120,26 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                     $pdf->stream(['payslip.pdf']);
                     //$response['payslip'] = base64_encode($pdf->output(['payslip.pdf']));
                 } elseif ($type == "html") {
-    
+
                     $html = view('dynamic_payslip_templates.dynamic_payslip_template_view', $getpersonal);
-    
+
                     $response = base64_encode($html);
                 } else if ($type == "mail") {
-    
+
                     $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
-    
+
                     $options = new Options();
                     $options->set('isHtml5ParserEnabled', true);
                     $options->set('isRemoteEnabled', true);
-    
+
                     $pdf = new Dompdf($options);
                     $pdf->loadhtml($html, 'UTF-8');
                     $pdf->setPaper('A4', 'portrait');
                     $pdf->render();
-    
+
                     $isSent = \Mail::to($getpersonal['personal_details'][0]['officical_mail'])
                         ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
-    
+
                     if ($isSent) {
                         $status = "success";
                         $message = "Employee payslip send successfully";
@@ -2152,14 +2153,14 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                         'data' => ''
                     ]);
                 }
-    
+
                 return response()->json([
                     'status' => 'success',
                     'message' => "data fetch successfully",
                     'data' => $response
                 ]);
             } catch (\Exception $e) {
-    
+
                 return response()->json([
                     'status' => 'failure',
                     'message' => "Error while fetch payslip details ",
@@ -2167,5 +2168,5 @@ foreach ($employee_excemption_details as $Excemption_key => $single_Excemption_d
                 ]);
             }
         }
-    
+
 }
