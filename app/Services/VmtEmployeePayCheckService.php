@@ -96,11 +96,11 @@ class VmtEmployeePayCheckService
             'message' => 'none',
             'data' => [],
         ];
-     
+
         $corrected_data = $data;
         $j = array_keys($data);
         foreach ($corrected_data[$j[0]] as &$Single_data) {
-            
+
             if (array_key_exists('dob', $Single_data) && is_int($Single_data['dob'])) {
 
                 $Single_data['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dob'])->format('Y-m-d');
@@ -112,21 +112,21 @@ class VmtEmployeePayCheckService
             if (array_key_exists('payroll_month', $Single_data) && is_int($Single_data['payroll_month'])) {
 
                 $Single_data['payroll_month'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['payroll_month'])->format('Y-m-d');
-              
+
             }
         }
         unset($Single_data);
 
-    
+
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $corrected_data;
-    
+
         $currentRowInExcel = 0;
         $i = array_keys($excelRowdata_row);
 
 
         foreach ($excelRowdata_row[$i[0]] as $key => $excelRowdata) {
-           
+
             $currentRowInExcel++;
             $excelRowdata['emp_no'] = trim($excelRowdata['emp_no']);
             //Validation
@@ -297,7 +297,7 @@ class VmtEmployeePayCheckService
             $empPaySlip->bank_ifsc_code = $row["bank_ifsc_code"] ?? null;
 
             $client_id = User::where('user_code', $row['emp_no'])->first()->client_id;
-         
+
             $payroll_date = \DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
             //check already exist or not
             $Payroll_data = VmtPayroll::where('client_id', $client_id)->where('payroll_date', $payroll_date)->first();
@@ -1123,8 +1123,9 @@ class VmtEmployeePayCheckService
                     "net_income",
                     "dearness_allowance"
                 ])->first();
+//dd($response);
 
-            $response['yearly_ctc'] = $response->cic * 12;
+            $response['yearly_ctc'] =(integer) $response->cic * 12;
             return response()->json([
                 'status' => 'success',
                 'message' => "",
@@ -1173,6 +1174,7 @@ class VmtEmployeePayCheckService
 
         try {
 
+
             $user_data = User::where('user_code', $user_code)->first();
             $payroll_data = VmtPayroll::leftJoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
                 ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
@@ -1188,6 +1190,14 @@ class VmtEmployeePayCheckService
                 ->whereYear('payroll_date', $year)
                 ->whereMonth('payroll_date', $month);
 
+             if($payroll_data->doesntExist()){
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "payslip data not found",
+                    'data' => ''
+                ]);
+             }
 
             //get leave data
             $start_date = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
