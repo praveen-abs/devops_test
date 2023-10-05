@@ -159,7 +159,7 @@ class VmtAttendanceServiceV2
 
                     if ($single_user->dol == null && Carbon::parse($doj)->lte($current_date) || $current_date->between($doj, Carbon::parse($single_user->dol))) {
 
-                         $current_date_str=  $current_date->format('Y-m-d');
+                        $current_date_str =  $current_date->format('Y-m-d');
 
                         $attendance_status = 'A';
                         $checkin_lat_long = null;
@@ -182,7 +182,7 @@ class VmtAttendanceServiceV2
                         $is_eg = false;
                         $regz_checkin_time = null;
                         $regz_checkout_time = null;
-                        $ot_mins = 0; 
+                        $ot_mins = 0;
 
 
                         $checking_date = null;
@@ -284,8 +284,8 @@ class VmtAttendanceServiceV2
                             $attendance_mode_checkout =    $checkout_time_ar['attendance_mode'];
                         }
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
-                        $shiftStartTime  = Carbon::parse( $current_date_str . ' ' . $shift_settings->shift_start_time);
-                        $shiftEndTime  = Carbon::parse( $current_date_str . ' ' . $shift_settings->shift_end_time);
+                        $shiftStartTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_start_time);
+                        $shiftEndTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_end_time);
                         if ($checking_time != null &&  $checkout_time != null &&  $checkout_time ==  $checking_time) {
                             $attendance_time = $this->findMIPOrMOP($checking_time, $shiftStartTime, $shiftEndTime);
 
@@ -418,7 +418,7 @@ class VmtAttendanceServiceV2
                             $leave_list =  $start_leave_list->merge($end_leave_list);
                             if (count($leave_list) > 0) {
                                 foreach ($leave_list as $single_emp_leave) {
-                                    if (Carbon::parse( $current_date_str)->addHour(23)->betweenIncluded(Carbon::parse($single_emp_leave->start_date), Carbon::parse($end_date))) {
+                                    if (Carbon::parse($current_date_str)->addHour(23)->betweenIncluded(Carbon::parse($single_emp_leave->start_date), Carbon::parse($end_date))) {
                                         $current_leave_type = VmtLeaves::where('id', $single_emp_leave->leave_type_id)->first()->leave_type;
                                         switch ($current_leave_type) {
                                             case 'Sick Leave / Casual Leave';
@@ -652,7 +652,14 @@ class VmtAttendanceServiceV2
                         } else {
                             $checkout_time = $att_detail->checkout_time;
                         }
-                        $current_ot = $att_detail->overtime;
+
+                        $ot_ar = CarbonInterval::minutes($att_detail->overtime)->cascade();
+                        $ot_hrs = (int) $ot_ar->totalHours;
+                        $ot_mins = $ot_ar->toArray()['minutes'];
+                        $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+
+                        $total_ot = $total_ot + $att_detail->overtime;
+
                         $lc_mins = $att_detail->lc_minutes;
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
@@ -673,8 +680,10 @@ class VmtAttendanceServiceV2
                             }
                         } elseif (
                             $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
-                            $status == 'OD' || $status == 'PI' || $status == 'CO' || $status == 'CL' || $status == 'SL' || $status == 'FO L' || $status = 'leave'
+                            $status == 'OD' || $status == 'PI' || $status == 'CO' || $status == 'CL' || $status == 'SL' || $status == 'FO L'
                         ) {
+                            // if($status='leave')
+                            // dd($att_detail);
                             if ($status == 'OD') {
                                 $total_on_duty = $total_on_duty;
                             } else {
@@ -708,17 +717,20 @@ class VmtAttendanceServiceV2
                     $current_date->addDay();
                 }
                 $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day) - $total_late_lop;
-                array_push($temp_ar, $total_weekoff, $total_holiday, $total_ot, $total_present, $total_absent, $total_late_lop, $total_leave, $total_half_day, $total_on_duty, $total_payable_days);
+                if ($total_ot > 0) {
+                    $total_ot =  CarbonInterval::minutes($total_ot)->cascade()->forHumans();
+                }
+                array_push($temp_ar, $total_weekoff, $total_holiday, $total_ot, $total_present, $total_absent, $total_late_lop, $total_leave, $total_half_day, $total_on_duty, $total_LC, $total_EG, $total_payable_days);
                 array_push($response['rows'], $temp_ar);
                 unset($temp_ar);
             }
             //dd($response ['rows']);
             array_push($heading_dates, 'Total Calculation');
-            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
+            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty", 'Total LC', 'Total EG', 'Total Payable Days');
             $response['heading_dates'] = $heading_dates;
             $response['header_2'] = $header_2;
             $response['heading_dates_2'] = $heading_dates_2;
-           // dd($response);
+            // dd($response);
             return $response;
         } catch (Exception $e) {
 
