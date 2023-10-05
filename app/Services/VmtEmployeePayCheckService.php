@@ -1295,7 +1295,7 @@ class VmtEmployeePayCheckService
                     [
                         'vmt_employee_payslip_v2.basic_arrear as Basic',
                         'vmt_employee_payslip_v2.hra_arrear as HRA',
-                        'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
+                        'vmt_employee_payslip_v2.earned_stats_arrear as Statuory Bonus',
                         'vmt_employee_payslip_v2.spl_alw_arrear  as Special Allowance',
                         'vmt_employee_payslip_v2.child_edu_allowance_arrear as Child Education Allowance',
                     ]

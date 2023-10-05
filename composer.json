@@ -67,7 +67,8 @@
             "app/Services/VmtSalaryRevisionService.php",
             "app/Services/VmtAppPermissionsService.php",
             "app/Services/VmtAttendanceServiceV2.php",
-            "app/Services/VmtReportsService.php"
+            "app/Services/VmtReportsService.php",
+            "app/Services/Testing/VmtTestingService.php"
 
         ]
     },
