@@ -96,7 +96,7 @@ class EmployeeBasicCtcExport implements FromArray, ShouldAutoSize, WithHeadings,
         $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFont()->setBold(true)
             ->getColor()->setRGB('ffffff');
         //for allignment
-        $range = 'A1:' . $this->last_header_column . $this->last_row;
+        $range = 'A5:' . $this->last_header_column . $this->last_row-1;
         $style = [
             'alignment' => [
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
