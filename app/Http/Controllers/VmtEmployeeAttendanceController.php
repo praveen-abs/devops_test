@@ -213,7 +213,8 @@ class VmtEmployeeAttendanceController extends Controller
         $client_name = sessionGetSelectedClientName();
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
-        return Excel::download(new AbsentReportExport($attendance_report_service->fetchAbsentReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Absent Report.xlsx');
+        $absent_data = $attendance_report_service->fetchAbsentReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
+        return Excel::download(new AbsentReportExport($absent_data,$client_name, $public_client_logo_path,$date),'Absent Report.xlsx');
     }
 
     public function fetchLCReportData(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
@@ -281,8 +282,7 @@ class VmtEmployeeAttendanceController extends Controller
         $public_client_logo_path = public_path($client_logo_path);
 
         $lc_data = $attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status);
-        return Excel::download(new EarlyGoingReportExport($lc_data, $public_client_logo_path, $client_name), 'Early Going Report.xlsx');
-       // return Excel::download(new EarlyGoingReportExport($attendance_report_service->fetchEGReportData($start_date, $end_date, $request->department_id, $request->legal_entity, $request->type, $request->active_status)), 'Early Going Report.xlsx');
+        return Excel::download(new EarlyGoingReportExport($lc_data,$client_name, $public_client_logo_path,$date), 'Early Going Report.xlsx');
     }
 
 
