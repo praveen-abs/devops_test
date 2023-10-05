@@ -1,27 +1,27 @@
 <template>
     <div class="card overflow-y-scroll h-[100%]">
         <div class="card-body">
-            <input type="text" name="" id="" v-model="query" class="border border-gray-300 p-1 w-full rounded-lg first-letter my-2"
+            <input type="text" name="" id="" v-model="query" class="w-full p-1 my-2 border border-gray-300 rounded-lg first-letter"
                 placeholder="Search Employees..">
-            <button class="list_employee_attendance  p-3 px-1 flex hover:bg-gray-300 rounded-lg w-full focus:bg-gray-300"
+            <button class="flex w-full p-3 px-1 rounded-lg list_employee_attendance hover:bg-gray-300 focus:bg-gray-300"
                 v-for="(employee, index) in globalSearch(query, source)"
                 @click="isTeam ? useTimesheet.getSelectedEmployeeTeamDetails(employee.id, isTeam,employee.user_code) : useTimesheet.getSelectedEmployeeOrgDetails(employee.id, isTeam,employee.user_code)">
                 <div class="col-auto me-2">
 
                     <p v-if="JSON.parse(employee.employee_avatar).type == 'shortname'"
-                        class="p-2 w-11 fs-6 font-semibold rounded-full  text-white"
+                        class="p-2 font-semibold text-white rounded-full w-11 fs-6"
                         :class="service.getBackgroundColor(index)">
                         {{ JSON.parse(employee.employee_avatar).data }} </p>
                     <img v-else class="rounded-circle userActive-status profile-img"
                         style="height: 30px !important; width: 30px !important;"
                         :src="`data:image/png;base64,${JSON.parse(employee.employee_avatar).data}`" srcset="" alt="" />
-                    <!-- <div class="rounded-full  text-center mx-0 p-2" >
+                    <!-- <div class="p-2 mx-0 text-center rounded-full" >
                         <span class="text-white fw-bold">{{ JSON.parse(employee.employee_avatar).data }}</span>
                     </div> -->
                 </div>
                 <div class="user_content text-start ">
-                    <p class="font-semibold text-sm text-capitalize">{{ employee.name }}</p>
-                    <p class=" text-muted f-11 text-capitalize">{{ employee.designation }}</p>
+                    <p class="text-sm font-semibold text-capitalize">{{ employee.name }}</p>
+                    <p class=" text-muted f-11 text-capitalize">{{ employee.user_code }} - {{ employee.designation }}</p>
                 </div>
             </button>
         </div>

@@ -706,7 +706,7 @@ function numberToWord($num)
     $str = array_reverse($str);
     $result = implode('', $str); //Join array elements with a string
 
-    return $result . ' Only';
+    return 'Rupees '.$result . ' Only';
 
 }
     function getAllDropdownFilterSetting(){
