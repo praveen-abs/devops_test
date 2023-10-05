@@ -3269,16 +3269,16 @@ class VmtAttendanceService
                 $image_view = url('/') . $VmtClientMaster->client_logo;
                 $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
-                $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
-                    $query_user->name,
-                    $query_user->user_code,
-                    Carbon::parse($date)->format('M jS, Y'),
-                    Carbon::parse($checkin_time)->format('h:i:s A'),
-                    $image_view,
-                    $emp_avatar,
-                    request()->getSchemeAndHttpHost(),
-                    "LC"
-                ));
+                // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                //     $query_user->name,
+                //     $query_user->user_code,
+                //     Carbon::parse($date)->format('M jS, Y'),
+                //     Carbon::parse($checkin_time)->format('h:i:s A'),
+                //     $image_view,
+                //     $emp_avatar,
+                //     request()->getSchemeAndHttpHost(),
+                //     "LC"
+                // ));
             }
 
 
@@ -3291,7 +3291,7 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'success',
                 'message' => 'Check-in success',
-                'mail_status' => $mail_status,
+                'mail_status' => $mail_status ?? 'NA',
                 'data'   => ''
             ]);
         } catch (TransportException $e) {
@@ -3478,16 +3478,16 @@ class VmtAttendanceService
                 $image_view = url('/') . $VmtClientMaster->client_logo;
                 $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id), true);
 
-                $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
-                    $query_user->name,
-                    $query_user->user_code,
-                    Carbon::parse($t_checkout_date)->format('M jS, Y'),
-                    Carbon::parse($checkout_time)->format('h:i:s A'),
-                    $image_view,
-                    $emp_avatar,
-                    request()->getSchemeAndHttpHost(),
-                    "EG"
-                ));
+                // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                //     $query_user->name,
+                //     $query_user->user_code,
+                //     Carbon::parse($t_checkout_date)->format('M jS, Y'),
+                //     Carbon::parse($checkout_time)->format('h:i:s A'),
+                //     $image_view,
+                //     $emp_avatar,
+                //     request()->getSchemeAndHttpHost(),
+                //     "EG"
+                // ));
             }
 
             if ($isSent) {
@@ -3500,7 +3500,7 @@ class VmtAttendanceService
                 'status' => 'success',
                 'message' => 'Check-out success for the check-in date : ' . $existing_check_in_date,
                 'data'   => '',
-                'mail_status' => $mail_status
+                'mail_status' => $mail_status ?? 'NA'
             ]);
         } catch (TransportException $e) {
             $response = [
