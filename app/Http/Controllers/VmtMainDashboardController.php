@@ -650,7 +650,7 @@ class VmtMainDashboardController extends Controller
 
         //Fetch the data
         // $request->record_id = "23";
-        
+
         return $serviceVmtDashboardService->readNotification($request->record_id);
     }
 
@@ -753,9 +753,14 @@ class VmtMainDashboardController extends Controller
     }
 public function getEmployeesCountDetails(Request $request, VmtDashboardService $serviceVmtDashboardService)
 {
-
+    $client_id=null;
+      if(session('client_id') == 1){
+        $client_id = VmtClientMaster::pluck('id')->toarray();
+       }else{
+        $client_id =[session('client_id')];
+       }
     //HR New Main Dashboard
-    return $serviceVmtDashboardService->getEmployeesCountDetails();
+    return $serviceVmtDashboardService->getEmployeesCountDetails( $client_id );
 
 }
 
