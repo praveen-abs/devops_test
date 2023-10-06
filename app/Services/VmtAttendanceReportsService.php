@@ -110,7 +110,7 @@ class VmtAttendanceReportsService
     {
 
         $emp_work_shift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->get();
-    
+
         if (count($emp_work_shift) == 1) {
             $regularTime  = VmtWorkShifts::where('id', $emp_work_shift->first()->work_shift_id)->first();
             return  $regularTime;
@@ -1919,8 +1919,6 @@ class VmtAttendanceReportsService
 
     public function fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status)
     {
-
-
         try {
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
@@ -1946,6 +1944,7 @@ class VmtAttendanceReportsService
                 ->whereIn('users.client_id', $client_id)
                 ->whereIn('users.active', $active_status)
                 ->whereDate('vmt_employee_details.doj', '<', $end_date);
+
 
             // if (sessionGetSelectedClientid() != 1) {
             //     $user = $user->where('client_id', sessionGetSelectedClientid());
@@ -2003,7 +2002,7 @@ class VmtAttendanceReportsService
                             ->where('user_Id', $singleUser->user_code)
                             ->first(['check_in_time']);
                     }
-                    //dd($attendanceCheckIn);
+                    // dd($attendanceCheckIn);
 
                     $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                     $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
@@ -2079,7 +2078,7 @@ class VmtAttendanceReportsService
 
                 // merging result from both table
                 //dd($attendance_WebMobile->toArray());
-                //dd($deviceData);
+                // dd($deviceData);
                 $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
 
                 $dateCollectionObj    =  collect($merged_attendanceData);
@@ -2618,8 +2617,6 @@ class VmtAttendanceReportsService
             } else {
                 $client_id =  $client_id;
             }
-            // dd($client_id);
-
             if (empty($active_status)) {
                 $active_status = ['1', '0', '-1'];
             } else {
@@ -2635,85 +2632,84 @@ class VmtAttendanceReportsService
                 $get_department = $department_id;
             }
             ini_set('max_execution_time', 3000);
-            $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status);
             $lcData = array();
             $response = array();
             $temp_ar = array();
+            $attendance_data = user::Join('vmt_employee_attendance_v2', 'vmt_employee_attendance_v2.user_id', '=', 'users.id')
+                ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_workshifts.work_shift_id')
+                ->whereBetween('date',[$start_date,$end_date])
+                ->whereIn('status', ['P/LC', 'P'])
+                ->where('lc_id')
+                ->get()->toarray();
+            // dd($attendance_data);
             foreach ($attendance_data as $single_data) {
-                foreach ($single_data as $key => $value) {
-                    if ($value['isMIP'] != null || $value['isLC'] != null) {
-                        $temp_ar['Employee Code'] = $value['user_code'];
-                        $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = Carbon::parse($key)->format('d-M-Y');
-                        $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                        $temp_ar['Shift Name'] =   $current_shift->shift_name;
-                        $regularized_sts = 'No';
-                        $reason = "-";
-                        $approved_by = "-";
-                        $approved_on = "-";
-                        $approved_cmts = "-";
-                        if ($value['checkinRegId'] != null) {
-                            $in_punch = $value['reged_checkin_time'];
-                        } else {
-                            $in_punch = $value['checkin_time'];
-                        }
-                        $out_punch = $value['checkout_time'];
-                        if ($in_punch  != null) {
-                            $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch));
-                            $lc_ar = CarbonInterval::minutes($lc1_total_mins)->cascade();
-                            $lc_hrs = (int) $lc_ar->totalHours;
-                            $lc_mins = $lc_ar->toArray()['minutes'];
-                            $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
-                            // $lc1_total_mins =     $lc_ar->forHumans();
-                        } else {
-                            $LCDuration  = '-';
-                        }
-                        if (Carbon::parse($in_punch)->diffInMinutes(Carbon::parse($out_punch)) <  $current_shift->fullday_min_workhrs) {
-                            $day_sts = 'Half Day';
-                        } else {
-                            $day_sts = 'Full Day';
-                        }
-                        if (($value['isMIP'] != 'Not Applied' && $value['isMIP'] != null) || ($value['isLC'] != 'Not Applied' && $value['isLC'] != null)) {
-                            $regularized_record = VmtEmployeeAttendanceRegularization::where('id', $value['checkinRegId'])->first();
-                            $regularized_sts = 'Yes';
-                            if ($regularized_record->reason_type != null) {
-                                if ($regularized_record->reason_type == 'Others') {
-                                    $reason = $regularized_record->custom_reason;
-                                } else {
-                                    $reason =  $regularized_record->reason_type;
-                                }
-                            } else {
-                                $reason = '-';
-                            }
-
-
-                            if (empty(User::where('id',  $regularized_record->reviewer_id)->first())) {
-                                $approved_by = '-';
-                            } else {
-                                $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
-                            }
-
-                            if ($regularized_record->reviewer_reviewed_date != null) {
-                                $approved_on = Carbon::parse($regularized_record->reviewer_reviewed_date)->format('d-M-Y');
-                            }
-                            if ($regularized_record->reviewer_comments != null) {
-                                $approved_cmts =  $regularized_record->reviewer_comments;
-                            }
-                        }
-                        $temp_ar['In Punch'] =  $in_punch;
-                        $temp_ar['Out Punch'] = $out_punch;
-                        $temp_ar['Late Coming Duration'] = $lc1_total_mins;
-                        $temp_ar['Day Status'] = $day_sts;
-                        $temp_ar['Regularise Status'] = $regularized_sts;
-                        $temp_ar['Employee Reason For Late Coming'] = $reason;
-                        $temp_ar['Approved By'] = $approved_by;
-                        $temp_ar['Approved On'] = $approved_on;
-                        $temp_ar['Approver Comments'] = $approved_cmts;
-                        array_push($lcData, $temp_ar);
-                        unset($temp_ar);
+                    $user = VmtEmployeeAttendanceRegularization::where('id', $single_data['lc_id'])->get();
+                    $temp_ar['Employee Code'] = $single_data['user_code'];
+                    $temp_ar['Employee Name'] = $single_data['name'];
+                    $temp_ar['Date'] = Carbon::parse($single_data['date'])->format('d-M-Y');
+                    $current_shift = VmtWorkShifts::where('id', $single_data['work_shift_id'])->first();
+                    $temp_ar['Shift Name'] =   $current_shift->shift_name;
+                    $regularized_sts = 'No';
+                    $reason = "-";
+                    $approved_by = "-";
+                    $approved_on = "-";
+                    $approved_cmts = "-";
+                    $in_punch = $single_data['checkin_time'];
+                    $out_punch = $single_data['checkout_time'];
+                    if ($in_punch  != null) {
+                        $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch));
+                        $lc_ar = CarbonInterval::minutes($lc1_total_mins)->cascade();
+                        $lc_hrs = (int) $lc_ar->totalHours;
+                        $lc_mins = $lc_ar->toArray()['minutes'];
+                        $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
+                        // $lc1_total_mins =     $lc_ar->forHumans();
+                    } else {
+                        $LCDuration  = '-';
                     }
+                    if (Carbon::parse($in_punch)->diffInMinutes(Carbon::parse($out_punch)) <  $current_shift->fullday_min_workhrs) {
+                        $day_sts = 'Half Day';
+                    } else {
+                        $day_sts = 'Full Day';
+                    }
+                  
+                        if ($user->reason_type != null) {
+                            if ($user->reason_type == 'Others') {
+                                $reason = $user->custom_reason;
+                            } else {
+                                $reason =  $user->reason_type;
+                            }
+                        } else {
+                            $reason = '-';
+                        }
+                        if (empty(User::where('id',  $user->reviewer_id)->first())) {
+                            $approved_by = '-';
+                        } else {
+                            $approved_by = User::where('id',  $user->reviewer_id)->first()->name;
+                        }
+
+                        if ($user->reviewer_reviewed_date != null) {
+                            $approved_on = Carbon::parse($user->reviewer_reviewed_date)->format('d-M-Y');
+                        }
+                        if ($user->reviewer_comments != null) {
+                            $approved_cmts =  $user->reviewer_comments;
+                        
+                    }
+                    $temp_ar['Late Coming Duration'] = $lc1_total_mins;
+                    $temp_ar['Day Status'] = $day_sts;
+                    $temp_ar['Regularise Status'] = $regularized_sts;
+                    $temp_ar['Employee Reason For Late Coming'] = $reason;
+                    $temp_ar['Approved By'] = $approved_by;
+                    $temp_ar['Approved On'] = $approved_on;
+                    $temp_ar['Approver Comments'] = $approved_cmts;
+                    array_push($lcData, $temp_ar);
+                    unset($temp_ar);
+                
+                    // array_push($lcData, $temp_ar);
+                    // unset($temp_ar);
                 }
-            }
+                // dd( $out_punch = $single_data['checkout_time']);
+                
             $response['headers'] = array(
                 'Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Late Coming Duration',
                 'Employee Reason For Late Coming', 'Approved By', 'Approved On', 'Approver Comments'
@@ -2726,12 +2722,13 @@ class VmtAttendanceReportsService
                 'error' =>  $e->getMessage(),
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
                 'trace line' => $e->getTraceAsString(),
-                'data' => $single_data[$key],
-                'lc_total_mins' => $lc1_total_mins
+                'data' => $single_data,
             ];
         }
         return $response;
     }
+
+
     public function fetchEGReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
     {
 
