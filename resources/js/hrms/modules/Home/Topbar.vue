@@ -10,11 +10,11 @@
                         <img :src="currentlySelectedClient.client_logo" alt="" class="w-12 h-6">
                         <p class="px-2 text-sm font-semibold whitespace-nowrap"
                             v-if="currentlySelectedClient.client_fullname.length <= 20"
-                            @click="useDashboard.canShowClients = !useDashboard.canShowClients">{{
+                            @mouseover="useDashboard.canShowClients = !useDashboard.canShowClients">{{
                                 currentlySelectedClient.client_fullname }}</p>
                         <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
                             v-tooltip="currentlySelectedClient.client_fullname" v-else
-                            @click="useDashboard.canShowClients = !useDashboard.canShowClients"> {{
+                            @mouseover="useDashboard.canShowClients = !useDashboard.canShowClients" @mouseleave="useDashboard.canShowClients = false"> {{
                                 currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
                                     20) + '..' : '' }}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -25,7 +25,7 @@
                     </div>
                 </button>
 
-                <transition enter-active-class="transition duration-200 ease-out transform"
+                <transition enter-active-class="transition duration-200 ease-out transform" @mouseleave="useDashboard.canShowClients = false" @mouseenter="useDashboard.canShowClients = true"
                     v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3 || service.current_user_role == 4"
                     enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                     leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
@@ -166,7 +166,7 @@
                     <img src="./assests/icons/exit.svg" alt="" class="w-6 h-6">
                 </button>
                 <div class="relative mx-3 "
-                    @click="useDashboard.canShowCurrentEmployee = !useDashboard.canShowCurrentEmployee">
+                     @mouseenter="useDashboard.canShowCurrentEmployee = !useDashboard.canShowCurrentEmployee" @mouseleave="useDashboard.canShowCurrentEmployee = false " >
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
