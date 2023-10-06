@@ -543,19 +543,12 @@ class VmtDashboardService
                         );
                     }
                 }
+            }
 
-                // echo $i;
-
-
-            } //for
-            // dd();
-
-
-
-            // attendance details from vmt_employee_attenndance table
+        // attendance details from vmt_employee_attenndance table
             $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $user_id)
                 ->whereMonth('date', $month)
-                ->whereYear('date', $month)
+                ->whereYear('date', $year)
                 ->orderBy('checkin_time', 'asc')
                 ->get(['date', 'checkin_time', 'checkout_time', 'attendance_mode_checkin', 'attendance_mode_checkout', 'selfie_checkin', 'selfie_checkout']);
 
@@ -635,7 +628,7 @@ class VmtDashboardService
                 $attendance_mode_checkin = null;
                 $attendance_mode_checkout = null;
 
-                //dd($value);
+
                 foreach ($value as $singleValue) {
                     //Find the min of checkin
                     if ($checkin_min == null) {
@@ -747,6 +740,7 @@ class VmtDashboardService
 
                 //for absent
                 if ($checkin_time == null && $checkout_time == null) {
+
                     $attendanceResponseArray[$key]["isAbsent"] = true;
 
                     //Check whether leave is applied or not.
@@ -803,7 +797,7 @@ class VmtDashboardService
             $count1 = 0;
             $count2 = 0;
 
-// dd($attendanceResponseArray);
+
             foreach ($attendanceResponseArray as $key =>$attendancedash) {
 //dd($attendanceResponseArray);
                 $dayStr = Carbon::parse($key)->format('l');

@@ -1319,7 +1319,6 @@ class VmtAttendanceService
             // merging result from both table
             $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
             $dateCollectionObj    =  collect($merged_attendanceData);
-
             $sortedCollection   =   $dateCollectionObj->sortBy([
                 ['date', 'asc'],
             ]);
@@ -4819,8 +4818,9 @@ class VmtAttendanceService
                 $regularTime  = VmtWorkShifts::where('id', $emp_work_shift[$i]->work_shift_id)->first();
                 $shift_start_time = Carbon::parse($regularTime->shift_start_time)->addMinutes($regularTime->grace_time);
                 $shift_end_time = Carbon::parse($regularTime->shift_end_time);
-                $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time), false);
-                $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time), false);
+                ;
+                $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time['date']), false);
+                $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time['date']), false);
                 // if ($user_id == '192' && $checkin_time == "13:56:01");
                 // dd($diffInMinutesInCheckinTime);
                 if ($checkin_time == null && $checkout_time == null) {
