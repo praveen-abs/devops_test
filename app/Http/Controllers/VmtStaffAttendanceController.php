@@ -19,23 +19,28 @@ class VmtStaffAttendanceController extends Controller
 
         try{
             $recentDeviceData  = VmtStaffAttendanceDevice::orderBy('date', 'DESC')->first();
+            $attendanceData = null;
 
             if($recentDeviceData){
                 $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->where('date', '>', $recentDeviceData->date)->get();
             }else{
                 $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->get();
             }
+          //  dd($attendanceData);
+
 
             $data_count = 0;
+
             foreach ($attendanceData as $key => $value) {
                 // code...
                 $this->insertDataFromExternalAttendanceTable($value);
                 $data_count++;
             }
 
+
             return [
                 'status' => 'success',
-                'message' => 'Pulled data count : '.$data_count
+                'message' => 'Pulled attendance data starting from '.$recentDeviceData->date.' . Data Count : '.$data_count
             ];
         }
         catch(\Exception $e){
