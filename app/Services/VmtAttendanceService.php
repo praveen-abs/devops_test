@@ -68,8 +68,16 @@ class VmtAttendanceService
         );
 
         try {
-            $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
-            // dd( $map_allEmployees);
+
+            $client_id =null;
+
+            if(session('client_id') == 1){
+             $client_id =VmtClientMaster::pluck('id');
+            }else{
+                $client_id =[session('client_id')];
+            }
+            $map_allEmployees =  User::where('active','1')->where('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
+            //dd( $map_allEmployees);
             $allEmployees_lateComing = null;
 
             //If manager ID not set, then show all employees
@@ -129,7 +137,7 @@ class VmtAttendanceService
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching Attendance Regularization data",
-                "data" => $e,
+                "data" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4864,9 +4872,9 @@ class VmtAttendanceService
                 $regularTime  = VmtWorkShifts::where('id', $emp_work_shift[$i]->work_shift_id)->first();
                 $shift_start_time = Carbon::parse($regularTime->shift_start_time)->addMinutes($regularTime->grace_time);
                 $shift_end_time = Carbon::parse($regularTime->shift_end_time);
-                ;
-                $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time['date']), false);
-                $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time['date']), false);
+
+                $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time['date'] ??$checkin_time), false);
+                $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time['date']??$checkout_time), false);
                 // if ($user_id == '192' && $checkin_time == "13:56:01");
                 // dd($diffInMinutesInCheckinTime);
                 if ($checkin_time == null && $checkout_time == null) {
