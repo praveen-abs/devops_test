@@ -1214,12 +1214,21 @@ class VmtEmployeeService
 
         $json_response = array();
 
+        $client_id =null;
+
+        if(session('client_id') == 1){
+         $client_id =VmtClientMaster::pluck('id');
+        }else{
+            $client_id =[session('client_id')];
+        }
+
         //Get all the  doc for the given user_id
         $query_pending_onboard_docs = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-            ->join('vmt_employee_documents', 'vmt_employee_documents.user_id', '=', 'users.id')
-            ->join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
+            ->leftjoin('vmt_employee_documents', 'vmt_employee_documents.user_id', '=', 'users.id')
+            ->leftjoin('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
             ->where('vmt_employee_documents.status', "Pending")
             ->where('users.is_ssa', "0")
+            ->where('users.client_id', $client_id)
             ->where('users.is_onboarded', "1")
             ->where('users.active', '<>', "-1")
             ->get([
@@ -1307,11 +1316,11 @@ class VmtEmployeeService
                     "doc_name" => $single_pending_docs->doc_name,
                     "doc_url" => $single_pending_docs->doc_url,
                     "doc_status" => $single_pending_docs->doc_status,
-                   
-                    
+
+
                 ]);
             } else {
-                
+
                 $user_details = [
                     "name" => $single_pending_docs->name,
                     "user_code" =>  $single_pending_docs->user_code,
@@ -1322,10 +1331,10 @@ class VmtEmployeeService
                         "doc_name" => $single_pending_docs->doc_name,
                         "doc_url" => $single_pending_docs->doc_url,
                         "doc_status" => $single_pending_docs->doc_status,
-                       
+
                     ]),
                 ];
-             
+
                 $json_response[$user_code] = $user_details;
                 //array_push(, $user_details);
             }
