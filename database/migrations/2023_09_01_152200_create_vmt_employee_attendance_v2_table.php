@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_employee_attendance_v2', function (Blueprint $table) {
+        Schema::create('vmt_emp_intermediate_attendance', function (Blueprint $table) {
 
             #Core attendance
             $table->id();
