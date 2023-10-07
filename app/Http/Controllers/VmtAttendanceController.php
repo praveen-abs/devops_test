@@ -751,7 +751,7 @@ class VmtAttendanceController extends Controller
             $attendanceResponseArray[$key]['workshift_name'] = $shift_time->shift_name;
             //dd($attendanceResponseArray[$key]['vmt_employee_workshift_id']);
             $attendanceResponseArray[$key]["is_weekoff"] = $this->checkWeekOffStatus($attendanceResponseArray[$key]['date'],$shift_time->week_off_days,$attendanceResponseArray[$key]['checkin_time'],$attendanceResponseArray[$key]['checkout_time']);
-             
+
             //dd($query_workShifts[$currentdate_workshift]->shift_start_time);
             //dd( $attendanceResponseArray);
             $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
@@ -1034,8 +1034,18 @@ class VmtAttendanceController extends Controller
         //Get the team members of the given user
         //$reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
-        $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.is_ssa', '0')->where('users.active', '1')
+        $client_id =null;
+
+        if(session('client_id') == 1){
+         $client_id =VmtClientMaster::pluck('id');
+        }else{
+            $client_id =[session('client_id')];
+        }
+
+            $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->whereIn('users.client_id',$client_id )
+            ->where('users.is_ssa', '0')
+            ->where('users.active', '1')
             ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation']);
 
 
@@ -1554,6 +1564,7 @@ class VmtAttendanceController extends Controller
             $month = $today->format('m');
         }
         $response = $serviceVmtAttendanceService->teamLeaveBalance($start_date,  $end_date, $month);
+    
         return $response;
     }
 
