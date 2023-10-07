@@ -31,9 +31,8 @@ class VmtAttendanceControllerV2 extends Controller
         $current_time = Carbon::now();
         foreach (VmtWorkShifts::pluck('shift_start_time') as $single_sfift) {
             $shift_start_time = Carbon::parse($single_sfift);
+           // dd($shift_start_time,$current_time->diffInMinutes($shift_start_time),$current_time->diffInMinutes($shift_start_time) < 65);
             if ($current_time->diffInMinutes($shift_start_time) < 65) {
-                // $task_sheduler = TrackTaskScheduler::where('job', 'vmt_staff_attenndance_device');
-                // dd(VmtStaffAttendanceDevice::exists());
                 if (VmtEmployeeAttendanceV2::exists()) {
                     $staff_attendance_query = VmtEmployeeAttendanceV2::orderBy('id', 'DESC')->first();
                     $start_date = Carbon::parse($staff_attendance_query->date)->subDays(2)->format('Y-m-d');
