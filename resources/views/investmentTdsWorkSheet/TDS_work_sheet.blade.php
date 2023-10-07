@@ -1,6 +1,8 @@
 <?php
 
     // dd( $Decuction_Under_chapter_6a["10) Decuction Under chapter VI - A"][0]['particular'][0] );
+    ksort($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1]);
+    ksort($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0]);
 
 ?>
 
@@ -125,18 +127,18 @@
         <tr>
             <td colspan="4">
                 <table style="width: 100%;  border-collapse: collapse; " border="1">
-                    <tr style="border-top:0px !important; height:20px !important;">
+                    <tr style="border-top:0px !important; height:20px !important; background-color:rgb(204, 204, 255);">
                         <td colspan="2" style="border-top:0px !important">
-                            <p style="font-size:11px">Particulars</p>
+                            <p style="font-size:11px"><b>Particulars</b></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px">Actual</p>
+                            <p style="font-size:11px; text-align:center" ><b>Actual</b></p>
                         </td>
                         <td colspan="1" >
-                            <p style="font-size:11px">Projection</p>
+                            <p style="font-size:11px; text-align:center"><b>Projection</b></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px">Total</p>
+                            <p style="font-size:11px; text-align:center"><b>Total</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -149,14 +151,14 @@
                         </td>
                         <td colspan="1">
                             @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Actual"] as $key => $value)
-                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            <p style="font-size:11px; text-align:right " class="p-2 m-11">{{ numberFormat($value,2) }}</p>
                             @endforeach
                         </td>
                         <td colspan="1">
                             @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Actual"] as $key => $single_value)
                                 @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Projection"] as $key1 => $value)
                                     @if($key == $key1 )
-                                        <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                                        <p style="font-size:11px; text-align:right " class="p-2 m-11">{{ numberFormat($value,2) }}</p>
                                     @endif
                                 @endforeach
                             @endforeach
@@ -166,11 +168,11 @@
                             @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Actual"] as $key => $single_value)
                                 @foreach ($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Total"] as $key1 => $value)
                                     @if($key == $key1 )
-                                        <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                                        <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value,2) }}</p>
                                     @endif
                                 @endforeach
                             @endforeach
-                            <p style="font-size:11px; " class="p-2 m-11"><b>₹{{ $Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Total Income"]}}</b></p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{ numberFormat($Gross_Earnings["1) Gross Earnings"][0]["particulars"]["Total Income"],2) }}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -179,9 +181,24 @@
                             @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
                             @endforeach
+                            <p style="font-size:11px; margin-top:-10px; color: gray"  class="p-2" >Note: <span style="text-decoration: underline">Monthly splitup of HRA exemption </span>can be found at the end of this tds sheet.</p>
+
+                            @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["projection"] as $key => $value)
+                            @if (!empty($value))
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ $key }}</p>
+                            @endif
+                            @endforeach
+
+                            <p style="font-size:11px;" class="p-2 m-11" >{{ "Total of Allowance to the extent exempt under Section 10" }}</p>
+
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">{{ $under_section_10["2) Allowance to the extent exampt under section 10"][0]["actual"] }}</p>
+                            <p style="font-size:11px; text-align:right " class="p-2 m-11">{{ numberFormat($under_section_10["2) Allowance to the extent exampt under section 10"][0]["actual"],2) }}</p>
+                            @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["projection"] as $key => $value)
+                            @if (!empty($value))
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value,2) }}</p>
+                            @endif
+                            @endforeach
                         </td>
                         <td colspan="1">
 
@@ -190,7 +207,8 @@
                             @foreach ($under_section_10["2) Allowance to the extent exampt under section 10"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
                             @endforeach
-                            <p style="font-size:11px; " class="p-2 m-11"><b>₹{{ $under_section_10["2) Allowance to the extent exampt under section 10"][0]["total"]}}</b></p>
+                            <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
+                            <p style="font-size:11px; text-align:right " class="p-2 m-11"><b>{{ numberFormat($under_section_10["2) Allowance to the extent exampt under section 10"][0]["total"],2) }}</b></p>
 
                         </td>
                     </tr>
@@ -203,7 +221,7 @@
                         <td colspan="1">
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $Total_after_excemption["3) Total after excemption (1 - 2)"][0]["total"]}}</b></p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11" ><b>{{ numberFormat($Total_after_excemption["3) Total after excemption (1 - 2)"][0]["total"] ,2 )}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -216,7 +234,7 @@
                         </td>
                         <td colspan="1">
                             @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
-                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value ,2) }}</p>
                             @endforeach
                         </td>
                         <td colspan="1">
@@ -226,7 +244,7 @@
                             @foreach ( $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
                             @endforeach
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["total"]}}</b></p>
+                            <p style="font-size:11px;  text-align:right" class="p-2 m-11"><b>{{  numberFormat($Under_Previous_employment["4) Taxable Income Under Previous employment"][0]["total"],2 )}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -238,7 +256,7 @@
                         <td colspan="1">
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Gross_Total["5) Gross Total (3 - 4)"][0]["total"]}}</b></p>
+                            <p style="font-size:11px;  text-align:right" class="p-2 m-11"><b>{{ numberFormat( $Gross_Total["5) Gross Total (3 - 4)"][0]["total"],2 )}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -251,7 +269,7 @@
                         </td>
                         <td colspan="1">
                             @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
-                            <p style="font-size:11px; " class="p-2 m-11">{{ $value }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value,2 )}}</p>
                             @endforeach
                         </td>
                         <td colspan="1">
@@ -261,7 +279,7 @@
                             @foreach ( $Under_section_16["6) Under section 16"][0]["particulars"] as $key => $value)
                             <p style="font-size:11px; " class="p-2 m-11">&nbsp;</p>
                             @endforeach
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Under_section_16["6) Under section 16"][0]["total"] }}</b></p>
+                            <p style="font-size:11px;  text-align:right" class="p-2 m-11"><b>{{ numberFormat( $Under_section_16["6) Under section 16"][0]["total"],2)}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -275,7 +293,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{  $Under_the_Head_Salaries["7) Income Chargeable Under the Head Salaries (5 - 6)"][0]["total"]}}</b></p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{ numberFormat( $Under_the_Head_Salaries["7) Income Chargeable Under the Head Salaries (5 - 6)"][0]["total"],2)}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -285,11 +303,11 @@
                            <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
                            @endforeach
                            <p style="font-size:11px; marign-top:-11px"><b>Total Income From Other Sources</b></p>
-                           <p style="font-size:11px; marign-top:-11px">Note: A maximum of 12,00,000.000 is allowed as exemption <br> for housing loan interest on Self Occupied House Property <br> and Let Out Property</p>
+                           <p style="font-size:11px; marign-top:-11px">(Note: A maximum of 2,00,000.00 is allowed as exemption for housing loan interest on Self Occupied Property , Let Out Property and Deemed Let Out Property)</p>
                         </td>
                         <td colspan="1">
                             @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["actual"] as $key => $value)
-                             <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                             <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value,2)}}</p>
                             @endforeach
                         </td>
                         <td colspan="1">
@@ -300,7 +318,7 @@
                             @foreach ($reported_by_the_employee["8) Any other income reported by the employee"][0]["particular"] as $key => $value)
                             <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
                             @endforeach
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $reported_by_the_employee["8) Any other income reported by the employee"][0]["total"]}}</b></p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{ numberFormat($reported_by_the_employee["8) Any other income reported by the employee"][0]["total"],2 )}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -314,7 +332,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"><b> ₹{{ $Gross_Total_income["9) Gross Total income"][0]["total"]}}</b></p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b> {{ numberFormat($Gross_Total_income["9) Gross Total income"][0]["total"],2 )}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -324,7 +342,7 @@
                             @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0] as $key => $value)
                              <p style="font-size:11px; marign-top:-11px"><b>{{  $key }}</b> </p>
                              @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][0][$key] as $key => $value)
-                             <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ $value['dec_amount'] }}</span></p>
+                             <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ numberFormat($value['dec_amount'],2) }}</span></p>
                             @endforeach
                             @endforeach
                             <p style="font-size:11px; marign-top:-11px"><b>{{ 'Total(80C+80CCC+80CCD)' }}</b></p>
@@ -332,7 +350,7 @@
                             @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
                             <p style="font-size:11px; marign-top:-11px"><b>{{  $key }}</b> </p>
                             @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1][$key] as $key => $value)
-                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ $value['dec_amount'] }}</span></p>
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $value['particular'] }} <span style="text-align: right;  float: right; padding-right:12px">{{ numberFormat($value['dec_amount'],2) }}</span></p>
                            @endforeach
                            <p style="font-size:11px; marign-top:-11px"><b>{{ 'Total' }}</b></p>
                            @endforeach
@@ -349,13 +367,13 @@
                            @endforeach
 
 
-                            <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'] }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{  numberFormat($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'],2) }}<b></p>
                             @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
                             <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
                                 @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['projection'] as $key1 => $value)
                                 @if ($key == $key1)
                                 <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
-                                <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                                <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{ numberFormat($value,2) }}<b></p>
                                 @endif
                                 @endforeach
                            @endforeach
@@ -373,13 +391,13 @@
 
 
 
-                           <p style="font-size:11px; marign-top:-11px">{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'] }}</p>
+                           <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{  numberFormat($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['Total(80C+80CCC+80CCD)'],2) }}<b></p>
                            @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['particular'][1] as $key => $value)
                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
                                @foreach ($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['projection'] as $key1 => $value)
                                @if ($key == $key1)
                                <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
-                               <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                               <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value,2) }}</p>
                                @endif
                                @endforeach
                           @endforeach
@@ -403,7 +421,7 @@
                           @endforeach
 
 
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['total_of_chapterVIa'] }} </b></p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{  numberFormat($Decuction_Under_chapter_6a['10) Decuction Under chapter VI - A'][0]['total_of_chapterVIa'],2) }} </b></p>
                         </td>
                     </tr>
 
@@ -418,7 +436,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px"><b>₹{{ $Total_income["11) Total income (Round By 10 Rupees) (9 - 10)"][0]["total"]}}</b></p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{ numberFormat($Total_income["11) Total income (Round By 10 Rupees) (9 - 10)"][0]["total"],2 )}}</b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -427,7 +445,7 @@
                             @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] )
                             @foreach ( $Tax_Calculation["12) Tax Calculation"][0]["particular"] as $key => $value)
                             @if($key != "Tax on total Income" && $key != "Less : Rebate Under Section 87A" && $key != 'Note : if taxable income is less than ₹500000, tax rebate of a maximum of ₹12500 is provided under Section 87A')
-                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $key }} <span style="text-align: right;  float: right; padding-right:12px">₹ {{ $value }}</span></p>
+                            <p style="font-size:11px; marign-top:-11px;  width:100%; ">{{ $key }} <span style="text-align: right;  float: right; padding-right:12px"> {{ numberFormat($value ,2) }}</span></p>
                             @endif
                             @endforeach
                             @endif
@@ -446,9 +464,9 @@
                             @if ($Tax_Calculation["12) Tax Calculation"][0]["particular"] )
                             @foreach ( $Tax_Calculation["12) Tax Calculation"][0]["particular"] as $key => $value)
                             @if($key == "Tax on total Income" || $key == "Less : Rebate Under Section 87A" || $key == 'Note : if taxable income is less than ₹500000, tax rebate of a maximum of ₹12500 is provided under Section 87A')
-                            <p style="font-size:11px; marign-top:-11px">₹ {{ $value }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value ,2) }}</p>
                             @else
-                            <p style="font-size:11px; marign-top:-11px">&nbsp;</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">&nbsp;</p>
                             @endif
                             @endforeach
                             @endif
@@ -465,7 +483,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{ $Total_Tax_on_income['13) Total Tax on income'][0]['total'] }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{ numberFormat($Total_Tax_on_income['13) Total Tax on income'][0]['total'] ,2) }}<b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -482,7 +500,7 @@
                         </td>
                         <td colspan="1">
                             @foreach ($Surcharge_amt[0] as $key => $value)
-                            <p style="font-size:11px; marign-top:-11px">₹{{ $value }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value ,2)}}</p>
                             @endforeach
                         </td>
                     </tr>
@@ -498,7 +516,7 @@
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">₹{{ $Relief_Under_Section_89["14) Tax Payable including Education Cess minus of Relief Under Section 89"][0]["total"] }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11"><b>{{ numberFormat($Relief_Under_Section_89["14) Tax Payable including Education Cess minus of Relief Under Section 89"][0]["total"],2) }}<b></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -510,19 +528,21 @@
                         </td>
                         <td colspan="1">
                             @foreach ($Source_us_192['15) Tax Deduction at Source u/s 192'][0] as $key => $value)
-                            <p style="font-size:11px; marign-top:-11px">{{ $value }}</p>
+                            <p style="font-size:11px; text-align:right" class="p-2 m-11">{{ numberFormat($value,2)}}</p>
                             @endforeach
                         </td>
                         <td colspan="1">
                             <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; marign-top:-11px">{{ '---' }}</p>
+                            <p style="font-size:11px; marign-top:-11px"></p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important; height:20px !important; background-color:rgba(128, 128, 128, 0.629)">
                         <td colspan="2" style="border-top:0px !important">
-                            <p style="font-size:11px">TDS for March</p>
+                            @foreach ($Final_result['final_result_value'][0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">{{ $key }}</p>
+                            @endforeach
                         </td>
                         <td colspan="1">
 
@@ -530,12 +550,16 @@
                         <td colspan="1" >
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px">₹ 99898</p>
+                            @foreach ($Final_result['final_result_value'][0] as $key => $value)
+                            <p style="font-size:11px; marign-top:-11px">{{ numberFormat($value,2) }}</p>
+                            @endforeach
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
+
+        @if($under_section_10["2) Allowance to the extent exampt under section 10"][0]["actual"] != 0)
         <tr style="">
             <td colspan="4">
                 <table style="width: 100%;">
@@ -565,16 +589,16 @@
                             <p style="font-size:11px; padding-right:8px;">Months</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; text-align:right; padding-right:8px;">%Earned Basic (Metro 50%, Non-Metro 40%)</p>
+                            <p style="font-size:11px; text-align:right; padding-right:8px; text-align:center"> Earned Basic (Metro 50%, Non-Metro 40%)</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;  padding-right:8px;">HRA RECEIVED</p>
+                            <p style="font-size:11px;  padding-right:8px ; text-align:center">HRA RECEIVED</p>
                         </td>
                         <td colspan="1" >
-                            <p style="font-size:11px; padding-right:8px;">Excess of Recent Paid Over 10% of Basic</p>
+                            <p style="font-size:11px; padding-right:8px; text-align:center">Excess of Rent Paid Over 10% of Basic</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; padding-right:8px;">Exemption Amount</p>
+                            <p style="font-size:11px; padding-right:8px; text-align:center">Exemption Amount</p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
@@ -586,23 +610,23 @@
                         </td>
                         <td colspan="1">
                             @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['Basic'] }}</p>
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">{{ numberFormat($Hra_exception_calc[0]['hra_months'][$i]['Basic'],2) }}</p>
                             @endfor
 
                         </td>
                         <td colspan="1">
                             @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['Hra'] }}</p>
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">{{ numberFormat($Hra_exception_calc[0]['hra_months'][$i]['Hra'],2) }}</p>
                             @endfor
                         </td>
                         <td colspan="1">
                            @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['excess_of_rent_paid'] }}</p>
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">{{ numberFormat($Hra_exception_calc[0]['hra_months'][$i]['excess_of_rent_paid'],2) }}</p>
                             @endfor
                         </td>
                         <td colspan="1">
                             @for ($i=0; $i<count($Hra_exception_calc[0]['hra_months']); $i++)
-                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['hra_months'][$i]['Excemption_amount'] }}</p>
+                            <p style="font-size:11px; text-align: right; " class="p-2 m-11">{{ numberFormat($Hra_exception_calc[0]['hra_months'][$i]['Excemption_amount'],2) }}</p>
                             @endfor
                         </td>
                     </tr>
@@ -612,16 +636,16 @@
                             <p style="font-size:11px;text-align: right; " class="p-2 m-11">Total</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_basic'] }}</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">{{  numberFormat($Hra_exception_calc[0]['Total_basic'],2) }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Hra'] }}</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">{{  numberFormat($Hra_exception_calc[0]['Total_Hra'],2) }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Excess_rent_10'] }}</p>
+                            <p style="font-size:11px;text-align: right; " class="p-2 m-11">{{  numberFormat($Hra_exception_calc[0]['Total_Excess_rent_10'],2) }}</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Expect_amt'] }}</p>
+                            <p style="font-size:11px; text-align: right;" class="p-2 m-11">{{  numberFormat($Hra_exception_calc[0]['Total_Expect_amt'],2) }}</p>
                         </td>
                     </tr>
 
@@ -633,12 +657,13 @@
                             <p  style="font-size:11px; margin-top:-10px;">Least amount of the three columns will be considered for tax exemption under HRA</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px; " class="p-2 m-11">₹{{ $Hra_exception_calc[0]['Total_Expect_amt'] }}</p>
+                            <p style="font-size:11px; " class="p-2 m-11">{{ numberFormat($Hra_exception_calc[0]['Total_Expect_amt'],2) }}</p>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
+        @endif
     </tbody>
     </table>
 </div>

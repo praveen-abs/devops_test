@@ -259,12 +259,16 @@ class VmtPayrollTaxService
             "Relief_Under_Section_89" => ["14) Tax Payable including Education Cess minus of Relief Under Section 89" => []],
             "Source_us_192" => ["15) Tax Deduction at Source u/s 192" => []],
             "Hra_exception_calc" => [],
+            "Final_result" => ["final_result_value" => []],
         ];
 
         // User Details
 
        $get_emp_annual =  $this->getEmpAnnualProjectionForPdf($user_id, $month);
 
+
+          $emp_childrens_allow = $get_emp_annual['Child Education Allowance'] + $get_emp_annual['Child Education Allowance Arrears'];
+          $emp_lta_allow = $get_emp_annual['Leave Travel Allowance'] + $get_emp_annual['Leave Travel Allowance Arrears'];
 
         array_push($res["User_details"], $inv_users->toArray());
 
@@ -284,23 +288,20 @@ class VmtPayrollTaxService
 
         $allowance_under_sec_10['particular'] = [
             "House Rent Allowance",
-            "Note: Monthly splitup of HRA exemption can be found at the end of this tds sheet.",
-            "Leave Encashment",
-            "Total of Allowance to the extent exempt under Section 10",
         ];
+
         $allowance_under_sec_10['actual'] = $hra_excemption;
-        $allowance_under_sec_10['projection'] = 0;
-        $allowance_under_sec_10['total'] = $allowance_under_sec_10['actual'] + $allowance_under_sec_10['projection'];
+        $allowance_under_sec_10['projection'] = ['Child Education Allowance' => $emp_childrens_allow , 'Leave Travel Allowance' => $emp_lta_allow ];
+        $allowance_under_sec_10['total'] = $allowance_under_sec_10['actual'] + $emp_childrens_allow + $emp_lta_allow;
 
         array_push($res["under_section_10"]["2) Allowance to the extent exampt under section 10"], $allowance_under_sec_10);
 
 
 
-        // 3) Total after excemption (1 - 2);
+        // 3) Total after excemption (1 - 2);    - $allowance_under_sec_10['total']
 
-        $total_after_exemption['total'] = $allowance_under_sec_10['total'] + $Gross_earnings['particulars']['Total Income'];
+        $total_after_exemption['total'] = $Gross_earnings['particulars']['Total Income'] - $allowance_under_sec_10['total'];
         array_push($res["Total_after_excemption"]["3) Total after excemption (1 - 2)"], $total_after_exemption);
-
 
         // 4) Taxable Income Under Previous employment
         $previous_gross = 0;
@@ -327,13 +328,13 @@ class VmtPayrollTaxService
 
 
         $taxincome_preEmployment['particular'] = [
-                                                'i) Income After Exception' => number_format($previous_gross,2),
-                                                'ii) Less: Professional Tax' => number_format($previous_pt,2),
+                                                'i) Income After Exception' => $previous_gross,
+                                                'ii) Less: Professional Tax' =>$previous_pt,
                                                 ];
 
         $taxincome_preEmployment['actual'] = 0;
         $taxincome_preEmployment['projection'] = 'Total taxable income under Previous employment';
-        $taxincome_preEmployment['total'] = 0;
+        $taxincome_preEmployment['total'] = $previous_gross + $previous_pt;
 
         // dd($taxincome_preEmployment);
 
@@ -341,8 +342,7 @@ class VmtPayrollTaxService
 
         // 5) Gross Total (3 - 4)
 
-        $Gross_total['total'] = number_format($total_after_exemption['total'] + $taxincome_preEmployment['total'],2);
-        $gross_income =  $total_after_exemption['total'] + $taxincome_preEmployment['total'];
+        $Gross_total['total'] = $total_after_exemption['total'] + $taxincome_preEmployment['total'];
         array_push($res["Gross_Total"]["5) Gross Total (3 - 4)"], $Gross_total);
 
         // 6) Under section 16
@@ -357,19 +357,19 @@ class VmtPayrollTaxService
         $undersection['particulars'] =
             [
                 'a) Entertainment allowance' => 0,
-                'b) Tax on employment' => number_format($professinaltax,2),
-                'c) Standard Deduction' => number_format($std_deduc,2)
+                'b) Tax on employment' => $professinaltax,
+                'c) Standard Deduction' => $std_deduc
             ];
         $undersection['Total Under Section 16'] = 0;
         $undersection['projection'] = 0;
-        $undersection['total'] = number_format($professinaltax + $std_deduc,2);
-        $under_case_section = $professinaltax + $std_deduc;
+        $undersection['total'] = $professinaltax + $std_deduc;
+
 
         array_push($res["Under_section_16"]["6) Under section 16"], $undersection);
 
         // 7) Income Chargeable Under the Head Salaries (5 - 6)
 
-        $income_charge_head_salaries['total'] = $gross_income + $under_case_section;
+        $income_charge_head_salaries['total'] = $Gross_total['total'] - $undersection['total'];
         array_push($res["Under_the_Head_Salaries"]["7) Income Chargeable Under the Head Salaries (5 - 6)"], $income_charge_head_salaries);
 
         // dd($res);
@@ -382,21 +382,29 @@ class VmtPayrollTaxService
         foreach ($v_form_template as $dec_amt) {
 
             if ($dec_amt['section_group'] == "House Properties ") {
-                // dd($dec_amt);
+
                 $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
-                $property_type[] = $totalIntersetPaid['property_type'];
-                $property_value[] = $totalIntersetPaid['income_loss'];
-                $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
-                if ($totalIntersetPaid['property_type'] == "Let Out Property") {
-                    $SumOfHousPropsInNew = $totalIntersetPaid['income_loss'];
-                    $tax_calc_new_redime += $totalIntersetPaid['income_loss'];
+                if($totalIntersetPaid['property_type'] == 'Self Occupied Property'){
+                    $property_type[] = $totalIntersetPaid['property_type'];
+                    $property_value[]  = ( -1 * $totalIntersetPaid['income_loss']);
+                    $SumOfHousPropsInOld  += ( -1 * $totalIntersetPaid['income_loss']);
+                }
+                if($totalIntersetPaid['property_type'] == 'Let Out Property'){
+                    $property_type[] = $totalIntersetPaid['property_type'];
+                    $property_value[]  = $totalIntersetPaid['income_loss'];
+                    $SumOfHousPropsInOld  += $totalIntersetPaid['income_loss'];
+                }
+                if($totalIntersetPaid['property_type'] == 'Deemed Let Out Property'){
+                    $property_type[] = $totalIntersetPaid['property_type'];
+                    $property_value[]  = $totalIntersetPaid['income_loss'];
+                    $SumOfHousPropsInOld  += $totalIntersetPaid['income_loss'];
                 }
             }
-        }
+            }
+            // dd($SumOfHousPropsInOld);
 
-        if ($SumOfHousPropsInOld > 200000) {
-            $sumofhouseproperty = 200000;
-        } else if (-200000 > $SumOfHousPropsInOld) {
+
+        if(-200000 > $SumOfHousPropsInOld) {
             $sumofhouseproperty = -200000;
         } else {
             $sumofhouseproperty = $SumOfHousPropsInOld;
@@ -546,6 +554,12 @@ class VmtPayrollTaxService
             $count++;
         }
 
+        if($sumof_max80g == 0){
+            $value_of_80g = $sumof_dec80g;
+        }elseif($sumof_dec80g < $sumof_max80g ){
+            $value_of_80g = $sumof_max80g;
+        }
+
         $sum_of_section_amt['80CCD (1B)'] = $sumof_dec80ccd1  > $sumof_max80ccd1 ? $sumof_max80ccd1 : $sumof_dec80ccd1;
         $sum_of_section_amt['80CCD (2)'] =  $sumof_dec80ccd2 > $sumof_max80ccd2 ? $sumof_max80ccd2 : $sumof_dec80ccd2;
         $sum_of_section_amt['80D'] =  $sumof_dec80d > $sumof_max80d ? $sumof_max80d : $sumof_dec80d;
@@ -556,7 +570,7 @@ class VmtPayrollTaxService
         $sum_of_section_amt['80EE'] = $sumof_dec80ee > $sumof_max80ee ? $sumof_max80ee : $sumof_dec80ee;
         $sum_of_section_amt['80EEA'] = $sumof_dec80eea > $sumof_max80eea ? $sumof_max80eea : $sumof_dec80eea;
         $sum_of_section_amt['80EEB'] = $sumof_dec80eeb > $sumof_max80eeb ? $sumof_max80eeb : $sumof_dec80eeb;
-        $sum_of_section_amt['80G'] = $sumof_dec80g > $sumof_max80g ? $sumof_max80g : $sumof_dec80g;
+        $sum_of_section_amt['80G'] = $value_of_80g;
         $sum_of_section_amt['80TTA'] = $sumof_dec80tta > $sumof_max80tta ? $sumof_max80tta : $sumof_dec80tta;
         $sum_of_section_amt['80TTB'] =  $sumof_dec80ttb > $sumof_max80ttb ? $sumof_max80ttb : $sumof_dec80ttb;
 
@@ -625,13 +639,20 @@ class VmtPayrollTaxService
         array_push($res["Relief_Under_Section_89"]["14) Tax Payable including Education Cess minus of Relief Under Section 89"], $tax_payable_ecucation);
 
         // 15) Tax Deduction at Source u/s 192
-        $current_month =  Carbon::now()->format('F');
+        $current_month =  Carbon::parse($month)->addMonth()->format('F');
+
+        $timeperiod = VmtOrgTimePeriod::where('status', '1')->first();
+        $end_date = Carbon::parse($timeperiod->end_date);
+        $end_date = Carbon::parse($end_date)->floorMonth();
+        $current = Carbon::now()->floorMonth();
+
+        $diffmonths = $current->diffInMonths($end_date)+1;
 
         $tax_deduction_192['i) TDS till last month'] = $income_tax;
-        $tax_deduction_192['ii) TDS for ' . $current_month] = $tax_payable_ecucation['total'];
+        $tax_deduction_192['ii) TDS for ' . $current_month] = $tax_payable_ecucation['total'] / $diffmonths;
         $tax_deduction_192['iii) TDS by Previous Employer'] = $previous_income_tax;
-        $tax_deduction_192['A) Total Tax Deduction at Source (i + ii + iii)'] =  ($income_tax) + ($tax_payable_ecucation['total']) + ($previous_income_tax) ;
-        $tax_deduction_192['Tax Payable / Refundable (14 - 15(A))'] = $tax_payable_ecucation['total'] - $income_tax;
+        $tax_deduction_192['A) Total Tax Deduction at Source (i + ii + iii)'] =  ($income_tax) + ($tax_payable_ecucation['total'] / $diffmonths) + ($previous_income_tax) ;
+        $tax_deduction_192['Tax Payable / Refundable (14 - 15(A))'] = ($tax_payable_ecucation['total']) - (($income_tax) + ($tax_payable_ecucation['total'] / $diffmonths) + ($previous_income_tax));
 
         array_push($res["Source_us_192"]["15) Tax Deduction at Source u/s 192"], $tax_deduction_192);
 
@@ -639,8 +660,14 @@ class VmtPayrollTaxService
 
         array_push($res["Hra_exception_calc"], $this->HraExceptionCalc($user_id, $month));
 
+        // final result
 
-        // return dd($res);
+        $tax_final_result['TDS for ' . $current_month] = $tax_payable_ecucation['total'] / $diffmonths;
+
+        array_push($res["Final_result"]["final_result_value"], $tax_final_result);
+
+
+        // return dd($res);0
 
         $html = view('investmentTdsWorkSheet.TDS_work_sheet', $res);
 
@@ -928,12 +955,50 @@ class VmtPayrollTaxService
 
         }
 
+        $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+        ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+        ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+        ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
+        ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
+        ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
+        ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
+        ->get(
+            [
+                'vmt_inv_section_group.section_group',
+                'vmt_inv_section.section',
+                'vmt_inv_section.particular',
+                'vmt_inv_emp_formdata.dec_amount',
+                'vmt_inv_section.max_amount',
+                'vmt_inv_emp_formdata.json_popups_value',
+                'vmt_inv_f_emp_assigned.regime',
+                'vmt_inv_f_emp_assigned.updated_at',
+                'vmt_employee_compensatory_details.gross',
+                'vmt_employee_compensatory_details.basic',
+                'vmt_employee_compensatory_details.hra',
+                'vmt_employee_compensatory_details.special_allowance',
+                'vmt_employee_compensatory_details.professional_tax',
+                'vmt_employee_compensatory_details.child_education_allowance',
+                'vmt_employee_compensatory_details.lta',
+                'vmt_employee_details.doj',
+                'vmt_employee_details.dob',
+            ]
+        )->toArray();
+
+        $json_rentpaid = 0;
+        foreach($v_form_template as $single_value){
+            if($single_value['section_group'] == "HRA"){
+               $json_rent = json_decode($single_value['json_popups_value'],true);
+               $json_rentpaid  += $json_rent['total_rent_paid'];
+
+            }
+        }
+
         foreach($employee_projected_salary as $key => $single_value){
                 $emp_salary_hra[$key]['date'] = $date[$key];
                 $emp_salary_hra[$key]['Basic'] = ($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.50;
                 $emp_salary_hra[$key]['Hra'] = $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'];
-                $emp_salary_hra[$key]['excess_of_rent_paid'] = (($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.10) + $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'];
-                $emp_salary_hra[$key]['Excemption_amount'] = min([($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.50 ,  $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'] , (($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.10) + $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear']]);
+                $emp_salary_hra[$key]['excess_of_rent_paid'] =   ($json_rentpaid / 12) - (($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.10);
+                $emp_salary_hra[$key]['Excemption_amount'] =   $json_rentpaid == 0 ? 0 : min([($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.50 ,  $employee_projected_salary[$key]['earned_hra'] + $employee_projected_salary[$key]['hra_arrear'] , (($json_rentpaid / 12) - (($employee_projected_salary[$key]['earned_basic'] + $employee_projected_salary[$key]['basic_arrear']) * 0.10))]);
         }
 
         $emp_basic = 0;
@@ -1151,9 +1216,10 @@ class VmtPayrollTaxService
 
         foreach ($Employee_details as $key => $single_user) {
             $value =  $this->HraExceptionCalc(User::where('user_code', $single_user['Employee Code'])->first()->id, $payroll_month)['Total_Expect_amt'];
+            $cea_lta_computation  =  $this->getEmpAnnualProjectionForPdf(User::where('user_code', $single_user['Employee Code'])->first()->id,$payroll_month);
             $employee_salary_details[$key]["HRA Exceptions"] = $value;
-            $employee_salary_details[$key]["CEA Exceptions"] = 0;
-            $employee_salary_details[$key]["LTA Exceptions"] = 0;
+            $employee_salary_details[$key]["CEA Exceptions"] = $cea_lta_computation['Child Education Allowance'] + $cea_lta_computation['Child Education Allowance Arrears'];
+            $employee_salary_details[$key]["LTA Exceptions"] = $cea_lta_computation['Leave Travel Allowance'] + $cea_lta_computation['Leave Travel Allowance Arrears'];
         }
 
         // Previous employeer income

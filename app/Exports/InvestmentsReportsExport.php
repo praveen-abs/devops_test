@@ -88,7 +88,7 @@ class InvestmentsReportsExport implements FromArray, ShouldAutoSize, WithHeading
 
 
         //For Second Row
-        $sheet->mergeCells('C2:D2')->setCellValue('C2', "Report Type : " . ' Employee CTC Report');
+        $sheet->mergeCells('C2:D2')->setCellValue('C2', "Report Type : " . ' Tax Computation Sheet');
         $sheet->getStyle('C2:D2')->getFont()->setBold(true);
         $sheet->getRowDimension('2')->setRowHeight(25);
 

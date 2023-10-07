@@ -23,7 +23,7 @@ public function getEmpCompValues(Request $request, VmtPayrollTaxService $vmtPayr
 
     // $user_id = VmtInvFEmpAssigned::pluck('user_id')->toArray();
 
-    $user_id = '149';
+    $user_id = '194';
 
     // $month = "2023-04-01";
 
