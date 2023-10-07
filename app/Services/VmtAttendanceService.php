@@ -4431,12 +4431,13 @@ class VmtAttendanceService
             ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
             ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
             ->where('users.is_ssa', '0')->where('users.active', '1');
+           // ->whereIn('users.client_id', $client_id);
 
      if(!empty($department_id)){
         $employees_data = $employees_data->where('off.department_id', $department_id)
             ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
      }else{
-        $employees_data= $employees_data->where('off.department_id', $department_id)
+        $employees_data= $employees_data
             ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
      }
 
@@ -4455,6 +4456,7 @@ class VmtAttendanceService
                 array_push($present_emps, $single_user_data);
 
                 $present_count++;
+
             } else if(!empty($emp_bio_attendance)){
 
                 $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
