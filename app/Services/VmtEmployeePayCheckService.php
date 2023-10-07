@@ -96,11 +96,11 @@ class VmtEmployeePayCheckService
             'message' => 'none',
             'data' => [],
         ];
-     
+
         $corrected_data = $data;
         $j = array_keys($data);
         foreach ($corrected_data[$j[0]] as &$Single_data) {
-            
+
             if (array_key_exists('dob', $Single_data) && is_int($Single_data['dob'])) {
 
                 $Single_data['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dob'])->format('Y-m-d');
@@ -112,21 +112,21 @@ class VmtEmployeePayCheckService
             if (array_key_exists('payroll_month', $Single_data) && is_int($Single_data['payroll_month'])) {
 
                 $Single_data['payroll_month'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['payroll_month'])->format('Y-m-d');
-              
+
             }
         }
         unset($Single_data);
 
-    
+
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $corrected_data;
-    
+
         $currentRowInExcel = 0;
         $i = array_keys($excelRowdata_row);
 
 
         foreach ($excelRowdata_row[$i[0]] as $key => $excelRowdata) {
-           
+
             $currentRowInExcel++;
             $excelRowdata['emp_no'] = trim($excelRowdata['emp_no']);
             //Validation
@@ -297,7 +297,7 @@ class VmtEmployeePayCheckService
             $empPaySlip->bank_ifsc_code = $row["bank_ifsc_code"] ?? null;
 
             $client_id = User::where('user_code', $row['emp_no'])->first()->client_id;
-         
+
             $payroll_date = \DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
             //check already exist or not
             $Payroll_data = VmtPayroll::where('client_id', $client_id)->where('payroll_date', $payroll_date)->first();
@@ -1123,8 +1123,9 @@ class VmtEmployeePayCheckService
                     "net_income",
                     "dearness_allowance"
                 ])->first();
+//dd($response);
 
-            $response['yearly_ctc'] = $response->cic * 12;
+            $response['yearly_ctc'] =(integer) $response->cic * 12;
             return response()->json([
                 'status' => 'success',
                 'message' => "",
@@ -1173,6 +1174,7 @@ class VmtEmployeePayCheckService
 
         try {
 
+
             $user_data = User::where('user_code', $user_code)->first();
             $payroll_data = VmtPayroll::leftJoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
                 ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
@@ -1188,6 +1190,14 @@ class VmtEmployeePayCheckService
                 ->whereYear('payroll_date', $year)
                 ->whereMonth('payroll_date', $month);
 
+             if($payroll_data->doesntExist()){
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "payslip data not found",
+                    'data' => ''
+                ]);
+             }
 
             //get leave data
             $start_date = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
@@ -1276,19 +1286,19 @@ class VmtEmployeePayCheckService
             $getearnings = $payroll_data
                 ->get(
                     [
-                        'vmt_employee_payslip_v2.basic as Basic',
-                        'vmt_employee_payslip_v2.hra as HRA',
+                        'vmt_employee_payslip_v2.earned_basic as Basic',
+                        'vmt_employee_payslip_v2.earned_hra as HRA',
                         'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
                         'vmt_employee_payslip_v2.other_earnings as Other Earnings',
                         'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                         'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                         'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
-                        'vmt_employee_payslip_v2.communication_allowance as Communication Allowance',
-                        'vmt_employee_payslip_v2.food_allowance as Food Allowance',
-                        'vmt_employee_payslip_v2.vehicle_reimbursement as Vehicle Reimbursement',
-                        'vmt_employee_payslip_v2.driver_salary as Driver Salary',
-                        'vmt_employee_payslip_v2.lta as Leave Travel Allowance',
-                        'vmt_employee_payslip_v2.other_allowance as Other Allowance',
+                        'vmt_employee_payslip_v2.communication_allowance_earned as Communication Allowance',
+                        'vmt_employee_payslip_v2.food_allowance_earned as Food Allowance',
+                        'vmt_employee_payslip_v2.vehicle_reimbursement_earned as Vehicle Reimbursement',
+                        'vmt_employee_payslip_v2.driver_salary_earned as Driver Salary',
+                        'vmt_employee_payslip_v2.earned_lta as Leave Travel Allowance',
+                        'vmt_employee_payslip_v2.other_allowance_earned as Other Allowance',
                         'vmt_employee_payslip_v2.overtime as Overtime',
                     ]
                 )->toArray();
@@ -1381,6 +1391,9 @@ class VmtEmployeePayCheckService
                 foreach ($getpersonal['earnings'][0] as $single_data) {
                     $total_value += ((int) $single_data);
                 }
+                foreach ($getpersonal['arrears'][0] as $single_arrear) {
+                    $total_value += ((int) $single_arrear);
+                }
                 $getpersonal['earnings'][0]['Total Earnings'] = $total_value;
             }
 
@@ -1451,7 +1464,7 @@ class VmtEmployeePayCheckService
                 ];
             }
 
-            // dd($getpersonal);
+            //dd($getpersonal);
 
             $get_payslip =  AbsActivePayslip::where('is_active', '1')->first();
             $status = "";
@@ -1664,19 +1677,19 @@ class VmtEmployeePayCheckService
             $getearnings = $payroll_data
                 ->get(
                     [
-                        'vmt_employee_payslip_v2.basic as Basic',
-                        'vmt_employee_payslip_v2.hra as HRA',
+                        'vmt_employee_payslip_v2.earned_basic as Basic',
+                        'vmt_employee_payslip_v2.earned_hra as HRA',
                         'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
                         'vmt_employee_payslip_v2.other_earnings as Other Earnings',
                         'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
                         'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
                         'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
-                        'vmt_employee_payslip_v2.communication_allowance as Communication Allowance',
-                        'vmt_employee_payslip_v2.food_allowance as Food Allowance',
-                        'vmt_employee_payslip_v2.vehicle_reimbursement as Vehicle Reimbursement',
-                        'vmt_employee_payslip_v2.driver_salary as Driver Salary',
-                        'vmt_employee_payslip_v2.lta as Leave Travel Allowance',
-                        'vmt_employee_payslip_v2.other_allowance as Other Allowance',
+                        'vmt_employee_payslip_v2.communication_allowance_earned as Communication Allowance',
+                        'vmt_employee_payslip_v2.food_allowance_earned as Food Allowance',
+                        'vmt_employee_payslip_v2.vehicle_reimbursement_earned as Vehicle Reimbursement',
+                        'vmt_employee_payslip_v2.driver_salary_earned as Driver Salary',
+                        'vmt_employee_payslip_v2.earned_lta as Leave Travel Allowance',
+                        'vmt_employee_payslip_v2.other_allowance_earned as Other Allowance',
                         'vmt_employee_payslip_v2.overtime as Overtime',
                     ]
                 )->toArray();
@@ -1687,7 +1700,7 @@ class VmtEmployeePayCheckService
                     [
                         'vmt_employee_payslip_v2.basic_arrear as Basic',
                         'vmt_employee_payslip_v2.hra_arrear as HRA',
-                        'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
+                        'vmt_employee_payslip_v2.earned_stats_arrear as Statuory Bonus',
                         'vmt_employee_payslip_v2.spl_alw_arrear  as Special Allowance',
                         'vmt_employee_payslip_v2.child_edu_allowance_arrear as Child Education Allowance',
                     ]
@@ -1769,8 +1782,12 @@ class VmtEmployeePayCheckService
                 foreach ($getpersonal['earnings'][0] as $single_data) {
                     $total_value += ((int) $single_data);
                 }
+                foreach ($getpersonal['arrears'][0] as $single_arrear) {
+                    $total_value += ((int) $single_arrear);
+                }
                 $getpersonal['earnings'][0]['Total Earnings'] = $total_value;
             }
+
 
             // Total contribution
 
