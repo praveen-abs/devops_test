@@ -4132,7 +4132,7 @@ class VmtAttendanceService
         }
         $response = array();
         $all_active_user = User::leftJoin('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->leftJoin('vmt_employee_office_details', 'users.id', '=', 'vmt_employee_office_details.user_id')
-            ->where('active', 1)->where('users.client_id', $client_id)->where('is_ssa', 0)->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_details.location', 'vmt_employee_office_details.department_id']);
+            ->where('active', 1)->whereIn('users.client_id', $client_id)->where('is_ssa', 0)->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_details.location', 'vmt_employee_office_details.department_id']);
         // dd( $all_active_user);
         try {
             foreach ($all_active_user as $single_user) {
