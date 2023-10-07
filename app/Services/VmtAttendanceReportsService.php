@@ -1254,7 +1254,7 @@ class VmtAttendanceReportsService
             if (Carbon::parse($end_date)->gt(Carbon::today())) {
                 $end_date = Carbon::today()->format('Y-m-d');
             }
-          //  dd($start_date,$end_date);
+            //  dd($start_date,$end_date);
             $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
@@ -1381,7 +1381,11 @@ class VmtAttendanceReportsService
                             $lc_minutes = '-';
                         }
 
-                        array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $status);
+                        if ($attendance_setting_details['lc_status'] == 1) {
+                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $status);
+                        } else {
+                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $status);
+                        }
                     } else {
                         array_push($temp_ar, 0, 0, 0);
                         if ($attendance_setting_details['lc_status'] == 1) {
