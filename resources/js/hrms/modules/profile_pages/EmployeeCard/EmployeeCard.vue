@@ -148,15 +148,14 @@
         </div>
     </div>
 
-    <Dialog header="Status" v-model:visible="canShowCompletionScreen" modal  :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '350px' }" >
+    <Dialog header="Status" v-model:visible="canShowCompletionScreen" modal
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }">
         <div class="confirmation-content">
             <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
             <span>{{ status_text_CompletionDialog }}</span>
         </div>
     </Dialog>
-    <Dialog v-model:visible="dailogDepartment" modal header="Edit Department"
-        :style="{ width: '30vw' }">
+    <Dialog v-model:visible="dailogDepartment" modal header="Edit Department" :style="{ width: '30vw' }">
         <!-- {{ employee_card.department  }} -->
         <Dropdown :options="departmentOption" optionLabel="name" v-model="employee_card.department"
             placeholder="Select Department" class="w-full form-selects" optionValue="id" />
@@ -168,8 +167,7 @@
             </div>
         </template>
     </Dialog>
-    <Dialog v-model:visible="dailogReporting" modal  header="Edit Reporting Manager"
-        :style="{ width: '30vw'}">
+    <Dialog v-model:visible="dailogReporting" modal header="Edit Reporting Manager" :style="{ width: '30vw' }">
         <Dropdown optionLabel="name" :options="reportManagerOption" v-model="employee_card.reporting_manager"
             optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
         <template #footer>
@@ -194,8 +192,7 @@
             </div>
 
         </template>
-        <div
-            class="w-100  py-4 px-2 rounded-lg d-flex justify-content-around overflow-x-scroll ... lg:w-100 ">
+        <div class="w-100  py-4 px-2 rounded-lg d-flex justify-content-around overflow-x-scroll ... lg:w-100 ">
 
             <div class="card p-3 d-flex  justify-items-center align-items-center mr-2 :lg:mx-0 Digital_Id_Card_"
                 style="width: 260px; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
@@ -335,7 +332,7 @@
 
 
     <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" modal >
+        :style="{ width: '25vw' }" modal>
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
                 animationDuration="2s" aria-label="Custom ProgressSpinner" />
@@ -345,8 +342,7 @@
         </template>
     </Dialog>
 
-    <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
-        :style="{ width: '50vw'}">
+    <Dialog v-model:visible="dialog_emp_name_visible" modal header=" " :style="{ width: '50vw' }">
         <template #header>
             <div>
                 <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
@@ -397,7 +393,8 @@
                                 Documents</label>
                             <div class="d-flex  justify-items-center align-items-center">
                                 <Toast />
-                                <label class="cursor-pointer text-primary bg-[black] px-2 py-2 rounded-md d-flex align-items-center fs-5"
+                                <label
+                                    class="cursor-pointer text-primary bg-[black] px-2 py-2 rounded-md d-flex align-items-center fs-5"
                                     style="width:100px ; " id="" for="uploadPassBook">
                                     <i class="pi pi-arrow-circle-up text-[white] mr-2 text-[18px]"></i>
                                     <h1 class="text-light">Upload</h1>
@@ -429,6 +426,10 @@
             </div>
         </div>
     </Dialog>
+
+    <Sidebar v-model:visible="visibleRight" position="right" class=" w-[600px]">
+        <h1 class="" ></h1>
+    </Sidebar>
 </template>
 
 <script setup>
@@ -760,8 +761,7 @@ $fontColor: rgb(250, 250, 250);
     color: black !important;
 }
 
-.p-sidebar-right .p-sidebar
-{
+.p-sidebar-right .p-sidebar {
     width: 50% !important;
     height: 100%;
 }
