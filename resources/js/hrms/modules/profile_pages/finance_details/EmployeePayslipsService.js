@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import axios from "axios";
 import dayjs from 'dayjs';
+import { useRouter, useRoute } from "vue-router";
 import { UseEmployeeDocumentManagerService } from "../EmployeeDocumentsManagerService";
 
 export const useEmployeePayslipStore = defineStore("employeePayslipStore", () => {
@@ -13,6 +14,8 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
     const paySlipHTMLView = ref();
     const Payroll_month =  ref('');
+    const router = useRouter();
+    const route = useRoute();
 
     const canShowPayslipView = ref(false);
 
@@ -20,10 +23,11 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
     const loading = ref(false);
 
     function getURLParams_UID() {
-        if (urlParams.has('uid'))
-            return urlParams.get('uid');
-        else
-            return '';
+        if(route.params.user_code){
+            return route.params.user_code
+        }else{
+            return 'pradessh'
+        }
     }
 
     // Events

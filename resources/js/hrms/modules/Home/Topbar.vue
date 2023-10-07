@@ -6,7 +6,7 @@
             <div class="relative col-span-4 px-2 py-2 mx-2 border-1 border-x-gray-300">
                 <button class="text-black rounded focus:outline-none">
                     <p class="text-left text-gray-600 text-md">Your organization</p>
-                    <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient">
+                    <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient ?  true :false">
                         <img :src="currentlySelectedClient.client_logo" alt="" class="w-12 h-6">
                         <p class="px-2 text-sm font-semibold whitespace-nowrap"
                             v-if="currentlySelectedClient.client_fullname.length <= 20"

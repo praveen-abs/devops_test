@@ -23,7 +23,7 @@
                  <Topbar />
               </div>
               <div class="h-screen p-2 !pb-20 overflow-y-auto ">
-                <loadingSpinner v-if="useDashboard.canShowLoading" />
+                <!-- <loadingSpinner v-if="useDashboard.canShowLoading" /> -->
                  <RouterView></RouterView>
               </div>
            </div>

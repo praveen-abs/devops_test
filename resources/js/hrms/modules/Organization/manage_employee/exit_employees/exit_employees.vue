@@ -20,7 +20,7 @@
             <DataTable :value="manageEmployeesStore.exit_employees_data" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['emp_name', 'emp_code', 'status']">
+                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu"  :globalFilterFields="['emp_name', 'emp_code','emp_designation','reporting_manager_name', 'status']">
                 <template #empty> No customers found.</template>
                 <template #loading> Loading customers data. Please wait. </template>
                 <Column class="font-bold" field="emp_name" header="Employee Name"  >
@@ -61,6 +61,9 @@
                     </template>
                 </Column>
                 <Column field="doj" header="DOJ">
+                    <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
+                </Column>
+                <Column field="doj" header="Exit Date">
                     <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
                 </Column>
                 <!-- <Column field="blood_group_name" header="Blood Group"></Column> -->

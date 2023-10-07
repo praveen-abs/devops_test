@@ -480,7 +480,7 @@ const updateProfilePhoto = (e) => {
     }
 
     let form = new FormData();
-    form.append("user_code", _instance_profilePagesStore.user_code);
+    form.append("user_code", service.current_user_code);
     form.append("file_object", _instance_profilePagesStore.profile);
 
     let url = "/profile-pages/updateProfilePicture";
