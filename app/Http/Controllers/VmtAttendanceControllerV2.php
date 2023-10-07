@@ -32,7 +32,7 @@ class VmtAttendanceControllerV2 extends Controller
         foreach (VmtWorkShifts::pluck('shift_start_time') as $single_sfift) {
             $shift_start_time = Carbon::parse($single_sfift);
             if ($current_time->diffInMinutes($shift_start_time) < 65) {
-                $task_sheduler = TrackTaskScheduler::where('job', 'vmt_staff_attenndance_device');
+                // $task_sheduler = TrackTaskScheduler::where('job', 'vmt_staff_attenndance_device');
                 // dd(VmtStaffAttendanceDevice::exists());
                 if (VmtEmployeeAttendanceV2::exists()) {
                     $staff_attendance_query = VmtEmployeeAttendanceV2::orderBy('id', 'DESC')->first();
@@ -56,8 +56,10 @@ class VmtAttendanceControllerV2 extends Controller
 
     public function downloadDetailedAttendanceReport(VmtAttendanceServiceV2 $attendance_services)
     {
-        $start_date = '2023-07-26';
-        $end_date = '2023-08-25';
-        return Excel::download(new DetailedAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date), true), 'Detailed Attendance Report.xlsx');
+        $start_date = '2023-04-26';
+        $end_date = '2023-05-25';
+        $department_id ='';
+        $client_id='';
+        return Excel::download(new DetailedAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date,$department_id, $client_id), true), 'Detailed Attendance Report.xlsx');
     }
 }

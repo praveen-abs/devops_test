@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Department;
 use App\Models\VmtEmployeeAttendanceV2;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -21,6 +22,7 @@ use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtOrgTimePeriod;
 use Carbon\CarbonInterval;
 use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Single;
+use Illuminate\Support\Facades\Validator;
 
 class VmtAttendanceServiceV2
 {
@@ -586,9 +588,36 @@ class VmtAttendanceServiceV2
         }
     }
 
-    public function downloadDetailedAttendanceReport($start_date, $end_date)
+    public function downloadDetailedAttendanceReport($start_date, $end_date, $department_id, $client_id)
     {
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'start_date' => 'required',
+                'end_date' => 'required'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
         try {
+
             $current_date = Carbon::parse($start_date);
             if (Carbon::parse($end_date)->gt(Carbon::today())) {
                 $end_date = Carbon::today()->format('Y-m-d');
@@ -596,16 +625,23 @@ class VmtAttendanceServiceV2
             $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-                ->where('is_ssa', '0')
-                ->get([
-                    'users.id as id',
-                    'users.user_code as user_code',
-                    'users.name as name',
-                    'vmt_employee_office_details.designation as designation',
-                    'vmt_employee_details.dob as dob',
-                    'vmt_employee_details.doj as doj',
-                    'vmt_employee_details.dol as dol'
-                ]);
+                ->where('is_ssa', '0');
+            if (!empty($client_id)) {
+                $users =  $users->whereIn->whereIn('client_id', $client_id);
+            }
+
+            if (!empty($department_id)) {
+                $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $users = $users->get([
+                'users.id as id',
+                'users.user_code as user_code',
+                'users.name as name',
+                'vmt_employee_office_details.designation as designation',
+                'vmt_employee_details.dob as dob',
+                'vmt_employee_details.doj as doj',
+                'vmt_employee_details.dol as dol'
+            ]);
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $header_2 = array('', '', '', '');
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
