@@ -33,7 +33,7 @@ class VmtHolidayService {
       $master_holidays =    $upcoming_holidays->merge($past_holidays);
       $i = 0;
       foreach ($master_holidays as $key => $Singleholiday) {
-          $master_holidays[$i]['image'] = $this->getHolidaysPicture($Singleholiday->id);
+          //$master_holidays[$i]['image'] = $this->getHolidaysPicture($Singleholiday->id);
           unset( $master_holidays[$i]['id']);
           unset( $master_holidays[$i]['created_at']);
           unset( $master_holidays[$i]['updated_at']);
