@@ -71,7 +71,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
             user_code: 'PLIPL068',
             date: '2023-06-26',
         }).then((response) => {
-            console.log("getAttendanceStatus() : " + response.data);
+            // console.log("getAttendanceStatus() : " + response.data);
         }).finally(() => {
 
         });
@@ -141,7 +141,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const getHrDashboardMainSource = async() => {
         canShowLoading.value = true
         await axios.get('/get-employees_count-detail').then(res => {
-            console.log(res.data.pending_request_count);
+            // console.log(res.data.pending_request_count);
             orgEmployeeDetailCount.value = res.data.employee_details_count
             // hrPendingRequestCount.value.push(res.data.pending_request_count)
             let obj = Object.entries(res.data.pending_request_count).map(item => {

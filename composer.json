@@ -68,6 +68,7 @@
             "app/Services/VmtSalaryRevisionService.php",
             "app/Services/VmtAppPermissionsService.php",
             "app/Services/VmtReportsService.php",
+            "app/Services/Testing/PMS/VmtTestingService.php"
             "app/Services/PMS/VmtPMSModuleService_v3.php"
 
         ]

@@ -23,6 +23,7 @@
                  <Topbar />
               </div>
               <div class="h-screen p-2 !pb-20 overflow-y-auto ">
+                <!-- <loadingSpinner v-if="useDashboard.canShowLoading" /> -->
                  <RouterView></RouterView>
               </div>
            </div>
@@ -36,6 +37,9 @@ import loadingSpinner from '../../components/LoadingSpinner.vue'
 import Topbar from './Topbar.vue';
 import Sidebar from './Sidebar.vue';
 import Dashboard from '../dashboard/dashboard.vue'
+import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
+
+const useDashboard = useMainDashboardStore();
 
 
 import { onMounted, ref } from 'vue';
@@ -53,14 +57,14 @@ const toggleDayNight = () => {
 
 const loading = ref(true)
 
-onMounted(() => {
-    axios.get('/clear_cache').then((res) => {
-        console.log(res.data);
-    })
-    setTimeout(() => {
-        loading.value = false
-    }, 2000);
-})
+// onMounted(() => {
+//     axios.get('/clear_cache').then((res) => {
+//         console.log(res.data);
+//     })
+//     setTimeout(() => {
+//         loading.value = false
+//     }, 2000);
+// })
 
 
 

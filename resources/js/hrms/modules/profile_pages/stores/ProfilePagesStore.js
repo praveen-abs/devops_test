@@ -22,6 +22,7 @@ export const profilePagesStore = defineStore("employeeService", () => {
     const router = useRouter();
     const route = useRoute();
     const profile = ref();
+    const profile_img = ref();
 
     const user_code = ref()
 
@@ -30,21 +31,23 @@ export const profilePagesStore = defineStore("employeeService", () => {
     const getProfilePhoto = () => {
         axios
             .post("/profile-pages/getProfilePicture", {
-                user_code: user_code.value
+                user_code: service.current_user_code
             })
             .then((res) => {
                 console.log("profile :?", res.data.data);
                 profile.value = res.data.data;
+                profile_img.value = res.data.data;
             })
             .finally(() => {
-                console.log("profile Pic Fetched");
+                console.log("profile Pic Fetched" ,profile_img.value);
+                // fetchEmployeeDetails();
             });
     };
 
-    async function fetchEmployeeDetails(user_id) {
+    async function fetchEmployeeDetails() {
         let url = '/profile-pages-getEmpDetails'
         console.log("Getting employee details")
-        await axios.get(`${url}/${user_id}`).then(res => {
+        await axios.get(`${url}/${user_code.value}`).then(res => {
             console.log("fetchEmployeeDetails() : " + res.data);
             loading_screen.value = false
             employeeDetails.value = res.data
@@ -65,7 +68,8 @@ export const profilePagesStore = defineStore("employeeService", () => {
         loading_screen,
         user_code,
         getProfilePhoto,
-        profile
+        profile,
+        profile_img
 
     };
 });

@@ -22,6 +22,8 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const overallEmployeeCountForExceptionAnalytics = ref()
     const overallEmployeeCountForExceptionAnalyticsForGraph = ref([])
     const totalEmployeeInOrganization = ref()
+    const AttendanceAnalytics = ref()
+    const AttendanceAnalyticsForGraph = ref([])
 
     const chartDetails = ref([
         { label: 'Absent', backgroundColor: '#FFB1B8', count: null },
@@ -40,7 +42,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
         await axios.get(url).then(res => {
             attendanceOverview.value = res.data.attendance_overview
 
-            totalEmployeeInOrganization.value = parseInt(attendanceOverview.value['present_count']) + parseInt(attendanceOverview.value['absent_count']) + parseInt(attendanceOverview.value['leave_emp_count'])
+            totalEmployeeInOrganization.value = res.data.total_Employees
             console.log(" totalEmployeeInOrganization.value" + totalEmployeeInOrganization.value);
             chartDetails.value[0].count = parseInt(attendanceOverview.value['absent_count'])
             chartDetails.value[1].count = parseInt(attendanceOverview.value['present_count'])
@@ -79,6 +81,20 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
                 }
             });
+
+            AttendanceAnalytics.value = res.data.CheckInMode
+
+
+            AttendanceAnalytics.value.forEach(async element => {
+                if (AttendanceAnalyticsForGraph.value.length < 3) {
+                    AttendanceAnalyticsForGraph.value.push(element.value)
+                }
+            });
+
+
+
+
+
         }).finally(() => {
             canShowLoading.value = false
         })
@@ -93,7 +109,9 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
         canShowShiftDetails, canShowAttendanceOverview, selectedAttendanceOverviewReport, currentlySelectedShiftDetails, currentlySelectedShiftName, downloadShiftDetails, downloadAttendanceOverviewDetails,
 
-        attendanceDashboardUpcoming, overallEmployeeCountForExceptionAnalytics, overallEmployeeCountForExceptionAnalyticsForGraph
+        attendanceDashboardUpcoming, overallEmployeeCountForExceptionAnalytics, overallEmployeeCountForExceptionAnalyticsForGraph,
+
+        AttendanceAnalytics,AttendanceAnalyticsForGraph
 
     }
 })

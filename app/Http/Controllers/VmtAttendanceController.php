@@ -41,6 +41,27 @@ use Symfony\Component\Mailer\Exception\TransportException;
 
 class VmtAttendanceController extends Controller
 {
+    public function checkWeekOffStatus($date, $weekOffJson, $checkin_time, $checkout_time)
+    {
+        $days_for_per_week = array('Sunday' => 0, 'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6);
+        $date =  Carbon::parse($date);
+        $given_date_day = $date->format('l');
+        $day_in_number = number_format($date->format('d'));
+        $weekOffJson = json_decode($weekOffJson, true);
+        if ($weekOffJson[$days_for_per_week[$given_date_day]]['all_week'] == 1) {
+
+            return   $checkin_time == null && $checkout_time == null ? true : false;
+        } else {
+            //logic for nth week of day week off
+            $week_of_month = (int)(ceil($day_in_number / 7));
+            $week_of_month_in_string = 'week_' . $week_of_month;
+            if ($weekOffJson[$days_for_per_week[$given_date_day]][$week_of_month_in_string] == 1) {
+                return   $checkin_time == null && $checkout_time == null ? true : false;
+            } else {
+                return false;
+            }
+        }
+    }
 
     public function showDashboard(Request $request)
     {
@@ -590,7 +611,7 @@ class VmtAttendanceController extends Controller
                 "isEG" => false, "eg_status" => null, "eg_reason" => null, "eg_reason_custom" => null, "eg_regularized_time" => null,
                 "isMIP" => false, "mip_status" => null, "mip_reason" => null, "mip_reason_custom" => null, "mip_regularized_time" => null,
                 "isMOP" => false, "mop_status" => null, "mop_reason" => null, "mop_reason_custom" => null, "mop_regularized_time" => null,
-                "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null
+                "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null,'is_weekoff'=>false
             );
 
             //echo "Date is ".$fulldate."\n";
@@ -729,6 +750,7 @@ class VmtAttendanceController extends Controller
             $attendanceResponseArray[$key]['workshift_code'] = $shift_time->shift_code;
             $attendanceResponseArray[$key]['workshift_name'] = $shift_time->shift_name;
             //dd($attendanceResponseArray[$key]['vmt_employee_workshift_id']);
+            $attendanceResponseArray[$key]["is_weekoff"] = $this->checkWeekOffStatus($attendanceResponseArray[$key]['date'],$shift_time->week_off_days,$attendanceResponseArray[$key]['checkin_time'],$attendanceResponseArray[$key]['checkout_time']);
 
             //dd($query_workShifts[$currentdate_workshift]->shift_start_time);
             //dd( $attendanceResponseArray);
@@ -1012,8 +1034,18 @@ class VmtAttendanceController extends Controller
         //Get the team members of the given user
         //$reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
-        $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.is_ssa', '0')->where('users.active', '1')
+        $client_id =null;
+
+        if(session('client_id') == 1){
+         $client_id =VmtClientMaster::pluck('id');
+        }else{
+            $client_id =[session('client_id')];
+        }
+
+            $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->whereIn('users.client_id',$client_id )
+            ->where('users.is_ssa', '0')
+            ->where('users.active', '1')
             ->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation']);
 
 
@@ -1046,14 +1078,13 @@ class VmtAttendanceController extends Controller
     {
 
         $response = null;
-         
+
         //Check whether the current employee is Manager
-           // dd(Str::contains(currentLoggedInUserRole(), ['Manager']));
+        // dd(Str::contains(currentLoggedInUserRole(), ['Manager']));
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-          //  dd(auth()->user()->user_code);
-            $response = $attendanceService->fetchAttendanceRegularizationData( null, null,auth()->user()->user_code);
-
+            //  dd(auth()->user()->user_code);
+            $response = $attendanceService->fetchAttendanceRegularizationData(null, null, auth()->user()->user_code);
         } else {
 
             //Fetch all data
@@ -1077,7 +1108,7 @@ class VmtAttendanceController extends Controller
 
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAbsentRegularizationData( null, null,auth()->user()->user_code);
+            $response = $attendanceService->fetchAbsentRegularizationData(null, null, auth()->user()->user_code);
         } else {
 
             //Fetch all data
@@ -1184,7 +1215,7 @@ class VmtAttendanceController extends Controller
             }
 
             return $response ;
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -1245,10 +1276,10 @@ class VmtAttendanceController extends Controller
                     );
                 }
             }
-  
+
             return $response ;
-             
-    
+
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -1533,6 +1564,7 @@ class VmtAttendanceController extends Controller
             $month = $today->format('m');
         }
         $response = $serviceVmtAttendanceService->teamLeaveBalance($start_date,  $end_date, $month);
+    
         return $response;
     }
 
@@ -1552,14 +1584,18 @@ class VmtAttendanceController extends Controller
 
     public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        return  $serviceVmtAttendanceService->getAttendanceDashboardData();
+        return  $serviceVmtAttendanceService->getAttendanceDashboardData($department_id=null);
     }
     public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
         return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
     }
 
-    // public function getEmployeeUpcomingAppliedRequested(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
-    //     return $serviceVmtAttendanceService->getEmployeeUpcomingAppliedRequested();
-    // }
+    public function checkEmployeeLcPermission(Request $request,VmtAttendanceService $testingservice)
+    {
+        $month = Carbon::now()->format('m');
+        $year =  Carbon::now()->format('Y');
+        $user_id = $request->user_id;
+        return $testingservice->checkEmployeeLcPermission($month, $year, $request->user_id);
+    }
 }

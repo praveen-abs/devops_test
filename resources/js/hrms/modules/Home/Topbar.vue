@@ -1,22 +1,20 @@
 <template>
 
-    <!-- {{ activeSettings ? findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 ?[]:null:null}} -->
-    <!-- {{combinedArray ? Object.values(combinedArray) : []}} -->
     <div class=" bg-white h-[60px]">
         <div class="grid items-center justify-between grid-cols-12 ">
             <!-- Organization List  -->
             <div class="relative col-span-4 px-2 py-2 mx-2 border-1 border-x-gray-300">
                 <button class="text-black rounded focus:outline-none">
                     <p class="text-left text-gray-600 text-md">Your organization</p>
-                    <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient">
+                    <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient ?  true :false">
                         <img :src="currentlySelectedClient.client_logo" alt="" class="w-12 h-6">
                         <p class="px-2 text-sm font-semibold whitespace-nowrap"
                             v-if="currentlySelectedClient.client_fullname.length <= 20"
-                            @click="useDashboard.canShowClients = !useDashboard.canShowClients">{{
+                            @mouseover="useDashboard.canShowClients = !useDashboard.canShowClients">{{
                                 currentlySelectedClient.client_fullname }}</p>
                         <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
                             v-tooltip="currentlySelectedClient.client_fullname" v-else
-                            @click="useDashboard.canShowClients = !useDashboard.canShowClients"> {{
+                            @mouseover="useDashboard.canShowClients = !useDashboard.canShowClients" @mouseleave="useDashboard.canShowClients = false"> {{
                                 currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
                                     20) + '..' : '' }}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -27,7 +25,7 @@
                     </div>
                 </button>
 
-                <transition enter-active-class="transition duration-200 ease-out transform"
+                <transition enter-active-class="transition duration-200 ease-out transform" @mouseleave="useDashboard.canShowClients = false" @mouseenter="useDashboard.canShowClients = true"
                     v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3 || service.current_user_role == 4"
                     enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                     leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
@@ -85,7 +83,7 @@
                         <!-- Dropdown content goes here -->
                         <div class="w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                             v-for="employee in globalSearch(query, orgList ? orgList : [])"
-                            @click="openProfilePage(employee.emp_code),query = null">
+                            @click="openProfilePage(employee.emp_code), query = null">
                             <div class="flex">
                                 <p class="text-sm font-bold text-gray-900">{{ employee.emp_name }} <span
                                         class="float-right text-xs font-bold text-gray-600">{{ employee.emp_code }}</span>
@@ -168,11 +166,21 @@
                     <img src="./assests/icons/exit.svg" alt="" class="w-6 h-6">
                 </button>
                 <div class="relative mx-3 "
-                    @click="useDashboard.canShowCurrentEmployee = !useDashboard.canShowCurrentEmployee">
+                     @mouseenter="useDashboard.canShowCurrentEmployee = !useDashboard.canShowCurrentEmployee" @mouseleave="useDashboard.canShowCurrentEmployee = false " >
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <p class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
+                        <img v-if="service.current_user_code != 'SA_ABS' && _profilePagesStore.profile_img"
+                            class=" forRounded w-[30px] h-[30px] rounded-full"
+                            :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output" />
+
+                        <!-- <h1
+                        class="rounded-full bg-blue-50  text-black font-semibold p-1.5 text-sm">
+                        {{ _profilePagesStore.employeeDetails.user_short_name }}
+                    </h1> -->
+
+
+                        <p v-else class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
 
                         <p class="px-2 mx-2 my-auto text-sm font-semibold text-black whitespace-nowrap"
@@ -187,11 +195,13 @@
                     <transition enter-active-class="transition duration-200 ease-out transform"
                         enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                         leave-active-class="transition duration-100 ease-in transform"
-                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"  @mouseleave="useDashboard.canShowCurrentEmployee = false" >
+                        leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"
+                        @mouseleave="useDashboard.canShowCurrentEmployee = false">
                         <div v-if="useDashboard.canShowCurrentEmployee"
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14">
                             <!-- Dropdown content goes here -->
-                            <RouterLink class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+                            <RouterLink
+                                class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                                 :to="`/profile-page`">View profile</RouterLink>
                             <a @click="canShowLogout = true"
                                 class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Log
@@ -339,13 +349,15 @@
 <script setup>
 
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
 import { Service } from '../Service/Service';
+import { profilePagesStore } from "../profile_pages/stores/ProfilePagesStore";
 import { useRouter, useRoute } from "vue-router";
 
 
 const useDashboard = useMainDashboardStore()
+let _profilePagesStore = profilePagesStore();
 const service = Service();
 
 
@@ -358,7 +370,7 @@ const canShowLoading = ref(false)
 const canShowLogout = ref(false)
 const canSwitchLegalEntity = ref(false)
 const router = useRouter();
-    const route = useRoute();
+const route = useRoute();
 
 
 const Modules = ref([
@@ -445,7 +457,7 @@ const readNotification = (notification_id) => {
 
 function updateMasterConfigClientCode(client) {
     axios.post('/session-update-globalClient', {
-        client_id:client
+        client_id: client
     });
 }
 
@@ -469,8 +481,16 @@ onMounted(() => {
         canShowLoading.value = true
     }, 2000);
     getNotifications()
-    getActiveSettings()
+    getActiveSettings();
+    _profilePagesStore.fetchEmployeeDetails();
+    _profilePagesStore.getProfilePhoto();
+    // console.log("TopBar", _profilePagesStore.profile);
 
+});
+
+
+onUpdated(() => {
+    // _profilePagesStore.getProfilePhoto();
 })
 
 
@@ -478,6 +498,7 @@ onMounted(() => {
 
 async function logout() {
     try {
+        router.replace('/')
         const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
         await axios.post('/logout', null, {
             headers: {

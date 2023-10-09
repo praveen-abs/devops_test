@@ -1214,12 +1214,21 @@ class VmtEmployeeService
 
         $json_response = array();
 
+        $client_id =null;
+
+        if(session('client_id') == 1){
+         $client_id =VmtClientMaster::pluck('id');
+        }else{
+            $client_id =[session('client_id')];
+        }
+
         //Get all the  doc for the given user_id
         $query_pending_onboard_docs = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-            ->join('vmt_employee_documents', 'vmt_employee_documents.user_id', '=', 'users.id')
-            ->join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
+            ->leftjoin('vmt_employee_documents', 'vmt_employee_documents.user_id', '=', 'users.id')
+            ->leftjoin('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
             ->where('vmt_employee_documents.status', "Pending")
             ->where('users.is_ssa', "0")
+            ->where('users.client_id', $client_id)
             ->where('users.is_onboarded', "1")
             ->where('users.active', '<>', "-1")
             ->get([
@@ -1284,8 +1293,10 @@ class VmtEmployeeService
             ->where('vmt_temp_employee_proof_documents.status', '<>', "Approved")
             ->get([
                 'users.name as name',
+                'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
                 'users.user_code as user_code',
+                'users.id as id',
                 'vmt_documents.document_name as doc_name',
                 'vmt_temp_employee_proof_documents.id as record_id',
                 'vmt_temp_employee_proof_documents.status as doc_status',
@@ -1293,27 +1304,34 @@ class VmtEmployeeService
             ]);
 
         // //store all the documents in single key
-        foreach ($query_pending_onboard_docs as $single_pending_docs) {
+        foreach ($query_pending_onboard_docs as $key=> $single_pending_docs) {
 
             $user_code = $single_pending_docs->user_code;
 
             if (array_key_exists($user_code, $json_response)) {
+
+                $query_pending_onboard_docs['key'] ["avatar"] = getEmployeeAvatarOrShortName($single_pending_docs->id);
                 array_push($json_response[$user_code]["documents"], [
                     "record_id" => $single_pending_docs->record_id,
                     "doc_name" => $single_pending_docs->doc_name,
                     "doc_url" => $single_pending_docs->doc_url,
-                    "doc_status" => $single_pending_docs->doc_status
+                    "doc_status" => $single_pending_docs->doc_status,
+
+
                 ]);
             } else {
+
                 $user_details = [
                     "name" => $single_pending_docs->name,
                     "user_code" =>  $single_pending_docs->user_code,
                     "doj" => $single_pending_docs->doj,
+                    "avatar" => getEmployeeAvatarOrShortName($single_pending_docs->id),
                     "documents" => array([
                         "record_id" => $single_pending_docs->record_id,
                         "doc_name" => $single_pending_docs->doc_name,
                         "doc_url" => $single_pending_docs->doc_url,
-                        "doc_status" => $single_pending_docs->doc_status
+                        "doc_status" => $single_pending_docs->doc_status,
+
                     ]),
                 ];
 

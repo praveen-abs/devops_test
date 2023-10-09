@@ -7,7 +7,7 @@
                     <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
                     Edit -->
                     <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""
-                        @click="onClick_EditButton_GeneralInfo">
+                        @click="canshowSidebar(true, 'General Information')">
 
                     <!-- </p> -->
                 </div>
@@ -24,7 +24,9 @@
                 <div class="col-span-2">
                     <p class="font-semibold text-xs text-gray-500">Gender</p>
                     <p class="font-semibold text-sm">
-                        {{ fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.gender) }}
+                        {{
+                            fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.gender)
+                        }}
                     </p>
                 </div>
                 <div class="col-span-2">
@@ -47,7 +49,8 @@
                 <div class="col-span-2">
                     <p class="font-semibold text-xs text-gray-500">Physically Handicapped</p>
                     <p class="font-semibold text-sm">{{
-                        fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged) }}</p>
+                        fetch_data.capitalizeFLetter(_instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged)
+                    }}</p>
                 </div>
 
             </div>
@@ -62,7 +65,7 @@
                     <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
                     Edit -->
                     <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""
-                        @click="onClick_EditButtonContacttInfo">
+                        @click="canshowSidebar(true, 'Contact Information')">
                     <!-- </p> -->
                 </div>
             </div>
@@ -102,7 +105,7 @@
                     <!-- <p class="rounded-full font-semibold  border whitespace-nowrap p-1 text-xs">
                     Edit -->
                     <img src="../../../assests/icons/edit.svg" class="h-4 mb-1 w-4 cursor-pointer my-auto" alt=""
-                        @click="onClick_EditButtonAddressInfo">
+                        @click="canshowSidebar(true, 'Address Information')">
 
                     <!-- </p> -->
                 </div>
@@ -186,7 +189,8 @@
                     <label>Blood Group<span class="text-danger">*</span></label>
                     <div class="cal-icon">
                         <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
-                            optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects w-[94%]" />
+                            optionLabel="name" optionValue="id" placeholder="Select Bloodgroup"
+                            class="form-selects w-[94%]" />
                     </div>
                     <!-- {{dialog_general_information.blood_group_id  }} -->
 
@@ -276,6 +280,119 @@
 
     <!-- Address  -->
 
+    <Sidebar v-model:visible="visible_dialog" position="right" class=" w-[500px]">
+        <div class="" v-if="InformationType == 'General Information'">
+            <h1 class=" font-semibold absolute top-6">General Information</h1>
+
+            <div class=" p-2 ">
+                <div class="my-2">
+                    <label class=" mb-1">Birth Date<span class="text-danger">*</span>
+                    </label>
+                    <Calendar class=" relative right-2 w-[100%] h-10 " v-model="dialog_general_information.dob"
+                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
+                </div>
+                <div class="my-2">
+                    <label>Gender<span class="text-danger">*</span></label>
+                    <Dropdown v-model="dialog_general_information.gender" :options="options_gender" optionLabel="name"
+                        optionValue="value" placeholder="Choose Gender" class=" h-10  w-[100%]" />
+                </div>
+                <div class="my-2">
+                    <label>Marital status <span class="text-danger">*</span></label>
+                    <Dropdown v-model="dialog_general_information.marital_status_id" :options="option_maritals_status"
+                        optionLabel="name" optionValue="id" placeholder="Select Marital Status" class="h-10 w-[100%]" />
+                </div>
+                <div class="my-2">
+                    <label>Blood Group<span class="text-danger">*</span></label>
+                    <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
+                        optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class=" w-[100%] h-10" />
+
+                </div>
+                <div class="my-2">
+                    <label class="my-1">Physically Handicapped</label>
+                    <Dropdown v-model="dialog_general_information.physically_challenged" :options="options_phy_challenged"
+                        optionLabel="name" optionValue="value" placeholder="Select" class="w-[100%] h-10" />
+                </div>
+
+                <div class=" flex justify-center ">
+                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[100px]"
+                        @click="saveGeneralInformationDetails()">Save</button>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div v-if="InformationType == 'Contact Information'">
+            <h1 class="font-semibold absolute top-6">Contact Information</h1>
+
+            <div class="p-2">
+                <div class="my-2 ">
+                    <label class=" mb-1">Personal Email</label>
+                    <input type="email" name="present_email" class="form-control" v-model="dailog_contactinfo.email">
+                </div>
+
+                <div class="my-2">
+                    <label class="mb-1">Office Email</label>
+                    <input type="email" class="h-10 form-control" name="officical_mail"
+                        v-model="dailog_contactinfo.official_email">
+                </div>
+
+                <div class="my-1">
+                    <label class=" mb-2">Mobile Number</label>
+                    <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.mobile_number"
+                        mask="9999999999" placeholder="999999999" />
+                </div>
+                <div class="my-2">
+                    <label class="mb-1">Official Mobile Number</label>
+                    <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.official_mobile_number"
+                        mask="9999999999" placeholder="999999999" />
+                </div>
+
+                <div class=" flex justify-center ">
+                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[100px]"
+                        @click="save_contactinfoDetails">Save</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="" v-if="InformationType == 'Address Information'">
+            <h1 class="font-semibold absolute top-6">Address</h1>
+
+            <div class="col-md-12">
+                <div class="mb-3 form-group">
+                    <label>Current Address</label>
+                    <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
+                        class="form-control" v-model="diolog_Addressinfo.current_address"></textarea>
+                </div>
+                <div class="mb-3 form-group">
+                    <label>Permanent Address </label>
+                    <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
+                        class="form-control" v-model="diolog_Addressinfo.Permanent_Address"></textarea>
+                </div>
+                <div class="mb-3 form-group">
+                    <div class=" d-flex justify-content-center align-items-center">
+                        <input type="checkbox" class="border rounded-md" v-model="CopyAddress"
+                            style="width: 20px; height: 20px;" @change="copyAddress" :value="1">
+                        <h1 class="mx-2">Copy current address to the permanent address</h1>
+                    </div>
+                </div>
+
+                <div class=" flex justify-center ">
+                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[100px]"
+                    @click="saveAddressinfoDetails">Save</button>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </Sidebar>
+
     <Dialog v-model:visible="addressVisible" modal header :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
             <div>
@@ -348,6 +465,27 @@ const is_dialog_generalInfo_visible = ref(false);
 const ContactVisible = ref(false);
 const addressVisible = ref(false);
 
+
+const InformationType = ref();
+
+const visible_dialog = ref(false);
+
+function canshowSidebar(val, type) {
+
+    visible_dialog.value = val;
+    InformationType.value = type;
+
+    if(type == 'General Information'){
+        onClick_EditButton_GeneralInfo();
+    }
+    else if(type == 'Contact Information'){
+        onClick_EditButtonContacttInfo();
+    }
+    else if(type == 'Address Information'){
+        onClick_EditButtonAddressInfo();
+    }
+
+}
 
 
 
@@ -493,14 +631,12 @@ function onClick_EditButton_GeneralInfo() {
     // dialog_general_information.blood_group_id = 3;
     dialog_general_information.physically_challenged = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged;
 
-    is_dialog_generalInfo_visible.value = true;
-
 }
 
 
 
 function saveGeneralInformationDetails() {
-    console.log(dialog_general_information.dob);
+    console.log(dialog_general_information);
 
     canShowLoading.value = true;
 
@@ -533,12 +669,11 @@ function saveGeneralInformationDetails() {
         .catch((err) => {
             console.log(err);
         }).finally(() => {
-            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.fetchEmployeeDetails(fetch_data.current_user_id)
             canShowLoading.value = false;
+            visible_dialog.value =false;
             toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
         });
-
-    is_dialog_generalInfo_visible.value = false
 
 
     // window.location.reload();
@@ -562,9 +697,6 @@ function onClick_EditButtonContacttInfo() {
     }
 
 
-    console.log("testing");
-
-    ContactVisible.value = true;
 }
 
 function save_contactinfoDetails() {
@@ -577,7 +709,7 @@ function save_contactinfoDetails() {
         email: dailog_contactinfo.email,
         officical_mail: dailog_contactinfo.official_email,
         mobile_number: dailog_contactinfo.mobile_number,
-        official_mobile_number: parseInt(dailog_contactinfo.official_mobile_number)
+        official_mobile_number:dailog_contactinfo.official_mobile_number
     })
         .then((res) => {
 
@@ -597,11 +729,8 @@ function save_contactinfoDetails() {
         }).finally(() => {
             _instance_profilePagesStore.fetchEmployeeDetails();
             canShowLoading.value = false;
+            visible_dialog.value =false;
         })
-
-    ContactVisible.value = false;
-
-
 
 }
 
@@ -616,12 +745,8 @@ function onClick_EditButtonAddressInfo() {
 
     diolog_Addressinfo.current_address = _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1;
     diolog_Addressinfo.Permanent_Address = _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1;
-    // diolog_Addressinfo.Permanent_Address = "testing"
 
 
-    addressVisible.value = true;
-
-    // console.log(ContactVisible.value);
 }
 
 const saveAddressinfoDetails = () => {
@@ -656,12 +781,22 @@ const saveAddressinfoDetails = () => {
             }).finally(() => {
                 _instance_profilePagesStore.fetchEmployeeDetails();
                 canShowLoading.value = false;
+                visible_dialog.value =false;
             })
-
-        addressVisible.value = false;
     }
 
 }
 
 
 </script>
+
+
+<style>
+.p-inputtext,
+.p-placeholder,
+.p-dropdown-label
+{
+    position: relative !important;
+    top: -4px !important;
+}
+</style>

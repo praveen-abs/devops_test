@@ -176,17 +176,8 @@ class VmtPayCheckController extends Controller
    }
 
    public function getEmployeeAllPayslipList(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
-        $user_code = null;
-
-        //If empty, then show current user profile page
-        if (empty($request->uid)) {
-            $user_code = auth()->user()->user_code;
-        } else {
-            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
-            //dd("Enc User details from request : ".$user);
-        }
-
-        return $employeePaySlipService->getEmployeeAllPayslipList($user_code);
+            $user = User::where('id',$request->uid)->first();
+ return $employeePaySlipService->getEmployeeAllPayslipList($user->user_code);
 
    }
 
@@ -300,19 +291,20 @@ class VmtPayCheckController extends Controller
         $user_code = null;
 
         //If empty, then show current user profile page
-        if (empty($request->uid)) {
-            if(empty($request->user_code))
-                $user_code = auth()->user()->user_code;
-            else
-                $user_code = $request->user_code ;
-        }
-        else {
-            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
-            //dd("Enc User details from request : ".$user);
-        }
+        // if (empty($request->uid)) {
+        //     if(empty($request->user_code))
+        //         $user_code = auth()->user()->user_code;
+        //     else
+        //         $user_code = $request->user_code ;
+        // }
+        // else {
+        //     $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+        //     //dd("Enc User details from request : ".$user);
+        // }
 
+        $user = User::where('id',$request->uid)->first();
 
-        return $employeePaySlipService->generatePayslip($user_code,
+        return $employeePaySlipService->generatePayslip($user->user_code,
             $request->month ,
              $request->year,
              $request->type,$serviceVmtAttendanceService);
@@ -322,7 +314,7 @@ class VmtPayCheckController extends Controller
 
      public function viewPayslipdetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService ,VmtAttendanceService $serviceVmtAttendanceService)
      {
-  
+
         return $employeePaySlipService->viewPayslipdetails($request->user_code,
         $request->month ,
          $request->year,$serviceVmtAttendanceService);
@@ -334,19 +326,20 @@ class VmtPayCheckController extends Controller
         $user_code = null;
 
         //If empty, then show current user profile page
-        if (empty($request->uid)) {
-            if(empty($request->user_code))
-                $user_code = auth()->user()->user_code;
-            else
-                $user_code = $request->user_code ;
-        }
-        else {
-            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
-            //dd("Enc User details from request : ".$user);
-        }
+        // if (empty($request->uid)) {
+        //     if(empty($request->user_code))
+        //         $user_code = auth()->user()->user_code;
+        //     else
+        //         $user_code = $request->user_code ;
+        // }
+        // else {
+        //     $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+        //     //dd("Enc User details from request : ".$user);
+        // }
 
+        $user = User::where('id',$request->uid)->first();
 
-        return $employeePaySlipService->viewPayslipdetails($user_code,
+        return $employeePaySlipService->viewPayslipdetails($user->user_code,
         $request->month ,
          $request->year,$serviceVmtAttendanceService);
      }
