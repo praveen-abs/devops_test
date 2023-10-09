@@ -779,4 +779,9 @@ public function getEmployeesCountDetails(Request $request, VmtDashboardService $
 
         return response()->json(['message' => 'Cache cleared successfully']);
     }
+
+    public function  getOrgDashBoardDeatail( Request $request,VmtDashboardService  $VmtDashBoardService)
+    {
+        return $VmtDashBoardService->getOrgDashBoardDeatail();
+    }
 }

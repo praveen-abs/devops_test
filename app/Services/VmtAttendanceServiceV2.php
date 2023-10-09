@@ -23,6 +23,8 @@ use App\Models\VmtOrgTimePeriod;
 use Carbon\CarbonInterval;
 use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Single;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\dommimails;
+use \Mail;
 
 class VmtAttendanceServiceV2
 {
@@ -368,7 +370,7 @@ class VmtAttendanceServiceV2
                                 if ($regularization_status['sts'] == 'Approved') {
                                     $regz_checkout_time = $regularization_status['reg_time'];
                                 } else {
-                                    $eg_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                    $eg_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time));
                                     $is_eg = true;
                                 }
                             } else {
@@ -394,7 +396,7 @@ class VmtAttendanceServiceV2
                             }
                             if ($regz_checkout_time != null) {
                                 $checkout_time_ot = substr($checkout_time, 0, 10) . ' ' . $regz_checkin_time;
-                                // $checkin_time_ot 
+                                // $checkin_time_ot
                             } else {
                                 $checkout_time_ot = $checkout_time;
                             }
@@ -405,7 +407,7 @@ class VmtAttendanceServiceV2
                         // dd($emp_ot_sts);
 
 
-                        //here checking for leave 
+                        //here checking for leave
                         if (!$week_off_sts && !$is_holiday && $checking_time != null && $checkout_time != null) {
                             $start_leave_list = VmtEmployeeLeaves::where('user_id', $single_user->id)
                                 ->WhereBetween(
@@ -539,7 +541,7 @@ class VmtAttendanceServiceV2
 
                         // $employee_attendance
                     } else {
-                        //employee exit, or they are not in organization 
+                        //employee exit, or they are not in organization
                     }
                     // dd($single_user);
                 }
@@ -547,13 +549,15 @@ class VmtAttendanceServiceV2
             }
             return response()->json([
                 'status' => 'success',
-                'message' => 'Attendance updated successfully'
+                'message' => 'Attendance updated successfully',
+                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('success',' data saved successfully ','null')),
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $e->getMessage(),
                 'data' => $e->getTraceAsString(),
+                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('failure',$e->getMessage(),$e->getTraceAsString())),
             ]);
         }
     }

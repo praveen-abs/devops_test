@@ -1106,7 +1106,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/getEmployeeLeaveBalanceDashboards', [App\Http\Controllers\VmtMainDashboardController::class, 'getEmployeeLeaveBalanceDashboards']);
     Route::get('/getAllNewDashboardDetails', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllNewDashboardDetails']);
     Route::get('/fetchAttendanceDailyReport_PerMonth', [App\Http\Controllers\VmtMainDashboardController::class, 'fetchAttendanceDailyReport_PerMonth']);
-
+    
 
 
     // generate payslip
