@@ -370,7 +370,7 @@ class VmtAttendanceServiceV2
                                 if ($regularization_status['sts'] == 'Approved') {
                                     $regz_checkout_time = $regularization_status['reg_time'];
                                 } else {
-                                    $eg_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                    $eg_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time));
                                     $is_eg = true;
                                 }
                             } else {
