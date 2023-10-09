@@ -117,13 +117,13 @@
                 </div>
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Employee</label>
-                    <Dropdown :options="useStore.EmployeeOptions" optionLabel="emp_name"  optionValue="id" v-model="useStore.createNewGoals.employee" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    <InputText type="text" v-model="useStore.createNewGoals.author_name" class=" h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-4 mt-2">
                 <div class="flex flex-col ">
                     <label for="" class=" text-[12px] text-[#757575]  my-2">Reviewer</label>
-                    <Dropdown :options="useStore.EmployeeOptions" optionLabel="emp_name"  optionValue="id" v-model="useStore.createNewGoals.reviewer" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
+                    <InputText type="text" v-model="useStore.createNewGoals.reviewer_name" class="h-10 !bg-[#DDDDDD] !border-[#F6F6F6]" />
                 </div>
             </div>
             <div class="  w-[100%] ">
@@ -149,7 +149,7 @@
             </div>
         </Sidebar>
 
-        <Sidebar v-model:visible="Create_KPI_From" position="right" class=" !w-[1000px]">
+        <Sidebar v-model:visible="Create_KPI_From" position="right" class="">
 
             <h2 class=" text-[#000] text-[16px] font-semibold ">KPI From Creation</h2>
 
@@ -296,7 +296,7 @@ const Create_KPI_From = ref(false);
 }
 .p-sidebar-right .p-sidebar
 {
-    width: 50rem !important;
+    width: 80% !important;
     height: 100%;
 }
 </style>

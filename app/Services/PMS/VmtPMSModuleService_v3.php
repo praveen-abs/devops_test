@@ -6,6 +6,7 @@ use App\Models\ConfigPms;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\VmtEmployee;
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormModel;
@@ -132,13 +133,7 @@ class VmtPMSModuleService_v3
     public function selfDashboardDetails($author_id)
     {
 
-        $table_pmsConfig = ConfigPms::find('1');
-        $configuration['calendar_type'] = $table_pmsConfig->calendar_type;
-        $configuration['year'] = $table_pmsConfig->year;
-        $configuration['frequency'] = $table_pmsConfig->frequency;
-        $configuration['assignment_period'] = $table_pmsConfig->assignment_period;
-
-        // checkConfigPms();
+        $user = User::find($author_id);
 
         //Get existing KPI forms
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $author_id)->get(['id', 'form_name']);
@@ -146,21 +141,46 @@ class VmtPMSModuleService_v3
         // get Departments data
         $departments = Department::where('is_active', 1)->get();
 
-        $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-            ->select(
-                'users.name as emp_name',
-                'users.id as id',
-                'users.avatar as avatar',
-            )
-            ->where('users.active', '1')
-            ->where('users.is_ssa', '0')
-            ->orderBy('vmt_employee_details.created_at', 'ASC')
-            ->get();
+        // get Currently Logged username
 
+        $author =  User::where('id', $user->id)->get(['id', 'user_code', 'name']);
+
+        $reviewer = VmtEmployeeOfficeDetails::where('user_id', $user->id)
+            ->leftJoin('users', 'vmt_employee_office_details.l1_manager_code', 'users.user_code')->get(
+                [
+                    'name',
+                    'user_code',
+                    'designation'
+                ]
+            );
+
+        $table_pmsConfig = ConfigPms::find('1');
+        $configuration['calendar_type'] = $table_pmsConfig->calendar_type;
+        $configuration['year'] = $table_pmsConfig->year;
+        $configuration['frequency'] = $table_pmsConfig->frequency;
+        $configuration['assignment_period'] = $table_pmsConfig->assignment_period;
+        // $configuration['author_name'] = $author[0]['name'];
+        // $configuration['reviewer_name'] = $reviewer[0]['name'];
+
+        // $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+        //     ->select(
+        //         'users.name as emp_name',
+        //         'users.id as id',
+        //         'users.avatar as avatar',
+        //     )
+        //     ->where('users.active', '1')
+        //     ->where('users.is_ssa', '0')
+        //     ->orderBy('vmt_employee_details.created_at', 'ASC')
+        //     ->get();
 
 
         // $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orderBy('id','DESC')->get();
-        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->orderBy('id', 'DESC')->get();
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')
+            ->orderBy('id', 'DESC')->where('assignee_id', $user->id)->get();
+
+        // dd($pmsKpiAssigneeDetails);
+
+
 
         $flowCheck = 1;
 
@@ -182,12 +202,13 @@ class VmtPMSModuleService_v3
             "Configuration" => $configuration,
             "ExistingKPIForms" => $existingKPIForms,
             "Departments" => $departments,
-            "Employees" => $employees,
+            "author" => $author,
+            "reviewer" => $reviewer,
+            "pmsKpiAssigneeDetails" => $pmsKpiAssigneeDetails,
             "canShowOverallScoreCard" => $canShowOverallScoreCard_SelfAppraisal_Dashboard
         ];
 
         return $response;
-
     }
 
 

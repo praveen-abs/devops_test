@@ -18,6 +18,8 @@ export const usePmsMainStore = defineStore("usePmsMainStore", () => {
     const departmentOptions = ref()
     const existingKpiFormOptions = ref()
     const EmployeeOptions = ref()
+    const authorDetails = ref()
+    const reviewerDetails = ref()
 
     const getPmsConfiguration = async () => {
         await axios.get('/api/getPMSConfig').then(res => {
@@ -30,10 +32,24 @@ export const usePmsMainStore = defineStore("usePmsMainStore", () => {
             pmsConfiguration.value = res.data.Configuration
             departmentOptions.value = res.data.Departments
             existingKpiFormOptions.value = res.data.ExistingKPIForms
-            EmployeeOptions.value = res.data.Employees
+            authorDetails.value = Object.values(res.data.author)
+            reviewerDetails.value = Object.values(res.data.reviewer)
+
+            createNewGoals.value.author_id = authorDetails.value.user_code
+            createNewGoals.value.author_name = authorDetails.value.name
+
+            createNewGoals.value.reviewer_id = reviewerDetails.value.user_code
+            createNewGoals.value.reviewer_name = reviewerDetails.value.name
+
+
         }).finally(()=>{
             if(pmsConfiguration.value){
-                createNewGoals.value = {...pmsConfiguration.value}
+                createNewGoals.value = {...pmsConfiguration.value,
+               author_id:authorDetails.value[0].user_code,
+               author_name:authorDetails.value[0].name,
+               reviewer_id:reviewerDetails.value[0].user_code,
+               reviewer_name:reviewerDetails.value[0].name,
+            }
             }
         })
     }

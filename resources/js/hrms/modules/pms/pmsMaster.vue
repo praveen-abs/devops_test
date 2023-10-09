@@ -78,15 +78,18 @@ import { ref, reactive, onMounted } from 'vue';
 import selfAppraisal from './selfAppraisal/selfAppraisal.vue';
 import { usePmsMainStore } from './stores/pmsMainStore'
 import {usePmsHelperStore} from './stores/pmsHelperStore'
+import { Service } from '../Service/Service';
+import axios from 'axios';
 
 const useStore = usePmsMainStore()
 const useHelper = usePmsHelperStore()
+const useService = Service()
 
 const activetab = ref(1);
 
 
 onMounted(async () => {
-    await useStore.getSelfAppraisalDashboardDetails(141)
+    await useStore.getSelfAppraisalDashboardDetails(1)
     // await useStore.getPmsConfiguration()
     // await useHelper.getKpiAsDropdown()
     // await useHelper.getManagerList()
