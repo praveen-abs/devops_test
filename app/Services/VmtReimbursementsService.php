@@ -7,6 +7,7 @@ use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\VmtEmployeeReimbursements;
+use App\Models\VmtClientMaster;
 use App\Models\VmtReimbursements;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -312,7 +313,20 @@ class VmtReimbursementsService {
     function fetchAllReimbursementsAsGroups($year, $month, $status ,$selected_reimbursement_type){
 
 
+        $client_id =null;
+        if(!empty(session('client_id'))){
 
+                if(session('client_id') == 1){
+
+                $client_id =VmtClientMaster::pluck('id');
+                }else{
+                    $client_id =[session('client_id')];
+                }
+
+        }else{
+
+            $client_id =[auth()->user()->client_id];
+        }
         $json_response = array();
 
         //Fetch how many unique users for the given filters
@@ -320,6 +334,7 @@ class VmtReimbursementsService {
         $array_unique_users = VmtEmployeeReimbursements::leftJoin('users','users.id','=','vmt_employee_reimbursements.user_id')
                                 ->whereYear('vmt_employee_reimbursements.date',$year)
                                 ->whereMonth('vmt_employee_reimbursements.date',$month)
+                                ->whereIn('users.client_id',$client_id)
                                 ->groupBy('user_code')
                                 ->select('vmt_employee_reimbursements.user_id as user_id','users.name as employee_name',
                                 'users.user_code as user_code',DB::raw('sum(distance_travelled) as total_distance_travelled'),
@@ -407,7 +422,7 @@ class VmtReimbursementsService {
     }
 
     public function fetchEmployeeReimbursement($user_id,$year,$month){
-    
+
         $employee_reimbursement_data_query = VmtEmployeeReimbursements::leftjoin('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
                                                                       ->leftjoin('vmt_reimbursement_vehicle_types','vmt_reimbursement_vehicle_types.id','=','vmt_employee_reimbursements.vehicle_type_id')
                                                                       ->where('user_id',$user_id)

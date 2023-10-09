@@ -44,7 +44,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const getEmployeeAttendance = async (currentlySelectedUser, currentlySelectedMonth, currentlySelectedYear) => {
         canShowLoading.value = true;
-     
+
         // console.log(CurrentlySelectedUser);
         let url = '/fetch-attendance-user-timesheet';
 
@@ -98,7 +98,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         CurrentlySelectedUser.value = currentlySelectedUser;
         console.log("employee list select function  ::" ,CurrentlySelectedUser.value);
         canShowLoading.value = true;
-    
+
         currentlySelectedOrgMemberUserId.value = user_id
         getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             // console.log(Object.values(res.data));
@@ -372,7 +372,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         if(CurrentlySelectedUser && service.current_user_role == 2){
             url = '/checkAbsentEmployeeAdminStatus'
         }else{
-            url = '/attendance-req-regularization'
+            url = '/attendance-req-absent-regularization'
         }
 
         if(CurrentlySelectedUser && service.current_user_role == 2){
