@@ -22,6 +22,8 @@ use App\Models\VmtClientMaster;
 use App\Models\VmtOrgTimePeriod;
 use Carbon\CarbonInterval;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Mail\dommimails;
+use \Mail;
 
 class VmtAttendanceControllerV2 extends Controller
 {
@@ -31,6 +33,11 @@ class VmtAttendanceControllerV2 extends Controller
         $current_time = Carbon::now();
         foreach (VmtWorkShifts::pluck('shift_start_time') as $single_sfift) {
             $shift_start_time = Carbon::parse($single_sfift);
+
+            // $current_time  = Carbon::parse('2023-10-09 10:00:00'); // for testing purpose only
+            // $shift_start_time = Carbon::parse('2023-10-09 11:00:00'); // for testing purpose only
+            // dd($current_time->diffInMinutes($shift_start_time));
+
            // dd($shift_start_time,$current_time->diffInMinutes($shift_start_time),$current_time->diffInMinutes($shift_start_time) < 65);
             if ($current_time->diffInMinutes($shift_start_time) < 65) {
                 if (VmtEmployeeAttendanceV2::exists()) {
@@ -49,7 +56,7 @@ class VmtAttendanceControllerV2 extends Controller
                 return $attendance_services->attendanceJobs($start_date, $end_date);
             }
         }
-        return 'No New Data ';
+        return Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('no data','null','null'));
     }
 
 
