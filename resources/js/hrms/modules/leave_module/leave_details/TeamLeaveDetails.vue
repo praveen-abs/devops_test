@@ -19,7 +19,6 @@
                                     style="border-radius: 7px; height: 30px;width: 100px;" :maxDate="new Date()" />
 
                             </div>
-
                             <button class=" btn-orange py-1  px-4 rounded"
                                 @click="leaveModuleStore.getTermLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD'), dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD')),leaveModuleStore.canShowLoading = true">submit</button>
                         </div>
@@ -164,7 +163,7 @@
                             </Column>
                             <Column field="" header="Action" style="min-width: 15rem">
                                 <template #body="slotProps">
-                                    <Button type="button" icon="" class=" text-white Button py-2.5" label="View"
+                                    <Button icon="" class=" border-[1px] text-[#000] border-[#000] py-2.5" label="View"
                                         @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="height: 2em" />
                                 </template>
                             </Column>
