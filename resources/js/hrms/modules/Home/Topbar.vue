@@ -165,8 +165,8 @@
                     class="p-2 transition duration-700 ease-in-out transform bg-gray-100 rounded-full hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
                     <img src="./assests/icons/exit.svg" alt="" class="w-6 h-6">
                 </button>
-                <div class="relative mx-3 "
-                     @mouseenter="useDashboard.canShowCurrentEmployee = !useDashboard.canShowCurrentEmployee" @mouseleave="useDashboard.canShowCurrentEmployee = false " >
+                <div class="relative mx-3"
+                     @mouseenter="useDashboard.canShowCurrentEmployee = true" @mouseleave="useDashboard.canShowCurrentEmployee = false " >
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
@@ -196,7 +196,7 @@
                         enter-class="translate-y-2 opacity-0" enter-to-class="translate-y-0 opacity-100"
                         leave-active-class="transition duration-100 ease-in transform"
                         leave-class="translate-y-0 opacity-100" leave-to-class="translate-y-2 opacity-0"
-                        @mouseleave="useDashboard.canShowCurrentEmployee = false">
+                           @mouseenter="useDashboard.canShowCurrentEmployee = true" class="" >
                         <div v-if="useDashboard.canShowCurrentEmployee"
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14">
                             <!-- Dropdown content goes here -->
