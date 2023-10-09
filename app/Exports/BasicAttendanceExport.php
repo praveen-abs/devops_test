@@ -44,14 +44,14 @@ class BasicAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, 
 
     public function __construct($data, $public_client_logo_path, $active_status, $period,$client_name)
     {
-        $this->heading_dates = $data[0];
-        $this->total_column = num2alpha(count($data[0]) - 1);
-        $this->reportresponse = $data[1];
+        $this->heading_dates = $data['headings'];
+        $this->total_column = num2alpha(count($data['headings']) - 1);
+        $this->reportresponse = $data['rows'];
         $this->client_name = $client_name;
         $this->period = $period;
         $this->category = $active_status;
         $this->last_header_column = num2alpha(count($this->heading_dates) - 1);
-        $this->last_row = count($data[1]) + 7;
+        $this->last_row = count($data['rows']) + 7;
         $this->public_client_logo_path = $public_client_logo_path;
     }
 
