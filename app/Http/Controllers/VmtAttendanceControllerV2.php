@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\DetailedAttendanceExport;
+use App\Exports\BasicAttendanceExport;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeAttendanceV2;
 use Exception;
@@ -60,12 +61,48 @@ class VmtAttendanceControllerV2 extends Controller
     }
 
 
-    public function downloadDetailedAttendanceReport(VmtAttendanceServiceV2 $attendance_services)
+    public function downloadDetailedAttendanceReport(Request $request,VmtAttendanceServiceV2 $attendance_services)
     {
-        $start_date = '2023-04-26';
-        $end_date = '2023-05-25';
-        $department_id ='';
-        $client_id='';
-        return Excel::download(new DetailedAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date,$department_id, $client_id), true), 'Detailed Attendance Report.xlsx');
+        if (empty($request->start_date)  || empty($request->end_date)) {
+            if (empty($request->date)) {
+                $date = Carbon::now()->format('Y-m-d');
+                $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
+            } else {
+                $start_date = Carbon::parse($request->date)->subMonth()->addDay(25)->format('Y-m-d');
+                $end_date = Carbon::parse($request->date)->addDay(24)->format(('Y-m-d'));
+            }
+        } else {
+            $start_date = Carbon::parse($request->start_date);
+            $end_date = Carbon::parse($request->end_date);
+        }
+        $start_date ='2023-07-26';
+            $end_date ='2023-08-25';
+        $client_logo_path = session()->get('client_logo_url');
+        $public_client_logo_path = public_path($client_logo_path);
+
+
+        if (empty($request->active_status)) {
+            $active_status = 'Active,Resigned,Yet to activate';
+        } else {
+            $active_status = '';
+            foreach ($request->active_status as $single_sts) {
+                if ($single_sts == '0') {
+                    $active_status = $active_status . 'Yet to activate,';
+                } else if ($single_sts == '1') {
+                    $active_status = $active_status . 'Active,';
+                } else if ($single_sts == '-1') {
+                    $active_status = $active_status . 'Resigned,';
+                } else {
+                }
+            }
+        }
+        // dd($request->all());
+        $period = Carbon::parse($start_date)->format('d-M-Y') . ' - ' . Carbon::parse($end_date)->format('d-M-Y');
+       // dd($start_date);
+       $department_id='';
+       $client_id = '';
+       // dd($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date, $department_id, $client_id));
+        return Excel::download(new BasicAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id), $public_client_logo_path, $active_status, $period, sessionGetSelectedClientName()), 'Basic Attendance Report c  .xlsx');
     }
 }
