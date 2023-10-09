@@ -394,9 +394,6 @@ const getClientList = () => {
 const getSessionClient = () => {
     axios.get('session-sessionselectedclient').then(res => {
         currentlySelectedClient.value = res.data
-    }).finally(() => {
-        updateMasterConfigClientCode()
-
     })
 
 
