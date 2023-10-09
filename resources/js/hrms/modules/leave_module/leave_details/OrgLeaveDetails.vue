@@ -152,7 +152,7 @@
 
                     <Column field="" header="Action" style="min-width: 15rem">
                         <template #body="slotProps">
-                            <Button type="button" icon="" class=" text-white Button py-2.5" label="View"
+                            <Button icon="" class=" text-[#000] border-[#000] border-[1px] py-2.5" label="View"
                                 @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="height: 2em" />
                         </template>
                     </Column>
