@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
 
         $schedule->call('App\Http\Controllers\VmtEmployeeBirthdayController@sendAniversaryNotificationtoEmployee')->daily();
 
-        $schedule->call('App\Http\Controllers\VmtAttendanceControllerV2@attendanceJob')->everyThirtyMinutes()->emailOutputTo('karthigaiselvan@abshrms.com');
-        
+        $schedule->call('App\Http\Controllers\VmtAttendanceControllerV2@attendanceJob')->everyThirtyMinutes()->emailOutputTo('simmasrfc1330@gmail.com');
+
     }
 
     /**
