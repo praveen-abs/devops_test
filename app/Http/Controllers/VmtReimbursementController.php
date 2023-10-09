@@ -12,6 +12,7 @@ class VmtReimbursementController extends Controller
     }
 
     public function getReimbursementClaimTypes(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
+
         return $serviceVmtReimbursementsService->getReimbursementClaimTypes();
     }
 
@@ -56,6 +57,7 @@ class VmtReimbursementController extends Controller
         $user_id = auth()->user()->id;
         $year = $request->selected_year;
         $month = $request->selected_month;
-        return  $reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month);
+         $response = $reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month);
+        return $response;
     }
 }

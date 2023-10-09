@@ -407,8 +407,9 @@ class VmtReimbursementsService {
     }
 
     public function fetchEmployeeReimbursement($user_id,$year,$month){
-        $employee_reimbursement_data_query = VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
-                                                                      ->join('vmt_reimbursement_vehicle_types','vmt_reimbursement_vehicle_types.id','=','vmt_employee_reimbursements.vehicle_type_id')
+    
+        $employee_reimbursement_data_query = VmtEmployeeReimbursements::leftjoin('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
+                                                                      ->leftjoin('vmt_reimbursement_vehicle_types','vmt_reimbursement_vehicle_types.id','=','vmt_employee_reimbursements.vehicle_type_id')
                                                                       ->where('user_id',$user_id)
                                                                       ->whereYear('date',$year)
                                                                       ->whereMonth('date',$month)
