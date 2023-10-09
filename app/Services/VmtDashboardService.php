@@ -1244,7 +1244,7 @@ class VmtDashboardService
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
-dd(  $getAllEvent);
+//dd(  $getAllEvent);
             return response()->json(
                 [
                     "all_events" => json_decode($getAllEvent->content(), true)['data'],
