@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\RolesPermissions;
 
 use App\Models\VmtPermissionModule;
 use App\Models\VmtPermodulePermission;

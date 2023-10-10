@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\PMS;
 
 
 class VmtPMSModuleService_v3 {

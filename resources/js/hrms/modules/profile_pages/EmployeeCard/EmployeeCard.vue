@@ -141,6 +141,8 @@
                 </div>
                 <div class="mx-2">
                     <button class="p-0 m-0 bg-transparent border-0 outline-none btn">
+
+                        <button class=" border-[1px] border-[#000] p-2 rounded-md mx-2" @click="visibleRight= true" > view</button>
                         <i class="pi pi-id-card text-success fs-4" aria-hidden="true" @click="dialogIdCard = true"></i>
                     </button>
                 </div>
@@ -427,8 +429,50 @@
         </div>
     </Dialog>
 
-    <Sidebar v-model:visible="visibleRight" position="right" class=" w-[600px]">
-        <h1 class="" ></h1>
+    <Sidebar v-model:visible="visibleRight" position="right" class="!w-[400px]">
+        <h1 class="bg-cyan-800 p-4 text-white text-xl " >Profile</h1>
+        <div class="py-4">
+            <h4 class="font-semibold text-2xl ">Personal Information</h4>
+            <div class="leading-8">
+                <h6 class="py-2 font-semibold text-xl">Name</h6>
+                <InputText v-model="value" class="bg-gray-200" disabled placeholder="Name" />
+                <h6 class="py-2 font-semibold text-xl">Designation</h6>
+                <InputText v-model="value"  class="bg-gray-200" disabled placeholder="Designation" />
+                <h6 class="py-2 font-semibold text-xl">Location</h6>
+                <InputText v-model="value" class="bg-gray-200" disabled placeholder="Location" />
+            </div>
+            <div class="py-2 leading-8 font-semibold text-2xl">General Information
+                <div class="flex ">
+                    <div class="">
+                        <div class="w-80  font-semibold  text-xl leading-10 ">DOB
+                            <InputText v-model="value" class="bg-gray-200 h-12" disabled placeholder="DOB" />
+                        </div>
+                        <div class="w-80 font-semibold text-xl leading-10 ">Gender
+                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Gender" />
+                        </div>
+                        <div class="w-80 font-semibold text-xl leading-10 ">Blood Group
+                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Blood Group" />
+                        </div>
+                    </div>
+                    <div class="ml-20 ">
+                        <div class="w-80  font-semibold leading-10  text-xl">DOJ
+                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="DOJ" />
+                        </div>
+                        <div class="w-80  font-semibold leading-10  text-xl">Martial Status
+                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Martial Status" />
+                        </div>
+                        <div class="w-80  font-semibold leading-10  text-xl">Physically Challenged
+                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Physically Challenged" />
+                        </div>
+                
+                    </div>
+                    
+                    
+    
+
+                </div>
+            </div>
+        </div>
     </Sidebar>
 </template>
 
@@ -442,6 +486,8 @@ import useValidate from '@vuelidate/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
 
 const service = Service();
+
+const visibleRight = ref(true);
 
 const canShowLoading = ref(false);
 
@@ -761,10 +807,6 @@ $fontColor: rgb(250, 250, 250);
     color: black !important;
 }
 
-.p-sidebar-right .p-sidebar {
-    width: 50% !important;
-    height: 100%;
-}
 
 /* .p-progressbar-label{
 color: black !important;
