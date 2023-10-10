@@ -50,7 +50,12 @@ class VmtEmployeeAttendanceController extends Controller
         }
         $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
         // dd($data);
-        return Excel::download(new DetailedAttendanceExport($data, $is_lc), 'Detailed Attendance Report.xlsx');
+        $client_query = VmtClientMaster::where('id', sessionGetSelectedClientid())->first();
+        $client_name = sessionGetSelectedClientName();
+        $client_logo_path = session()->get('client_logo_url');
+        $public_client_logo_path = public_path($client_logo_path);
+        // dd($data);
+        return Excel::download(new DetailedAttendanceExport($data, $is_lc, $client_name, $public_client_logo_path,$start_date, $end_date), 'Detailed Attendance Report.xlsx');
     }
     public function downloadConsolidateReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {

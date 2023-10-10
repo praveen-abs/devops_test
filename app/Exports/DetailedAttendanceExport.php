@@ -20,8 +20,10 @@ use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStrictNullComparison, WithStyles
+class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStrictNullComparison, WithStyles,WithDrawings
 {
 
     /**
@@ -36,8 +38,15 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
     private $heading_dates_2;
     private $last_row;
     private $is_lc;
+    private $public_client_logo_path;
+    private $client_name;
+    private $start_date;
+    private $end_date;
 
-    public function __construct($data, $is_lc)
+
+
+
+    public function __construct($data, $is_lc,$client_name,$public_client_logo_path,$start_date, $end_date)
     {
         $this->heading_dates = $data['heading_dates'];
         $this->header_2 = $data['header_2'];
@@ -46,6 +55,10 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
         $this->heading_dates_2 = $data['heading_dates_2'];
         $this->last_row = count($this->reportresponse) + 8;
         $this->is_lc = $is_lc;
+        $this->client_name = $client_name;
+        $this->public_client_logo_path = $public_client_logo_path;
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
     }
 
     public function headings(): array
@@ -58,12 +71,22 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
     public function startCell(): string
     {
-        return 'A5';
+        return 'A6';
     }
 
 
     public function styles(Worksheet $sheet)
     {
+
+        $sheet->mergeCells('C1:E1')->setCellValue('C1', "Legal Entity : " .$this->client_name);
+        $sheet->getStyle('C1:E1')->getFont()->setBold(true);
+
+        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Attedance Detailed Report');
+        $sheet->getStyle('C2:E2')->getFont()->setBold(true);
+
+        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".Carbon::parse($this->start_date)->format('d-M-Y') .' to '. $this->end_date);
+        $sheet->getStyle('C3:E3')->getFont()->setBold(true);
+
 
         // For First Four Column Headers
         for ($i = 0; $i < 4; $i++) {
@@ -151,4 +174,15 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
         return  $single_employee;
     }
+
+    public function drawings()
+    {
+        $drawing = new Drawing();
+        $drawing->setPath($this->public_client_logo_path);
+        $drawing->setHeight(1200);
+        $drawing->setWidth(224);
+        $drawing->setCoordinates('A1');
+        return $drawing;
+    }
+
 }
