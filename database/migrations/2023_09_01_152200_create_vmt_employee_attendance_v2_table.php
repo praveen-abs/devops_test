@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_emp_intermediate_attendance', function (Blueprint $table) {
+        Schema::create('vmt_emp_att_intrtable', function (Blueprint $table) {
 
             #Core attendance
             $table->id();
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->text('attendance_mode_checkout')->nullable(); #web,mobile,bio
             $table->text('checkin_lat_long')->nullable();
             $table->text('checkout_lat_long')->nullable();
-            //$table->integer('overtime')->nullable(); # can be calculated from current shifttime and checkout time + limit 
+            //$table->integer('overtime')->nullable(); # can be calculated from current shifttime and checkout time + limit
             $table->integer('emp_leave_id')->nullable();
             $table->text('overtime')->nullable();
             $table->integer('lc_id')->nullable();
@@ -51,8 +51,8 @@ return new class extends Migration
             // $table->integer('lc_minutes')->nullable(); # can be calculated from current shifttime and regularized time
             // $table->integer('eg_minutes')->nullable(); # can be calculated from current shifttime and regularized time
 
-            #MIP status , mip time , 
-            #MOP status , mop time , 
+            #MIP status , mip time ,
+            #MOP status , mop time ,
 
             $table->timestamps();
         });
@@ -65,6 +65,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_employee_attendance_v2');
+        Schema::dropIfExists('vmt_emp_att_intrtable');
     }
 };
