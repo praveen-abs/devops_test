@@ -53,12 +53,15 @@ import { useMainDashboardStore } from './stores/dashboard_service'
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { Service } from '../Service/Service'
 import Hr_dashboard from './hr_dashboard/hr_dashboard.vue';
-import axios from 'axios'
+import axios from 'axios';
+import { profilePagesStore } from '../profile_pages/stores/ProfilePagesStore'
 
 const useDashboard = useMainDashboardStore();
 const canShowLoadingScreen = ref();
-const service = Service()
+const service = Service();
 
+
+const _profilePagesStore = profilePagesStore();
 
 // Watch for changes in receivedData
 const stopWatchingData = watch(useDashboard.allEventSource, (newValue, oldValue) => {

@@ -12,10 +12,10 @@
                         {{ dayjs(new Date()).format('MMMM DD,YYYY') }}</span>
                 </p>
             </div>
-            <div class="flex justify-end gap-5 mx-4">
-                <!-- <div>1</div>
-                <div>2</div>
-                <div>2</div> -->
+            <div class="flex justify-end gap-3 mx-4 items-center ">
+                <div><Dropdown  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
+                <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
+                <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
             </div>
         </div>
 
@@ -134,7 +134,9 @@ import { saveAs } from "file-saver";
 const useDashboard = useAttendanceDashboardMainStore()
 
 onMounted(async () => {
+    
     await useDashboard.getAttendanceDashboardMainSource()
+    useDashboard.GetDepartment();
 })
 
 

@@ -108,10 +108,10 @@ import { useToast } from "primevue/usetoast";
 import dayjs from "dayjs";
 import { Service } from '../../../Service/Service';
 
-
 const service = Service()
 
 import { useManageEmployeesStore } from '../manage_service'
+import { profilePagesStore } from "../../../profile_pages/stores/ProfilePagesStore";
 
 const manageEmployeesStore = useManageEmployeesStore()
 
@@ -125,6 +125,8 @@ let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
+
+const profilePageStore = profilePagesStore();
 // const loading = ref(true);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -160,7 +162,9 @@ const filters = ref({
 
 
 function openProfilePage(uid) {
-    window.location.href = "/pages-profile-new?uid=" + uid;
+    console.log("user code ::",uid.emp_code);
+    enc_user_id.value = uid.data;
+    profilePageStore.user_code = uid.emp_code;
 }
 
 ////PrimeVue ConfirmDialog code -- Keeping here for reference

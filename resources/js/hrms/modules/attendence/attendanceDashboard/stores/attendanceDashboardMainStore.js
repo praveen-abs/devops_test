@@ -23,7 +23,8 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const overallEmployeeCountForExceptionAnalyticsForGraph = ref([])
     const totalEmployeeInOrganization = ref()
     const AttendanceAnalytics = ref()
-    const AttendanceAnalyticsForGraph = ref([])
+    const AttendanceAnalyticsForGraph = ref([]);
+    const departments = ref();
 
     const chartDetails = ref([
         { label: 'Absent', backgroundColor: '#FFB1B8', count: null },
@@ -33,7 +34,24 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
         { label: 'Early going', backgroundColor: '#6BB7C0', count: null },
         { label: 'Missed out punch', backgroundColor: '#000000', count: null },
         { label: 'Missed in punch', backgroundColor: '#000000', count: null },
-    ])
+    ]);
+
+    function GetDepartment(){
+        axios.get('/fetch-departments').then((res)=>{
+            departments.value = res.data;
+            console.log(res.data);
+        }).finally(()=>{
+        })
+    }
+
+    function send_selectedDepartment(){
+
+        axios.post('/get-attendance-dashboard').then((res)=>{
+        }).finally(()=>{
+
+        })
+
+    }
 
 
     const getAttendanceDashboardMainSource = async () => {
@@ -111,7 +129,13 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
         attendanceDashboardUpcoming, overallEmployeeCountForExceptionAnalytics, overallEmployeeCountForExceptionAnalyticsForGraph,
 
-        AttendanceAnalytics,AttendanceAnalyticsForGraph
+        AttendanceAnalytics,AttendanceAnalyticsForGraph,
+
+        GetDepartment,
+        departments,
+
+        send_selectedDepartment
+
 
     }
 })
