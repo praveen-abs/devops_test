@@ -4077,7 +4077,7 @@ class VmtAttendanceService
             $client_id =[session('client_id')];
         }
 
-        $map_allEmployees = User::where('active','1')->where('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
+        $map_allEmployees = User::where('active','1')->whereIn('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
 
         $map_leaveTypes = VmtLeaves::all(['id', 'leave_type'])->keyBy('id');
 

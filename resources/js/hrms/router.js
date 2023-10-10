@@ -106,6 +106,11 @@ const routes = [
                 name: 'approvals-employee-Details',
                 component: () => import('../hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.vue'),
             },
+            {
+                path: '/Approvals/loan-settings',
+                name: 'approvals-salary-advance',
+                component: () => import('../hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.vue'),
+            },
 
             // Paycheck
             {
@@ -127,6 +132,18 @@ const routes = [
                 path: '/Paycheck/Import-loan-and-salary-advance',
                 name: 'Paycheck-Import-loan-and-salary-advance',
                 component: () => import('../hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue'),
+            },
+
+            // payroll
+            {
+                path: '/Payroll/Manage-Payslips',
+                name: 'Payroll-Manage-Payslips',
+                component: () => import('../hrms/modules/manage_payslips/ManagePayslips.vue'),
+            },
+            {
+                path: '/Payroll/PayRun',
+                name: 'Payroll-Pay-Run',
+                component: () => import('../hrms/modules/payroll/payRun/payRun.vue'),
             },
 
             // Reports

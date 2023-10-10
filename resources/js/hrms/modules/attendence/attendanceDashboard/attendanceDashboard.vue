@@ -13,7 +13,7 @@
                 </p>
             </div>
             <div class="flex justify-end gap-3 mx-4 items-center ">
-                <div><Dropdown  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
+                <div><Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id" v-model="department"  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
                 <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
                 <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
             </div>
@@ -134,11 +134,12 @@ import { saveAs } from "file-saver";
 const useDashboard = useAttendanceDashboardMainStore()
 
 onMounted(async () => {
-    
+
     await useDashboard.getAttendanceDashboardMainSource()
     useDashboard.GetDepartment();
-})
+});
 
+const department = ref();
 
 const downloadExcelFile = async () => {
     const workbook = new ExcelJS.Workbook();

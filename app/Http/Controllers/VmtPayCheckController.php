@@ -176,8 +176,8 @@ class VmtPayCheckController extends Controller
    }
 
    public function getEmployeeAllPayslipList(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
-            $user = User::where('id',$request->uid)->first();
- return $employeePaySlipService->getEmployeeAllPayslipList($user->user_code);
+           // $user = User::where('id',$request->uid)->first();
+ return $employeePaySlipService->getEmployeeAllPayslipList($request->user_code);
 
    }
 

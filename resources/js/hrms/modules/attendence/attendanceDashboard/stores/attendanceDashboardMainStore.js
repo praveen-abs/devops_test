@@ -38,19 +38,21 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
 
     function GetDepartment(){
         axios.get('/fetch-departments').then((res)=>{
+
             departments.value = res.data;
             console.log(res.data);
         }).finally(()=>{
         })
     }
 
-    function send_selectedDepartment(){
+    function send_selectedDepartment(val){
 
-        axios.post('/get-attendance-dashboard').then((res)=>{
+        axios.post('/get-attendance-dashboard',{
+            id:val
+        }).then((res)=>{
         }).finally(()=>{
 
         })
-
     }
 
 

@@ -209,7 +209,7 @@ onMounted(() => {
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.REIMBURSEMENT === 1 ? { label: 'Reimbursement', to: 'Approvals/Reimbursements' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.TAXATIONS === 1 ? { label: 'Taxations ', to: '' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.EMPLOYEE_DETAILS === 1 ? { label: 'Employee Details', to: 'Approvals/Employee-Details' } : null : null : null,
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.LOAN_AND_SALARY_ADVANCE === 1 ? { label: 'Loan And Salary Advance ', to: 'showSAapprovalView' } : null : null : null
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS') ? findSelectedModuleIsEnabled(res.data.data, 'APPROVALS').sub_module_name.LOAN_AND_SALARY_ADVANCE === 1 ? { label: 'Loan And Salary Advance ', to: 'Approvals/loan-settings' } : null : null : null
                     ],
                     arrow_icon: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? 'pi pi-angle-right' : null,
                     icon: '',
@@ -243,8 +243,8 @@ onMounted(() => {
                         label: 'Payroll',
                         subItems: [
                             findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.ANALYTICS === 1 ? { label: 'Analytics', to: 'payroll-analytics' } : null : null,
-                            findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.PAYRUN === 1 ? { label: 'Pay Run', to: 'payRun' } : null : null,
-                            findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.MANAGE_PAYSLIPS === 1 ? { label: 'Manage Payslip', to: 'showManagePayslipsPage' } : null : null,
+                            findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.PAYRUN === 1 ? { label: 'Pay Run', to: 'Payroll/PayRun' } : null : null,
+                            findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.MANAGE_PAYSLIPS === 1 ? { label: 'Manage Payslip', to: 'Payroll/Manage-Payslips' } : null : null,
                             findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.CLAIM === 1 ? { label: 'Claim', to: 'payroll-claims' } : null : null,
                             findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.REPORTS === 1 ? { label: 'Reports', to: 'reports-payroll' } : null : null],
                         arrow_icon: 'pi pi-angle-right',
