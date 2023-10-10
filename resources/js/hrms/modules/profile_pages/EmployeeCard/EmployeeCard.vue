@@ -142,7 +142,7 @@
                 <div class="mx-2">
                     <button class="p-0 m-0 bg-transparent border-0 outline-none btn">
 
-                        <button class=" border-[1px] border-[#000] p-2 rounded-md mx-2" @click="visibleRight= true" > view</button>
+                        <!-- <button class=" border-[1px] border-[#000] p-2 rounded-md mx-2" @click="visibleRight= true" > view</button> -->
                         <i class="pi pi-id-card text-success fs-4" aria-hidden="true" @click="dialogIdCard = true"></i>
                     </button>
                 </div>
@@ -487,7 +487,7 @@ import { required, email, minLength, sameAs } from '@vuelidate/validators'
 
 const service = Service();
 
-const visibleRight = ref(true);
+const visibleRight = ref(false);
 
 const canShowLoading = ref(false);
 
