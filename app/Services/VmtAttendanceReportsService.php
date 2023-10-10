@@ -1012,7 +1012,7 @@ class VmtAttendanceReportsService
                         }
 
                         if ($attendance_setting_details['lc_status'] == 1) {
-                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins,$att_detail->status);
+                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $att_detail->status);
                         } else {
                             array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $att_detail->status);
                         }
@@ -1555,16 +1555,16 @@ class VmtAttendanceReportsService
             }
 
             $attendance_data = user::Join('vmt_emp_intermediate_attendance', 'vmt_emp_intermediate_attendance.user_id', '=', 'users.id')
-            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
-            ->whereBetween('date', [$start_date, $end_date])
-            ->get();
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
+                ->whereBetween('date', [$start_date, $end_date])
+                ->get();
 
             foreach ($attendance_data as $single_data) {
                 $sts_ar = explode('/', $single_data['status']);
 
                 if ($single_data['status'] == 'A') {
 
-                    $temp_ar['Employee Code']= $single_data['user_code'];
+                    $temp_ar['Employee Code'] = $single_data['user_code'];
                     $temp_ar['Employee Name'] = $single_data['name'];
                     $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
                     $temp_ar['Shift Name'] =  $single_data['shift_name'];
@@ -1573,9 +1573,8 @@ class VmtAttendanceReportsService
                     $temp_ar['Status'] = 'Absent';
                     $temp_ar['Day Status'] = 'Full day Absent';
                     array_push($absent_data, $temp_ar);
-
-                }else
-                if(in_array('P',$sts_ar)){
+                } else
+                if (in_array('P', $sts_ar)) {
 
 
                     $diff_minutes = (Carbon::parse($single_data['checkin_time']))->diffInMinutes(Carbon::parse($single_data['checkout_time']));
@@ -1583,37 +1582,33 @@ class VmtAttendanceReportsService
                     $forenoon = Carbon::parse($single_data['shift_start_time'])->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
                     $afternoon = Carbon::parse($forenoon)->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
 
-                    if($diff_minutes > $single_data['halfday_min_workhrs'] || $diff_minutes < $single_data['halfday_min_workhrs']){
+                    if ($diff_minutes > $single_data['halfday_min_workhrs'] || $diff_minutes < $single_data['halfday_min_workhrs']) {
 
-                    if($forenoon <= $single_data['checkout_time'] && $forenoon <= $single_data['checkin_time']){
-                        $temp_ar['Employee Code']= $single_data['user_code'];
-                        $temp_ar['Employee Name'] = $single_data['name'];
-                        $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
-                        $temp_ar['Shift Name'] =  $single_data['shift_name'];
-                        $temp_ar['In Punch'] = $single_data['checkin_time'];
-                        $temp_ar['Out Punch']  = $single_data['checkout_time'];
-                        $temp_ar['Status'] = 'Half Day';
-                        $temp_ar['Day Status'] = 'FN Absent';
-                        array_push($absent_data, $temp_ar);
-
-                    }else
-                    if(($forenoon >= ($single_data['checkout_time']) && ($forenoon >= $single_data['checkin_time']))){
-                        $temp_ar['Employee Code']= $single_data['user_code'];
-                        $temp_ar['Employee Name'] = $single_data['name'];
-                        $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
-                        $temp_ar['Shift Name'] =  $single_data['shift_name'];
-                        $temp_ar['In Punch'] = $single_data['checkin_time'];
-                        $temp_ar['Out Punch']  = $single_data['checkout_time'];
-                        $temp_ar['Status'] = 'Half Day';
-                        $temp_ar['Day Status'] = 'AN Absent';
-                        array_push($absent_data, $temp_ar);
+                        if ($forenoon <= $single_data['checkout_time'] && $forenoon <= $single_data['checkin_time']) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
+                            $temp_ar['Status'] = 'Half Day';
+                            $temp_ar['Day Status'] = 'FN Absent';
+                            array_push($absent_data, $temp_ar);
+                        } else
+                    if (($forenoon >= ($single_data['checkout_time']) && ($forenoon >= $single_data['checkin_time']))) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
+                            $temp_ar['Status'] = 'Half Day';
+                            $temp_ar['Day Status'] = 'AN Absent';
+                            array_push($absent_data, $temp_ar);
+                        }
                     }
-
                 }
-
             }
-
-        }
 
             $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Status', 'Day Status');
             $response['rows'] = $absent_data;
@@ -1692,51 +1687,47 @@ class VmtAttendanceReportsService
             }
 
             $attendance_data = user::Join('vmt_emp_intermediate_attendance', 'vmt_emp_intermediate_attendance.user_id', '=', 'users.id')
-            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
-            ->whereBetween('date', [$start_date, $end_date])
-            ->get();
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
+                ->whereBetween('date', [$start_date, $end_date])
+                ->get();
 
             foreach ($attendance_data as $single_data) {
                 $sts_ar = explode('/', $single_data['status']);
 
-                if(in_array('P',$sts_ar)){
+                if (in_array('P', $sts_ar)) {
 
                     $diff_minutes = (Carbon::parse($single_data['checkin_time']))->diffInMinutes(Carbon::parse($single_data['checkout_time']));
 
                     $forenoon = Carbon::parse($single_data['shift_start_time'])->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
                     $afternoon = Carbon::parse($forenoon)->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
 
-                    if($diff_minutes > $single_data['halfday_min_workhrs'] || $diff_minutes < $single_data['halfday_min_workhrs']){
+                    if ($diff_minutes > $single_data['halfday_min_workhrs'] || $diff_minutes < $single_data['halfday_min_workhrs']) {
 
-                    if($forenoon <= $single_data['checkout_time'] && $forenoon <= $single_data['checkin_time']){
-                        $temp_ar['Employee Code']= $single_data['user_code'];
-                        $temp_ar['Employee Name'] = $single_data['name'];
-                        $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
-                        $temp_ar['Shift Name'] =  $single_data['shift_name'];
-                        $temp_ar['In Punch'] = $single_data['checkin_time'];
-                        $temp_ar['Out Punch']  = $single_data['checkout_time'];
-                        $temp_ar['Status'] = 'Half Day';
-                        $temp_ar['Day Status'] = 'FN Absent';
-                        array_push($halfday_data, $temp_ar);
-
-                    }else
-                    if(($forenoon >= ($single_data['checkout_time']) && ($forenoon >= $single_data['checkin_time']))){
-                        $temp_ar['Employee Code']= $single_data['user_code'];
-                        $temp_ar['Employee Name'] = $single_data['name'];
-                        $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
-                        $temp_ar['Shift Name'] =  $single_data['shift_name'];
-                        $temp_ar['In Punch'] = $single_data['checkin_time'];
-                        $temp_ar['Out Punch']  = $single_data['checkout_time'];
-                        $temp_ar['Status'] = 'Half Day';
-                        $temp_ar['Day Status'] = 'AN Absent';
-                        array_push($halfday_data, $temp_ar);
+                        if ($forenoon <= $single_data['checkout_time'] && $forenoon <= $single_data['checkin_time']) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
+                            $temp_ar['Status'] = 'Half Day';
+                            $temp_ar['Day Status'] = 'FN Absent';
+                            array_push($halfday_data, $temp_ar);
+                        } else
+                    if (($forenoon >= ($single_data['checkout_time']) && ($forenoon >= $single_data['checkin_time']))) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
+                            $temp_ar['Status'] = 'Half Day';
+                            $temp_ar['Day Status'] = 'AN Absent';
+                            array_push($halfday_data, $temp_ar);
+                        }
                     }
-
                 }
-
             }
-
-        }
 
             $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Status', 'Day Status');
             $response['rows'] = $halfday_data;
@@ -1808,9 +1799,9 @@ class VmtAttendanceReportsService
         $response = array();
         $temp_ar = array();
         // dd($start_date,$end_date);
-            if (Carbon::parse($end_date)->gt(Carbon::today())) {
-                $end_date = Carbon::today()->format('Y-m-d');
-            }
+        if (Carbon::parse($end_date)->gt(Carbon::today())) {
+            $end_date = Carbon::today()->format('Y-m-d');
+        }
         $attendance_data = user::Join('vmt_emp_intermediate_attendance', 'vmt_emp_intermediate_attendance.user_id', '=', 'users.id')
             // ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
             ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
