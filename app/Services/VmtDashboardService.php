@@ -1241,13 +1241,15 @@ class VmtDashboardService
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
             $getAttendanceLoginCount = $this->getOrgDashBoardDeatail();
+            $getMobAppCount = $this->getMobLoginCount();
             // dd($getAllEvent);
             return response()->json(
                 [
                     "all_events" => json_decode($getAllEvent->content(), true)['data'],
                     "leave_balance_per_month" => json_decode($getEmpLeaveBalance->content(), true)['data'],
                     "attenance_report_permonth" => json_decode($getAttenanceReportpermonth->content(), true)['data'],
-                    "attendance_login_count" => $getAttendanceLoginCount
+                    "attendance_login_count" => $getAttendanceLoginCount,
+                    "mobileapp_login_count" => $getMobAppCount
                 ]
             );
         } catch (\Exception $e) {
