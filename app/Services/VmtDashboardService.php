@@ -1241,13 +1241,15 @@ class VmtDashboardService
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
             $getAttendanceLoginCount = $this->getOrgDashBoardDeatail();
+            $getMobAppCount = $this->getMobLoginCount();
             // dd($getAllEvent);
             return response()->json(
                 [
                     "all_events" => json_decode($getAllEvent->content(), true)['data'],
                     "leave_balance_per_month" => json_decode($getEmpLeaveBalance->content(), true)['data'],
                     "attenance_report_permonth" => json_decode($getAttenanceReportpermonth->content(), true)['data'],
-                    "attendance_login_count" =>$getAttendanceLoginCount
+                    "attendance_login_count" => $getAttendanceLoginCount,
+                    "mobileapp_login_count" => $getMobAppCount
                 ]
             );
         } catch (\Exception $e) {
@@ -1862,35 +1864,49 @@ class VmtDashboardService
 
     public function  getOrgDashBoardDeatail()
     {
-        try{
-        $current_date = Carbon::now();
-        $user_code =  auth()->user()->user_code;
-        $user_data = User::where("user_code", $user_code)->first();
-        $check_in_data = VmtStaffAttendanceDevice::where('user_id', $user_data['user_code'])->whereDate('date', $current_date)->first();
-        $login_data = VmtEmployeeAttendance::where('user_id', $user_data['id'])->whereDate('date', $current_date)->first();
-        if (!empty($login_data)) {
-            $attendance_mode =  $login_data['attendance_mode_checkin'];
-        } else
-        {
-             $attendance_mode = $check_in_data='biomatric';
+        try {
+            $current_date = Carbon::now();
+            $user_code =  auth()->user()->user_code;
+            $user_data = User::where("user_code", $user_code)->first();
+            $check_in_data = VmtStaffAttendanceDevice::where('user_id', $user_data['user_code'])->whereDate('date', $current_date)->first();
+            $login_data = VmtEmployeeAttendance::where('user_id', $user_data['id'])->whereDate('date', $current_date)->first();
+            if (!empty($login_data)) {
+                $attendance_mode =  $login_data['attendance_mode_checkin'];
+            } else {
+                $attendance_mode = $check_in_data = 'biomatric';
+            }
+            $response = ['login_type' => $attendance_mode];
+            return $response;
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch Attendance details",
+                "data" => $response,
+            ]);
         }
-        $response = ['login_type'=>$attendance_mode];
+    }
+
+    public function getMobLoginCount()
+    {
+        try{
+        $current_date = carbon::now()->format('Y-m-d');
+        $app_checkin_count = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+            ->where('attendance_mode_checkin', 'mobile')
+            ->whereDate('date', $current_date)->get()->count();
+        $active_count = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+            ->where('attendance_mode_checkin', 'mobile')->get()->unique('user_id')->count();
+
+            $user_data = User::get()->count();
+            $inactive_count = $user_data- $active_count;
+        $response = [$app_checkin_count, $active_count,$inactive_count];
         return $response;
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch Attendance details",
+                "data" => $response,
+            ]);
+        }
     }
-    catch (\Exception $e) {
-        return response()->json([
-            "status" => "failure",
-            "message" => "Unable to fetch Attendance details",
-            "data" =>$response,
-        ]);
-    }
-}
-
-public function getMobLoginCount()
-{
-    $user_code = auth()->user()->user_code;
-    $user_data = User::where("user_code",$user_code)->first();
-    // $login_data = ;
-}
-
 }

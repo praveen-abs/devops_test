@@ -1545,7 +1545,7 @@ class VmtAttendanceController extends Controller
             $end_date = $today->format('Y-m-d');
             $month = $today->format('m');
         }
-
+          //  dd($start_date,$end_date,$month);
         $response = $serviceVmtAttendanceService->fetchOrgLeaveBalance($start_date,  $end_date, $month);
         return $response;
     }

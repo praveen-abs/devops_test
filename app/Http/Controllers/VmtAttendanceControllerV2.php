@@ -39,7 +39,7 @@ class VmtAttendanceControllerV2 extends Controller
             // $shift_start_time = Carbon::parse('2023-10-09 11:00:00'); // for testing purpose only
             // dd($current_time->diffInMinutes($shift_start_time));
 
-           // dd($shift_start_time,$current_time->diffInMinutes($shift_start_time),$current_time->diffInMinutes($shift_start_time) < 65);
+            // dd($shift_start_time,$current_time->diffInMinutes($shift_start_time),$current_time->diffInMinutes($shift_start_time) < 65);
             if ($current_time->diffInMinutes($shift_start_time) < 65) {
                 if (VmtEmpAttIntrTable::exists()) {
                     $staff_attendance_query = VmtEmpAttIntrTable::orderBy('id', 'DESC')->first();
@@ -57,11 +57,29 @@ class VmtAttendanceControllerV2 extends Controller
                 return $attendance_services->attendanceJobs($start_date, $end_date);
             }
         }
-        return Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('no data','null','null'));
+        return Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('no data', 'null', 'null'));
+    }
+
+    public function syncattintrtable(Request $request, VmtAttendanceServiceV2 $attendance_services)
+    {
+        if (VmtEmpAttIntrTable::exists()) {
+            $staff_attendance_query = VmtEmpAttIntrTable::orderBy('id', 'DESC')->first();
+            $start_date = Carbon::parse($staff_attendance_query->date)->subDays(2)->format('Y-m-d');
+        } else {
+            $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id', 'asc')->first();
+            //dd('working');
+            if (Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->lte(Carbon::parse($staff_attendance_query->date))) {
+                $start_date = Carbon::parse($staff_attendance_query->date)->format('Y-m-d');
+            } else {
+                $start_date = Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->format('Y-m-d');
+            }
+        }
+        $end_date = Carbon::now()->format('Y-m-d');
+        return $attendance_services->attendanceJobs($start_date, $end_date);
     }
 
 
-    public function downloadDetailedAttendanceReport(Request $request,VmtAttendanceServiceV2 $attendance_services)
+    public function downloadDetailedAttendanceReport(Request $request, VmtAttendanceServiceV2 $attendance_services)
     {
         if (empty($request->start_date)  || empty($request->end_date)) {
             if (empty($request->date)) {
@@ -76,8 +94,8 @@ class VmtAttendanceControllerV2 extends Controller
             $start_date = Carbon::parse($request->start_date);
             $end_date = Carbon::parse($request->end_date);
         }
-        $start_date ='2023-07-26';
-            $end_date ='2023-08-25';
+        $start_date = '2023-07-26';
+        $end_date = '2023-08-25';
         $client_logo_path = session()->get('client_logo_url');
         $public_client_logo_path = public_path($client_logo_path);
 
@@ -99,10 +117,10 @@ class VmtAttendanceControllerV2 extends Controller
         }
         // dd($request->all());
         $period = Carbon::parse($start_date)->format('d-M-Y') . ' - ' . Carbon::parse($end_date)->format('d-M-Y');
-       // dd($start_date);
-       $department_id='';
-       $client_id = '';
-       // dd($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date, $department_id, $client_id));
+        // dd($start_date);
+        $department_id = '';
+        $client_id = '';
+        // dd($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date, $department_id, $client_id));
         return Excel::download(new BasicAttendanceExport($attendance_services->downloadDetailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id), $public_client_logo_path, $active_status, $period, sessionGetSelectedClientName()), 'Basic Attendance Report c  .xlsx');
     }
 }
