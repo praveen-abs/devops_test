@@ -183,7 +183,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                 user_code: service.current_user_code,
                 regularization_type: selectedAttendanceRegularizationType,
                 attendance_date: selectedDayRegularizationRecord.date,
-                user_time: selectedDayRegularizationRecord.checkin_time,
+                user_time:  selectedAttendanceRegularizationType == 'EG' ? selectedDayRegularizationRecord.checkout_time : selectedDayRegularizationRecord.checkin_time,
                 regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? convertTime(AttendanceLateOrMipRegularization.value) :
                     selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? convertTime(AttendanceEarylOrMopRegularization.value) : '',
                 reason: selectedDayRegularizationRecord.reason,
