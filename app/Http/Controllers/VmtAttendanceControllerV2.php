@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\DetailedAttendanceExport;
 use App\Exports\BasicAttendanceExport;
 use Illuminate\Http\Request;
-use App\Models\VmtEmployeeAttendanceV2;
+use App\Models\VmtEmpAttIntrTable;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use App\Models\VmtWorkShifts;
@@ -41,8 +41,8 @@ class VmtAttendanceControllerV2 extends Controller
 
            // dd($shift_start_time,$current_time->diffInMinutes($shift_start_time),$current_time->diffInMinutes($shift_start_time) < 65);
             if ($current_time->diffInMinutes($shift_start_time) < 65) {
-                if (VmtEmployeeAttendanceV2::exists()) {
-                    $staff_attendance_query = VmtEmployeeAttendanceV2::orderBy('id', 'DESC')->first();
+                if (VmtEmpAttIntrTable::exists()) {
+                    $staff_attendance_query = VmtEmpAttIntrTable::orderBy('id', 'DESC')->first();
                     $start_date = Carbon::parse($staff_attendance_query->date)->subDays(2)->format('Y-m-d');
                 } else {
                     $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id', 'asc')->first();

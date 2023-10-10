@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Department;
-use App\Models\VmtEmployeeAttendanceV2;
+use App\Models\VmtEmpAttIntrTable;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use App\Models\VmtWorkShifts;
@@ -486,12 +486,12 @@ class VmtAttendanceServiceV2
                             $checkout_date = null;
                         }
 
-                        $existing_record_query = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date);
+                        $existing_record_query = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date);
                         if ($existing_record_query->exists()) {
                             $existing_record_query->delete();
                         }
 
-                        $attendance_table = new VmtEmployeeAttendanceV2;
+                        $attendance_table = new VmtEmpAttIntrTable;
                         $attendance_table->user_id = $single_user->id;
                         $attendance_table->vmt_employee_workshift_id = $shift_settings->id;
                         $attendance_table->date = $current_date;
@@ -670,7 +670,7 @@ class VmtAttendanceServiceV2
                 $total_EG = 0;
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
-                        $att_detail = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
                      //   dd($temp_ar);
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);

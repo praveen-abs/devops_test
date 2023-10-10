@@ -12,7 +12,7 @@ use App\Models\VmtLeaves;
 use Illuminate\Support\Facades\Validator;
 use App\Models\VmtClientMaster;
 use App\Models\Department;
-use App\Models\VmtEmployeeAttendanceV2;
+use App\Models\VmtEmpAttIntrTable;
 use Exception;
 
 class VmtPayRunService
@@ -108,7 +108,7 @@ class VmtPayRunService
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                     $current_day = $current_date->format('d') . ' - ' .  $current_date->format('l');
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
-                        $att_detail = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
                         //   dd($temp_ar);
                         //  if( $att_detail==null){
                         //                    dd($current_date,$single_user->id);

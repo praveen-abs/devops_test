@@ -32,7 +32,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Ramsey\Uuid\Type\Integer;
 use Exception;
-use App\Models\VmtEmployeeAttendanceV2;
+use App\Models\VmtEmpAttIntrTable;
 
 class VmtAttendanceReportsService
 {
@@ -278,7 +278,7 @@ class VmtAttendanceReportsService
                 $total_EG = 0;
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
-                        $att_detail = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
                         //   dd($temp_ar);
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
@@ -945,10 +945,10 @@ class VmtAttendanceReportsService
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
 
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
-                        if (!VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
+                        if (!VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
                             dd($single_user);
                         }
-                        $att_detail = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
                         if ($att_detail->regularized_checkin_time != null) {
                             $checkin_time = $att_detail->regularized_checkin_time;
                         } else {
@@ -1554,10 +1554,10 @@ class VmtAttendanceReportsService
                 $end_date = Carbon::today()->format('Y-m-d');
             }
 
-            $attendance_data = user::Join('vmt_emp_intermediate_attendance', 'vmt_emp_intermediate_attendance.user_id', '=', 'users.id')
-                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
-                ->whereBetween('date', [$start_date, $end_date])
-                ->get();
+            $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
+            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+            ->whereBetween('date', [$start_date, $end_date])
+            ->get();
 
             foreach ($attendance_data as $single_data) {
                 $sts_ar = explode('/', $single_data['status']);
@@ -1686,10 +1686,10 @@ class VmtAttendanceReportsService
                 $end_date = Carbon::today()->format('Y-m-d');
             }
 
-            $attendance_data = user::Join('vmt_emp_intermediate_attendance', 'vmt_emp_intermediate_attendance.user_id', '=', 'users.id')
-                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
-                ->whereBetween('date', [$start_date, $end_date])
-                ->get();
+            $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
+            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+            ->whereBetween('date', [$start_date, $end_date])
+            ->get();
 
             foreach ($attendance_data as $single_data) {
                 $sts_ar = explode('/', $single_data['status']);
@@ -1799,12 +1799,12 @@ class VmtAttendanceReportsService
         $response = array();
         $temp_ar = array();
         // dd($start_date,$end_date);
-        if (Carbon::parse($end_date)->gt(Carbon::today())) {
-            $end_date = Carbon::today()->format('Y-m-d');
-        }
-        $attendance_data = user::Join('vmt_emp_intermediate_attendance', 'vmt_emp_intermediate_attendance.user_id', '=', 'users.id')
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
+            }
+        $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
             // ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
-            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
+            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
             ->whereBetween('date', [$start_date, $end_date])
             ->get();
 
@@ -1934,9 +1934,9 @@ class VmtAttendanceReportsService
                 $end_date = Carbon::today()->format('Y-m-d');
             }
 
-            $attendance_data = user::Join('vmt_emp_intermediate_attendance', 'vmt_emp_intermediate_attendance.user_id', '=', 'users.id')
+            $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
                 // ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
-                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_intermediate_attendance.vmt_employee_workshift_id')
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
                 ->whereBetween('date', [$start_date, $end_date])
                 ->get();
 
