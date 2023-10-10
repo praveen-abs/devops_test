@@ -334,18 +334,17 @@ class VmtAttendanceServiceV2
                             } else {
                                 //dd("Checkin NOT on-time");
                                 //check whether regularization applied.
-                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'LC');
-                                //   dd($current_date);
-                                $lc_id = $regularization_status['id'];
-                                if ($regularization_status['sts'] == 'Approved') {
-                                    $regz_checkin_time = $regularization_status['reg_time'];
-                                } else {
-                                    $lc_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
-                                    $is_lc = true;
+                                if ($shift_settings->is_lc_applicable == 1) {
+                                    $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'LC');
+                                    //   dd($current_date);
+                                    $lc_id = $regularization_status['id'];
+                                    if ($regularization_status['sts'] == 'Approved') {
+                                        $regz_checkin_time = $regularization_status['reg_time'];
+                                    } else {
+                                        $lc_mins = $shiftStartTime->diffInMinutes(Carbon::parse($checking_time));
+                                        $is_lc = true;
+                                    }
                                 }
-
-                                // dd( $regularization_status );
-                                //  $attendanceResponseArray[$key]["isLC"] = $regularization_status;
                             }
                         }
                         //Code For Check EG And MIP
@@ -365,14 +364,17 @@ class VmtAttendanceServiceV2
                             $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
                             if ($isCheckout_done_ontime) {
                                 //employee left early on time....
-                                $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
-                                $eg_id = $regularization_status['id'];
-                                if ($regularization_status['sts'] == 'Approved') {
-                                    $regz_checkout_time = $regularization_status['reg_time'];
-                                } else {
-                                    $eg_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time));
-                                    $is_eg = true;
+                                if($shift_settings->is_eg_applicable==1){
+                                    $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
+                                    $eg_id = $regularization_status['id'];
+                                    if ($regularization_status['sts'] == 'Approved') {
+                                        $regz_checkout_time = $regularization_status['reg_time'];
+                                    } else {
+                                        $eg_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time));
+                                        $is_eg = true;
+                                    }
                                 }
+                                
                             } else {
                                 //employee left late....
                             }
@@ -550,14 +552,14 @@ class VmtAttendanceServiceV2
             return response()->json([
                 'status' => 'success',
                 'message' => 'Attendance updated successfully',
-                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('success',' data saved successfully ','null')),
+                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('success', ' data saved successfully ', 'null')),
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $e->getMessage(),
                 'data' => $e->getTraceAsString(),
-                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('failure',$e->getMessage(),$e->getTraceAsString())),
+                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('failure', $e->getMessage(), $e->getTraceAsString())),
             ]);
         }
     }
@@ -622,7 +624,7 @@ class VmtAttendanceServiceV2
         }
 
         try {
-            $reportresponse= array();
+            $reportresponse = array();
             $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->where('is_ssa', '0')
@@ -636,7 +638,7 @@ class VmtAttendanceServiceV2
                 $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
             }
             $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-          //  dd($users);
+            //  dd($users);
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
             $reportresponse['rows'] = array();
@@ -671,7 +673,7 @@ class VmtAttendanceServiceV2
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
                         $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
-                     //   dd($temp_ar);
+                        //   dd($temp_ar);
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
                         if ($sts_ar[0] == 'P') {
@@ -709,7 +711,7 @@ class VmtAttendanceServiceV2
                             $status = $att_detail->status;
                             $total_weekoff = $total_weekoff + 1;
                         } else {
-                            $staus ='-';
+                            $staus = '-';
                         }
                         array_push($temp_ar, $status);
                     } else {
@@ -725,12 +727,12 @@ class VmtAttendanceServiceV2
                 if ($attendance_setting_details['eg_status'] == 1) {
                     array_push($temp_ar,  $total_EG);
                 }
-                array_push( $temp_ar,$total_payable_days);
-                array_push($reportresponse['rows'],$temp_ar);
+                array_push($temp_ar, $total_payable_days);
+                array_push($reportresponse['rows'], $temp_ar);
                 // dd($reportresponse);
                 unset($temp_ar);
             }
-           return $reportresponse;
+            return $reportresponse;
         } catch (Exception $e) {
 
             return response()->json([

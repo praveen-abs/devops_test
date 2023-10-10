@@ -23,6 +23,7 @@ use App\Services\VmtNotificationsService;
 
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
+use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeAbsentRegularization;
 use App\Models\VmtEmployeeWorkShifts;
 use Carbon\Carbon;
@@ -3969,7 +3970,29 @@ class VmtAttendanceService
         $leave_details = array();
         $single_user_leave_details = array();
         $accrued_leave_types = VmtLeaves::get();
+        $gender = VmtEmployee::where('userid', $user_id);
+            if ($gender->exists()) {
+                $gender = $gender->first()->gender;
+            } else {
+                $gender = '';
+            }
+            if (empty($gender) || $gender == null) {
+                $gender = '';
+            } else {
+                $gender = strtolower($gender);
+            }
+            if ($gender == 'male') {
+                $remove_leave = 'Maternity Leave';
+            } else if ($gender == 'female') {
+                $remove_leave = 'Paternity Leave';
+            } else {
+                $remove_leave = 'no leave';
+            }
         foreach ($accrued_leave_types as $single_leave_types) {
+            if ($single_leave_types->leave_type == $remove_leave) {
+                continue;
+                // dd($single_leave_types->leave_type);
+            }
             if ($single_leave_types->is_finite == 1) {
                 if ($single_leave_types->is_accrued != 1) {
                     $current_month_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
@@ -4144,9 +4167,9 @@ class VmtAttendanceService
             foreach ($all_active_user as $single_user) {
                 $total_leave_balance = 0;
                 $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
-                // dd($overall_leave_balance);
+                //dd($overall_leave_balance);
                 $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
-                //dd($leavetypeAndBalanceDetails);
+               // dd($leavetypeAndBalanceDetails);
                 $each_user['user_code'] = $single_user->user_code;
                 $each_user['name'] = $single_user->name;
                 $each_user['location'] = $single_user->location;
@@ -4216,8 +4239,28 @@ class VmtAttendanceService
         $response = array();
         $accrued_leave_types = VmtLeaves::get();
         $temp_leave = array();
-        // dd($accrued_leave_types);
+        $gender = VmtEmployee::where('userid', $user_id);
+            if ($gender->exists()) {
+                $gender = $gender->first()->gender;
+            } else {
+                $gender = '';
+            }
+            if (empty($gender) || $gender == null) {
+                $gender = '';
+            } else {
+                $gender = strtolower($gender);
+            }
+            if ($gender == 'male') {
+                $remove_leave = 'Maternity Leave';
+            } else if ($gender == 'female') {
+                $remove_leave = 'Paternity Leave';
+            } else {
+                $remove_leave = 'no leave';
+            }
         foreach ($accrued_leave_types as $single_leave_types) {
+            if ($single_leave_types->leave_type == $remove_leave) {
+                continue;
+            }
             if ($single_leave_types->is_finite == 1) {
                 if ($single_leave_types->is_accrued != 1) {
                     $total_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
