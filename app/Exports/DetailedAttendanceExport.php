@@ -71,7 +71,7 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
     public function startCell(): string
     {
-        return 'A6';
+        return 'A5';
     }
 
 
@@ -84,7 +84,7 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
         $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Attedance Detailed Report');
         $sheet->getStyle('C2:E2')->getFont()->setBold(true);
 
-        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".Carbon::parse($this->start_date)->format('d-M-Y') .' to '. $this->end_date);
+        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".Carbon::parse($this->start_date)->format('d-M-Y') .' to '. Carbon::parse($this->end_date)->format('d-M-Y'));
         $sheet->getStyle('C3:E3')->getFont()->setBold(true);
 
 
