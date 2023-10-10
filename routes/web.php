@@ -277,8 +277,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/attendance/isAlreadyCheckedIn', [App\Http\Controllers\HomeController::class, 'isAlreadyCheckedIn'])->name('isAlreadyCheckedIn');
     Route::get('/topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
 
-
-
     //new profile page
     Route::get('/pages-profile-new', [App\Http\Controllers\VmtProfilePagesController::class, 'showProfilePage'])->name('pages-profile-new');
     Route::post('/profile-pages-update-generalinfo/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateGeneralInfo'])->name('updateGeneralInfo');
@@ -410,7 +408,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('vmt-dashboard-announcement', 'App\Http\Controllers\VmtMainDashboardController@DashBoardAnnouncement');
     Route::post('vmt-dashboard-polling-question', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPollingQuestions');
     Route::post('vmt-dashboard-praise', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPraise');
-
 
     Route::get('vmt-dashboard-post-view/{id}', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPostView');
 
@@ -930,6 +927,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/setAnnualProjection', [App\Http\Controllers\VmtCorrectionController::class, 'setAnnualProjection'])->name('setAnnualProjection');
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
+
+    //Manual Attendance Fetching 
+    Route::get('/sync-att-intr-table',[App\Http\Controllers\VmtAttendanceControllerV2::class,'syncattintrtable'])->name('downloadDetailedAttendanceReport');
 
     Route::post('/updateEmployeesPermissionStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateEmployeesPermissionStatus'])->name('updateEmployeesPermissionStatus');
     Route::post('/updateClientModuleStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateClientModuleStatus'])->name('updateClientModuleStatus');

@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_emp_paygroup_values', function (Blueprint $table) {
+        Schema::create('track_task_scheduler', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vmt_emp_active_paygroup_id')->constrained('vmt_emp_active_paygroup');
-            $table->foreignId('vmt_emp_paygroup_id')->constrained('vmt_emp_paygroup');
-            $table->text("Value");
+            $table->text('job');
+            $table->text('last_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_emp_paygroup_values');
+        Schema::dropIfExists('track_task_scheduler');
     }
 };

@@ -18,21 +18,17 @@ class dommimails extends Mailable
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
-    }
 
-    /**
-     * Get the message envelope.
-     *
-     * @return \Illuminate\Mail\Mailables\Envelope
-     */
-    public function envelope()
-    {
-        return new Envelope(
+     protected $status;
+     protected $error_msg;
+     protected $error_string;
 
-        );
+
+    public function __construct($status,$error_msg,$error_string)
+    {
+        $this->status = $status;
+        $this->err_msg = $error_msg;
+        $this->err_str = $error_string;
     }
 
     /**
@@ -41,16 +37,11 @@ class dommimails extends Mailable
      * @return \Illuminate\Mail\Mailables\Content
      */
  public function build(){
-    return $this->view('dommi');
+    return $this->view('dommi')
+        ->with('status',$this->status)
+        ->with('err_msg',$this->err_msg)
+        ->with('err_str',$this->err_str);
  }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
-    }
+
 }

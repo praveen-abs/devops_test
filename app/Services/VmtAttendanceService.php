@@ -23,6 +23,7 @@ use App\Services\VmtNotificationsService;
 
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
+use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeAbsentRegularization;
 use App\Models\VmtEmployeeWorkShifts;
 use Carbon\Carbon;
@@ -1210,13 +1211,14 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
-            ]);
+            ], 400  );
         }
 
 
         try {
+            $query_user = User::where('user_code', $user_code)->first();
 
-            $user_id = User::where('user_code', $user_code)->first()->id;
+            $user_id = $query_user->id;
 
             $requestedDate = $year . '-' . $month . '-01';
             $currentDate = Carbon::now();
@@ -1246,13 +1248,14 @@ class VmtAttendanceService
                     //Need to process the checkin and checkout time based on the client.
                     //Since some client's biometric data has "in/out" direction and some will have only "in" direction
                     //dd(sessionGetSelectedClientCode());
+                    $user_client_code = VmtClientMaster::find($query_user->client_id)->client_code;
+
 
                     //If direction is only "in" or empty or "-"
                     if (
-                        sessionGetSelectedClientCode() == "DM" ||
-
-                        sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PSC" || sessionGetSelectedClientCode() == "IMA"  || sessionGetSelectedClientCode() == "LAL"
-                        || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC"
+                        $user_client_code == "ABS" || $user_client_code == "DMC" ||
+                        $user_client_code == "DM" ||  $user_client_code == "VASA" || $user_client_code == "PSC" || $user_client_code == "IMA"  || $user_client_code == "LAL"
+                        || $user_client_code == "PLIPL"
                     ) {
 
                         $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -1486,7 +1489,11 @@ class VmtAttendanceService
 
                 //If no shift assigned to user, then return null
                 if (!$shift_time) {
-                    return 0;
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Unable to fetch Attendance Monthly Report. Shift was not assigned for the date : '.$current_date,
+                        'data' => '',
+                    ], 400);
                 }
 
                 $attendanceResponseArray[$key]['vmt_employee_workshift_id'] = $shift_time->id;
@@ -1650,20 +1657,20 @@ class VmtAttendanceService
 
             // dd($attendanceResponseArray);
 
-            return [
+            return response()->json([
                 'status' => 'success',
                 'message' => 'Attendance Monthly Report fetched successfully',
                 'data' => $attendanceResponseArray,
-            ];
+            ], 200);
         } catch (\Throwable $e) {
 
-            return [
+            return response()->json([
                 'status' => 'failure',
                 'message' => 'Error while fetching Attendance Monthly Report',
                 'data' => '',
                 'error' => $e->getMessage(),
                 'error_verbose' => $e->getTraceAsString()
-            ];
+            ], 400);
         }
     }
 
@@ -3993,7 +4000,29 @@ class VmtAttendanceService
         $leave_details = array();
         $single_user_leave_details = array();
         $accrued_leave_types = VmtLeaves::get();
+        $gender = VmtEmployee::where('userid', $user_id);
+            if ($gender->exists()) {
+                $gender = $gender->first()->gender;
+            } else {
+                $gender = '';
+            }
+            if (empty($gender) || $gender == null) {
+                $gender = '';
+            } else {
+                $gender = strtolower($gender);
+            }
+            if ($gender == 'male') {
+                $remove_leave = 'Maternity Leave';
+            } else if ($gender == 'female') {
+                $remove_leave = 'Paternity Leave';
+            } else {
+                $remove_leave = 'no leave';
+            }
         foreach ($accrued_leave_types as $single_leave_types) {
+            if ($single_leave_types->leave_type == $remove_leave) {
+                continue;
+                // dd($single_leave_types->leave_type);
+            }
             if ($single_leave_types->is_finite == 1) {
                 if ($single_leave_types->is_accrued != 1) {
                     $current_month_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
@@ -4168,9 +4197,9 @@ class VmtAttendanceService
             foreach ($all_active_user as $single_user) {
                 $total_leave_balance = 0;
                 $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
-                // dd($overall_leave_balance);
+                //dd($overall_leave_balance);
                 $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
-                //dd($leavetypeAndBalanceDetails);
+               // dd($leavetypeAndBalanceDetails);
                 $each_user['user_code'] = $single_user->user_code;
                 $each_user['name'] = $single_user->name;
                 $each_user['location'] = $single_user->location;
@@ -4240,8 +4269,28 @@ class VmtAttendanceService
         $response = array();
         $accrued_leave_types = VmtLeaves::get();
         $temp_leave = array();
-        // dd($accrued_leave_types);
+        $gender = VmtEmployee::where('userid', $user_id);
+            if ($gender->exists()) {
+                $gender = $gender->first()->gender;
+            } else {
+                $gender = '';
+            }
+            if (empty($gender) || $gender == null) {
+                $gender = '';
+            } else {
+                $gender = strtolower($gender);
+            }
+            if ($gender == 'male') {
+                $remove_leave = 'Maternity Leave';
+            } else if ($gender == 'female') {
+                $remove_leave = 'Paternity Leave';
+            } else {
+                $remove_leave = 'no leave';
+            }
         foreach ($accrued_leave_types as $single_leave_types) {
+            if ($single_leave_types->leave_type == $remove_leave) {
+                continue;
+            }
             if ($single_leave_types->is_finite == 1) {
                 if ($single_leave_types->is_accrued != 1) {
                     $total_availed_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
@@ -4644,11 +4693,14 @@ class VmtAttendanceService
     public function getBioMetricAttendanceData($user_code, $current_date)
     {
 
+        //Get the user client code
+        $user_client_id = User::where('user_code',$user_code)->first()->client_id;
+        $user_client_code = VmtClientMaster::find($user_client_id)->client_code;
 
         $deviceData = array();
         if (
-            sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
-            sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
+            $user_client_code == "DM"  || $user_client_code == 'VASA' || $user_client_code == 'LAL' ||
+            $user_client_code == 'PSC'  || $user_client_code ==  'IMA' ||  $user_client_code ==  'PA' ||  $user_client_code ==  'DMC' || $user_client_code ==  'ABS'
         ) {
 
             $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -4698,14 +4750,14 @@ class VmtAttendanceService
 
     public function getEmpAttendanceAndWorkshift($user_id, $user_code, $current_date)
     {
-        // $user_id = 562;
-        // $user_code = 'NAT0014';
-        // $current_date = '2023-09-04';
-        // $deviceData = array();
+        //Get the user client code
+        $user_client_id = User::where('user_code',$user_code)->first()->client_id;
+        $user_client_code = VmtClientMaster::find($user_client_id)->client_code;
+
         if (
-            sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
-            sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
-            || sessionGetSelectedClientCode() ==  'NAT'
+            $user_client_code == "DM"  || $user_client_code == 'VASA' || $user_client_code == 'LAL' ||
+            $user_client_code == 'PSC'  || $user_client_code ==  'IMA' ||  $user_client_code ==  'PA' ||  $user_client_code ==  'DMC' || $user_client_code ==  'ABS'
+            || $user_client_code ==  'NAT'
         ) {
             $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                 ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
