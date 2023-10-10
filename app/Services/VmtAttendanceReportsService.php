@@ -1000,10 +1000,8 @@ class VmtAttendanceReportsService
                         } else if ($att_detail->status == 'A') {
                             $total_absent = $total_absent + 1;
                         } else if ($att_detail->status == 'HO') {
-                            $status = $att_detail->status;
                             $total_holiday = $total_holiday + 1;
                         } else if ($att_detail->status == 'WO') {
-                            $status = $att_detail->status;
                             $total_weekoff = $total_weekoff + 1;
                         } else {
                             $checkin_time = '-';
@@ -1014,9 +1012,9 @@ class VmtAttendanceReportsService
                         }
 
                         if ($attendance_setting_details['lc_status'] == 1) {
-                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $status);
+                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins,$att_detail->status);
                         } else {
-                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $status);
+                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $att_detail->status);
                         }
                     } else {
                         array_push($temp_ar, 0, 0, 0);
