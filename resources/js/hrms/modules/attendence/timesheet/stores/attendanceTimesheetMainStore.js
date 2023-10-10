@@ -127,15 +127,9 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         console.log("employee list select function  ::" ,CurrentlySelectedUser.value);
         canShowLoading.value = true;
 
-<<<<<<< HEAD
-        currentlySelectedOrgMemberUserId.value = user_id
-        getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
-            // console.log(Object.values(res.data));
-=======
         currentlySelectedOrgMemberUserId.value = user_code
         await getEmployeeAttendance(user_code, useCalendar.getMonth, useCalendar.getYear).then(res => {
             console.log(" getSelectedEmployeeOrgDetails() : "+  Object.values(res.data));
->>>>>>> b77f98e72cd4a4c89baa14496116d296e77a357f
             currentlySelectedOrgMemberAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false
