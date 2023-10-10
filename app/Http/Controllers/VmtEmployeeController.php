@@ -1004,6 +1004,21 @@ class VmtEmployeeController extends Controller
         return response()->json($query);
     }
 
+    public function fetchLocationDetails(Request $request){
+        $query = VmtEmployeeOfficeDetails::get(['work_location'])->toarray();
+         $loc_data=array();
+         foreach($query as $key =>$single_location){
+
+            if($single_location['work_location'] != null){
+             $loc_data[$key]['work_location'] = ucfirst(strtolower($single_location['work_location']));
+            }
+
+         }
+         $location_data = array_unique($loc_data,SORT_REGULAR);
+
+        return response()->json($location_data);
+    }
+
 
     public function fetchMaritalStatus(Request $request){
         $query = VmtMaritalStatus::all(['id','name']);
