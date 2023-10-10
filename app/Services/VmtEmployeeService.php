@@ -1216,11 +1216,17 @@ class VmtEmployeeService
 
         $client_id =null;
 
+   if(session('client_id')){
+
         if(session('client_id') == 1){
          $client_id =VmtClientMaster::pluck('id');
         }else{
             $client_id =[session('client_id')];
         }
+
+      }else{
+         $client_id =[auth()->user()->client_id];
+      }
 
         //Get all the  doc for the given user_id
         $query_pending_onboard_docs = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
@@ -1280,6 +1286,19 @@ class VmtEmployeeService
     public function fetchAllEmployeesDocumentsProof(Request $request)
     {
 
+        $client_id =null;
+
+        if(session('client_id')){
+     
+             if(session('client_id') == 1){
+              $client_id =VmtClientMaster::pluck('id');
+             }else{
+                 $client_id =[session('client_id')];
+             }
+     
+           }else{
+              $client_id =[auth()->user()->client_id];
+           }
         $json_response = array();
 
         //Get all the  doc for the given user_id
@@ -1287,6 +1306,7 @@ class VmtEmployeeService
             ->join('vmt_temp_employee_proof_documents', 'vmt_temp_employee_proof_documents.user_id', '=', 'users.id')
             ->join('vmt_documents', 'vmt_documents.id', '=', 'vmt_temp_employee_proof_documents.doc_id')
             ->where('vmt_temp_employee_proof_documents.status', "Pending")
+            ->where('users.client_id',$client_id)
             ->where('users.is_ssa', "0")
             ->where('users.is_onboarded', "1")
             ->where('users.active', '<>', "-1")
@@ -1310,7 +1330,7 @@ class VmtEmployeeService
 
             if (array_key_exists($user_code, $json_response)) {
 
-                $query_pending_onboard_docs['key'] ["avatar"] = getEmployeeAvatarOrShortName($single_pending_docs->id);
+                $query_pending_onboard_docs[$key]["avatar"] = getEmployeeAvatarOrShortName($single_pending_docs->id);
                 array_push($json_response[$user_code]["documents"], [
                     "record_id" => $single_pending_docs->record_id,
                     "doc_name" => $single_pending_docs->doc_name,
