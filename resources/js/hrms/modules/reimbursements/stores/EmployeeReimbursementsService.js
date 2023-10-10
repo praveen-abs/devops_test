@@ -84,11 +84,11 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
     // Reimbursement Claim types
     async function getReimbursementClaimTypes(){
 
-        let url_all_reimbursements = "/reimbursements/getReimbursementClaimTypes";
+        let url_all_reimbursements = '/getReimbursementClaimTypes';
 
         console.log("AJAX URL : " + url_all_reimbursements);
 
-        await axios.get(url_all_reimbursements).then((response) => {
+        await axios.post(url_all_reimbursements).then((response) => {
             reimbursement_claim_types.value = response.data.data;
             console.log("getReimbursementClaimTypes() : "+response.data);
         });
@@ -168,7 +168,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
 
         console.log("AJAX URL : " + url_all_reimbursements);
 
-        axios.get(url_all_reimbursements).then((response) => {
+        axios.post(url_all_reimbursements).then((response) => {
             data_local_convergance.value = response.data;
             console.log(response.data);
             // loading_spinner.value = false;
@@ -375,11 +375,9 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         console.log(month);
 
 
-        await axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
-            params: {
+        await axios.post("/fetch_employee_reimbursement_data", {
                 selected_year: year,
                 selected_month: month
-            }
         }).then(res => {
             console.log("data sent");
             console.log("data from " + res.employee_name);

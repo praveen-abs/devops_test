@@ -70,42 +70,54 @@ class VmtAttendanceService
         try {
 
             $client_id =null;
+        if(!empty(session('client_id'))){
+                if(session('client_id') == 1){
 
-            if(session('client_id') == 1){
-             $client_id =VmtClientMaster::pluck('id');
-            }else{
-                $client_id =[session('client_id')];
-            }
-            $map_allEmployees =  User::where('active','1')->where('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
-            //dd( $map_allEmployees);
+                $client_id =VmtClientMaster::pluck('id');
+                }else{
+                    $client_id =[session('client_id')];
+                }
+        }else{
+
+            $client_id =[auth()->user()->client_id];
+        }
+
+            $map_allEmployees =  User::where('active','1')->whereIn('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
             $allEmployees_lateComing = null;
 
             //If manager ID not set, then show all employees
             // dd($manager_user_code);
             if (empty($manager_user_code)) {
-                if (empty($month) && empty($year))
-                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
-                else
+                if (empty($month) && empty($year)){
+
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',array_keys($map_allEmployees->toarray()))->where('status',"Pending")->get();
+
+                }else{
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
                         ->whereMonth('attendance_date', $month)
                         ->get();
+
+                }
             } else {
                 //If manager ID set, then show only the team level employees
 
                 $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
-                // dd( $employees_id );
 
-                if (empty($month) && empty($year))
-                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)->get();
-                else
+
+                if (empty($month) && empty($year)){
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id->toarray())->get();
+
+                }else{
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)
                         ->whereYear('attendance_date', $year)
                         ->whereMonth('attendance_date', $month)
                         ->get();
+
+                }
             }
 
             //dd($map_allEmployees->toArray());
-            //dd($allEmployees_lateComing->toArray());
+           // dd($allEmployees_lateComing->toArray());
 
             foreach ($allEmployees_lateComing as $singleItem) {
 
@@ -114,7 +126,7 @@ class VmtAttendanceService
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                     $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-
+                    
                     //If reviewer_id = 0, then its not yet reviewed
                     if ($singleItem->reviewer_id != 0) {
                         $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
@@ -133,6 +145,7 @@ class VmtAttendanceService
             // ];
 
             return $allEmployees_lateComing;
+
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
@@ -149,18 +162,35 @@ class VmtAttendanceService
     public function fetchAbsentRegularizationData($month, $year, $manager_user_code = null)
     {
 
-        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+        $client_id =null;
+        if(!empty(session('client_id'))){
+
+                if(session('client_id') == 1){
+
+                $client_id =VmtClientMaster::pluck('id');
+                }else{
+                    $client_id =[session('client_id')];
+                }
+
+        }else{
+
+            $client_id =[auth()->user()->client_id];
+        }
+
+        $map_allEmployees = User::where('active','1')->whereIn('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
 
         $allEmployees_lateComing = null;
 
         //If manager ID not set, then show all employees
         if (empty($manager_user_code)) {
-            if (empty($month) && empty($year))
-                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::all();
-            else
+            if (empty($month) && empty($year)){
+                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id',array_keys($map_allEmployees->toarray()))->get();
+            }
+            else{
                 $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereYear('attendance_date', $year)
                     ->whereMonth('attendance_date', $month)
                     ->get();
+            }
         } else {
             //If manager ID set, then show only the team level employees
 

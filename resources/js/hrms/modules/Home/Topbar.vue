@@ -475,7 +475,6 @@ onMounted(async () => {
     getOrgList()
     getClientList()
     getSessionClient();
-    updateMasterConfigClientCode();
     setTimeout(() => {
         canShowLoading.value = true
     }, 2000);

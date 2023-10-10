@@ -44,18 +44,18 @@
                             </div>
                         </div>
 
-                  
+
                     </template> -->
                     <template #body="slotProps">
                     <div class="flex items-center !justify-left ">
                         <div>
-                            <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'"
+                            <p v-if="slotProps.data.employee_avatar ? JSON.parse(slotProps.data.employee_avatar).type == 'shortname' : ''"
                                 class="p-2 font-semibold text-white rounded-full w-[30px] text-[14px]"
-                                :class="service.getBackgroundColor(slotProps.index)">
-                                {{ JSON.parse(slotProps.data.employee_avatar).data }} </p>
+                                :class="service.getBackgroundColor(slotProps.index)" >
+                                {{ slotProps.data.employee_avatar?JSON.parse(slotProps.data.employee_avatar).data :null }} </p>
                             <img v-else class="rounded-circle userActive-status profile-img"
                                 style="height: 30px !important; width: 30px !important;"
-                                :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset="" alt="" />
+                                :src="`data:image/png;base64,${slotProps.data.employee_avatar ? JSON.parse(slotProps.data.employee_avatar).data :''}`" srcset="" alt="" />
                         </div>
                         <div>
                             <p class="pl-2">{{ slotProps.data.employee_name }} </p>

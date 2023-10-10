@@ -173,6 +173,12 @@ const routes = [
                 component: () => import('../hrms/modules/configurations/module_settings/module_settings.vue'),
             },
 
+            // Claims
+            {
+                path: '/Claims/Employee-reimbursements',
+                name: 'Employee-reimbursements',
+                component: () => import('../hrms/modules/reimbursements/EmployeeReimbursements.vue')
+            },
 
 
 
