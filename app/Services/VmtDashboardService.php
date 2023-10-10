@@ -1888,10 +1888,15 @@ class VmtDashboardService
     {
         try{
         $current_date = carbon::now()->format('Y-m-d');
-        $before_date= Carbon::now()->subWeeks(1)->format('Y-m-d');
-        $active_count = User::where('is_ssa','!=','1')->where('last_login_date',$current_date)->get()->count();
-        $inactive_count = User::where('is_ssa','!=','1')->whereNotBetween('last_login_date',[$before_date,$current_date])->get()->count();
-        $response=[$active_count,$inactive_count];
+        $app_checkin_count = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+            ->where('attendance_mode_checkin', 'mobile')
+            ->whereDate('date', $current_date)->get()->count();
+        $active_count = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+            ->where('attendance_mode_checkin', 'mobile')->get()->unique('user_id')->count();
+
+            $user_data = User::get()->count();
+            $inactive_count = $user_data- $active_count;
+        $response = [$app_checkin_count, $active_count,$inactive_count];
         return $response;
         }
         catch (\Exception $e) {
@@ -1902,5 +1907,4 @@ class VmtDashboardService
             ]);
         }
     }
-
 }
