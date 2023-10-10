@@ -9,9 +9,9 @@ use Carbon\Carbon;
 class VmtPayRunController extends Controller
 {
     public function fetch_attendance_data(Request $request, VmtPayRunService $pay_run_service)
-    { 
-        $date = $request->date_req;
-        if ( $date = $request->date_req == null ) {
+    {
+        $date = $request->date;
+        if ($date == null) {
             $current_date = Carbon::now();
             $current_month = $current_date->format('m');
             $last_month =  $current_month - 1;
@@ -24,12 +24,10 @@ class VmtPayRunController extends Controller
                 $end_date =   $current_date->format('Y-m-d');
             }
         } else {
-           
+
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return $pay_run_service->fetch_attendance_data($start_date, $end_date, $request-> department_id, $request->client_id, $request->type, $request->active_status);
-       
+        return $pay_run_service->fetch_attendance_data($start_date, $end_date, $request->department_id, $request->client_id, $request->type, $request->active_status);
     }
-
 }

@@ -128,7 +128,6 @@ class VmtEmployeeAttendanceController extends Controller
     public function basicAttendanceReport(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
 
-        $client_domain = $request->getHttpHost();
         if (empty($request->start_date)  || empty($request->end_date)) {
             if (empty($request->date)) {
                 $date = Carbon::now()->format('Y-m-d');

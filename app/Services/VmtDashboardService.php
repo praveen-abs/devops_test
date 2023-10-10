@@ -1247,7 +1247,7 @@ class VmtDashboardService
                     "all_events" => json_decode($getAllEvent->content(), true)['data'],
                     "leave_balance_per_month" => json_decode($getEmpLeaveBalance->content(), true)['data'],
                     "attenance_report_permonth" => json_decode($getAttenanceReportpermonth->content(), true)['data'],
-                    "attendance_login_count" =>$getAttendanceLoginCount['data']
+                    "attendance_login_count" =>$getAttendanceLoginCount
                 ]
             );
         } catch (\Exception $e) {
@@ -1885,4 +1885,12 @@ class VmtDashboardService
         ]);
     }
 }
+
+public function getMobLoginCount()
+{
+    $user_code = auth()->user()->user_code;
+    $user_data = User::where("user_code",$user_code)->first();
+    // $login_data = ;
+}
+
 }

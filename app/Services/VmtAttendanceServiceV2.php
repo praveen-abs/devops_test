@@ -594,6 +594,7 @@ class VmtAttendanceServiceV2
 
     public function downloadDetailedAttendanceReport($start_date, $end_date, $department_id, $client_id)
     {
+        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
@@ -621,55 +622,42 @@ class VmtAttendanceServiceV2
         }
 
         try {
-
-            $current_date = Carbon::parse($start_date);
-            if (Carbon::parse($end_date)->gt(Carbon::today())) {
-                $end_date = Carbon::today()->format('Y-m-d');
-            }
+            $reportresponse= array();
             $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
-                ->where('is_ssa', '0');
-            if (!empty($client_id)) {
-                $users =  $users->whereIn->whereIn('client_id', $client_id);
-            }
+                ->where('is_ssa', '0')
+                ->where('active',  "1")
+                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
             if (!empty($department_id)) {
+                $users =  $users->whereIn('client_id', $client_id);
+            }
+            if (!empty($client_id)) {
                 $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
             }
-            $users = $users->get([
-                'users.id as id',
-                'users.user_code as user_code',
-                'users.name as name',
-                'vmt_employee_office_details.designation as designation',
-                'vmt_employee_details.dob as dob',
-                'vmt_employee_details.doj as doj',
-                'vmt_employee_details.dol as dol'
-            ]);
+            $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+          //  dd($users);
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
-            $header_2 = array('', '', '', '');
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
-            $response['rows'] = array();
+            $reportresponse['rows'] = array();
             $header_date = Carbon::parse($start_date);
-            $heading_dates_2 = array();
             while ($header_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
                 array_push($heading_dates, $header_date->format('d') . ' - ' .  $header_date->format('l'));
-                array_push($heading_dates_2, $header_date->format('d') . ' - ' .  $header_date->format('l'));
                 $header_date->addDay();
-                array_push($header_2, 'InPunch', 'OutPunch', 'OT');
-                if ($attendance_setting_details['lc_status'] == 1) {
-                    array_push($header_2, 'LC Minutes', 'Status');
-                } else {
-                    array_push($header_2, 'Status');
-                }
             }
-            //dd(count($users));
+            array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
+            if ($attendance_setting_details['lc_status'] == 1) {
+                array_push($heading_dates, 'Total LC');
+            }
+            if ($attendance_setting_details['eg_status'] == 1) {
+                array_push($heading_dates, 'Total EG');
+            }
+            array_push($heading_dates, "Total Payable Days");
+            $reportresponse['headings'] = $heading_dates;
             foreach ($users as $single_user) {
                 $current_date = Carbon::parse($start_date);
                 $temp_ar = array();
                 array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
-                $total_LC_mins = 0;
-                $total_ot = 0;
                 $total_weekoff = 0;
                 $total_holiday = 0;
                 $total_present = 0;
@@ -680,41 +668,16 @@ class VmtAttendanceServiceV2
                 $total_on_duty = 0;
                 $total_LC = 0;
                 $total_EG = 0;
-
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
-
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
-                        if (!VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
-                            dd($single_user);
-                        }
                         $att_detail = VmtEmployeeAttendanceV2::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
-                        if ($att_detail->regularized_checkin_time != null) {
-                            $checkin_time = $att_detail->regularized_checkin_time;
-                        } else {
-                            $checkin_time = $att_detail->checkin_time;
-                        }
-                        if ($att_detail->regularized_checkout_time != null) {
-                            $checkout_time = $att_detail->regularized_checkout_time;
-                        } else {
-                            $checkout_time = $att_detail->checkout_time;
-                        }
-
-                        $ot_ar = CarbonInterval::minutes($att_detail->overtime)->cascade();
-                        $ot_hrs = (int) $ot_ar->totalHours;
-                        $ot_mins = $ot_ar->toArray()['minutes'];
-                        $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-
-                        $total_ot = $total_ot + $att_detail->overtime;
-
-                        $lc_mins = $att_detail->lc_minutes;
+                     //   dd($temp_ar);
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
                         if ($sts_ar[0] == 'P') {
-                            if (count($sts_ar) == 1) {
-                                $total_present = $total_present + 1;
-                            } else {
+                            if (count($sts_ar) != 1) {
                                 if (in_array('LC', $sts_ar)) {
-                                    $total_LC = $total_LC + 1;
+                                    $total_LC =   $total_LC + 1;
                                 }
                                 if (in_array('EG', $sts_ar)) {
                                     $total_EG = $total_EG + 1;
@@ -724,6 +687,7 @@ class VmtAttendanceServiceV2
                                 // if (in_array('MIP', $sts_ar)) {
                                 // }
                             }
+                            $total_present = $total_present + 1;
                         } elseif (
                             $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
                             $status == 'OD' || $status == 'PI' || $status == 'CO' || $status == 'CL' || $status == 'SL' || $status == 'FO L'
@@ -745,39 +709,28 @@ class VmtAttendanceServiceV2
                             $status = $att_detail->status;
                             $total_weekoff = $total_weekoff + 1;
                         } else {
-                            $checkin_time = '-';
-                            $checkout_time = '-';
-                            $ot = '-';
-                            //  if ($lc_eg_setting['lc_status'])
-                            $lc_minutes = '-';
+                            $staus ='-';
                         }
-
-                        array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $status);
+                        array_push($temp_ar, $status);
                     } else {
-                        array_push($temp_ar, 0, 0, 0);
-                        if ($attendance_setting_details['lc_status'] == 1) {
-                            array_push($temp_ar, '0 Minutes');
-                        }
                         array_push($temp_ar, 'N');
                     }
                     $current_date->addDay();
                 }
-                $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day) - $total_late_lop;
-                if ($total_ot > 0) {
-                    $total_ot =  CarbonInterval::minutes($total_ot)->cascade()->forHumans();
+                $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day + $total_on_duty) - $total_late_lop;
+                array_push($temp_ar, $total_weekoff, $total_holiday, $total_present, $total_absent, $total_late_lop, $total_leave, $total_half_day, $total_on_duty);
+                if ($attendance_setting_details['lc_status'] == 1) {
+                    array_push($temp_ar, $total_LC);
                 }
-                array_push($temp_ar, $total_weekoff, $total_holiday, $total_ot, $total_present, $total_absent, $total_late_lop, $total_leave, $total_half_day, $total_on_duty, $total_LC, $total_EG, $total_payable_days);
-                array_push($response['rows'], $temp_ar);
+                if ($attendance_setting_details['eg_status'] == 1) {
+                    array_push($temp_ar,  $total_EG);
+                }
+                array_push( $temp_ar,$total_payable_days);
+                array_push($reportresponse['rows'],$temp_ar);
+                // dd($reportresponse);
                 unset($temp_ar);
             }
-            //dd($response ['rows']);
-            array_push($heading_dates, 'Total Calculation');
-            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty", 'Total LC', 'Total EG', 'Total Payable Days');
-            $response['heading_dates'] = $heading_dates;
-            $response['header_2'] = $header_2;
-            $response['heading_dates_2'] = $heading_dates_2;
-            // dd($response);
-            return $response;
+           return $reportresponse;
         } catch (Exception $e) {
 
             return response()->json([

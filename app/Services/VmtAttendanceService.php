@@ -76,7 +76,7 @@ class VmtAttendanceService
             }else{
                 $client_id =[session('client_id')];
             }
-            $map_allEmployees =  User::where('active','1')->where('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
+            $map_allEmployees =  User::where('active','1')->whereIn('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
             //dd( $map_allEmployees);
             $allEmployees_lateComing = null;
 
@@ -1180,13 +1180,14 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
-            ]);
+            ], 400  );
         }
 
 
         try {
+            $query_user = User::where('user_code', $user_code)->first();
 
-            $user_id = User::where('user_code', $user_code)->first()->id;
+            $user_id = $query_user->id;
 
             $requestedDate = $year . '-' . $month . '-01';
             $currentDate = Carbon::now();
@@ -1216,13 +1217,14 @@ class VmtAttendanceService
                     //Need to process the checkin and checkout time based on the client.
                     //Since some client's biometric data has "in/out" direction and some will have only "in" direction
                     //dd(sessionGetSelectedClientCode());
+                    $user_client_code = VmtClientMaster::find($query_user->client_id)->client_code;
+
 
                     //If direction is only "in" or empty or "-"
                     if (
-                        sessionGetSelectedClientCode() == "DM" ||
-
-                        sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PSC" || sessionGetSelectedClientCode() == "IMA"  || sessionGetSelectedClientCode() == "LAL"
-                        || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC"
+                        $user_client_code == "ABS" || $user_client_code == "DMC" ||
+                        $user_client_code == "DM" ||  $user_client_code == "VASA" || $user_client_code == "PSC" || $user_client_code == "IMA"  || $user_client_code == "LAL"
+                        || $user_client_code == "PLIPL"
                     ) {
 
                         $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -1456,7 +1458,11 @@ class VmtAttendanceService
 
                 //If no shift assigned to user, then return null
                 if (!$shift_time) {
-                    return 0;
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Unable to fetch Attendance Monthly Report. Shift was not assigned for the date : '.$current_date,
+                        'data' => '',
+                    ], 400);
                 }
 
                 $attendanceResponseArray[$key]['vmt_employee_workshift_id'] = $shift_time->id;
@@ -1620,20 +1626,20 @@ class VmtAttendanceService
 
             // dd($attendanceResponseArray);
 
-            return [
+            return response()->json([
                 'status' => 'success',
                 'message' => 'Attendance Monthly Report fetched successfully',
                 'data' => $attendanceResponseArray,
-            ];
+            ], 200);
         } catch (\Throwable $e) {
 
-            return [
+            return response()->json([
                 'status' => 'failure',
                 'message' => 'Error while fetching Attendance Monthly Report',
                 'data' => '',
                 'error' => $e->getMessage(),
                 'error_verbose' => $e->getTraceAsString()
-            ];
+            ], 400);
         }
     }
 
@@ -4605,11 +4611,14 @@ class VmtAttendanceService
     public function getBioMetricAttendanceData($user_code, $current_date)
     {
 
+        //Get the user client code
+        $user_client_id = User::where('user_code',$user_code)->first()->client_id;
+        $user_client_code = VmtClientMaster::find($user_client_id)->client_code;
 
         $deviceData = array();
         if (
-            sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
-            sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
+            $user_client_code == "DM"  || $user_client_code == 'VASA' || $user_client_code == 'LAL' ||
+            $user_client_code == 'PSC'  || $user_client_code ==  'IMA' ||  $user_client_code ==  'PA' ||  $user_client_code ==  'DMC' || $user_client_code ==  'ABS'
         ) {
 
             $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -4659,14 +4668,14 @@ class VmtAttendanceService
 
     public function getEmpAttendanceAndWorkshift($user_id, $user_code, $current_date)
     {
-        // $user_id = 562;
-        // $user_code = 'NAT0014';
-        // $current_date = '2023-09-04';
-        // $deviceData = array();
+        //Get the user client code
+        $user_client_id = User::where('user_code',$user_code)->first()->client_id;
+        $user_client_code = VmtClientMaster::find($user_client_id)->client_code;
+
         if (
-            sessionGetSelectedClientCode() == "DM"  || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL' ||
-            sessionGetSelectedClientCode() == 'PSC'  || sessionGetSelectedClientCode() ==  'IMA' ||  sessionGetSelectedClientCode() ==  'PA' ||  sessionGetSelectedClientCode() ==  'DMC' || sessionGetSelectedClientCode() ==  'ABS'
-            || sessionGetSelectedClientCode() ==  'NAT'
+            $user_client_code == "DM"  || $user_client_code == 'VASA' || $user_client_code == 'LAL' ||
+            $user_client_code == 'PSC'  || $user_client_code ==  'IMA' ||  $user_client_code ==  'PA' ||  $user_client_code ==  'DMC' || $user_client_code ==  'ABS'
+            || $user_client_code ==  'NAT'
         ) {
             $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                 ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))

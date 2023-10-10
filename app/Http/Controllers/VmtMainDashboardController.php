@@ -784,4 +784,9 @@ public function getEmployeesCountDetails(Request $request, VmtDashboardService $
     {
         return $VmtDashBoardService->getOrgDashBoardDeatail();
     }
+
+    public function getMobLoginCount(Request $request,VmtDashboardService  $VmtDashBoardService)
+{
+    return  $VmtDashBoardService->getMobLoginCount();
+}
 }
