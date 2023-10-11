@@ -127,7 +127,7 @@ class VmtAttendanceService
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                     $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-                    
+
                     //If reviewer_id = 0, then its not yet reviewed
                     if ($singleItem->reviewer_id != 0) {
                         $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
@@ -4513,16 +4513,16 @@ class VmtAttendanceService
            // ->whereIn('users.client_id', $client_id);
 
      if(!empty($department_id)){
-        $employees_data = $employees_data->where('off.department_id', $department_id)
-            ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
-     }else{
-        $employees_data= $employees_data
-            ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+        
+        $employees_data = $employees_data->where('off.department_id', $department_id);
      }
+        $employees_data= $employees_data
+            ->get(['users.id as id', 'users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+
 
         foreach ($employees_data as $key => $single_user_data) {
 
-            $user_code = $single_user_data->user_code;
+            $user_code = $single_user_data->Employee_Code;
 
             $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
 
@@ -4692,7 +4692,6 @@ class VmtAttendanceService
 
     public function getBioMetricAttendanceData($user_code, $current_date)
     {
-
         //Get the user client code
         $user_client_id = User::where('user_code',$user_code)->first()->client_id;
         $user_client_code = VmtClientMaster::find($user_client_id)->client_code;
