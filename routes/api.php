@@ -160,6 +160,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Payroll
 
     Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth'])->name('payroll/getCurrentPayrollDates');
+    Route::post('/payroll/getPayrollOutcomes', [App\Http\Controllers\VmtPayrollController::class, 'getPayrollOutcomes'])->name('payroll/getPayrollOutcomes');
+
+
 
   //payroll statutory PT settings
     Route::post('fetchProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchProfessionalTaxSettings'])->name('fetchProfessionalTaxSettings');

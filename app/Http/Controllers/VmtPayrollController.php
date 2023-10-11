@@ -72,4 +72,8 @@ class VmtPayrollController extends Controller
         return view('payroll.vmt_work_location');
     }
 
+    public function getPayrollOutcomes(Request $request, VmtPayrollService $serviceVmtPayrollService){
+        return $serviceVmtPayrollService->getPayrollOutcomes($request->payroll_month);
+    }
+
 }

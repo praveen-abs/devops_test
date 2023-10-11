@@ -39,24 +39,45 @@ class VmtPayrollService{
         Get the payroll outcome section data.
     */
     public function getPayrollOutcomes($payroll_month){
-        $validator = Validator::make(
-            $data = [
-                'payroll_month' => $payroll_month,
-            ],
-            $rules = [
-                'payroll_month' => 'nullable|exists:vmt_client_master,id',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-            ]
-        );
+        // $validator = Validator::make(
+        //     $data = [
+        //         'payroll_month' => $payroll_month,
+        //     ],
+        //     $rules = [
+        //         'payroll_month' => 'nullable|exists:vmt_client_master,id',
+        //     ],
+        //     $messages = [
+        //         'required' => 'Field :attribute is missing',
+        //         'exists' => 'Field :attribute is invalid',
+        //     ]
+        // );
 
-        if ($validator->fails()) {
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'status' => 'failure',
+        //         'message' => $validator->errors()->all()
+        //     ]);
+        // }
+
+
+        try{
+            $data = '';
+
             return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
+                "status" => "success",
+                "message" => "Payroll outcomes fetched successfully",
+                "data" => $data
+
             ]);
+
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch Payroll Outcome details",
+                "data" => $e->getmessage(),
+            ],400);
         }
 
 
