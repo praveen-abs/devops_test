@@ -1898,7 +1898,7 @@ class VmtDashboardService
 
             $user_data = User::get()->count();
             $inactive_count = $user_data- $active_count;
-        $response = [$app_checkin_count, $active_count,$inactive_count];
+        $response = ["app_checkin_count"=>$app_checkin_count, "app_active_count"=>$active_count,"app_inactive_count"=>$inactive_count];
         return $response;
         }
         catch (\Exception $e) {
