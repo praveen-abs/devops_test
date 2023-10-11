@@ -97,11 +97,11 @@ class VmtReportsService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
+            // if (empty($department_id)) {
+            //     $get_department = Department::pluck('id');
+            // } else {
+            //     $get_department = $department_id;
+            // }
 
             $dates = Carbon::now()->format('Y-m-d');
             // $Category = 'All';
@@ -110,7 +110,7 @@ class VmtReportsService
             $headings = array();
             $temp_ar = array();
             $headers = array();
-            
+
             $emp_ctc_detail = user::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
@@ -120,9 +120,13 @@ class VmtReportsService
                 ->where('users.is_ssa','=','0')
                 ->where('vmt_employee_details.doj', '<', $date_req)
                 ->whereIn('users.client_id', $client_id)
-                ->whereIn('users.active', $active_status)
-                ->whereIn('vmt_employee_office_details.department_id', $get_department)
-                ->get();
+                ->whereIn('users.active', $active_status);
+
+                if (!empty($department_id)) {
+                    $emp_ctc_detail = $emp_ctc_detail->whereIn('office.department_id', $department_id);
+                }
+
+                $emp_ctc_detail = $emp_ctc_detail->get();
 
 
 
@@ -190,12 +194,12 @@ class VmtReportsService
                 $response['rows'] = [];
             }
         } catch (\Exception $e) {
-            $response = [
+            $response = ([
                 'status' => 'failure',
                 'message' => 'Error while fetching data',
                 'error' =>  $e->getMessage(),
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
-            ];
+            ]);
         }
         return $response;
     }
@@ -203,7 +207,7 @@ class VmtReportsService
     public function getEmployeesMasterDetails($type, $client_id, $active_status, $department_id, $date_req)
 
     {
-     
+
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
@@ -231,7 +235,7 @@ class VmtReportsService
         }
 
         try {
-           
+
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id');
             } else {
@@ -248,11 +252,13 @@ class VmtReportsService
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
+            // if (empty($department_id)) {
+
+            //     $get_department = Department::pluck('id');
+
+            // } else {
+            //     $get_department = $department_id;
+            // }
             $date = Carbon::now()->format('M-Y');
             //$client_id = array(1);
             $Category = 'All';
@@ -272,9 +278,13 @@ class VmtReportsService
                 ->where('users.is_ssa','=','0')
                 ->whereIn('users.client_id', $client_id)
                 ->whereDate('employee.doj', '<', $date_req)
-                ->whereIn('users.active', $active_status)
-                ->whereIn('office.department_id', $get_department)
-                ->get([
+                ->whereIn('users.active', $active_status);
+
+                if (!empty($department_id)) {
+                    $emp_master_detail = $emp_master_detail->whereIn('office.department_id', $department_id);
+                }
+
+                $emp_master_detail = $emp_master_detail->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
                     'office.official_mobile', 'office.l1_manager_code', 'office.work_location', 'employee.aadhar_number', 'employee.pan_number', 'statutory.uan_number', 'statutory.epf_number', 'statutory.esic_number',
                     'employee.mobile_number', 'users.email', 'employee.physically_challenged', 'employee.blood_group_id', 'banks.bank_name', 'employee.bank_account_number', 'employee.bank_ifsc_code', 'employee.no_of_children',
@@ -282,7 +292,8 @@ class VmtReportsService
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-                
+
+
             foreach ($emp_master_detail as $single_details) {
                 // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
@@ -297,7 +308,7 @@ class VmtReportsService
                     $temp_ar['Employee Status'] = "Exit";
                 } else if ($single_details->active == 0) {
                     $temp_ar['Employee Status'] = 'Not Yet Active';
-                
+
                 }
                 $temp_ar['Last Working Day'] = carbon::parse($single_details->dol)->format('d-M-Y');
                 $temp_ar['Nationality'] = $single_details->nationality;
@@ -369,7 +380,7 @@ class VmtReportsService
                 $temp_ar['Child Education Allowance'] = $single_details->child_education_allowance;
                 $temp_ar['Food Allowance'] = $single_details->food_allowance;
                 $temp_ar['Washing Allowance'] = $single_details->washing_allowance;
-                // $temp_ar['Uniform Allowance'] = $single_details->; 
+                // $temp_ar['Uniform Allowance'] = $single_details->;
                 $temp_ar['Special Allowance'] = round((int) $single_details->special_allowance) == 0 ? "0" : round((int) $single_details->special_allowance);
                 $temp_ar['Statutory Bonus'] = round((int) $single_details->Statutory_bonus) == 0 ? "0" : round((int) $single_details->Statutory_bonus);
                 $temp_ar['Other Allowance'] = round((int) $single_details->other_allowance) == 0 ? "0" : round((int) $single_details->other_allowance);
@@ -405,15 +416,15 @@ class VmtReportsService
                 // $temp_ar['IFSC Code'] = $single_details->bank_ifsc_code;
                 // $temp_ar['NATIONALITY'] = $single_details->nationality;
                 // $temp_ar['Communication Allowance'] = $single_details->communication_allowance;
-                // $temp_ar['Employer EPF'] = $single_details->washing_allowance; 
+                // $temp_ar['Employer EPF'] = $single_details->washing_allowance;
                 // if ($single_details->esic_number =='NOT APPLICABLE' ) {
                 //     $temp_ar['ESI Eligible'] = "Yes";
                 // } else if ($single_details->esic_number != 'NOT APPLICABLE') {
                 //     $temp_ar['ESI Eligible'] = "No";
 
 
-                // $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution; 
-                // $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution; 
+                // $temp_ar['Employer EPF'] = $single_details->epf_employer_contribution;
+                // $temp_ar['Employer ESIC	'] = $single_details->esic_employer_contribution;
 
                 //Get family details
                 array_push($processed_array, $temp_ar);
