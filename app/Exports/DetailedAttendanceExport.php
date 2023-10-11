@@ -126,7 +126,7 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
             } else {
                 $sheet->getStyle(num2alpha($i) . '7:' . num2alpha($i + $k) . '7' )->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()->setRGB('808080');
+                    ->getStartColor()->setRGB('BFBFBF');
             }
 
             $sheet->getStyle(num2alpha($i) . '7:' . num2alpha($i + $k) . '7')
@@ -134,7 +134,7 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
 
             if ($this->is_lc) {
-                $i = $i + 6;
+                $i = $i + 5;
             } else {
                 $i = $i + 4;
             }

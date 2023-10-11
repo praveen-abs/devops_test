@@ -48,7 +48,7 @@ class VmtEmployeeAttendanceController extends Controller
         if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
             $is_lc = true;
         }
-        $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id, $request->active_status);
+        $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id);
         // dd($data);
         $client_query = VmtClientMaster::where('id', sessionGetSelectedClientid())->first();
         $client_name = sessionGetSelectedClientName();
