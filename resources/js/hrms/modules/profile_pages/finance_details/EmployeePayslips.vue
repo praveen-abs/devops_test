@@ -33,7 +33,7 @@
                                     @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)">Download</button> -->
                                     <!-- bg-blue-500 -->
                                     <button class=" border-[2px] border-[#000] py-2 px-3 rounded-md"
-                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('', slotProps.data.PAYROLL_MONTH)">View</button>
+                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.user_code, slotProps.data.PAYROLL_MONTH)">View</button>
                 </template>
 
             </column>
@@ -340,6 +340,12 @@ function toggle(event){
     padding: 0;
     z-index: 0 !important;
 }
+
+.p-sidebar-right .p-sidebar {
+    width:50% !important;
+    height: 100%;
+}
+
 </style>
 
 

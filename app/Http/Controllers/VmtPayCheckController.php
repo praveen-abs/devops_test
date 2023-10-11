@@ -339,7 +339,7 @@ class VmtPayCheckController extends Controller
 
         $user = User::where('id',$request->uid)->first();
 
-        return $employeePaySlipService->viewPayslipdetails($user->user_code,
+        return $employeePaySlipService->viewPayslipdetails($request->user_code,
         $request->month ,
          $request->year,$serviceVmtAttendanceService);
      }
