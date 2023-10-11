@@ -7,6 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Narasimman <h1>
+    @if ($status)
+    <h1> {{ $status }} <h1>
+    @endif
+    @if ($err_msg != 'null')
+    <h1> {{ $err_msg }} <h1>
+    @endif
+    @if ($err_str != 'null')
+    <h1> {{ $err_str }} <h1>
+    @endif
+
 </body>
 </html>

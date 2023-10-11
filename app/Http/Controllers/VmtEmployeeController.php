@@ -1144,6 +1144,7 @@ class VmtEmployeeController extends Controller
                 'users.id as user_id',
                 'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
+                'vmt_employee_details.dol as dol',
                 'vmt_employee_details.blood_group_id as blood_group_id',
                 'vmt_employee_office_details.department_id',
                 'vmt_employee_office_details.designation as emp_designation',

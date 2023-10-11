@@ -78,7 +78,7 @@
     <!-- <div class="" v-else>
          <ImportQuickOnboarding />
     </div> -->
-    <Transition name="fade" mode="out-in">
+    <!-- <Transition name="fade" mode="out-in">
         <Dialog header="Header" v-model:visible="useStore.canShowloading"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
             :closeOnEscape="false">
@@ -90,7 +90,7 @@
                 <h5 style="text-align: center">Please wait...</h5>
             </template>
         </Dialog>
-    </Transition>
+    </Transition> -->
     <importSalaryAdvance />
 </template>
 
@@ -101,7 +101,8 @@ import { onMounted, onUpdated, ref } from 'vue';
 import { useRoute } from "vue-router";
 // import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
 import { useImportSalaryAdvance } from './stores/useImportSalaryAdvance';
-import { Service } from '../../Service/Service';
+import { Service } from '../../Service/Service';we
+
 import importSalaryAdvance from './import_salary_advance.vue'
 
 

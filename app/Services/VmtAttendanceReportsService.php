@@ -31,6 +31,8 @@ use App\Exports\BasicAttendanceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Ramsey\Uuid\Type\Integer;
+use Exception;
+use App\Models\VmtEmpAttIntrTable;
 
 class VmtAttendanceReportsService
 {
@@ -195,164 +197,63 @@ class VmtAttendanceReportsService
         }
     }
 
-    public function basicAttendanceReport($start_date,  $end_date, $department_id, $client_id, $active_status)
+    public function basicAttendanceReport($start_date,  $end_date, $department_id, $client_id)
     {
         ini_set('max_execution_time', 3000);
-        //dd($month);
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'start_date' => 'required',
+                'end_date' => 'required'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
 
-
-
-        if (empty($client_id)) {
-            $client_id = VmtClientMaster::pluck('id')->toArray();
-        } else {
-            $client_id =  $client_id;
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
         }
-        // dd($client_id);
 
-        if (empty($active_status)) {
-            $active_status = ['1', '0', '-1'];
-        } else {
-            $active_status = $active_status;
-        }
-        $reportresponse = array();
-        $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('is_ssa', '0')
-            ->where('active',  "1")
-            ->whereIn('client_id', $client_id)
-            ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
-
-        if (!empty($department_id)) {
-            $user =  $user->whereIn('vmt_employee_office_details.department_id', $department_id);
-        }
-        $user =   $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-        $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
-        foreach ($user as $singleUser) {
-
-            $total_present = 0;
-            $total_absent = 0;
-            $total_weekoff = 0;
-            $total_holidays = 0;
-            $total_leave = 0;
-            $total_halfday = 0;
-            $total_OD = 0;
-            $total_LC = 0;
-            $total_EG = 0;
-            $total_lop = 0;
-
-
-            //dd($singleUser);
-
-            $arrayReport = array($singleUser->user_code, $singleUser->name, $singleUser->designation, $singleUser->doj);
-
-
-
-
-            $firstDateStr = $start_date;
-            $lastAttendanceDate = Carbon::parse($end_date);
-            $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($firstDateStr));
-            $deviceData = [];
-            for ($i = 0; $i < ($totalDays); $i++) {
-                // code...
-
-                $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
-
-
-                $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
-                //dd($dateString);
-
-
-                if (
-                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
-                ) {
-                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('user_Id', $singleUser->user_code)
-                        ->first(['check_out_time']);
-
-                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('user_Id',  $singleUser->user_code)
-                        ->first(['check_in_time']);
-                } else {
-                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('direction', 'out')
-                        ->where('user_Id', $singleUser->user_code)
-                        ->first(['check_out_time']);
-
-                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('direction', 'in')
-                        ->where('user_Id', $singleUser->user_code)
-                        ->first(['check_in_time']);
-                }
-                //dd($attendanceCheckIn);
-
-                $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-                $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-                //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
-                if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
-                    $deviceData[] = array(
-                        'date' => $dateString,
-                        'checkin_time' => $deviceCheckInTime,
-                        'checkout_time' => $deviceCheckOutTime,
-                        'attendance_mode_checkin' => 'biometric',
-                        'attendance_mode_checkout' => 'biometric'
-                    );
-                }
+        try {
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
             }
+            $reportresponse = array();
+            $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('is_ssa', '0')
+                ->where('active',  "1")
+                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
-
-
-            // attendance details from vmt_employee_attenndance table
-            $attendance_WebMobile = VmtEmployeeAttendance::
-                // where('user_id', $request->user_id)
-                where('user_id', $singleUser->id)
-                //->whereMonth('date', $request->month)
-                ->whereBetween('date', [$start_date, $end_date])
-                ->orderBy('checkin_time', 'asc')
-                ->get(['date', 'checkin_time', 'checkout_time', 'attendance_mode_checkin', 'attendance_mode_checkout']);
-
-            //dd($attendance_WebMobile);
-
-
-            $attendanceResponseArray = [];
-
-            //Create empty month array with all dates.
-            // $month = $request->month;
-
-
-            //$days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-            //dd($totalDays );
-            //For Excel Sheet Headers
+            if (!empty($department_id)) {
+                $users =  $users->whereIn('client_id', $client_id);
+            }
+            if (!empty($client_id)) {
+                $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+            //  dd($users);
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
-            for ($i = 0; $i <= $totalDays; $i++) {
-                $fulldate = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
-                $date = Carbon::parse($firstDateStr)->addDay($i)->format('d');
-
-                $date_day = $date . ' - ' . Carbon::parse($fulldate)->format('l');
-                array_push($heading_dates, $date_day);
-
-                $attendanceResponseArray[$fulldate] = array(
-                    //"user_id"=>$request->user_id,
-                    "user_id" => $singleUser->id, "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false,
-                    "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false,
-                    "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null,
-                    "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null
-                );
-
-                //echo "Date is ".$fulldate."\n";
-                ///$month_array[""]
+            $attendance_setting_details = $this->attendanceSettingsinfos(null);
+            $reportresponse['rows'] = array();
+            $header_date = Carbon::parse($start_date);
+            while ($header_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
+                array_push($heading_dates, $header_date->format('d') . ' - ' .  $header_date->format('l'));
+                $header_date->addDay();
             }
             array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
-            $attendance_setting_details = $this->attendanceSettingsinfos(null);
-
             if ($attendance_setting_details['lc_status'] == 1) {
                 array_push($heading_dates, 'Total LC');
             }
@@ -360,359 +261,92 @@ class VmtAttendanceReportsService
                 array_push($heading_dates, 'Total EG');
             }
             array_push($heading_dates, "Total Payable Days");
-
-
-
-
-
-            // merging result from both table
-            //dd($attendance_WebMobile->toArray());
-            //dd($deviceData);
-            $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
-
-            $dateCollectionObj    =  collect($merged_attendanceData);
-            $sortedCollection   =   $dateCollectionObj->sortBy([
-                ['date', 'asc'],
-            ]);
-            $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
-            //dd($merged_attendanceData);
-            //dd($dateWiseData);
-            // dd($attendanceResponseArray);
-            foreach ($dateWiseData  as $key => $value) {
-                //dd($key);
-                //dd($value[0]);
-
-                /*
-                     Here $key is the date. i.e : 2022-10-01
-
-                     $value is ::
-
-                         [
-                             date=>2022-11-05
-                             checkin_time=18:06:00
-                             checkout_time=18:06:00
-                             attendance_mode="web"
-                         ],
-                         [
-                             ....
-                             attendance_mode="biometric"
-
-                         ]
-
-                 */
-                //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
-
-                $checkin_min = null;
-                $checkout_max = null;
-                $attendance_mode_checkin = null;
-                $attendance_mode_checkout = null;
-
-
-                foreach ($value as $singleValue) {
-                    //Find the min of checkin
-                    //dd($singleValue);
-
-                    if ($checkin_min == null) {
-                        $checkin_min = $singleValue["checkin_time"];
-
-                        $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
-                    } else
-                     if ($checkin_min > $singleValue["checkin_time"]) {
-                        $checkin_min = $singleValue["checkin_time"];
-                        $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
-                    }
-
-                    //dd("Min value found : " . $singleValue["checkin_time"]);
-
-                    //Find the max of checkin
-                    if ($checkout_max == null) {
-                        $checkout_max = $singleValue["checkout_time"];
-                        $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
-                    } else
-                     if ($checkout_max < $singleValue["checkout_time"]) {
-                        $checkout_max = $singleValue["checkout_time"];
-                        $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
-                    }
-                }
-
-                //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
-
-                //dd($value[0]["attendance_mode"]);
-
-                $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
-                $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
-
-                //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
-                $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
-                $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
-            }
-
-            // dd($attendanceResponseArray );
-            foreach ($attendanceResponseArray as $key => $value) {
-
-                //get Shift Time for day
-
-                $shift_settings = $this->getShiftTimeForEmployee($singleUser->id, $value['checkin_time'], $value['checkout_time']);
-                $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
-                $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
-                $weekOffDays =  $shift_settings->week_off_days;
-
-                if ($attendanceResponseArray[$key]['checkin_time'] != null && $attendanceResponseArray[$key]['checkout_time'] != null && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
-                    $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
-
-                    $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
-                    $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
-                }
-
-
-
-                //Logic For Check week off or not
-
-                if (!array_key_exists('date', $attendanceResponseArray[$key]))
-                    dd("Missing for : " . $key);
-
-                // if (
-                //     Carbon::parse($attendanceResponseArray[$key]['date'])->format('l') == "Sunday"
-                //     && $attendanceResponseArray[$key]['checkin_time'] == null &&
-                //     $attendanceResponseArray[$key]["checkout_time"] == null
-                // ) {
-                //     $attendanceResponseArray[$key]['is_weekoff'] = true;
-                // }
-                $attendanceResponseArray[$key]['is_weekoff'] = $this->checkWeekOffStatus($attendanceResponseArray[$key]['date'], $weekOffDays, $attendanceResponseArray[$key]['checkin_time'], $attendanceResponseArray[$key]["checkout_time"]);
-
-                //Logic For Check Holiday Or Not
-                foreach ($holidays as $holiday) {
-                    if (
-                        Carbon::parse($holiday)->eq(Carbon::parse($attendanceResponseArray[$key]['date']))
-                        && $attendanceResponseArray[$key]['checkin_time'] == null &&
-                        $attendanceResponseArray[$key]["checkout_time"] == null &&
-                        !$attendanceResponseArray[$key]['is_weekoff']
-                    ) {
-                        $attendanceResponseArray[$key]['is_holiday'] = true;
-                    }
-                }
-
-                //Logic For Check Leave,Half day, Absent
-                //dd($attendanceResponseArray[$key]['user_id']);
-                if (
-                    $attendanceResponseArray[$key]['checkin_time'] == null &&
-                    $attendanceResponseArray[$key]["checkout_time"] == null &&
-                    $attendanceResponseArray[$key]['is_weekoff'] == false
-                ) {
-
-                    $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id']);
-
-                    if (empty($leave_Details)) {
-                        $leave_Details =   $leave_Details->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
-                    } else {
-                        $leave_Details =   $leave_Details->WhereBetween('start_date', [$start_date, $end_date]);
-                        $leave_Details =   $leave_Details->WhereBetween('end_date', [$start_date, $end_date])
-                            ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
-                        // if ($key == '2023-08-12')
-                        // dd($leave_Details);
-                    }
-                    if ($leave_Details->count() == 0) {
-                        // dd( $leave_Details->count());
-                        $attendanceResponseArray[$key]['isAbsent'] = true;
-                    } else {
-                        foreach ($leave_Details as $single_leave_details) {
-                            $startDate = Carbon::parse($single_leave_details->start_date)->subDays(1);
-                            $endDate = Carbon::parse($single_leave_details->end_date);
-                            $currentDate =  Carbon::parse($attendanceResponseArray[$key]['date']);
-                            //   dd($startDate.'-----'.$currentDate.'-----');
-                            if ($currentDate->gt($startDate) && $currentDate->lte($endDate)) {
-                                if (substr($single_leave_details->total_leave_datetime, -1) == 'N') {
-                                    // Logic Get FN or AN Value From total Leave date time
-                                    $attendanceResponseArray[$key]['half_day_type'] = preg_replace("/([^a-zA-Z]+)/i", "",  $single_leave_details->total_leave_datetime);
-                                    $attendanceResponseArray[$key]['half_day_status'] = $single_leave_details->status;
-                                } else if (
-                                    $attendanceResponseArray[$key]['checkin_time'] == null &&
-                                    $attendanceResponseArray[$key]["checkout_time"] == null &&
-                                    $single_leave_details->status == 'Approved'
-                                ) {
-                                    $attendanceResponseArray[$key]['isLeave'] = true;
-                                    $leave_type = VmtLeaves::where('id', $single_leave_details->leave_type_id)
-                                        ->pluck('leave_type');
-                                    //  dd( $leave_type[0]);
-                                    if ($leave_type[0] == 'Sick Leave / Casual Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'SL/CL';
-                                    } else if ($leave_type[0] == 'Casual/Sick Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'CL/SL';
-                                    } else if ($leave_type[0] == 'LOP Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'LOP LE';
-                                    } else if ($leave_type[0] == 'Earned Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'EL';
-                                    } else if ($leave_type[0] == 'Maternity Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'ML';
-                                    } else if ($leave_type[0] == 'Paternity Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'PTL';
-                                    } else if ($leave_type[0] == 'On Duty') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'OD';
-                                    } else if ($leave_type[0] == 'Permission') {
-                                        $attendanceResponseArray[$key]['leave_type'] = "PI";
-                                    } else if ($leave_type[0] == 'Compensatory Off') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'CO';
-                                    } else if ($leave_type[0] == 'Casual Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'CL';
-                                    } else if ($leave_type[0] == 'Sick Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'SL';
-                                    } else if ($leave_type[0] == 'Compensatory Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'CO';
-                                    } else if ($leave_type[0] == 'Flexi day-off Leave') {
-                                        $attendanceResponseArray[$key]['leave_type'] = 'FO L';
-                                    }
-                                    continue;
-                                } else {
-                                    $attendanceResponseArray[$key]['isAbsent'] = true;
-                                    continue;
+            $reportresponse['headings'] = $heading_dates;
+            foreach ($users as $single_user) {
+                $current_date = Carbon::parse($start_date);
+                $temp_ar = array();
+                array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
+                $total_weekoff = 0;
+                $total_holiday = 0;
+                $total_present = 0;
+                $total_absent = 0;
+                $total_late_lop = 0;
+                $total_leave = 0;
+                $total_half_day = 0;
+                $total_on_duty = 0;
+                $total_LC = 0;
+                $total_EG = 0;
+                while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
+                    if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
+                        $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        //   dd($temp_ar);
+                        $status = $att_detail->status;
+                        $sts_ar =  explode("/", $status);
+                        if ($sts_ar[0] == 'P') {
+                            if (count($sts_ar) != 1) {
+                                if (in_array('LC', $sts_ar)) {
+                                    $total_LC =   $total_LC + 1;
                                 }
+                                if (in_array('EG', $sts_ar)) {
+                                    $total_EG = $total_EG + 1;
+                                }
+                                // if (in_array('MOP', $sts_ar)) {
+                                // }
+                                // if (in_array('MIP', $sts_ar)) {
+                                // }
+                            }
+                            $total_present = $total_present + 1;
+                        } elseif (
+                            $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
+                            $status == 'OD' || $status == 'PI' || $status == 'CO' || $status == 'CL' || $status == 'SL' || $status == 'FO L'
+                        ) {
+                            // if($status='leave')
+                            // dd($att_detail);
+                            if ($status == 'OD') {
+                                $total_on_duty = $total_on_duty;
                             } else {
-                                $attendanceResponseArray[$key]['isAbsent'] = true;
-                                continue;
+                                $total_leave = $total_leave;
                             }
+                            $total_present = $total_present + 1;
+                        } else if ($att_detail->status == 'A') {
+                            $total_absent = $total_absent + 1;
+                        } else if ($att_detail->status == 'HO') {
+                            $status = $att_detail->status;
+                            $total_holiday = $total_holiday + 1;
+                        } else if ($att_detail->status == 'WO') {
+                            $status = $att_detail->status;
+                            $total_weekoff = $total_weekoff + 1;
+                        } else {
+                            $staus = '-';
                         }
-                    }
-                }
-
-                $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
-                $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
-
-                //Code For Check LC
-                if (!empty($checkin_time)) {
-                    $parsedCheckIn_time  = Carbon::parse($checkin_time);
-                    //Check whether checkin done on-time
-                    $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
-                    if ($isCheckin_done_ontime) {
-                        //employee came on time....
+                        array_push($temp_ar, $status);
                     } else {
-                        //dd("Checkin NOT on-time");
-                        //check whether regularization applied.
-                        $user_id = $attendanceResponseArray[$key]['user_id'];
-                        $date = $attendanceResponseArray[$key]['date'];
-                        $regularization_status = $this->isRegularizationRequestApplied($user_id, $date, 'LC');
-                        $attendanceResponseArray[$key]["isLC"] = $regularization_status;
+                        array_push($temp_ar, 'N');
                     }
+                    $current_date->addDay();
                 }
-                //Code For Check EG
-                if (!empty($checkout_time)) {
-                    $parsedCheckOut_time  = Carbon::parse($checkout_time);
-                    //Check whether checkin out on-time
-                    $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
-                    if ($isCheckout_done_ontime) {
-                        //employee left early on time....
-                        $user_id = $attendanceResponseArray[$key]['user_id'];
-                        $date = $attendanceResponseArray[$key]['date'];
-                        $regularization_status = $this->isRegularizationRequestApplied($user_id, $date, 'EG');
-                        $attendanceResponseArray[$key]["isEG"] = $regularization_status;
-                    } else {
-                        //employee left late....
-                    }
+                $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day + $total_on_duty) - $total_late_lop;
+                array_push($temp_ar, $total_weekoff, $total_holiday, $total_present, $total_absent, $total_late_lop, $total_leave, $total_half_day, $total_on_duty);
+                if ($attendance_setting_details['lc_status'] == 1) {
+                    array_push($temp_ar, $total_LC);
                 }
-            }
-
-
-            // dd($attendanceResponseArray);
-
-            foreach ($attendanceResponseArray as $key => $value) {
-                $current_date = Carbon::parse($attendanceResponseArray[$key]['date']);
-                $doj = Carbon::parse($attendanceResponseArray[$key]['DOJ']);
-
-                if ($doj->gt($current_date)) {
-                    array_push($arrayReport, 'N');
-                } else if ($attendanceResponseArray[$key]['is_weekoff']) {
-                    array_push($arrayReport, 'WO');
-                    $total_weekoff++;
-                } else if ($attendanceResponseArray[$key]['is_holiday']) {
-                    array_push($arrayReport, 'HO');
-                    $total_holidays++;
-                } else if (
-                    $attendanceResponseArray[$key]['isAbsent'] && !$attendanceResponseArray[$key]['isLeave']
-                    && !$attendanceResponseArray[$key]['is_holiday'] && $attendanceResponseArray[$key]['half_day_status'] == null
-                ) {
-                    array_push($arrayReport, 'A');
-                    $total_absent++;
-                } else if ($attendanceResponseArray[$key]['half_day_status'] == 'Approved') {
-                    if ($attendanceResponseArray[$key]['half_day_type'] == 'FN') {
-                        array_push($arrayReport, 'HD/P');
-                    } else if ($attendanceResponseArray[$key]['half_day_type'] == 'AN') {
-                        array_push($arrayReport, 'P/HD');
-                    }
-                    $total_present = $total_present + 0.5;
-                    $total_halfday = $total_halfday + 0.5;
-                } else if ($attendanceResponseArray[$key]['half_day_status'] == 'Pending' || $attendanceResponseArray[$key]['half_day_status'] == 'Rejected') {
-                    if ($attendanceResponseArray[$key]['half_day_type'] == 'AN') {
-                        array_push($arrayReport, 'A/P');
-                    } else if ($attendanceResponseArray[$key]['half_day_type'] == 'FN') {
-                        array_push($arrayReport, 'P/A');
-                    }
-                    $total_present = $total_present + 0.5;
-                    $total_absent = $total_absent + 0.5;
-                } else if ($attendanceResponseArray[$key]['isLeave']) {
-                    // dd($attendanceResponseArray[$key]);
-                    if ($attendanceResponseArray[$key]['leave_type'] == 'OD') {
-                        array_push($arrayReport, $attendanceResponseArray[$key]['leave_type']);
-                        $total_OD++;
-                    } else {
-                        array_push($arrayReport, $attendanceResponseArray[$key]['leave_type']);
-                        $total_leave++;
-                    }
-                } else if ($attendanceResponseArray[$key]['checkin_time'] != null || $attendanceResponseArray[$key]['checkout_time'] != null) {
-
-
-                    if ($shift_settings->is_lc_applicable == 1 ||  $shift_settings->is_eg_applicable == 1) {
-                        $lc_eg_day_att = 'P';
-                        if ($attendanceResponseArray[$key]['isLC'] == 'Rejected' || $attendanceResponseArray[$key]['isLC'] == 'Not Applied') {
-                            if ($shift_settings->is_lc_applicable == 1) {
-                                $lc_eg_day_att = $lc_eg_day_att . '/LC';
-                                if ($total_LC >= $shift_settings->lc_limit_permonth && $shift_settings->lc_limit_permonth != null) {
-                                    $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
-                                }
-                            }
-                        }
-                        if ($attendanceResponseArray[$key]['isEG'] == 'Rejected' || $attendanceResponseArray[$key]['isEG'] == 'Not Applied') {
-                            if ($shift_settings->is_eg_applicable == 1) {
-                                $lc_eg_day_att = $lc_eg_day_att . '/EG';
-                                if ($total_EG >= $shift_settings->eg_limit_permonth && $shift_settings->eg_limit_permonth != null) {
-                                    $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
-                                }
-                            }
-                        }
-                        array_push($arrayReport,  $lc_eg_day_att);
-                        $total_present++;
-                    } else {
-                        array_push($arrayReport, 'P');
-                        $total_present++;
-                    }
-
-
-                    //Count For LG AND EG
-                    if ($attendanceResponseArray[$key]['isLC'] != null) {
-                        $total_LC++;
-                    }
-
-                    if ($attendanceResponseArray[$key]['isEG'] != null) {
-                        $total_EG++;
-                    }
-                } else {
-                    array_push($arrayReport, ' ');
+                if ($attendance_setting_details['eg_status'] == 1) {
+                    array_push($temp_ar,  $total_EG);
                 }
+                array_push($temp_ar, $total_payable_days);
+                array_push($reportresponse['rows'], $temp_ar);
+                // dd($reportresponse);
+                unset($temp_ar);
             }
+            return $reportresponse;
+        } catch (Exception $e) {
 
-            array_push($arrayReport, $total_weekoff, $total_holidays, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD,);
-            if ($attendance_setting_details['lc_status'] == 1) {
-                array_push($arrayReport, $total_LC);
-            }
-            if ($attendance_setting_details['eg_status'] == 1) {
-                array_push($arrayReport, $total_EG);
-            }
-            $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday + $total_OD) - $total_lop;
-            array_push($arrayReport,  $total_payable_days);
-            array_push($reportresponse, $arrayReport);
-            unset($arrayReport);
+            return response()->json([
+                'status' => 'failure',
+                'message' => $e->getMessage(),
+                'data' => $e->getTraceAsString(),
+            ]);
         }
-
-        $data = array($heading_dates, $reportresponse);
-        return $data;
     }
 
     public function shiftTimeForEmployee($start_date, $end_date, $client_domain)
@@ -1218,22 +852,20 @@ class VmtAttendanceReportsService
         return $data;
     }
 
-    public function detailedAttendanceReport($start_date, $end_date, $department_id, $client_id, $active_status)
+    public function detailedAttendanceReport($start_date, $end_date, $department_id, $client_id)
     {
-        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
-                // 'type' => $type,
-                'active_status' => $active_status,
                 'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
-                // 'type' => 'nullable',
-                'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
-                'date' => 'nullable'
+                'start_date' => 'required',
+                'end_date' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1248,679 +880,180 @@ class VmtAttendanceReportsService
             ]);
         }
 
-
         try {
-            if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id')->toArray();
-            } else {
-                $client_id =  $client_id;
-            }
-            // dd($client_id);
 
-            if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
-            } else {
-                $active_status = $active_status;
+            $current_date = Carbon::parse($start_date);
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
             }
-            if (empty($date_req)) {
-                $date_req = Carbon::now()->format('Y-m-d');
-            }
-
-
-            //dd($month);
-            $reportresponse = array();
-            $user = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            //  dd($start_date,$end_date);
+            $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->where('is_ssa', '0')
-                ->where('active', '1')
-                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
-
-            // if (sessionGetSelectedClientid() != 1) {
-            //     $user = $user->where('client_id', sessionGetSelectedClientid());
-            // }
-            if (!empty($department_id)) {
-                $user = $user->whereIn('vmt_employee_office_details.department_id', $department_id);
+                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
+                ->where('is_ssa', '0');
+            if (!empty($client_id)) {
+                $users =  $users->whereIn->whereIn('client_id', $client_id);
             }
-            $user =  $user->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-            $holidays = vmtHolidays::whereBetween('holiday_date', [$start_date, $end_date])->pluck('holiday_date');
-            foreach ($user as $singleUser) {
 
+            if (!empty($department_id)) {
+                $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $users = $users->get([
+                'users.id as id',
+                'users.user_code as user_code',
+                'users.name as name',
+                'vmt_employee_office_details.designation as designation',
+                'vmt_employee_details.dob as dob',
+                'vmt_employee_details.doj as doj',
+                'vmt_employee_details.dol as dol'
+            ]);
+            $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
+            $header_2 = array('', '', '', '');
+            $attendance_setting_details = $this->attendanceSettingsinfos(null);
+            $response['rows'] = array();
+            $header_date = Carbon::parse($start_date);
+            $heading_dates_2 = array();
+            while ($header_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
+                array_push($heading_dates, $header_date->format('d') . ' - ' .  $header_date->format('l'));
+                array_push($heading_dates_2, $header_date->format('d') . ' - ' .  $header_date->format('l'));
+                $header_date->addDay();
+                array_push($header_2, 'InPunch', 'OutPunch', 'OT');
+                if ($attendance_setting_details['lc_status'] == 1) {
+                    array_push($header_2, 'LC Minutes', 'Status');
+                } else {
+                    array_push($header_2, 'Status');
+                }
+            }
+            //dd(count($users));
+            foreach ($users as $single_user) {
+                $current_date = Carbon::parse($start_date);
+                $temp_ar = array();
+                array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
+                $total_LC_mins = 0;
+                $total_ot = 0;
+                $total_weekoff = 0;
+                $total_holiday = 0;
                 $total_present = 0;
                 $total_absent = 0;
-                $total_weekoff = 0;
-                $total_holidays = 0;
+                $total_late_lop = 0;
                 $total_leave = 0;
-                $total_halfday = 0;
-                $total_OD = 0;
-                $total_OT = 0;
+                $total_half_day = 0;
+                $total_on_duty = 0;
                 $total_LC = 0;
-                $total_LC_mins = 0;
-                $total_LC_hrs = 0;
                 $total_EG = 0;
-                $total_lop = 0;
 
+                while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
 
-                //dd($singleUser);
-
-                $arrayReport = array($singleUser->user_code, $singleUser->name, $singleUser->designation, Carbon::parse($singleUser->doj)->format('d-M-Y'));
-
-
-
-                $firstDateStr = $start_date;
-                $lastAttendanceDate = Carbon::parse($end_date);
-                $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($firstDateStr));
-
-
-                //dd($totalDays);
-                // attendance details from vmt_staff_attenndance_device table
-                $deviceData = [];
-
-                for ($i = 0; $i <= ($totalDays); $i++) {
-                    // code...
-
-                    $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
-
-
-
-                    $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
-
-                    //dd(sessionGetSelectedClientCode());
-                    if (
-                        sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-                        || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
-                    ) {
-                        $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('user_Id', $singleUser->user_code)
-                            ->first(['check_out_time']);
-
-
-
-                        $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('user_Id',  $singleUser->user_code)
-                            ->first(['check_in_time']);
-
-                        // dd($attendanceCheckIn);
-                        if ($attendanceCheckOut->check_out_time ==  $attendanceCheckIn->check_in_time) {
-                            $attendanceCheckOut = null;
+                    if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
+                        if (!VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
+                            dd($single_user);
                         }
-                    } else {
-                        $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('direction', 'out')
-                            ->where('user_Id', $singleUser->user_code)
-                            ->first(['check_out_time']);
-
-                        $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('direction', 'in')
-                            ->where('user_Id', $singleUser->user_code)
-                            ->first(['check_in_time']);
-                    }
-                    //dd($attendanceCheckIn);
-
-                    $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-                    $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-                    //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
-                    if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
-                        $deviceData[] = array(
-                            'date' => $dateString,
-                            'checkin_time' => $deviceCheckInTime,
-                            'checkout_time' => $deviceCheckOutTime,
-                            'attendance_mode_checkin' => 'biometric',
-                            'attendance_mode_checkout' => 'biometric'
-                        );
-                    }
-                }
-
-
-
-
-                // attendance details from vmt_employee_attenndance table
-                $attendance_WebMobile = VmtEmployeeAttendance::
-                    // where('user_id', $request->user_id)
-                    where('user_id', $singleUser->id)
-                    //->whereMonth('date', $request->month)
-                    ->whereBetween('date', [$start_date, $end_date])
-                    ->orderBy('checkin_time', 'asc')
-                    ->get(['date', 'checkin_time', 'checkout_time', 'attendance_mode_checkin', 'attendance_mode_checkout']);
-                //dd($attendance_WebMobile);
-
-
-                $attendanceResponseArray = [];
-
-                //Create empty month array with all dates.
-                // $month = $request->month;
-
-
-                //$days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-                //dd($totalDays );
-
-                //For Excel Sheet Headers
-                $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
-                $header_2 = array('', '', '', '');
-                $heading_dates_2 = array();
-                $attendance_setting_details = $this->attendanceSettingsinfos(null);
-                for ($i = 0; $i <= $totalDays; $i++) {
-
-                    $fulldate = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
-                    $date = Carbon::parse($firstDateStr)->addDay($i)->format('d');
-
-                    $date_day = $date . ' - ' . Carbon::parse($fulldate)->format('l');
-                    array_push($heading_dates, $date_day);
-                    array_push($heading_dates_2, $date_day);
-                    array_push($header_2, 'InPunch', 'OutPunch', 'OT');
-                    if ($attendance_setting_details['lc_status'] == 1) {
-                        array_push($header_2, 'LC Minutes');
-                    }
-                    array_push($header_2, 'Staus');
-                    $attendanceResponseArray[$fulldate] = array(
-                        //"user_id"=>$request->user_id,
-                        $dojformat = carbon::parse($singleUser->doj)->format('d-m-Y'),
-                        "user_id" => $singleUser->id, "DOJ" => $dojformat, "isAbsent" => false, "isLeave" => false,
-                        "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false,
-                        "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null,
-                        "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null,
-                        "half_day_type" => null, "OT" => 0
-                    );
-
-                    //echo "Date is ".$fulldate."\n";
-                    ///$month_array[""]
-                }
-                //dd( $attendanceResponseArray);
-                array_push($heading_dates, 'Total Calculation');
-                array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
-                $attendance_setting_details = $this->attendanceSettingsinfos(null);
-
-                if ($attendance_setting_details['lc_status'] == 1) {
-                    array_push($header_2, 'Total LC');
-                    array_push($header_2, 'Total LC Minutes');
-                    array_push($header_2, 'Total LC Hours');
-                }
-                if ($attendance_setting_details['eg_status'] == 1) {
-                    array_push($header_2, 'Total EG');
-                }
-                array_push($header_2, "Total Payable Days");
-
-
-
-
-
-                // merging result from both table
-                //dd($attendance_WebMobile->toArray());
-
-                // dd($deviceData);
-
-                $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
-
-                $dateCollectionObj    =  collect($merged_attendanceData);
-                $sortedCollection   =   $dateCollectionObj->sortBy([
-                    ['date', 'asc'],
-                ]);
-                $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
-                //dd($merged_attendanceData);
-                //if ($singleUser->id == '192')
-
-                // dd($dateWiseData);
-                // dd($attendanceResponseArray);
-                foreach ($dateWiseData  as $key => $value) {
-                    //dd($key);
-                    //dd($value[0]);
-
-                    /*
-                     Here $key is the date. i.e : 2022-10-01
-
-                     $value is ::
-
-                         [
-                             date=>2022-11-05
-                             checkin_time=18:06:00
-                             checkout_time=18:06:00
-                             attendance_mode="web"
-                         ],
-                         [
-                             ....
-                             attendance_mode="biometric"
-
-                         ]
-
-                 */
-                    //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
-
-                    $checkin_min = null;
-                    $checkout_max = null;
-                    $attendance_mode_checkin = null;
-                    $attendance_mode_checkout = null;
-
-
-                    foreach ($value as $singleValue) {
-                        //Find the min of checkin
-                        //dd($singleValue);
-
-                        if ($checkin_min == null) {
-                            $checkin_min = $singleValue["checkin_time"];
-
-                            $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
-                        } else
-                     if ($checkin_min > $singleValue["checkin_time"]) {
-                            $checkin_min = $singleValue["checkin_time"];
-                            $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                        $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        if ($att_detail->regularized_checkin_time != null) {
+                            $checkin_time = $att_detail->regularized_checkin_time;
+                        } else {
+                            $checkin_time = $att_detail->checkin_time;
+                        }
+                        if ($att_detail->regularized_checkout_time != null) {
+                            $checkout_time = $att_detail->regularized_checkout_time;
+                        } else {
+                            $checkout_time = $att_detail->checkout_time;
                         }
 
-                        //dd("Min value found : " . $singleValue["checkin_time"]);
+                        $ot_ar = CarbonInterval::minutes($att_detail->overtime)->cascade();
+                        $ot_hrs = (int) $ot_ar->totalHours;
+                        $ot_mins = $ot_ar->toArray()['minutes'];
+                        $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
 
-                        //Find the max of checkin
-                        if ($checkout_max == null) {
-                            $checkout_max = $singleValue["checkout_time"];
-                            $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
-                        } else
-                     if ($checkout_max < $singleValue["checkout_time"]) {
-                            $checkout_max = $singleValue["checkout_time"];
-                            $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
-                        }
-                    }
+                        $total_ot = $total_ot + $att_detail->overtime;
 
-                    //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
-
-                    //dd($value[0]["attendance_mode"]);
-
-                    $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
-                    $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
-
-                    //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
-                    $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
-                    $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
-                }
-
-
-                // if ($singleUser->id == '192')
-                //dd($attendanceResponseArray );
-                foreach ($attendanceResponseArray as $key => $value) {
-
-                    //dd($key);
-                    //get Shift Time for day
-
-                    $shift_settings = $this->getShiftTimeForEmployee($singleUser->id, $value['checkin_time'], $value['checkout_time']);
-                    // if( $shift_settings == null){
-                    //     dd($singleUser->id);
-                    // }
-                    // if( $shift_settings->shift_start_time==null)
-                    // dd($singleUser->id);
-                    $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
-                    $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
-                    $weekOffDays =  $shift_settings->week_off_days;
-                    $attendanceResponseArray[$key]['shift_start_time'] = $shiftStartTime;
-                    $attendanceResponseArray[$key]['shift_end_time'] = $shiftEndTime;
-                    if ($attendanceResponseArray[$key]['checkin_time'] != null && $attendanceResponseArray[$key]['checkout_time'] != null && $attendanceResponseArray[$key]['checkout_time'] == $attendanceResponseArray[$key]['checkin_time']) {
-                        $attendance_time = $this->findMIPOrMOP($attendanceResponseArray[$key]['checkin_time'], $shiftStartTime, $shiftEndTime);
-
-                        $attendanceResponseArray[$key]['checkin_time'] = $attendance_time['checkin_time'];
-                        $attendanceResponseArray[$key]['checkout_time'] = $attendance_time['checkout_time'];
-                    }
-                    // if(  $singleUser->id=='192'&&$key='2023-06-13'){
-                    //     dd( $shift_settings);
-                    // }
-
-                    //Calculate OT
-                    // if($singleUser->id==188)
-                    //dd(Carbon::parse($value['checkin_time'])->diffInMinutes($value['checkout_time']));
-                    // dd($shiftStartTime->diffInMinutes($shiftEndTime) );
-                    //  dd(Carbon::parse($value['checkout_time']));
-                    if ($this->canCalculateOt($singleUser->user_code)) {
-                        if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes($value['checkout_time']) && $value['checkout_time'] != null) {
-                            $ot = $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
-                            $ot_ar = CarbonInterval::minutes($ot)->cascade();
-                            $ot_hrs = (int) $ot_ar->totalHours;
-                            $ot_mins = $ot_ar->toArray()['minutes'];
-                            $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-                            // dd( $total_ot);
-                            if ($ot_hrs == 0) {
-                                if ($ot_mins > 30) {
-                                    $attendanceResponseArray[$key]['OT'] =  $total_ot;
-                                    $total_OT =  $total_OT +  $ot;
-                                } else {
-                                    $attendanceResponseArray[$key]['OT'] =  0;
-                                }
+                        $lc_mins = $att_detail->lc_minutes;
+                        $status = $att_detail->status;
+                        $sts_ar =  explode("/", $status);
+                        if ($sts_ar[0] == 'P') {
+                            if (count($sts_ar) == 1) {
+                                $total_present = $total_present + 1;
                             } else {
-                                $attendanceResponseArray[$key]['OT'] =  $total_ot;
-                                $total_OT =  $total_OT +  $ot;
+                                if (in_array('LC', $sts_ar)) {
+                                    $total_LC = $total_LC + 1;
+                                }
+                                if (in_array('EG', $sts_ar)) {
+                                    $total_EG = $total_EG + 1;
+                                }
+                                // if (in_array('MOP', $sts_ar)) {
+                                // }
+                                // if (in_array('MIP', $sts_ar)) {
+                                // }
                             }
-                        }
-                    } else {
-                        $attendanceResponseArray[$key]['OT'] =  0;
-                    }
-
-                    // if ($shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time'])) > 30 && $value['checkout_time'] != null && $shiftStartTime->diffInMinutes($shiftEndTime) > 270) {
-                    //     $ot = $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
-                    //     $total_OT =  $total_OT +  $ot;
-                    //     $ot_ar = CarbonInterval::minutes($ot)->cascade();
-                    //     $ot_hrs = (int) $ot_ar->totalHours;
-                    //     $ot_mins = $ot_ar->toArray()['minutes'];
-                    //     $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-                    //     // dd( $total_ot);
-                    //     $attendanceResponseArray[$key]['OT'] =  $total_ot;
-                    // }
-                    //dd('---------');
-
-
-
-                    //Logic For Check week off or not
-
-                    if (!array_key_exists('date', $attendanceResponseArray[$key]))
-                        dd("Missing for : " . $key);
-
-                    // if (
-                    //     Carbon::parse($attendanceResponseArray[$key]['date'])->format('l') == "Sunday"
-                    //     && $attendanceResponseArray[$key]['checkin_time'] == null &&
-                    //     $attendanceResponseArray[$key]["checkout_time"] == null
-                    // ) {
-                    //     $attendanceResponseArray[$key]['is_weekoff'] = true;
-                    // }
-                    $attendanceResponseArray[$key]['is_weekoff'] = $this->checkWeekOffStatus($attendanceResponseArray[$key]['date'], $weekOffDays, $attendanceResponseArray[$key]['checkin_time'], $attendanceResponseArray[$key]["checkout_time"]);
-
-                    //Logic For Check Holiday Or Not
-                    foreach ($holidays as $holiday) {
-                        if (
-                            Carbon::parse($holiday)->eq(Carbon::parse($attendanceResponseArray[$key]['date']))
-                            && $attendanceResponseArray[$key]['checkin_time'] == null &&
-                            $attendanceResponseArray[$key]["checkout_time"] == null &&
-                            !$attendanceResponseArray[$key]['is_weekoff']
+                        } elseif (
+                            $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
+                            $status == 'OD' || $status == 'PI' || $status == 'CO' || $status == 'CL' || $status == 'SL' || $status == 'FO L'
                         ) {
-                            $attendanceResponseArray[$key]['is_holiday'] = true;
-                        }
-                    }
-
-                    //Logic For Check Leave,Half day, Absent
-                    //dd($attendanceResponseArray[$key]['user_id']);
-                    if (
-                        $attendanceResponseArray[$key]['checkin_time'] == null &&
-                        $attendanceResponseArray[$key]["checkout_time"] == null &&
-                        $attendanceResponseArray[$key]['is_weekoff'] == false
-                    ) {
-
-                        $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id']);
-
-                        if (empty($leave_Details)) {
-                            $leave_Details =   $leave_Details->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
-                        } else {
-                            $leave_Details =   $leave_Details->WhereBetween('start_date', [$start_date, $end_date]);
-                            $leave_Details =   $leave_Details->WhereBetween('end_date', [$start_date, $end_date])
-                                ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
-                            // if ($key == '2023-08-12')
-                            // dd($leave_Details);
-                        }
-
-                        // if ($key == '2023-08-12')
-                        //     dd($leave_Details);
-                        if ($leave_Details->count() == 0) {
-                            // dd( $leave_Details->count());
-                            $attendanceResponseArray[$key]['isAbsent'] = true;
-                        } else {
-                            foreach ($leave_Details as $single_leave_details) {
-                                $startDate = Carbon::parse($single_leave_details->start_date)->subDays(1);
-                                $endDate = Carbon::parse($single_leave_details->end_date);
-                                $currentDate =  Carbon::parse($attendanceResponseArray[$key]['date']);
-                                //   dd($startDate.'-----'.$currentDate.'-----');
-                                if ($currentDate->gt($startDate) && $currentDate->lte($endDate)) {
-                                    if (substr($single_leave_details->total_leave_datetime, -1) == 'N') {
-                                        // Logic Get FN or AN Value From total Leave date time
-                                        $attendanceResponseArray[$key]['half_day_type'] = preg_replace("/([^a-zA-Z]+)/i", "",  $single_leave_details->total_leave_datetime);
-                                        $attendanceResponseArray[$key]['half_day_status'] = $single_leave_details->status;
-                                    } else if (
-                                        $attendanceResponseArray[$key]['checkin_time'] == null &&
-                                        $attendanceResponseArray[$key]["checkout_time"] == null &&
-                                        $single_leave_details->status == 'Approved'
-                                    ) {
-                                        $attendanceResponseArray[$key]['isLeave'] = true;
-                                        $leave_type = VmtLeaves::where('id', $single_leave_details->leave_type_id)
-                                            ->pluck('leave_type');
-                                        //  dd( $leave_type[0]);
-                                        if ($leave_type[0] == 'Sick Leave / Casual Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'SL/CL';
-                                        } else if ($leave_type[0] == 'Casual/Sick Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'CL/SL';
-                                        } else if ($leave_type[0] == 'LOP Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'LOP LE';
-                                        } else if ($leave_type[0] == 'Earned Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'EL';
-                                        } else if ($leave_type[0] == 'Maternity Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'ML';
-                                        } else if ($leave_type[0] == 'Paternity Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'PTL';
-                                        } else if ($leave_type[0] == 'On Duty') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'OD';
-                                        } else if ($leave_type[0] == 'Permission') {
-                                            $attendanceResponseArray[$key]['leave_type'] = "PI";
-                                        } else if ($leave_type[0] == 'Compensatory Off') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'CO';
-                                        } else if ($leave_type[0] == 'Casual Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'CL';
-                                        } else if ($leave_type[0] == 'Sick Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'SL';
-                                        } else if ($leave_type[0] == 'Compensatory Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'CO';
-                                        } else if ($leave_type[0] == 'Flexi day-off Leave') {
-                                            $attendanceResponseArray[$key]['leave_type'] = 'FO L';
-                                        }
-                                        continue;
-                                    } else {
-                                        $attendanceResponseArray[$key]['isAbsent'] = true;
-                                        continue;
-                                    }
-                                } else {
-                                    $attendanceResponseArray[$key]['isAbsent'] = true;
-                                    continue;
-                                }
+                            // if($status='leave')
+                            // dd($att_detail);
+                            if ($status == 'OD') {
+                                $total_on_duty = $total_on_duty;
+                            } else {
+                                $total_leave = $total_leave;
                             }
-                        }
-                    }
-
-                    $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
-                    $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
-
-                    //Code For Check LC
-                    if (!empty($checkin_time)) {
-                        $parsedCheckIn_time  = Carbon::parse($checkin_time);
-                        //Check whether checkin done on-time
-                        $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
-                        if ($isCheckin_done_ontime) {
-                            //employee came on time....
+                            $total_present = $total_present + 1;
+                        } else if ($att_detail->status == 'A') {
+                            $total_absent = $total_absent + 1;
+                        } else if ($att_detail->status == 'HO') {
+                            $total_holiday = $total_holiday + 1;
+                        } else if ($att_detail->status == 'WO') {
+                            $total_weekoff = $total_weekoff + 1;
                         } else {
-                            //dd("Checkin NOT on-time");
-                            //check whether regularization applied.
-                            $user_id = $attendanceResponseArray[$key]['user_id'];
-                            $date = $attendanceResponseArray[$key]['date'];
-                            $regularization_status = $this->isRegularizationRequestApplied($user_id, $date, 'LC');
-                            $attendanceResponseArray[$key]["isLC"] = $regularization_status;
+                            $checkin_time = '-';
+                            $checkout_time = '-';
+                            $ot = '-';
+                            //  if ($lc_eg_setting['lc_status'])
+                            $lc_minutes = '-';
                         }
-                    }
-                    //Code For Check EG
-                    if (!empty($checkout_time)) {
-                        $parsedCheckOut_time  = Carbon::parse($checkout_time);
-                        //Check whether checkin out on-time
-                        $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
-                        if ($isCheckout_done_ontime) {
-                            //employee left early on time....
-                            $user_id = $attendanceResponseArray[$key]['user_id'];
-                            $date = $attendanceResponseArray[$key]['date'];
-                            $regularization_status = $this->isRegularizationRequestApplied($user_id, $date, 'EG');
-                            $attendanceResponseArray[$key]["isEG"] = $regularization_status;
+
+                        if ($attendance_setting_details['lc_status'] == 1) {
+                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $att_detail->status);
                         } else {
-                            //employee left late....
-                        }
-                    }
-                }
-
-
-                //dd($attendanceResponseArray);
-                foreach ($attendanceResponseArray as $key => $value) {
-                    // dd($attendanceResponseArray[$key]);
-                    $lc_mins = 0;
-                    if ($attendanceResponseArray[$key]['isLC'] != null) {
-                        $lc_mins = Carbon::parse($attendanceResponseArray[$key]['checkin_time'])->diffInMinutes($attendanceResponseArray[$key]['shift_start_time']);
-                        $total_LC_mins =  $total_LC_mins + $lc_mins;
-                    }
-                    // array_push(
-                    //     $arrayReport,
-                    //     $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : $attendanceResponseArray[$key]['checkin_time'],
-                    //     $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : $attendanceResponseArray[$key]['checkout_time'],
-                    //     $attendanceResponseArray[$key]['OT'],
-                    //     $lc_mins . ' Minutes'
-                    // );
-
-                    //for decimal values
-                    array_push(
-                        $arrayReport,
-                        $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkin_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkin_time'], 3, -3),
-                        $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : substr($attendanceResponseArray[$key]['checkout_time'], 0, -6) . '.' . substr($attendanceResponseArray[$key]['checkout_time'], 3, -3),
-                        $attendanceResponseArray[$key]['OT'],
-                        $lc_mins . ' Minutes'
-                    );
-
-
-                    // if($singleUser->id==206)
-                    //  dd($arrayReport);
-                    $current_date = Carbon::parse($attendanceResponseArray[$key]['date']);
-                    $doj = Carbon::parse($attendanceResponseArray[$key]['DOJ']);
-
-                    if ($doj->gt($current_date)) {
-                        array_push($arrayReport, 'N');
-                    } else if ($attendanceResponseArray[$key]['is_weekoff']) {
-                        array_push($arrayReport, 'WO');
-                        $total_weekoff++;
-                    } else if ($attendanceResponseArray[$key]['is_holiday']) {
-                        array_push($arrayReport, 'HO');
-                        $total_holidays++;
-                    } else if (
-                        $attendanceResponseArray[$key]['isAbsent'] && !$attendanceResponseArray[$key]['isLeave']
-                        && !$attendanceResponseArray[$key]['is_holiday'] && $attendanceResponseArray[$key]['half_day_status'] == null
-                    ) {
-                        array_push($arrayReport, 'A');
-                        $total_absent++;
-                    } else if ($attendanceResponseArray[$key]['half_day_status'] == 'Approved') {
-                        if ($attendanceResponseArray[$key]['half_day_type'] == 'FN') {
-                            array_push($arrayReport, 'HD/P');
-                        } else if ($attendanceResponseArray[$key]['half_day_type'] == 'AN') {
-                            array_push($arrayReport, 'P/HD');
-                        }
-                        $total_present = $total_present + 0.5;
-                        $total_halfday = $total_halfday + 0.5;
-                    } else if ($attendanceResponseArray[$key]['half_day_status'] == 'Pending' || $attendanceResponseArray[$key]['half_day_status'] == 'Rejected') {
-                        if ($attendanceResponseArray[$key]['half_day_type'] == 'AN') {
-                            array_push($arrayReport, 'A/P');
-                        } else if ($attendanceResponseArray[$key]['half_day_type'] == 'FN') {
-                            array_push($arrayReport, 'P/A');
-                        }
-                        $total_present = $total_present + 0.5;
-                        $total_absent = $total_absent + 0.5;
-                    } else if ($attendanceResponseArray[$key]['isLeave']) {
-                        // dd($attendanceResponseArray[$key]);
-                        if ($attendanceResponseArray[$key]['leave_type'] == 'OD') {
-                            array_push($arrayReport, $attendanceResponseArray[$key]['leave_type']);
-                            $total_OD++;
-                        } else {
-                            array_push($arrayReport, $attendanceResponseArray[$key]['leave_type']);
-                            $total_leave++;
-                        }
-                    } else if ($attendanceResponseArray[$key]['checkin_time'] != null || $attendanceResponseArray[$key]['checkout_time'] != null) {
-
-
-                        if ($shift_settings->is_lc_applicable == 1 ||  $shift_settings->is_eg_applicable == 1) {
-                            $lc_eg_day_att = 'P';
-                            if ($attendanceResponseArray[$key]['isLC'] == 'Rejected' || $attendanceResponseArray[$key]['isLC'] == 'Not Applied') {
-                                if ($shift_settings->is_lc_applicable == 1) {
-                                    $lc_eg_day_att = $lc_eg_day_att . '/LC';
-                                    if ($total_LC >= $shift_settings->lc_limit_permonth && $shift_settings->lc_limit_permonth != null) {
-                                        $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
-                                    }
-                                }
-                            }
-                            if ($attendanceResponseArray[$key]['isEG'] == 'Rejected' || $attendanceResponseArray[$key]['isEG'] == 'Not Applied') {
-                                if ($shift_settings->is_eg_applicable == 1) {
-                                    $lc_eg_day_att = $lc_eg_day_att . '/EG';
-                                    if ($total_EG >= $shift_settings->eg_limit_permonth && $shift_settings->eg_limit_permonth != null) {
-                                        $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
-                                    }
-                                }
-                            }
-                            array_push($arrayReport,  $lc_eg_day_att);
-                            $total_present++;
-                        } else {
-                            array_push($arrayReport, 'P');
-                            $total_present++;
-                        }
-
-
-                        //Count For LG AND EG
-                        if ($attendanceResponseArray[$key]['isLC'] != null) {
-                            $total_LC++;
-                        }
-
-                        if ($attendanceResponseArray[$key]['isEG'] != null) {
-                            $total_EG++;
+                            array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $att_detail->status);
                         }
                     } else {
-                        array_push($arrayReport, ' ');
+                        array_push($temp_ar, 0, 0, 0);
+                        if ($attendance_setting_details['lc_status'] == 1) {
+                            array_push($temp_ar, '0 Minutes');
+                        }
+                        array_push($temp_ar, 'N');
                     }
-                    //if($singleUser->id==204)
-
-
-
+                    $current_date->addDay();
                 }
-
-                // if($singleUser->id==204);
-                // dd($arrayReport);
-                // foreach ($attendanceResponseArray as $key => $value) {
-
-                // }
-                if ($this->canCalculateOt($singleUser->user_code)) {
-                    //dd( $total_OT);
-                    $total_OT = CarbonInterval::minutes($total_OT)->cascade();
-                    $total_hours = (int)$total_OT->totalHours;
-                    $total_minutes = $total_OT->toArray()['minutes'];
-                    $total_OT =  $total_hours . '.' . $total_minutes;
-                    // dd(  $total_OT );
-                } else {
-                    $total_OT = 0;
+                $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day) - $total_late_lop;
+                if ($total_ot > 0) {
+                    $total_ot =  CarbonInterval::minutes($total_ot)->cascade()->forHumans();
                 }
-
-                array_push($arrayReport, $total_weekoff, $total_holidays, $total_OT, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD,);
-                if ($attendance_setting_details['lc_status'] == 1) {
-                    $total_LC_hrs = CarbonInterval::minutes($total_LC_mins)->cascade()->forHumans();
-                    $total_LC_mins = $total_LC_mins . ' Minutes';
-                    array_push($arrayReport, $total_LC, $total_LC_mins, $total_LC_hrs);
-                }
-                if ($attendance_setting_details['eg_status'] == 1) {
-                    array_push($arrayReport, $total_EG);
-                }
-                $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday) - $total_lop;
-                array_push($arrayReport,  $total_payable_days);
-                array_push($reportresponse, $arrayReport);
-                unset($arrayReport);
+                array_push($temp_ar, $total_weekoff, $total_holiday, $total_ot, $total_present, $total_absent, $total_late_lop, $total_leave, $total_half_day, $total_on_duty, $total_LC, $total_EG, $total_payable_days);
+                array_push($response['rows'], $temp_ar);
+                unset($temp_ar);
             }
+            //dd($response ['rows']);
+            array_push($heading_dates, 'Total Calculation');
+            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty", 'Total LC', 'Total EG', 'Total Payable Days');
+            $response['heading_dates'] = $heading_dates;
+            $response['header_2'] = $header_2;
+            $response['heading_dates_2'] = $heading_dates_2;
+            // dd($response);
+            return $response;
+        } catch (Exception $e) {
 
-            $data = array($heading_dates, $header_2, $reportresponse, $heading_dates_2);
-        } catch (\Exception $e) {
-            $response = [
+            return response()->json([
                 'status' => 'failure',
-                'message' => 'Error while fetching data',
-                'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getLine() . "  " . $e->getfile(),
-            ];
+                'message' => $e->getMessage(),
+                'data' => $e->getTraceAsString(),
+            ]);
         }
-        return $data;
     }
 
 
     public function fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status)
     {
-
-
         try {
             if (empty($client_id)) {
                 $client_id = VmtClientMaster::pluck('id')->toArray();
@@ -1946,6 +1079,7 @@ class VmtAttendanceReportsService
                 ->whereIn('users.client_id', $client_id)
                 ->whereIn('users.active', $active_status)
                 ->whereDate('vmt_employee_details.doj', '<', $end_date);
+
 
             // if (sessionGetSelectedClientid() != 1) {
             //     $user = $user->where('client_id', sessionGetSelectedClientid());
@@ -2003,7 +1137,7 @@ class VmtAttendanceReportsService
                             ->where('user_Id', $singleUser->user_code)
                             ->first(['check_in_time']);
                     }
-                    //dd($attendanceCheckIn);
+                    // dd($attendanceCheckIn);
 
                     $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                     $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
@@ -2079,7 +1213,7 @@ class VmtAttendanceReportsService
 
                 // merging result from both table
                 //dd($attendance_WebMobile->toArray());
-                //dd($deviceData);
+                // dd($deviceData);
                 $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
 
                 $dateCollectionObj    =  collect($merged_attendanceData);
@@ -2411,57 +1545,71 @@ class VmtAttendanceReportsService
                 $get_department = $department_id;
             }
             ini_set('max_execution_time', 3000);
+
             $response = array();
             $absent_data = array();
             $temp_ar = array();
-            $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status);
-            foreach ($attendance_data as $single_data) {
-                foreach ($single_data as $key => $value) {
-                    if ($value['isAbsent'] == true && $value['isLeave'] == false  && $value['is_weekoff'] == false) {
-                        $temp_ar['Employee Code'] = $value['user_code'];
-                        $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = Carbon::parse($value['date'])->format('d-M-Y');
-                        $temp_ar['Shift Name'] = VmtWorkShifts::where('id', $value['work_shift_id'])->first()->shift_name;
-                        $temp_ar['In Punch'] = $value['checkin_time'];
-                        $temp_ar['Out Punch'] = $value['checkout_time'];
-                        $temp_ar['Status'] = 'Absent';
-                        $temp_ar['Day Status'] = 'Full day Absent';
-                        array_push($absent_data, $temp_ar);
-                        unset($temp_ar);
-                    } else if ($value['isAbsent'] == false && $value['is_weekoff'] == false && $value['isLeave'] == false) {
-                        $current_shift =  VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                        if ($value['isLC'] == 'Approved' ||  $value['isMIP'] == 'Approved') {
-                            $temp_ar['in_punch'] = $value['reged_checkin_time'];
-                        } else {
-                            $value['checkin_time'] = $value['checkin_time'];
-                        }
 
-                        if ($value['isEG'] == 'Approved' ||  $value['isMOP'] == 'Approved') {
-                            $temp_ar['out_punch'] = $value['reged_checkout_time'];
-                        } else {
-                            $value['checkout_time'] = $value['checkout_time'];
-                        }
-                        if (Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) < $current_shift->fullday_min_workhrs) {
-                            $temp_ar['Employee Code'] = $value['user_code'];
-                            $temp_ar['Employee Name'] = $value['name'];
-                            $temp_ar['Date'] = Carbon::parse($value['date'])->format('d-M-Y');
-                            $temp_ar['Shift Name'] = $current_shift->shift_name;
-                            $temp_ar['In Punch'] = $value['checkin_time'];
-                            $temp_ar['Out Punch'] = $value['checkout_time'];
-                            if (Carbon::parse($temp_ar['In Punch'])->diffInMinutes(Carbon::parse($temp_ar['Out Punch'])) < $current_shift->halfday_min_workhrs) {
-                                $temp_ar['Status'] = 'Absent';
-                                $temp_ar['Day Status'] = 'Full day Absent';
-                            } else {
-                                $temp_ar['Status'] = 'Half Day';
-                                $temp_ar['Day Status'] = 'Half Day Absent';
-                            }
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
+            }
+
+            $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
+            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+            ->whereBetween('date', [$start_date, $end_date])
+            ->get();
+
+            foreach ($attendance_data as $single_data) {
+                $sts_ar = explode('/', $single_data['status']);
+
+                if ($single_data['status'] == 'A') {
+
+                    $temp_ar['Employee Code'] = $single_data['user_code'];
+                    $temp_ar['Employee Name'] = $single_data['name'];
+                    $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                    $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                    $temp_ar['In Punch'] = '-';
+                    $temp_ar['Out Punch']  = '-';
+                    $temp_ar['Status'] = 'Absent';
+                    $temp_ar['Day Status'] = 'Full day Absent';
+                    array_push($absent_data, $temp_ar);
+                } else
+                if (in_array('P', $sts_ar)) {
+
+
+                    $diff_minutes = (Carbon::parse($single_data['checkin_time']))->diffInMinutes(Carbon::parse($single_data['checkout_time']));
+
+                    $forenoon = Carbon::parse($single_data['shift_start_time'])->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
+                    $afternoon = Carbon::parse($forenoon)->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
+
+                    if ($diff_minutes > $single_data['halfday_min_workhrs'] || $diff_minutes < $single_data['halfday_min_workhrs']) {
+
+                        if ($forenoon <= $single_data['checkout_time'] && $forenoon <= $single_data['checkin_time']) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
+                            $temp_ar['Status'] = 'Half Day';
+                            $temp_ar['Day Status'] = 'FN Absent';
                             array_push($absent_data, $temp_ar);
-                            unset($temp_ar);
+                        } else
+                    if (($forenoon >= ($single_data['checkout_time']) && ($forenoon >= $single_data['checkin_time']))) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
+                            $temp_ar['Status'] = 'Half Day';
+                            $temp_ar['Day Status'] = 'AN Absent';
+                            array_push($absent_data, $temp_ar);
                         }
                     }
-                    // dd($response);
                 }
             }
+
             $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Status', 'Day Status');
             $response['rows'] = $absent_data;
         } catch (\Exception $e) {
@@ -2533,35 +1681,49 @@ class VmtAttendanceReportsService
             $response = array();
             $halfday_data = array();
             $temp_ar = array();
-            $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status);
-            // dd( $attendance_data);
+
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
+            }
+
+            $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
+            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+            ->whereBetween('date', [$start_date, $end_date])
+            ->get();
+
             foreach ($attendance_data as $single_data) {
-                foreach ($single_data as $key => $value) {
-                    if ($value['isAbsent'] == false && $value['is_weekoff'] == false && $value['isLeave'] == false) {
-                        $current_shift =  VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                        if ($value['isLC'] == 'Approved' ||  $value['isMIP'] == 'Approved') {
-                            $value['checkin_time'] = $value['reged_checkin_time'];
-                        } else {
-                            $value['checkin_time'] = $value['checkin_time'];
-                        }
+                $sts_ar = explode('/', $single_data['status']);
 
-                        if ($value['isEG'] == 'Approved' ||  $value['isMOP'] == 'Approved') {
-                            $value['checkout_time'] = $value['reged_checkout_time'];
-                        } else {
-                            $value['checkout_time'] = $value['checkout_time'];
-                        }
-                        if (Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) < $current_shift->fullday_min_workhrs) {
-                            $temp_ar['Employee Code'] = $value['user_code'];
-                            $temp_ar['Employee Name'] = $value['name'];
-                            $temp_ar['Date'] = Carbon::parse($value['date'])->format('d-M-Y');
-                            $temp_ar['Shift Name'] = $current_shift->shift_name;
-                            $temp_ar['In Punch'] = $value['checkin_time'];
-                            $temp_ar['Out Punch'] = $value['checkout_time'];
+                if (in_array('P', $sts_ar)) {
+
+                    $diff_minutes = (Carbon::parse($single_data['checkin_time']))->diffInMinutes(Carbon::parse($single_data['checkout_time']));
+
+                    $forenoon = Carbon::parse($single_data['shift_start_time'])->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
+                    $afternoon = Carbon::parse($forenoon)->addMinutes($single_data['halfday_min_workhrs'])->format('H:i:s');
+
+                    if ($diff_minutes > $single_data['halfday_min_workhrs'] || $diff_minutes < $single_data['halfday_min_workhrs']) {
+
+                        if ($forenoon <= $single_data['checkout_time'] && $forenoon <= $single_data['checkin_time']) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
                             $temp_ar['Status'] = 'Half Day';
-                            $temp_ar['Day Status'] = 'Half Day Absent';
-
+                            $temp_ar['Day Status'] = 'FN Absent';
                             array_push($halfday_data, $temp_ar);
-                            unset($temp_ar);
+                        } else
+                    if (($forenoon >= ($single_data['checkout_time']) && ($forenoon >= $single_data['checkin_time']))) {
+                            $temp_ar['Employee Code'] = $single_data['user_code'];
+                            $temp_ar['Employee Name'] = $single_data['name'];
+                            $temp_ar['Date'] =  Carbon::parse($single_data['date'])->format('d-M-Y');
+                            $temp_ar['Shift Name'] =  $single_data['shift_name'];
+                            $temp_ar['In Punch'] = $single_data['checkin_time'];
+                            $temp_ar['Out Punch']  = $single_data['checkout_time'];
+                            $temp_ar['Status'] = 'Half Day';
+                            $temp_ar['Day Status'] = 'AN Absent';
+                            array_push($halfday_data, $temp_ar);
                         }
                     }
                 }
@@ -2611,127 +1773,106 @@ class VmtAttendanceReportsService
         }
 
 
-        try {
+        // try {
 
-            if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id')->toArray();
-            } else {
-                $client_id =  $client_id;
-            }
-            // dd($client_id);
-
-            if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
-            } else {
-                $active_status = $active_status;
-            }
-            if (empty($date_req)) {
-                $date_req = Carbon::now()->format('Y-m-d');
-            }
-
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
-            ini_set('max_execution_time', 3000);
-            $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status);
-            $lcData = array();
-            $response = array();
-            $temp_ar = array();
-            foreach ($attendance_data as $single_data) {
-                foreach ($single_data as $key => $value) {
-                    if ($value['isMIP'] != null || $value['isLC'] != null) {
-                        $temp_ar['Employee Code'] = $value['user_code'];
-                        $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = Carbon::parse($key)->format('d-M-Y');
-                        $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                        $temp_ar['Shift Name'] =   $current_shift->shift_name;
-                        $regularized_sts = 'No';
-                        $reason = "-";
-                        $approved_by = "-";
-                        $approved_on = "-";
-                        $approved_cmts = "-";
-                        if ($value['checkinRegId'] != null) {
-                            $in_punch = $value['reged_checkin_time'];
-                        } else {
-                            $in_punch = $value['checkin_time'];
-                        }
-                        $out_punch = $value['checkout_time'];
-                        if ($in_punch  != null) {
-                            $lc1_total_mins = Carbon::parse($current_shift->shift_start_time)->diffInMinutes(Carbon::parse($in_punch));
-                            $lc_ar = CarbonInterval::minutes($lc1_total_mins)->cascade();
-                            $lc_hrs = (int) $lc_ar->totalHours;
-                            $lc_mins = $lc_ar->toArray()['minutes'];
-                            $lc1_total_mins =    $lc_hrs . ' Hrs : ' .  $lc_mins . ' Minutes';
-                            // $lc1_total_mins =     $lc_ar->forHumans();
-                        } else {
-                            $LCDuration  = '-';
-                        }
-                        if (Carbon::parse($in_punch)->diffInMinutes(Carbon::parse($out_punch)) <  $current_shift->fullday_min_workhrs) {
-                            $day_sts = 'Half Day';
-                        } else {
-                            $day_sts = 'Full Day';
-                        }
-                        if (($value['isMIP'] != 'Not Applied' && $value['isMIP'] != null) || ($value['isLC'] != 'Not Applied' && $value['isLC'] != null)) {
-                            $regularized_record = VmtEmployeeAttendanceRegularization::where('id', $value['checkinRegId'])->first();
-                            $regularized_sts = 'Yes';
-                            if ($regularized_record->reason_type != null) {
-                                if ($regularized_record->reason_type == 'Others') {
-                                    $reason = $regularized_record->custom_reason;
-                                } else {
-                                    $reason =  $regularized_record->reason_type;
-                                }
-                            } else {
-                                $reason = '-';
-                            }
-
-
-                            if (empty(User::where('id',  $regularized_record->reviewer_id)->first())) {
-                                $approved_by = '-';
-                            } else {
-                                $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
-                            }
-
-                            if ($regularized_record->reviewer_reviewed_date != null) {
-                                $approved_on = Carbon::parse($regularized_record->reviewer_reviewed_date)->format('d-M-Y');
-                            }
-                            if ($regularized_record->reviewer_comments != null) {
-                                $approved_cmts =  $regularized_record->reviewer_comments;
-                            }
-                        }
-                        $temp_ar['In Punch'] =  $in_punch;
-                        $temp_ar['Out Punch'] = $out_punch;
-                        $temp_ar['Late Coming Duration'] = $lc1_total_mins;
-                        $temp_ar['Day Status'] = $day_sts;
-                        $temp_ar['Regularise Status'] = $regularized_sts;
-                        $temp_ar['Employee Reason For Late Coming'] = $reason;
-                        $temp_ar['Approved By'] = $approved_by;
-                        $temp_ar['Approved On'] = $approved_on;
-                        $temp_ar['Approver Comments'] = $approved_cmts;
-                        array_push($lcData, $temp_ar);
-                        unset($temp_ar);
-                    }
-                }
-            }
-            $response['headers'] = array(
-                'Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Late Coming Duration',
-                'Employee Reason For Late Coming', 'Approved By', 'Approved On', 'Approver Comments'
-            );
-            $response['rows'] = $lcData;
-        } catch (\Exception $e) {
-            return  $response = [
-                'status' => 'failure',
-                'message' => 'Error while fetching data',
-                'error' =>  $e->getMessage(),
-                'error_verbose' => $e->getLine() . "  " . $e->getfile(),
-                'trace line' => $e->getTraceAsString(),
-                'data' => $single_data[$key],
-                'lc_total_mins' => $lc1_total_mins
-            ];
+        if (empty($client_id)) {
+            $client_id = VmtClientMaster::pluck('id')->toArray();
+        } else {
+            $client_id =  $client_id;
         }
+        if (empty($active_status)) {
+            $active_status = ['1', '0', '-1'];
+        } else {
+            $active_status = $active_status;
+        }
+        if (empty($date_req)) {
+            $date_req = Carbon::now()->format('Y-m-d');
+        }
+
+        if (empty($department_id)) {
+            $get_department = Department::pluck('id');
+        } else {
+            $get_department = $department_id;
+        }
+        ini_set('max_execution_time', 3000);
+        $lcData = array();
+        $response = array();
+        $temp_ar = array();
+        // dd($start_date,$end_date);
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
+            }
+        $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
+            // ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
+            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+            ->whereBetween('date', [$start_date, $end_date])
+            ->get();
+
+        foreach ($attendance_data as $single_data) {
+            $sts_ar = explode('/', $single_data['status']);
+            if (in_array('LC', $sts_ar) || $single_data['lc_id'] != null) {
+                $temp_ar['Employee Code'] = $single_data['user_code'];
+                $temp_ar['Employee Name'] = $single_data['name'];
+                $temp_ar['Date'] = Carbon::parse($single_data['date'])->format('d-M-Y');
+                $temp_ar['Shift Name'] = $single_data['shift_name'];
+                $temp_ar['In Punch'] = $single_data['checkin_time'];
+                $temp_ar['Out Punch'] = $single_data['checkout_time'];
+                if ($single_data['regularized_checkout_time'] != null) {
+                    $temp_ar['Out Punch'] = $single_data['regularized_checkout_time'];
+                }
+                $temp_ar['Late Coming Duration'] =  CarbonInterval::minutes($single_data['lc_minutes'])->cascade()->forHumans();
+                // if($temp_ar['Out Punch'] == null ){
+                //     $temp_ar['Day Status'] ='Half Day';
+                // }else if(Carbon::parse(  $temp_ar['In Punch'])->diffInMinutes( $temp_ar['Out Punch'])<$single_data['fullday_min_workhrs']){
+                //     $temp_ar['Day Status'] ='Half Day';
+                // }else{
+                //     $temp_ar['Day Status'] ='Full Day';
+                // }
+                if ($single_data['lc_id'] != null) {
+                    $regularized_sts = 'Yes';
+                    $user = VmtEmployeeAttendanceRegularization::where('id', $single_data['lc_id'])->first();
+                    $reason = $user->reason_type == 'Others' ? $user->custom_reason : $user->reason_type;
+                    $approved_by = user::where('id', $user->reviewer_id)->first()->name;
+                    $approved_on = $user->reviewer_reviewed_date;
+                    $approved_cmts = $user->reviewer_comments;
+                } else {
+                    $regularized_sts = 'No';
+                    $reason = "-";
+                    $approved_by = "-";
+                    $approved_on = "-";
+                    $approved_cmts = "-";
+                }
+                $temp_ar['Regularise Status'] = $regularized_sts;
+                $temp_ar['Employee Reason For Late Coming'] = $reason;
+                $temp_ar['Approved By'] = $approved_by;
+                $temp_ar['Approved On'] = $approved_on;
+                $temp_ar['Approver Comments'] = $approved_cmts;
+                array_push($lcData, $temp_ar);
+                unset($temp_ar);
+            }
+        }
+
+
+
+        $response['headers'] = array(
+            'Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Late Coming Duration', 'Regularise Status',
+            'Employee Reason For Late Coming', 'Approved By', 'Approved On', 'Approver Comments'
+        );
+        $response['rows'] = $lcData;
+        // } catch (\Exception $e) {
+        //     return  $response = [
+        //         'status' => 'failure',
+        //         'message' => 'Error while fetching data',
+        //         'error' =>  $e->getMessage(),
+        //         'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+        //         'trace line' => $e->getTraceAsString(),
+        //         'data' => $single_data,
+        //     ];
+        // }
         return $response;
     }
+
+
     public function fetchEGReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
     {
 
@@ -2788,85 +1929,68 @@ class VmtAttendanceReportsService
             }
 
             ini_set('max_execution_time', 3000);
-            $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status);
+
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
+            }
+
+            $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
+                // ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+                ->whereBetween('date', [$start_date, $end_date])
+                ->get();
+
             $ecData = array();
             $response = array();
             $temp_ar = array();
+
             foreach ($attendance_data as $single_data) {
-                foreach ($single_data as $key => $value) {
-                    if ($value['isMOP'] != null || $value['isEG'] != null) {
-                        $temp_ar['Employee Code'] = $value['user_code'];
-                        $temp_ar['Employee Name'] = $value['name'];
-                        $temp_ar['Date'] = Carbon::parse($key)->format('d-M-Y');
-                        $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                        $temp_ar['Shift Name'] =   $current_shift->shift_name;
+                $sts_ar = explode('/', $single_data['status']);
+                if (in_array('EG', $sts_ar) || $single_data['eg_id'] != null) {
+                    $temp_ar['Employee Code'] = $single_data['user_code'];
+                    $temp_ar['Employee Name'] = $single_data['name'];
+                    $temp_ar['Date'] = Carbon::parse($single_data['date'])->format('d-M-Y');
+                    $temp_ar['Shift Name'] = $single_data['shift_name'];
+                    $temp_ar['In Punch'] = $single_data['checkin_time'];
+                    $temp_ar['Out Punch'] = $single_data['checkout_time'];
+                    if ($single_data['regularized_checkout_time'] != null) {
+                        $temp_ar['Out Punch'] = $single_data['regularized_checkout_time'];
+                    }
+                    $temp_ar['Early Going Duration'] =  CarbonInterval::minutes($single_data['eg_minutes'])->cascade()->forHumans();
+                    // if($temp_ar['Out Punch'] == null ){
+                    //     $temp_ar['Day Status'] ='Half Day';
+                    // }else if(Carbon::parse(  $temp_ar['In Punch'])->diffInMinutes( $temp_ar['Out Punch'])<$single_data['fullday_min_workhrs']){
+                    //     $temp_ar['Day Status'] ='Half Day';
+                    // }else{
+                    //     $temp_ar['Day Status'] ='Full Day';
+                    // }
+                    if ($single_data['eg_id'] != null) {
+                        $regularized_sts = 'Yes';
+                        $user = VmtEmployeeAttendanceRegularization::where('id', $single_data['eg_id'])->first();
+                        $reason = $user->reason_type == 'Others' ? $user->custom_reason : $user->reason_type;
+                        $approved_by = user::where('id', $user->reviewer_id)->first()->name;
+                        $approved_on = $user->reviewer_reviewed_date;
+                        $approved_cmts = $user->reviewer_comments;
+                    } else {
                         $regularized_sts = 'No';
                         $reason = "-";
                         $approved_by = "-";
                         $approved_on = "-";
                         $approved_cmts = "-";
-                        $in_punch = $value['checkin_time'];
-                        if ($value['checkoutRegId'] != null) {
-                            $out_punch = $value['reged_checkout_time'];
-                        } else {
-                            $out_punch = $value['checkout_time'];
-                        }
-
-                        if ($out_punch   != null) {
-                            // $EGDuration = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time)) . ' Mins';
-                            $eg1_total_mins = Carbon::parse($out_punch)->diffInMinutes(Carbon::parse($current_shift->shift_end_time));
-                            $eg_ar = CarbonInterval::minutes($eg1_total_mins)->cascade();
-                            $eg_hrs = (int) $eg_ar->totalHours;
-                            $eg_mins = $eg_ar->toArray()['minutes'];
-                            $eg_duration =    $eg_hrs . ' Hrs : ' .  $eg_mins . ' Minutes';
-
-                            //  dd( $eg_hrs);
-                        } else {
-                            $EGDuration  = '-';
-                        }
-                        if (Carbon::parse($in_punch)->diffInMinutes(Carbon::parse($out_punch)) <  $current_shift->fullday_min_workhrs) {
-                            $day_sts = 'Half Day';
-                        } else {
-                            $day_sts = 'Full Day';
-                        }
-                        if (($value['isMOP'] != 'Not Applied' && $value['isMOP'] != null) || ($value['isEG'] != 'Not Applied' && $value['isEG'] != null)) {
-                            $regularized_record = VmtEmployeeAttendanceRegularization::where('id', $value['checkoutRegId'])->first();
-                            $regularized_sts = 'Yes';
-                            if ($regularized_record->reason_type != null) {
-                                if ($regularized_record->reason_type == 'Others') {
-                                    $reason = $regularized_record->custom_reason;
-                                } else {
-                                    $reason =  $regularized_record->reason_type;
-                                }
-                            } else {
-                                $reason = '-';
-                            }
-
-                            $approved_by = User::where('id',  $regularized_record->reviewer_id)->first()->name;
-                            if ($regularized_record->reviewer_reviewed_date != null) {
-                                $approved_on = Carbon::parse($regularized_record->reviewer_reviewed_date)->format('d-M-Y');
-                            }
-                            if ($regularized_record->reviewer_comments != null) {
-                                $approved_cmts =  $regularized_record->reviewer_comments;
-                            }
-                        }
-                        $temp_ar['In Punch'] =  $in_punch;
-                        $temp_ar['Out Punch'] = $out_punch;
-                        $temp_ar['Early Going Duration'] =   $eg_duration;
-                        $temp_ar['Day Status'] = $day_sts;
-                        $temp_ar['Regularise Status'] = $regularized_sts;
-                        $temp_ar['Employee Reason For Late Coming'] = $reason;
-                        $temp_ar['Approved By'] = $approved_by;
-                        $temp_ar['Approved On'] = $approved_on;
-                        $temp_ar['Approver Comments'] = $approved_cmts;
-                        array_push($ecData, $temp_ar);
-                        unset($temp_ar);
                     }
+                    $temp_ar['Regularise Status'] = $regularized_sts;
+                    $temp_ar['Employee Reason For Early Going'] = $reason;
+                    $temp_ar['Approved By'] = $approved_by;
+                    $temp_ar['Approved On'] = $approved_on;
+                    $temp_ar['Approver Comments'] = $approved_cmts;
+                    array_push($ecData, $temp_ar);
+                    unset($temp_ar);
                 }
             }
+
             $response['headers'] = array(
-                'Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Early Going Duration',
-                'Employee Reason For Late Coming', 'Approved By', 'Approved On', 'Approver Comments'
+                'Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'Early Going Duration', 'Regularise Status',
+                'Employee Reason For Early Going', 'Approved By', 'Approved On', 'Approver Comments'
             );
             $response['rows'] =  $ecData;
         } catch (\Exception $e) {
@@ -2876,7 +2000,7 @@ class VmtAttendanceReportsService
                 'error' =>  $e->getMessage(),
                 'error_verbose' => $e->getLine() . "  " . $e->getfile(),
                 'trace line' => $e->getTraceAsString(),
-                'data' => $single_data[$key]
+                // 'data' => $single_data[$key]
             ];
         }
         return $response;

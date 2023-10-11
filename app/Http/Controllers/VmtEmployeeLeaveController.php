@@ -13,6 +13,8 @@ use PhpParser\Node\Stmt\Catch_;
 use App\Models\VmtOrgTimePeriod;
 use App\Models\VmtEmployeesLeavesAccrued;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use App\Imports\ImportExistingLeaveBalanceData;
 
 
 class VmtEmployeeLeaveController extends Controller
@@ -86,7 +88,7 @@ class VmtEmployeeLeaveController extends Controller
                         $temp_date =  Carbon::parse($start_date)->addMonths($j);
                         $year =  $temp_date->format('Y');
                         $month = $temp_date->format('m');
-                      
+
                         if (!VmtEmployeesLeavesAccrued::where('user_id', $user->first()->id)
                             ->whereYear('date', $year)
                             ->whereMonth('date', $month)
@@ -134,5 +136,111 @@ class VmtEmployeeLeaveController extends Controller
             'status' => 'success',
             'message' => 'Leave Balance Uploaded Sucessfully',
         ]);
+    }
+
+    public function showEmployeeLeaveBalanceDatapage()
+    {
+
+        return view('vmt_importEmployeeLeaveBalancedata');
+    }
+
+    // public function ImportExistingLeaveBalanceData(Request $request)
+    // {
+
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xls,xlsx'
+    //     ]);
+
+    //     $importDataArry = \Excel::toArray(new ImportExistingLeaveBalanceData, request()->file('file'));
+
+    //     return $this->updateEmployeeLeaveBalanceData($importDataArry);
+    // }
+
+
+    public function updateEmployeeLeaveBalanceData(Request $request)
+    {
+
+        try {
+            $data = $request->all();
+            $updated_details = array();
+
+            foreach ($data as $key => $single_data) {
+
+                $update_emp_CL_leave = $this->updateSingleEmployeeLeaveBalanceData($single_data['employee_code'], $single_data['date'], $single_data['Casual_Leave'], "Casual Leave");
+                $update_emp_SL_leave = $this->updateSingleEmployeeLeaveBalanceData($single_data['employee_code'], $single_data['date'], $single_data['Sick_Leave'], "Sick Leave");
+                $update_emp_EL_leave = $this->updateSingleEmployeeLeaveBalanceData($single_data['employee_code'], $single_data['date'], $single_data['Earned_Leave'], "Earned Leave");
+                if($update_emp_CL_leave['status']=='success'&& $update_emp_SL_leave['status']=='success'&& $update_emp_EL_leave['status']=='success'){
+
+                    array_push($updated_details, $update_emp_EL_leave);
+                }else{
+                    array_push($updated_details, $update_emp_EL_leave);
+                }
+            }
+
+            return $response = ([
+                'status' => 'success',
+                'message' => 'Data saved successfully',
+                'data' => $updated_details ?? " ",
+            ]);
+        } catch (\Exception $e) {
+            return $response = ([
+                'status' => 'failure',
+                'message' => 'Error while saving data',
+                'data' => $e->getmessage(),
+            ]);
+        }
+    }
+    public function updateSingleEmployeeLeaveBalanceData($emplyeee_code, $date, $leave_count, $leave_type)
+    {
+
+        try {
+
+            $start_date = Carbon::parse($date);
+            $no_of_leaves = (int)$leave_count;
+            $end_date =  Carbon::parse($date)->subMonths($no_of_leaves);
+            $end_date = Carbon::parse($end_date);
+
+            $date_range = CarbonPeriod::create($end_date->startOfMonth()->format('Y-m-d'), '1 month', $start_date->endOfMonth()->format('Y-m-d'),);
+
+            $monthWise_leave_date = array();
+
+            foreach ($date_range as $single_date) {
+
+                $monthWise_leave_date[] = $single_date->format('Y-m-15');
+            }
+
+            $user_data = User::where('user_code', $emplyeee_code)->first();
+
+            $leave_type = VmtLeaves::where('leave_type', $leave_type)->first();
+
+            foreach ($monthWise_leave_date as $key => $single_month) {
+
+                if (!empty($user_data)) {
+
+                    $emp_leave_details = VmtEmployeesLeavesAccrued::where('user_id', $user_data->id)->where('date', $single_month)->where('leave_type_id', $leave_type->id)->first();
+
+                    if (empty($emp_leave_details)) {
+                        $update_leave_details = new VmtEmployeesLeavesAccrued;
+                        $update_leave_details->user_id = $user_data->id;
+                        $update_leave_details->date = $single_month;
+                        $update_leave_details->leave_type_id = $leave_type->id;
+                        $update_leave_details->accrued_leave_count = 1;
+                        $update_leave_details->save();
+                    }
+                }
+            }
+            return $response = ([
+                'status' => 'success',
+                'message' => 'Data saved successfully',
+                'Employee_Name' => $user_data->name,
+                'data' => '',
+            ]);
+        } catch (\Exception $e) {
+            return $response = ([
+                'status' => 'failure',
+                'message' => 'Error while saving data',
+                'data' => $e->getmessage(),
+            ]);
+        }
     }
 }

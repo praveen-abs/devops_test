@@ -296,8 +296,8 @@ class VmtProfilePagesService
                     $response['getEmployeeDetails'][$key] = '';
                 }
             }
-            $response['getEmployeeDetails']['current_address_line_1'] = $response['getEmployeeDetails']['current_address_line_1'].','.$response['getEmployeeDetails']['current_address_line_2'];
-            $response['getEmployeeDetails']['permanent_address_line_1'] =  $response['getEmployeeDetails']['permanent_address_line_1'].','.$response['getEmployeeDetails']['permanent_address_line_2'];
+            // $response['getEmployeeDetails']['current_address_line_1'] = $response['getEmployeeDetails']['current_address_line_1'].','.$response['getEmployeeDetails']['current_address_line_2'];
+            // $response['getEmployeeDetails']['permanent_address_line_1'] =  $response['getEmployeeDetails']['permanent_address_line_1'].','.$response['getEmployeeDetails']['permanent_address_line_2'];
            }
             //dd($response['getEmployeeDetails']);
         if(!empty($response['getEmployeeOfficeDetails'])){

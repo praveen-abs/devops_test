@@ -44,17 +44,28 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const getEmployeeAttendance = async (currentlySelectedUser, currentlySelectedMonth, currentlySelectedYear) => {
         canShowLoading.value = true;
-     
+
         // console.log(CurrentlySelectedUser);
         let url = '/fetch-attendance-user-timesheet';
 
         //Returns '0' if shift is not assigned to user. Need to handle error scenario based on that value.
+        try{
 
-        return await axios.post(url, {
-            month: currentlySelectedMonth + 1,
-            year: currentlySelectedYear,
-            user_id: currentlySelectedUser,
-        })
+
+            return await axios.post(url, {
+                month: currentlySelectedMonth + 1,
+                year: currentlySelectedYear,
+                user_code: currentlySelectedUser,
+            }).then(res => {
+                console.log(" getEmployeeAttendance() : " + Object.values(res.data));
+                // Object.values(res.data)
+                return res.data;
+            });
+
+        }catch(error){
+            console.error('Error [ getEmployeeAttendance() ]:', error);
+            return null;
+        }
     }
 
 
@@ -64,44 +75,61 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = async () => {
         try {
             canShowLoading.value = true
-            await getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
-                console.log("Selected employee attendance : " + res.data);
-                currentEmployeeAttendance.value = Object.values(res.data)
-                currentEmployeeAttendanceLength.value = Object.values(res.data).length
-            }).finally(() => {
-                canShowLoading.value = false
-            })
+            return await getEmployeeAttendance(service.current_user_code, useCalendar.getMonth, useCalendar.getYear).then(res => {
+                console.log( "getSelectedEmployeeAttendance() : "+res);
 
-        } catch (error) {
-            console.error('Error:', error);
+                //If shift is assigned , then 0 not returned
+                if(res)
+                {
+                    console.log("Selected employee attendance : " + res.data);
+                    currentEmployeeAttendance.value = Object.values(res.data)
+                    currentEmployeeAttendanceLength.value = Object.values(res.data).length
+                }
+                else{
+                    //If shift is not assigned , then 0 is returned in res
+                    //Todo : Show Error popup "Shift is not assigned for this user"
+                    return null;
+                }
+            });
+        }
+        catch (error) {
+            console.error('Error [ getSelectedEmployeeAttendance() ]:', error);
+        }
+        finally{
+            canShowLoading.value = false
+
         }
     }
 
     /* Get currently selected team employee daily attendance */
-    const getSelectedEmployeeTeamDetails = (user_id, isteam) => {
+    const getSelectedEmployeeTeamDetails = (user_code, isteam) => {
 
         isTeamOrg.value = isteam
         canShowLoading.value = true
-        currentlySelectedTeamMemberUserId.value = user_id
-        getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        currentlySelectedTeamMemberUserId.value = user_code
+        getEmployeeAttendance(user_code, useCalendar.getMonth, useCalendar.getYear).then(res => {
             currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
 
-        }).finally(() => {
+        })
+        .catch((error) => {
+            console.log('Error[ getSelectedEmployeeTeamDetails)() ]', error);
+        })
+        .finally(() => {
             canShowLoading.value = false
         })
     }
 
     /* Get currently selected organization employee daily attendance */
 
-    const getSelectedEmployeeOrgDetails = (user_id, isteam,currentlySelectedUser) => {
+    const getSelectedEmployeeOrgDetails = async (user_code, isteam,currentlySelectedUser) => {
         isTeamOrg.value = isteam;
         CurrentlySelectedUser.value = currentlySelectedUser;
         console.log("employee list select function  ::" ,CurrentlySelectedUser.value);
         canShowLoading.value = true;
-    
-        currentlySelectedOrgMemberUserId.value = user_id
-        getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
-            // console.log(Object.values(res.data));
+
+        currentlySelectedOrgMemberUserId.value = user_code
+        await getEmployeeAttendance(user_code, useCalendar.getMonth, useCalendar.getYear).then(res => {
+            console.log(" getSelectedEmployeeOrgDetails() : "+  Object.values(res.data));
             currentlySelectedOrgMemberAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false
