@@ -19,9 +19,11 @@ use Dompdf\Dompdf;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use PDF;
+use DateTime;
 use App\Models\VmtEmployeeInvestmentsDeclarationAmount;
 use App\Models\VmtEmployeeInvestmentsDeclarationFields;
 use App\Models\VmtInvestmentForm;
+use App\Models\AbsActivePayslip;
 use App\Models\VmtOrgTimePeriod;
 use App\Models\VmtInvestmentParticulars;
 use App\Models\VmtEmployeePayroll;
@@ -40,7 +42,8 @@ use App\Exports\AttenanceWorkShifttime;
 use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
-
+use App\Models\AbsActivePayslip;
+use DateTime;
 use Carbon\Carbon;
 use App\Http\Controllers\VmtEmployeeBirthdayController;
 use Carbon\CarbonPeriod;
@@ -1861,4 +1864,395 @@ class VmtTestingController extends Controller
 
         return $reports_data;
     }
+
+
+        public function generatePayslip(VmtAttendanceService $serviceVmtAttendanceService)
+        {
+            $user_code="CT0003";
+             $month="09"; $year='2023'; $type='pdf';
+            $validator = Validator::make(
+                $data = [
+                    "user_code" => $user_code,
+                    "year" => $year,
+                    "month" => $month,
+                    "type" => $type,
+
+                ],
+                $rules = [
+                    "user_code" => 'required|exists:users,user_code',
+                    "year" => 'required',
+                    "month" => 'required',
+                    "type" => 'required',
+                ],
+                $messages = [
+                    'required' => 'Field :attribute is missing',
+                    'exists' => 'Field :attribute is invalid',
+                ]
+
+            );
+
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+                ]);
+            }
+
+
+            try {
+
+                $user_data = User::where('user_code', $user_code)->first();
+                $payroll_data = VmtPayroll::leftJoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+                    ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                    ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+                    ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                    ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                    ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                    ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                    ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                    ->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                    ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                    ->where('user_code', $user_code)
+                    ->whereYear('payroll_date', $year)
+                    ->whereMonth('payroll_date', $month);
+
+
+                //get leave data
+                $start_date = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
+
+                $end_date = Carbon::create($year, $month)->lastOfMonth()->format('Y-m-d');
+
+                $getleavedetails = $serviceVmtAttendanceService->leavetypeAndBalanceDetails($user_data->id, $start_date, $end_date, $month);
+
+                $leave_data = array();
+
+                foreach ($getleavedetails as $key => $single_leave_type) {
+
+                    if ($single_leave_type['leave_type']  <> "Sick Leave / Casual Leave" &&  $single_leave_type['leave_type'] <> "Earned Leave") {
+
+                        if ($single_leave_type['availed'] != 0) {
+
+                            array_push($leave_data, $single_leave_type);
+                        }
+                    } else {
+                        array_push($leave_data, $single_leave_type);
+                    }
+                }
+
+                $getpersonal['leave_data'] = $leave_data;
+
+
+                // $financial_time   = VmtOrgTimePeriod::where('status','1')->first()->start_date;
+                // $start_date =  Carbon::parse($financial_time );
+                // $diff_months  = $start_date->diffInMonths(Carbon::now());
+
+                // $months = [];
+                // for($i=0; $i<$diff_months; $i++){
+                //     $month = Carbon::parse($start_date)->addMonths($i)->format('Y-m-d');
+                //     array_push($months,$month);
+                // }
+
+                // $months_details =[];
+                // for($i=0; $i<count($months); $i++){
+                // $vmt_payroll  =  VmtPayroll::join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
+                //             ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
+                //             ->where('vmt_emp_payroll.user_id',$user_data->id)
+                //             ->where('payroll_date',$months[$i])
+                //             ->get()->toArray();
+                //             array_push($months_details,$vmt_payroll);
+                // }
+
+                $getpersonal['client_details'] = VmtClientMaster::where('id', $user_data->client_id)->get(
+                    [
+                        'client_fullname',
+                        'client_logo',
+                        'address',
+                    ]
+                )->toArray();
+
+
+                $getpersonal['personal_details'] = $payroll_data
+                    ->get(
+                        [
+                            'users.name',
+                            'users.user_code',
+                            'vmt_employee_details.doj',
+                            'vmt_department.name as department_name',
+                            'vmt_employee_office_details.designation',
+                            'vmt_employee_office_details.officical_mail',
+                            'vmt_employee_details.pan_number',
+                            'vmt_banks.bank_name',
+                            'vmt_employee_details.bank_account_number',
+                            'vmt_employee_details.bank_ifsc_code',
+                            'vmt_employee_statutory_details.uan_number',
+                            'vmt_employee_statutory_details.epf_number',
+                            'vmt_department.name as department_name'
+                        ]
+                    )->toArray();
+
+
+                $getpersonal['salary_details'] = $payroll_data
+                    ->get(
+                        [
+                            'vmt_employee_payslip_v2.month_days',
+                            'vmt_employee_payslip_v2.worked_Days',
+                            'vmt_employee_payslip_v2.arrears_Days',
+                            'vmt_employee_payslip_v2.lop',
+                        ]
+                    )->toArray();
+
+                $getearnings = $payroll_data
+                    ->get(
+                        [
+                            'vmt_employee_payslip_v2.basic as Basic',
+                            'vmt_employee_payslip_v2.hra as HRA',
+                            'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
+                            'vmt_employee_payslip_v2.other_earnings as Other Earnings',
+                            'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
+                            'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
+                            'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
+                            'vmt_employee_payslip_v2.communication_allowance as Communication Allowance',
+                            'vmt_employee_payslip_v2.food_allowance as Food Allowance',
+                            'vmt_employee_payslip_v2.vehicle_reimbursement as Vehicle Reimbursement',
+                            'vmt_employee_payslip_v2.driver_salary as Driver Salary',
+                            'vmt_employee_payslip_v2.lta as Leave Travel Allowance',
+                            'vmt_employee_payslip_v2.other_allowance as Other Allowance',
+                            'vmt_employee_payslip_v2.overtime as Overtime',
+                        ]
+                    )->toArray();
+
+
+                $getarrears = $payroll_data
+                    ->get(
+                        [
+                            'vmt_employee_payslip_v2.basic_arrear as Basic',
+                            'vmt_employee_payslip_v2.hra_arrear as HRA',
+                            'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
+                            'vmt_employee_payslip_v2.spl_alw_arrear  as Special Allowance',
+                            'vmt_employee_payslip_v2.child_edu_allowance_arrear as Child Education Allowance',
+                        ]
+                    )->toArray();
+                //need  to add over_time arrears
+
+
+                $getcontribution = $payroll_data
+                    ->get(
+                        [
+                            'vmt_employee_payslip_v2.epf_ee as EPF Employee',
+                            'vmt_employee_payslip_v2.employee_esic as ESIC Employee ',
+                            'vmt_employee_payslip_v2.vpf as VPF',
+                        ]
+                    )->toArray();
+
+
+                $gettaxdeduction = $payroll_data
+                    ->get(
+                        [
+                            'vmt_employee_payslip_v2.prof_tax as Professional Tax',
+                            'vmt_employee_payslip_v2.lwf as LWF',
+                            'vmt_employee_payslip_v2.income_tax as Income Tax',
+                            'vmt_employee_payslip_v2.sal_adv as Salary Advance',
+                            'vmt_employee_payslip_v2.canteen_dedn as Canteen Deduction',
+                            'vmt_employee_payslip_v2.other_deduc as Other Deduction',
+                        ]
+                    )->toArray();
+
+                $getCompensatorydata = $payroll_data
+                    ->get(
+                        [
+                            'vmt_employee_compensatory_details.basic as Basic',
+                            'vmt_employee_compensatory_details.hra as HRA',
+                            'vmt_employee_compensatory_details.Statutory_bonus as Statuory Bonus',
+                            'vmt_employee_compensatory_details.special_allowance as Special Allowance',
+                            'vmt_employee_compensatory_details.child_education_allowance as Child Education Allowance',
+                            'vmt_employee_compensatory_details.communication_allowance as Communication Allowance',
+                            'vmt_employee_compensatory_details.food_allowance as Food Allowance',
+                            'vmt_employee_compensatory_details.vehicle_reimbursement as Vehicle Reimbursement',
+                            'vmt_employee_compensatory_details.driver_salary as Driver Salary',
+                            'vmt_employee_compensatory_details.lta as Leave Travel Allowance',
+                            'vmt_employee_compensatory_details.other_allowance as Other Allowance',
+                        ]
+                    )->toArray();
+
+
+                $getpersonal['date_month'] = [
+                    "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
+                    "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
+                    "abs_logo" => '/assets/clients/ess/logos/AbsLogo1.png',
+                ];
+
+                // Total earnings
+
+                $getpersonal['earnings'] = [];
+                foreach ($getearnings as $single_payslip) {
+                    foreach ($single_payslip as $key => $single_details) {
+
+                        if ($single_details == "0" || $single_details == null || $single_details == "") {
+                            unset($single_payslip[$key]);
+                        }
+                    }
+                    array_push($getpersonal['earnings'], $single_payslip);
+                }
+                $getpersonal['arrears'] = [];
+                foreach ($getarrears as $single_payslip) {
+                    foreach ($single_payslip as $key => $single_details) {
+
+                        if ($single_details == "0" || $single_details == null || $single_details == "") {
+                            unset($single_payslip[$key]);
+                        }
+                    }
+                    array_push($getpersonal['arrears'], $single_payslip);
+                }
+
+                if (!empty($getpersonal['earnings'])) {
+                    $total_value = 0;
+                    foreach ($getpersonal['earnings'][0] as $single_data) {
+                        $total_value += ((int) $single_data);
+                    }
+                    $getpersonal['earnings'][0]['Total Earnings'] = $total_value;
+                }
+
+                // Total contribution
+
+                $getpersonal['contribution'] = [];
+                foreach ($getcontribution as $single_payslip) {
+                    foreach ($single_payslip as $key => $single_details) {
+
+                        if ($single_details == "0" || $single_details == null || $single_details == "") {
+                            unset($single_payslip[$key]);
+                        }
+                    }
+                    array_push($getpersonal['contribution'], $single_payslip);
+                }
+
+                if (!empty($getpersonal['contribution'])) {
+
+                    $total_value = 0;
+                    foreach ($getpersonal['contribution'][0] as $single_simma) {
+                        $total_value += ((int) $single_simma);
+                    }
+                    $getpersonal['contribution'][0]['Total Contribution'] = $total_value;
+                }
+
+                // Total deduction
+
+                $getpersonal['Tax_Deduction'] = [];
+                foreach ($gettaxdeduction as $single_payslip) {
+                    foreach ($single_payslip as $key => $single_details) {
+
+                        if ($single_details == "0" || $single_details == null || $single_details == "") {
+                            unset($single_payslip[$key]);
+                        }
+                    }
+                    array_push($getpersonal['Tax_Deduction'], $single_payslip);
+                }
+
+                $getpersonal['compensatory_data'] = [];
+                foreach ($getCompensatorydata as $single_payslip) {
+                    foreach ($single_payslip as $key => $single_details) {
+
+                        if ($single_details == "0" || $single_details == null || $single_details == "") {
+                            unset($single_payslip[$key]);
+                        }
+                    }
+                    array_push($getpersonal['compensatory_data'], $single_payslip);
+                }
+
+                if (!empty($getpersonal['Tax_Deduction'])) {
+
+                    $total_value = 0;
+                    foreach ($getpersonal['Tax_Deduction'][0] as $single_data) {
+                        $total_value += ((int) $single_data);
+                    }
+                    $getpersonal['Tax_Deduction'][0]['Total Deduction'] = $total_value;
+                }
+
+
+                if (!empty($getpersonal['earnings']) && !empty($getpersonal['contribution']) && !empty($getpersonal['Tax_Deduction'])) {
+                    $total_amount = ($getpersonal['earnings'][0]['Total Earnings']) - ($getpersonal['contribution'][0]['Total Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total Deduction']);
+
+                    $getpersonal['over_all'] = [
+                        [
+                            "Net Salary Payable" => $total_amount,
+                            "Net Salary in words" => numberToWord($total_amount),
+                        ]
+                    ];
+                }
+
+
+                $get_payslip =  AbsActivePayslip::where('is_active', '1')->first();
+                $status = "";
+                $message = "";
+
+                if ($type == "pdf") {
+
+                    $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+
+                    $options = new Options();
+                    $options->set('isHtml5ParserEnabled', true);
+                    $options->set('isRemoteEnabled', true);
+
+                    $pdf = new Dompdf($options);
+                    $pdf->loadhtml($html, 'UTF-8');
+                    $pdf->setPaper('A4', 'portrait');
+                    $pdf->render();
+                    // $pdf->stream("payslip.pdf");
+
+                    $response['user_code'] = $user_code;
+                    $response['month'] = $month;
+                    $response['year'] = $year;
+                    $response['emp_name']  = $user_data->name;
+                    $pdf->stream(['payslip.pdf']);
+                    //$response['payslip'] = base64_encode($pdf->output(['payslip.pdf']));
+                } elseif ($type == "html") {
+
+                    $html = view('dynamic_payslip_templates.dynamic_payslip_template_view', $getpersonal);
+
+                    $response = base64_encode($html);
+                } else if ($type == "mail") {
+
+                    $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+
+                    $options = new Options();
+                    $options->set('isHtml5ParserEnabled', true);
+                    $options->set('isRemoteEnabled', true);
+
+                    $pdf = new Dompdf($options);
+                    $pdf->loadhtml($html, 'UTF-8');
+                    $pdf->setPaper('A4', 'portrait');
+                    $pdf->render();
+
+                    $isSent = \Mail::to($getpersonal['personal_details'][0]['officical_mail'])
+                        ->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year));
+
+                    if ($isSent) {
+                        $status = "success";
+                        $message = "Employee payslip send successfully";
+                    } else {
+                        $status = "failure";
+                        $message = "Error while send employee payslip";
+                    }
+                    return response()->json([
+                        'status' => $status,
+                        'message' => $message,
+                        'data' => ''
+                    ]);
+                }
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "data fetch successfully",
+                    'data' => $response
+                ]);
+            } catch (\Exception $e) {
+
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => "Error while fetch payslip details ",
+                    'data' =>$e->getTraceAsString()
+                ]);
+            }
+        }
+
 }

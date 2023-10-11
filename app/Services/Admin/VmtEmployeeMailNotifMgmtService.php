@@ -31,7 +31,16 @@ class VmtEmployeeMailNotifMgmtService {
 
     public function getAllEmployees_WelcomeMailStatus_Details(){
 
+        $client_id =null;
+
+        if(session('client_id') == 1){
+         $client_id =VmtClientMaster::pluck('id');
+        }else{
+            $client_id =[session('client_id')];
+        }
+
         $user_email= User::leftjoin('vmt_employee_mail_status','vmt_employee_mail_status.user_id','users.id')
+        ->whereIn('users.client_id',$client_id)
         ->where('users.active','','0')
         ->select(
                 'users.User_code as empcode',

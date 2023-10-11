@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Sanctum\Sanctum;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        // Sanctum::creatingToken(function ($user) {
+        //     $token = $user->createToken('custom-token', ['user_code' => $user->code, 'user_name' => $user->name]);
+
+        //     return [
+        //         'token' => $token->plainTextToken,
+        //         'user_code' => $user->code,
+        //         'user_name' => $user->name,
+        //     ];
+        // });
 
         //
     }

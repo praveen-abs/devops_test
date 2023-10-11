@@ -1,7 +1,7 @@
 <template>
     <LoadingSpinner v-if="useLeaveStore.canShowLoading" class="absolute z-50 bg-white" />
    <div class="w-full" >
-    <div >
+    <div>
         <div v-if="service.current_user_role == 5">
             <p class="font-semibold text-2xl text-[#000] font-['Poppins]">Leave</p>
             <p class="font-semibold text-sm">Here you can apply Leave,<a ><span class="underline cursor-pointer hover:text-indigo-500"> Company's Leave Policy</span></a>.</p>
@@ -19,15 +19,15 @@
                         Current User Role == 5 ,Employee
                      -->
                 <li class="nav-item text-muted " role="presentation"
-                    v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3|| service.current_user_role == 4">
+                    v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3|| service.current_user_role == 4" @click="service.clearfunction" >
                     <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false"
-                        tabindex="-1" role="tab">
+                        tabindex="-1" role="tab" >
                         Team Leave Balance</a>
                 </li>
 
-                <li class="nav-item text-muted " role="presentation" v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3">
+                <li class="nav-item text-muted " role="presentation" v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3" @click="service.clearfunction " >
                     <a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false" tabindex="-1"
-                        role="tab">
+                        role="tab "  >
                         Org Leave Balance</a>
                 </li>
             </ul>
@@ -43,7 +43,7 @@
 
                 </div>
                 <a href="/attendance-leave-policydocument" id=""
-                    class="text-md  font-medium border-1 border-black rounded-lg text-center bg-black text-white my-auto p-1.5 dark:text-white"
+                    class="text-[14px] text-blue-500 !underline font-semibold"
                     role="button" aria-expanded="false">
                     Leave
                     Policy Explanation
@@ -107,8 +107,8 @@ const service = Service()
 
 const apply = ref(false)
 
-onMounted(() => {
-    useLeaveStore.getEmployeeLeaveBalance()
+onMounted(async () => {
+   await useLeaveStore.getEmployeeLeaveBalance()
 })
 </script>
 

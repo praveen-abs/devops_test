@@ -2,7 +2,7 @@
     <div class="px-2">
         <div class="flex justify-between mb-[10px]">
             <h1 class=" text-black text-[24px] font-semibold ">Attendance Reports</h1>
-            <div class=" flex items-center">
+            <div class="flex items-center ">
                 <button @click="EmployeeMaster.clearfilterBtn(Reports_store.activetab),Reports_store.clearDataTable()"
                     class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-times"></i> Clear Filter</button>
@@ -34,7 +34,7 @@
                             MUSTER ROLL
                         </a>
 
-                     
+
                     </li>
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-2 position-relative font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
@@ -43,7 +43,7 @@
                             :class="[Reports_store.activetab === 3 ? 'active font-semibold !border-b-[2.2px]  !border-[#F9BE00]' : 'font-medium !text-[#8B8B8B] border-b-[2.2px] border-[#dcdcdc] ']">
                             CONSOLIDATE
                         </a>
-                      
+
                     </li>
                     <li class=" nav-item  !border-0  flex items-center " role="presentation">
                         <a class="px-4 position-relative font-['poppins'] text-[14px] text-[#001820]  w-[100%]"
@@ -146,7 +146,7 @@
                         </div>
 
                         <div>
-                           
+
                             <DataTable :value="Reports_store.AttendanceReportSource" paginator :rows="5"
                                 :rowsPerPageOptions="[5, 10, 20, 50]" responsiveLayout="scroll" scrollable scrollHeight="240px"
                                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"

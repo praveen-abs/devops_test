@@ -9,6 +9,7 @@
         "ext-gd": "*",
         "barryvdh/laravel-dompdf": "^1.0",
         "doctrine/dbal": "^3.4",
+        "firebase/php-jwt": "^6.8",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.0",
@@ -67,8 +68,10 @@
             "app/Services/VmtPayRunService.php",
             "app/Services/VmtSalaryRevisionService.php",
             "app/Services/VmtAppPermissionsService.php",
-            "app/Services/VmtReportsService.php"
-           
+            "app/Services/VmtAttendanceServiceV2.php",
+            "app/Services/VmtReportsService.php",
+            "app/Services/Testing/VmtTestingService.php"
+
         ]
     },
     "autoload-dev": {

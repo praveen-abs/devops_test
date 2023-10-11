@@ -74,7 +74,7 @@
                 </Column>
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                         <button  @click="openProfilePage(slotProps.data)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</button>
+                         <RouterLink :to="`/profile-page/${slotProps.data.user_id}`" @click="openProfilePage(slotProps.data)" class="px-2 py-1  "><i class="h-6 py-1 mx-2 pi pi-eye text-[#000]"></i></RouterLink>
                     </template>
                 </Column>
             </DataTable>
@@ -142,9 +142,14 @@ onMounted(async () => {
 
 async function openProfilePage(uid) {
     console.log(uid);
+
+    console.log("user code ::",uid.emp_code);
     enc_user_id.value = uid.data;
-    profilePageStore.user_code = uid.enc_user_id
-    window.location.href = "/pages-profile-new?uid=" + uid.enc_user_id;
+    profilePageStore.user_code = uid.emp_code;
+    
+
+    // profilePageStore.emp_user_code = ;
+    // window.location.href = "/pages-profile-new?uid=" + uid.enc_user_id;
 }
 
 </script>

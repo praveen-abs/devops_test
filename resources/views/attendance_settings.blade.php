@@ -17,9 +17,6 @@
                 </div>
             </div>
         </div>
-        @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
-
-        <div id="vjs_attendance_master"></div>
     </div>
  </div>
 @endsection

@@ -31,26 +31,34 @@
                 class="mt-3 mb-2 !rounded-[20px] shadow-sm !h-[180px]"
                 style="width: 100%; margin-bottom: 10px;position: relative;right: 0;  bottom :10px; display: block;"
                 :alt="slotProps.item.holiday_name" />
-                <button class=" text-[#fff] absolute right-4 top-2 px-3 text-['poppins'] rounded-lg p-1 bg-[#00000067] "  @click="visibleRight = true">View List</button>
+            <button class=" text-[#fff] absolute right-4 top-2 px-3 text-['poppins'] rounded-lg p-1 bg-[#00000067] "
+                @click="visibleRight = true">View List</button>
         </template>
 
     </Galleria>
     <Sidebar v-model:visible="visibleRight" position="right">
-    <!-- <h2>Right Sidebar</h2> -->
+        <!-- <h2>Right Sidebar</h2> -->
+        <template #header>
+            <p class="absolute left-0 mx-4 font-semibold fs-5 ">
+                Holiday list</p>
+        </template>
 
-    <DataTable :value="holidays" tableStyle="min-width: 50rem">
-    <Column field="holiday_name" header="Holiday Name"></Column>
-    <Column field="holiday_date" header="Holiday Date">
-    <template #body="slotProps"  >
-        <!-- <div> -->
-            {{ dayjs(slotProps.data.holiday_date).format('DD/MM/YYYY')}}  {{  dayjs(slotProps.data.holiday_date).format('ddd')  }}
-        <!-- </div> -->
-    </template>
-    </Column>
-    <Column field="holiday_description" header="Holiday Description "></Column>
-</DataTable>
+       <div class="p-2">
+        <DataTable :value="holidays">
+            <Column field="holiday_name" header="Holiday Name"></Column>
+            <Column field="holiday_date" header="Holiday Date">
+                <template #body="slotProps">
+                    <!-- <div> -->
+                    {{ dayjs(slotProps.data.holiday_date).format('DD-MMM-YYYY') }} {{
+                        dayjs(slotProps.data.holiday_date).format('ddd') }}
+                    <!-- </div> -->
+                </template>
+            </Column>
+            <Column field="holiday_description" header="Holiday Description "></Column>
+        </DataTable>
+       </div>
 
-</Sidebar>
+    </Sidebar>
 </template>
 
 <script setup>
@@ -70,7 +78,6 @@ const visibleRight = ref(false);
 
 const getHolidays = () => {
     axios.get('/holiday/master-page').then(res => {
-        console.log(res.data);
         holidays.value = res.data
         let conditionPass = true
         res.data.forEach((element, i) => {
@@ -207,9 +214,10 @@ onMounted(() => {
     position: absolute;
     top: 55px !important;
 }
+
 .p-sidebar-right .p-sidebar
 {
-    width: 50rem !important;
+    width: 50% !important;
     height: 100%;
 }
 </style>

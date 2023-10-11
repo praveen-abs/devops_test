@@ -544,6 +544,7 @@ class VmtReportsController extends Controller
 
     public function generateEmployeeReimbursementsReports(Request $request, VmtReimbursementsService $reimbursementService)
     {
+
         $user_id = auth()->user()->id;
         //dd($request->all());
         $year = $request->selected_year;
@@ -553,13 +554,8 @@ class VmtReportsController extends Controller
         $reimbursement_data = array();
 
         $employee_details = User::join('vmt_employee_details AS details', 'details.userid', '=', 'users.id')
-            ->join(
-                'vmt_employee_office_details AS office',
-                'office.user_id',
-                '=',
-                'users.id'
-            )
-            ->join('vmt_department AS dep', 'dep.id', '=', 'office.department_id')
+            ->leftjoin('vmt_employee_office_details AS office','office.user_id','=','users.id')
+            ->leftjoin('vmt_department AS dep', 'dep.id', '=', 'office.department_id')
             ->where('users.id', auth()->user()->id)
             ->select('users.user_code', 'users.name AS name', 'dep.name AS department', 'details.location')->first();
 

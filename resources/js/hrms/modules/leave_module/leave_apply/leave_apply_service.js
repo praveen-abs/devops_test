@@ -5,6 +5,7 @@ import axios from "axios";
 import moment from "moment";
 import { Service } from "../../Service/Service";
 import {useAttendanceTimesheetMainStore} from "../../attendence/timesheet/stores/attendanceTimesheetMainStore";
+import { useLeaveModuleStore } from "../LeaveModuleService";
 const swal = inject("$swal");
 
 
@@ -12,7 +13,8 @@ export const useLeaveService = defineStore("useLeaveService", () => {
 
     // Notification service
     const toast = useToast();
-    const service = Service()
+    const service = Service();
+    const useLeaveModule = useLeaveModuleStore();
 
     const AttendanceTimesheetMainStore = useAttendanceTimesheetMainStore();
 
@@ -454,6 +456,8 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             }).catch(err => {
                 console.log(err);
             }).finally(() => {
+                restChars();
+
                 leaveApplyDailog.value = false
     
             })
@@ -500,7 +504,10 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         }).catch(err => {
             console.log(err);
         }).finally(() => {
-            leaveApplyDailog.value = false
+            useLeaveModule.getTermLeaveBalance();
+            useLeaveModule.getEmployeeLeaveHistory();
+            restChars();
+            leaveApplyDailog.value = false;
 
         })
 

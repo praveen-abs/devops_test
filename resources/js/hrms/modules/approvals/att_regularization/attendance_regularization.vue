@@ -25,26 +25,50 @@
                 <template #empty> No Employeee found. </template>
                 <template #loading> Loading customers data. Please wait. </template>
 
-                <Column class="font-bold" field="employee_name" header="Employee Name">
-                    <template #body="slotProps">
-                        <!-- <div class="flex justify-content-center align-items-center">
-                            <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'" if
-                                class="w-3 p-2 text-white bg-blue-900 rounded-full h-18 text-semibold">{{
-                                    JSON.parse(slotProps.data.employee_avatar).data }} </p>
+                <Column field="employee_name" header="Employee Name" class=" " style="width: 12rem !important">
+                    <!-- <template #body="slotProps">
+                        <div class=" flex justify-center items-center ">
+                            <div class="flex justify-center items-center">
+                                <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'"
+                                    class=" p-2 text-white rounded-full h-18 w-[30px] text-semibold"
+                                    :class="service.getBackgroundColor(slotProps.index)">{{
+                                        JSON.parse(slotProps.data.employee_avatar).data }} </p>
 
-                            <img v-else class="w-3 rounded-circle img-md userActive-status profile-img"
-                                style="height: 30px !important;"
-                                :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset=""
-                                alt="" />
-                        </div> -->
-                        <p class="pl-2 text-left ">{{ slotProps.data.employee_name }} </p>
-                    </template>
+                                <img v-else class="w-3 rounded-circle img-md userActive-status profile-img"
+                                    style="height: 30px !important;"
+                                    :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`"
+                                    srcset="" alt="" />
+                            </div>
+                            <div class="">
+                                <p class="pl-2 ">{{ slotProps.data.employee_name }} </p>
+                            </div>
+                        </div>
+
+
+                    </template> -->
+                    <template #body="slotProps">
+                    <div class="flex items-center !justify-left ">
+                        <div>
+                            <p v-if="slotProps.data.employee_avatar ? JSON.parse(slotProps.data.employee_avatar).type == 'shortname' : ''"
+                                class="p-2 font-semibold text-white rounded-full w-[30px] text-[14px]"
+                                :class="service.getBackgroundColor(slotProps.index)" >
+                                {{ slotProps.data.employee_avatar?JSON.parse(slotProps.data.employee_avatar).data :null }} </p>
+                            <img v-else class="rounded-circle userActive-status profile-img"
+                                style="height: 30px !important; width: 30px !important;"
+                                :src="`data:image/png;base64,${slotProps.data.employee_avatar ? JSON.parse(slotProps.data.employee_avatar).data :''}`" srcset="" alt="" />
+                        </div>
+                        <div>
+                            <p class="pl-2">{{ slotProps.data.employee_name }} </p>
+                        </div>
+                    </div>
+                </template>
+
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="attendance_date" header="Date" :sortable="true" style="min-width: 10rem;" >
+                <Column field="attendance_date" header="Date" :sortable="true" style="min-width: 10rem;">
                     <template #body="slotProps">
                         <h1 class="text-right "> {{ moment(slotProps.data.attendance_date).format('DD-MM-YYYY') }}</h1>
                     </template>
@@ -136,7 +160,7 @@ import { useToast } from "primevue/usetoast";
 import moment from "moment";
 import { Service } from "../../Service/Service";
 import LoadingSpinner from '../../../components/LoadingSpinner.vue';
-import {UseAttendanceStore} from "./AttendanceStore";
+import { UseAttendanceStore } from "./AttendanceStore";
 
 const UseAttendance = UseAttendanceStore();
 
@@ -173,19 +197,19 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
-onMounted(() => {
-    ajax_GetAttRegularizationData();
+onMounted(async () => {
+    await ajax_GetAttRegularizationData();
 });
 
-function ajax_GetAttRegularizationData() {
+async function ajax_GetAttRegularizationData() {
     UseAttendance.canShowLoadingScreen = true
     let url = window.location.origin + "/fetch-att-regularization-data";
     // console.log("AJAX URL : " + url);
-    axios.get(url).then((response) => {
+    await axios.get(url).then((response) => {
         // console.log("Axios : " + response.data);
         att_regularization.value = Object.values(response.data);
     }).finally(() => {
-        UseAttendance.canShowLoadingScreen  = false
+        UseAttendance.canShowLoadingScreen = false
     });
 }
 
@@ -198,7 +222,7 @@ function showConfirmDialog(selectedRowData, status) {
 }
 
 function hideConfirmDialog(canClearData) {
-    canShowConfirmation.value  = false;
+    canShowConfirmation.value = false;
     if (canClearData) resetVars();
 }
 
@@ -226,7 +250,7 @@ const getSeverity = (status) => {
 
 function processApproveReject() {
     hideConfirmDialog(false);
-    UseAttendance.canShowLoadingScreen  = true;
+    UseAttendance.canShowLoadingScreen = true;
     // console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
     axios
@@ -262,12 +286,12 @@ function processApproveReject() {
             resetVars();
         })
         .catch((error) => {
-            UseAttendance.canShowLoadingScreen  = false;
+            UseAttendance.canShowLoadingScreen = false;
             resetVars();
             // console.log(error.toJSON());
         }).finally(() => {
             reviewer_comment.value = null
-            UseAttendance.canShowLoadingScreen  = false;
+            UseAttendance.canShowLoadingScreen = false;
             ajax_GetAttRegularizationData();
         });
 }
@@ -275,7 +299,8 @@ function processApproveReject() {
 
 
 <style>
-.page-content {
+.page-content
+{
     padding: calc(30px + 1.5rem) calc(1.5rem / 2) 60px calc(1.5rem / 2);
 }
 </style>

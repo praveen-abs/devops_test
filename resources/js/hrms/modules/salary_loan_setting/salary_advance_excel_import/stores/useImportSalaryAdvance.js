@@ -17,7 +17,7 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
     // const service = Service()
     // const normalOnboardingSource = useNormalOnboardingMainStore()
     const router = useRouter();
-    const canShowloading = ref(false)
+    const canShowloading = ref(false);
     const toast = useToast();
 
 
@@ -123,12 +123,14 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
     //Upload selected file
     const uploadOnboardingFile = (data) => {
 
-        let url = '/imporExistingSalaryAdvanceData'
+       // let url = '/imporExistingSalaryAdvanceData'
+
+        let url = '/updateEmployeeLeaveBalanceData'
 
         if (errorRecordsCount.value == 0) {
-            canShowloading.value = true
+            // canShowloading.value = true
             axios.post(url, data).then(res => {
-                canShowloading.value = false
+                // canShowloading.value = false
                 if (res.data.status == 'failure') {
                     toast.add({
                         severity: "error",
@@ -146,9 +148,9 @@ export const useImportSalaryAdvance = defineStore("useImportSalaryAdvance", () =
                                 life: 3000,
                             });
                         });
-                        setTimeout(() => {
-                            window.location.replace(window.location.origin + '/manageEmployees')
-                        }, 4000);
+                     //setTimeout(() => {
+                        //     window.location.replace(window.location.origin + '/manageEmployees')
+                        // }, 4000);
                     }
             }).finally(() => {
             })

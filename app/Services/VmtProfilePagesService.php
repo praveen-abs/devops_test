@@ -167,7 +167,7 @@ class VmtProfilePagesService
 
     */
 
-    public function getEmployeeProfileDetails(int $user_id)
+    public function getEmployeeProfileDetails( $user_id)
     {
 
         $response = User::with(
@@ -215,6 +215,12 @@ class VmtProfilePagesService
         $response['user_short_name'] = getUserShortName($user_id);
 
         $response['short_name_Color'] = shortNameBGColor($user_short_name);
+
+        $current_user_short_name = getUserShortName(auth()->user()->id);
+
+        $response['current_user_short_name'] = getUserShortName(auth()->user()->id);
+
+        $response['current_short_name_Color'] = shortNameBGColor($current_user_short_name);
 
         $user_client_data = User::where('id', $user_id)->first();
 
@@ -296,8 +302,8 @@ class VmtProfilePagesService
                     $response['getEmployeeDetails'][$key] = '';
                 }
             }
-            $response['getEmployeeDetails']['current_address_line_1'] = $response['getEmployeeDetails']['current_address_line_1'].','.$response['getEmployeeDetails']['current_address_line_2'];
-            $response['getEmployeeDetails']['permanent_address_line_1'] =  $response['getEmployeeDetails']['permanent_address_line_1'].','.$response['getEmployeeDetails']['permanent_address_line_2'];
+            // $response['getEmployeeDetails']['current_address_line_1'] = $response['getEmployeeDetails']['current_address_line_1'].','.$response['getEmployeeDetails']['current_address_line_2'];
+            // $response['getEmployeeDetails']['permanent_address_line_1'] =  $response['getEmployeeDetails']['permanent_address_line_1'].','.$response['getEmployeeDetails']['permanent_address_line_2'];
            }
             //dd($response['getEmployeeDetails']);
         if(!empty($response['getEmployeeOfficeDetails'])){
@@ -788,7 +794,7 @@ class VmtProfilePagesService
              $i++;
        }
         return $response= $emp_documents;
-     
+
 
     }
     catch(\Exception $e){

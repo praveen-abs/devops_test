@@ -21,7 +21,7 @@ use App\Models\VmtOrgTimePeriod;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
-class VmtReportsservice
+class VmtReportsService
 {
     public function fetchAnnualEarnedDetails($start_date, $end_date)
     {
