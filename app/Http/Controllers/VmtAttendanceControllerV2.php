@@ -66,7 +66,7 @@ class VmtAttendanceControllerV2 extends Controller
             $staff_attendance_query = VmtEmpAttIntrTable::orderBy('id', 'DESC')->first();
             $start_date = Carbon::parse($staff_attendance_query->date)->subDays(2)->format('Y-m-d');
         } else {
-            $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id', 'DESC')->first();
+            $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id', 'asc')->first();
             //dd('working');
             if (Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->lte(Carbon::parse($staff_attendance_query->date))) {
                 $start_date = Carbon::parse($staff_attendance_query->date)->format('Y-m-d');
