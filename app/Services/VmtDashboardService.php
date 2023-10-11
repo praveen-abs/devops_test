@@ -183,17 +183,22 @@ class VmtDashboardService
 
         try {
 
-            $client_id = null;
-
+            $client_id=null;
+            if(!empty( session('client_id')  )){
 
             if (session('client_id') == 1) {
 
                 $client_id = VmtClientMaster::pluck('id')->toarray();
             } else {
 
-                $client_id = [session('client_id')];
-            }
+                //    }else{
 
+                    $client_id =[session('client_id')];
+
+                   }
+                }else{
+                    $client_id = [auth()->user()->client_id];
+                }
 
 
             $employeesEventDetails = User::leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
@@ -208,15 +213,11 @@ class VmtDashboardService
                 )
                 ->where('users.is_ssa', '=', '0')
                 ->where('users.active', '=', '1')
+                ->whereIn('users.client_id',$client_id)
                 ->where('users.is_onboarded', '=', '1')
                 ->whereNotNull('vmt_employee_details.doj')
                 ->whereNotNull('vmt_employee_details.dob');
 
-            if (!empty($client_id)) {
-                $employeesEventDetails = $employeesEventDetails->where('users.client_id', '=', $client_id);
-            } else {
-                $employeesEventDetails = $employeesEventDetails->where('users.client_id', '=', auth()->user()->client_id);
-            }
 
             //Employee events for the current month only
             $dashboardEmployeeEventsData_birthday = $employeesEventDetails->whereMonth('vmt_employee_details.dob', '>=', Carbon::now()->month)
@@ -997,7 +998,7 @@ class VmtDashboardService
         }
 
 
-        $get_notification =  VmtNotifications::where('id', $record_id)->first();
+           $get_notification =  VmtNotifications::where('id',$record_id)->first();
 
         if ($get_notification) {
             $get_notification->is_read = "1";

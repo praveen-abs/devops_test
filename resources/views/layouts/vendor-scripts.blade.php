@@ -48,9 +48,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 {{-- for calendar --}}
-
+<!--
 <script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script> -->
 
 <script>
     $(document).ready(function() {

@@ -1,9 +1,9 @@
 <template>
-    <div class="card top-line">
+    <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Team Leave Balance</h6>
+                    <h6 class="mb-4 text-lg font-semibold text-gray-900">Team Leave Balance</h6>
                     <div class=" my-2 d-flex justify-content-between align-items-center">
                         <div></div>
                         <div class=" d-flex ">
@@ -19,7 +19,6 @@
                                     style="border-radius: 7px; height: 30px;width: 100px;" :maxDate="new Date()" />
 
                             </div>
-
                             <button class=" btn-orange py-1  px-4 rounded"
                                 @click="leaveModuleStore.getTermLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD'), dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD')),leaveModuleStore.canShowLoading = true">submit</button>
                         </div>
@@ -83,7 +82,7 @@
                 <div class="card-body">
                     <div class="flex justify-between">
                         <div>
-                            <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Team Leave history</h6>
+                            <h6 class="mb-4 text-lg font-semibold text-gray-900 ">Team Leave history</h6>
                         </div>
                         <div class="d-flex justify-content-end">
                             <label for="" class="my-2 text-lg font-semibold">Select Month</label>
@@ -164,7 +163,7 @@
                             </Column>
                             <Column field="" header="Action" style="min-width: 15rem">
                                 <template #body="slotProps">
-                                    <Button type="button" icon="" class=" text-white Button py-2.5" label="View"
+                                    <Button icon="" class=" border-[1px] text-[#000] border-[#000] py-2.5" label="View"
                                         @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="height: 2em" />
                                 </template>
                             </Column>

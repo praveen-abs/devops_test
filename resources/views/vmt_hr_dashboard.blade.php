@@ -5,8 +5,8 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
-    <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
+    <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}"> -->
+    <!-- <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script> -->
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
@@ -23,6 +23,4 @@
 @endsection
 
 @section('content')
-@vite('resources/js/hrms/modules/dashboard/dashboard.js')
-<div id="Dashboard"></div>
 @endsection

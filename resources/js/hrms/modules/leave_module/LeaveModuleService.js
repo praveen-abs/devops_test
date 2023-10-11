@@ -159,6 +159,10 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
             array_orgLeaveBalance.value = res.data;
         }).finally(() => {
             canShowLoading.value = false;
+
+            selectedStartDate.value ='';
+            selectedEndDate.value ='';
+
         });
     }
 
@@ -172,9 +176,19 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
             arrayTermLeaveBalance.value = res.data;
 
         }).finally(() => {
+            selectedStartDate.value ='';
+            selectedEndDate.value ='';
             canShowLoading.value = false;
         })
     }
+
+    function clearfunction(){
+        selectedStartDate.value =''
+         selectedEndDate.value ='';
+         console.log( ' this variable is cleared ::',selectedEndDate.value , selectedStartDate.value);
+
+    }
+
 
     return {
 
@@ -196,7 +210,10 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         getOrgLeaveBalance,
 
         // TermLeaveBalance
-        getTermLeaveBalance
+        getTermLeaveBalance,
+
+        // clear start date and end date function
+        clearfunction
 
     };
 });

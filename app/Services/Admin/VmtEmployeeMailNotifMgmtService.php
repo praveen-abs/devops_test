@@ -40,7 +40,7 @@ class VmtEmployeeMailNotifMgmtService {
         }
 
         $user_email= User::leftjoin('vmt_employee_mail_status','vmt_employee_mail_status.user_id','users.id')
-        ->where('users.client_id',$client_id)
+        ->whereIn('users.client_id',$client_id)
         ->where('users.active','','0')
         ->select(
                 'users.User_code as empcode',

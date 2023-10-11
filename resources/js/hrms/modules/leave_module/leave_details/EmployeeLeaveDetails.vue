@@ -79,7 +79,7 @@
                             <Column field="" header="Action" style="min-width: 15rem">
                                 <template #body="slotProps">
                                     <div class="flex justify-center">
-                                        <button class="!text-[#000] !bg-black p-2 rounded-xl"
+                                        <button class="!text-[white] !bg-black py-2 px-4 rounded-xl"
                                         @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="">View</button>
                                     </div>
                                 </template>

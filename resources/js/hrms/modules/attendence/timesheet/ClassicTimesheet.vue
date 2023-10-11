@@ -1,5 +1,5 @@
 <template>
-    <Sidebar v-model:visible="visibleRight" position="right" class="w-full md:w-2rem lg:w-30rem">
+    <Sidebar v-model:visible="visibleRight" position="right" class="w-full">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
@@ -920,7 +920,7 @@ onUpdated(() => {
     width: 150px;
     top: 80px;
     left: 25px;
-
+    z-index: 9999;
 }
 
 .hp:hover+.hop {
@@ -948,5 +948,11 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
+}
+
+.p-sidebar-right .p-sidebar
+{
+    width: 28rem !important;
+    height: 100%;
 }
 </style>

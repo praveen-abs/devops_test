@@ -211,7 +211,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                 user_code: service.current_user_code,
                 regularization_type: selectedAttendanceRegularizationType,
                 attendance_date: selectedDayRegularizationRecord.date,
-                user_time: selectedDayRegularizationRecord.checkin_time,
+                user_time:  selectedAttendanceRegularizationType == 'EG' ? selectedDayRegularizationRecord.checkout_time : selectedDayRegularizationRecord.checkin_time,
                 regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? convertTime(AttendanceLateOrMipRegularization.value) :
                     selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? convertTime(AttendanceEarylOrMopRegularization.value) : '',
                 reason: selectedDayRegularizationRecord.reason,
@@ -400,7 +400,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         if(CurrentlySelectedUser && service.current_user_role == 2){
             url = '/checkAbsentEmployeeAdminStatus'
         }else{
-            url = '/attendance-req-regularization'
+            url = '/attendance-req-absent-regularization'
         }
 
         if(CurrentlySelectedUser && service.current_user_role == 2){

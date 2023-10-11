@@ -168,77 +168,9 @@ clearstatcache();
 @section('body')
 @include('layouts.body')
 @show
-<!-- Begin page -->
-<!-- <section id="loading" class="loading">
-        <div id="loading-content" class="loading-content"></div>
-    </section> -->
 {{-- @yield('loading') --}}
-<div class="flex flex-row h-screen fixed w-screen">
-    @if (Auth::user()->active == 0)
-    @vite('resources/js/hrms/modules/Home/Sidebar.js')
-    <div id="Sidebar"></div>
-    @else
-    @vite('resources/js/hrms/modules/Home/Sidebar.js')
-    <div id="Sidebar"></div>
-    @endif
-
-    <div class="bg-gray-50  text-gray-700 h-screen w-[100%] main-content">
-        @vite('resources/js/hrms/modules/Home/Topbar.js')
-        <div id="Topbar"></div>
-        <div class="h-full overflow-auto p-2 mb-14">
-            @yield('content')
-        </div>
-    </div>
-</div>
-
-<div style="z-index: 11">
-    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-checkbox-circle-fill align-middle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div style="position:fixed;top:80px;right: 40px">
-    <div class="toast hide common-toast-success common-toast toast-border-success" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-checkbox-circle-fill align-middle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <h6 id="result-toast-success" class="m-0"></h6>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div style="position:fixed;top:80px;right: 40px">
-    <div class="toast hide common-toast-error common-toast toast-border-danger" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-checkbox-circle-fill align-middle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <h6 id="result-toast-error" class="m-0"></h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- END layout-wrapper -->
+@vite('resources/js/hrms/app.js')
+<div id="app"></div>
 
 <!-- Shows Theme Customizer menu on right side -->
 {{-- @include('layouts.customizer') --}}

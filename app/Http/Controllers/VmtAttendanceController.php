@@ -1219,7 +1219,8 @@ class VmtAttendanceController extends Controller
                 }
             }
 
-            return $response;
+            return $response ;
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -1281,7 +1282,9 @@ class VmtAttendanceController extends Controller
                 }
             }
 
-            return $response;
+            return $response ;
+
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
@@ -1586,7 +1589,8 @@ class VmtAttendanceController extends Controller
 
     public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        return  $serviceVmtAttendanceService->getAttendanceDashboardData();
+
+        return  $serviceVmtAttendanceService->getAttendanceDashboardData($department_id=null);
     }
     public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {

@@ -42,6 +42,8 @@ import LeaveBalance from "./leave_balance/leave_balance.vue";
 import Calender from "./calender/calender.vue";
 import HolidayWidget from "./holiday_widget/holiday_widget.vue";
 import events from "../events/events.vue";
+import * as ExcelJS from 'exceljs'
+
 import { useMainDashboardStore } from "../stores/dashboard_service";
 
 
@@ -70,4 +72,5 @@ const useDashboard = useMainDashboardStore()
 ::-webkit-scrollbar-thumb:hover {
     background: #a1a1a1;
 }
+
 </style>

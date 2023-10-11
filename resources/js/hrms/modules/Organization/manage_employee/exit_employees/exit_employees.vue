@@ -20,7 +20,7 @@
             <DataTable :value="manageEmployeesStore.exit_employees_data" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['emp_name', 'emp_code', 'status']">
+                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu"  :globalFilterFields="['emp_name', 'emp_code','emp_designation','reporting_manager_name', 'status']">
                 <template #empty> No customers found.</template>
                 <template #loading> Loading customers data. Please wait. </template>
                 <Column class="font-bold" field="emp_name" header="Employee Name"  >
@@ -63,6 +63,9 @@
                 <Column field="doj" header="DOJ">
                     <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
                 </Column>
+                <Column field="dol" header="Exit Date">
+                    <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
+                </Column>
                 <!-- <Column field="blood_group_name" header="Blood Group"></Column> -->
 
                 <!-- <Column field="profile_completeness" header="Profile Completeness">
@@ -89,8 +92,7 @@
                      <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                        <button  @click="openProfilePage(slotProps.data.enc_user_id)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</button>
-
+                        <RouterLink :to="`/profile-page/${slotProps.data.user_id}`" @click="openProfilePage(slotProps.data)" class="px-2 py-1  "><i class="h-6 py-1 mx-2 pi pi-eye text-[#000]"></i></RouterLink>
                     </template>
                 </Column>
             </DataTable>
@@ -106,10 +108,10 @@ import { useToast } from "primevue/usetoast";
 import dayjs from "dayjs";
 import { Service } from '../../../Service/Service';
 
-
 const service = Service()
 
 import { useManageEmployeesStore } from '../manage_service'
+import { profilePagesStore } from "../../../profile_pages/stores/ProfilePagesStore";
 
 const manageEmployeesStore = useManageEmployeesStore()
 
@@ -123,6 +125,8 @@ let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
+
+const profilePageStore = profilePagesStore();
 // const loading = ref(true);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -158,7 +162,9 @@ const filters = ref({
 
 
 function openProfilePage(uid) {
-    window.location.href = "/pages-profile-new?uid=" + uid;
+    console.log("user code ::",uid.emp_code);
+    enc_user_id.value = uid.data;
+    profilePageStore.user_code = uid.emp_code;
 }
 
 ////PrimeVue ConfirmDialog code -- Keeping here for reference

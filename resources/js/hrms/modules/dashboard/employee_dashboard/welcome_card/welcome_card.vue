@@ -257,6 +257,8 @@ const getTime = () => {
         });
 };
 
+const isDataReceived = ref(true)
+
 const checkInMessege = ref()
 const getEmployeeDetials = async () => {
     let url = "/fetchEmpLastAttendanceStatus";
@@ -275,9 +277,13 @@ const getEmployeeDetials = async () => {
         usedashboard.canShowTopbar = true
     });
 };
-onMounted(() => {
+onMounted(async () => {
     getSession();
-    getEmployeeDetials();
+    if(isDataReceived){
+        await getEmployeeDetials().finally(()=>{
+            isDataReceived.value = false
+        });
+    }
 });
 
 
