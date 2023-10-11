@@ -633,7 +633,13 @@ class VmtAttendanceService
             //Core values needed
             $query_user = User::where('user_code', $user_code)->first();
 
-            $compensatory_leavetype_id = VmtLeaves::where('leave_type', 'LIKE', '%Compensatory%')->first()->id;
+            $compensatory_leavetype_id = VmtLeaves::where('leave_type', 'LIKE', '%Compensatory%')->first();
+
+            if(!empty($compensatory_leavetype_id)){
+                
+                $compensatory_leavetype_id =$compensatory_leavetype_id->id;
+            }
+
             $leave_type_id = VmtLeaves::where('leave_type', $leave_type_name)->first()->id;
 
             //Check whether this user has manager
@@ -4513,7 +4519,7 @@ class VmtAttendanceService
            // ->whereIn('users.client_id', $client_id);
 
      if(!empty($department_id)){
-        
+
         $employees_data = $employees_data->where('off.department_id', $department_id);
      }
         $employees_data= $employees_data
