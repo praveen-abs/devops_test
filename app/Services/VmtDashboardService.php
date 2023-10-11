@@ -191,7 +191,7 @@ class VmtDashboardService
                 $client_id = VmtClientMaster::pluck('id')->toarray();
             } else {
 
-                   }else{
+                //    }else{
 
                     $client_id =[session('client_id')];
 
