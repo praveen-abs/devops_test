@@ -9,9 +9,9 @@
                         v-if="currentlySelectedClient ? true : false">
                         <img :src="currentlySelectedClient.client_logo" alt="" class="w-12 h-6">
                         <p class="px-2 text-sm font-semibold whitespace-nowrap"
-                            v-if="currentlySelectedClient.client_fullname.length <= 20"
+                            v-if="currentlySelectedClient ? currentlySelectedClient.client_fullname.length <= 20 : ''"
                             @mouseover="useDashboard.canShowClients = !useDashboard.canShowClients">{{
-                                currentlySelectedClient.client_fullname }}</p>
+                                currentlySelectedClient ? currentlySelectedClient.client_fullname : '' }}</p>
                         <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
                             v-tooltip="currentlySelectedClient.client_fullname" v-else
                             @mouseover="useDashboard.canShowClients = !useDashboard.canShowClients"
@@ -50,13 +50,13 @@
                                         <img :src="client.client_logo" alt="" class=" mh-100 mw-100">
                                         <!-- <p class="text-sm font-semibold whitespace-nowrap ">{{ client.client_fullname }} ({{
                                             client.abs_client_code }})</p> -->
-                                        <p class="px-2 text-sm font-semibold whitespace-nowrap"
-                                            v-if="client.client_fullname.length <= 40">{{
-                                                client.client_fullname }} {{ client.abs_client_code }}</p>
+                                        <p  class="px-2 text-sm font-semibold whitespace-nowrap"
+                                            v-if="client ?  client.client_fullname.length <= 40 : ''">{{
+                                                client ? client.client_fullname : '' }} {{ client ? client.abs_client_code : '' }}</p>
                                         <p class="px-2 text-sm font-semibold whitespace-nowrap"
                                             v-tooltip="client.client_fullname" v-else> {{
-                                                client.client_fullname ? client.client_fullname.substring(0,
-                                                    40) + '..' : '' }}</p>
+                                                client ?  client.client_fullname ? client.client_fullname.substring(0,
+                                                    40) + '..' : '' : '' }}</p>
                                     </div>
                                 </div>
                                 <div v-if="currentlySelectedClient ? currentlySelectedClient.id == client.id : ''">
@@ -386,17 +386,17 @@ const Modules = ref([
 const currentlySelectedClient = ref()
 
 
-const getClientList = () => {
-    axios.get('/clients-fetchAll').then(res => {
-        clientList.value = res.data
-    }).finally(() => {
-    })
+ function getClientList() {
+axios.get('/clients-fetchAll').then(res => {
+clientList.value = res.data;
+}).finally(() => {
+});
 }
 
-const getSessionClient = () => {
-    axios.get('session-sessionselectedclient').then(res => {
-        currentlySelectedClient.value = res.data
-    })
+function getSessionClient() {
+axios.get(` ${window.location.origin}/session-sessionselectedclient`).then(res => {
+currentlySelectedClient.value = res.data;
+});
 
 
 }
@@ -410,7 +410,9 @@ const submitSelectedClient = (client) => {
             getSessionClient()
             getOrgList()
         }).finally(() => {
-            useDashboard.canShowLoading = false
+            useDashboard.canShowLoading = false;
+            window.location.reload();
+
         })
     }, 500);
 }
@@ -439,7 +441,9 @@ const getOrgList = () => {
 const notificationSource = ref()
 
 const getNotifications = () => {
-    axios.get('/getNotifications').then(res => {
+    axios.post('/getNotifications',{
+        user_code:service.current_user_code
+    }).then(res => {
         notificationSource.value = res.data.data
     })
 }
