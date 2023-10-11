@@ -1105,7 +1105,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
     Route::get('/get-hrmaindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getHrMainDashboardData']);
     Route::get('/get-employees_count-detail', [App\Http\Controllers\VmtMainDashboardController::class, 'getEmployeesCountDetails']);
-    Route::get('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
+    Route::post('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
     Route::post('/readNotification', [App\Http\Controllers\VmtMainDashboardController::class, 'readNotification']);
     Route::post('/performAttendanceCheckIn', [App\Http\Controllers\VmtMainDashboardController::class, 'performAttendanceCheckIn']);
     Route::get('/fetchEmpLastAttendanceStatus', [App\Http\Controllers\VmtMainDashboardController::class, 'fetchEmpLastAttendanceStatus']);

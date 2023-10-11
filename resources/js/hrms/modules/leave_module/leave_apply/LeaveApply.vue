@@ -455,6 +455,9 @@
         </Dialog>
     </Dialog>
 
+
+
+
 </template>
 
 
@@ -788,4 +791,9 @@ label {
     position: relative;
     top: 3px;
 }*/
+
+.p-button {
+    height: 3rem !important;
+}
+/* p-component p-button-icon-only p-datepicker-trigger */
 </style>
