@@ -1,25 +1,25 @@
 <template>
     <LoadingSpinner v-if="useDashboard.canShowLoading" class="absolute z-50 bg-white" />
     <div class="w-full">
-        <p class="mb-2 text-2xl  text-black font-semibold">
+        <p class="mb-2 text-2xl font-semibold text-black">
             Attendance dashboard
         </p>
 
-        <div class="bg-white p-2 rounded-lg border flex justify-between">
+        <div class="flex justify-between p-2 bg-white border rounded-lg">
             <div class="mx-2">
                 <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
                     Daily Analytics - <span class="mb-2 text-sm font-semibold">
                         {{ dayjs(new Date()).format('MMMM DD,YYYY') }}</span>
                 </p>
             </div>
-            <div class="flex justify-end gap-3 mx-4 items-center ">
+            <div class="flex items-center justify-end gap-3 mx-4 ">
                 <div><Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id" v-model="department"  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
                 <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
                 <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
             </div>
         </div>
 
-        <div class=" my-3">
+        <div class="my-3 ">
             <AttendanceCount />
         </div>
 
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class=" my-3">
+        <div class="my-3 ">
             <Shifts />
         </div>
     </div>
