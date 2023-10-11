@@ -634,9 +634,7 @@ class VmtAttendanceService
             $query_user = User::where('user_code', $user_code)->first();
 
             $compensatory_leavetype_id = VmtLeaves::where('leave_type', 'LIKE', '%Compensatory%')->first();
-
             if(!empty($compensatory_leavetype_id)){
-                
                 $compensatory_leavetype_id =$compensatory_leavetype_id->id;
             }
 
@@ -651,13 +649,24 @@ class VmtAttendanceService
                     "message" => "Manager not found for the given user " . $query_user->name . " . Kindly contact the admin"
                 ]);
             } else {
+                $manager_emp_id = $manager_emp_code->user_id;
                 $manager_emp_code = $manager_emp_code->l1_manager_code;
+
             }
+            if($manager_emp_code == ""){
 
-            $query_manager = User::where('user_code', $manager_emp_code)->first();
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Manager code not defined. Kindly contact the admin"
+                ]);
 
-            $manager_name = $query_manager->name;
-            $manager_id = $query_manager->id;
+            }
+                $query_manager = User::where('user_code', $manager_emp_code)->first();
+                $manager_name = $query_manager->name;
+                $manager_id = $query_manager->id;
+
+
+
 
             $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->first()->officical_mail;
 
@@ -1254,8 +1263,10 @@ class VmtAttendanceService
                     //Need to process the checkin and checkout time based on the client.
                     //Since some client's biometric data has "in/out" direction and some will have only "in" direction
                     //dd(sessionGetSelectedClientCode());
-                    $user_client_code = VmtClientMaster::find($query_user->client_id)->client_code;
 
+                    $user_client_code = VmtClientMaster::find($query_user->client_id);
+                    $user_client_code =$user_client_code->client_code;
+                    
 
                     //If direction is only "in" or empty or "-"
                     if (
