@@ -477,7 +477,9 @@ class VmtAttendanceController extends Controller
 
     public function fetchAttendanceDailyReport_PerMonth_v2(Request $request, VmtAttendanceService $vmtAttendanceServices)
     {
-        return $vmtAttendanceServices->fetchAttendanceDailyReport_PerMonth_v2($request->user_code, $request->year, $request->month);
+        $response = $vmtAttendanceServices->fetchAttendanceDailyReport_PerMonth_v2($request->user_code, $request->year, $request->month);
+
+        return response()->json($response);
     }
 
     // public function fetchUserTimesheet(Request $request)

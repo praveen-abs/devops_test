@@ -1627,11 +1627,11 @@ class VmtAttendanceService
 
             // dd($attendanceResponseArray);
 
-            return response()->json([
+            return $response =[
                 'status' => 'success',
                 'message' => 'Attendance Monthly Report fetched successfully',
                 'data' => $attendanceResponseArray,
-            ], 200);
+            ];
         } catch (\Throwable $e) {
 
             return response()->json([
