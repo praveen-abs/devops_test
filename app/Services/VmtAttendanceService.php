@@ -1266,7 +1266,7 @@ class VmtAttendanceService
 
                     $user_client_code = VmtClientMaster::find($query_user->client_id);
                     $user_client_code =$user_client_code->client_code;
-                    
+
 
                     //If direction is only "in" or empty or "-"
                     if (
@@ -3915,12 +3915,15 @@ class VmtAttendanceService
     {
 
         $client_id =null;
-
+ if(!empty(session('client_id'))){
         if(session('client_id') == 1){
          $client_id =VmtClientMaster::pluck('id');
         }else{
             $client_id =[session('client_id')];
         }
+    }else{
+        $client_id =[auth()->user()->client_id];
+    }
 
         $validator = Validator::make(
             $data = [
@@ -3963,7 +3966,7 @@ class VmtAttendanceService
 
 
             $query_employees_leaves = VmtEmployeeLeaves::join('users', 'users.id', '=', 'vmt_employee_leaves.user_id')
-                ->join('vmt_leaves', 'vmt_leaves.id', '=', 'vmt_employee_leaves.leave_type_id')
+                ->leftjoin('vmt_leaves', 'vmt_leaves.id', '=', 'vmt_employee_leaves.leave_type_id')
                 ->whereYear('leaverequest_date', $filter_year)
                 ->whereMonth('leaverequest_date', $filter_month)
                 ->whereIn('status', $filter_leave_status)
@@ -4679,6 +4682,7 @@ class VmtAttendanceService
         $attendanceOverview['mip_count'] = $mip_count;
         $attendanceOverview['mip_emps'] = $mip_emps;
 
+        $total_active_employees = User::where('is_ssa',0)->where('active',1)->count();
 
         $shifts = $this->getWorkShiftDetails();
         $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
@@ -4688,12 +4692,9 @@ class VmtAttendanceService
             ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()])->count();
         $upcomings['On duty'] =  $on_duty_count;
         $upcomings['Leave'] = $leave_count;
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings,"CheckInMode" => $this->getAllEmployeesCheckInCheckOutMode(),"total_Employees"=>$total_active_employees];
 
 
-        $totalActiveEmployees = User::where('is_ssa',0)->where('active',1)->count();
-
-
-        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings, "CheckInMode" => $this->getAllEmployeesCheckInCheckOutMode(),"total_Employees" => $totalActiveEmployees];
         return $response;
 
     }catch(\Exception $e){
@@ -5132,6 +5133,7 @@ class VmtAttendanceService
             ]);
         }
     }
+
 
     public function checkEmployeeLcPermission($month, $year, $user_id)
     {

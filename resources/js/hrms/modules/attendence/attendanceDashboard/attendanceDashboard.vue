@@ -2,9 +2,11 @@
     <LoadingSpinner v-if="useDashboard.canShowLoading" class="absolute z-50 bg-white" />
     <div class="w-full">
         <p class="mb-2 text-2xl font-semibold text-black">
+        <p class="mb-2 text-2xl font-semibold text-black">
             Attendance dashboard
         </p>
 
+        <div class="flex justify-between items-center p-2 bg-white border rounded-lg">
         <div class="flex justify-between items-center p-2 bg-white border rounded-lg">
             <div class="mx-2">
                 <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
@@ -16,13 +18,19 @@
                 <div><Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id" v-model="department"  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
                 <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
                 <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
+            <div class="flex items-center justify-end gap-3 mx-4 ">
+                <div><Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id" v-model="department"  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
+                <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
+                <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
             </div>
         </div>
 
         <div class="my-3 ">
+        <div class="my-3 ">
             <AttendanceCount />
         </div>
 
+        <div class="grid grid-cols-3 gap-2">
         <div class="grid grid-cols-3 gap-2">
             <div>
                 <ExceptionAnalytics />
@@ -62,6 +70,8 @@
                 </button>
             </div>
         </template>
+        <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
+            <DataTable scrollable scrollHeight="450px"
         <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
             <DataTable scrollable scrollHeight="450px"
                 :value="useDashboard.currentlySelectedShiftDetails ? useDashboard.currentlySelectedShiftDetails : []">
@@ -140,6 +150,13 @@ onMounted(async () => {
 });
 
 const department = ref();
+onMounted(async () => {
+
+    await useDashboard.getAttendanceDashboardMainSource()
+    useDashboard.GetDepartment();
+});
+
+const department = ref();
 
 const downloadExcelFile = async () => {
     const workbook = new ExcelJS.Workbook();
@@ -176,6 +193,16 @@ const downloadExcelFile = async () => {
         });
         worksheet.addRow(row);
 
+    });
+
+    worksheet.addRow(['']);
+
+    // Merge three cells for the author message
+    const authorRow = worksheet.addRow(['']); // Add an empty row
+    authorRow.getCell(1).value = authorMessage;
+    worksheet.mergeCells(authorRow.number, 1, authorRow.number, 3); // Merge three cells
+    authorRow.getCell(1).alignment = { wrapText: true };
+    authorRow.getCell(1).font = { italic: true };
     });
 
     worksheet.addRow(['']);

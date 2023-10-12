@@ -1022,7 +1022,7 @@ class VmtAttendanceController extends Controller
 
         $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')->where('users.active', '1')
-            ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
+            ->get(['users.id','users.user_code', 'users.name', 'vmt_employee_office_details.designation']);
 
 
         //dd($reportees_details->toArray());
