@@ -17,6 +17,16 @@ class VmtPMSMail_Assignee extends Mailable
      * @return void
      */
     // protected $linkUri;
+    protected $approvalStatus = $approvalStatus;
+    protected $flowType = $flowType;// PMS flow 1 / 2 / 3
+    protected $user_emp_name = $user_emp_name;
+    protected $appraisal_period = $appraisal_period;
+    protected $user_manager_name = $user_manager_name;
+    protected $comments_employee = $comments_employee;
+    protected $login_Link = $login_Link;
+    protected $emp_avatar = $emp_avatar;
+    protected $emp_neutralgender = $emp_neutralgender;
+
     public function __construct( $approvalStatus,$flowType, $user_emp_name,$appraisal_period,$user_manager_name,$comments_employee,$login_Link,$emp_avatar,$emp_neutralgender)
 
     {

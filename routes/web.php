@@ -739,7 +739,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     Route::post('/getLocalConveyanceCost', [App\Http\Controllers\VmtReimbursementController::class, 'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
     Route::post('/testCreateLocalCovergance', [App\Http\Controllers\VmtReimbursementController::class, 'testCreateLocalCovergance'])->name('testCreateLocalCovergance');
-    Route::post('/getReimbursementClaimTypes', [App\Http\Controllers\VmtReimbursementController::class, 'getReimbursementClaimTypes'])->name('getReimbursementClaimTypes');
+    Route::get('/reimbursements/getReimbursementClaimTypes', [App\Http\Controllers\VmtReimbursementController::class, 'getReimbursementClaimTypes'])->name('getReimbursementClaimTypes');
 
     //Employee Wise Reimbursement Data
     Route::post('/fetch_employee_reimbursement_data', [App\Http\Controllers\VmtReimbursementController::class, 'fetchEmployeeReimbursement'])->name('fetchReimbursementsData');
@@ -997,7 +997,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //Profile Pages v3
     Route::get('/profile-page', [App\Http\Controllers\VmtProfilePagesController::class, 'showProfilePage_v3'])->name('profile-page-v3');
-    Route::get('/profile-pages-getEmpDetails/{user_id}', [App\Http\Controllers\VmtProfilePagesController::class, 'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
+    Route::get('/profile-pages-getEmpDetails', [App\Http\Controllers\VmtProfilePagesController::class, 'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
 
 
     //Investments
