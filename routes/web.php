@@ -149,7 +149,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
 
     //Attendance
-    // Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
+    Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
     Route::get('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData'])->name('getAttendanceDashboardData');
     Route::get('/attendance-leave', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePage'])->name('attendance-leave');
     // Route::get('/upcoming-employee-leaves', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeUpcomingAppliedRequested'])->name('getEmployeeUpcomingAppliedRequested');
@@ -927,7 +927,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
 
-    //Manual Attendance Fetching 
+    //Manual Attendance Fetching
     Route::get('/sync-att-intr-table',[App\Http\Controllers\VmtAttendanceControllerV2::class,'syncattintrtable'])->name('downloadDetailedAttendanceReport');
 
     Route::post('/updateEmployeesPermissionStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateEmployeesPermissionStatus'])->name('updateEmployeesPermissionStatus');
