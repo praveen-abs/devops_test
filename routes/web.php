@@ -873,8 +873,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/report/download-late-coming-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadLCReport']);
     Route::post('/report/download-over-time-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadOvertimeReport']);
     Route::post('/report/download-half-day-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadHalfDayReport']);
-    Route::get('/report/download-consolidate-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadConsolidateReport']);
-
+    Route::post('/report/download-consolidate-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'downloadConsolidateReport']);
+    Route::post('/fetch-consolidate-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchConsolidateAttendancedata']);
     Route::get('/shiftwork', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'shiftTimeForEmployee']);
 
 
