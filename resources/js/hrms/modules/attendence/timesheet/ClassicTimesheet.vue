@@ -1,5 +1,5 @@
 <template>
-    <Sidebar v-model:visible="visibleRight" position="right" class="w-full">
+    <Sidebar v-model:visible="visibleRight" position="right" class="!w-[2px]">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
@@ -950,9 +950,5 @@ onUpdated(() => {
     text-align: center;
 }
 
-.p-sidebar-right .p-sidebar
-{
-    width: 28rem !important;
-    height: 100%;
-}
+
 </style>

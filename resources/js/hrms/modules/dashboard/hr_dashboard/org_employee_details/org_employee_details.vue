@@ -180,7 +180,7 @@ const toggleClass = ref('downloaded');
 <style>
 .p-sidebar-right .p-sidebar
 {
-    width: 70% !important;
+    width: 28rem ;
     height: 100%;
 }
 </style>

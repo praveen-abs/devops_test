@@ -312,7 +312,7 @@ const emp = ref([
 
 .p-sidebar-right .p-sidebar
 {
-    width: 28rem;
+    width: 28rem !important;
     height: 100%;
 }
 </style>

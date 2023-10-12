@@ -5,7 +5,7 @@
             Attendance dashboard
         </p>
 
-        <div class="flex justify-between p-2 bg-white border rounded-lg">
+        <div class="flex justify-between items-center p-2 bg-white border rounded-lg">
             <div class="mx-2">
                 <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
                     Daily Analytics - <span class="mb-2 text-sm font-semibold">
@@ -278,10 +278,10 @@ const toggleClass = ref('downloaded');
 </script>
 
 
-<style>
+<style scoped>
 .p-sidebar-right .p-sidebar
 {
-    width: 70% !important;
+    width: 28rem;
     height: 100%;
 }
 </style>

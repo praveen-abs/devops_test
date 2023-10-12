@@ -273,7 +273,7 @@ async function submitEmployeeDocsUpload() {
 <style>
 .p-sidebar-right .p-sidebar
 {
-    width: 50% !important;
+    width: 50%;
     height: 100%;
 }
 </style>

@@ -285,9 +285,9 @@
 
             </div>
 
-           
+
         </div>
-        
+
 
 </Sidebar>
 </template>
@@ -309,7 +309,7 @@ const viewpayslip = ref(true);
 const op = ref();
 
 onMounted( () => {
-    console.log("EmployeePayslips,vue loaded"); 
+    console.log("EmployeePayslips,vue loaded");
     employeePayslipStore.getEmployeeAllPayslipList();
 
 });
@@ -342,7 +342,7 @@ function toggle(event){
 }
 
 .p-sidebar-right .p-sidebar {
-    width:50% !important;
+    width:50% ;
     height: 100%;
 }
 

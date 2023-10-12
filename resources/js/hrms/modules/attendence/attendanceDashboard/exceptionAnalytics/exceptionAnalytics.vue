@@ -32,9 +32,7 @@ const useDashboard = useAttendanceDashboardMainStore()
 
 
 
-onMounted(async () => {
-    await useDashboard.attendanceOverview
-    useDashboard.overallEmployeeCountForExceptionAnalyticsForGraph
+onMounted(() => {
     // chartData.value = setChartData();
     chartOptions.value = setChartOptions();
     // chartData.value.datasets[0].data = [20, 20, 20]
@@ -42,8 +40,7 @@ onMounted(async () => {
         console.log(useDashboard.overallEmployeeCountForExceptionAnalyticsForGraph);
         chartData.value.datasets[0].data = useDashboard.overallEmployeeCountForExceptionAnalyticsForGraph
         // updateChartLabels()
-
-    }, 3000);
+    }, 10000);
 
 });
 
