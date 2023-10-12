@@ -16,6 +16,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const isTeamOrg = ref('single')
     const switchTimesheet = ref('Classic');
     const CurrentlySelectedUser = ref();
+    const currentlySelectedTimesheet = ref(1);
 
     const mopDetails = ref({})
     const mipDetails = ref({})
@@ -123,6 +124,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const getSelectedEmployeeOrgDetails = async (user_code, isteam,currentlySelectedUser) => {
         isTeamOrg.value = isteam;
+        console.log("==========="+currentlySelectedUser);
         CurrentlySelectedUser.value = currentlySelectedUser;
         console.log("employee list select function  ::" ,CurrentlySelectedUser.value);
         canShowLoading.value = true;
@@ -189,7 +191,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     /* Creating constructor for Attendance Regularization request */
     const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
         let currentlySelectedUser= CurrentlySelectedUser.value
-
+        console.log("00000000000000000".currentlySelectedUser);
+  if(currentlySelectedTimesheet.value == 2 || currentlySelectedTimesheet.value == 3 ){
         if(service.current_user_role === 2){
         let AttendanceRegularizeFormat = {
             admin_user_code: service.current_user_code,
@@ -206,7 +209,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         AttendanceEarylOrMopRegularization.value = null
         return AttendanceRegularizeFormat
     }
-        else{
+    }else{
             let AttendanceRegularizeFormat = {
                 user_code: service.current_user_code,
                 regularization_type: selectedAttendanceRegularizationType,
@@ -242,11 +245,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
         let url ;
 
-        if(CurrentlySelectedUser && service.current_user_role == 2){
-            url = '/checkAttendanceEmployeeAdminStatus'
-        }else{
-            url = '/attendance-req-regularization'
-        }
+        if(currentlySelectedTimesheet.value == 2 || currentlySelectedTimesheet.value == 3 ){
+            if( service.current_user_role == 2){
+                url = '/checkAttendanceEmployeeAdminStatus'
+            }
+            }else{
+                url = '/attendance-req-regularization'
+            }
 
         axios.post(url, AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
             .then((res) => {
@@ -280,11 +285,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const applyEgRegularization = () => {
 
         let url;
-        if(CurrentlySelectedUser && service.current_user_role == 2){
-            url = '/checkAttendanceEmployeeAdminStatus'
-        }else{
-            url = '/attendance-req-regularization'
-        }
+        if(currentlySelectedTimesheet.value == 2 || currentlySelectedTimesheet.value == 3 ){
+            if( service.current_user_role == 2){
+                url = '/checkAttendanceEmployeeAdminStatus'
+            }
+            }else{
+                url = '/attendance-req-regularization'
+            }
         canShowLoading.value = true
         axios.post(url, AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
             .then((res) => {
@@ -322,11 +329,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const applyMipRegularization = () => {
         canShowLoading.value = true;
         let url;
-        if(CurrentlySelectedUser && service.current_user_role == 2){
-            url = '/checkAttendanceEmployeeAdminStatus'
-        }else{
-            url = '/attendance-req-regularization'
-        }
+        if(currentlySelectedTimesheet.value == 2 || currentlySelectedTimesheet.value == 3 ){
+            if( service.current_user_role == 2){
+                url = '/checkAttendanceEmployeeAdminStatus'
+            }
+            }else{
+                url = '/attendance-req-regularization'
+            }
         axios.post(url, AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
             .then((res) => {
                 getSelectedEmployeeAttendance()
@@ -358,11 +367,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const applyMopRegularization = () => {
         let url;
-        if(CurrentlySelectedUser && service.current_user_role == 2){
-            url = '/checkAttendanceEmployeeAdminStatus'
-        }else{
-            url = '/attendance-req-regularization'
-        }
+        if(currentlySelectedTimesheet.value == 2 || currentlySelectedTimesheet.value == 3 ){
+            if( service.current_user_role == 2){
+                url = '/checkAttendanceEmployeeAdminStatus'
+            }
+            }else{
+                url = '/attendance-req-regularization'
+            }
         canShowLoading.value = true;
         axios.post(url, AttendanceRegularizationApplyFormat(mopDetails.value, 'MOP'))
             .then((res) => {
@@ -397,12 +408,15 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         console.log(`currentlySelectedUser :: `,currentlySelectedUser);
 
         let url;
-        if(CurrentlySelectedUser && service.current_user_role == 2){
-            url = '/checkAbsentEmployeeAdminStatus'
-        }else{
-            url = '/attendance-req-regularization'
-        }
+        if(currentlySelectedTimesheet.value == 2 || currentlySelectedTimesheet.value == 3 ){
 
+        if(service.current_user_role == 2){
+            url = '/checkAbsentEmployeeAdminStatus'
+        }
+        }else{
+            url = '/attendance-req-absent-regularization'
+        }
+ if(currentlySelectedTimesheet.value == 2 || currentlySelectedTimesheet.value == 3 ){
         if(CurrentlySelectedUser && service.current_user_role == 2){
 
 
@@ -436,7 +450,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             }).finally(() => {
                 canShowLoading.value = false
             })
-        }else{
+        }
+    }else{
             axios.post(url, {
                 user_code: service.current_user_code,
                 attendance_date: absentRegularizationDetails.value.date,
@@ -549,6 +564,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         currentlySelectedTeamMemberAttendance,
         currentlySelectedOrgMemberUserId,
         currentlySelectedOrgMemberAttendance,
+        currentlySelectedTimesheet,
         canShowLoading, isManager, isTeamOrg,
 
 
@@ -570,6 +586,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         dialog_Selfie, onClickSViewSelfie, selfieDetails, switchTimesheet,
         // Absent regularization
         absentRegularizationDetails, applyAbsentRegularization,
+
+
 
 
 
