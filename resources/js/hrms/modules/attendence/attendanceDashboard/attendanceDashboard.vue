@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <Sidebar v-model:visible="useDashboard.canShowShiftDetails" position="right" class="w-full">
+    <Sidebar v-model:visible="useDashboard.canShowShiftDetails" position="right"  :style="{ width: '70vw !important' }">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">{{ useDashboard.currentlySelectedShiftDetails ?
                 useDashboard.currentlySelectedShiftDetails[0].shift_name : null }} Reports</p>
@@ -76,7 +76,7 @@
             <img class="h-[450px]" src="../../../assests/images/no-data.svg" alt="" srcset="">
         </div>
     </Sidebar>
-    <Sidebar v-model:visible="useDashboard.canShowAttendanceOverview" position="right" class="w-full">
+    <Sidebar v-model:visible="useDashboard.canShowAttendanceOverview" position="right" :style="{ width: '70vw !important' }">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">
                 {{ useDashboard.selectedAttendanceOverviewReport }} Reports</p>
@@ -278,13 +278,6 @@ const toggleClass = ref('downloaded');
 </script>
 
 
-<style scoped>
-.p-sidebar-right .p-sidebar
-{
-    width: 28rem;
-    height: 100%;
-}
-</style>
 
 
 <style lang="sass" scoped>

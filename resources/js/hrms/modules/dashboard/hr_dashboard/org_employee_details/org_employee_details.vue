@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <Sidebar v-model:visible="useDashboard.canShowSidebar" position="right" class="w-full">
+    <Sidebar v-model:visible="useDashboard.canShowSidebar" position="right"  :style="{ width: '70vw !important' }">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 "> Reports</p>
             <div class="relative right-0 mx-4 font-semibold fs-5 ">
@@ -177,13 +177,7 @@ const toggleClass = ref('downloaded');
 
 </script>
 
-<style>
-.p-sidebar-right .p-sidebar
-{
-    width: 28rem ;
-    height: 100%;
-}
-</style>
+
 
 <style lang="sass" scoped>
 #btn-download

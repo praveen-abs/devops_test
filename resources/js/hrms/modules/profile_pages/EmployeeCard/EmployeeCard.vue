@@ -150,20 +150,23 @@
         </div>
     </div>
 
-    <Dialog header="Status" v-model:visible="canShowCompletionScreen" modal
+    <Dialog header="Status" v-model:visible="canShowCompletionScreen"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }">
         <div class="confirmation-content">
             <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
             <span>{{ status_text_CompletionDialog }}</span>
         </div>
     </Dialog>
-    <Dialog v-model:visible="dailogDepartment" modal header="Edit Department" :style="{ width: '30vw' }">
+    <Dialog v-model:visible="dailogDepartment"  header="Edit Department" :style="{ width: '30vw' }">
         <!-- {{ employee_card.department  }} -->
         <Dropdown :options="departmentOption" optionLabel="name" v-model="employee_card.department"
             placeholder="Select Department" class="w-full form-selects" optionValue="id" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" @click="editDepartment">
+                <button type="button" class="btn btn-outline-orange" @click="dailogDepartment= false">
+                    cancel
+                </button>
+                <button type="button" class="btn btn-orange" @click="editDepartment">
                     Save
                 </button>
             </div>
@@ -174,7 +177,10 @@
             optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" @click="editReportingManager">
+                <button type="button" class="btn btn-outline-orange" @click="dailogReporting= false">
+                    cancel
+                </button>
+                <button type="button" class="btn btn-orange" @click="editReportingManager">
                     Save
                 </button>
             </div>
@@ -182,7 +188,7 @@
     </Dialog>
 
 
-    <Sidebar position="right" v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw' }"
+    <Sidebar position="right" v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw !important' }"
         style=" @media (min-width:1024px){background-image:particular_ad_small.png;} ">
 
         <template #header>
@@ -333,17 +339,6 @@
 
 
 
-    <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" modal>
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
-
     <Dialog v-model:visible="dialog_emp_name_visible" modal header=" " :style="{ width: '50vw' }">
         <template #header>
             <div>
@@ -421,7 +416,10 @@
                 </div>
                 <div class="col-12">
                     <div class="text-right">
-                        <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                        <button type="button" class="btn btn-outline-orange" @click="dialog_emp_name_visible= false">
+                            cancel
+                        </button>
+                        <button id="btn btn-orange mx-2" class="btn btn-orange submit-btn"
                             @click="submitForm">Submit</button>
                     </div>
                 </div>
@@ -464,11 +462,11 @@
                         <div class="w-80  font-semibold leading-10  text-xl">Physically Challenged
                             <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Physically Challenged" />
                         </div>
-                
+
                     </div>
-                    
-                    
-    
+
+
+
 
                 </div>
             </div>

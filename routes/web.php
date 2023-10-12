@@ -825,7 +825,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     ///for current year
 
     Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
-    Route::get('/reports', [App\Http\Controllers\VmtReportsController::class, 'showReportsPage'])->name('showReportsPage');
+    // Route::get('/reports', [App\Http\Controllers\VmtReportsController::class, 'showReportsPage'])->name('showReportsPage');
 
     Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
@@ -997,7 +997,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
 
     //Profile Pages v3
-    Route::get('/profile-page', [App\Http\Controllers\VmtProfilePagesController::class, 'showProfilePage_v3'])->name('profile-page-v3');
+    // Route::get('/profile-page', [App\Http\Controllers\VmtProfilePagesController::class, 'showProfilePage_v3'])->name('profile-page-v3');
     Route::get('/profile-pages-getEmpDetails/{user_id}', [App\Http\Controllers\VmtProfilePagesController::class, 'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
 
 
