@@ -89,7 +89,7 @@ const activetab = ref(1);
 
 
 onMounted(async () => {
-    await useStore.getSelfAppraisalDashboardDetails(1)
+    await useStore.getSelfAppraisalDashboardDetails(194)
     // await useStore.getPmsConfiguration()
     // await useHelper.getKpiAsDropdown()
     // await useHelper.getManagerList()
