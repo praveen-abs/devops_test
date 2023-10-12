@@ -4484,11 +4484,11 @@ class VmtAttendanceService
             ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
             ->where('users.is_ssa', '0')->where('users.active', '1')
             ->whereIn('users.client_id', $client_id)
-            ->get(['users.id as id', 'users.user_code as user_code', 'users.name as name', 'dep.name as department_name', 'off.process as process', 'det.location as location']);
+            ->get(['users.id as id', 'users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
 
         foreach ($employees_data as $key => $single_user_data) {
 
-            $user_code = $single_user_data->user_code;
+            $user_code = $single_user_data->Employee_Code;
 
             $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
 

@@ -96,7 +96,7 @@
                     </div>
                 </button>
             </div>
-            {{ useDashboard.currentlySelectedShiftDetails }}
+            <!-- {{ useDashboard.currentlySelectedShiftDetails }} -->
         </template>
         <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
             <DataTable scrollable scrollHeight="450px"
