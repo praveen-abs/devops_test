@@ -70,7 +70,7 @@
                 </transition>
             </div>
             <div class="relative col-span-4">
-                <input type="text" name="" id="" class="border p-1.5 bg-gray-100  border-gray-300 rounded-lg w-full"
+                <input v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3" type="text" name="" id="" class="border p-1.5 bg-gray-100  border-gray-300 rounded-lg w-full"
                     v-model="query" placeholder="Search....">
 
                 <transition enter-active-class="transition duration-200 ease-out transform"
@@ -164,12 +164,12 @@
                         <img  v-if="service.current_user_code != 'SA_ABS' && _profilePagesStore.profile_img" class=" forRounded w-[30px] h-[30px] rounded-full"
                         :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output"
                      />
-                  
+
                     <!-- <h1
                         class="rounded-full bg-blue-50  text-black font-semibold p-1.5 text-sm">
                         {{ _profilePagesStore.employeeDetails.user_short_name }}
                     </h1> -->
-          
+
 
                         <p  v-else class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">{{
                             service.current_user_name ? service.current_user_name.substring(0, 2) : '' }}</p>
