@@ -18,6 +18,9 @@ class VmtStaffAttendanceController extends Controller
     public function syncStaffAttendanceFromDeviceDatabase(){
 
         try{
+            //Check the client names
+
+
             $recentDeviceData  = VmtStaffAttendanceDevice::orderBy('date', 'DESC')->first();
             $attendanceData = null;
 

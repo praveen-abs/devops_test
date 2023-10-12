@@ -1292,6 +1292,8 @@ class VmtAttendanceService
                     $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                     $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
 
+                   // dd($deviceCheckInTime);
+
                     if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
                         $deviceData[] = array(
                             'date' => $dateString,

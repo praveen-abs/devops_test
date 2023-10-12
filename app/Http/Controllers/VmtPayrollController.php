@@ -73,7 +73,7 @@ class VmtPayrollController extends Controller
     }
 
     public function getPayrollOutcomes(Request $request, VmtPayrollService $serviceVmtPayrollService){
-        return $serviceVmtPayrollService->getPayrollOutcomes($request->payroll_month);
+        return $serviceVmtPayrollService->getPayrollOutcomes($request->client_code, $request->payroll_month);
     }
 
 }
