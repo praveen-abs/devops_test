@@ -1,47 +1,58 @@
 <template>
     <!-- {{useDashboard.attendanceDashboardWorkShiftSource ?  useDashboard.attendanceDashboardWorkShiftSource  : []}} -->
-    <div class="bg-white p-2 rounded-lg border" v-if="useDashboard.attendanceDashboardWorkShiftSource">
-        <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Shift</span>
-        <div class="grid grid-cols-6 gap-2 my-2">
-            <div class="bg-gray-100 w-[180px] h-[200px] rounded-lg cursor-pointer"
-                @click="useDashboard.canShowShiftDetails = true, useDashboard.currentlySelectedShiftDetails = { ...shift.work_shift_employee_data },useDashboard.downloadShiftDetails.push({ ...shift.work_shift_employee_data })"
-                v-for="(shift, index) in useDashboard.attendanceDashboardWorkShiftSource " :key="index">
-                <div class="w-full bg-gray-200 p-2 rounded-lg" >
-                    <span class="font-semibold text-[12px] text-[#000] font-['Poppins]">
-                        {{ shift.work_shift_employee_data[0].shift_name }}
-                    </span>
-                </div>
-                <div class="p-2">
-                    <div>
-                        <p class="font-semibold text-sm text-[#000] font-['Poppins]">Shift Timing</p>
-                        <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">
-                            {{ convertToAMPM(shift.work_shift_employee_data[0].shift_start_time) }}
-                            -
-                            {{ convertToAMPM(shift.work_shift_employee_data[0].shift_end_time) }}
-                        </p>
-                    </div>
-                    <div class="my-3">
-                        <p class="font-semibold text-sm text-[#000] font-['Poppins]">Total Employees</p>
-                        <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">{{
-                            shift.work_shift_assigned_employees ? shift.work_shift_assigned_employees : '-' }}
-                        </p>
-                    </div>
-                    <div class="flex justify-between ">
-                        <div>
-                            <p class="font-semibold text-sm text-[#000] font-['Poppins]">Present</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
-                        </div>
-                        <div class="mx-3">
-                            <p class="font-semibold text-sm text-[#000] font-['Poppins]">Absent</p>
-                            <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">-</p>
-                        </div>
-                    </div>
+    <div class="bg-white p-2 rounded-[6px] border" v-if="useDashboard.attendanceDashboardWorkShiftSource">
+        <span class="font-semibold text-[#000] font-['Poppins] text-[16px]">Shift</span>
+        <!-- grid grid-cols-6 -->
 
+        <div class="grid grid-cols-6 gap-2">
+
+            <div :class="cardBodyBgColor(index)"
+            class="h-[200px] mx-[10px] rounded-[6px] cursor-pointer transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100"
+            @click="useDashboard.canShowShiftDetails = true, useDashboard.currentlySelectedShiftDetails = { ...shift.work_shift_employee_data }, useDashboard.downloadShiftDetails.push({ ...shift.work_shift_employee_data })"
+            v-for="(shift, index) in useDashboard.attendanceDashboardWorkShiftSource " :key="index">
+            <div class="w-full rounded-t-[8px] pl-[12px] py-2 " :class="cardHeaderBgColor(index)">
+                <span class="font-semibold  text-[16px] font-['Poppins] " :class="text(index)">
+                    {{ shift.work_shift_employee_data[0].shift_name }}
+                </span>
+            </div>
+            <div class="p-3">
+                <div>
+                    <p class="font-semibold text-sm text-[#000] font-['Poppins]">Shift Timing</p>
+                    <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">
+                        {{ convertToAMPM(shift.work_shift_employee_data[0].shift_start_time) }}
+                        -
+                        {{ convertToAMPM(shift.work_shift_employee_data[0].shift_end_time) }}
+                    </p>
+                </div>
+                <div class="my-3">
+                    <p class="font-semibold text-sm text-[#000] font-['Poppins]">Total Employees</p>
+                    <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">{{
+                        shift.work_shift_assigned_employees ? shift.work_shift_assigned_employees : '-' }}
+                    </p>
+                </div>
+                <div class="flex justify-between ">
+                    <div>
+                        <p class="font-semibold text-sm text-[#000] font-['Poppins]">Present</p>
+                        <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">
+                            {{ shift.present_count ? shift.present_count : 0 }}
+                        </p>
+                    </div>
+                    <div class="mx-3">
+                        <p class="font-semibold text-sm text-[#000] font-['Poppins]">Absent</p>
+                        <p class="font-medium text-[12px] text-gray-600 font-['Poppins]">
+                            {{ shift.absent_count ? shift.absent_count : 0 }}
+                        </p>
+                    </div>
                 </div>
 
             </div>
+
         </div>
-    </div>
+        </div>
+
+
+            </div>
+
 </template>
 
 
@@ -67,5 +78,54 @@ function convertToAMPM(railwayTime) {
 
     return timeInAMPM;
 }
+
+const cardHeader = [
+    'bg-orange-100',
+    'bg-red-100',
+    'bg-orange-100',
+    'bg-gray-100',
+    'bg-emerald-100',
+    'bg-orange-100',
+    'bg-red-100',
+    'bg-orange-100',
+    'bg-gray-100',
+    'bg-black-100',
+];
+
+const cardHeaderBgColor = (index) => {
+    return cardHeader[index];
+};
+
+const cardBody = [
+    'bg-orange-50',
+    'bg-red-50',
+    'bg-orange-50',
+    'bg-gray-50',
+    'bg-emerald-50',
+    'bg-orange-50',
+    'bg-red-50',
+    'bg-orange-50',
+    'bg-gray-50',
+    'bg-black-50',
+];
+
+const cardBodyBgColor = (index) => {
+    // console.log(index);
+    return cardBody[index];
+};
+
+const cardText = [
+    'text-[#000]',
+    'text-[#000]',
+    'text-[#000]',
+    'text-[#000]',
+    'text-[#000]',
+    'text-[#000]',
+];
+
+const text = (index) => {
+    // console.log(index);
+    return cardText[index];
+};
 
 </script>

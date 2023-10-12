@@ -1,11 +1,15 @@
 <template>
-    <div class="p-2 overflow-hidden bg-white rounded-lg border" style="height: 200px;">
-        <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Upcomings</span>
-        <div class="h-full overflow-x-scroll bg-white rounded-lg">
+    <div class=" bg-[#E4ECFF] rounded-[20px] p-3" style="height: 200px;">
+        <div class=" mx-4 flex items-center justify-between">
+            <span class="font-semibold text-[14px] text-[#000] font-['Poppins] ">Upcomings</span>
+        <i class=" pi pi-calendar text-[#000] text-[16px]"></i>
+        </div>
+
+        <div class="h-full overflow-x-scroll bg-[#E4ECFF] rounded-lg">
             <div class="px-auto" v-if="useDashboard.attendanceDashboardUpcoming"
                 v-for="request in  useDashboard.attendanceDashboardUpcoming ">
                 <div
-                    class="p-2  my-2 transition duration-700 ease-in-out bg-[#E4ECFF] rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100 ">
+                    class="p-2  my-2 transition duration-700 ease-in-out bg-white rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-100 ">
                     <div class="flex px-2 justify-between items-center">
                         <div>
                             <span class="text-[14px] font-semibold">{{ request.title }}</span>
