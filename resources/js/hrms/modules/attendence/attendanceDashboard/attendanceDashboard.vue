@@ -2,11 +2,8 @@
     <LoadingSpinner v-if="useDashboard.canShowLoading" class="absolute z-50 bg-white" />
     <div class="w-full">
         <p class="mb-2 text-2xl font-semibold text-black">
-        <p class="mb-2 text-2xl font-semibold text-black">
             Attendance dashboard
         </p>
-
-        <div class="flex justify-between items-center p-2 bg-white border rounded-lg">
         <div class="flex justify-between items-center p-2 bg-white border rounded-lg">
             <div class="mx-2">
                 <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
@@ -15,22 +12,22 @@
                 </p>
             </div>
             <div class="flex items-center justify-end gap-3 mx-4 ">
-                <div><Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id" v-model="department"  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
-                <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
-                <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
-            <div class="flex items-center justify-end gap-3 mx-4 ">
-                <div><Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id" v-model="department"  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
-                <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
+                <div>
+                    <Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id"
+                        v-model="department" optionLabel="name" :options="useDashboard.departments"
+                        placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" />
+                </div>
+                <div>
+                    <Dropdown optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" />
+                </div>
                 <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
             </div>
         </div>
 
         <div class="my-3 ">
-        <div class="my-3 ">
             <AttendanceCount />
         </div>
 
-        <div class="grid grid-cols-3 gap-2">
         <div class="grid grid-cols-3 gap-2">
             <div>
                 <ExceptionAnalytics />
@@ -48,7 +45,7 @@
         </div>
     </div>
 
-    <Sidebar v-model:visible="useDashboard.canShowShiftDetails" position="right"  :style="{ width: '70vw !important' }">
+    <Sidebar v-model:visible="useDashboard.canShowShiftDetails" position="right" :style="{ width: '70vw !important' }">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">{{ useDashboard.currentlySelectedShiftDetails ?
                 useDashboard.currentlySelectedShiftDetails[0].shift_name : null }} Reports</p>
@@ -70,9 +67,7 @@
                 </button>
             </div>
         </template>
-        <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
-            <DataTable scrollable scrollHeight="450px"
-        <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
+        <div class="" v-if="Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
             <DataTable scrollable scrollHeight="450px"
                 :value="useDashboard.currentlySelectedShiftDetails ? useDashboard.currentlySelectedShiftDetails : []">
                 <Column field="user_code" header="User code"></Column>
@@ -86,7 +81,8 @@
             <img class="h-[450px]" src="../../../assests/images/no-data.svg" alt="" srcset="">
         </div>
     </Sidebar>
-    <Sidebar v-model:visible="useDashboard.canShowAttendanceOverview" position="right" :style="{ width: '70vw !important' }">
+    <Sidebar v-model:visible="useDashboard.canShowAttendanceOverview" position="right"
+        :style="{ width: '70vw !important' }">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">
                 {{ useDashboard.selectedAttendanceOverviewReport }} Reports</p>
@@ -107,7 +103,7 @@
                 </button>
             </div>
         </template>
-        <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
+        <div class="" v-if="Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
             <DataTable scrollable scrollHeight="450px"
                 :value="useDashboard.currentlySelectedShiftDetails ? useDashboard.currentlySelectedShiftDetails : []">
                 <Column field="Employee_Code" header="Employee_Code" style="white-space: nowrap;"></Column>
@@ -156,7 +152,6 @@ onMounted(async () => {
     useDashboard.GetDepartment();
 });
 
-const department = ref();
 
 const downloadExcelFile = async () => {
     const workbook = new ExcelJS.Workbook();
@@ -203,16 +198,7 @@ const downloadExcelFile = async () => {
     worksheet.mergeCells(authorRow.number, 1, authorRow.number, 3); // Merge three cells
     authorRow.getCell(1).alignment = { wrapText: true };
     authorRow.getCell(1).font = { italic: true };
-    });
 
-    worksheet.addRow(['']);
-
-    // Merge three cells for the author message
-    const authorRow = worksheet.addRow(['']); // Add an empty row
-    authorRow.getCell(1).value = authorMessage;
-    worksheet.mergeCells(authorRow.number, 1, authorRow.number, 3); // Merge three cells
-    authorRow.getCell(1).alignment = { wrapText: true };
-    authorRow.getCell(1).font = { italic: true };
 
     // Create a Blob from the workbook
     const blob = await workbook.xlsx.writeBuffer();
@@ -239,7 +225,7 @@ const downloadAttendanceExcelExcelFile = async () => {
 
     // Specify the headers you want to include in the Excel file
     // const desiredHeaders = ['user_code', 'user_code', 'shift_start_time', 'shift_end_time', 'shift_end_time'];
-    const desiredHeaders = ['Employee Code', 'Employee Name', 'Department', 'Process', 'Location'];
+    const desiredHeaders = ['Employee_Code', 'Employee_Name', 'Department', 'Process', 'Location'];
     const authorMessage = 'This report generated by ABShrms payroll software ';
     // Add headers to the worksheet
     // const headers = Object.keys(useDashboard.ShowEmployeeStatuswise[0]);

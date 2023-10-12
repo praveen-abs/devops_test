@@ -187,10 +187,10 @@ const getSeverity = (status) => {
 };
 
 function showConfirmDialog(selectedRowData, status) {
-    UseAttendance.canShowLoadingScreen  = true;
     currentlySelectedStatus = status;
     reject.value = status;
     currentlySelectedRowData = selectedRowData;
+    canShowConfirmation.value = true
     // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 

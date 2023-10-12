@@ -56,8 +56,8 @@
                                 </option>
                                 <option value="Permission">Permission</option>
                                 <option value="Technical Error">Technical Error</option>
-                                <option value="Technical Error">Official</option>
-                                <option value="Technical Error">Personal</option>
+                                <option value="Official">Official</option>
+                                <option value="Personal">Personal</option>
                                 <option value="Others">Others</option>
                             </select>
                         </div>
