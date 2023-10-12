@@ -17,6 +17,17 @@ class VmtPMSMail_PublishForm extends Mailable
      * @return void
      */
     // protected $linkUri;
+    protected $approvalStatus;
+    protected $user_emp_name ;
+    protected $appraisal_year ;
+    protected $appraisal_period;
+    protected $user_manager_name;
+    protected $command_emp ;
+    protected $flow_check ;
+    protected $login_Link ;
+    protected $emp_avatar ;
+    protected $user_gender;
+
     public function __construct( $approvalStatus,$user_emp_name,$appraisal_year,$appraisal_period,$user_manager_name,$command_emp,$flow_check,$login_Link,$emp_avatar,$user_gender
     // ,$reviewer_gender
     )

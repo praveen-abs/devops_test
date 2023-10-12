@@ -24,6 +24,12 @@ class VmtPMSMail_HR extends Mailable
      * @return void
      */
     // protected $linkUri;
+    protected $hr_name ;
+        protected $assignee_name ;
+        protected $manager_name ;
+        protected $appraisal_year;
+        protected $appraisal_period ;
+        protected $login_link ;
     public function __construct($hr_name,$assignee_name,$manager_name,$appraisal_year,$appraisal_period,$login_link)
     {
         //
