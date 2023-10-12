@@ -3868,12 +3868,15 @@ class VmtAttendanceService
     {
 
         $client_id =null;
-
+ if(!empty(session('client_id'))){
         if(session('client_id') == 1){
          $client_id =VmtClientMaster::pluck('id');
         }else{
             $client_id =[session('client_id')];
         }
+    }else{
+        $client_id =[auth()->user()->client_id];
+    }
 
         $validator = Validator::make(
             $data = [
@@ -3916,7 +3919,7 @@ class VmtAttendanceService
 
 
             $query_employees_leaves = VmtEmployeeLeaves::join('users', 'users.id', '=', 'vmt_employee_leaves.user_id')
-                ->join('vmt_leaves', 'vmt_leaves.id', '=', 'vmt_employee_leaves.leave_type_id')
+                ->leftjoin('vmt_leaves', 'vmt_leaves.id', '=', 'vmt_employee_leaves.leave_type_id')
                 ->whereYear('leaverequest_date', $filter_year)
                 ->whereMonth('leaverequest_date', $filter_month)
                 ->whereIn('status', $filter_leave_status)
