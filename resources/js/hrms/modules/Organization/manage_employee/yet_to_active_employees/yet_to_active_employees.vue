@@ -20,7 +20,7 @@
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                 :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu"
-                :globalFilterFields="['emp_name', 'emp_code', 'status']">
+                :globalFilterFields="['emp_name', 'emp_code','emp_designation','reporting_manager_name', 'status']">
                 <template #empty> No customers found. </template>
                 <template #loading> Loading customers data. Please wait. </template>
 

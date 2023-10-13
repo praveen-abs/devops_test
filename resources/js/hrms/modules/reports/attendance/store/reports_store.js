@@ -93,7 +93,6 @@ export const UseReports_store = defineStore("UseReports_store", () => {
 
         console.log(filterValue);
 
-      
         // else if(filterValue=="custom_date" && active_status==5 ){
         //      dialog_customDate.value= false;
         // }
@@ -108,6 +107,13 @@ export const UseReports_store = defineStore("UseReports_store", () => {
             if (active_status == 2) {
                 // Muster Reports
                 url = `/fetch-attendance-data`;
+                if(filterValue==="custom_date"){
+                    dialog_customDate.value= true;
+                }
+            }
+            if (active_status == 3) {
+                // consolidate Reports
+                url = `/fetch-consolidate-report`;
                 if(filterValue==="custom_date"){
                     dialog_customDate.value= true;
                 }
@@ -227,6 +233,11 @@ export const UseReports_store = defineStore("UseReports_store", () => {
         if (active_status == 2) {
             // Muster Reports
             url = `/fetch-attendance-data`;
+        }
+        else
+        if (active_status == 3) {
+            // Overtime Reports
+            url = `/fetch-consolidate-report`;
         } else
         if (active_status == 4) {
             // Overtime Reports
@@ -404,7 +415,11 @@ export const UseReports_store = defineStore("UseReports_store", () => {
             if (active_status == 2) {
                 url = '/reports/generate-basic-attendance'
                 filename = "Attendance Basic Report"
-
+            }
+            else
+            if (active_status == 3) {
+                url = '/report/download-consolidate-report'
+                filename = "consolidate Report"
             } else
             if (active_status == 4) {
                 url = '/report/download-over-time-report'
