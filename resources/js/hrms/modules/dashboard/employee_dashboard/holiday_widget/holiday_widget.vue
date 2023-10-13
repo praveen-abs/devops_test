@@ -36,7 +36,7 @@
         </template>
 
     </Galleria>
-    <Sidebar v-model:visible="visibleRight" position="right" style="{{width:'800px'}}" >
+    <Sidebar v-model:visible="visibleRight" position="right" :style="{ width: '40vw !important' }" >
         <!-- <h2>Right Sidebar</h2> -->
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">
@@ -215,9 +215,4 @@ onMounted(() => {
     top: 55px !important;
 }
 
-.p-sidebar-right .p-sidebar
-{
-    width: 50% ;
-    height: 100%;
-}
 </style>
