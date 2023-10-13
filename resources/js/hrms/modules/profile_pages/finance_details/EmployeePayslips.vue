@@ -4,7 +4,7 @@
         <h2 class="my-2 text-lg font-semibold">Salary Details</h2>
         <DataTable :value="employeePayslipStore.array_employeePayslips_list" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]" sortField="PAYROLL_MONTH" :sortOrder="-1"
+            :rowsPerPageOptions="[5, 10, 25]" sortField="PAYROLL_MONTH" :sortOrder="-1" :rowClass="rowClass"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name']">
             <Column field="PAYROLL_MONTH" header="Month" :sortable="true">
@@ -327,6 +327,11 @@ const filters = ref({
 function toggle(event){
     op.value.toggle(event);
 }
+
+
+const rowClass = (data) => {
+    return [{ '!hidden': data.payslip_release_status === 0 }];
+};
 
 
 </script>

@@ -80,8 +80,10 @@
                             <Column field="" header="Action" style="min-width: 15rem">
                                 <template #body="slotProps">
                                     <div class="flex justify-center">
-                                        <button class="!text-[white] !bg-black py-2 px-4 rounded-xl"
-                                            @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="">View</button>
+                                        <button class=" text-[#000] px-4 py-2 rounded-xl"
+                                            @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="">
+                                            <i class="pi pi-eye"></i>
+                                            </button>
                                     </div>
                                 </template>
                             </Column>

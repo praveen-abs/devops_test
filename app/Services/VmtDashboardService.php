@@ -1750,7 +1750,7 @@ class VmtDashboardService
             }
 
             $pending_request_count['Leave Requests'] = count($leave_employee_count);
-            $pending_request_count['Leave Employees'] =  $leave_employee_count;
+           // $pending_request_count['Leave Employees'] =  $leave_employee_count;
 
             foreach ($employees_data as $key => $single_user_data) {
 

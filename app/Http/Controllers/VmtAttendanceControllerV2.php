@@ -31,24 +31,29 @@ class VmtAttendanceControllerV2 extends Controller
 
     public function attendanceJob(Request $request, VmtAttendanceServiceV2 $attendance_services)
     {
-      //  $current_time = Carbon::now();
-
-        if (VmtEmpAttIntrTable::exists()) {
-            $staff_attendance_query = VmtEmpAttIntrTable::orderBy('id', 'DESC')->first();
-            $start_date = Carbon::parse($staff_attendance_query->date)->subDays(2)->format('Y-m-d');
-        } else {
-            $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id', 'asc')->first();
-            //dd('working');
-            if (Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->lte(Carbon::parse($staff_attendance_query->date))) {
-                $start_date = Carbon::parse($staff_attendance_query->date)->format('Y-m-d');
+        //  $current_time = Carbon::now();
+        try {
+            if (VmtEmpAttIntrTable::exists()) {
+                $staff_attendance_query = VmtEmpAttIntrTable::orderBy('id', 'DESC')->first();
+                $start_date = Carbon::parse($staff_attendance_query->date)->subDays(2)->format('Y-m-d');
             } else {
-                $start_date = Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->format('Y-m-d');
+                $staff_attendance_query = VmtStaffAttendanceDevice::orderBy('id', 'asc')->first();
+                //dd('working');
+                if (Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->lte(Carbon::parse($staff_attendance_query->date))) {
+                    $start_date = Carbon::parse($staff_attendance_query->date)->format('Y-m-d');
+                } else {
+                    $start_date = Carbon::parse(VmtOrgTimePeriod::where('status', 1)->first()->start_date)->format('Y-m-d');
+                }
             }
+            $end_date = Carbon::now()->format('Y-m-d');
+            return $attendance_services->attendanceJobs($start_date, $end_date);
+        } catch (Exception $e) {
+            return Mail::to('karthigaiselvan@abshrms.com')->send(new dommimails('Failure', $e->getMessage(), $e->getTraceAsString()));
         }
-        $end_date = Carbon::now()->format('Y-m-d');
-        return $attendance_services->attendanceJobs($start_date, $end_date);
 
-      //  return Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('no data', 'null', 'null'));
+
+
+        //  
     }
 
     public function syncattintrtable(Request $request, VmtAttendanceServiceV2 $attendance_services)
