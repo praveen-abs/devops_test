@@ -46,7 +46,7 @@
     <!-- dialog for show details -->
 
     <Sidebar position="right" v-model:visible="employeePayslipStore.canShowPayslipView" v-if="employeePayslipStore.canShowPayslipView" modal header="Payslip"
-        :style="{ width: '70vw' }">
+    :style="{ width: '60vw !important' }">
         <button class=" flex items-center p-2 absolute top-5 border-[1px] mx-2 text-[#000]  rounded-md h-[33px] "
                                     @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', employeePayslipStore.Payroll_month)"> <i class="pi pi-download"></i></button>
         <div class=" flex justify-center w-[100%] my-3 rounded-lg">
