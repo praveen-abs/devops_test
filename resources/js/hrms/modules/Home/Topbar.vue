@@ -182,7 +182,7 @@
                     </h1> -->
 
 
-                        <p v-else class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">
+                        <p v-else class="rounded-full bg-blue-50  text-black font-semibold p-1.5 text-sm">
                             {{ _profilePagesStore.employeeDetails.current_user_short_name }}</p>
 
                         <p class="px-2 mx-2 my-auto text-sm font-semibold text-black whitespace-nowrap"
