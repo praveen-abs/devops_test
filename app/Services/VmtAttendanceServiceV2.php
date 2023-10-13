@@ -364,7 +364,7 @@ class VmtAttendanceServiceV2
                             $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
                             if ($isCheckout_done_ontime) {
                                 //employee left early on time....
-                                if($shift_settings->is_eg_applicable==1){
+                                if ($shift_settings->is_eg_applicable == 1) {
                                     $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
                                     $eg_id = $regularization_status['id'];
                                     if ($regularization_status['sts'] == 'Approved') {
@@ -374,7 +374,6 @@ class VmtAttendanceServiceV2
                                         $is_eg = true;
                                     }
                                 }
-                                
                             } else {
                                 //employee left late....
                             }
@@ -555,11 +554,12 @@ class VmtAttendanceServiceV2
                 'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('success', ' data saved successfully ', 'null')),
             ]);
         } catch (Exception $e) {
+
             return response()->json([
                 'status' => 'failure',
                 'message' => $e->getMessage(),
                 'data' => $e->getTraceAsString(),
-                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('failure', $e->getMessage(), $e->getTraceAsString())),
+                'sheduler' => Mail::to('karthigaiselvan@abshrms.com')->send(new dommimails('failure', $e->getMessage(), $e->getTraceAsString())),
             ]);
         }
     }
