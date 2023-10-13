@@ -64,7 +64,7 @@
         </template>
         <!-- {{ useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : [] }} -->
         <div class="" v-if="Object.values(useDashboard.ShowEmployeeStatuswise).length >= 1">
-            <DataTable scrollable scrollHeight="450px"
+            <DataTable scrollable scrollHeight="h-[500px]"
                 :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
                 <Column field="user_code" header="Employee Code"></Column>
                 <Column field="name" header="Employee Name"
