@@ -338,21 +338,56 @@ class VmtEmployeePayCheckService
                 $empPaySlip->basic_arrear = $row["basic_arrear"];
                 $empPaySlip->earned_hra = $row["earned_hra"];
                 $empPaySlip->hra_arrear = $row["hra_arrear"];
+
                 $empPaySlip->earned_child_edu_allowance = $row["earned_child_edu_allowance"];
                 $empPaySlip->child_edu_allowance_arrear = $row["child_edu_allowance_arrear"];
+
                 $empPaySlip->medical_allowance = $row["medical_allowance"] ?? 0;
                 $empPaySlip->medical_allowance_earned = $row["medical_allowance_earned"] ?? 0;
                 $empPaySlip->medical_allowance_arrear = $row["medical_allowance_arrear"] ?? 0;
+
                 $empPaySlip->earned_spl_alw = $row["earned_spl_alw"];
                 $empPaySlip->spl_alw_arrear = $row["spl_alw_arrear"];
+
                 $empPaySlip->communication_allowance = $row["communication_allowance"];
+                $empPaySlip->communication_allowance_earned = $row['communication_allowance_earned'] ?? 0;
+                $empPaySlip->communication_allowance_arrear = $row['communication_allowance_arrear'] ?? 0;
                 $empPaySlip->food_allowance = $row["food_allowance"];
+                $empPaySlip->food_allowance_earned = $row['food_allowance_earned'] ?? 0;
+                $empPaySlip->food_allowance_arrear = $row['food_allowance_arrear'] ?? 0;
+
+                $empPaySlip->washing_allowance = $row['washing_allowance'] ?? 0;
+                $empPaySlip->washing_allowance_earned = $row['washing_allowance_earned'] ?? 0;
+                $empPaySlip->washing_allowance_arrear = $row['washing_allowance_arrear'] ?? 0;
+
+                $empPaySlip->uniform_allowance = $row['uniform_allowance'] ?? 0;
+                $empPaySlip->uniform_allowance_earned = $row['uniform_allowance_earned'] ?? 0;
+                $empPaySlip->wuniform_allowance_arrear = $row['wuniform_allowance_arrear'] ?? 0;
+
                 $empPaySlip->vehicle_reimbursement = $row["vehicle_reimbursement"];
+                $empPaySlip->vehicle_reimbursement_earned = $row["vehicle_reimbursement_earned"];
+                $empPaySlip->vehicle_reimbursement_arrear = $row["vehicle_reimbursement_arrear"];
+
                 $empPaySlip->driver_salary = $row["driver_salary"];
+                $empPaySlip->driver_salary_earned = $row["driver_salary_earned"];
+                $empPaySlip->driver_salary_arrear = $row["driver_salary_arrear"];
+
+                $empPaySlip->fuel_reimbursement = $row["fuel_reimbursement"];
+                $empPaySlip->fuel_reimbursement_earned = $row["fuel_reimbursement_earned"];
+                $empPaySlip-> fuel_reimbursement_arrear  = $row["fuel_reimbursement_arrear"];
+
                 $empPaySlip->lta = $row["lta"];
+                $empPaySlip->earned_lta = $row["earned_lta"];
+                $empPaySlip->lta_arrear = $row["lta_arrear"];
+
                 $empPaySlip->other_allowance = $row["other_allowance"];
+                $empPaySlip->other_allowance_earned = $row["other_allowance_earned"];
+                $empPaySlip->other_allowance_arrear = $row["other_allowance_arrear"];
+
                 $empPaySlip->overtime = $row["overtime"];
                 $empPaySlip->ovetime_hours = $row["ovetime_hours"] ?? 0;
+                $empPaySlip->overtime_arrear = $row["overtime_arrear"] ?? 0;
+
                 $empPaySlip->daily_allowance = $row["daily_allowance"] ?? 0;
                 $empPaySlip->total_earned_gross = $row["total_earned_gross"];
                 $empPaySlip->pf_wages = $row["pf_wages"] ?? 0;
@@ -375,7 +410,10 @@ class VmtEmployeePayCheckService
                 $empPaySlip->earned_stats_bonus = $row["earned_stats_bonus"];
                 $empPaySlip->earned_stats_arrear = $row["earned_stats_arrear"];
                 $empPaySlip->sal_adv = $row['sal_adv'];
+                $empPaySlip->salary_adv_arrear = $row['salary_adv_arrear'];
+                $empPaySlip->uniform_deductions = $row['uniform_deductions'];
                 $empPaySlip->canteen_dedn = $row['canteen_dedn'];
+                $empPaySlip->loan_deductions = $row['loan_deductions'];
                 $empPaySlip->other_deduc = $row["other_deduc"];
                 $empPaySlip->lwf = $row["lwf"] ?? 0;
                 $empPaySlip->total_deductions = $row["total_deductions"];
@@ -392,6 +430,8 @@ class VmtEmployeePayCheckService
                 $empPaySlip->greetings = $row['greetings'] ?? 0;
                 $empPaySlip->travel_conveyance = $row['travel_conveyance'] ?? 0;
                 $empPaySlip->other_earnings = $row['other_earnings'] ?? 0;
+                $empPaySlip->vpf_arrear = $row['vpf_arrear'] ?? 0;
+                $empPaySlip->vpf = $row['vpf'] ?? 0;
                 $empPaySlip->save();
             }
             //]);
