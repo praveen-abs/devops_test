@@ -1,1 +1,0 @@
-import{_ as e,e as s,f as t,g as c}from"./app-052ddeba.js";const o="/build/assets/PageNotFound-a8ecb1eb.png",n={},a={class:"flex justify-center h-[100%] w-[100%] items-center"},_=c("img",{src:o,class:"w-[600px] h-[400px]",alt:""},null,-1),r=[_];function i(d,l){return s(),t("div",a,r)}const p=e(n,[["render",i]]);export{p as default};
