@@ -246,9 +246,15 @@ class VmtAttendanceServiceV2
                             if ($web_attendance->checkout_date == null) {
                                 $web_attendance->checkout_date =  $current_date_str;
                             }
-                            $web_checkin_time = $web_attendance->date . ' ' . $web_attendance->checkin_time;
-                            $web_checkout_time = $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time;
+                            if ($web_attendance->checkin_time != null) {
+                                $web_checkin_time = $web_attendance->date . ' ' . $web_attendance->checkin_time;
+                            }
+                            if ($web_attendance->checkout_time != null) {
+                                $web_checkout_time = $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time;
+                            }
                         }
+                        // if($single_user->id==266 && $current_date->format('Y-m-d')=='2023-10-13')
+                        // dd();
                         if ($web_checkin_time != null) {
                             $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time, 'attendance_mode' => $web_attendance->attendance_mode_checkin]);
                         }
@@ -277,7 +283,7 @@ class VmtAttendanceServiceV2
                         $checking_time_ar = $sortedCollection->first();
                         $checkout_time_ar =  $sortedCollection->last();
 
-
+                        //  dd($checking_time_ar, $checkout_time_ar);
                         //dd( $sortedCollection->first());
                         if ($checking_time_ar != null) {
                             $checking_time = $checking_time_ar['date'];
@@ -287,6 +293,7 @@ class VmtAttendanceServiceV2
                             $checkout_time =  $checkout_time_ar['date'];
                             $attendance_mode_checkout =    $checkout_time_ar['attendance_mode'];
                         }
+
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
                         $shiftStartTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_start_time);
                         $shiftEndTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_end_time);
@@ -296,8 +303,6 @@ class VmtAttendanceServiceV2
                             $checking_time  = $attendance_time['checkin_time'];
                             $checkout_time = $attendance_time['checkout_time'];
                         }
-
-
                         $week_off =   $shift_settings->week_off_days;
                         $week_off_sts = $this->checkWeekOffStatus($current_date, $week_off, $checking_time, $checkout_time);
 
@@ -383,12 +388,7 @@ class VmtAttendanceServiceV2
                         $emp_ot_sts = VmtEmployeeWorkShifts::where('user_id', $single_user->id)
                             ->where('work_shift_id', $shift_settings->id)->first()->can_calculate_ot;
                         if ($emp_ot_sts == 1) {
-                            // if($checking_time!=null){
-                            //     dd($single_user->id);
-                            //     dd($checking_time);
-                            // }
-                            //  dd();
-                            // dd($regz_checkin_time);
+
                             if ($regz_checkin_time != null) {
                                 $checkin_time_ot = substr($checking_time, 0, 10) . ' ' . $regz_checkin_time;
                                 // $checkin_time_ot
@@ -401,8 +401,9 @@ class VmtAttendanceServiceV2
                             } else {
                                 $checkout_time_ot = $checkout_time;
                             }
-                            if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot) && $checkout_time_ot != null) {
+                            if ($shiftStartTime->diffInMinutes($shiftEndTime) + $shift_settings->minimum_ot_working_mins <= Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot) && $checkout_time_ot != null &&  $checkin_time_ot != null) {
                                 $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                                //  dd($single_user->id,$checkin_time_ot,$checkout_time_ot,$ot_mins);
                             }
                         }
                         // dd($emp_ot_sts);
