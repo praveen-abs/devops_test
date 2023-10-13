@@ -10,7 +10,7 @@
                                 Leave history
                             </span>
                         </div>
-                        <div class="d-flex justify-content-end mb-2">
+                        <div class="mb-2 d-flex justify-content-end">
                             <label for="" class="my-2 text-lg font-semibold">Select Month</label>
                             <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
                                 style=" border-radius: 7px; height: 30px;"
@@ -106,9 +106,9 @@
         </template>
         <div class="w-full">
 
-            <div class="border w-full rounded-lg">
-                <div class="p-3 pl-5 d-flex align-items-center border">
-                    <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center bg-yellow-100"
+            <div class="w-full border rounded-lg">
+                <div class="p-3 pl-5 border d-flex align-items-center">
+                    <div class="bg-yellow-100 shadow-sm rounded-circle d-flex justify-content-center align-items-center"
                         style="width:80px ; height: 80px;">
                         <h1 class="text-3xl font-semibold ">{{ leaveModuleStore.setLeaveDetails.user_short_name }}</h1>
                     </div>
@@ -122,14 +122,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="border w-full d-flex py-4 px-4 ">
-                    <div class="mx-2 p-1  rounded-lg">
-                        <h1 class="text-center py-1 px-2 text-light rounded-top fw-bold" style="background-color: navy;">{{
+                <div class="w-full px-4 py-4 border d-flex ">
+                    <div class="p-1 mx-2 rounded-lg">
+                        <h1 class="px-2 py-1 text-center text-light rounded-top fw-bold" style="background-color: navy;">{{
                             dayjs(leaveModuleStore.setLeaveDetails.end_date).format('MMM') }}</h1>
-                        <h1 class="text-center py-1 px-2 fs-5 fw-bold">{{
+                        <h1 class="px-2 py-1 text-center fs-5 fw-bold">{{
                             dayjs(leaveModuleStore.setLeaveDetails.end_date).format('DD') }}</h1>
 
-                        <h1 class="text-center py-1 px-2 fs-6 fw-bold">{{
+                        <h1 class="px-2 py-1 text-center fs-6 fw-bold">{{
                             dayjs(leaveModuleStore.setLeaveDetails.end_date).format('dddd') }}</h1>
                     </div>
                     <div class="py-3">
@@ -139,7 +139,7 @@
                             Day of
                             {{
                                 leaveModuleStore.setLeaveDetails.leave_type }}
-                            <span class="font-semibold text-xs">
+                            <span class="text-xs font-semibold">
                                 ({{
                                     leaveModuleStore.setLeaveDetails.leave_reason }})
                             </span>
@@ -147,15 +147,15 @@
 
                     </div>
                 </div>
-                <div class="border w-full py-4 px-4">
+                <div class="w-full px-4 py-4 border">
                     <h1 class="text-lg font-semibold">Notified To:</h1>
-                    <div class="card px-3 py-2 d-flex mt-3" style="min-width: 250px; max-width: 300px; display: flex;">
-                        <div class="d-flex p-2 align-items-center">
-                            <div class="rounded-circle bg-blue-100 d-flex justify-content-center align-items-center"
+                    <div class="px-3 py-2 mt-3 card d-flex" style="min-width: 250px; max-width: 300px; display: flex;">
+                        <div class="p-2 d-flex align-items-center">
+                            <div class="bg-blue-100 rounded-circle d-flex justify-content-center align-items-center"
                                 style="width:40px ; height: 40px;">{{ leaveModuleStore.setLeaveDetails.reviewer_short_name
                                 }}
                             </div>
-                            <div class="flex-column px-3">
+                            <div class="px-3 flex-column">
                                 <h1 class="fs-6 fw-bold ">{{ leaveModuleStore.setLeaveDetails.reviewer_name }}</h1>
                                 <h1 class="py-2 text-neutral-400">{{ leaveModuleStore.setLeaveDetails.reviewer_designation
                                 }}
@@ -164,13 +164,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="border w-full  py-4 px-4 ">
+                <div class="w-full px-4 py-4 border ">
                     <h1 class="text-lg font-semibold">Approved by</h1>
-                    <div class="card px-3 py-2 d-flex mt-3" style="min-width: 180px; max-width: 300px; display: flex;">
-                        <div class="d-flex p-2 align-items-center">
-                            <div class="rounded-circle bg-green-400 d-flex justify-content-center align-items-center"
+                    <div class="px-3 py-2 mt-3 card d-flex" style="min-width: 180px; max-width: 300px; display: flex;">
+                        <div class="p-2 d-flex align-items-center">
+                            <div class="bg-green-400 rounded-circle d-flex justify-content-center align-items-center"
                                 style="width:40px ; height: 40px;"><i class="pi pi-check text-light"></i></div>
-                            <div class="flex-column px-3">
+                            <div class="px-3 flex-column">
                                 <h1 class="fs-6 fw-bold ">{{ leaveModuleStore.setLeaveDetails.reviewer_name }}</h1>
                                 <h1 class="py-2 text-neutral-400">
                                     on
@@ -181,20 +181,20 @@
 
                     </div>
                 </div>
-                <div class="my-4 mx-3">
+                <div class="mx-3 my-4">
                     <Textarea name="" id="" cols="70" rows="3" autoResize placeholder="Add Comment" />
                 </div>
             </div>
         </div>
-        <div class="text-end mx-4 my-4">
-            <button class="btn btn-orange px-5 mx-2"
+        <div class="mx-4 my-4 text-end">
+            <button class="px-5 mx-2 btn btn-orange"
                 @click="leaveModuleStore.performLeaveWithdraw(leaveModuleStore.setLeaveDetails.id)"
                 v-if="leaveModuleStore.setLeaveDetails.can_withdraw_leave !== null && leaveModuleStore.setLeaveDetails.can_withdraw_leave">Withdraw</button>
             <!-- For Employee -->
-            <button class="btn btn-orange px-5 mx-2" @click="Leavehistory_Addcomment_btn"
+            <button class="px-5 mx-2 btn btn-orange" @click="Leavehistory_Addcomment_btn"
                 v-if="leaveModuleStore.setLeaveDetails.can_revoke_leave !== null && leaveModuleStore.setLeaveDetails.can_revoke_leave">Revoke</button>
             <!-- For Manager -->
-            <button class="btn btn-orange px-5 " @click="Leavehistory_Addcomment_btn">Post</button>
+            <button class="px-5 btn btn-orange " @click="Leavehistory_Addcomment_btn">Post</button>
         </div>
         <!-- {{ leaveModuleStore.setLeaveDetails }} -->
         <!-- {{ dayjs(slotProps.data.end_date).format('DD-MMM-YYYY') }} -->
@@ -214,27 +214,27 @@
         </template>
 
         <div class="flex items-center mt-6">
-            <img src="" alt="" class=" rounded-full ">
+            <img src="" alt="" class="rounded-full ">
             <div class="bg-blue-200 w-[40px] h-[40px] rounded-full mr-4 flex items-center justify-center">{{ leaveModuleStore.setLeaveDetails.user_short_name }}</div>
-            <div class=" flex flex-col items-center justify-center">
-                <h1 class=" font-semibold">{{ leaveModuleStore.setLeaveDetails.name }}</h1>
+            <div class="flex flex-col items-center justify-center ">
+                <h1 class="font-semibold ">{{ leaveModuleStore.setLeaveDetails.name }}</h1>
                 <p>{{leaveModuleStore.setLeaveDetails.user_code}}</p>
             </div>
         </div>
-        <div class="grid grid-cols-3 gap-2 bg-gray-200 rounded-md my-2 p-2">
-            <div class="  flex flex-col ">
+        <div class="grid grid-cols-3 gap-2 p-2 my-2 bg-gray-200 rounded-md">
+            <div class="flex flex-col ">
                 <b>Leave Type</b>
                 <span>{{leaveModuleStore.setLeaveDetails.leave_type}}</span>
             </div>
-            <div class="flex flex-col  ">
+            <div class="flex flex-col ">
                 <b>Start Date</b>
                 <span>{{ dayjs(leaveModuleStore.setLeaveDetails.start_date).format('DD-MMM-YYYY') }}</span>
             </div>
-            <div class=" flex flex-col ">
+            <div class="flex flex-col ">
                 <b>End Date</b>
                 <span>{{ dayjs(leaveModuleStore.setLeaveDetails.end_date).format('DD-MMM-YYYY') }} </span>
             </div>
-            <div class="  flex flex-col ">
+            <div class="flex flex-col ">
                 <b>Total Leave Days</b>
                 <span>{{leaveModuleStore.setLeaveDetails.total_leave_datetime}}</span>
             </div>
@@ -248,20 +248,20 @@
             <p>{{leaveModuleStore.setLeaveDetails.leave_reason}}
             </p>
         </div>
-        <div class="my-2 p-2">
+        <div class="p-2 my-2">
             <b>Notified to</b>
             <div class="flex items-center mt-2">
-                <img src="" alt="" class=" rounded-full">
+                <img src="" alt="" class="rounded-full ">
                 <div class="bg-orange-200 w-[40px] h-[40px] rounded-full mr-4 flex items-center justify-center">{{leaveModuleStore.setLeaveDetails.reviewer_short_name}}  </div>
-                <div class=" flex flex-col items-center justify-center">
-                    <h1 class=" font-semibold">{{leaveModuleStore.setLeaveDetails.reviewer_name}}</h1>
+                <div class="flex flex-col items-center justify-center ">
+                    <h1 class="font-semibold ">{{leaveModuleStore.setLeaveDetails.reviewer_name}}</h1>
                     <p>-</p>
                 </div>
             </div>
         </div>
-        <div class=" flex flex-col">
+        <div class="flex flex-col ">
             <b>Comments</b>
-            <textarea name="" id="" cols="20" rows="5" class="border-[1px] border-[#000] rounded-lg mt-2" ></textarea>
+            <textarea name="" id="" cols="20" rows="5" class="border-[1px] border-[#000] rounded-lg mt-2 p-2" ></textarea>
         </div>
 
         <div class=" flex justify-center items-center mt-[50px]">
