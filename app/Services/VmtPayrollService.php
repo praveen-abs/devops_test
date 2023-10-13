@@ -63,10 +63,12 @@ class VmtPayrollService{
         }
 
         $processed_date = strtotime($payroll_month);
-        $payroll_month = date('F',$processed_date);
+        $payroll_month = date('m',$processed_date);
         $payroll_year = date('Y',$processed_date);
 
-        dd($payroll_month." , ".$payroll_year);
+        //dd($payroll_month." , ".$payroll_year);
+
+
 
         try{
 
@@ -102,21 +104,30 @@ class VmtPayrollService{
                 ],
             ];
 
-
             //Get all the employees earnings details
-            $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+            $employees_payroll_details = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
                             ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
                             ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
                             ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
-                            ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                            //->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                            //->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                             ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                             ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                            ->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                            ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
-                            ->where('user_code', 'BA020')
-                            ->whereYear('payroll_date', $year)
-                            ->whereMonth('payroll_date', $month);
+                            //->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                            //->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                            //->where('user_code', 'BA020')
+                            ->where('users.is_ssa','0')
+                            ->whereYear('payroll_date', $payroll_year)
+                            ->whereMonth('payroll_date', $payroll_month)
+                            ->get();
+
+            dd($employees_payroll_details->toArray());
+
+            $total_employees_payables = 0;
+
+            foreach($employees_payroll_details as $singleEmployeePayrollDetails){
+               // $total_employees_payables = $singleEmployeePayrollDetails->
+            }
 
 
             //Calculate the total payables for the give employees
