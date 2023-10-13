@@ -838,16 +838,16 @@ class VmtEmployeePayCheckService
 
 
         */
-    public function getEmployeeAllPayslipList($user_code)
+    public function getEmployeeAllPayslipList($user_id)
     {
 
         //Validate
         $validator = Validator::make(
             $data = [
-                "user_code" => $user_code,
+                "user_id" => $user_id,
             ],
             $rules = [
-                "user_code" => 'required|exists:users,user_code',
+                "user_id" => 'required|exists:users,id',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -866,11 +866,11 @@ class VmtEmployeePayCheckService
 
         try {
 
-            $user_id = User::where('user_code', $user_code)->first()->id;
+            //$user_id = User::where('user_code', $user_code)->first()->id;
 
 
             $query_payslips = VmtEmployeePaySlipV2::join('vmt_emp_payroll', 'vmt_emp_payroll.id', '=', 'vmt_employee_payslip_v2.emp_payroll_id')
-                ->join('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
+                ->leftjoin('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
                 ->where('vmt_emp_payroll.user_id', $user_id)
                 ->orderBy('vmt_payroll.payroll_date', 'ASC')
                 ->get([

@@ -83,9 +83,9 @@
                     <div v-if="query"
                         class="absolute top-0 left-0 z-40 w-3/4 px-3 py-4 mt-16 overflow-x-scroll bg-white rounded shadow-lg">
                         <!-- Dropdown content goes here -->
-                        <div class="w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
+                        <RouterLink class="w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                             v-for="employee in globalSearch(query, orgList ? orgList : [])"
-                            @click="openProfilePage(employee.emp_code), query = null">
+                            @click="query = null" :to="`/profile-page/${employee.user_id}`" >
                             <div class="flex">
                                 <p class="text-sm font-bold text-gray-900">{{ employee.emp_name }} <span
                                         class="float-right text-xs font-bold text-gray-600">{{ employee.emp_code }}</span>
@@ -94,7 +94,7 @@
                             <div>
                                 <p class="text-xs text-gray-600">{{ employee.emp_designation }}</p>
                             </div>
-                        </div>
+                        </RouterLink>
                     </div>
                 </transition>
             </div>
@@ -204,7 +204,7 @@
                             <!-- Dropdown content goes here -->
                             <RouterLink
                                 class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
-                                :to="`/profile-page`">View profile</RouterLink>
+                                :to="`/profile-page/`">View profile</RouterLink>
                             <a @click="canShowLogout = true"
                                 class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Log
                                 out</a>
@@ -522,7 +522,6 @@ async function logout() {
 }
 
 async function openProfilePage(uid) {
-    // window.location.href = "/pages-profile-new?uid=" + uid;
     router.replace(`/profile-page/${uid}`)
 }
 

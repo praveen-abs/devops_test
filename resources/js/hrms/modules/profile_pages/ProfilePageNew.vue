@@ -101,7 +101,6 @@ let _instance_profilePagesStore = profilePagesStore();
 
 onMounted(async () => {
     if (route.params.user_code) {
-
         _instance_profilePagesStore.user_code = route.params.user_code
         console.log( _instance_profilePagesStore.user_code );
         _instance_profilePagesStore.loading_screen = true
@@ -115,5 +114,14 @@ onMounted(async () => {
         await _instance_profilePagesStore.fetchEmployeeDetails()
     }
 })
+
+// onUpdated(async () => {
+//     if(_instance_profilePagesStore.user_code != route.params.user_code){
+//         _instance_profilePagesStore.user_code = route.params.user_code
+//         await _instance_profilePagesStore.fetchEmployeeDetails().finally(() => {
+//             _instance_profilePagesStore.loading_screen = false
+//         })
+//     }
+// })
 </script>
 <style lang="scss"></style>

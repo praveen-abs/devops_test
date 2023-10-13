@@ -774,6 +774,7 @@ class VmtProfilePagesController extends Controller
         //     //dd("Enc User details from request : ".$user);
         // }
 
+
         return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
 
