@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen p-3 overflow-auto">
+    <div class="h-[100%] p-2 overflow-auto">
         <div class="grid grid-cols-12 gap-4">
             <div class="col-span-8 ">
                 <div class="col-span-12 w-[100%]  !rounded-[20px] bg-white p-2">
@@ -25,7 +25,7 @@
                 <div>
                     <Analytics />
                 </div>
-                <div class="py-3">
+                <div class="py-3 h-[65%]">
                     <Notification />
                 </div>
             </div>

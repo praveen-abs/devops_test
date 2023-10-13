@@ -89,7 +89,7 @@
                      <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-                        <button  @click="openProfilePage(slotProps.data.enc_user_id)" class="px-2 py-1 text-center text-white bg-orange-700 rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i>View</button>
+                        <button  @click="openProfilePage(slotProps.data.enc_user_id)" class="px-2 py-1 text-center text-[#000] rounded-md whitespace-nowrap "><i class="h-6 py-1 mx-2 pi pi-eye"></i></button>
 
                     </template>
                 </Column>
@@ -126,7 +126,7 @@ const toast = useToast();
 // const loading = ref(true);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    employee_name: {
+    emp_name: {
         value: null,
         matchMode: FilterMatchMode.STARTS_WITH,
         matchMode: FilterMatchMode.EQUALS,
