@@ -1242,15 +1242,12 @@ class VmtDashboardService
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
             $getAttendanceLoginCount = $this->getOrgDashBoardDeatail();
-            $getMobAppCount = $this->getMobLoginCount();
-            // dd($getAllEvent);
             return response()->json(
                 [
                     "all_events" => json_decode($getAllEvent->content(), true)['data'],
                     "leave_balance_per_month" => json_decode($getEmpLeaveBalance->content(), true)['data'],
                     "attenance_report_permonth" => json_decode($getAttenanceReportpermonth->content(), true)['data'],
                     "attendance_login_count" => $getAttendanceLoginCount,
-                    "mobileapp_login_count" => $getMobAppCount
                 ]
             );
         } catch (\Exception $e) {
@@ -1790,10 +1787,10 @@ class VmtDashboardService
             }
             $pending_request_count['Document Approvals'] = $doc_count;
             $pending_request_count['Attendance Regularization'] = $reg_count;
-
-            $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count];
-
+            $mob_login_count = $this->getMobLoginCount();
+            $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count,'mob_login_count'=>$mob_login_count];
             return ($response);
+            
         } catch (\Exception $e) {
             return $response = ([
                 'status' => 'failure',
