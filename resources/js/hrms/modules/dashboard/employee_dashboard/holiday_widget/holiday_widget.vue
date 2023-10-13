@@ -36,7 +36,7 @@
         </template>
 
     </Galleria>
-    <Sidebar v-model:visible="visibleRight" position="right">
+    <Sidebar v-model:visible="visibleRight" position="right" style="{{width:'800px'}}" >
         <!-- <h2>Right Sidebar</h2> -->
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">
