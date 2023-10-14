@@ -947,7 +947,7 @@ class VmtAttendanceReportsService
 
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
                         if (!VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
-                            dd($single_user);
+                            // dd($single_user);
                         }
                         $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
                         if ($att_detail->regularized_checkin_time != null) {
@@ -2185,7 +2185,7 @@ class VmtAttendanceReportsService
     public function fetchConsolidateReportData($start_date, $end_date, $department_id, $client_id)
     {
         // $start_date = '2023-04-26';  // For testing
-        // $end_date = '2023-05-25';    // For testing 
+        // $end_date = '2023-05-25';    // For testing
 
         ini_set('max_execution_time', 3000);
         $validator = Validator::make(
