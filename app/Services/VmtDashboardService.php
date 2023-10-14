@@ -1591,7 +1591,7 @@ class VmtDashboardService
                     ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
                     ->where('users.is_ssa', '0')->where('users.active', '!=', '-1')
                     ->whereIn('users.client_id', $client_id)
-                    ->get(['users.user_code as Employee_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['total_employee_count'] = $emp_details_count['total_employees']->count(); //fortotalemployee
 
                 $emp_details_count['new_employees'] = user::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
@@ -1599,7 +1599,7 @@ class VmtDashboardService
                     ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
                     ->wheredate('det.doj',   $current_date)->where('users.is_ssa', '!=', '1')->where('users.active', '=', '1')
                     ->whereIn('users.client_id', $client_id)
-                    ->get(['users.user_code as Employee_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['new_employee_count'] =    $emp_details_count['new_employees']->count();
 
                 // dd( $emp_details_count['newEmpCount']);
@@ -1609,7 +1609,7 @@ class VmtDashboardService
                     ->where('users.active', '1')
                     ->where('users.is_ssa', '0')
                     ->whereIn('users.client_id', $client_id)
-                    ->get(['users.user_code as Employee_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['active_employee_count'] = $emp_details_count['active_employees']->count();
 
                 $emp_details_count['yet_to_active_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
@@ -1617,7 +1617,7 @@ class VmtDashboardService
                     ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
                     ->where('users.active', '0')
                     ->whereIn('users.client_id', $client_id)
-                    ->get(['users.user_code as Employee_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['yet_to_active_employee_count'] = $emp_details_count['yet_to_active_employees']->count();
 
                 $emp_details_count['exit_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
@@ -1625,7 +1625,7 @@ class VmtDashboardService
                     ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
                     ->where('users.active', '-1')
                     ->whereIn('users.client_id', $client_id)
-                    ->get(['users.user_code as Employee_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['exit_employee_count'] =  $emp_details_count['exit_employees']->count();
 
                 $graph_chart_count['male_employee_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->whereIn('users.client_id', $client_id)->where('vmt_employee_details.gender', 'Male')->where('users.active', '1')->get()->count();
@@ -1651,7 +1651,7 @@ class VmtDashboardService
                     ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
                     ->where('users.is_ssa', '0')->where('users.active', '!=', '-1')->where('off.l1_manager_code', $user_code)
                     ->whereIn('users.client_id', $client_id)
-                    ->get(['users.user_code as user_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['total_employee_count'] =  $emp_details_count['total_employees']->count();
 
 
@@ -1661,7 +1661,7 @@ class VmtDashboardService
                     ->wheredate('det.doj',   $current_date)->where('users.is_ssa', '!=', '1')->where('users.active', '=', '1')
                     ->whereIn('users.client_id', $client_id)
                     ->whereIn('users.id', $employees_data)
-                    ->get(['users.user_code as user_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['new_employee_count'] = $emp_details_count['new_employees']->count();
 
                 $emp_details_count['active_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
@@ -1671,7 +1671,7 @@ class VmtDashboardService
                     ->where('users.is_ssa', '0')
                     ->whereIn('users.client_id', $client_id)
                     ->whereIn('users.id', $employees_data)
-                    ->get(['users.user_code as user_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['active_employee_count'] =   $emp_details_count['active_employees']->count();
 
                 $emp_details_count['yet_to_active_employees'] = User::join('vmt_employee_details as det', 'det.userid', '=',  'users.id',)
@@ -1680,7 +1680,7 @@ class VmtDashboardService
                     ->where('users.active', '0')
                     ->whereIn('users.client_id', $client_id)
                     ->whereIn('users.id', $employees_data)
-                    ->get(['users.user_code as user_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['yet_to_active_employee_count'] =  $emp_details_count['yet_to_active_employees']->count();
 
 
@@ -1690,7 +1690,7 @@ class VmtDashboardService
                     ->where('users.active', '-1')
                     ->whereIn('users.client_id', $client_id)
                     ->whereIn('users.id', $employees_data)
-                    ->get(['users.user_code as user_code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
+                    ->get(['users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
                 $emp_details_count['exit_employee_count'] =  $emp_details_count['exit_employees']->count();
 
                 // $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
