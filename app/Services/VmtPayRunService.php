@@ -71,6 +71,21 @@ class VmtPayRunService
             }
             $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
             //  dd($users);
+
+            $users_data = array();
+            foreach($users as $key => $single_user){
+
+                     if($single_user->dol != null){
+
+                        if($single_user->dol > $start_date){
+
+                            $users_data[$key] = $single_user;
+                        }
+                     }else{
+
+                        $users_data[$key] =$single_user;
+                    }
+            }
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $attendance_setting_details =  $this->attendance_report_service->attendanceSettingsinfos(null);
             $reportresponse['rows'] = array();
@@ -88,7 +103,7 @@ class VmtPayRunService
             }
             array_push($heading_dates, "Total Payable Days");
             $reportresponse['headers'] = $heading_dates;
-            foreach ($users as $single_user) {
+            foreach ($users_data as $single_user) {
                 $current_date = Carbon::parse($start_date);
                 $temp_ar = array();
                 $temp_ar['Emp Code'] = $single_user->user_code;
@@ -109,6 +124,9 @@ class VmtPayRunService
                     $current_day = $current_date->format('d') . ' - ' .  $current_date->format('l');
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
                         $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
+                        if(empty($att_detail)){
+                            continue;
+                        }
                         //   dd($temp_ar);
                         //  if( $att_detail==null){
                         //                    dd($current_date,$single_user->id);
