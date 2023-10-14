@@ -5129,7 +5129,7 @@ class VmtAttendanceService
             return $reponse = ([
                 'status' => 'failure',
                 'message' => 'Error While Fetch Employees Data',
-                'data' => ' ',
+                'data' => '$e->getmessage()."  ".$e->getLine ',
             ]);
         }
     }

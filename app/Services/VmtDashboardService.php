@@ -1701,11 +1701,7 @@ class VmtDashboardService
 
                 $graph_chart_count['others_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->whereIn('users.client_id', $client_id)->where('vmt_employee_details.gender', 'others')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
 
-                $graph_chart_count['app-checkin-ins'] = 0;
-
-                $graph_chart_count['active_apps'] =  0;
-
-                $graph_chart_count['inactive_apps'] = 0;
+              
                 // $emp_details_count['reimbursement_count'] = VmtEmployeeReimbursements::where('user_id','')
 
             }
@@ -1788,7 +1784,13 @@ class VmtDashboardService
             $pending_request_count['Document Approvals'] = $doc_count;
             $pending_request_count['Attendance Regularization'] = $reg_count;
             $mob_login_count = $this->getMobLoginCount();
-            array_push($graph_chart_count, $mob_login_count);
+       
+            $graph_chart_count['app-checkin-ins'] = $mob_login_count['app_checkin_count'];
+
+            $graph_chart_count['active_apps'] =  $mob_login_count['app_active_count'];
+
+            $graph_chart_count['inactive_apps'] = $mob_login_count['app_inactive_count'];
+          
             $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count];
             return ($response);
 
@@ -1905,7 +1907,7 @@ class VmtDashboardService
             return response()->json([
                 "status" => "failure",
                 "message" => "Unable to fetch Attendance details",
-                "data" => $response,
+                "data" =>$e->getmessage(),
             ]);
         }
     }
