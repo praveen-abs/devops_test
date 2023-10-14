@@ -887,11 +887,12 @@ class VmtAttendanceReportsService
             if (Carbon::parse($end_date)->gt(Carbon::today())) {
                 $end_date = Carbon::today()->format('Y-m-d');
             }
-            //  dd($start_date,$end_date);
+              //dd($start_date,$end_date,Carbon::parse($end_date));
             $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
+                ->where('vmt_employee_details.doj', '<=', Carbon::parse($end_date))
                 ->where('is_ssa', '0');
+
             if (!empty($client_id)) {
                 $users =  $users->whereIn('client_id', $client_id);
             }
@@ -906,8 +907,24 @@ class VmtAttendanceReportsService
                 'vmt_employee_office_details.designation as designation',
                 'vmt_employee_details.dob as dob',
                 'vmt_employee_details.doj as doj',
-                'vmt_employee_details.dol as dol'
+                 'vmt_employee_details.dol as dol'
             ]);
+
+            $users_data = array();
+            foreach($users as $key => $single_user){
+
+                     if($single_user->dol != null){
+
+                        if($single_user->dol > $start_date){
+
+                            $users_data[$key] = $single_user;
+                        }
+                     }else{
+
+                        $users_data[$key] =$single_user;
+                    }
+            }
+
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $header_2 = array('', '', '', '');
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
@@ -925,8 +942,9 @@ class VmtAttendanceReportsService
                     array_push($header_2, 'Status');
                 }
             }
-            //dd(count($users));
-            foreach ($users as $single_user) {
+            //dd(count($users_data));
+            foreach ($users_data as $single_user) {
+
                 $current_date = Carbon::parse($start_date);
                 $temp_ar = array();
                 array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
@@ -947,7 +965,7 @@ class VmtAttendanceReportsService
 
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
                         if (!VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
-                            // dd($single_user);
+                            continue;
                         }
                         $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
                         if ($att_detail->regularized_checkin_time != null) {
