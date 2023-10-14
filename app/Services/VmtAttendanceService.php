@@ -413,7 +413,8 @@ class VmtAttendanceService
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching employee leave balance",
-                "data" => $e,
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3159,7 +3160,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'success',
                 'message' => 'Error while getting latest attendance status',
-                'data'   => $e->getmessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3587,7 +3589,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getEmployeeWorkShiftTimings() ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3647,7 +3650,8 @@ class VmtAttendanceService
             return response()->json([
                 "status" => "failure",
                 "message" => "",
-                "data" =>  ''
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3760,7 +3764,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getEmployeeLeaveDetails() ] " . $e->getMessage(),
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3863,7 +3868,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getTeamEmployeesLeaveDetails() ] " . $e->getMessage(),
-                'data' => $e->getLine(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3965,7 +3971,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getAllEmployeesLeaveDetails() ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4389,7 +4396,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getCountForAttRegularization ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4431,7 +4439,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getCountForAttRegularization ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -5045,7 +5054,8 @@ class VmtAttendanceService
             return $reponse = ([
                 'status' => 'failure',
                 'message' => 'Error While Fetch Employees Data',
-                'data' => ' ',
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -5085,7 +5095,8 @@ class VmtAttendanceService
         return response()->json([
             "status" => "failure",
             "message" => "Error while fetching Attendance Regularization LC data",
-            "data" => $e,
+            "error" => $e->getMessage().' | Line : '.$e->getLine(),
+            "error_verbose" => $e->getTraceAsString(),
         ]);
     }
 }
