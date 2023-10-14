@@ -136,8 +136,8 @@ const routes = [
 
             // Performance 
             {
-                path: '/Performance/employee-appraisal',
-                name: 'Performance-employee-appraisal',
+                path: '/Performance',
+                name: 'Performance',
                 component: () => import('../hrms/components/PageNotFound.vue'),
             },
 
@@ -208,6 +208,8 @@ const routes = [
                 name: 'Employee-reimbursements',
                 component: () => import('../hrms/modules/reimbursements/EmployeeReimbursements.vue')
             },
+
+
 
 
 

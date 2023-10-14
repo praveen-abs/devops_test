@@ -54,7 +54,7 @@
                     <div v-if="subMenuDisable">
                         <div v-if="isOpen(index)" class="w-full p-2 text-white rounded shadow-lg ">
                             <div v-for="(item, subIndex) in menu.subItems" :key="subIndex" @click="subMenuDisable = false">
-                                <a v-if="item" @click="item.to ?  redirectModule(item.to) : ''"
+                                <a v-if="item" @click="item.to ? redirectModule(item.to) : ''"
                                     class="transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover: duration-300 text-sm font-semibold whitespace-nowrap  cursor-pointer text-white w-full block  hover:bg-gray-600 focus:bg-gray-600 p-2.5 rounded-lg">
                                     {{ item ? item.label : null }}
                                 </a>
@@ -223,13 +223,14 @@ onMounted(() => {
                 ?
                 {
                     label: 'Performance',
-                    subItems: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? [
+                    subItems: false ? res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? [
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.SELF_APPRAISAL === 1 ? { label: 'Self Appraisal', to: 'Performance/employee-appraisal' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.TEAM_APPRAISAL === 1 ? { label: 'Team Appraisal', to: 'team-appraisal' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.ORG_APPRAISAL === 1 ? { label: 'Org Appraisal', to: 'pms' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.PMS_CONFIG === 1 ? { label: 'PMS Config', to: 'config-pms' } : null : null : null,
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.PMS_FORMS_MANAGEMENT === 1 ? { label: 'PMS Forms Management', to: 'pms-forms-mgmt' } : null : null : null] : [{ label: 'Self Appraisal', to: 'employee-appraisal' }],
-                    arrow_icon: 'pi pi-angle-right',
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.PMS_FORMS_MANAGEMENT === 1 ? { label: 'PMS Forms Management', to: 'pms-forms-mgmt' } : null : null : null] : [{ label: 'Self Appraisal', to: 'employee-appraisal' }] : null,
+                    arrow_icon: false ? 'pi pi-angle-right' : null,
+                    to:'Performance',
                     icon: 'M23 1L13.5 10.5L8.5 5.5L1 13',
                     icon1: '1.71429',
                     icon2: '',
@@ -311,7 +312,7 @@ async function getclientname() {
 }
 
 function findSelectedModuleIsEnabled(array, idToFind) {
-    if(array){
+    if (array) {
         return array.find(obj => obj.module_name === idToFind);
     }
 
