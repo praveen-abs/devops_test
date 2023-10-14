@@ -112,7 +112,6 @@ class VmtReportsService
                 ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
-                ->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
                 ->where('users.is_ssa','=','0')
                 ->where('vmt_employee_details.doj', '<', $date_req);
 
@@ -123,6 +122,7 @@ class VmtReportsService
                     $emp_ctc_detail = $emp_ctc_detail->whereIn('vmt_employee_office_details.department_id', $department_id);
                 }
                $emp_ctc_detail = $emp_ctc_detail->get();
+
 
             foreach ($emp_ctc_detail as $singleemployeedata) {
                 $temp_ar['Employee Code'] = $singleemployeedata->user_code;
