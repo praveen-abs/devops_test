@@ -119,6 +119,11 @@ const routes = [
                 component: () => import('../hrms/modules/paycheck/salary_details/salary_details.vue'),
             },
             {
+                path: '/Paycheck/form16_details',
+                name: 'Paycheck-form16_details',
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+            {
                 path: '/Paycheck/Investments',
                 name: 'Paycheck-Investments',
                 component: () => import('../hrms/modules/paycheck/investments/investment.vue'),
@@ -155,7 +160,17 @@ const routes = [
             {
                 path: '/Payroll/PayRun',
                 name: 'Payroll-Pay-Run',
-                component: () => import('../hrms/modules/payroll/payRun/payRun.vue'),
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+            {
+                path: '/Payroll/payroll-claims',
+                name: 'Payroll-claims',
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+            {
+                path: 'Payroll/reports-payroll',
+                name: 'Payroll-reports-payroll',
+                component: () => import('../hrms/components/PageNotFound.vue'),
             },
 
             // Reports

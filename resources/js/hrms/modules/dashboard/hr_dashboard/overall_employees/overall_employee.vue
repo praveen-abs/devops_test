@@ -50,7 +50,7 @@ const data = ref()
 const setChartData = () => {
     const documentStyle = getComputedStyle(document.documentElement);
     return {
-        labels: ['Male', 'Female', 'Others', 'App Check-Ins', 'Active Apps', 'Inactive Apps',],
+        labels: ['male_employee_count', 'female_employee_count', 'others_count', 'app-checkin-ins', 'active_apps', 'inactive_apps',],
         datasets: [
             {
                 backgroundColor: [

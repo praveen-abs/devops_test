@@ -158,8 +158,11 @@
                             </DataTable>
 
                             <Dialog v-model:visible="Reports_store.dialog_customDate" modal header="Custom Date" :style="{ width: '30vw' }">
+
+                                <!-- <i class="pi pi-times text-[20px] text-[#000] " @click="Reports_store.dialog_customDate= false" ></i> -->
                                 <div>
-                                    <div class="flex items-center">
+                                    <i class="pi pi-times text-[14px] text-gray-400  rounded-full border-[3px] p-2 hover:border-blue-200 font-medium absolute top-5 right-5 " @click="Reports_store.dialog_customDate= false" ></i>
+                                    <div class="flex items-center justify-between">
                                     <Calendar v-model="Reports_store.Start_Date" @date-select="Reports_store.select_StartAndEnd_Date('start_date',dayjs(Reports_store.Start_Date).format('YYYY-MM-DD'), Reports_store.activetab)"  dateFormat="dd-mm-yy"  class="w-[150px] h-10 mx-2" placeholder="Start-date " />
                                     <Calendar v-model="Reports_store.End_Date"  dateFormat="dd-mm-yy" @date-select="Reports_store.select_StartAndEnd_Date('end_date',dayjs(Reports_store.End_Date).format('YYYY-MM-DD') , Reports_store.activetab)" class="w-[150px] h-10"  placeholder="End-date " />
                                  </div>
