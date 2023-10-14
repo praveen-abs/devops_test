@@ -47,10 +47,10 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
     public function title(): string
     {
         if($this->type == null){
-            $this->type= 'Employee Basic CTC Report';
+            $this->type= 'Employee Master Report';
         }
         else{
-            $this->type= 'Employee Detailed CTC Report';
+            $this->type= 'Employee Master Report';
         }
         return $this->type;
     }
@@ -84,7 +84,7 @@ class EmployeeMasterExport implements FromArray, ShouldAutoSize, WithHeadings, W
         $sheet->getStyle('C1:E1')->getFont()->setBold(true);
 
         //For Second Row
-        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Employee CTC Report');
+        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Employee Master Report');
         $sheet->getStyle('C2:E2')->getFont()->setBold(true);
 
         //For Third Row
