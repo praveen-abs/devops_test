@@ -1788,7 +1788,8 @@ class VmtDashboardService
             $pending_request_count['Document Approvals'] = $doc_count;
             $pending_request_count['Attendance Regularization'] = $reg_count;
             $mob_login_count = $this->getMobLoginCount();
-            $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count,'mob_login_count'=>$mob_login_count];
+            array_push($graph_chart_count, $mob_login_count);
+            $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count];
             return ($response);
 
         } catch (\Exception $e) {

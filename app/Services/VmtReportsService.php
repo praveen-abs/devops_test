@@ -255,11 +255,16 @@ class VmtReportsService
                 ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
                 ->where('users.is_ssa','=','0')
-                ->whereIn('users.client_id', $client_id)
-                ->whereDate('employee.doj', '<', $date_req)
-                ->whereIn('users.active', $active_status)
-                ->whereIn('office.department_id', $get_department)
-                ->get([
+                ->whereDate('employee.doj', '<', $date_req);
+                // ->whereIn('users.client_id', $client_id)
+
+                if (!empty($active_status)) {
+                    $emp_master_detail =  $emp_master_detail->whereIn('active', $active_status);
+                }
+                if (!empty($department_id)) {
+                    $emp_master_detail = $emp_master_detail->whereIn('office.department_id', $department_id);
+                }
+                $emp_master_detail = $emp_master_detail ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
                     'office.official_mobile', 'office.l1_manager_code', 'office.work_location', 'employee.aadhar_number', 'employee.pan_number', 'statutory.uan_number', 'statutory.epf_number', 'statutory.esic_number',
                     'employee.mobile_number', 'users.email', 'employee.physically_challenged', 'employee.blood_group_id', 'banks.bank_name', 'employee.bank_account_number', 'employee.bank_ifsc_code', 'employee.no_of_children',
@@ -269,6 +274,7 @@ class VmtReportsService
                 ]);
 
             foreach ($emp_master_detail as $single_details) {
+                // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
                 $temp_ar['Employee Name'] = $single_details->name;
                 $temp_ar['Gender'] = strtoupper($single_details->gender);
@@ -280,6 +286,7 @@ class VmtReportsService
                     $temp_ar['Employee Status'] = "Exit";
                 } else if ($single_details->active == 0) {
                     $temp_ar['Employee Status'] = 'Not Yet Active';
+
                 }
                 if(!empty($single_details->dol)){
                 $temp_ar['Last Working Day'] = carbon::parse($single_details->dol)->format('d-M-Y');
@@ -328,10 +335,10 @@ class VmtReportsService
                 //for father mother detail need dob also
                 $user_id = User::where('user_code', $single_details->user_code)->first()->id;
                 $family_details =  VmtEmployeeFamilyDetails::where('user_id', $user_id)->get(['name', 'relationship']);
-                $temp_ar['Father Name'] = '';
-                $temp_ar['Mother Name'] = '';
-                $temp_ar['Spouse Name'] = '';
-                $temp_ar['Children Name'] = '';
+                $temp_ar['Father Name']='';
+                $temp_ar['Mother Name']='';
+                $temp_ar['Spouse Name']='';
+                $temp_ar['Children Name'] ='';
                 foreach ($family_details as $singleFamilyDetails) {
                     if (strtolower($singleFamilyDetails->relationship) == 'father') {
                         $temp_ar['Father Name'] = $singleFamilyDetails->name;
