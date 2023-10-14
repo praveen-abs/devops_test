@@ -813,6 +813,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //--- PMS v3 START ---
     Route::get('/performance', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'showPMSDashboard']);
+    Route::get('/getmanager', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'getEmpManagerCode']);
 
 
 

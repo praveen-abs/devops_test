@@ -212,216 +212,26 @@ class VmtPMSModuleService_v3
     }
 
 
-    public function DashboardforEmployee(){
-
-        $loggedUserId = Auth::id();
-
-        $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
-        $table_pmsConfig = ConfigPms::find('1');
-        $calendar_type =  $table_pmsConfig->calendar_type;
-        $year = $table_pmsConfig->year;
-        $frequency = $table_pmsConfig->frequency;
-        $assignment_period = $table_pmsConfig->assignment_period;
-
-        // get Departments data
-        $departments = Department::where('is_active', 1)->get();
-
-        //Dashboard vars
-        /*$employeesGoalsSetCount = 0;
-        $totalEmployeesCount = User::where('active',1)->where('is_ssa',0)->count();
-        $employeesAssessedCount = 0;
-        $selfReviewCount = 0;
-        $totalSelfReviewCount = 0;*/
-        $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-            ->select(
-                'users.name as emp_name',
-                'users.id as id',
-                'users.avatar as avatar',
-            )
-            ->where('users.active','1')
-            ->where('users.is_ssa','0')
-            ->orderBy('vmt_employee_details.created_at', 'ASC')
-            ->get();
-
-        // check leveles L1,L2,L3 in pms config
-        $pmsConfigData = ConfigPms::first();
-        $selectedReviewLevel = '';
-        if(isset($pmsConfigData) && isset($pmsConfigData->selected_reviewlevel)){
-            $selectedReviewLevel = $pmsConfigData->selected_reviewlevel;
-        }
-
-        $parentUserCode = VmtEmployeeOfficeDetails::where('user_id',$loggedUserId)->value('l1_manager_code');
-
-        // Get logged in user Employee details
-        $parentReviewerNames = [];
-        $parentReviewerIds = [];
-
-        $employeeManagerDetail = getEmployeeManager([$loggedUserId]);
-        $parentReviewerNames = $employeeManagerDetail->pluck('name')->toArray();
-        $parentReviewerIds = $employeeManagerDetail->pluck('id')->toArray();
-
-        // Level 2
-        if($selectedReviewLevel == '' || $selectedReviewLevel == 'L2' || $selectedReviewLevel == 'L3'){
-            foreach($parentReviewerIds as $reviewerId){
-                $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
-                $reviewerName = $reviewerManagerDetail->pluck('name')->first();
-                $reviewerId = $reviewerManagerDetail->pluck('id')->first();
-                if(!empty($reviewerName) && !empty($reviewerId)){
-                    if(!in_array($reviewerName,$parentReviewerNames)){
-                        array_push($parentReviewerNames,$reviewerName);
-                    }
-                    if(!in_array($reviewerId,$parentReviewerIds)){
-                        array_push($parentReviewerIds,$reviewerId);
-                    }
-                }
-            }
-        }
-
-        // Level 3
-        if($selectedReviewLevel == '' || $selectedReviewLevel == 'L3'){
-            foreach($parentReviewerIds as $reviewerId){
-                $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
-                $reviewerName = $reviewerManagerDetail->pluck('name')->first();
-                $reviewerId = $reviewerManagerDetail->pluck('id')->first();
-
-                if(!empty($reviewerName) && !empty($reviewerId)){
-                    if(!in_array($reviewerName,$parentReviewerNames)){
-                        array_push($parentReviewerNames,$reviewerName);
-                    }
-                    if(!in_array($reviewerId,$parentReviewerIds)){
-                        array_push($parentReviewerIds,$reviewerId);
-                    }
-                }
-            }
-        }
-        $parentReviewerIds = implode(',',$parentReviewerIds);
-        $parentReviewerNames = implode(',',$parentReviewerNames);
-
-        $dashboardCountersData =  $this->getPerformanceDashboardSummaryStats();
-        /*[];
-        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
-        $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
-        $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
-        $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
-        $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
-        */
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')/*->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->*/->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
-
-        $loggedInUser = Auth::user();
-
-        $flowCheck = 3;
-
-
-        $assignedUserDetails = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
-            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->select(
-                'users.name',
-                'users.user_code',
-                'vmt_employee_office_details.department_id',
-                'vmt_employee_office_details.designation',
-                'vmt_employee_office_details.l1_manager_code',
-                'vmt_employee_office_details.l1_manager_name',
-                'vmt_employee_office_details.l1_manager_designation'
-            )
-            ->where('users.active', '1')
-            ->where('users.is_ssa', '0')
-            ->where('users.id',Auth::user()->id)
-            ->first();
-
-        $reportingManagerName = "---";
-
-        if($assignedUserDetails)
-            $reportingManagerName =User::where('user_code',$assignedUserDetails->l1_manager_code)->value('name');
-
-        //// Rating calculation
-        // Get assigned Details
-        $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_reviews.assignee_id',Auth::user()->id)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
-
-        // rating details
-        $ratingDetail['performance'] ='-';
-        $ratingDetail['ranking'] = '-';
-        $ratingDetail['action'] = '-';
-        $ratingDetail['rating'] = '-';
-
-
-        //// Rating calculation -ends
-
-        //dd($ratingDetail);
-        $canShowOverallScoreCard_SelfAppraisal_Dashboard = fetchPMSConfigValue('can_show_overallscorecard_in_selfappraisal_dashboard');
-
-        return [$dashboardCountersData,$canShowOverallScoreCard_SelfAppraisal_Dashboard,$ratingDetail,$reportingManagerName,$existingKPIForms,$assignedUserDetails,$departments,$employees,$pmsKpiAssigneeDetails,$flowCheck,$loggedInUser,$parentReviewerIds,$parentReviewerName,$parentReviewerIds,$calendar_type,$year,$frequency,$assignment_period];
-
-
-    }
-
-    protected function getPerformanceDashboardSummaryStats(){
-
-        //Note : We need to show the Performance stats based on current frequency(month/quarter/half-yearly/yearly)
-        $current_pms_config_data = ConfigPms::first();
-        //dd($current_pms_config_data);
-       // dd($current_pms_config_data->assignment_period);
-
-        //Get the current PMS config details
-        $calendar_type = $current_pms_config_data->calendar_type;
-        $year = "April - 2022 to March - 2023"; //Hardcoded for now
-        $assignment_period = 'q3'; //Need to add this as a new option in pmsconfig
-
-
-        //Dashboard vars
-
-        //EMPLOYEE GOALS
-        $totalEmployeesCount = User::where('active',1)->where('is_ssa','0')->count();
-
-            //Get all the forms assigned for the current period
-            $assignedForms_currentReviewPeriod = \DB::table('vmt_pms_kpiform_assigned')
-                                    ->where('calendar_type', $calendar_type)
-                                    ->where('year', $year)
-                                    ->where('assignment_period', $assignment_period);
-
-            //Get their ids only
-            $assignedFormsIds_currentReviewPeriod = $assignedForms_currentReviewPeriod->pluck('id');
-
-        $employeesGoalsSetCount_currentReviewPeriod = $assignedForms_currentReviewPeriod->count();
-
-
-        ////SELF-REVIEW
-        $selfReviewCount_currentReviewPeriod =  \DB::table('vmt_pms_kpiform_reviews')
-                                ->whereIn('vmt_pms_kpiform_assigned_id', $assignedFormsIds_currentReviewPeriod)
-                                ->where('is_assignee_submitted', '1')
-                                ->count();
-
-            //dd($selfReviewCount_currentReviewPeriod);
-
-        ////EMPLOYEES ASSESSED
-
-        $employeesAssessedCount_currentReviewPeriod = \DB::table('vmt_pms_kpiform_reviews')
-                                ->whereIn('vmt_pms_kpiform_assigned_id', $assignedFormsIds_currentReviewPeriod)
-                                ->where('is_reviewer_submitted', 'Not Like', '%null%')
-                                ->count();
-
-
-        ////Final Score Published(When HR review is also done)
-
-        $finalScoreCount  =  \DB::table('vmt_pms_kpiform_reviews')
-                                ->whereIn('vmt_pms_kpiform_assigned_id', $assignedFormsIds_currentReviewPeriod)
-                                ->where('is_reviewer_submitted', 'Not Like', '%null%')
-                                ->count();
 
 
 
 
 
-        $totalReviewedCount = \DB::table('vmt_pms_kpiform_reviews')->count();
 
-        $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
-        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount_currentReviewPeriod;
-        $dashboardCountersData['selfReviewCount'] = $selfReviewCount_currentReviewPeriod;
-        $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount_currentReviewPeriod;
-        $dashboardCountersData['totalReviewedCount'] = $totalReviewedCount;
-        $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;
 
-        return $dashboardCountersData;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function getPMSRatingCardDetails()
