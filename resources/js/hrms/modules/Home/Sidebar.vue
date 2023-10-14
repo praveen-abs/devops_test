@@ -224,7 +224,7 @@ onMounted(() => {
                 {
                     label: 'Performance',
                     subItems: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? [
-                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.SELF_APPRAISAL === 1 ? { label: 'Self Appraisal', to: 'employee-appraisal' } : null : null : null,
+                        res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.SELF_APPRAISAL === 1 ? { label: 'Self Appraisal', to: 'Performance/employee-appraisal' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.TEAM_APPRAISAL === 1 ? { label: 'Team Appraisal', to: 'team-appraisal' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.ORG_APPRAISAL === 1 ? { label: 'Org Appraisal', to: 'pms' } : null : null : null,
                         res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? findSelectedModuleIsEnabled(res.data.data, 'PMS') ? findSelectedModuleIsEnabled(res.data.data, 'PMS').sub_module_name.PMS_CONFIG === 1 ? { label: 'PMS Config', to: 'config-pms' } : null : null : null,
@@ -242,7 +242,7 @@ onMounted(() => {
                     {
                         label: 'Payroll',
                         subItems: [
-                            findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.ANALYTICS === 1 ? { label: 'Analytics', to: 'payroll-analytics' } : null : null,
+                            findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.ANALYTICS === 1 ? { label: 'Analytics', to: 'Payroll/payroll-analytics' } : null : null,
                             findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.PAYRUN === 1 ? { label: 'Pay Run', to: 'Payroll/PayRun' } : null : null,
                             findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.MANAGE_PAYSLIPS === 1 ? { label: 'Manage Payslip', to: 'Payroll/Manage-Payslips' } : null : null,
                             findSelectedModuleIsEnabled(res.data.data, 'PAYROLL') ? findSelectedModuleIsEnabled(res.data.data, 'PAYROLL').sub_module_name.CLAIM === 1 ? { label: 'Claim', to: 'payroll-claims' } : null : null,

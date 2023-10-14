@@ -1,5 +1,6 @@
 <template>
-    <div class="w-full" v-if="route.params.module == 'null'">
+     <!-- v-if="route.params.module == 'null'" -->
+    <div class="w-full">
         <!--Current  Financial Year  calculation -->
         <div class="">
             <CurrentFinancialYearStatus />

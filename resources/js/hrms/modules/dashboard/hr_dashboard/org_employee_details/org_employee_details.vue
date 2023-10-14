@@ -66,14 +66,14 @@
         <div class="" v-if="Object.values(useDashboard.ShowEmployeeStatuswise).length >= 1">
             <DataTable scrollable scrollHeight="h-[500px]"
                 :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
-                <Column field="user_code" header="Employee Code"></Column>
-                <Column field="name" header="Employee Name"
+                <Column field="Employee_Code" header="Employee Code"></Column>
+                <Column field="Employee_Name" header="Employee Name"
                     style="text-align: left !important;white-space: no !important;"></Column>
-                <Column field="department_name" header="Department"
+                <Column field="Department" header="Department"
                     style="text-align: left !important;white-space: no !important;"></Column>
-                <Column field="process" header="Process" style="text-align: left !important;white-space: no !important;">
+                <Column field="Process" header="Process" style="text-align: left !important;white-space: no !important;">
                 </Column>
-                <Column field="location" header="Work location"
+                <Column field="Location" header="Work location"
                     style="text-align: left !important;white-space: no !important;"></Column>
             </DataTable>
         </div>

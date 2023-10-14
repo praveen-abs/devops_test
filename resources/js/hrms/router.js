@@ -134,11 +134,23 @@ const routes = [
                 component: () => import('../hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue'),
             },
 
+            // Performance 
+            {
+                path: '/Performance/employee-appraisal',
+                name: 'Performance-employee-appraisal',
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+
             // payroll
             {
                 path: '/Payroll/Manage-Payslips',
                 name: 'Payroll-Manage-Payslips',
                 component: () => import('../hrms/modules/manage_payslips/ManagePayslips.vue'),
+            },
+            {
+                path: '/Payroll/payroll-analytics',
+                name: 'payroll-analytics',
+                component: () => import('../hrms/components/PageNotFound.vue'),
             },
             {
                 path: '/Payroll/PayRun',
