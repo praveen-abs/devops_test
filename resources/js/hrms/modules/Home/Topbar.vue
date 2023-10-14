@@ -17,7 +17,7 @@
                             @mouseover="useDashboard.canShowClients = !useDashboard.canShowClients"
                             @mouseleave="useDashboard.canShowClients = false"> {{
                                 currentlySelectedClient.client_fullname ? currentlySelectedClient.client_fullname.substring(0,
-                                    20) + '..' : '' }}</p>
+                                    20) + '..'+ '    ' + currentlySelectedClient.abs_client_code : '' }}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-8 h-8 font-semibold text-green-600">
                             <path stroke-linecap="round" stroke-linejoin="round"

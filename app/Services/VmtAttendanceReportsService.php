@@ -2233,7 +2233,7 @@ class VmtAttendanceReportsService
                 $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
             }
             $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-            $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
+            $heading_dates = array("Employee Code", "Employee Name", "Designation", "DOJ");
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
             $reportresponse['rows'] = array();
             array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
@@ -2244,11 +2244,14 @@ class VmtAttendanceReportsService
                 array_push($heading_dates, 'Total EG');
             }
             array_push($heading_dates, "Total Payable Days");
-            $reportresponse['headings'] = $heading_dates;
+            $reportresponse['headers'] = $heading_dates;
             foreach ($users as $single_user) {
                 $current_date = Carbon::parse($start_date);
                 $temp_ar = array();
-                array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
+                $temp_ar['Employee Code'] = $single_user->user_code;
+                $temp_ar['Employee Name'] =$single_user->name;
+                $temp_ar['Designation']= $single_user->designation;
+                $temp_ar['DOJ']= $single_user->doj;
                 $total_weekoff = 0;
                 $total_holiday = 0;
                 $total_present = 0;
@@ -2287,19 +2290,26 @@ class VmtAttendanceReportsService
                   //  dd($total_half_day);
                 $total_on_duty = VmtEmpAttIntrTable::where('user_id', $single_user->id)
                     ->whereBetween('date', [$start_date, $end_date])->Where('status', 'like', '%OD%')->count();
-                array_push($temp_ar, $total_weekoff, $total_holiday,   $total_present, $total_absent, $total_late_lop,  $total_leave, $total_half_day, $total_on_duty);
+              $temp_ar['Total Weekoff']=$total_weekoff;
+              $temp_ar['Total Holiday']= $total_holiday;
+              $temp_ar['Total Present']=  $total_present;
+              $temp_ar['Total Absent']= $total_absent;
+              $temp_ar['Total Late LOP']= $total_late_lop;
+              $temp_ar['Total Leave']=  $total_leave;
+              $temp_ar['Total Halfday']= $total_half_day;
+              $temp_ar['Total On Duty']= $total_on_duty;
                 if ($attendance_setting_details['lc_status'] == 1) {
                     $total_LC  = VmtEmpAttIntrTable::where('user_id', $single_user->id)
                         ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', '%LC%')->count();
-                    array_push($temp_ar, $total_LC);
+                $temp_ar['Total LC']= $total_LC;
                 }
                 if ($attendance_setting_details['eg_status'] == 1) {
                     $total_EG = VmtEmpAttIntrTable::where('user_id', $single_user->id)
                         ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', '%EG%')->count();
-                    array_push($temp_ar, $total_EG);
+                        $temp_ar['Total EG']=$total_EG;
                 }
                 $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day + $total_on_duty) - $total_late_lop;
-                array_push($temp_ar, $total_payable_days);
+                $temp_ar['Total Payable Days']= $total_payable_days;
                 array_push($reportresponse['rows'], $temp_ar);
                 unset($temp_ar);
             }
