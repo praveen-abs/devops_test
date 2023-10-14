@@ -105,7 +105,7 @@ class VmtPayrollService{
             ];
 
             //Get all the employees earnings details
-            $employees_payroll_details = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+            $query_employees_payroll_details = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
                             ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
                             ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
                             ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
@@ -118,16 +118,59 @@ class VmtPayrollService{
                             //->where('user_code', 'BA020')
                             ->where('users.is_ssa','0')
                             ->whereYear('payroll_date', $payroll_year)
-                            ->whereMonth('payroll_date', $payroll_month)
-                            ->get();
+                            ->whereMonth('payroll_date', $payroll_month);
 
-            dd($employees_payroll_details->toArray());
 
-            $total_employees_payables = 0;
 
-            foreach($employees_payroll_details as $singleEmployeePayrollDetails){
-               // $total_employees_payables = $singleEmployeePayrollDetails->
-            }
+           $array_overall_earnings = $query_employees_payroll_details->get(
+                [
+                    //'users.user_code as User-code',
+                    //'users.name as Name',
+                    'vmt_employee_payslip_v2.earned_basic as Basic',
+                    'vmt_employee_payslip_v2.earned_hra as HRA',
+                    'vmt_employee_payslip_v2.earned_stats_bonus as Statuory Bonus',
+                    'vmt_employee_payslip_v2.other_earnings as Other Earnings',
+                    'vmt_employee_payslip_v2.earned_spl_alw as Special Allowance',
+                    'vmt_employee_payslip_v2.travel_conveyance as Travel Conveyance ',
+                    'vmt_employee_payslip_v2.earned_child_edu_allowance as Child Education Allowance',
+                    'vmt_employee_payslip_v2.communication_allowance_earned as Communication Allowance',
+                    'vmt_employee_payslip_v2.food_allowance_earned as Food Allowance',
+                    'vmt_employee_payslip_v2.vehicle_reimbursement_earned as Vehicle Reimbursement',
+                    'vmt_employee_payslip_v2.driver_salary_earned as Driver Salary',
+                    'vmt_employee_payslip_v2.earned_lta as Leave Travel Allowance',
+                    'vmt_employee_payslip_v2.other_allowance_earned as Other Allowance',
+                    'vmt_employee_payslip_v2.overtime as Overtime',
+                ]
+            )->toArray();
+
+            $array_overall_contributions = $query_employees_payroll_details
+            ->get(
+                [
+                    'vmt_employee_payslip_v2.epf_ee as EPF Employee',
+                    'vmt_employee_payslip_v2.employee_esic as ESIC Employee ',
+                    'vmt_employee_payslip_v2.vpf as VPF',
+                ]
+            )->toArray();
+
+
+            $array_overall_taxdeduction = $query_employees_payroll_details
+            ->get(
+                [
+                    'vmt_employee_payslip_v2.prof_tax as Professional Tax',
+                    'vmt_employee_payslip_v2.lwf as LWF',
+                    'vmt_employee_payslip_v2.income_tax as Income Tax',
+                    'vmt_employee_payslip_v2.sal_adv as Salary Advance',
+                    'vmt_employee_payslip_v2.canteen_dedn as Canteen Deduction',
+                    'vmt_employee_payslip_v2.other_deduc as Other Deduction',
+                ]
+            )->toArray();
+
+
+            $response_data["employee_payables"]["total"] = $this->calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_taxdeduction);
+
+            // foreach($employees_payroll_details as $singleEmployeePayrollDetails){
+            //     //$total_employees_payables = $singleEmployeePayrollDetails->
+            // }
 
 
             //Calculate the total payables for the give employees
@@ -147,7 +190,8 @@ class VmtPayrollService{
             return response()->json([
                 "status" => "failure",
                 "message" => "Unable to fetch Payroll Outcome details",
-                "data" => $e->getmessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ],400);
         }
 
@@ -155,5 +199,72 @@ class VmtPayrollService{
 
     }
 
+    private function calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_deductions){
+        //dd(json_encode($array_overall_earnings). "\n ------ \n ". json_encode($array_overall_contributions). "\n ------ \n ". json_encode($array_overall_deductions) );
 
+        $validator = Validator::make(
+            $data = [
+                'array_overall_earnings' => $array_overall_earnings,
+                'array_overall_contributions' => $array_overall_contributions,
+                'array_overall_deductions' => $array_overall_deductions
+            ],
+            $rules = [
+                'array_overall_earnings' => 'required|array',
+                'array_overall_contributions' => 'required|array',
+                'array_overall_deductions' => 'required|array',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'array' => 'Field :attribute is not an array',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
+
+        $overall_net_salary = 0;
+        $overall_earnings = 0;
+        $overall_contributions = 0;
+        $overall_deductions = 0;
+
+        //calculate the overall earnings
+        foreach($array_overall_earnings as $singleEmployeeEarnings){
+
+            foreach($singleEmployeeEarnings as $key => $value)
+            {
+                if(!empty($value))
+                    $overall_earnings += $value;
+
+            }
+        }
+
+        //calculate the overall contributions
+        foreach($array_overall_contributions as $singleEmployeeContributions){
+
+            foreach($singleEmployeeContributions as $key => $value)
+            {
+                if(!empty($value))
+                    $overall_contributions += $value;
+
+            }
+        }
+
+        foreach($array_overall_deductions as $singleEmployeeDeductions){
+
+            foreach($singleEmployeeDeductions as $key => $value)
+            {
+                if(!empty($value))
+                    $overall_deductions += $value;
+
+            }
+        }
+
+        $overall_net_salary = $overall_earnings - $overall_contributions - $overall_deductions;
+
+        return $overall_net_salary;
+
+
+    }
 }
