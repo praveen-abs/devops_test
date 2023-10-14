@@ -3727,7 +3727,11 @@ class VmtAttendanceService
             for ($i = 0; $i < count($query_employees_leaves); $i++) {
 
                 $reviewer_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
-                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id', $query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
+                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id', $query_employees_leaves[$i]["reviewer_user_id"])->first();
+                if(!empty($reviewer_designation))
+                    $reviewer_designation =$reviewer_designation->designation;
+                else
+                    $reviewer_designation = "";
                 $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
                 $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
@@ -3755,7 +3759,7 @@ class VmtAttendanceService
             // dd($e);
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ getEmployeeLeaveDetails() ] ",
+                'message' => "Error[ getEmployeeLeaveDetails() ] " . $e->getMessage(),
                 'data' => $e
             ]);
         }
@@ -3858,8 +3862,8 @@ class VmtAttendanceService
             // dd($e);
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ getTeamEmployeesLeaveDetails() ] ",
-                'data' => $e
+                'message' => "Error[ getTeamEmployeesLeaveDetails() ] " . $e->getMessage(),
+                'data' => $e->getLine(),
             ]);
         }
     }
