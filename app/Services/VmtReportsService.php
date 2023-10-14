@@ -88,11 +88,11 @@ class VmtReportsservice
             }
             // dd($client_id);
 
-            if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
-            } else {
-                $active_status = $active_status;
-            }
+            // if (empty($active_status)) {
+            //     $active_status = ['1', '0', '-1'];
+            // } else {
+            //     $active_status = $active_status;
+            // }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
             }
@@ -120,11 +120,14 @@ class VmtReportsservice
                 ->where('users.is_ssa','=','0')
                 ->where('vmt_employee_details.doj', '<', $date_req)
                 ->whereIn('users.client_id', $client_id)
-                ->whereIn('users.active', $active_status)
-                ->whereIn('vmt_employee_office_details.department_id', $get_department)
                 ->get();
 
-
+                if (!empty($active_status)) {
+                    $emp_ctc_detail =  $emp_ctc_detail->whereIn('active', $active_status);
+                }
+                // if (!empty($department_id)) {
+                //     $emp_ctc_detail = $emp_ctc_detail->whereIn('vmt_employee_office_details.department_id', $department_id);
+                // }
 
             foreach ($emp_ctc_detail as $singleemployeedata) {
                 $temp_ar['Employee Code'] = $singleemployeedata->user_code;
@@ -238,43 +241,35 @@ class VmtReportsservice
                 $client_id =  $client_id;
             }
 
-
-            if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
-            } else {
-                $active_status = $active_status;
-            }
             if (empty($date_req)) {
                 $date_req = Carbon::now()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
             $date = Carbon::now()->format('M-Y');
-            //$client_id = array(1);
             $Category = 'All';
             $processed_array = array();
             $response = array();
             $headings = array();
             $type = '';
+            
             $temp_ar = array();
-            // dd($date_req);
-            // $date_req ='2022-05-01';
-            $emp_master_detail = User::join('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
-                ->rightJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
+            $emp_master_detail = User::leftjoin('vmt_employee_details as employee', 'employee.userid', '=', 'users.id')
+                ->leftJoin('vmt_employee_office_details as office', 'office.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_compensatory_details as compensatory', 'compensatory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_employee_statutory_details as statutory', 'statutory.user_id', '=', 'users.id')
                 ->leftJoin('vmt_banks as banks', 'banks.id', '=', 'employee.bank_id')
                 ->leftJoin('vmt_department as department', 'department.id', '=', 'office.department_id')
                 ->where('users.is_ssa','=','0')
-                ->whereIn('users.client_id', $client_id)
-                ->whereDate('employee.doj', '<', $date_req)
-                ->whereIn('users.active', $active_status)
-                ->whereIn('office.department_id', $get_department)
-                ->get([
+                ->whereDate('employee.doj', '<', $date_req);
+                // ->whereIn('users.client_id', $client_id)
+               
+                if (!empty($active_status)) {
+                    $emp_master_detail =  $emp_master_detail->whereIn('active', $active_status);
+                }
+                if (!empty($department_id)) {
+                    $emp_master_detail = $emp_master_detail->whereIn('office.department_id', $department_id);
+                }
+                $emp_master_detail = $emp_master_detail ->get([
                     'users.user_code as user_code', 'users.name as name', 'employee.gender as gender', 'employee.dob as dob', 'employee.doj as doj', 'users.active', 'employee.dol', 'employee.nationality', 'office.designation', 'office.department_id', 'office.officical_mail',
                     'office.official_mobile', 'office.l1_manager_code', 'office.work_location', 'employee.aadhar_number', 'employee.pan_number', 'statutory.uan_number', 'statutory.epf_number', 'statutory.esic_number',
                     'employee.mobile_number', 'users.email', 'employee.physically_challenged', 'employee.blood_group_id', 'banks.bank_name', 'employee.bank_account_number', 'employee.bank_ifsc_code', 'employee.no_of_children',
@@ -282,11 +277,10 @@ class VmtReportsservice
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
                     'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
-                
+
             foreach ($emp_master_detail as $single_details) {
                 // dd($single_details);
                 $temp_ar['Employee Code'] = $single_details->user_code;
-                // dd(  $temp_ar);
                 $temp_ar['Employee Name'] = $single_details->name;
                 $temp_ar['Gender'] = strtoupper($single_details->gender);
                 $temp_ar['DOB'] = Carbon::parse($single_details->dob)->format('d-M-Y');
@@ -299,7 +293,13 @@ class VmtReportsservice
                     $temp_ar['Employee Status'] = 'Not Yet Active';
                 
                 }
+                if(!empty($single_details->dol)){
                 $temp_ar['Last Working Day'] = carbon::parse($single_details->dol)->format('d-M-Y');
+                }else
+                {
+                    $temp_ar['Last Working Day']  = "-";
+
+                }
                 $temp_ar['Nationality'] = $single_details->nationality;
                 // $temp_ar['legal entity'] = $single_details->;
                 $temp_ar['Designation'] = $single_details->designation;
