@@ -4,11 +4,11 @@
             <h1 class=" text-black text-[24px] font-semibold ">Attendance Reports</h1>
             <div class="flex items-center ">
                 <button @click="EmployeeMaster.clearfilterBtn(Reports_store.activetab),Reports_store.clearDataTable()"
-                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] bg-[#F9BE00] mx-2 rounded-[4px] "><i
+                    class=" flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] !bg-[#E6E6E6] mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-times"></i> Clear Filter</button>
                         <!-- useEmployeeReport.updateEmployeeApplyFilter(activetab) -->
                         <button @click="Reports_store.updateAttendanceReports(Reports_store.activetab)"
-                    class="my-2 flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px] !bg-[#E6E6E6] mx-2 rounded-[4px] "><i
+                    class="my-2 flex items-center text-[#000] !font-semibold !font-['poppins'] text-[12px] px-3 py-2 border-[1px]  bg-[#F9BE00]  mx-2 rounded-[4px] "><i
                         class="mr-2 pi pi-filter"></i> Run</button>
             </div>
         </div>
