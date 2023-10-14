@@ -91,7 +91,7 @@ class VmtAttendanceService
             if (empty($manager_user_code)) {
                 if (empty($month) && empty($year)){
 
-                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',array_keys($map_allEmployees->toarray()))->where('status',"Pending")->get();
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',array_keys($map_allEmployees->toarray()))->get();
 
                 }else{
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
