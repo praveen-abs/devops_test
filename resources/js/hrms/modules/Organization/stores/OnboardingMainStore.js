@@ -93,8 +93,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                     if (onboardingType == 'quick') {
                         if (validateArrays(currentlyImportFileHeaders, quickOnboardingHeaders.value)) {
                             type.value = 'quick'
-                            router.push({ path: `/import/${'quickOnboarding'}` }
-                            )
+                            router.replace('/Organization/import')
                             canShowloading.value = false
                         } else {
                             canShowloading.value = false
@@ -109,7 +108,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                         if (onboardingType == 'bulk') {
                             type.value = 'bulk'
                             if (validateArrays(currentlyImportFileHeaders, bulkOnboardingHeaders.value)) {
-                                router.push({ path: `/import/${'bulkOnboarding'}` })
+                                router.replace('/Organization/import')
                                 canShowloading.value = false
                             } else {
                                 canShowloading.value = false
