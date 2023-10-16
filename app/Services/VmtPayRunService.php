@@ -73,18 +73,18 @@ class VmtPayRunService
             //  dd($users);
 
             $users_data = array();
-            foreach($users as $key => $single_user){
+            foreach ($users as $key => $single_user) {
 
-                     if($single_user->dol != null){
+                if ($single_user->dol != null) {
 
-                        if($single_user->dol > $start_date){
+                    if ($single_user->dol > $start_date) {
 
-                            $users_data[$key] = $single_user;
-                        }
-                     }else{
-
-                        $users_data[$key] =$single_user;
+                        $users_data[$key] = $single_user;
                     }
+                } else {
+
+                    $users_data[$key] = $single_user;
+                }
             }
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $attendance_setting_details =  $this->attendance_report_service->attendanceSettingsinfos(null);
@@ -124,7 +124,7 @@ class VmtPayRunService
                     $current_day = $current_date->format('d') . ' - ' .  $current_date->format('l');
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
                         $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
-                        if(empty($att_detail)){
+                        if (empty($att_detail)) {
                             continue;
                         }
                         //   dd($temp_ar);
@@ -133,7 +133,7 @@ class VmtPayRunService
                         //  }
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
-                        if ($sts_ar[0] == 'P') {
+                        if ($sts_ar[0] == 'P' || $sts_ar[0] == 'A') {
                             if (count($sts_ar) != 1) {
                                 if (in_array('LC', $sts_ar)) {
                                     $total_LC =   $total_LC + 1;
@@ -146,7 +146,11 @@ class VmtPayRunService
                                 // if (in_array('MIP', $sts_ar)) {
                                 // }
                             }
-                            $total_present = $total_present + 1;
+                            if ($sts_ar[0] == 'P') {
+                                $total_present = $total_present + 1;
+                            } else {
+                                $total_absent = $total_absent + 1;
+                            }
                         } elseif (
                             $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
                             $status == 'OD' || $status == 'PI' || $status == 'CO' || $status == 'CL' || $status == 'SL' || $status == 'FO L'
