@@ -56,7 +56,7 @@ class VmtAttendanceService
                 'year' => $year,
             ],
             $rules = [
-                'manager_user_code' => 'required|exists:users,user_code',
+                'manager_user_code' => 'nullable|exists:users,user_code',
                 'month' => 'required',
                 'year' => 'required',
             ],
@@ -67,6 +67,14 @@ class VmtAttendanceService
                 'in' => 'Field :attribute is invalid',
             ]
         );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
 
         try {
 
@@ -121,16 +129,19 @@ class VmtAttendanceService
            // dd($allEmployees_lateComing->toArray());
 
             foreach ($allEmployees_lateComing as $singleItem) {
-
+                // dd($singleItem);
                 //check whether user_id from regularization table exists in USERS table
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                     $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
 
-                    //If reviewer_id = 0, then its not yet reviewed
-                    if ($singleItem->reviewer_id != 0) {
+                    //If reviewer_id = 0, then its not yet reviewed4
+                    // dd($singleItem->reviewer_id );
+                    if (array_key_exists($singleItem->reviewer_id, $map_allEmployees->toArray())) {
+
                         $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                        // dd($singleItem->reviewer_name);
                         $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
                     }
                 } else {
@@ -144,21 +155,18 @@ class VmtAttendanceService
             //     "message"=>"",
             //     "data"=>$allEmployees_lateComing
             // ];
-
+                // dd($allEmployees_lateComing);
             return $allEmployees_lateComing;
 
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching Attendance Regularization data",
-                "data" => $e->getTraceAsString(),
+                "error" => $e->getMessage().' | File : '.$e->getFile().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTrace(),
             ]);
         }
     }
-
-
-
-
 
     public function fetchAbsentRegularizationData($month, $year, $manager_user_code = null)
     {
@@ -443,7 +451,8 @@ class VmtAttendanceService
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching employee leave balance",
-                "data" => $e,
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3249,7 +3258,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'success',
                 'message' => 'Error while getting latest attendance status',
-                'data'   => $e->getmessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3677,7 +3687,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getEmployeeWorkShiftTimings() ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3737,7 +3748,8 @@ class VmtAttendanceService
             return response()->json([
                 "status" => "failure",
                 "message" => "",
-                "data" =>  ''
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3817,7 +3829,11 @@ class VmtAttendanceService
             for ($i = 0; $i < count($query_employees_leaves); $i++) {
 
                 $reviewer_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
-                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id', $query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
+                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id', $query_employees_leaves[$i]["reviewer_user_id"])->first();
+                if(!empty($reviewer_designation))
+                    $reviewer_designation =$reviewer_designation->designation;
+                else
+                    $reviewer_designation = "";
                 $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
                 $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
@@ -3845,8 +3861,9 @@ class VmtAttendanceService
             // dd($e);
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ getEmployeeLeaveDetails() ] ",
-                'data' => $e
+                'message' => "Error[ getEmployeeLeaveDetails() ] " . $e->getMessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3948,8 +3965,9 @@ class VmtAttendanceService
             // dd($e);
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ getTeamEmployeesLeaveDetails() ] ",
-                'data' => $e
+                'message' => "Error[ getTeamEmployeesLeaveDetails() ] " . $e->getMessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4051,7 +4069,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getAllEmployeesLeaveDetails() ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4475,7 +4494,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getCountForAttRegularization ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4517,7 +4537,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getCountForAttRegularization ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -5172,7 +5193,8 @@ class VmtAttendanceService
             return $reponse = ([
                 'status' => 'failure',
                 'message' => 'Error While Fetch Employees Data',
-                'data' => '$e->getmessage()."  ".$e->getLine ',
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
