@@ -1288,6 +1288,7 @@ class VmtAttendanceService
                             ->whereDate('date', $dateString)
                             ->where('user_Id', $user_code)
                             ->first(['check_in_time']);
+
                     } else //If direction is only "in" and "out"
                     {
                         $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -1520,9 +1521,15 @@ class VmtAttendanceService
 
                 //dd($query_workShifts[$currentdate_workshift]->shift_start_time);
                 //dd( $attendanceResponseArray);
+
+                //
+
+
+
                 $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
                 $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
                 //dd($checkin_time);
+                $current_time = carbon::now()->format('H:i:s');
 
                 // dd(!empty($attendanceResponseArray[$key]['vmt_employee_workshift_id']));
                 //Calculate LC, EG only if the current day shifttype is found. If no shifttype found, dont calculate LC, EG. NEED TO CORRECT IT MANUALLY
@@ -1533,6 +1540,26 @@ class VmtAttendanceService
 
                     $shiftStartTime  = Carbon::parse($query_workShifts[$currentdate_workshift]->shift_start_time);
                     $shiftEndTime  = Carbon::parse($query_workShifts[$currentdate_workshift]->shift_end_time);
+
+                        if($attendanceResponseArray[$key]["checkin_time"] ==  $attendanceResponseArray[$key]["checkout_time"] &&($attendanceResponseArray[$key]["checkin_time"]!= null &&$attendanceResponseArray[$key]["checkout_time"]!= null)){
+                            $employee_checkIn_CheckOut = $this->findMIPOrMOP($attendanceResponseArray[$key]["checkin_time"], $shiftStartTime, $shiftEndTime);
+
+                            $attendanceResponseArray[$key]["checkin_time"] =$employee_checkIn_CheckOut ["checkin_time"];
+                            $attendanceResponseArray[$key]["checkout_time"] =$employee_checkIn_CheckOut ["checkout_time"];
+
+
+                            if(!empty($employee_checkIn_CheckOut ["checkin_time"])){
+                                $attendanceResponseArray[$key]["attendance_mode_checkin"] =  $attendanceResponseArray[$key]["attendance_mode_checkin"];
+                                $attendanceResponseArray[$key]["attendance_mode_checkout"] = "";
+                            }else{
+                                $attendanceResponseArray[$key]["attendance_mode_checkin"] = "";
+                                $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendanceResponseArray[$key]["attendance_mode_checkout"];
+                            }
+
+
+                            $checkin_time = $employee_checkIn_CheckOut ["checkin_time"];
+                            $checkout_time = $employee_checkIn_CheckOut ["checkout_time"];
+                        }
 
                     //Attendance regularization check : When checkin and checkout is null
                     if (empty($checkin_time) && empty($checkout_time)) {
@@ -1626,7 +1653,7 @@ class VmtAttendanceService
                         $attendanceResponseArray[$key]["absent_status"] = $t_leaveRequestDetails->status;
                         $attendanceResponseArray[$key]["leave_type"] = $t_leaveRequestDetails->leave_type;
                     }
-                } elseif ($checkin_time != null && $checkout_time == null) {
+                } elseif ($checkin_time != null && $checkout_time == null && $current_time >= $shiftEndTime  ) {
 
                     //Since its MOP
                     $attendanceResponseArray[$key]["isMOP"] = true;
@@ -1671,9 +1698,9 @@ class VmtAttendanceService
                     }
                 }
             } //for each
-
+            $employee_Lc_expire_status = $this->processOutdatedPendingAttRegAsVoid($attendanceResponseArray);
             // dd($attendanceResponseArray);
-
+            $attendanceResponseArray =$employee_Lc_expire_status;
             return $response =[
                 'status' => 'success',
                 'message' => 'Attendance Monthly Report fetched successfully',
@@ -2045,6 +2072,22 @@ class VmtAttendanceService
          Get attendance stats data for single month
 
      */
+    public function findMIPOrMOP($time, $shiftStartTime, $shiftEndTime)
+    {
+        $response = array();
+        $shift_start_time = $shiftStartTime->subHours(1)->format('Y-m-d H:i:0');
+        $first_half_end_time =  $shiftStartTime->addHours(5);
+
+        if (Carbon::parse($time)->between(Carbon::parse($shift_start_time), $first_half_end_time, true)) {
+            $response['checkin_time'] = $time;
+            $response['checkout_time'] = null;
+        } else {
+            $response['checkin_time'] = null;
+            $response['checkout_time'] = $time;
+        }
+        return $response;
+    }
+
     public function fetchAttendanceMonthStatsReport($user_code, $year, $month)
     {
 
@@ -5170,6 +5213,52 @@ class VmtAttendanceService
                 "status" => "failure",
                 "message" => "Error while fetching Attendance Regularization LC data",
                 "data" => $e,
+            ]);
+        }
+    }
+    public function processOutdatedPendingAttRegAsVoid($attendanceResponseArray)
+    {
+        try {
+
+            $response=array();
+        foreach($attendanceResponseArray as $key =>$single_day_Lcstatus){
+
+            $response[$key] =$single_day_Lcstatus;
+
+          if($single_day_Lcstatus['isLC'] && $single_day_Lcstatus['lc_status'] != 'Approved'){
+               $Lc_applied_date =  $single_day_Lcstatus['date'];
+               $LC_Expires_date =  Carbon::parse($single_day_Lcstatus['date'])->addDays(7)->format('Y-m-d');
+               $current_date = carbon::now()->format('Y-m-d');
+
+               if($current_date > $LC_Expires_date){
+
+                $response[$key]['is_Lc_Voided'] = true;
+
+               }else{
+                $response[$key]['is_Lc_Voided'] = false;
+               }
+          }else{
+            $response[$key]['is_Lc_Voided'] = false;
+           }
+
+        //    $Employees_lateComing = VmtEmployeeAttendanceRegularization::where('user_id',$single_day_Lcstatus['user_id'] )
+        //    ->whereYear('attendance_date', Carbon::parse($single_day_Lcstatus['date'])->format('Y'))
+        //    ->whereMonth('attendance_date', Carbon::parse($single_day_Lcstatus['date'])->format('m'))
+        //    ->where('regularization_type', 'LC')
+        //    ->where('reason_type', 'Permission')
+        //    ->whereIn('status', ['Approved', 'Pending'])
+        //    ->get();
+        //    $response[$key]['Lc_permission_count'] = $Employees_lateComing->count();
+           }
+
+           return $response;
+            // dd($response);
+              //$employees_lc_data
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching Attendance Regularization LC data",
+                "data" => $e->getMessage(),
             ]);
         }
     }
