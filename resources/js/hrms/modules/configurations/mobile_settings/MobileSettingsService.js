@@ -32,7 +32,7 @@ export const useMobileSettingsStore = defineStore("MobileSettingsStore", () => {
     }
 
      const getSessionClient = async () => {
-        await axios.get('session-sessionselectedclient').then(res => {
+        await axios.get(`${window.location.origin}/session-sessionselectedclient`).then(res => {
             console.log(res.data);
             currentlySelectedClient.value = res.data;
             if(res.data.id){
