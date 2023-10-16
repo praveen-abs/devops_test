@@ -200,7 +200,7 @@ class VmtPayrollTaxService
             ],
             $rules = [
                 'user_code' => 'required|exists:users,user_code',
-                'payroll_month' => 'required|exists:vmt_inv_f_emp_assigned,year',
+                'payroll_month' => 'required|exists:vmt_payroll,payroll_date',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
