@@ -204,8 +204,9 @@ class VmtEmployeeAttendanceController extends Controller
         if (!empty($request->start_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
+            $date = Carbon::parse($request->start_date)->format('d-M-Y') . ' - ' . Carbon::parse($request->end_date)->format('d-M-Y');
         } else {
-            $date = $request->date;
+            $date = Carbon::parse($request->date)->format('d-M-Y');
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
@@ -236,10 +237,9 @@ class VmtEmployeeAttendanceController extends Controller
         if (!empty($request->start_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
+            $date = Carbon::parse($request->start_date)->format('d-M-Y') . ' - ' . Carbon::parse($request->end_date)->format('d-M-Y');
         } else {
-            $date = $request->date;
-            // $client_logo_path = session()->get('client_logo_url');
-            //  $public_client_logo_path = public_path($client_logo_path);
+            $date = Carbon::parse($request->date)->format('d-M-Y');
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
@@ -272,7 +272,9 @@ class VmtEmployeeAttendanceController extends Controller
         if (!empty($request->start_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
+            $date = Carbon::parse($request->start_date)->format('d-M-Y') . ' - ' . Carbon::parse($request->end_date)->format('d-M-Y');
         } else {
+            $date = Carbon::parse($request->date)->format('d-M-Y');
             $date = $request->date;
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
@@ -307,8 +309,9 @@ class VmtEmployeeAttendanceController extends Controller
         if (!empty($request->start_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
+            $date = Carbon::parse($request->start_date)->format('d-M-Y') . ' - ' . Carbon::parse($request->end_date)->format('d-M-Y');
         } else {
-            $date = $request->date;
+            $date = Carbon::parse($request->date)->format('d-M-Y');
             $client_name = sessionGetSelectedClientName();
             $client_logo_path = VmtClientMaster::where('id', sessionGetSelectedClientid())->first()->client_logo;
             $public_client_logo_path = public_path($client_logo_path);

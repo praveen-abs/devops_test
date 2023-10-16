@@ -73,7 +73,7 @@ class EarlyGoingReportExport implements FromArray,WithStrictNullComparison,WithH
         $sheet->getStyle('C2:E2')->getFont()->setBold(true);
 
         //For Third Row
-        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".Carbon::parse($this->date)->format('d-M-Y'));
+        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".$this->date);
         $sheet->getStyle('C3:E3')->getFont()->setBold(true);
         //for fourth row
         // $sheet->mergeCells('C4:E4')->setCellValue('C4', "Category : ". $this->category);
