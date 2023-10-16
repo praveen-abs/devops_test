@@ -62,6 +62,35 @@ class VmtPMSModuleController_v3 extends Controller
     }
 
 
+    public function getReviewsDetails(){
+
+            $emp_code = 'PSC0020';
+
+           $config = ConfigPms::first();
+           $selected_level = json_decode($config->selected_reviewlevel,true);
+
+           $getmanager  = $this->getEmpManagerCode($emp_code);
+
+           $temp = array();
+           $res = array();
+           foreach($selected_level as $single_level){
+            if(isset($getmanager[$single_level['reviewer_level']])){
+            $temp["reviewer_id"] =  User::where('user_code',$getmanager[$single_level['reviewer_level']])->first()->id ?? null;
+            $temp["reviewer_user_code"] = $getmanager[$single_level['reviewer_level']] ?? null;
+            $temp["reviewer_level"] = $single_level['order'];
+            $temp["is_accepted"] = 0;
+            $temp["is_reviewed"] = 0;
+            $temp["rejection_comments"] = "";
+
+            array_push($res,$temp);
+            }
+        }
+            dd($res);
+
+           return json_encode($res,true);
+    }
+
+
     public function createKpiForm(Request $request){
 
           $config = ConfigPms::first();
@@ -92,6 +121,80 @@ class VmtPMSModuleController_v3 extends Controller
           return "Question Created Successfully";
 
     }
+
+    public function pmsFormApproveRejected(){
+
+        $json_value = [
+            [
+                "reviewer_id" => 194,
+                "reviewer_user_code" => "PSC0018",
+                "reviewer_level" => "1",
+                "is_accepted" => 0,
+                "is_reviewed" => 0,
+                "rejection_comments" => "",
+            ],
+            [
+                "reviewer_id" => 215,
+                "reviewer_user_code" => "LAL0013",
+                "reviewer_level" => "2",
+                "is_accepted" => 0,
+                "is_reviewed" => 0,
+                "rejection_comments" => "",
+
+            ]
+        ];
+
+        // dd($json_value);
+
+        foreach($json_value as $single_value){
+
+            dump($single_value);
+
+        }
+
+        // foreach ($all_pending_loans as $single_record) {
+        //     //dd($single_record);
+        //     $approver_flow = collect(json_decode($single_record->emp_approver_flow, true))->sortBy('order');
+
+        //     $ordered_approver_flow = array();
+        //     foreach ($approver_flow as $key => $value) {
+        //         $ordered_approver_flow[$value['order']] = $value;
+        //     }
+        //     // dd( $ordered_approver_flow);
+        //     foreach ($ordered_approver_flow as $single_ar) {
+
+        //         if ($user_id == $single_ar['approver']) {
+        //             $current_user_order = $single_ar['order'];
+        //             if ($current_user_order == 1) {
+        //                 if ($ordered_approver_flow[$current_user_order]['status'] == 0) {
+        //                     array_push($temp_ar, $single_record);
+        //                 }
+        //             } else if ($current_user_order == 2) {
+        //                 if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
+        //                     array_push($temp_ar, $single_record);
+        //                 }
+        //             } else if ($current_user_order == 3) {
+        //                 if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
+        //                     array_push($temp_ar, $single_record);
+        //                 }
+        //             } else if ($current_user_order == 4) {
+        //                 if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
+        //                     array_push($temp_ar, $single_record);
+        //                 }
+        //             }
+        //         }
+
+        //         // dd($current_user_order);
+        //         // dd();
+        //     }
+        //     // if($single_record->user_id==214)
+        //     // dd($temp_ar);
+
+        //     unset($ordered_approver_flow);
+        // }
+
+    }
+
 
     public function publishKpiform(Request $request){
 
