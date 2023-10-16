@@ -15,20 +15,20 @@ use Maatwebsite\Excel\Facades\Excel;
 class VmtPayrollTaxController extends Controller
 {
 
-public function getEmpCompValues(Request $request, VmtPayrollTaxService $vmtPayrollTaxService){
+public function getEmployeeTDSWorksheetAsPDF(Request $request, VmtPayrollTaxService $vmtPayrollTaxService){
 
     // $user_id = auth()->user()->id;
 
-    $month = "2023-08-01";
+    //$month = "2023-08-01";
 
     // $user_id = VmtInvFEmpAssigned::pluck('user_id')->toArray();
 
-    $user_id = '194';
+   // $user_id = '194';
 
     // $month = "2023-04-01";
 
 
-    return $vmtPayrollTaxService->getEmpCompValues($user_id,$month);
+    return $vmtPayrollTaxService->getEmployeeTDSWorksheetAsPDF($request->user_code,$request->payroll_month);
 
 }
 public function annualProjection(Request $request, VmtPayrollTaxService $vmtPayrollTaxService){

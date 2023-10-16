@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\VmtAPIAttendanceController;
 use App\Http\Controllers\Api\VmtAPIPaySlipController;
 use App\Http\Controllers\Api\VmtAPIProfilePagesController;
 use App\Http\Controllers\Api\VmtAPIInvestmentsController;
+use App\Http\Controllers\Api\VmtAPIPayrollTaxController;
 use App\Http\Controllers\Api\VmtApiNotificationsController;
 use App\Http\Controllers\Api\VmtAPIReimbursementsController;
 use App\Http\Controllers\Api\VmtAPILoanAndSalaryAdvanceController;
@@ -148,6 +149,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/investments/fetchHousePropertyDetails', [VmtAPIInvestmentsController::class, 'fetchHousePropertyDetails']);
     Route::post('/investments/fetchEmpRentalDetails', [VmtAPIInvestmentsController::class, 'fetchEmpRentalDetails']);
     Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class, 'deleteHousePropertyDetails']);
+
+
+    //TDS
+    Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class, 'deleteHousePropertyDetails']);
+    Route::post('/payroll/getEmployeeTDSWorksheetAsPDF', [VmtAPIPayrollTaxController::class, 'getEmployeeTDSWorksheetAsPDF']);
+
 
     //Notifications
     Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class, 'getNotifications']);

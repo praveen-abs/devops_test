@@ -521,7 +521,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //payrolltax calculation
 
-    Route::get('get_comp_value', [App\Http\Controllers\VmtPayrollTaxController::class, 'getEmpCompValues']);
+    Route::get('getEmployeeTDSWorksheetAsPDF', [App\Http\Controllers\VmtPayrollTaxController::class, 'getEmployeeTDSWorksheetAsPDF']);
 
     Route::get('annualProjection', [App\Http\Controllers\VmtPayrollTaxController::class, 'annualProjection']);
 
@@ -932,7 +932,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
     //mobile Settings
 
-    //Manual Attendance Fetching 
+    //Manual Attendance Fetching
     Route::get('/sync-att-intr-table',[App\Http\Controllers\VmtAttendanceControllerV2::class,'syncattintrtable'])->name('downloadDetailedAttendanceReport');
 
     Route::post('/updateEmployeesPermissionStatus', [App\Http\Controllers\VmtMasterConfigController::class, 'updateEmployeesPermissionStatus'])->name('updateEmployeesPermissionStatus');
