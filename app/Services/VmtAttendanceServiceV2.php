@@ -401,9 +401,11 @@ class VmtAttendanceServiceV2
                             } else {
                                 $checkout_time_ot = $checkout_time;
                             }
-                            if ($shiftStartTime->diffInMinutes($shiftEndTime) + $shift_settings->minimum_ot_working_mins <= Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot) && $checkout_time_ot != null &&  $checkin_time_ot != null) {
-                                $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
-                                //  dd($single_user->id,$checkin_time_ot,$checkout_time_ot,$ot_mins);
+                            if ($checkout_time_ot != null &&  $checkin_time_ot != null) {
+                                if ($shiftStartTime->diffInMinutes($shiftEndTime) + $shift_settings->minimum_ot_working_mins <= Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot)) {
+                                    $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                                    //  dd($single_user->id,$checkin_time_ot,$checkout_time_ot,$ot_mins);
+                                }
                             }
                         }
                         // dd($emp_ot_sts);
