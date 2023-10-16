@@ -167,7 +167,7 @@ class VmtReportsService
                 $temp_ar['Insurance'] =  round((int) $singleemployeedata->insurance) == 0 ? "0" : round((int) $singleemployeedata->insurance);
                 $temp_ar['LWFER'] = round((int)$singleemployeedata->labour_welfare_fund) == 0 ? "0" : round((int) $singleemployeedata->labour_welfare_fund);
                 $temp_ar['CTC'] = round((int) $singleemployeedata->cic) == 0 ? "0" : round((int) $singleemployeedata->cic);
-                $temp_ar['EPFEE'] = round((int)  $singleemployeedata->epf_employee) == 0 ? "0" : round((int) $singleemployeedata->epf_employee);
+                $temp_ar['EPFEE'] = round((int)  $singleemployeedata->epf_employee_contribution) == 0 ? "0" : round((int) $singleemployeedata->epf_employee_contribution);
                 $temp_ar['ESICEE'] = round((int)$singleemployeedata->esic_employee) == 0 ? "0" : round((int) $singleemployeedata->esic_employee);
                 $temp_ar['Income Tax'] = round((int)$singleemployeedata->Income_tax) == 0 ? "0" : round((int) $singleemployeedata->Income_tax);
                 $temp_ar['Professional Tax'] = round((int) $singleemployeedata->professional_tax) == 0 ? "0" : round((int) $singleemployeedata->professional_tax);
@@ -280,7 +280,7 @@ class VmtReportsService
                     'employee.mobile_number', 'users.email', 'employee.physically_challenged', 'employee.blood_group_id', 'banks.bank_name', 'employee.bank_account_number', 'employee.bank_ifsc_code', 'employee.no_of_children',
                     'employee.marital_status_id', 'employee.present_address', 'employee.permanent_address', 'compensatory.basic', 'compensatory.dearness_allowance', 'compensatory.hra', 'compensatory.child_education_allowance',
                     'compensatory.food_coupon', 'compensatory.washing_allowance', 'compensatory.special_allowance', 'compensatory.Statutory_bonus', 'compensatory.other_allowance', 'compensatory.lta', 'compensatory.driver_salary',
-                    'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
+                    'compensatory.gross', 'compensatory.epf_employer_contribution', 'compensatory.esic_employer_contribution', 'compensatory.labour_welfare_fund', 'compensatory.cic', 'compensatory.epf_employee_contribution', 'compensatory.esic_employee', 'compensatory.professional_tax', 'compensatory.Income_tax', 'compensatory.lwfee', 'compensatory.net_income'
                 ]);
                 
             foreach ($emp_master_detail as $single_details) {
@@ -386,7 +386,7 @@ class VmtReportsService
                 // $temp_ar[' employer Insurance'] = $single_details->;
                 $temp_ar['LWFER'] = round((int)$single_details->labour_welfare_fund) == 0 ? "0" : round((int) $single_details->labour_welfare_fund);
                 $temp_ar['CTC'] = round((int) $single_details->cic) == 0 ? "0" : round((int) $single_details->cic);
-                $temp_ar['EPFEE'] = round((int)  $single_details->epf_employee) == 0 ? "0" : round((int) $single_details->epf_employee);
+                $temp_ar['EPFEE'] = round((int)  $single_details->epf_employee_contribution) == 0 ? "0" : round((int) $single_details->epf_employee_contribution);
                 $temp_ar['ESICEE'] = round((int)$single_details->esic_employee) == 0 ? "0" : round((int) $single_details->esic_employee);
                 $temp_ar['Professional Tax'] = round((int) $single_details->professional_tax) == 0 ? "0" : round((int) $single_details->professional_tax);
                 $temp_ar['Income Tax'] = round((int)$single_details->Income_tax) == 0 ? "0" : round((int) $single_details->Income_tax);
