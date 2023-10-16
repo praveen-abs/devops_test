@@ -518,6 +518,9 @@ class VmtAttendanceServiceV2
 
                         if ($checking_time != null ||  $checkout_time != null) {
                             $attendance_status = 'P';
+                            if ($is_mip || $is_mop) {
+                                $attendance_status = 'A';
+                            }
                             if ($is_lc) {
                                 $attendance_status =  $attendance_status . '/LC';
                             }
@@ -535,8 +538,6 @@ class VmtAttendanceServiceV2
                         } else if ($is_holiday) {
                             $attendance_status = 'HO';
                         } else if ($is_leave) {
-                            // if($leave_type='leave')
-                            // dd($single_user);
                             $attendance_status = $leave_type;
                         }
                         $attendance_table->status = $attendance_status;
