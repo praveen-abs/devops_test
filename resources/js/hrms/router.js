@@ -74,6 +74,11 @@ const routes = [
                 component: () => import('../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'),
             },
             {
+                path: '/Organization/import',
+                name: 'import-onboarding',
+                component: () => import('../hrms/modules/Organization/QuickOnboarding/ImportQuickOnboarding.vue'),
+            },
+            {
                 path: '/Organization/manage-welcome-mails',
                 name: 'manage-welcome-mails',
                 component: () => import('../hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.vue'),
