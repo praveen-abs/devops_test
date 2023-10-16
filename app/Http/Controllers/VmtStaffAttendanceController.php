@@ -26,6 +26,13 @@ class VmtStaffAttendanceController extends Controller
             $array_result = array();
             $recentDeviceData = null;
 
+            foreach($current_client_list as $single_client)
+            {
+                //check if the current client is valid
+
+
+            }
+
             //For ESS :: Fetch Dunamis Contract using "attendanceDB_DMC" DB connection
             if(array_key_exists('DMC', $current_client_list)){
 
@@ -144,6 +151,7 @@ class VmtStaffAttendanceController extends Controller
                             "Client Name : " =>$recentDeviceData->att_server ,
                             "Start Date : " => $start_date
                         ];
+
             $data_count = 0;
 
            // dd($attendanceData);
@@ -153,12 +161,33 @@ class VmtStaffAttendanceController extends Controller
             }
 
             //Add the data count to the result array
-            array_push($array_result['DMC'] ,["Data Count : " =>$data_count]);
+            array_push($array_result[$att_client_name] ,["Data Count : " =>$data_count]);
 
-            //Remove the client name from this array\
-           // array_
+            return [
+                'status' => 'success',
+                'data' => $array_result
+            ];
+    }
+
+
+    private function getClientDBDetails($client_code){
+
+        if(empty($client_code)){
+            return null;
+        }
+
+        switch($client_code){
+            case "DMC":
+                return [
+                  "client_db_connection_name" => "attendanceDB_DMC" ,
+                  "att_client_name" => "dunamis"
+                ];
+            default:
+                return null;
+        }
 
     }
+
 
     // inserting device data in to vmt_staff_attenndance_device table
     protected function insertDataFromExternalAttendanceTable($data){
