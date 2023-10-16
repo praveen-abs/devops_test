@@ -402,9 +402,19 @@ class VmtAttendanceServiceV2
                                 $checkout_time_ot = $checkout_time;
                             }
                             if ($checkout_time_ot != null &&  $checkin_time_ot != null) {
-                                if ($shiftStartTime->diffInMinutes($shiftEndTime) + $shift_settings->minimum_ot_working_mins <= Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot)) {
-                                    $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
-                                    //  dd($single_user->id,$checkin_time_ot,$checkout_time_ot,$ot_mins);
+                                if ($shift_settings->ot_calculation_type == 'shift_time') {
+                                    $gross_hours = $shiftStartTime->diffInMinutes($checkout_time_ot);
+                                } else if ($shift_settings->ot_calculation_type == 'actual_time') {
+                                    $gross_hours = Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot);
+                                }
+                                if ($shiftStartTime->diffInMinutes($shiftEndTime) + $shift_settings->minimum_ot_working_mins <=  $gross_hours) {
+                                    if ($shift_settings->ot_calculation_type == 'shift_time') {
+                                        $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                                    } else if ($shift_settings->ot_calculation_type == 'actual_time') {
+                                        $shift_start_ot = $shiftStartTime->diffInMinutes(Carbon::parse($checkin_time_ot));
+                                        $shift_end_ot =  $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                                        $ot_mins = $shift_start_ot + $shift_end_ot;
+                                    }
                                 }
                             }
                         }
