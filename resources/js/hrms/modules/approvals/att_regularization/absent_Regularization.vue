@@ -152,6 +152,7 @@ const filters = ref({
 
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
+const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 onUpdated(() => {
     canShowConfirmation ? reviewer_comment.value = null : ''

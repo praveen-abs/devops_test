@@ -2,7 +2,7 @@
     <Toast />
     <LoadingSpinner v-if="UseAttendance.canShowLoadingScreen" class="absolute z-50 bg-white w-[100%] h-[100%]" />
     <div class="w-full">
-        <h6 class="mb-0 text-lg font-semibold ">Attendance Regularization Approvals</h6>
+        <h6 class="mb-0 text-[18px] font-semibold my-4 ">Attendance Regularization Approvals</h6>
         <div class="p-2 pb-0 my-2 mb-3 rounded-lg">
             <div class="flex justify-between">
                 <ul class="py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab"
