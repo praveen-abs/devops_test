@@ -1568,6 +1568,7 @@ class VmtAttendanceService
                 $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
                 //dd($checkin_time);
                 $current_time = carbon::now()->format('H:i:s');
+                $current_date = carbon::now()->format('Y-m-d');
 
                 // dd(!empty($attendanceResponseArray[$key]['vmt_employee_workshift_id']));
                 //Calculate LC, EG only if the current day shifttype is found. If no shifttype found, dont calculate LC, EG. NEED TO CORRECT IT MANUALLY
@@ -1697,7 +1698,7 @@ class VmtAttendanceService
                         $attendanceResponseArray[$key]["absent_status"] = $t_leaveRequestDetails->status;
                         $attendanceResponseArray[$key]["leave_type"] = $t_leaveRequestDetails->leave_type;
                     }
-                } elseif ($checkin_time != null && $checkout_time == null && $current_time >= $shiftEndTime) {
+                } elseif ($checkin_time != null && $checkout_time == null &&   $current_date != $attendanceResponseArray[$key]["date"]  ? $current_time < $shiftEndTime :$current_time >= $shiftEndTime) {
 
                     //Since its MOP
                     $attendanceResponseArray[$key]["isMOP"] = true;
