@@ -859,7 +859,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports-half-dayabsent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showHalfdayAbsentReport'])->name('showHalfdayAbsentReport');
 
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
-    Route::post('/fetch-detailed-attendance-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchDetailedAttendancedata'])->name('fetchDetailedAttendancedata');
+    Route::get('/fetch-detailed-attendance-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchDetailedAttendancedata'])->name('fetchDetailedAttendancedata');
     Route::post('/fetch-overtime-report-data', [\App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchOvertimeReportData']);
     Route::post('/fetch-EG-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchEGReportData']);
     Route::post('/fetch-absent-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAbsentReportData']);
