@@ -1115,11 +1115,11 @@ class VmtAttendanceController extends Controller
 
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAbsentRegularizationData(null, null, auth()->user()->user_code);
+            $response = $attendanceService->fetchAbsentRegularizationData($request->month,$request->year , auth()->user()->user_code);
         } else {
 
             //Fetch all data
-            $response = $attendanceService->fetchAbsentRegularizationData(null, null, null);
+            $response = $attendanceService->fetchAbsentRegularizationData($request->month,$request->year , null);
         }
 
         return $response;

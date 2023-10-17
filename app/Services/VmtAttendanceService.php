@@ -101,6 +101,7 @@ class VmtAttendanceService
 
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))->get();
                 } else {
+                   // dd(array_keys($map_allEmployees->toarray()));
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
                         ->whereMonth('attendance_date', $month)
                         ->whereIn('user_id', array_keys($map_allEmployees->toarray()))
@@ -146,14 +147,13 @@ class VmtAttendanceService
                 }
             }
 
-            // dd($allEmployees_lateComing);
-            // return [
-            //     "status"=>"success",
-            //     "message"=>"",
-            //     "data"=>$allEmployees_lateComing
-            // ];
-            // dd($allEmployees_lateComing);
-            return $allEmployees_lateComing;
+            return [
+                "status"=>"success",
+                "message"=>" Attendance data fetch successfully",
+                "data"=>$allEmployees_lateComing
+            ];
+            // // dd($allEmployees_lateComing);
+            // return $allEmployees_lateComing;
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
@@ -166,6 +166,35 @@ class VmtAttendanceService
 
     public function fetchAbsentRegularizationData($month, $year, $manager_user_code = null)
     {
+
+        $validator = Validator::make(
+            $data = [
+                'manager_user_code' => $manager_user_code,
+                'month' => $month,
+                'year' => $year,
+            ],
+            $rules = [
+                'manager_user_code' => 'nullable|exists:users,user_code',
+                'month' => 'required',
+                'year' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
 
         $client_id = null;
         if (!empty(session('client_id'))) {
@@ -181,7 +210,7 @@ class VmtAttendanceService
             $client_id = [auth()->user()->client_id];
         }
 
-        $map_allEmployees = User::where('active', '1')->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
+        $map_allEmployees = User::where('active', '1')->where('is_ssa',"0")->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
 
         $allEmployees_lateComing = null;
 
@@ -190,9 +219,10 @@ class VmtAttendanceService
             if (empty($month) && empty($year)) {
                 $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))->get();
             } else {
-                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereYear('attendance_date', $year)
-                    ->whereMonth('attendance_date', $month)
-                    ->get();
+                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))
+                ->whereYear('attendance_date', $year)
+                ->whereMonth('attendance_date', $month)
+                ->get();
             }
         } else {
             //If manager ID set, then show only the team level employees
@@ -231,13 +261,22 @@ class VmtAttendanceService
         }
 
         // dd($allEmployees_lateComing);
-        // return [
-        //     "status"=>"success",
-        //     "message"=>"",
-        //     "data"=>$allEmployees_lateComing
-        // ];
+        return [
+            "status"=>"success",
+            "message"=>"Absent data fetch successfully",
+            "data"=>$allEmployees_lateComing
+        ];
 
-        return $allEmployees_lateComing;
+        // return $allEmployees_lateComing;
+    } catch (\Exception $e) {
+
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error while fetching Absent Regularization data",
+            "error" => $e->getMessage() . ' | File : ' . $e->getFile() . ' | Line : ' . $e->getLine(),
+            "error_verbose" => $e->getTrace(),
+        ]);
+    }
     }
 
 
