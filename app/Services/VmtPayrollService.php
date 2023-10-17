@@ -122,8 +122,6 @@ class VmtPayrollService
                 ->where('users.is_ssa', '0')
                 ->whereYear('payroll_date', $payroll_year)
                 ->whereMonth('payroll_date', $payroll_month);
-            // dd( $query_employees_payroll_details);
-
 
             $array_overall_earnings = $query_employees_payroll_details->get(
                 [
@@ -174,6 +172,7 @@ class VmtPayrollService
             $overall_employer_epf = 0;
             $overall_employee_esic = 0;
             $overall_employer_esic = 0;
+            $other_charges = 0;
             $overall_tax = 0;
             $over_all_employee = 0;
             $response = array();
@@ -181,11 +180,13 @@ class VmtPayrollService
                 ->get([
                     'vmt_employee_payslip_v2.epfr',
                     'vmt_employee_payslip_v2.epf_ee',
+                    'vmt_employee_payslip_v2.pf_admin_charges',
                 ]);
             $array_overall_esic = $query_employees_payroll_details
                 ->get([
                     'vmt_employee_payslip_v2.employer_esi',
                     'vmt_employee_payslip_v2.employee_esic',
+                    'vmt_employee_payslip_v2.pf_admin_charges',
 
                 ]);
             $array_overall_PT = $query_employees_payroll_details
@@ -196,26 +197,28 @@ class VmtPayrollService
             foreach ($array_overall_epf as $single_employee_epf) {
                 $overall_employer_epf = $overall_employer_epf + $single_employee_epf->epfr;
                 $overall_employee_epf = $overall_employee_epf + $single_employee_epf->epf_ee;
+                $other_charges  = $other_charges + $single_employee_epf->pf_admin_charges;
             }
             foreach ($array_overall_esic as $single_employee_esic) {
                 $overall_employee_esic = $overall_employee_esic + $single_employee_esic->employee_esic;
                 $overall_employer_esic = $overall_employer_esic + $single_employee_esic->employer_esi;
+                $other_charges  = $other_charges + $single_employee_epf->pf_admin_charges;
             }
-
             foreach ($array_overall_PT as $simple_employee_tax) {
                 $overall_tax = $overall_tax + $simple_employee_tax->prof_tax;
                 $over_all_employee++;
             }
             $EPF["Employee Share"] = $overall_employee_epf;
             $EPF["Employer Share"] = $overall_employer_epf;
+            $EPF["Other Charges"] = $other_charges;
             $response['EPF'] = $EPF;
             $ESIC['Employee Share'] = $overall_employee_esic;
             $ESIC['Employer Share'] = $overall_employer_esic;
-            $response['ESIC']=$ESIC;
-            $Professional_Tax['Tax Payable']=$overall_tax;
-            $Professional_Tax['Number Of Employee']=$over_all_employee;
-            $response['Professional Tax']=$Professional_Tax;
-        // dd($response);
+            $ESIC['Other Charges'] = $other_charges;
+            $response['ESIC'] = $ESIC;
+            $Professional_Tax['Tax Payable'] = $overall_tax;
+            $Professional_Tax['Number Of Employee'] = $over_all_employee;
+            $response['Professional Tax'] = $Professional_Tax;
             return $response;
 
 
