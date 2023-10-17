@@ -91,7 +91,7 @@ class VmtAttendanceService
                 $client_id = [auth()->user()->client_id];
             }
 
-            $map_allEmployees =  User::where('active', '1')->where('is_ssa',"0")->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
+            $map_allEmployees =  User::where('active', '1')->where('is_ssa', "0")->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
             $allEmployees_lateComing = null;
 
             //If manager ID not set, then show all employees
@@ -101,7 +101,7 @@ class VmtAttendanceService
 
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))->get();
                 } else {
-                   // dd(array_keys($map_allEmployees->toarray()));
+                    // dd(array_keys($map_allEmployees->toarray()));
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
                         ->whereMonth('attendance_date', $month)
                         ->whereIn('user_id', array_keys($map_allEmployees->toarray()))
@@ -148,9 +148,9 @@ class VmtAttendanceService
             }
 
             return [
-                "status"=>"success",
-                "message"=>" Attendance data fetch successfully",
-                "data"=>$allEmployees_lateComing
+                "status" => "success",
+                "message" => " Attendance data fetch successfully",
+                "data" => $allEmployees_lateComing
             ];
             // // dd($allEmployees_lateComing);
             // return $allEmployees_lateComing;
@@ -196,87 +196,87 @@ class VmtAttendanceService
 
         try {
 
-        $client_id = null;
-        if (!empty(session('client_id'))) {
+            $client_id = null;
+            if (!empty(session('client_id'))) {
 
-            if (session('client_id') == 1) {
+                if (session('client_id') == 1) {
 
-                $client_id = VmtClientMaster::pluck('id');
-            } else {
-                $client_id = [session('client_id')];
-            }
-        } else {
-
-            $client_id = [auth()->user()->client_id];
-        }
-
-        $map_allEmployees = User::where('active', '1')->where('is_ssa',"0")->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
-
-        $allEmployees_lateComing = null;
-
-        //If manager ID not set, then show all employees
-        if (empty($manager_user_code)) {
-            if (empty($month) && empty($year)) {
-                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))->get();
-            } else {
-                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))
-                ->whereYear('attendance_date', $year)
-                ->whereMonth('attendance_date', $month)
-                ->get();
-            }
-        } else {
-            //If manager ID set, then show only the team level employees
-
-            $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
-
-
-            if (empty($month) && empty($year))
-                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', $employees_id)->get();
-            else
-                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', $employees_id)
-                    ->whereYear('attendance_date', $year)
-                    ->whereMonth('attendance_date', $month)
-                    ->get();
-        }
-
-        //dd($map_allEmployees->toArray());
-        //dd($allEmployees_lateComing->toArray());
-
-        foreach ($allEmployees_lateComing as $singleItem) {
-
-            //check whether user_id from regularization table exists in USERS table
-            if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
-
-                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-
-                //If reviewer_id = 0, then its not yet reviewed
-                if ($singleItem->reviewer_id != 0) {
-                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
+                    $client_id = VmtClientMaster::pluck('id');
+                } else {
+                    $client_id = [session('client_id')];
                 }
             } else {
-                //  dd("Missing User ID : " . $singleItem->user_id);
+
+                $client_id = [auth()->user()->client_id];
             }
+
+            $map_allEmployees = User::where('active', '1')->where('is_ssa', "0")->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
+
+            $allEmployees_lateComing = null;
+
+            //If manager ID not set, then show all employees
+            if (empty($manager_user_code)) {
+                if (empty($month) && empty($year)) {
+                    $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))->get();
+                } else {
+                    $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', array_keys($map_allEmployees->toarray()))
+                        ->whereYear('attendance_date', $year)
+                        ->whereMonth('attendance_date', $month)
+                        ->get();
+                }
+            } else {
+                //If manager ID set, then show only the team level employees
+
+                $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
+
+
+                if (empty($month) && empty($year))
+                    $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', $employees_id)->get();
+                else
+                    $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', $employees_id)
+                        ->whereYear('attendance_date', $year)
+                        ->whereMonth('attendance_date', $month)
+                        ->get();
+            }
+
+            //dd($map_allEmployees->toArray());
+            //dd($allEmployees_lateComing->toArray());
+
+            foreach ($allEmployees_lateComing as $singleItem) {
+
+                //check whether user_id from regularization table exists in USERS table
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+
+                    //If reviewer_id = 0, then its not yet reviewed
+                    if ($singleItem->reviewer_id != 0) {
+                        $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                        $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
+                    }
+                } else {
+                    //  dd("Missing User ID : " . $singleItem->user_id);
+                }
+            }
+
+            // dd($allEmployees_lateComing);
+            return [
+                "status" => "success",
+                "message" => "Absent data fetch successfully",
+                "data" => $allEmployees_lateComing
+            ];
+
+            // return $allEmployees_lateComing;
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching Absent Regularization data",
+                "error" => $e->getMessage() . ' | File : ' . $e->getFile() . ' | Line : ' . $e->getLine(),
+                "error_verbose" => $e->getTrace(),
+            ]);
         }
-
-        // dd($allEmployees_lateComing);
-        return [
-            "status"=>"success",
-            "message"=>"Absent data fetch successfully",
-            "data"=>$allEmployees_lateComing
-        ];
-
-        // return $allEmployees_lateComing;
-    } catch (\Exception $e) {
-
-        return response()->json([
-            "status" => "failure",
-            "message" => "Error while fetching Absent Regularization data",
-            "error" => $e->getMessage() . ' | File : ' . $e->getFile() . ' | Line : ' . $e->getLine(),
-            "error_verbose" => $e->getTrace(),
-        ]);
-    }
     }
 
 
@@ -1568,6 +1568,7 @@ class VmtAttendanceService
                 $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
                 //dd($checkin_time);
                 $current_time = carbon::now()->format('H:i:s');
+                $current_date = carbon::now()->format('Y-m-d');
 
                 // dd(!empty($attendanceResponseArray[$key]['vmt_employee_workshift_id']));
                 //Calculate LC, EG only if the current day shifttype is found. If no shifttype found, dont calculate LC, EG. NEED TO CORRECT IT MANUALLY
@@ -1625,7 +1626,7 @@ class VmtAttendanceService
 
                         //Check whether checkin done on-time
 
-                            $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+                        $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
 
 
                         if ($isCheckin_done_ontime) {
@@ -1697,7 +1698,7 @@ class VmtAttendanceService
                         $attendanceResponseArray[$key]["absent_status"] = $t_leaveRequestDetails->status;
                         $attendanceResponseArray[$key]["leave_type"] = $t_leaveRequestDetails->leave_type;
                     }
-                } elseif ($checkin_time != null && $checkout_time == null && $current_time >= $shiftEndTime) {
+                } elseif ($checkin_time != null && $checkout_time == null &&   $current_date != $attendanceResponseArray[$key]["date"]  ? $current_time < $shiftEndTime :$current_time >= $shiftEndTime) {
 
                     //Since its MOP
                     $attendanceResponseArray[$key]["isMOP"] = true;
@@ -2304,6 +2305,31 @@ class VmtAttendanceService
 
         try {
 
+            if ($checkin_time == $checkout_time) {
+
+                return $response = ([
+                    'status' => 'failure',
+                    'message' => "The check-in and check-out times must differ. Please adjust the check-in or check-out time before proceeding.",
+                    'data' => "",
+                ]);
+            }
+
+            if ($checkout_time < $checkin_time) {
+
+                return $response = ([
+                    'status' => 'failure',
+                    'message' => "Ensure that the check-out time is not earlier than the check-in time on the specified date.",
+                    'data' => "",
+                ]);
+            }
+            // if($checkin_time > $checkout_time ){
+
+            //     return $response=([
+            //         'status' => 'failure',
+            //         'message' => "Check-IN time does not exceed the Check-OUT time on the same date.",
+            //         'data' =>"",
+            //     ]);
+            // }
             $query_user = User::where('user_code', $user_code)->first();
 
             $user_id = $query_user->id;
@@ -2529,9 +2555,50 @@ class VmtAttendanceService
         }
 
         try {
-            //Get the user_code
+
             $query_user = User::where('user_code', $user_code)->first();
             $user_id = $query_user->id;
+
+            $employee_Bio_attendance_data = $this->getBioMetricAttendanceData($user_code, $attendance_date);
+
+            $checkin_time = "";
+            $checkout_time = "";
+            if (!empty($employee_Bio_attendance_data)) {
+
+                $checkin_time = $employee_Bio_attendance_data[0]['checkin_time'];
+                $checkout_time = $employee_Bio_attendance_data[0]['checkout_time'];
+
+            }
+
+            $employee_web_attendance_data = VmtEmployeeAttendance::where('date', $attendance_date)
+                ->where('user_id',  $user_id);
+
+            if ($employee_web_attendance_data->exists()) {
+
+                $checkin_time = $employee_web_attendance_data->first()->checkin_time;
+                $checkout_time = $employee_web_attendance_data->first()->checkout_time;
+            }
+
+
+            if ($regularization_type == 'LC' && $regularize_time > $checkin_time) {
+
+                return $response = ([
+                    'status' => 'failure',
+                    'message' => "regularize time does not exceed the check-in time on the same date",
+                    'data' => "",
+                ]);
+            }
+
+            if ($regularization_type == 'EG' && $regularize_time < $checkout_time) {
+
+                return $response = ([
+                    'status' => 'failure',
+                    'message' => "Ensure that the regularzie time is not earlier than the check-out time on the specified date.",
+                    'data' => "",
+                ]);
+            }
+            //Get the user_code
+
 
             //Check if already request applied
             $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
