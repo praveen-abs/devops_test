@@ -815,7 +815,9 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/performance', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'showPMSDashboard']);
     Route::get('/getmanager', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'getEmpManagerCode']);
     Route::get('/getReviewsDetails', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'getReviewsDetails']);
-    Route::get('/pmsFormApproveRejected', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'pmsFormApproveRejected']);
+    Route::get('/publishPmsform', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'publishPmsform']);
+    Route::get('/Approverflow', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'Approverflow']);
+    Route::get('/ApproveOrReject', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'ApproveOrReject']);
 
 
 

@@ -5,11 +5,16 @@ namespace App\Http\Controllers\PMS;
 use App\Http\Controllers\Controller;
 use App\Models\ConfigPms;
 use App\Models\User;
+use App\Models\VmtConfigPmsV3;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
+use App\Models\VmtPmsKpiFormAssignedV3;
+use App\Models\VmtPmsKpiFormDetailsV3;
+use App\Models\VmtPmsKpiFormReviewsV3;
+use App\Models\VmtPmsKpiFormV3;
 use Illuminate\Http\Request;
 use App\Services\VmtPMS;
 use Illuminate\Support\Facades\Auth;
@@ -62,12 +67,13 @@ class VmtPMSModuleController_v3 extends Controller
     }
 
 
-    public function getReviewsDetails(){
+    public function getReviewsDetails($emp_code,$flowCheck){
 
-            $emp_code = 'PSC0020';
+            // $emp_code = 'PSC0020';
 
-           $config = ConfigPms::first();
-           $selected_level = json_decode($config->selected_reviewlevel,true);
+           $config = VmtConfigPmsV3::first();
+
+           $selected_level = json_decode($config->reviewers_flow,true);
 
            $getmanager  = $this->getEmpManagerCode($emp_code);
 
@@ -78,24 +84,26 @@ class VmtPMSModuleController_v3 extends Controller
             $temp["reviewer_id"] =  User::where('user_code',$getmanager[$single_level['reviewer_level']])->first()->id ?? null;
             $temp["reviewer_user_code"] = $getmanager[$single_level['reviewer_level']] ?? null;
             $temp["reviewer_level"] = $single_level['order'];
-            $temp["is_accepted"] = 0;
+            if($flowCheck == 3){
+                $temp["is_accepted"] = 0;
+            }else{
+                $temp["is_accepted"] = 1;
+            }
             $temp["is_reviewed"] = 0;
             $temp["rejection_comments"] = "";
 
             array_push($res,$temp);
             }
         }
-            dd($res);
-
-           return json_encode($res,true);
+           return json_encode($res);
     }
 
 
     public function createKpiForm(Request $request){
 
-          $config = ConfigPms::first();
+          $config = VmtConfigPmsV3::first();
 
-          $kpiTable  = new VmtPMS_KPIFormModel;
+          $kpiTable  = new VmtPmsKpiFormV3;
           $kpiTable->available_columns        =    $config->selected_columns;
           $kpiTable->author_id       =    Auth::user()->id;
           $kpiTable->form_name     =    $request->name;
@@ -104,7 +112,7 @@ class VmtPMSModuleController_v3 extends Controller
 
           $totRows  = count($request->dimension);
           for ($i=0; $i < $totRows; $i++) {
-                  $kpiRow = new VmtPMS_KPIFormDetailsModel;
+                  $kpiRow = new VmtPmsKpiFormDetailsV3;
                   $kpiRow->vmt_pms_kpiform_id   =    $KpiLAST;
                   $kpiRow->dimension   =    isset($request->dimension) && isset($request->dimension[$i]) ? $request->dimension[$i] : '';
                   $kpiRow->kpi         =    isset($request->kpi) && isset($request->kpi[$i]) ? $request->kpi[$i] : '';
@@ -115,6 +123,7 @@ class VmtPMSModuleController_v3 extends Controller
                   $kpiRow->stretch_target  =    isset($request->stretchTarget) && isset($request->stretchTarget[$i]) ? $request->stretchTarget[$i] : '';
                   $kpiRow->source          =    isset($request->source) && isset($request->source[$i]) ? $request->source[$i] : '';
                   $kpiRow->kpi_weightage   =    isset($request->kpiWeightage) && isset($request->kpiWeightage[$i]) ? $request->kpiWeightage[$i] : '';
+                  $kpiRow->matrices   =    isset($request->matrices) && isset($request->matrices[$i]) ? $request->matrices[$i] : '';
                   $kpiRow->save();
 
           }
@@ -122,265 +131,162 @@ class VmtPMSModuleController_v3 extends Controller
 
     }
 
-    public function pmsFormApproveRejected(){
+    public function publishPmsform(Request $request){
 
-        $json_value = [
-            [
-                "reviewer_id" => 194,
-                "reviewer_user_code" => "PSC0018",
-                "reviewer_level" => "1",
-                "is_accepted" => 0,
-                "is_reviewed" => 0,
-                "rejection_comments" => "",
-            ],
-            [
-                "reviewer_id" => 215,
-                "reviewer_user_code" => "LAL0013",
-                "reviewer_level" => "2",
-                "is_accepted" => 0,
-                "is_reviewed" => 0,
-                "rejection_comments" => "",
+        $flowcheck = 3;
 
-            ]
-        ];
+        $assignee = '145';
 
-        // dd($json_value);
+        if($flowcheck == 3){
 
-        foreach($json_value as $single_value){
+            $publishform =  new VmtPmsKpiFormAssignedV3;
+            $publishform->vmt_pms_kpiform_v3_id = '1' ;
+            $publishform->assignee_id =  $assignee;
+            $publishform->reviewer_id = '215';
+            $publishform->assigner_id = '194' ;
+            $publishform->calendar_type = 'financial_year' ;
+            $publishform->year = 'April - 2023 to March - 2024' ;
+            $publishform->frequency = 'quarterly' ;
+            $publishform->assignment_period = 'q1' ;
+            $publishform->department_id = '1' ;
+            $publishform->org_time_period_id = '1' ;
+            $publishform->save();
 
-            dump($single_value);
+            $reviewer  = new VmtPmsKpiFormReviewsV3;
+            $reviewer->vmt_kpiform_assigned_v3_id = $publishform->id;
+            $reviewer->assignee_id = $assignee;
+            $reviewer->is_assignee_accepted = '1';
+            $reviewer->reviewer_details = $this->getReviewsDetails(User::where('id',$assignee)->first()->user_code,$flowcheck);
+            $reviewer->save();
 
         }
+        elseif($flowcheck == 2 || $flowcheck == 1){
 
-        // foreach ($all_pending_loans as $single_record) {
-        //     //dd($single_record);
-        //     $approver_flow = collect(json_decode($single_record->emp_approver_flow, true))->sortBy('order');
+            foreach($assignee as $single_assigne){
 
-        //     $ordered_approver_flow = array();
-        //     foreach ($approver_flow as $key => $value) {
-        //         $ordered_approver_flow[$value['order']] = $value;
-        //     }
-        //     // dd( $ordered_approver_flow);
-        //     foreach ($ordered_approver_flow as $single_ar) {
+            $publishform =  new VmtPmsKpiFormAssignedV3;
+            $publishform->vmt_pms_kpiform_v3_id = '1' ;
+            $publishform->assignee_id =  $single_assigne;
+            $publishform->reviewer_id = '215';
+            $publishform->assigner_id = '215';
+            $publishform->calendar_type = 'financial_year' ;
+            $publishform->year = 'April - 2023 to March - 2024' ;
+            $publishform->frequency = 'quarterly' ;
+            $publishform->assignment_period = 'q1' ;
+            $publishform->department_id = '1' ;
+            $publishform->org_time_period_id = '1' ;
+            $publishform->save();
 
-        //         if ($user_id == $single_ar['approver']) {
-        //             $current_user_order = $single_ar['order'];
-        //             if ($current_user_order == 1) {
-        //                 if ($ordered_approver_flow[$current_user_order]['status'] == 0) {
-        //                     array_push($temp_ar, $single_record);
-        //                 }
-        //             } else if ($current_user_order == 2) {
-        //                 if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
-        //                     array_push($temp_ar, $single_record);
-        //                 }
-        //             } else if ($current_user_order == 3) {
-        //                 if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
-        //                     array_push($temp_ar, $single_record);
-        //                 }
-        //             } else if ($current_user_order == 4) {
-        //                 if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
-        //                     array_push($temp_ar, $single_record);
-        //                 }
-        //             }
-        //         }
+            $reviewer  = new VmtPmsKpiFormReviewsV3;
+            $reviewer->vmt_kpiform_assigned_v3_id = $publishform->id;
+            $reviewer->assignee_id = $single_assigne;
+            $reviewer->is_reviewer_accepted = '1';
+            $reviewer->reviewer_details = $this->getReviewsDetails(User::where('id',$single_assigne)->first()->user_code,$flowcheck);
+            $reviewer->save();
 
-        //         // dd($current_user_order);
-        //         // dd();
-        //     }
-        //     // if($single_record->user_id==214)
-        //     // dd($temp_ar);
+            }
+        }
 
-        //     unset($ordered_approver_flow);
-        // }
+        return "saved";
 
     }
 
+    public function Approverflow(){
 
-    public function publishKpiform(Request $request){
+    $gt = VmtPmsKpiFormReviewsV3::join('vmt_pms_kpiform_assigned_v3','vmt_pms_kpiform_assigned_v3.id','=','vmt_pms_kpiform_reviews_v3.vmt_kpiform_assigned_v3_id')
+                                ->get()->toarray();
+        $user_id = auth()->user()->id;
+        $getAllRecords = array();
+        foreach($gt as $key => $single_value){
+            $getAllRecords[$key]['assignee_id'] =  $single_value['assignee_id'];
+            $getAllRecords[$key]['assignee_name'] =  user::where('id',$single_value['assignee_id'])->first()->name;
+            $getAllRecords[$key]['is_assignee_accepted'] =  $single_value['is_assignee_accepted'];
+            $getAllRecords[$key]['is_assignee_submitted'] =  $single_value['is_assignee_submitted'];
+            $getAllRecords[$key]['reviewer_details']  = (json_decode($single_value['reviewer_details'],true));
+            $getAllRecords[$key]['is_reviewer_accepted']  = $single_value['is_reviewer_accepted'];
+            $getAllRecords[$key]['is_reviewer_submitted']  = $single_value['is_reviewer_submitted'];
+            $getAllRecords[$key]['reviewer_kpi_review']  = $single_value['reviewer_kpi_review'];
+            $getAllRecords[$key]['reviewer_kpi_percentage']  = $single_value['reviewer_kpi_percentage'];
+            $getAllRecords[$key]['reviewer_kpi_comments']  = $single_value['reviewer_kpi_comments'];
 
-           // dd($request->all());
+            $form_header = VmtPmsKpiFormV3::where('id',$single_value['vmt_pms_kpiform_v3_id'])->first()->available_columns;
+            $getAllRecords[$key]['form_header']  = explode(',',$form_header);
 
-            $validator = Validator::make($request->all(), [
-                'calendar_type' => 'required',
-                'hidden_calendar_year' => 'required',
-                'frequency' => 'required',
-                'assignment_period_start' => 'required',
-                'department' => 'required',
-                'employees' => 'required',
-                'reviewer' => 'required',
-                'selected_kpi_form_id' => 'required',
-            ],$messages = [
-                'calendar_type.required' => 'Calendar Type is Required',
-                'hidden_calendar_year.required' => 'Year is Required',
-                'frequency.required' => 'Frequency is Required',
-                'assignment_period_start.required' => 'Assignment Period is Required',
-                'department.required' => 'Department is Required',
-                'employees.required' => 'Employee is Required',
-                'reviewer.required' => 'Reviewer is Required',
-                'selected_kpi_form_id.required' => 'KPI Form is Required',
-            ]);
+            $form_details = VmtPmsKpiFormDetailsV3::where('vmt_pms_kpiform_v3_id', $single_value['vmt_pms_kpiform_v3_id'])
+                            ->join('vmt_pms_kpiform_v3','vmt_pms_kpiform_v3.id','=','vmt_pms_kpiform_details_v3.vmt_pms_kpiform_v3_id')
+                            ->get(
+                                ['vmt_pms_kpiform_details_v3.id',
+                                'vmt_pms_kpiform_details_v3.dimension',
+                                'vmt_pms_kpiform_details_v3.Kpi',
+                                'operational_definition',
+                                'measure',
+                                'frequency',
+                                'target',
+                                'stretch_target',
+                                'source',
+                                'kpi_weightage',
+                                'matrices',]
+                                )->toarray();
 
-            if ($validator->fails())
-            {
-                return response()->json(['status' => false,'message'=>$validator->messages()->first()]);
-            }
-            try{
-                $hr_details = getOrganization_HR_Details();
-                //dd($hr_details);
-                if(empty($hr_details))
-                {
-                    return response()->json(['status' => false,'message'=>'Please assign an HR in Master Configuration settings']);
+            $getAllRecords[$key]['kpi_form_details'] = $form_details;
+        }
+
+        $pending_records = [];
+        foreach($getAllRecords as $single_record){
+            $arr = [];
+                foreach($single_record['reviewer_details'] as $key => $single_approvers){
+                        $arr[$single_approvers['reviewer_level']] = $single_approvers;
                 }
-
-                $loggedUser = Auth::user();
-
-                $reviewersList = is_array($request->reviewer) ? $request->reviewer : explode(",",$request->reviewer);
-                $employeesList = is_array($request->employees) ? $request->employees : explode(",",$request->employees);
-
-                // check if employee is available in reviewer list
-                if(count($reviewersList) > 0){
-                    foreach($reviewersList as $reviewerCheckAsEmployee){
-                        if(in_array($reviewerCheckAsEmployee, $employeesList)){
-                            return response()->json(['status' => false, 'message' => "Same User Can't be Employee as well as Reviewer"]);
-                        }
-                    }
-                }
-                if(isset($request->hr_id) && !empty($request->hr_id)){
-                    if(!in_array($request->hr_id,$reviewersList)){
-                        array_push($reviewersList, $request->hr_id);
-                    }
-                }
-
-                $kpi_AssignedTable  = new VmtPMS_KPIFormAssignedModel;
-
-                $kpi_AssignedTable->vmt_pms_kpiform_id        =   $request->selected_kpi_form_id;
-                $kpi_AssignedTable->assignee_id               =   is_array($request->employees) ? implode(",",$request->employees) : $request->employees;
-                $kpi_AssignedTable->reviewer_id               =   is_array($request->reviewer) ? implode(",",$request->reviewer) : $request->reviewer;
-                $kpi_AssignedTable->assigner_id               =   auth::user()->id;
-                $kpi_AssignedTable->calendar_type             =   $request->calendar_type;
-                $kpi_AssignedTable->year                      =   $request->hidden_calendar_year;
-                $kpi_AssignedTable->frequency                 =   $request->frequency;
-                $kpi_AssignedTable->assignment_period         =   $request->assignment_period_start;
-                $kpi_AssignedTable->department_id             =   $request->department;
-
-                $kpi_AssignedTable->save();
-
-                // get parent id from logged used id
-                $parent_user_code = VmtEmployeeOfficeDetails::where('user_id',$loggedUser->id)->value('l1_manager_code');
-                $parentUserID = User::where('user_code',$parent_user_code)->value('id');
-
-
-                //Based on assignee count, you create records in review table
-                $assigneeIdsAll = explode(',',$kpi_AssignedTable->assignee_id );
-                $explodedReviewersIds = explode(',',$kpi_AssignedTable->reviewer_id);
-
-                $reviewerAcceptedData = [];
-                $reviewerSubmittedData = [];
-                foreach($explodedReviewersIds as $reviewer){
-                    $reviewerAcceptedData[$reviewer] = "1";
-                    if(isset($request->flowCheck) && $request->flowCheck == 3 && $parentUserID == $reviewer){
-                        $reviewerAcceptedData[$reviewer] = null;
-                    }
-
-                    $reviewerSubmittedData[$reviewer] = null;
-                }
-
-                if(count($assigneeIdsAll) > 0){
-                    foreach($assigneeIdsAll as $assignee){
-                        $assigneeReview = new VmtPMS_KPIFormReviewsModel();
-                        $assigneeReview->vmt_pms_kpiform_assigned_id = $kpi_AssignedTable->id;
-                        $assigneeReview->assignee_id = $assignee;
-                        $assigneeReview->assignee_kpi_status = null;
-                        $assigneeReview->reviewer_kpi_status = null;
-                        $assigneeReview->is_assignee_submitted = null;
-                        if(isset($request->flowCheck) && ($request->flowCheck == 1 || $request->flowCheck == 3))
-                        {
-                            $assigneeReview->is_assignee_accepted = '1';
-                        }else{
-                            $assigneeReview->is_assignee_accepted = null;
-                        }
-                        $assigneeReview->is_reviewer_submitted = json_encode($reviewerSubmittedData);
-                        $assigneeReview->is_reviewer_accepted = json_encode($reviewerAcceptedData);
-                        $assigneeReview->save();
-
-                        if($request->flowCheck == 1 || $request->flowCheck == 2){
-                            $assigneeMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', $assignee)->pluck('officical_mail','userid')->first();
-
-                            $assigneeName = User::where('id',$assignee)->pluck('name')->first();
-                            $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-                            $comments_employee = '';
-                            $login_Link=request()->getSchemeAndHttpHost();
-                            // dd($hr_details);
-                            $emp_avatar    =  json_decode(newgetEmployeeAvatarOrShortName(auth()->user()->id),true);
-
-                            $emp_neutralgender  = getGenderNeutralTerm(auth()->user()->id);
-
-                            //Send mail when flow is 1 or 2 (Flow Checked inside VmtPMSMail_PublishForm)
-                            if(!empty($assigneeMailId)){
-
-                                //Send mail to assignee
-                                \Mail::to($assigneeMailId)
-                                      ->cc($hr_details->officical_mail)
-                                      ->send(new VmtPMSMail_PublishForm("none", $assigneeName,
-                                                                        $request->hidden_calendar_year,
-                                                                        strtoupper($request->assignment_period_start),
-                                                                        $assignerName,
-                                                                        $comments_employee,
-                                                                        $request->flowCheck,
-                                                                        $login_Link,
-                                                                        $emp_avatar,
-                                                                        $emp_neutralgender
-                                                                    ));
+                foreach($arr as $single_arr){
+                    if($user_id == $single_arr['reviewer_id']){
+                        $current_user_order = $single_arr['reviewer_level'];
+                        if($current_user_order == 1){
+                            if($arr[$current_user_order]['is_accepted'] == 0){
+                                array_push($pending_records,$single_record);
+                            }
+                        }elseif($current_user_order == 2){
+                            if($arr[$current_user_order - 1]['is_accepted'] == 1 && $arr[$current_user_order]['is_accepted'] == 0){
+                                array_push($pending_records,$single_record);
+                            }
+                        }elseif($current_user_order == 3){
+                            if($arr[$current_user_order - 1]['is_accepted'] == 1 && $arr[$current_user_order]['is_accepted'] == 0){
+                                array_push($pending_records,$single_record);
+                            }
+                        }elseif($current_user_order == 4){
+                            if($arr[$current_user_order - 1]['is_accepted'] == 1 && $arr[$current_user_order]['is_accepted'] == 0){
+                                array_push($pending_records,$single_record);
                             }
                         }
                     }
                 }
-
-                if($request->flowCheck == 3){
-                    $reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
-
-                    $assigneeName = User::where('id',$assignee)->pluck('name')->first();
-                    $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-                    $comments_employee = '';
-                    $login_Link=request()->getSchemeAndHttpHost();
-
-                    if(count($reviewerMailId) > 0){
-                        foreach($reviewerMailId as $reviewerId => $reviewerMailSend){
-                            $receiverDetails = User::findorfail($reviewerId);
-                            $receiverName = isset($receiverDetails) && !empty($receiverDetails->name) ? $receiverDetails->name : '';
-
-                        $emp_avatar    =  json_decode(newgetEmployeeAvatarOrShortName(auth()->user()->id),true);
-
-                        $emp_neutralgender  = getGenderNeutralTerm(auth()->user()->id);
-
-                            \Mail::to($reviewerMailSend)
-                            ->cc($hr_details->officical_mail)
-                            ->send(new VmtPMSMail_Assignee("none",$request->flowCheck,
-                                                           $assigneeName,
-                                                           $request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),
-                                                           $receiverName,
-                                                           $comments_employee,
-                                                           $login_Link,
-                                                           $emp_avatar,
-                                                           $emp_neutralgender
-                                                        ));
-                        }
-                    }
-                }
-                //Create review record with some default values for :
-                //status of assignee,assigner,reviewer ("Pending")
-                return response()->json(['status' => true, 'message' => "KPI Published Successfully"]);
-                // return "KPI Published Successfully";
-               }
-               catch(TransportException $e){
-                     return response()->json(['status' => true, 'message' => 'KPI Published Successfully','error_verbose' => $e->getMessage()]);
-
-               }
-               catch(Exception $e){
-                    Log::info('Publish KPI Form V2 Error: '.$e->getMessage());
-                    //dd($e);
-                    return response()->json(['status' => false, 'message' => 'Something went wrong!','error_verbose' => $e->getMessage()]);
-            }
         }
+
+       return $pending_records;
+
+    }
+
+    public function ApproveOrReject(Request $request){
+
+        $user_id = auth()->user()->id;
+
+        $record_id = '12';
+        $status = '1';    // approve or reject
+        $reviewer_comments = 'approved';
+
+        $get_record = VmtPmsKpiFormReviewsV3::where('id',$record_id)->first();
+        $reviewer_details = json_decode($get_record->reviewer_details,true);
+
+        for($i=0; $i< count($reviewer_details); $i++){
+                if($reviewer_details[$i]['reviewer_id'] == $user_id){
+                    $reviewer_details[$i]['is_accepted'] = $status;
+                    $reviewer_details[$i]['rejection_comments'] = $reviewer_comments;
+                }
+        }
+          $result  =  json_encode($reviewer_details);
+
+          $get_record->reviewer_details = $result;
+          $get_record->save();
+
+    }
 
 }
