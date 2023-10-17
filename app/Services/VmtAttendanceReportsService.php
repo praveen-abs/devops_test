@@ -968,37 +968,25 @@ class VmtAttendanceReportsService
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
 
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
+                        $checkin_time = '-';
+                        $checkout_time = '-';
+                        $current_ot = '-';
+                        $lc_mins = '-';
                         if (!VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
+                            if ($attendance_setting_details['lc_status'] == 1) {
+                                array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, '-');
+                            } else {
+                                array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, '-');
+                            }
                             continue;
                         }
                         $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
-                        if ($att_detail->regularized_checkin_time != null) {
-                            $checkin_time = $att_detail->regularized_checkin_time;
-                        } else {
-                            $checkin_time = $att_detail->checkin_time;
-                        }
-                        if ($att_detail->regularized_checkout_time != null) {
-                            $checkout_time = $att_detail->regularized_checkout_time;
-                        } else {
-                            $checkout_time = $att_detail->checkout_time;
-                        }
-
-                        $ot_ar = CarbonInterval::minutes($att_detail->overtime)->cascade();
-                        $ot_hrs = (int) $ot_ar->totalHours;
-                        $ot_mins = $ot_ar->toArray()['minutes'];
-                        $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-
-                        $total_ot = $total_ot + $att_detail->overtime;
-
-                        $lc_mins = $att_detail->lc_minutes;
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
-                        if ($sts_ar[0] == 'P') {
-                            if (count($sts_ar) == 1) {
-                                $total_present = $total_present + 1;
-                            } else {
+                        if ($sts_ar[0] == 'P' || $sts_ar[0] == 'A') {
+                            if (count($sts_ar) != 1) {
                                 if (in_array('LC', $sts_ar)) {
-                                    $total_LC = $total_LC + 1;
+                                    $total_LC =   $total_LC + 1;
                                 }
                                 if (in_array('EG', $sts_ar)) {
                                     $total_EG = $total_EG + 1;
@@ -1007,6 +995,11 @@ class VmtAttendanceReportsService
                                 // }
                                 // if (in_array('MIP', $sts_ar)) {
                                 // }
+                            }
+                            if ($sts_ar[0] == 'P') {
+                                $total_present = $total_present + 1;
+                            } else {
+                                $total_absent = $total_absent + 1;
                             }
                         } elseif (
                             $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
@@ -1026,13 +1019,30 @@ class VmtAttendanceReportsService
                             $total_holiday = $total_holiday + 1;
                         } else if ($att_detail->status == 'WO') {
                             $total_weekoff = $total_weekoff + 1;
-                        } else {
-                            $checkin_time = '-';
-                            $checkout_time = '-';
-                            $ot = '-';
-                            //  if ($lc_eg_setting['lc_status'])
-                            $lc_minutes = '-';
                         }
+                        if ($att_detail->regularized_checkin_time != null) {
+                            $checkin_time = $att_detail->regularized_checkin_time;
+                        } else if ($att_detail->checkin_time != null) {
+                            $checkin_time = $att_detail->checkin_time;
+                        }
+
+                        if ($att_detail->regularized_checkout_time != null) {
+                            $checkout_time = $att_detail->regularized_checkout_time;
+                        } else if ($att_detail->checkout_time != null) {
+                            $checkout_time = $att_detail->checkout_time;
+                        }
+                        if ($att_detail->lc_minutes != 0) {
+                            $lc_mins = $att_detail->lc_minutes;
+                        }
+
+
+                        // For Calculating ot
+
+                        $ot_ar = CarbonInterval::minutes($att_detail->overtime)->cascade();
+                        $ot_hrs = (int) $ot_ar->totalHours;
+                        $ot_mins = $ot_ar->toArray()['minutes'];
+                        $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+                        $total_ot = $total_ot + $att_detail->overtime;
 
                         if ($attendance_setting_details['lc_status'] == 1) {
                             array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $att_detail->status);
