@@ -177,7 +177,7 @@ async function getAbsentRegularization(Month,Year) {
         month:Month,
         year:Year
     }).then((res) => {
-        arrayAbsentRegularization.value = res.data;
+        arrayAbsentRegularization.value = res.data.data;
     }).finally(() => {
         UseAttendance.canShowLoadingScreen  = false
     })
