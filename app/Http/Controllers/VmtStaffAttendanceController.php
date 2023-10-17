@@ -16,71 +16,30 @@ class VmtStaffAttendanceController extends Controller
         Fetch staff attendance From biometric databse
         Storing data in to vmt_staff_attenndance_device table
     */
-    public function syncStaffAttendanceFromDeviceDatabase(){
+    public function syncStaffAttendanceFromDeviceDatabase(Request $request, string $can_debug = null){
 
-
-        //For ESS only:  Pull the Dunamis contract data from 'u417351686_att_dunamis'
-        $current_client_list = VmtClientMaster::where('client_code','<>','')->pluck('client_code')->toArray();
-
+        $current_client_list = VmtClientMaster::where('client_code','<>','')->get(['client_code','client_name','client_fullname'])->keyBy('client_code')->toArray();
+        //dd($current_client_list);
         try{
             $array_result = array();
-            $recentDeviceData = null;
 
-            //For ESS :: Fetch Dunamis Contract using "attendanceDB_DMC" DB connection
-            if(in_array('DMC', $current_client_list)){
+            foreach($current_client_list as $single_client)
+            {
+                //check if the current client is valid
+                $client_db_details = $this->getClientDBDetails($single_client['client_code']);
 
-                //Fetch the last attendance details of dunamis in local db
-                $recentDeviceData  = VmtStaffAttendanceDevice::where('att_server','dunamis')
-                                        ->orderBy('date', 'DESC')->first();
-                $attendanceData = null;
+                if(!empty($client_db_details))
+                {
+                   //dd($client_db_details);
 
-                if($recentDeviceData){
-                    $attendanceData  = \DB::connection('attendanceDB_DMC')->table('staff_attenndance')
-                                        ->where('att_server', 'dunamis')
-                                        ->where('date', '>', $recentDeviceData->date)
-                                        ->get();
-                }else{
-                    $attendanceData  = \DB::connection('attendanceDB_DMC')->table('staff_attenndance')->get();
+                   $array_result[] = $this->pullDataFromAttendanceDB( client_db_connection_name: $client_db_details["client_db_connection_name"], att_client_name : $client_db_details["att_client_name"]);
+                }
+                else
+                {
+                    $array_result[] = 'Client DB Details not found for the given Client Code : '.$single_client['client_code'];
                 }
 
-
-                $data_count = 0;
-
-               // dd($attendanceData);
-                foreach ($attendanceData as $key => $value) {
-                    $this->insertDataFromExternalAttendanceTable($value);
-                    $data_count++;
-                }
-                $start_date = $recentDeviceData->date ?? "-";
-                array_push($array_result, "Client Name : ".$recentDeviceData->att_server ." , Start Date : ".$start_date." , Data Count : ".$data_count);
-
             }
-
-
-
-            //For all other sites including ESS - ABS
-            $recentDeviceData  = VmtStaffAttendanceDevice::where('att_server','<>','dunamis')
-                                    ->orderBy('date', 'DESC')->first();
-
-            $attendanceData = null;
-
-            if($recentDeviceData){
-                $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->where('date', '>', $recentDeviceData->date)->get();
-            }else{
-                $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->get();
-            }
-
-            $data_count = 0;
-
-            foreach ($attendanceData as $key => $value) {
-                $this->insertDataFromExternalAttendanceTable($value);
-                $data_count++;
-            }
-
-            //Store the result
-            $start_date = $recentDeviceData->date ?? "-";
-
-            array_push($array_result, "Client Name : ".$recentDeviceData->att_server ." , Start Date : ".$start_date." , Data Count : ".$data_count);
 
             return [
                 'status' => 'success',
@@ -91,12 +50,82 @@ class VmtStaffAttendanceController extends Controller
         catch(\Exception $e){
             return [
                 "status" => "failure",
-                "message" => "Error [ syncStaffAttendanceFromDeviceDatabase() ] : ".$e->getMessage(),
-                "data" => $e,
+                "message" => "Error [ syncStaffAttendanceFromDeviceDatabase() ] : Error while fetching biometric attendance data for client list :: ".$client_list,
+                "data" => $array_result,
+                "error" =>$e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => (!empty($can_debug) && $can_debug  == "1") ? $e->getTrace() : '** Debug Mode is disabled **',
 
             ];
+
         }
     }
+
+    private function pullDataFromAttendanceDB($client_db_connection_name, $att_client_name){
+
+        //Fetch the last attendance details of dunamis in local db
+        $recentDeviceData  = VmtStaffAttendanceDevice::where('att_server',$att_client_name)
+                                ->orderBy('date', 'DESC')->first();
+
+        $attendanceData = null;
+
+        if($recentDeviceData){
+            $attendanceData  = \DB::connection($client_db_connection_name)->table('staff_attenndance')
+                                ->where('att_server', $att_client_name)
+                                ->where('date', '>', $recentDeviceData->date)
+                                ->get();
+        }else{
+            $attendanceData  = \DB::connection($client_db_connection_name)->table('staff_attenndance')->get();
+        }
+
+        $data_count = 0;
+
+        // dd($attendanceData);
+        foreach ($attendanceData as $key => $value) {
+            $this->insertDataFromExternalAttendanceTable($value);
+            $data_count++;
+        }
+
+        return [
+            "Client Name" =>$recentDeviceData->att_server ,
+            "Start Date" => $recentDeviceData->date ?? "-",
+            "Data Count" => $data_count
+        ];
+
+    }
+
+
+    /*
+
+        Should add the db connection name in database.php before running this.
+    */
+    private function getClientDBDetails($client_code){
+
+        if(empty($client_code)){
+            return null;
+        }
+
+        switch($client_code){
+            case "DM":
+                return [
+                  "client_db_connection_name" => "attendanceDB_Dunamis" ,
+                  "att_client_name" => "dunamis"
+                ];
+            case "DMC":
+                return [
+                  "client_db_connection_name" => "attendanceDB_Dunamis" ,
+                  "att_client_name" => "dunamis"
+                ];
+            case "ABS":
+                return [
+                  "client_db_connection_name" => "attendanceDB" ,
+                  "att_client_name" => "ess"
+                ];
+            default:
+                return null;
+        }
+
+    }
+
 
     // inserting device data in to vmt_staff_attenndance_device table
     protected function insertDataFromExternalAttendanceTable($data){
