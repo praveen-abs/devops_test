@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Date</label></div>
                 <div class="col-6">
-                    <span class="text-ash-medium fs-15" id="current_date">{{ source.date }}</span>
+                    <span class="text-ash-medium fs-15" id="current_date">{{ dayjs( source.date).format('DD-MMM-YYYY') }}</span>
                     <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
                         id="attendance_date">
                 </div>
@@ -294,6 +294,7 @@
 <script setup>
 import { onUpdated } from 'vue';
 import { useAttendanceTimesheetMainStore } from '../stores/attendanceTimesheetMainStore';
+import dayjs from 'dayjs';
 
 
 
