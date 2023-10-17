@@ -22,24 +22,27 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
-class VmtPayrollService{
+class VmtPayrollService
+{
 
 
-    public function getCurrentPayrollMonth(){
+    public function getCurrentPayrollMonth()
+    {
 
         // start date and end date of current payroll month from the payroll table
 
         $current_payroll_date = date("Y-m-d");
 
         dd($current_payroll_date);
-
     }
 
     /*
         For UI :
         Get the payroll outcome section data.
     */
-    public function getPayrollOutcomes($client_code, $payroll_month){
+    public function getPayrollOutcomes($client_code, $payroll_month)
+    {
+        // dd('sdcfc');
         $validator = Validator::make(
             $data = [
                 'payroll_month' => $payroll_month,
@@ -63,14 +66,14 @@ class VmtPayrollService{
         }
 
         $processed_date = strtotime($payroll_month);
-        $payroll_month = date('m',$processed_date);
-        $payroll_year = date('Y',$processed_date);
+        $payroll_month = date('m', $processed_date);
+        $payroll_year = date('Y', $processed_date);
 
         //dd($payroll_month." , ".$payroll_year);
 
 
 
-        try{
+        try {
 
             //Base structure of Payroll Outcomes for UI
             $response_data = [
@@ -106,23 +109,23 @@ class VmtPayrollService{
 
             //Get all the employees earnings details
             $query_employees_payroll_details = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
-                            ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
-                            ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
-                            ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
-                            //->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-                            //->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                            ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
-                            ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-                            //->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                            //->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
-                            //->where('user_code', 'BA020')
-                            ->where('users.is_ssa','0')
-                            ->whereYear('payroll_date', $payroll_year)
-                            ->whereMonth('payroll_date', $payroll_month);
+                ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+                ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+                ->leftJoin('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                //->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                //->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+                //->leftJoin('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                //->leftJoin('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+                //->where('user_code', 'BA020')
+                ->where('users.is_ssa', '0')
+                ->whereYear('payroll_date', $payroll_year)
+                ->whereMonth('payroll_date', $payroll_month);
+            // dd( $query_employees_payroll_details);
 
 
-
-           $array_overall_earnings = $query_employees_payroll_details->get(
+            $array_overall_earnings = $query_employees_payroll_details->get(
                 [
                     //'users.user_code as User-code',
                     //'users.name as Name',
@@ -144,37 +147,87 @@ class VmtPayrollService{
             )->toArray();
 
             $array_overall_contributions = $query_employees_payroll_details
-            ->get(
-                [
-                    'vmt_employee_payslip_v2.epf_ee as EPF Employee',
-                    'vmt_employee_payslip_v2.employee_esic as ESIC Employee ',
-                    'vmt_employee_payslip_v2.vpf as VPF',
-                ]
-            )->toArray();
+                ->get(
+                    [
+                        'vmt_employee_payslip_v2.epf_ee as EPF Employee',
+                        'vmt_employee_payslip_v2.employee_esic as ESIC Employee ',
+                        'vmt_employee_payslip_v2.vpf as VPF',
+                    ]
+                )->toArray();
 
 
             $array_overall_taxdeduction = $query_employees_payroll_details
-            ->get(
-                [
-                    'vmt_employee_payslip_v2.prof_tax as Professional Tax',
-                    'vmt_employee_payslip_v2.lwf as LWF',
-                    'vmt_employee_payslip_v2.income_tax as Income Tax',
-                    'vmt_employee_payslip_v2.sal_adv as Salary Advance',
-                    'vmt_employee_payslip_v2.canteen_dedn as Canteen Deduction',
-                    'vmt_employee_payslip_v2.other_deduc as Other Deduction',
-                ]
-            )->toArray();
-
+                ->get(
+                    [
+                        'vmt_employee_payslip_v2.prof_tax as Professional Tax',
+                        'vmt_employee_payslip_v2.lwf as LWF',
+                        'vmt_employee_payslip_v2.income_tax as Income Tax',
+                        'vmt_employee_payslip_v2.sal_adv as Salary Advance',
+                        'vmt_employee_payslip_v2.canteen_dedn as Canteen Deduction',
+                        'vmt_employee_payslip_v2.other_deduc as Other Deduction',
+                    ]
+                )->toArray();
 
             $response_data["employee_payables"]["total"] = $this->calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_taxdeduction);
 
+            $overall_employee_epf = 0;
+            $overall_employer_epf = 0;
+            $overall_employee_esic = 0;
+            $overall_employer_esic = 0;
+            $overall_tax = 0;
+            $over_all_employee = 0;
+            $response = array();
+            $array_overall_epf = $query_employees_payroll_details
+                ->get([
+                    'vmt_employee_payslip_v2.epfr',
+                    'vmt_employee_payslip_v2.epf_ee',
+                ]);
+            $array_overall_esic = $query_employees_payroll_details
+                ->get([
+                    'vmt_employee_payslip_v2.employer_esi',
+                    'vmt_employee_payslip_v2.employee_esic',
+
+                ]);
+            $array_overall_PT = $query_employees_payroll_details
+                ->get([
+                    'vmt_employee_payslip_v2.prof_tax',
+                ]);
+
+            foreach ($array_overall_epf as $single_employee_epf) {
+                $overall_employer_epf = $overall_employer_epf + $single_employee_epf->epfr;
+                $overall_employee_epf = $overall_employee_epf + $single_employee_epf->epf_ee;
+            }
+            foreach ($array_overall_esic as $single_employee_esic) {
+                $overall_employee_esic = $overall_employee_esic + $single_employee_esic->employee_esic;
+                $overall_employer_esic = $overall_employer_esic + $single_employee_esic->employer_esi;
+            }
+
+            foreach ($array_overall_PT as $simple_employee_tax) {
+                $overall_tax = $overall_tax + $simple_employee_tax->prof_tax;
+                $over_all_employee++;
+            }
+            $EPF["Employee Share"] = $overall_employee_epf;
+            $EPF["Employer Share"] = $overall_employer_epf;
+            $response['EPF'] = $EPF;
+            $ESIC['Employee Share'] = $overall_employee_esic;
+            $ESIC['Employer Share'] = $overall_employer_esic;
+            $response['ESIC']=$ESIC;
+            $Professional_Tax['Tax Payable']=$overall_tax;
+            $Professional_Tax['Number Of Employee']=$over_all_employee;
+            $response['Professional Tax']=$Professional_Tax;
+        // dd($response);
+            return $response;
+
+
+
+            // $response_data["overall_EPF"]=
             // foreach($employees_payroll_details as $singleEmployeePayrollDetails){
             //     //$total_employees_payables = $singleEmployeePayrollDetails->
             // }
 
 
             //Calculate the total payables for the give employees
-           // $total_amount = ($getpersonal['earnings'][0]['Total Earnings']) - ($getpersonal['contribution'][0]['Total Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total Deduction']);
+            // $total_amount = ($getpersonal['earnings'][0]['Total Earnings']) - ($getpersonal['contribution'][0]['Total Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total Deduction']);
 
 
             return response()->json([
@@ -183,23 +236,18 @@ class VmtPayrollService{
                 "data" => $response_data
 
             ]);
-
-
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Unable to fetch Payroll Outcome details",
-                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error" => $e->getMessage() . ' | Line : ' . $e->getLine(),
                 "error_verbose" => $e->getTraceAsString(),
-            ],400);
+            ], 400);
         }
-
-
-
     }
 
-    private function calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_deductions){
+    private function calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_deductions)
+    {
         //dd(json_encode($array_overall_earnings). "\n ------ \n ". json_encode($array_overall_contributions). "\n ------ \n ". json_encode($array_overall_deductions) );
 
         $validator = Validator::make(
@@ -230,41 +278,37 @@ class VmtPayrollService{
         $overall_deductions = 0;
 
         //calculate the overall earnings
-        foreach($array_overall_earnings as $singleEmployeeEarnings){
+        foreach ($array_overall_earnings as $singleEmployeeEarnings) {
 
-            foreach($singleEmployeeEarnings as $key => $value)
-            {
-                if(!empty($value))
+            foreach ($singleEmployeeEarnings as $key => $value) {
+                if (!empty($value))
                     $overall_earnings += $value;
-
             }
         }
 
         //calculate the overall contributions
-        foreach($array_overall_contributions as $singleEmployeeContributions){
+        foreach ($array_overall_contributions as $singleEmployeeContributions) {
 
-            foreach($singleEmployeeContributions as $key => $value)
-            {
-                if(!empty($value))
+            foreach ($singleEmployeeContributions as $key => $value) {
+                if (!empty($value))
                     $overall_contributions += $value;
-
             }
         }
 
-        foreach($array_overall_deductions as $singleEmployeeDeductions){
+        foreach ($array_overall_deductions as $singleEmployeeDeductions) {
 
-            foreach($singleEmployeeDeductions as $key => $value)
-            {
-                if(!empty($value))
+            foreach ($singleEmployeeDeductions as $key => $value) {
+                if (!empty($value))
                     $overall_deductions += $value;
-
             }
         }
 
         $overall_net_salary = $overall_earnings - $overall_contributions - $overall_deductions;
 
         return $overall_net_salary;
+    }
 
-
+    private function getOverall_EPF_ESI_PT($client_code, $payroll_month)
+    {
     }
 }
