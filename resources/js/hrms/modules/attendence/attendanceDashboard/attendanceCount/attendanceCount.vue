@@ -1,13 +1,14 @@
 <template>
     <div class="grid grid-cols-7 gap-4 " v-if="useDashboard.attendanceOverview">
-        <div class="relative bg-white rounded-lg py-2 border cursor-pointer transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100"
+        <div class=" bg-white rounded-lg p-2 border cursor-pointer transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100"
             @click="useDashboard.selectedAttendanceOverviewReport = 'Present', useDashboard.canShowAttendanceOverview = true, useDashboard.currentlySelectedShiftDetails = { ...useDashboard.attendanceOverview.present_emps }, useDashboard.downloadAttendanceOverviewDetails.push({ ...useDashboard.attendanceOverview.present_emps })">
             <div class="px-auto mx-auto flex justify-around items-center w-[86px]">
                 <span class="mr-2 text-3xl font-semibold text-center">
                     {{ useDashboard.attendanceOverview.present_count }}
                 </span>
+                <img class=" right-8 w-[16px] h-[16px]" src="../../../../assests/images/present-img.png" alt="">
             </div>
-            <img class="absolute top-6 right-8 w-[16px] h-[16px]" src="../../../../assests/images/present-img.png" alt="">
+
             <p class=" text-lg underline text-center text-gray-500 font-[Poppins] font-medium mt-[10px] ">Present</p>
         </div>
         <div class=" bg-white rounded-lg p-2 border cursor-pointer transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100"

@@ -1198,7 +1198,7 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 Route::get('/showLoginPage', [App\Http\Controllers\Auth\LoginController::class, 'showLoginPage'])->name('showLoginPage');
 
 //
-Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
+Route::get('/syncStaffAttendanceFromDeviceDatabase/{can_debug?}', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
 
 //TESTING ROUTES

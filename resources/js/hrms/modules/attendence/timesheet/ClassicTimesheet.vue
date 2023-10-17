@@ -90,16 +90,15 @@
             <p class="font-sans font-bold fs-6">Check-in</p>
 
 
-            <div class="my-2">
-                <div class="flex my-1 justify-center">
-                    <p class="font-medium fs-6 text-gray-700">In Time</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkin_time }}</p>
-                </div>
-                <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Check In Mode</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6 ">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin) }}
+            <div class="my-2  ">
+                <div class="grid grid-cols-6 gap-y-4">
+                    <p class="font-medium text-[12px] text-gray-700 col-span-2 ">In Time</p>
+                    <p class="font-semibold text-[12px] col-span-1 text-center">:</p>
+                    <p class="font-semibold text-[12px] col-span-3">{{ currentlySelectedCellRecord.checkin_time }}</p>
+
+                    <p class="font-medium text-[12px] text-gray-700 col-span-2">Check In Mode</p>
+                    <p class="font-semibold text-[12px] col-span-1 text-center">:</p>
+                    <p class="font-semibold text-[12px] col-span-3">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkin) }}
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkin)"></i> -->
@@ -109,52 +108,47 @@
                             aria-hidden="true"></i>
                     </p>
 
-                </div>
-                <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Check In Status</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6 whitespace-nowrap">{{ capitalizeFLetter(findCheckInStatus('checkin', currentlySelectedCellRecord)) }}
+
+                    <p class="font-medium text-[12px] text-gray-700 col-span-2">Check In Status</p>
+                    <p class="font-semibold text-[12px] col-span-1 text-center">:</p>
+                    <p class="font-semibold text-[12px] whitespace-nowrap col-span-2">{{ capitalizeFLetter(findCheckInStatus('checkin', currentlySelectedCellRecord)) }}
 
                     </p>
-                </div>
-                <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Approval Status</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">
+
+                    <p class="font-medium text-[12px] text-gray-700 col-span-2">Approval Status</p>
+                    <p class="font-semibold text-[12px] col-span-1 text-center">:</p>
+                    <p class="font-semibold text-[12px] col-span-2">
                         {{ findCheckInStatus('checkInStatus', currentlySelectedCellRecord) }}</p>
                 </div>
             </div>
         </div>
         <div class="rounded-lg bg-blue-50 p-3 my-3" v-if="!currentlySelectedCellRecord.isAbsent">
-            <p class="font-sans font-bold fs-6">Check-out</p>
+            <p class="font-sans font-bold text-[12px]">Check-out</p>
 
             <div class="my-2">
-                <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Out Time</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.checkout_time }}</p>
-                </div>
-                <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Check Out Mode</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkout) }}
+                <div class="grid grid-cols-6 my-1 gap-y-4">
+                    <p class="font-medium text-[12px] text-gray-700 col-span-3">Out Time</p>
+                    <p class="font-semibold text-[12px] col-span-1 ">:</p>
+                    <p class="font-semibold text-[12px] col-span-2">{{ currentlySelectedCellRecord.checkout_time }}</p>
+
+                    <p class="font-medium text-[12px] text-gray-700 col-span-3">Check Out Mode</p>
+                    <p class="font-semibold text-[12px] col-span-1">:</p>
+                    <p class="font-semibold text-[12px] col-span-2">{{ capitalizeFLetter(currentlySelectedCellRecord.attendance_mode_checkout) }}
                         <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'mobile'"
-                            class="fa fa-picture-o fs-6 cursor-pointer animate-pulse" aria-hidden="true"
+                            class="fa fa-picture-o text-[12px] cursor-pointer animate-pulse" aria-hidden="true"
                             @click="viewSelfieImage('checkout', currentlySelectedCellRecord.selfie_checkout)"></i>
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkout)"></i> -->
                     </p>
-                </div>
-                <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Check Out Status</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6 whitespace-nowrap">{{ findCheckInStatus('checkout', currentlySelectedCellRecord) }}</p>
-                </div>
-                <div class="flex my-1">
-                    <p class="font-medium fs-6 text-gray-700">Approval Status</p>
-                    <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ findCheckInStatus('checkOutStatus', currentlySelectedCellRecord) }}</p>
+
+                    <p class="font-medium text-[12px] text-gray-700 col-span-3">Check Out Status</p>
+                    <p class="font-semibold text-[12px] col-span-1 ">:</p>
+                    <p class="font-semibold text-[12px] col-span-2 whitespace-nowrap">{{ findCheckInStatus('checkout', currentlySelectedCellRecord) }}</p>
+
+                    <p class="font-medium text-[12px] text-gray-700 col-span-3">Approval Status</p>
+                    <p class="font-semibold text-[12px] col-span-1 ">:</p>
+                    <p class="font-semibold text-[12px] col-span-2">{{ findCheckInStatus('checkOutStatus', currentlySelectedCellRecord) }}</p>
                 </div>
             </div>
         </div>
@@ -164,9 +158,17 @@
             Attendance
             regularization</p>
 
+        
+        <div class=" bg-yellow-50 text-yellow-400 p-1 rounded-sm" v-if="currentlySelectedCellRecord.isLC && currentlySelectedCellRecord.is_Lc_Voided">
+            <p  class="font-bold mx-2 my-3 text-center">
+                LC is voided
+            </p>
+        </div>
+
+
 
         <Accordion>
-            <AccordionTab v-if="currentlySelectedCellRecord.isLC">
+            <AccordionTab v-if="currentlySelectedCellRecord.isLC && !currentlySelectedCellRecord.is_Lc_Voided">
                 <template #header>
                     <div class="grid grid-cols-2 w-full">
                         <span class="w-10/12 px-2 font-semibold fs-6 my-auto whitespace-nowrap">Late Coming</span>
@@ -175,7 +177,7 @@
                                 class="py-auto" style="font-size: 1.2rem"></i></p>
                     </div>
                 </template>
-                <AttendanceRegularization :source="useTimesheet.lcDetails" :type="'LC'" />
+                <AttendanceRegularization  :source="useTimesheet.lcDetails" :type="'LC'" />
             </AccordionTab>
             <AccordionTab v-if="currentlySelectedCellRecord.isMIP">
                 <template #header>
@@ -297,12 +299,18 @@
                                     </p>
                                 </div>
                                 <div
-                                    class="w-full my-3  p-2.5  rounded-sm mr-3 flex  border-l-4 border-red-500 bg-red-50 text-red-600 font-medium fs-5">
+                                    class="w-full my-3  p-2.5  rounded-sm mr-3 flex  border-l-4  font-medium fs-5 "
+                                     :class="singleAttendanceDay.isMOP ? 'bg-blue-50 text-blue-600' : 'border-red-500 bg-red-50 text-red-600' ">
                                     <i class="fa fa-arrow-down font-medium text-sm text-red-800 "
                                         style='transform: rotate(230deg);'></i>
-                                    <p class="text-red-800  font-sans font-semibold text-sm mx-1">
+                                        <!-- :class="" -->
+                                    <p class="bg-blue-50 text-blue-600   font-sans font-semibold text-sm mx-1" v-if="singleAttendanceDay.isMOP" >
+                                        MOP
+                                    </p>
+                                    <p class="text-red-800  font-sans font-semibold text-sm mx-1" v-else >
                                         {{ getSession(singleAttendanceDay.checkout_time) }}
                                     </p>
+                                 
                                 </div>
                             </div>
 
@@ -415,7 +423,10 @@ const getSelectedCellValues = (selectedCells) => {
 const findAttendanceStatus = (data) => {
     // console.log(data);
     if (data.isAbsent) {
-        if (data.absent_status.includes('Approved')) {
+        if(data.isAbsent && data.is_holiday){
+            return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5'
+        }
+       else if (data.absent_status.includes('Approved')) {
             return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5'
         } else
             if (data.absent_status.includes('Rejected')) {
@@ -493,7 +504,9 @@ const icons = (isSelected, data) => {
 const find = (data) => {
 
     if (data.isAbsent) {
-
+        if(data.isAbsent && data.is_holiday){
+            return data.is_holiday == false ? 'Absent' : `${data.holiday_name} Present`
+        }
         if (data.absent_status.includes('Approved')) {
             return data.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : `${data.leave_type} Approved`
         } else
@@ -842,7 +855,7 @@ const isFutureDate = (today) => {
 
 const getSession = (time) => {
 
-    let timeFormat = time == null ? "--:--:--" : moment(
+    let timeFormat = time == null ? "Yet to check Out" : moment(
         time, ["HH:mm"]).format('h:mm a');
 
     return timeFormat

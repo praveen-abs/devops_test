@@ -3368,7 +3368,7 @@ class VmtAttendanceService
 
 
 
-    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long, $checkin_full_address)
     {
 
         $validator = Validator::make(
@@ -3380,6 +3380,7 @@ class VmtAttendanceService
                 "work_mode" => $work_mode,
                 "attendance_mode_checkin" => $attendance_mode_checkin,
                 "checkin_lat_long" => $checkin_lat_long,
+                "checkin_full_address" => $checkin_full_address,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
@@ -3389,6 +3390,7 @@ class VmtAttendanceService
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkin" => "required", //mobile, web
                 "checkin_lat_long" => "nullable", //stores in lat , long
+                "checkin_full_address" => "nullable",
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -3447,7 +3449,8 @@ class VmtAttendanceService
             $attendanceCheckin->checkin_comments = "";
             $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
             $attendanceCheckin->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id; //TODO : Need to fetch from 'vmt_employee_workshifts'
-            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? '';
+            $attendanceCheckin->checkin_full_address = $checkin_full_address ?? '';
             $attendanceCheckin->save();
             // processing and storing base64 files in public/selfies folder
             if (!empty($selfie_checkin)) {
@@ -3535,7 +3538,7 @@ class VmtAttendanceService
         }
     }
 
-    public function performAttendanceCheckOut($user_code, $existing_check_in_date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
+    public function performAttendanceCheckOut($user_code, $existing_check_in_date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long, $checkout_full_address)
     {
 
         $validator = Validator::make(
@@ -3547,6 +3550,7 @@ class VmtAttendanceService
                 "work_mode" => $work_mode,
                 "attendance_mode_checkout" => $attendance_mode_checkout,
                 "checkout_lat_long" => $checkout_lat_long,
+                "checkout_full_address" => $checkout_full_address,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
@@ -3556,6 +3560,8 @@ class VmtAttendanceService
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkout" => "required", //mobile, web
                 "checkout_lat_long" => "nullable", //stores in lat , long
+                "checkout_full_address" => "nullable",
+
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -3614,6 +3620,7 @@ class VmtAttendanceService
                 $existing_att_details->checkout_comments = "";
                 $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
                 $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
+                $existing_att_details->checkout_full_address = $checkout_full_address ?? '';
                 $existing_att_details->save();
                 // processing and storing base64 files in public/selfies folder
                 if (!empty($selfie_checkout)) {
@@ -3648,6 +3655,7 @@ class VmtAttendanceService
                     $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
                     $existing_att_details->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
                     $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
+                    $existing_att_details->checkout_full_address = $checkout_full_address ?? '';
                     $existing_att_details->save();
 
                     // processing and storing base64 files in public/selfies folder
