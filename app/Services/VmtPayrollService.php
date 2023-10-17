@@ -82,17 +82,18 @@ class VmtPayrollService
                     "bank_transfer" => 0.0,
                     "cheques" => 0.0,
                     "cash" => 0.0,
-                    "total" => 0.0,
                 ],
                 "income_tax" => [
                     "title" => "Income Tax (TDS - 192 B)",
                     "tds_payable" => 0.0,
-                    "no_of_employees" => 0
+                    "no_of_employees" => 0.0,
                 ],
                 "EPF" => [
                     "employee_share" => 0.0,
+                    "vpf_share" => 0.0,
                     "employer_share" => 0.0,
                     "other_charges" => 0.0,
+
                 ],
                 "ESIC" => [
                     "employee_share" => 0.0,
@@ -105,6 +106,11 @@ class VmtPayrollService
                     "states" => 0.0,
 
                 ],
+                // "insurance"=>[
+                //     "employee_share"=>0.0,
+                //     "employer_share"=>0.0,
+                //     "total"=>0.0,
+                // ]
             ];
 
             //Get all the employees earnings details
@@ -122,7 +128,7 @@ class VmtPayrollService
                 ->where('users.is_ssa', '0')
                 ->whereYear('payroll_date', $payroll_year)
                 ->whereMonth('payroll_date', $payroll_month);
-
+            // dd($query_employees_payroll_details );
             $array_overall_earnings = $query_employees_payroll_details->get(
                 [
                     //'users.user_code as User-code',
@@ -166,62 +172,31 @@ class VmtPayrollService
                     ]
                 )->toArray();
 
-            $response_data["employee_payables"]["total"] = $this->calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_taxdeduction);
-
-            $overall_employee_epf = 0;
-            $overall_employer_epf = 0;
-            $overall_employee_esic = 0;
-            $overall_employer_esic = 0;
-            $other_charges = 0;
-            $overall_tax = 0;
-            $over_all_employee = 0;
-            $response = array();
             $array_overall_epf = $query_employees_payroll_details
                 ->get([
                     'vmt_employee_payslip_v2.epfr',
                     'vmt_employee_payslip_v2.epf_ee',
+                    'vmt_employee_payslip_v2.vpf',
+                    'vmt_employee_payslip_v2.edli_charges',
                     'vmt_employee_payslip_v2.pf_admin_charges',
                 ]);
+
             $array_overall_esic = $query_employees_payroll_details
                 ->get([
                     'vmt_employee_payslip_v2.employer_esi',
                     'vmt_employee_payslip_v2.employee_esic',
-                    'vmt_employee_payslip_v2.pf_admin_charges',
-
                 ]);
+
             $array_overall_PT = $query_employees_payroll_details
                 ->get([
                     'vmt_employee_payslip_v2.prof_tax',
                 ]);
 
-            foreach ($array_overall_epf as $single_employee_epf) {
-                $overall_employer_epf = $overall_employer_epf + $single_employee_epf->epfr;
-                $overall_employee_epf = $overall_employee_epf + $single_employee_epf->epf_ee;
-                $other_charges  = $other_charges + $single_employee_epf->pf_admin_charges;
-            }
-            foreach ($array_overall_esic as $single_employee_esic) {
-                $overall_employee_esic = $overall_employee_esic + $single_employee_esic->employee_esic;
-                $overall_employer_esic = $overall_employer_esic + $single_employee_esic->employer_esi;
-                $other_charges  = $other_charges + $single_employee_epf->pf_admin_charges;
-            }
-            foreach ($array_overall_PT as $simple_employee_tax) {
-                $overall_tax = $overall_tax + $simple_employee_tax->prof_tax;
-                $over_all_employee++;
-            }
-            $EPF["Employee Share"] = $overall_employee_epf;
-            $EPF["Employer Share"] = $overall_employer_epf;
-            $EPF["Other Charges"] = $other_charges;
-            $response['EPF'] = $EPF;
-            $ESIC['Employee Share'] = $overall_employee_esic;
-            $ESIC['Employer Share'] = $overall_employer_esic;
-            $ESIC['Other Charges'] = $other_charges;
-            $response['ESIC'] = $ESIC;
-            $Professional_Tax['Tax Payable'] = $overall_tax;
-            $Professional_Tax['Number Of Employee'] = $over_all_employee;
-            $response['Professional Tax'] = $Professional_Tax;
-            return $response;
 
-
+            $response_data["employee_payables"]["total"] = $this->calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_taxdeduction);
+            $response_data["EPF"] =  $this->getOverall_EPF($array_overall_epf);
+            $response_data["ESIC"] = $this->getOverall_ESIC($array_overall_esic);
+            $response_data["professional_tax"] = $this->getOverall_PT($array_overall_PT);
 
             // $response_data["overall_EPF"]=
             // foreach($employees_payroll_details as $singleEmployeePayrollDetails){
@@ -252,7 +227,7 @@ class VmtPayrollService
     private function calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_deductions)
     {
         //dd(json_encode($array_overall_earnings). "\n ------ \n ". json_encode($array_overall_contributions). "\n ------ \n ". json_encode($array_overall_deductions) );
-
+        //    dd($array_overall_earnings);
         $validator = Validator::make(
             $data = [
                 'array_overall_earnings' => $array_overall_earnings,
@@ -282,7 +257,6 @@ class VmtPayrollService
 
         //calculate the overall earnings
         foreach ($array_overall_earnings as $singleEmployeeEarnings) {
-
             foreach ($singleEmployeeEarnings as $key => $value) {
                 if (!empty($value))
                     $overall_earnings += $value;
@@ -311,7 +285,49 @@ class VmtPayrollService
         return $overall_net_salary;
     }
 
-    private function getOverall_EPF_ESI_PT($client_code, $payroll_month)
+    private function getOverall_EPF($array_overall_epf)
     {
+        $EPF = array();
+        $overall_employee_epf = 0;
+        $overall_vpf_share = 0;
+        $overall_employer_epf = 0;
+        $other_charges = 0;
+        foreach ($array_overall_epf as $single_employee_epf) {
+            // dd($overall_employee_epf);
+            $overall_employer_epf += (int)$single_employee_epf->epfr;
+            $overall_vpf_share += (int)$single_employee_epf->vpf;
+            $overall_employee_epf += (int)$single_employee_epf->epf_ee;
+            $other_charges  += (int) $single_employee_epf->edli_charges + $single_employee_epf->pf_admin_charges;
+        }
+        $EPF["employee_share"] = $overall_employee_epf;
+        $EPF["vpf_share"] = $overall_vpf_share;
+        $EPF["employer_share"] = $overall_employer_epf;
+        $EPF["other_charges"] = $other_charges;
+        return $EPF;
+    }
+
+    private function getOverall_ESIC($array_overall_esic)
+    {
+        $ESIC = array();
+        $overall_employee_esic = 0;
+        $overall_employer_esic = 0;
+        foreach ($array_overall_esic as $single_employee_esic) {
+            $overall_employee_esic +=(int)$single_employee_esic->employee_esic;
+            $overall_employer_esic +=(int)$single_employee_esic->employer_esi;
+        }
+        $ESIC["employee_share"] = $overall_employee_esic;
+        $ESIC["employer_share"] = $overall_employer_esic;
+        return $ESIC;
+    }
+
+    private  function getOverall_PT($array_overall_PT)
+    {
+        $professional_tax = array();
+        $overall_tax = 0;
+        foreach ($array_overall_PT as $simple_employee_tax) {
+            $overall_tax +=(int)$simple_employee_tax->prof_tax;
+        }
+        $professional_tax["tds_payable"] = $overall_tax;
+        return $professional_tax;
     }
 }
