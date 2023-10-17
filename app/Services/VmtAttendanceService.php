@@ -91,7 +91,7 @@ class VmtAttendanceService
                 $client_id = [auth()->user()->client_id];
             }
 
-            $map_allEmployees =  User::where('active', '1')->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
+            $map_allEmployees =  User::where('active', '1')->where('is_ssa',"0")->whereIn('client_id', $client_id)->get(['id', 'name'])->keyBy('id');
             $allEmployees_lateComing = null;
 
             //If manager ID not set, then show all employees
@@ -103,6 +103,7 @@ class VmtAttendanceService
                 } else {
                     $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
                         ->whereMonth('attendance_date', $month)
+                        ->whereIn('user_id', array_keys($map_allEmployees->toarray()))
                         ->get();
                 }
             } else {
@@ -1582,7 +1583,7 @@ class VmtAttendanceService
                     if (!empty($checkin_time)) {
 
                         $parsedCheckIn_time  = Carbon::parse($checkin_time);
-                       
+
                         //Check whether checkin done on-time
 
                             $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
