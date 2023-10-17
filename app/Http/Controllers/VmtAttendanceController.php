@@ -1218,6 +1218,8 @@ class VmtAttendanceController extends Controller
                         user_type: "Admin",
                         serviceVmtNotificationsService: $serviceVmtNotificationsService
                     );
+                }else{
+                    return $response;
                 }
             }
 
@@ -1256,6 +1258,8 @@ class VmtAttendanceController extends Controller
 
             if (!empty($is_admin)) {
 
+
+
                 $response = $serviceVmtAttendanceService->applyRequestAbsentRegularization(
                     user_code: $request->user_code,
                     attendance_date: $request->attendance_date,
@@ -1281,6 +1285,8 @@ class VmtAttendanceController extends Controller
                         status_text: "---",
                         user_type: "Admin",
                     );
+                }else{
+                    return $response;
                 }
             }
 
