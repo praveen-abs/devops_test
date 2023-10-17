@@ -2580,7 +2580,7 @@ class VmtAttendanceService
             }
 
 
-            if ($regularization_type == 'LC' && $regularize_time < $checkin_time) {
+            if ($regularization_type == 'LC' && $regularize_time > $checkin_time) {
 
                 return $response = ([
                     'status' => 'failure',
