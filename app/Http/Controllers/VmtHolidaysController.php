@@ -392,7 +392,8 @@ class VmtHolidaysController extends Controller
 
             //Get the user record and update avatar column
             $holiday_image = vmtHolidays::where('id', $holiday_id)->first()->image;
-
+            if(!empty( $holiday_image))
+            $holiday_image = str_replace("\n", '', $holiday_image);
             //Get the image from PRIVATE disk and send as BASE64
             $response = Storage::disk('private1')->get('/holidays/' . $holiday_image);
 
