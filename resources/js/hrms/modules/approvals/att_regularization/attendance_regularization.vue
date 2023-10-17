@@ -220,7 +220,7 @@ async function ajax_GetAttRegularizationData(Month,Year) {
         year:Year
     }).then((response) => {
         // console.log("Axios : " + response.data);
-        att_regularization.value = Object.values(response.data);
+        att_regularization.value =response.data.data;
     }).finally(() => {
         UseAttendance.canShowLoadingScreen = false
     });
