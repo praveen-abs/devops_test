@@ -28,7 +28,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function performAttendanceCheckIn(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin, $request->checkin_lat_long);
+        $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin, $request->checkin_lat_long, $request->checkin_full_address);
 
         return $response;
     }
@@ -68,7 +68,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $request->selfie_checkout,
             $request->work_mode,
             $request->attendance_mode_checkout,
-            $request->checkout_lat_long
+            $request->checkout_lat_long,
+            $request->checkout_full_address
         );
 
         return $response;
