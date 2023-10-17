@@ -83,7 +83,7 @@ return [
             ]) : [],
         ],
 
-        'attendanceDB_DMC' => [
+        'attendanceDB_Dunamis' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_ATTENDANCE_HOST_DUNAMIS', '127.0.0.1'),
