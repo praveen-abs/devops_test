@@ -4148,6 +4148,7 @@ class VmtAttendanceService
                 ->whereIn('status', $filter_leave_status)
                 ->whereIn('users.client_id', $client_id)
                 ->get([
+                    "vmt_employee_leaves.id",
                     "vmt_employee_leaves.user_id",
                     "vmt_employee_leaves.leaverequest_date",
                     "vmt_employee_leaves.start_date",
