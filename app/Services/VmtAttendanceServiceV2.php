@@ -303,7 +303,7 @@ class VmtAttendanceServiceV2
 
 
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
-                        $shiftStartTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_start_time);
+                        $shiftStartTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_start_time)->addMinutes($shift_settings->grace_time);
                         $shiftEndTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_end_time);
                         if ($checking_time != null &&  $checkout_time != null &&  $checkout_time ==  $checking_time) {
                             $attendance_time = $this->findMIPOrMOP($checking_time, $shiftStartTime, $shiftEndTime);

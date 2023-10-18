@@ -98,25 +98,34 @@ class VmtEmployeeAttendanceController extends Controller
 
     public function fetchDetailedAttendancedata(Request $request, VmtAttendanceReportsService $attendance_report_service) // need to work
     {
-        $date = $request->date_req;
-        if ($date = $request->date_req == null) {
-            $current_date = Carbon::now();
-            $current_month = $current_date->format('m');
-            $last_month =  $current_month - 1;
-            $date = 26;
-            $year =  $current_date->format('Y');
-            $start_date =  Carbon::parse($year . '-' . $last_month . '-' . $date)->format('Y-m-d');
-            if ($current_date->lt(Carbon::parse($year . '-' .   $current_month . '-' . 25))) {
-                $end_date = Carbon::parse($year . '-' .   $current_month . '-' . 25)->format('Y-m-d');
-            } else {
-                $end_date =   $current_date->format('Y-m-d');
-            }
+        if (!empty($request->start_date) && !empty($request->end_date)) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
         } else {
-
+            $date = $request->date;
             $start_date = Carbon::parse($date)->subMonth()->addDay(25)->format('Y-m-d');
             $end_date = Carbon::parse($date)->addDay(24)->format(('Y-m-d'));
         }
-        return $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id);
+        $start_date = '2023-06-26';
+        $end_date = '2023-06-29';
+        $request->department_id = '';
+        $request->client_id = '';
+        $is_lc = false;
+        if (VmtWorkShifts::where('is_lc_applicable', 1)->exists()) {
+            $is_lc = true;
+        }
+
+        $data = $attendance_report_service->detailedAttendanceReport($start_date, $end_date, $request->department_id, $request->client_id);
+        $temp_ar = array();
+        $response = array();
+        foreach ($data['heading_dates'] as $single_heading) {
+            $temp_ar['header'] = $single_heading;
+            $temp_ar['row_sapn'] = 2;
+            $temp_ar['col_span'] = 1;
+            array_push($response, $temp_ar);
+            unset($temp_ar);
+        }
+        return $response;
     }
 
     public function showBasicAttendanceReport(Request $request)
