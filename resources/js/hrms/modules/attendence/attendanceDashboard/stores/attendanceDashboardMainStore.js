@@ -48,7 +48,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     function send_selectedDepartment(val){
 
         axios.post('/get-attendance-dashboard',{
-            id:val
+            department_id:val
         }).then((res)=>{
         }).finally(()=>{
 
@@ -59,7 +59,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const getAttendanceDashboardMainSource = async () => {
         canShowLoading.value = true
         let url = '/get-attendance-dashboard'
-        await axios.get(url).then(res => {
+        await axios.post(url).then(res => {
             attendanceOverview.value = res.data.attendance_overview
 
             totalEmployeeInOrganization.value = res.data.total_Employees

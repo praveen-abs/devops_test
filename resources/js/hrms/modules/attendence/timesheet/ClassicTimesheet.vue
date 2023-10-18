@@ -158,7 +158,7 @@
             Attendance
             regularization</p>
 
-        
+
         <div class=" bg-yellow-50 text-yellow-400 p-1 rounded-sm" v-if="currentlySelectedCellRecord.isLC && currentlySelectedCellRecord.is_Lc_Voided">
             <p  class="font-bold mx-2 my-3 text-center">
                 LC is voided
@@ -294,7 +294,10 @@
                                     class="w-full my-3  p-2.5  rounded-sm mr-3 flex  border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5">
                                     <i class="fa fa-arrow-down text-green-800  font-medium text-sm "
                                         style='transform: rotate(-45deg);'></i>
-                                    <p class="text-green-800 font-sans font-semibold text-sm mx-1">
+                                    <p class="bg-blue-50 text-blue-600   font-sans font-semibold text-sm mx-1" v-if="singleAttendanceDay.isMIP" >
+                                        MIP
+                                    </p>
+                                    <p class="text-green-800 font-sans font-semibold text-sm mx-1" v-else>
                                         {{ getSession(singleAttendanceDay.checkin_time) }}
                                     </p>
                                 </div>
@@ -310,7 +313,7 @@
                                     <p class="text-red-800  font-sans font-semibold text-sm mx-1" v-else >
                                         {{ getSession(singleAttendanceDay.checkout_time) }}
                                     </p>
-                                 
+
                                 </div>
                             </div>
 

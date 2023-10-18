@@ -1598,7 +1598,7 @@ class VmtAttendanceController extends Controller
     public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        return  $serviceVmtAttendanceService->getAttendanceDashboardData($department_id=null);
+        return  $serviceVmtAttendanceService->getAttendanceDashboardData($request->department_id);
     }
     public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {

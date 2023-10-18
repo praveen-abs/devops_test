@@ -1743,9 +1743,14 @@ class VmtAttendanceService
                     }
                 }
             } //for each
-            $employee_Lc_expire_status = $this->processOutdatedPendingAttRegAsVoid($attendanceResponseArray);
-            // dd($attendanceResponseArray);
-            $attendanceResponseArray = $employee_Lc_expire_status;
+
+            if( $user_client_code == "BA" ){
+
+                $employee_Lc_expire_status = $this->processOutdatedPendingAttRegAsVoid($attendanceResponseArray);
+                // dd($attendanceResponseArray);
+                $attendanceResponseArray = $employee_Lc_expire_status;
+            }
+
             return $response = [
                 'status' => 'success',
                 'message' => 'Attendance Monthly Report fetched successfully',
@@ -4143,6 +4148,7 @@ class VmtAttendanceService
                 ->whereIn('status', $filter_leave_status)
                 ->whereIn('users.client_id', $client_id)
                 ->get([
+                    "vmt_employee_leaves.id",
                     "vmt_employee_leaves.user_id",
                     "vmt_employee_leaves.leaverequest_date",
                     "vmt_employee_leaves.start_date",
@@ -4700,7 +4706,7 @@ class VmtAttendanceService
             $response = array();
             $i = 0;
 
-            $employees_data = User::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
+            $employees_data = User::leftjoin('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
                 ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
                 ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
                 ->where('users.is_ssa', '0')->where('users.active', '1');
@@ -4712,17 +4718,19 @@ class VmtAttendanceService
             }
             $employees_data = $employees_data
                 ->get(['users.id as id', 'users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
-
+// dd($employees_data);
 
             foreach ($employees_data as $key => $single_user_data) {
 
                 $user_code = $single_user_data->Employee_Code;
 
-                $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
+                $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date);
 
                 $emp_bio_attendance = $this->getBioMetricAttendanceData($user_code, $current_date);
 
-                if (!empty($absent_present_employee_data)) {
+                if ($absent_present_employee_data->exists()) {
+
+                    $absent_present_employee_data = $absent_present_employee_data->first();
 
                     $present_employee_data[$key]['presentEmployeeCount'] = $absent_present_employee_data;
 
@@ -5259,7 +5267,7 @@ class VmtAttendanceService
     {
 
         try {
-            $employees_data = User::where('active', 1)->get(['id', 'user_code']);
+            $employees_data = User::where('active', 1)->where('is_ssa',"0")->get(['id', 'user_code']);
             $response = array();
             $biometric_checkin_count = 0;
             $web_checkin_count = 0;
