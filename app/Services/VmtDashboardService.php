@@ -157,7 +157,7 @@ class VmtDashboardService
         //Get current day attendance checkin/checkout status
 
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
-        $response["holidays"] = $serviceHolidayService->getAllHolidays();
+        //$response["holidays"] = $serviceHolidayService->getAllHolidays();
         $response["events"] = $this->getAllEventsDashboard();
 
         return response()->json([
