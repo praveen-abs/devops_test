@@ -158,7 +158,7 @@ onMounted(() => {
                 ?
                 {
                     label: 'Attendance',
-                    subItems: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? [findSelectedModuleIsEnabled(res.data.data, 'ATTENDANCE TIMESHEET') ? findSelectedModuleIsEnabled(res.data.data, 'ATTENDANCE TIMESHEET').sub_module_name.DASHBOARD === 1 ? { label: 'Dashboard', to: 'attendance-dashboard' } : null : null,
+                    subItems: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? [findSelectedModuleIsEnabled(res.data.data, 'ATTENDANCE TIMESHEET') ? findSelectedModuleIsEnabled(res.data.data, 'ATTENDANCE TIMESHEET').sub_module_name.DASHBOARD === 1 ? { label: 'Dashboard', to: 'Attendance/attendance-dashboard' } : null : null,
                     findSelectedModuleIsEnabled(res.data.data, 'ATTENDANCE TIMESHEET') ? findSelectedModuleIsEnabled(res.data.data, 'ATTENDANCE TIMESHEET').sub_module_name.TIME_SHEET === 1 ? { label: 'Timesheet', to: 'attendance-timesheet' } : null : null,] : null,
                     arrow_icon: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? 'pi pi-angle-right' : null,
                     to: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 || res.data.role == 4 ? null : 'attendance-timesheet',
@@ -184,7 +184,7 @@ onMounted(() => {
                     label: 'Organization',
                     subItems: res.data.role == 1 || res.data.role == 2 || res.data.role == 3 ? [
                         findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.MANAGE_EMPLOYEES === 1 ? { label: 'Manage Employees', to: 'Organization/manage-employees' } : null : null,
-                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ORG_STRUCTURE === 1 ? { label: 'ORG structure', to: 'employee-hierarchy' } : null : null,
+                        findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ORG_STRUCTURE === 1 ? { label: 'ORG structure', to: 'Organization/employee-hierarchy' } : null : null,
                         findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING === 1 ? { label: 'Onboarding', to: 'Organization/employee-onboarding' } : null : null,
                         findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING_BULK_UPLOAD === 1 ? { label: 'Onboarding Bulk Upload', to: 'Organization/bulk-onboarding' } : null : null,
                         findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION') ? findSelectedModuleIsEnabled(res.data.data, 'ORGANIZATION').sub_module_name.ONBOARDING_QUICK_UPLOAD === 1 ? { label: 'Onboarding Quick Upload', to: 'Organization/quick-onboarding' } : null : null,
