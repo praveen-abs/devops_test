@@ -142,7 +142,7 @@
                 <div class="mx-2">
                     <button class="p-0 m-0 bg-transparent border-0 outline-none btn">
 
-                        <!-- <button class=" border-[1px] border-[#000] p-2 rounded-md mx-2" @click="visibleRight= true" > view</button> -->
+                        <i  class="pi pi-pencil rounded-md mx-4 " @click="visibleRight= true" ></i> 
                         <i class="pi pi-id-card text-success fs-4" aria-hidden="true" @click="dialogIdCard = true"></i>
                     </button>
                 </div>
@@ -427,40 +427,48 @@
         </div>
     </Dialog>
 
-    <Sidebar v-model:visible="visibleRight" position="right" class="!w-[400px]">
-        <h1 class="bg-cyan-800 p-4 text-white text-xl " >Profile</h1>
-        <div class="py-4">
-            <h4 class="font-semibold text-2xl ">Personal Information</h4>
-            <div class="leading-8">
-                <h6 class="py-2 font-semibold text-xl">Name</h6>
-                <InputText v-model="value" class="bg-gray-200" disabled placeholder="Name" />
-                <h6 class="py-2 font-semibold text-xl">Designation</h6>
-                <InputText v-model="value"  class="bg-gray-200" disabled placeholder="Designation" />
-                <h6 class="py-2 font-semibold text-xl">Location</h6>
-                <InputText v-model="value" class="bg-gray-200" disabled placeholder="Location" />
+    <Sidebar v-model:visible="visibleRight" position="right" class="!w-[500px] !h-[650px] " :style="{ width: '40vw !important' }">
+        <template #header>
+            <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+                <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">Profile Details</h1>
             </div>
-            <div class="py-2 leading-8 font-semibold text-2xl">General Information
+        </template>
+        <div class="py-3">
+            <h4 class="font-semibold text-[15px] ">Personal Information</h4>
+            <div class="leading-8">
+                <h6 class="py-2 font-semibold text-[12px]">Name<span class="text-danger">*</span></h6>
+                <InputText v-model="value" class="bg-gray-200 h-10"  placeholder="Name" />
+                <h6 class="py-2 font-semibold text-[12px]">Designation<span class="text-danger">*</span></h6>
+                <InputText v-model="value"  class="bg-gray-200 h-10"  placeholder="Designation" />
+                <h6 class="py-2 font-semibold text-[12px]">Location<span class="text-danger">*</span></h6>
+                <InputText v-model="value" class="bg-gray-200 h-10"  placeholder="Location" />
+            </div>
+            <div class="py-2 leading-8 font-semibold text-[15px]">General Information
                 <div class="flex ">
                     <div class="">
-                        <div class="w-80  font-semibold  text-xl leading-10 ">DOB
-                            <InputText v-model="value" class="bg-gray-200 h-12" disabled placeholder="DOB" />
-                        </div>
-                        <div class="w-80 font-semibold text-xl leading-10 ">Gender
+                         <div class=" w-72 font-semibold   text-[12px] leading-10 ">DOB<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200 h-9"  placeholder="DOB" />
+                        </div> 
+                        <!-- <div class="W-64 font-semibold text-xl leading-10 ">Gender<span class="text-danger">*</span>
                             <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Gender" />
-                        </div>
-                        <div class="w-80 font-semibold text-xl leading-10 ">Blood Group
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Blood Group" />
+                        </div> -->
+                        <div class=" w-72 font-semibold  text-[12px] leading-10 ">Gender<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200 h-10"  placeholder="  Gender" />
+                            
+                        </div> 
+                        <div class="w-72 font-semibold text-[12px] leading-10 ">Blood Group<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10"  placeholder="Blood Group" />
                         </div>
                     </div>
-                    <div class="ml-20 ">
-                        <div class="w-80  font-semibold leading-10  text-xl">DOJ
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="DOJ" />
+                    <div class="ml-10 ">
+                        <div class="w-72  font-semibold leading-10  text-[12px] ">DOJ<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10"  placeholder="DOJ" />
                         </div>
-                        <div class="w-80  font-semibold leading-10  text-xl">Martial Status
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Martial Status" />
+                        <div class="w-72  font-semibold leading-10  text-[12px]">Martial Status<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10"  placeholder="Martial Status" />
                         </div>
-                        <div class="w-80  font-semibold leading-10  text-xl">Physically Challenged
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Physically Challenged" />
+                        <div class="w-72  font-semibold leading-10  text-[12px]">Physically Challenged<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10" placeholder="Physically Challenged" />
                         </div>
 
                     </div>
@@ -471,6 +479,16 @@
                 </div>
             </div>
         </div>
+        <div class="">
+            <div class="bg-[#FFE2E2] mt-24 py-3 rounded-lg ml-1 font-['poppins] font-bold">Note
+                <p class="font-['poppins] ml-1">Changing Personal Information will be verified and approved by the Manager after you submit this form</p>
+            </div>
+            <div class="justify-center font-['poppins'] py-4 ml-52 items-center ">
+                 <button class=" border-2 py-1 px-3  rounded-lg border-black">Cancel</button>
+                <button class=" border-2 py-1 px-3 ml-10 rounded-lg bg-black text-white border-black">Submit</button>
+            </div>
+        </div>
+  
     </Sidebar>
 </template>
 
@@ -489,7 +507,8 @@ const visibleRight = ref(false);
 
 const canShowLoading = ref(false);
 
-const dialogIdCard = ref(false)
+const dialogIdCard = ref(false);
+const value = ref();
 
 const employee_card = reactive({
     department: "",
