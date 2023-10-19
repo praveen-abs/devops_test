@@ -49,7 +49,7 @@ class VmtProfilePagesController extends Controller
 
     public function getProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService)
     {
-        return $serviceProfilePagesService->getProfilePicture($request->user_id);
+        return $serviceProfilePagesService->getEmployeeProfilePicture($request->user_id,$request->admin_user_id);
     }
 
 

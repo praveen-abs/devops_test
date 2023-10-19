@@ -102,7 +102,7 @@
                 <button v-tooltip="'Settings'"
                     v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3"
                     class="p-2 mx-2 transition duration-700 ease-in-out transform bg-gray-100 rounded-full hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
-                    @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration">
+                    @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"  @mouseleave="useDashboard.canShowConfiguration = false">
                     <img src="./assests/icons/setting.svg" alt="" class="w-6 h-6">
                 </button>
                 <transition enter-active-class="transition duration-200 ease-out transform" v-if="activeSettings"
@@ -110,9 +110,9 @@
                     leave-active-class="transition duration-100 ease-in transform" leave-class="translate-y-0 opacity-100"
                     leave-to-class="translate-y-2 opacity-0" @mouseleave="useDashboard.canShowConfiguration = false">
                     <div v-if="useDashboard.canShowConfiguration"
-                        @click="useDashboard.canShowConfiguration = !useDashboard.canShowConfiguration"
+                        @click="useDashboard.canShowConfiguration = true" @mouseenter="useDashboard.canShowConfiguration = true"
                         class="absolute top-0 z-50 p-2 mt-16 bg-white rounded shadow-lg right-40 w-60 "
-                        @mouseleave="useDashboard.canShowConfiguration = false">
+                        >
                         <!-- Dropdown content goes here -->
 
                         <!-- <RouterLink  v-if= "findSelectedModuleIsEnabled(activeSettings,'MASTER CONFIG').sub_module_name.IS_ENABLED ===1 "
@@ -171,10 +171,10 @@
                     <div class="relative mx-3">
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-
-                        <img  v-if="service.current_user_code != 'SA_ABS' && _profilePagesStore.profile_img" class=" forRounded w-[30px] h-[30px] rounded-full"
-                        :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output"
+                        <img  v-if="_profilePagesStore.profile_img " class=" forRounded w-[30px] h-[30px] rounded-full"
+                        :src="`data:image/png;base64,${_profilePagesStore.profile_img?_profilePagesStore.profile.admin_profile :'gsaj' }`" srcset="" alt="" id="output"
                      />
+
 
                     <!-- <h1
                         class="rounded-full bg-blue-50  text-black font-semibold p-1.5 text-sm">

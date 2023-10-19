@@ -39,12 +39,13 @@
     <Sidebar v-model:visible="visibleRight" position="right" :style="{ width: '40vw !important' }" >
         <!-- <h2>Right Sidebar</h2> -->
         <template #header>
-            <p class="absolute left-0 mx-4 font-semibold fs-5 ">
+            <p class="absolute top-[0px] text-[#fff]  left-[0px] px-4 py-3  font-semibold fs-5  bg-[#001820] w-[100%]">
                 Holiday list</p>
         </template>
 
        <div class="p-2">
-        <DataTable :value="holidays">
+        <h1 class="font-[600] my-3 text-[rgb(0,0,0)]">Upcoming Holidays</h1>
+        <DataTable :value="holidays" class=" mb-12"  paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]"  >
             <Column field="holiday_name" header="Holiday Name"></Column>
             <Column field="holiday_date" header="Holiday Date">
                 <template #body="slotProps">
@@ -56,6 +57,30 @@
             </Column>
             <Column field="holiday_description" header="Holiday Description "></Column>
         </DataTable>
+
+        <h1 class=" text-[#000] font-[600] my-3">Past Holidays</h1>
+        <DataTable :value="holidays" class=" "  paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]"  >
+            <Column field="holiday_name" header="Holiday Name"></Column>
+            <Column field="holiday_date" header="Holiday Date">
+                <template #body="slotProps">
+                    <!-- <div> -->
+                    {{ dayjs(slotProps.data.holiday_date).format('DD-MMM-YYYY') }} {{
+                        dayjs(slotProps.data.holiday_date).format('ddd') }}
+                    <!-- </div> -->
+                </template>
+            </Column>
+            <Column field="holiday_description" header="Holiday Description "></Column>
+        </DataTable>
+
+        <div class=" mt-10 flex justify-center p-2 rounded-md bg-[#FFE2E2]">
+            <p>This holiday schedule is derived from your company's official 
+                holiday notification. For additional information, please get in touch 
+                with your HR department.</p>
+        </div>
+       </div>
+
+       <div class=" flex justify-center mt-10">
+        <button class=" p-2 px-4 rounded-md border-[1.5px] border-[#000] " @click="visibleRight= false">Close</button>
        </div>
 
     </Sidebar>

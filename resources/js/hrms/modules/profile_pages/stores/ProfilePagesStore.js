@@ -32,17 +32,38 @@ export const profilePagesStore = defineStore("employeeService", () => {
     
     function getURLParams_UID() {
 
-        if(route.params.user_id){
-            return route.params.user_id
+        if(route.params.user_code){
+            return route.params.user_code
         }else{
             return service.current_user_id
         }
     }
 
     const getProfilePhoto = () => {
+        console.log(route.params.user_code);
+        if(route.params.user_code && user_id.value ){
+            console.log(" admin and view user id ::");
+            
         axios
+        .post("/profile-pages/getProfilePicture", {
+            user_id:user_id.value,
+            admin_user_id:service.current_user_id
+        })
+        .then((res) => {
+            console.log("profile :?", res.data.data);
+            profile.value = res.data.data;
+            profile_img.value = res.data.data;
+        })
+        .finally(() => {
+        });
+
+        }
+        else{
+            console.log(" admin ");
+            axios
             .post("/profile-pages/getProfilePicture", {
-                user_id: user_id.value
+                user_id:"",
+                admin_user_id:service.current_user_id
             })
             .then((res) => {
                 console.log("profile :?", res.data.data);
@@ -50,9 +71,10 @@ export const profilePagesStore = defineStore("employeeService", () => {
                 profile_img.value = res.data.data;
             })
             .finally(() => {
-                console.log("profile Pic Fetched" ,profile_img.value);
-                // fetchEmployeeDetails();
             });
+
+        }
+
     };
 
     async function fetchEmployeeDetails(userId) {

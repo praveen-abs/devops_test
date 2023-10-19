@@ -15,7 +15,7 @@
 
             <div class="grid grid-cols-12 gap-2 h-full py-2">
                 <div class="col-span-2">
-                    <p class="font-semibold text-xs text-gray-500">Birthday</p>
+                    <p class="font-semibold text-xs text-gray-500">Date of Birth</p>
                     <p class="font-semibold text-sm">
                         {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY')
                         }}

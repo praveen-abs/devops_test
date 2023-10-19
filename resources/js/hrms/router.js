@@ -241,7 +241,7 @@ const routes = [
             {
                 path: '/testing',
                 name: 'testing',
-                component: () => import('../testings/api.vue'),
+                component: () => import('../hrms/modules/manage_payslips/managePayslipv2/managePayslipV2.vue'),
             },
             // Other routes go here
         ],

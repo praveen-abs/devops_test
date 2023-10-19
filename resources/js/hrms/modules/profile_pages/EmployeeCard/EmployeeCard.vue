@@ -11,7 +11,7 @@
             </div> -->
                 <div class="profile-pic">
                     <img v-if="_instance_profilePagesStore.profile" class="forRounded"
-                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" id="output"
+                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile ?_instance_profilePagesStore.profile.employee_profile:''}`" srcset="" alt="" id="output"
                         width="200" />
                     <p v-else
                         class="font-semibold text-5xl text-center flex items-center justify-center text-white forRounded"
