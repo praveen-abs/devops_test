@@ -282,7 +282,7 @@
 
     <Sidebar v-model:visible="visible_dialog" position="right" class=" w-[500px]">
         <div class="" v-if="InformationType == 'General Information'">
-            <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+            <div class=" bg-[#001820] !w-[100%] h-[60px] absolute top-0 left-0 ">
                 <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">General Information</h1>
             </div>
 

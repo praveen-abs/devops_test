@@ -108,6 +108,208 @@
 
     </div>
     </div>
+
+    <div>
+        <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed mb-3 " id="pills-tab" role="tablist">
+            <li class=" nav-item" role="presentation">
+                <a class="px-4 position-relative border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                    aria-selected="true" @click="activetab_btn1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
+                        EMPLOYEE DOCUMENTS
+                </a>                      
+                <div v-if="activetab === 1" class="h-1 rounded-l-3xl " style="border: 2px solid #F9BE00 !important;" ></div>
+                <div v-else class=" border-2 h-1 rounded-l-3xl border-gray-300"></div>
+            </li>
+
+            <li class=" nav-item position-relative  border-0" role="presentation">
+                <a class=" text-center px-4  border-0 font-['poppins'] text-[12px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab=2"
+                    :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                    PREVIOUS DOCUMENTS
+                </a>
+                <div v-if="activetab === 2"
+                    class=" h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="border: 2px solid #F9BE00 !important;"></div>
+                <div v-else class=" border-3 h-1  border-gray-300"></div>
+            </li>
+            <li class=" nav-item position-relative  border-0" role="presentation">
+                <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab_btn3"
+                    :class="[activetab === 3 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                    PERSONAL DOCUMENTS
+                </a>
+                <div v-if="activetab === 3"
+                    class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
+
+            </li>
+            <div class="border-gray-300 border-b-[4px]  w-100 mt-[-7px]"></div>
+            <!-- <li class=" nav-item position-relative  border-0" role="presentation">
+                <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab_btn3"
+                    :class="[activetab === 3 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                    PERSONAL DOCUMENTS
+                </a>
+                <div v-if="activetab === 3"
+                    class="h-1 rounded-r-3xl position-absolute bottom-[1px] w-[100%] left-0"  style="border: 2px solid #F9BE00 !important;"></div>
+                <div v-else class=" border-3 h-1 rounded-r-3xl border-yellow-300"></div>
+            </li> -->
+            <!-- <div class="border-gray-300 border-b-[4px]  w-100 mt-[-7px]"></div> -->
+             <!-- <li class=" nav-item position-relative  border-0" role="presentation">
+                <a class=" text-center px-4  border-0 font-['poppins'] text-[14px] text-[#001820]" id="" data-bs-toggle="pill" href="" @click="activetab_btn2"
+                    :class="[activetab === 4 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
+                    PREVIOUS DOCUMENTS
+                </a>
+                <div v-if="activetab === 4"
+                    class=" h-1 position-absolute bottom-[1px] left-0 w-[100%]" style="border: 2px solid #F9BE00 !important;"></div>
+                <div v-else class=" border-3 h-1  border-yellow-300"></div>
+            </li>  -->
+        </ul>
+        <!-- </div> -->
+        <!-- Tab Content -->
+        <div class="tab-content" id="">
+            <div>
+                <div class="card-body">
+                    <div v-if="activetab === 1">
+                  
+                    </div>
+                    <div v-if="activetab === 2">
+                        <!-- <EmployeeSummary /> -->
+                        <div class=" text-sm">
+                            <div class=" bg-white p-2 py-15  ">
+                                <div class="flex justify-between items-center bottom-12  border-b-2 py-3">
+                                    <div class=" flex items-center  ">
+                                        <img src='../../../assests/images/Aadhaar-Logo 1.png' class=" ">
+                                        <p class="text-[14px] font-bold ml-5">Aadhar card front </p>
+                                    </div>
+                                    <div class="">
+                                        <i class="pi pi-ellipsis-v" ></i>
+                                    </div>
+                                </div>
+                                <div class="flex gap-32 ml-5 py-3">
+                                    <div class="grid grid-rows-2 ">
+                                        <p class="mt-3">Aadhar Number</p>
+                                        <p class="font-bold mt-1 ">9123  7272  1928</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p class="mt-3">Name</p>
+                                        <p class="font-bold mt-1 ">Suba shri</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p class="mt-3">Date of Birth</p>
+                                        <p class="font-bold mt-1">Not Available</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p class="mt-3">Gender</p>
+                                        <p class="font-bold mt-1">Female</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p class="mt-3">Enrollment Number</p>
+                                        <p class="font-bold mt-1">N/A</p>
+                                    </div>
+                                    <div class="grid grid-rows-4">
+                                        <p>Address</p>
+                                        <p class="font-bold">ABS,</p>
+                                        <P class="font-bold">North Phase Industrial Estate, Kalaimagal Nagar,</P>
+                                        <p class="font-bold">Ekkatuthangal,Chennai-600032</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <br>
+                        <!-- <div class="font-[poppins]">
+                            <div class=" bg-white p-10 py-20 ">
+                                <div class="flex relative bottom-12  border-b-2 py-3">
+                                    <img src='../../../assests/images/Aadhaar-Logo 1.png' class="text-lg">
+                                    <p class="text-[14px] font-semibold  ml-6">Aadhar card Back </p>
+                                    <i class="pi pi-ellipsis-v" ></i>
+                                </div>
+                                <div class="flex gap-24 ml-5">
+                                    <div class="grid grid-rows-2">
+                                        <p>Aadhar Number</p>
+                                        <p class="font-bold">9123  7272  1928</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Name</p>
+                                        <p class="font-bold">Suba shri</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Date of Birth</p>
+                                        <p class="font-bold">Not Available</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Gender</p>
+                                        <p class="font-bold">Female</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Enrollment Number</p>
+                                        <p class="font-bold">N/A</p>
+                                    </div>
+                                    <div class="grid grid-rows-4">
+                                        <p>Address</p>
+                                        <p class="font-bold">ABS,</p>
+                                        <P class="font-bold">North Phase Industrial Estate, Kalaimagal Nagar,</P>
+                                        <p class="font-bold">Ekkatuthangal,Chennai-600032</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+                        <br>
+                        <div class="font-[poppins]  text-sm">
+                            <div class=" bg-white p-2 py-10 ">
+                                <div class="flex justify-between items-center bottom-12  border-b-2 ">
+                                    <div class="flex items-center ">
+                                    <img src='../../../assests/images/Frame 35676.png' class=" ">
+                                    <p class="text-[14px] font-semibold   ml-1">PANcard</p>
+                                </div>
+                                <div class="">
+                                    <i class="pi pi-ellipsis-v" ></i>
+                                </div>
+                                </div>
+                                <div class="flex  leading-7 gap-48 ml-5 py-3">
+                                    <div class="grid grid-rows-2">
+                                        <p>Permanent Acc No</p>
+                                        <p class="font-bold">GOUPM9956M</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Name</p>
+                                        <p class="font-bold">Suba shri</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Date of Birth</p>
+                                        <p class="font-bold">Not Available</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Gender</p>
+                                        <p class="font-bold">Female</p>
+                                    </div>
+                                    <div class="grid grid-rows-2">
+                                        <p>Parents Name</p>
+                                        <p class="font-bold">Not Available</p>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                       
+                           
+                        
+                       
+
+                    </div>
+                  
+                    <div v-if="activetab === 3">
+                     
+                    </div>
+                    <div v-if="activetab === 4">
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- {{ EmployeeDocumentManagerService.getEmployeeDetails }} -->
 
 </template>
@@ -120,6 +322,7 @@ import { UseEmployeeDocumentManagerService } from '../EmployeeDocumentsManagerSe
 import { profilePagesStore } from "../stores/ProfilePagesStore";
 
 const EmployeeDoc = ref([]) ;
+const activetab = ref(1);
 
 onMounted(() => {
     EmployeeDocumentManagerService.fetch_EmployeeDocument();

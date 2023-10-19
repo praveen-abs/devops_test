@@ -429,12 +429,18 @@
 
     <Sidebar v-model:visible="visibleRight" position="right" class="!w-[500px] !h-[650px] " :style="{ width: '40vw !important' }">
         <template #header>
-            <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+            <div class="bg-[#001820] !w-[100%] h-[60px] absolute top-0 left-0 ">
                 <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">Profile Details</h1>
             </div>
+            <div class="w-[535px] text-sm">
+                <div class="bg-[#FFE2E2] mt-[44px] w-[530px] h-18  ml-2 font-['poppins] font-bold">Note
+                    <p class="font-['poppins]  ml-1">Changing Personal Information will be verified and approved by the Manager after you submit this form</p>
+                </div>
+            </div>    
         </template>
-        <div class="py-3">
+        <div class="">
             <h4 class="font-semibold text-[15px] ">Personal Information</h4>
+            
             <div class="leading-8">
                 <h6 class="py-2 font-semibold text-[12px]">Name<span class="text-danger">*</span></h6>
                 <InputText v-model="value" class="bg-gray-200 h-10"  placeholder="Name" />
@@ -480,9 +486,9 @@
             </div>
         </div>
         <div class="">
-            <div class="bg-[#FFE2E2] mt-24 py-3 rounded-lg ml-1 font-['poppins] font-bold">Note
+            <!-- <div class="bg-[#FFE2E2] mt-24 py-3 rounded-lg ml-1 font-['poppins] font-bold">Note
                 <p class="font-['poppins] ml-1">Changing Personal Information will be verified and approved by the Manager after you submit this form</p>
-            </div>
+            </div> -->
             <div class="justify-center font-['poppins'] py-4 ml-52 items-center ">
                  <button class=" border-2 py-1 px-3  rounded-lg border-black">Cancel</button>
                 <button class=" border-2 py-1 px-3 ml-10 rounded-lg bg-black text-white border-black">Submit</button>
