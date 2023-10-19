@@ -1590,16 +1590,16 @@ class VmtAttendanceController extends Controller
     {
         return  $serviceVmtAttendanceService->getAttendanceDashboardData();
     }
-    public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
-    {
-        return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
-    }
+    // public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    // {
+    //     return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
+    // }
 
-    public function checkEmployeeLcPermission(Request $request,VmtAttendanceService $testingservice)
+    public function checkEmployeeLcPermission(Request $request,VmtAttendanceService $serviceVmtAttendanceService)
     {
         $month = Carbon::now()->format('m');
         $year =  Carbon::now()->format('Y');
         $user_id = $request->user_id;
-        return $testingservice->checkEmployeeLcPermission($month, $year, $request->user_id);
+        return $serviceVmtAttendanceService->checkEmployeeLcPermission($month, $year, $request->user_id);
     }
 }
