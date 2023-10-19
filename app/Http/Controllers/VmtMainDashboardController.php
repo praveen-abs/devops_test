@@ -718,7 +718,7 @@ class VmtMainDashboardController extends Controller
 
         return $serviceVmtDashboardService->fetchAttendanceDailyReport_PerMonth($request->user_code, $request->year, $request->month);
     }
-    public function fetchEmpLastAttendanceStatus(Request $request, VmtDashboardService $serviceVmtDashboardService)
+    public function fetchEmpLastAttendanceStatus(Request $request, VmtDashboardService $serviceVmtDashboardService,)
     {
 
         $request->user_code = auth()->user()->user_code;
