@@ -1595,15 +1595,20 @@ class VmtAttendanceController extends Controller
         return $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
     }
 
-    public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    // public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    // {
+
+    //     return  $serviceVmtAttendanceService->getAttendanceDashboardData($request->department_id);
+    // }
+    public function getAttendanceDashboardData_v2(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        return  $serviceVmtAttendanceService->getAttendanceDashboardData($request->department_id);
+        return  $serviceVmtAttendanceService->getAttendanceDashboardData_v2($request->department_id);
     }
-    public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
-    {
-        return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
-    }
+    // public function getWorkShiftDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    // {
+    //     return  $serviceVmtAttendanceService->getWorkShiftDetails();
+    // }
 
     public function checkEmployeeLcPermission(Request $request,VmtAttendanceService $testingservice)
     {

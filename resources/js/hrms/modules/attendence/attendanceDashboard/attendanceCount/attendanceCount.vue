@@ -36,7 +36,7 @@
             @click="useDashboard.selectedAttendanceOverviewReport = 'Late coming', useDashboard.canShowAttendanceOverview = true, useDashboard.currentlySelectedShiftDetails = { ...useDashboard.attendanceOverview.lc_emps }, useDashboard.downloadAttendanceOverviewDetails.push({ ...useDashboard.attendanceOverview.lc_emps })">
             <div class="px-auto mx-auto flex justify-around items-center w-[86px]">
                 <span class=" text-3xl font-semibold text-center">
-                    {{ useDashboard.attendanceOverview.lg_count }}
+                    {{ useDashboard.attendanceOverview.lc_count }}
                 </span>
                 <img src="../../../../assests/images/Early_going.png" class=" ml-6 w-[20px] h-[20px]" alt="">
             </div>
