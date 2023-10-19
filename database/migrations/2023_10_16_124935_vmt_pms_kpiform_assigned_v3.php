@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return void max
      */
     public function up()
     {
@@ -30,7 +30,6 @@ return new class extends Migration
 
             $table->foreign('vmt_pms_kpiform_v3_id')->references('id')->on('vmt_pms_Kpiform_v3');
             $table->foreign('department_id')->references('id')->on('vmt_department');
-            // $table->foreign('org_time_period_id')->references('id')->on('vmt_org_time_period');
 
 
         });

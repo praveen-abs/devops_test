@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('vmt_pms_Kpiform_v3', function (Blueprint $table) {
             $table->id();
             $table->text('form_name');
-            $table->text('available_columns');
+            $table->text('available_headers');
             $table->text('author_id');
             $table->timestamps();
         });

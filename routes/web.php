@@ -813,11 +813,11 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //--- PMS v3 START ---
     Route::get('/performance', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'showPMSDashboard']);
-    Route::get('/getmanager', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'getEmpManagerCode']);
-    Route::get('/getReviewsDetails', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'getReviewsDetails']);
+    Route::get('/createKpiForm', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'createKpiForm']);
     Route::get('/publishPmsform', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'publishPmsform']);
     Route::get('/Approverflow', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'Approverflow']);
     Route::get('/ApproveOrReject', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'ApproveOrReject']);
+    Route::get('/assigneReviews', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'assigneReviews']);
 
 
 
