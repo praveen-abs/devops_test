@@ -11,10 +11,10 @@
     <h1> {{ $status }} <h1>
     @endif
     @if ($err_msg != 'null')
-    <h1> {{ $err_msg }} <h1>
+    <p> {{ $err_msg }} <p>
     @endif
     @if ($err_str != 'null')
-    <h1> {{ $err_str }} <h1>
+    <p> {{ $err_str }} <p>
     @endif
 
 </body>

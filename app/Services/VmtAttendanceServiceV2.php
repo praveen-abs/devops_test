@@ -246,9 +246,15 @@ class VmtAttendanceServiceV2
                             if ($web_attendance->checkout_date == null) {
                                 $web_attendance->checkout_date =  $current_date_str;
                             }
-                            $web_checkin_time = $web_attendance->date . ' ' . $web_attendance->checkin_time;
-                            $web_checkout_time = $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time;
+                            if ($web_attendance->checkin_time != null) {
+                                $web_checkin_time = $web_attendance->date . ' ' . $web_attendance->checkin_time;
+                            }
+                            if ($web_attendance->checkout_time != null) {
+                                $web_checkout_time = $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time;
+                            }
                         }
+                        // if($single_user->id==266 && $current_date->format('Y-m-d')=='2023-10-13')
+                        // dd();
                         if ($web_checkin_time != null) {
                             $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time, 'attendance_mode' => $web_attendance->attendance_mode_checkin]);
                         }
@@ -277,7 +283,7 @@ class VmtAttendanceServiceV2
                         $checking_time_ar = $sortedCollection->first();
                         $checkout_time_ar =  $sortedCollection->last();
 
-
+                        //  dd($checking_time_ar, $checkout_time_ar);
                         //dd( $sortedCollection->first());
                         if ($checking_time_ar != null) {
                             $checking_time = $checking_time_ar['date'];
@@ -287,6 +293,7 @@ class VmtAttendanceServiceV2
                             $checkout_time =  $checkout_time_ar['date'];
                             $attendance_mode_checkout =    $checkout_time_ar['attendance_mode'];
                         }
+
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
                         $shiftStartTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_start_time);
                         $shiftEndTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_end_time);
@@ -296,8 +303,6 @@ class VmtAttendanceServiceV2
                             $checking_time  = $attendance_time['checkin_time'];
                             $checkout_time = $attendance_time['checkout_time'];
                         }
-
-
                         $week_off =   $shift_settings->week_off_days;
                         $week_off_sts = $this->checkWeekOffStatus($current_date, $week_off, $checking_time, $checkout_time);
 
@@ -364,7 +369,7 @@ class VmtAttendanceServiceV2
                             $isCheckout_done_ontime = $parsedCheckOut_time->lte($shiftEndTime);
                             if ($isCheckout_done_ontime) {
                                 //employee left early on time....
-                                if($shift_settings->is_eg_applicable==1){
+                                if ($shift_settings->is_eg_applicable == 1) {
                                     $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'EG');
                                     $eg_id = $regularization_status['id'];
                                     if ($regularization_status['sts'] == 'Approved') {
@@ -374,7 +379,6 @@ class VmtAttendanceServiceV2
                                         $is_eg = true;
                                     }
                                 }
-                                
                             } else {
                                 //employee left late....
                             }
@@ -384,12 +388,7 @@ class VmtAttendanceServiceV2
                         $emp_ot_sts = VmtEmployeeWorkShifts::where('user_id', $single_user->id)
                             ->where('work_shift_id', $shift_settings->id)->first()->can_calculate_ot;
                         if ($emp_ot_sts == 1) {
-                            // if($checking_time!=null){
-                            //     dd($single_user->id);
-                            //     dd($checking_time);
-                            // }
-                            //  dd();
-                            // dd($regz_checkin_time);
+
                             if ($regz_checkin_time != null) {
                                 $checkin_time_ot = substr($checking_time, 0, 10) . ' ' . $regz_checkin_time;
                                 // $checkin_time_ot
@@ -402,8 +401,21 @@ class VmtAttendanceServiceV2
                             } else {
                                 $checkout_time_ot = $checkout_time;
                             }
-                            if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot) && $checkout_time_ot != null) {
-                                $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                            if ($checkout_time_ot != null &&  $checkin_time_ot != null) {
+                                if ($shift_settings->ot_calculation_type == 'shift_time') {
+                                    $gross_hours = $shiftStartTime->diffInMinutes($checkout_time_ot);
+                                } else if ($shift_settings->ot_calculation_type == 'actual_time') {
+                                    $gross_hours = Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot);
+                                }
+                                if ($shiftStartTime->diffInMinutes($shiftEndTime) + $shift_settings->minimum_ot_working_mins <=  $gross_hours) {
+                                    if ($shift_settings->ot_calculation_type == 'shift_time') {
+                                        $ot_mins = $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                                    } else if ($shift_settings->ot_calculation_type == 'actual_time') {
+                                        $shift_start_ot = $shiftStartTime->diffInMinutes(Carbon::parse($checkin_time_ot));
+                                        $shift_end_ot =  $shiftEndTime->diffInMinutes(Carbon::parse($checkout_time_ot));
+                                        $ot_mins = $shift_start_ot + $shift_end_ot;
+                                    }
+                                }
                             }
                         }
                         // dd($emp_ot_sts);
@@ -506,6 +518,9 @@ class VmtAttendanceServiceV2
 
                         if ($checking_time != null ||  $checkout_time != null) {
                             $attendance_status = 'P';
+                            if ($is_mip || $is_mop) {
+                                $attendance_status = 'A';
+                            }
                             if ($is_lc) {
                                 $attendance_status =  $attendance_status . '/LC';
                             }
@@ -523,8 +538,6 @@ class VmtAttendanceServiceV2
                         } else if ($is_holiday) {
                             $attendance_status = 'HO';
                         } else if ($is_leave) {
-                            // if($leave_type='leave')
-                            // dd($single_user);
                             $attendance_status = $leave_type;
                         }
                         $attendance_table->status = $attendance_status;
@@ -555,11 +568,12 @@ class VmtAttendanceServiceV2
                 'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('success', ' data saved successfully ', 'null')),
             ]);
         } catch (Exception $e) {
+
             return response()->json([
                 'status' => 'failure',
                 'message' => $e->getMessage(),
                 'data' => $e->getTraceAsString(),
-                'sheduler' => Mail::to('simmasrfc1330@gmail.com')->send(new dommimails('failure', $e->getMessage(), $e->getTraceAsString())),
+                'sheduler' => Mail::to('karthigaiselvan@abshrms.com')->send(new dommimails('failure', $e->getMessage(), $e->getTraceAsString())),
             ]);
         }
     }

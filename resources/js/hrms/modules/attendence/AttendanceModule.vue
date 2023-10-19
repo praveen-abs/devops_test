@@ -17,7 +17,7 @@
 
                                     <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed justify-center"
                                         id="pills-tab" role="tablist">
-                                        <li class="mx-4 nav-item ember-view" role="presentation">
+                                        <li class="mx-4 nav-item ember-view" role="presentation" @click="useTimesheet.currentlySelectedTimesheet = 1">
                                             <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#timesheet" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">

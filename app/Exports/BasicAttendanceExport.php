@@ -141,8 +141,8 @@ class BasicAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, 
         $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : " . $this->period);
         $sheet->getStyle('C3:E3')->getFont()->setBold(true);
         //for fourth row
-        $sheet->mergeCells('C4:E4')->setCellValue('C4', "Category : " . $this->category);
-        $sheet->getStyle('C4:E4')->getFont()->setBold(true);
+        // $sheet->mergeCells('C4:E4')->setCellValue('C4', "Category : " . $this->category);
+        // $sheet->getStyle('C4:E4')->getFont()->setBold(true);
 
         $sheet->getStyle('A5:' . $this->last_header_column . '5')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)

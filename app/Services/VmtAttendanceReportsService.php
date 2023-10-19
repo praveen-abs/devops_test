@@ -854,6 +854,7 @@ class VmtAttendanceReportsService
 
     public function detailedAttendanceReport($start_date, $end_date, $department_id, $client_id)
     {
+        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
@@ -892,7 +893,7 @@ class VmtAttendanceReportsService
                 ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
                 ->where('is_ssa', '0');
             if (!empty($client_id)) {
-                $users =  $users->whereIn->whereIn('client_id', $client_id);
+                $users =  $users->whereIn('client_id', $client_id);
             }
 
             if (!empty($department_id)) {
@@ -1490,22 +1491,22 @@ class VmtAttendanceReportsService
 
 
 
-    public function fetchAbsentReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
+    public function fetchAbsentReportData($start_date, $end_date, $department_id, $client_id)
     {
 
+        //   dd($start_date, $end_date, $department_id, $client_id);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
-                'type' => $type,
-                'active_status' => $active_status,
                 'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
-                'type' => 'nullable',
-                'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
-                'date' => 'nullable'
+                'start_date' => 'required',
+                'end_date' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1523,27 +1524,6 @@ class VmtAttendanceReportsService
 
         try {
 
-            if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id')->toArray();
-            } else {
-                $client_id =  $client_id;
-            }
-            // dd($client_id);
-
-            if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
-            } else {
-                $active_status = $active_status;
-            }
-            if (empty($date_req)) {
-                $date_req = Carbon::now()->format('Y-m-d');
-            }
-
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
             ini_set('max_execution_time', 3000);
 
             $response = array();
@@ -1555,9 +1535,17 @@ class VmtAttendanceReportsService
             }
 
             $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
-            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
-            ->whereBetween('date', [$start_date, $end_date])
-            ->get();
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->whereBetween('date', [$start_date, $end_date]);
+            // dd($attendance_data);
+            if (!empty($client_id)) {
+                $attendance_data =  $attendance_data->whereIn('client_id', $client_id);
+            }
+            if (!empty($department_id)) {
+                $attendance_data = $attendance_data->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $attendance_data =  $attendance_data->get();
 
             foreach ($attendance_data as $single_data) {
                 $sts_ar = explode('/', $single_data['status']);
@@ -1624,22 +1612,22 @@ class VmtAttendanceReportsService
         return $response;
     }
 
-    public function fetchHalfDayReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
+    public function fetchHalfDayReportData($start_date, $end_date, $department_id, $client_id)
     {
 
+        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
-                'type' => $type,
-                'active_status' => $active_status,
                 'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
-                'type' => 'nullable',
-                'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
-                'date' => 'nullable'
+                'start_date' => 'required',
+                'end_date' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1656,28 +1644,6 @@ class VmtAttendanceReportsService
 
 
         try {
-            if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id')->toArray();
-            } else {
-                $client_id =  $client_id;
-            }
-            // dd($client_id);
-
-            if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
-            } else {
-                $active_status = $active_status;
-            }
-            if (empty($date_req)) {
-                $date_req = Carbon::now()->format('Y-m-d');
-            }
-
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
-            ini_set('max_execution_time', 3000);
             $response = array();
             $halfday_data = array();
             $temp_ar = array();
@@ -1687,9 +1653,16 @@ class VmtAttendanceReportsService
             }
 
             $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
-            ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
-            ->whereBetween('date', [$start_date, $end_date])
-            ->get();
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->whereBetween('date', [$start_date, $end_date]);
+            if (!empty($client_id)) {
+                $attendance_data = $attendance_data->whereIn('client_id', $client_id);
+            }
+            if (!empty($department_id)) {
+                $attendance_data = $attendance_data->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $attendance_data = $attendance_data->get();
 
             foreach ($attendance_data as $single_data) {
                 $sts_ar = explode('/', $single_data['status']);
@@ -1742,22 +1715,21 @@ class VmtAttendanceReportsService
         return $response;
     }
 
-    public function fetchLCReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
+    public function fetchLCReportData($start_date, $end_date, $department_id, $client_id)
     {
-
+        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
-                'type' => $type,
-                'active_status' => $active_status,
                 'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
-                'type' => 'nullable',
-                'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
-                'date' => 'nullable'
+                'start_date' => 'required',
+                'end_date' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1775,38 +1747,24 @@ class VmtAttendanceReportsService
 
         // try {
 
-        if (empty($client_id)) {
-            $client_id = VmtClientMaster::pluck('id')->toArray();
-        } else {
-            $client_id =  $client_id;
-        }
-        if (empty($active_status)) {
-            $active_status = ['1', '0', '-1'];
-        } else {
-            $active_status = $active_status;
-        }
-        if (empty($date_req)) {
-            $date_req = Carbon::now()->format('Y-m-d');
-        }
-
-        if (empty($department_id)) {
-            $get_department = Department::pluck('id');
-        } else {
-            $get_department = $department_id;
-        }
-        ini_set('max_execution_time', 3000);
         $lcData = array();
         $response = array();
         $temp_ar = array();
         // dd($start_date,$end_date);
-            if (Carbon::parse($end_date)->gt(Carbon::today())) {
-                $end_date = Carbon::today()->format('Y-m-d');
-            }
+        if (Carbon::parse($end_date)->gt(Carbon::today())) {
+            $end_date = Carbon::today()->format('Y-m-d');
+        }
         $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
-            // ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
             ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
-            ->whereBetween('date', [$start_date, $end_date])
-            ->get();
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->whereBetween('date', [$start_date, $end_date]);
+        if (!empty($client_id)) {
+            $attendance_data = $attendance_data->whereIn('client_id', $client_id);
+        }
+        if (!empty($department_id)) {
+            $attendance_data = $attendance_data->whereIn('vmt_employee_office_details.department_id', $department_id);
+        }
+        $attendance_data = $attendance_data->get();
 
         foreach ($attendance_data as $single_data) {
             $sts_ar = explode('/', $single_data['status']);
@@ -1873,22 +1831,22 @@ class VmtAttendanceReportsService
     }
 
 
-    public function fetchEGReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
+    public function fetchEGReportData($start_date, $end_date, $department_id, $client_id)
     {
 
+        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
-                'type' => $type,
-                'active_status' => $active_status,
                 'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
-                'type' => 'nullable',
-                'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
-                'date' => 'nullable'
+                'start_date' => 'required',
+                'end_date' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1906,40 +1864,23 @@ class VmtAttendanceReportsService
 
         try {
 
-            if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id')->toArray();
-            } else {
-                $client_id =  $client_id;
-            }
-            // dd($client_id);
 
-            if (empty($active_status)) {
-                $active_status = ['1', '0', '-1'];
-            } else {
-                $active_status = $active_status;
-            }
-            if (empty($date_req)) {
-                $date_req = Carbon::now()->format('Y-m-d');
-            }
-
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
-            }
-
-            ini_set('max_execution_time', 3000);
 
             if (Carbon::parse($end_date)->gt(Carbon::today())) {
                 $end_date = Carbon::today()->format('Y-m-d');
             }
 
             $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
-                // ->join('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                 ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
-                ->whereBetween('date', [$start_date, $end_date])
-                ->get();
-
+                ->whereBetween('date', [$start_date, $end_date]);
+            if (!empty($client_id)) {
+                $attendance_data =  $attendance_data->where('client_id', $client_id);
+            }
+            if (!empty($department_id)) {
+                $attendance_data = $attendance_data->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $attendance_data =  $attendance_data->get();
             $ecData = array();
             $response = array();
             $temp_ar = array();
@@ -2133,22 +2074,21 @@ class VmtAttendanceReportsService
         }
     }
 
-    public function fetchOvertimeReportData($start_date, $end_date, $department_id, $client_id, $type, $active_status)
+    public function fetchOvertimeReportData($start_date, $end_date, $department_id, $client_id)
     {
-
+        ini_set('max_execution_time', 3000);
         $validator = Validator::make(
             $data = [
                 'client_id' => $client_id,
-                'type' => $type,
-                'active_status' => $active_status,
                 'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
             ],
             $rules = [
                 'client_id' => 'nullable|exists:vmt_client_master,id',
-                'type' => 'nullable',
-                'active_status' => 'nullable',
                 'department_id' => 'nullable|exists:vmt_department,id',
-                'date' => 'nullable'
+                'start_date' => 'required',
+                'end_date' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -2165,74 +2105,35 @@ class VmtAttendanceReportsService
 
 
         try {
-            if (empty($client_id)) {
-                $client_id = VmtClientMaster::pluck('id')->toArray();
-            } else {
-                $client_id =  $client_id;
-            }
-            // dd($client_id);
-
-            if (empty($active_status)) {
-                $active_status = ['1'];
-            } else {
-                $active_status = $active_status;
-            }
-            if (empty($date_req)) {
-                $date_req = Carbon::now()->format('Y-m-d');
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
             }
 
-            if (empty($department_id)) {
-                $get_department = Department::pluck('id');
-            } else {
-                $get_department = $department_id;
+            $attendance_data = user::Join('vmt_emp_att_intrtable', 'vmt_emp_att_intrtable.user_id', '=', 'users.id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_emp_att_intrtable.vmt_employee_workshift_id')
+                ->whereBetween('date', [$start_date, $end_date])
+                ->where('vmt_emp_att_intrtable.overtime', '>', '0');
+            if (!empty($client_id)) {
+                $attendance_data =  $attendance_data->where('client_id', $client_id);
             }
-            ini_set('max_execution_time', 3000);
-            $attendance_data = $this->fetch_attendance_data($start_date, $end_date, $department_id, $client_id, $type, $active_status);
+            if (!empty($department_id)) {
+                $attendance_data = $attendance_data->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $attendance_data =  $attendance_data->get();
             $otData = array();
             $response = array();
             $temp_ar = array();
             foreach ($attendance_data as $single_data) {
-                foreach ($single_data as $key => $value) {
-                    if ($this->canCalculateOt($value['user_code'])) {
-                        $current_shift = VmtWorkShifts::where('id', $value['work_shift_id'])->first();
-                        $shiftStartTime = Carbon::parse($current_shift->shift_start_time);
-                        $shiftEndTime = Carbon::parse($current_shift->shift_end_time);
-                        if ($shiftStartTime->diffInMinutes($shiftEndTime) + 30 <= Carbon::parse($value['checkin_time'])->diffInMinutes(Carbon::parse($value['checkout_time'])) && $value['checkout_time'] != null) {
-                            $shiftEndTime = Carbon::parse($value['checkin_time'])->addMinutes($current_shift->fullday_min_workhrs);
-                            $ot =  $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
-                            $ot_ar = CarbonInterval::minutes($ot)->cascade();
-                            $ot_hrs = (int) $ot_ar->totalHours;
-                            $ot_mins = $ot_ar->toArray()['minutes'];
-                            if ($ot_hrs == 0) {
-                                if ($ot_mins > 30) {
-                                    $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-                                    $temp_ar['Employee Code'] = $value['user_code'];
-                                    $temp_ar['Employee Name'] = $value['name'];
-                                    $temp_ar['Date'] = $value['date_day'];
-                                    $temp_ar['Shift Name'] =  $current_shift->shift_name;
-                                    $temp_ar['In Punch'] = $value['checkin_time'];
-                                    $temp_ar['Out Punch'] = $value['checkout_time'];
-                                    $temp_ar['OverTime Duration'] =   $total_ot;
-                                    array_push($otData,  $temp_ar);
-                                    unset($temp_ar);
-                                } else {
-                                    break;
-                                }
-                            } else {
-                                $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-                                $temp_ar['Employee Code'] = $value['user_code'];
-                                $temp_ar['Employee Name'] = $value['name'];
-                                $temp_ar['Date'] = $value['date_day'];
-                                $temp_ar['Shift Name'] =  $current_shift->shift_name;
-                                $temp_ar['In Punch'] = $value['checkin_time'];
-                                $temp_ar['Out Punch'] = $value['checkout_time'];
-                                $temp_ar['OverTime Duration'] =   $total_ot;
-                                array_push($otData,  $temp_ar);
-                                unset($temp_ar);
-                            }
-                        }
-                    }
-                }
+                $temp_ar['Employee Code'] = $single_data['user_code'];
+                $temp_ar['Employee Name'] = $single_data['name'];
+                $temp_ar['Date'] = Carbon::parse($single_data['date'])->format('d-M-Y');
+                $temp_ar['Shift Name'] = $single_data['shift_name'];
+                $temp_ar['In Punch'] = $single_data['checkin_time'];
+                $temp_ar['Out Punch'] = $single_data['checkout_time'];
+                $temp_ar['OverTime Duration'] = CarbonInterval::minutes($single_data['overtime'])->cascade()->forHumans();
+                array_push($otData,  $temp_ar);
+                unset($temp_ar);
             }
 
             $response['headers'] = array('Employee Code', 'Employee Name', 'Date', 'Shift Name', 'In Punch', 'Out Punch', 'OverTime Duration');
@@ -2281,7 +2182,136 @@ class VmtAttendanceReportsService
         return $response;
     }
 
-    public function fetchConsolidateReportData($start_date, $end_date, $department_id, $client_id, $active_status)
+    public function fetchConsolidateReportData($start_date, $end_date, $department_id, $client_id)
     {
+        // $start_date = '2023-04-26';  // For testing
+        // $end_date = '2023-05-25';    // For testing 
+
+        ini_set('max_execution_time', 3000);
+        $validator = Validator::make(
+            $data = [
+                'client_id' => $client_id,
+                'department_id' => $department_id,
+                'start_date' => $start_date,
+                'end_date' => $end_date
+            ],
+            $rules = [
+                'client_id' => 'nullable|exists:vmt_client_master,id',
+                'department_id' => 'nullable|exists:vmt_department,id',
+                'start_date' => 'required',
+                'end_date' => 'required'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+            if (Carbon::parse($end_date)->gt(Carbon::today())) {
+                $end_date = Carbon::today()->format('Y-m-d');
+            }
+            $reportresponse = array();
+            $temp_ar = array();
+            $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+                ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('is_ssa', '0')
+                ->where('active',  "1")
+                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
+
+            if (!empty($department_id)) {
+                $users =  $users->whereIn('client_id', $client_id);
+            }
+            if (!empty($client_id)) {
+                $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
+            }
+            $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
+            $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
+            $attendance_setting_details = $this->attendanceSettingsinfos(null);
+            $reportresponse['rows'] = array();
+            array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
+            if ($attendance_setting_details['lc_status'] == 1) {
+                array_push($heading_dates, 'Total LC');
+            }
+            if ($attendance_setting_details['eg_status'] == 1) {
+                array_push($heading_dates, 'Total EG');
+            }
+            array_push($heading_dates, "Total Payable Days");
+            $reportresponse['headings'] = $heading_dates;
+            foreach ($users as $single_user) {
+                $current_date = Carbon::parse($start_date);
+                $temp_ar = array();
+                array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
+                $total_weekoff = 0;
+                $total_holiday = 0;
+                $total_present = 0;
+                $total_absent = 0;
+                $total_late_lop = 0;
+                $total_leave = 0;
+                $total_half_day = 0;
+                $total_on_duty = 0;
+                $total_LC = 0;
+                $total_EG = 0;
+                $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date]);
+                $total_weekoff = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', 'WO%')->count();
+                $total_holiday = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', 'HO%')->count();
+                $total_present = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', 'P%')->count();
+                $total_absent = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', 'A%')->count();
+                $total_leave = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date])->Where('status', 'like', 'SL/CL%')
+                    ->orWhere('status', 'like', 'CL/SL%')
+                    ->orWhere('status', 'like', 'LOP LE%')
+                    ->orWhere('status', 'like', 'EL%')
+                    ->orWhere('status', 'like', 'ML%')
+                    ->orWhere('status', 'like', 'PTL%')
+                    ->orWhere('status', 'like', 'PI%')
+                    ->orWhere('status', 'like', 'CO%')
+                    ->orWhere('status', 'like', 'CL%')
+                    ->orWhere('status', 'like', 'SL%')
+                    ->orWhere('status', 'like', 'FO L%')
+                    ->count();
+                $total_half_day = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date])->Where('status', 'like', '%HD%')->count();
+                  //  dd($total_half_day);
+                $total_on_duty = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                    ->whereBetween('date', [$start_date, $end_date])->Where('status', 'like', '%OD%')->count();
+                array_push($temp_ar, $total_weekoff, $total_holiday,   $total_present, $total_absent, $total_late_lop,  $total_leave, $total_half_day, $total_on_duty);
+                if ($attendance_setting_details['lc_status'] == 1) {
+                    $total_LC  = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                        ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', '%LC%')->count();
+                    array_push($temp_ar, $total_LC);
+                }
+                if ($attendance_setting_details['eg_status'] == 1) {
+                    $total_EG = VmtEmpAttIntrTable::where('user_id', $single_user->id)
+                        ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', '%EG%')->count();
+                    array_push($temp_ar, $total_EG);
+                }
+                $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day + $total_on_duty) - $total_late_lop;
+                array_push($temp_ar, $total_payable_days);
+                array_push($reportresponse['rows'], $temp_ar);
+                unset($temp_ar);
+            }
+          return $reportresponse;
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while fetching data',
+                'error' =>  $e->getMessage(),
+                'error_verbose' => $e->getLine() . "  " . $e->getfile(),
+            ];
+        }
+        return $response;
     }
 }

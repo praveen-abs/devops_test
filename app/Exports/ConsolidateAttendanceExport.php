@@ -24,11 +24,13 @@ use PhpOffice\PhpSpreadsheet\Style\Protection;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class OverTimeReportExport implements FromArray, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStrictNullComparison, WithTitle, WithStyles, WithDrawings
+class ConsolidateAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStrictNullComparison, WithTitle, WithStyles, WithDrawings
 {
     /**
      * @return \Illuminate\Support\Collection
      */
+    use Exportable;
+
     private $heading_dates;
     private $reportresponse;
     private $total_column;
@@ -39,9 +41,8 @@ class OverTimeReportExport implements FromArray, WithHeadings, ShouldAutoSize, W
     private $public_client_logo_path;
     public function __construct($data, $public_client_logo_path, $period, $client_name)
     {
-        //dd($data);
-        $this->heading_dates = $data['headers'];
-        $this->total_column = num2alpha(count($data['headers']) - 1);
+        $this->heading_dates = $data['headings'];
+        $this->total_column = num2alpha(count($data['headings']) - 1);
         $this->reportresponse = $data['rows'];
         $this->client_name = $client_name;
         $this->period = $period;
@@ -51,7 +52,7 @@ class OverTimeReportExport implements FromArray, WithHeadings, ShouldAutoSize, W
     }
     public function title(): string
     {
-        return 'Overtime Report';
+        return 'Consolidate Attendance Report';
     }
 
     public function headings(): array
@@ -90,7 +91,7 @@ class OverTimeReportExport implements FromArray, WithHeadings, ShouldAutoSize, W
         $sheet->getStyle('C1:E1')->getFont()->setBold(true);
 
         //For Second Row
-        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " . 'Overtime Report');
+        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " . ' Consolidate Attendance Report');
         $sheet->getStyle('C2:E2')->getFont()->setBold(true);
 
         //For Third Row

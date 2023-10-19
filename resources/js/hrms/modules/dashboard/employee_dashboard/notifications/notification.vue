@@ -1,13 +1,13 @@
 <template>
-    <div class="bg-white min-h-min rounded-lg overflow-hidden">
+    <div class="bg-white min-h-min rounded-lg overflow-hidden h-[100%]">
         <div class="flex items-center justify-between p-3 mb-3 bg-gray-100 card-title" id="">
             <span class="font-semibold text-[14px] text-[#000] font-['Poppins]">Activity Log</span>
             <!-- <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="px-4 pi pi-bell p-overlay-badge"
                 style="font-size: 1rem" /> -->
         </div>
         <div class="h-full overflow-x-scroll" >
-            <div class=" hover:bg-slate-100 divide-y-2 divide-gray-400  ">
-                <p class="font-medium text-sm text-center">No activity log to display</p>
+            <div class="divide-y-2 divide-gray-400 hover:bg-slate-100">
+                <p class="text-sm font-medium text-center">No activity log to display</p>
                 <!-- <div class="p-2">
                     <a class="text-black notify-content">
                         <p class="flex items-center justify-between mb-1 orange-median">
