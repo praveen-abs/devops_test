@@ -42,7 +42,7 @@ export const profilePagesStore = defineStore("employeeService", () => {
     const getProfilePhoto = () => {
         axios
             .post("/profile-pages/getProfilePicture", {
-                user_code: service.current_user_code
+                user_id: user_id.value
             })
             .then((res) => {
                 console.log("profile :?", res.data.data);
@@ -59,12 +59,14 @@ export const profilePagesStore = defineStore("employeeService", () => {
         
         let User_code = user_id.value;
         if(userId){
-            User_code = userId
+            User_code = userId;
+            user_id.value = userId;
         }
         else if(User_code){
             User_code = user_id.value;
         }else{
             User_code = service.current_user_id;
+            user_id.value = service.current_user_id;
         }
 
         console.log(" user code : : " , user_code.value ,User_code );
