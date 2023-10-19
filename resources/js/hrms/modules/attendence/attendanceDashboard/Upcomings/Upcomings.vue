@@ -1,11 +1,11 @@
 <template>
-    <div class=" bg-[#E4ECFF] rounded-[20px] p-3" style="height: 200px;">
+    <div class=" bg-[#E4ECFF]  h-full rounded-lg  p-3">
         <div class=" mx-4 flex items-center justify-between">
             <span class="font-semibold text-[14px] text-[#000] font-['Poppins] ">Upcomings</span>
         <i class=" pi pi-calendar text-[#000] text-[16px]"></i>
         </div>
 
-        <div class="h-full overflow-x-scroll bg-[#E4ECFF] rounded-lg">
+        <div class="overflow-x-scroll bg-[#E4ECFF] rounded-lg">
             <div class="px-auto" v-if="useDashboard.attendanceDashboardUpcoming"
                 v-for="request in  useDashboard.attendanceDashboardUpcoming ">
                 <div

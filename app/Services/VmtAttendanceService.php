@@ -56,7 +56,7 @@ class VmtAttendanceService
                 'year' => $year,
             ],
             $rules = [
-                'manager_user_code' => 'required|exists:users,user_code',
+                'manager_user_code' => 'nullable|exists:users,user_code',
                 'month' => 'required',
                 'year' => 'required',
             ],
@@ -67,6 +67,14 @@ class VmtAttendanceService
                 'in' => 'Field :attribute is invalid',
             ]
         );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
 
         try {
 
@@ -84,6 +92,8 @@ class VmtAttendanceService
         }
 
             $map_allEmployees =  User::where('active','1')->whereIn('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
+            //dd(array_keys( $map_allEmployees->toArray()));
+
             $allEmployees_lateComing = null;
 
             //If manager ID not set, then show all employees
@@ -121,16 +131,19 @@ class VmtAttendanceService
            // dd($allEmployees_lateComing->toArray());
 
             foreach ($allEmployees_lateComing as $singleItem) {
-
+                // dd($singleItem);
                 //check whether user_id from regularization table exists in USERS table
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                     $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
 
-                    //If reviewer_id = 0, then its not yet reviewed
-                    if ($singleItem->reviewer_id != 0) {
+                    //If reviewer_id = 0, then its not yet reviewed4
+                    // dd($singleItem->reviewer_id );
+                    if (array_key_exists($singleItem->reviewer_id, $map_allEmployees->toArray())) {
+
                         $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                        // dd($singleItem->reviewer_name);
                         $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
                     }
                 } else {
@@ -144,41 +157,22 @@ class VmtAttendanceService
             //     "message"=>"",
             //     "data"=>$allEmployees_lateComing
             // ];
-
+                // dd($allEmployees_lateComing);
             return $allEmployees_lateComing;
 
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching Attendance Regularization data",
-                "data" => $e->getTraceAsString(),
+                "error" => $e->getMessage().' | File : '.$e->getFile().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTrace(),
             ]);
         }
     }
 
-
-
-
-
-    public function fetchAbsentRegularizationData($month, $year, $manager_user_code = null)
-    {
-
-        $client_id =null;
-        if(!empty(session('client_id'))){
-
-                if(session('client_id') == 1){
-
-                $client_id =VmtClientMaster::pluck('id');
-                }else{
-                    $client_id =[session('client_id')];
-                }
-
         }else{
 
-            $client_id =[auth()->user()->client_id];
-        }
-
-        $map_allEmployees = User::where('active','1')->whereIn('client_id',$client_id)->get(['id', 'name'])->keyBy('id');
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
         $allEmployees_lateComing = null;
 
@@ -443,7 +437,8 @@ class VmtAttendanceService
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching employee leave balance",
-                "data" => $e,
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -1659,11 +1654,11 @@ class VmtAttendanceService
 
             // dd($attendanceResponseArray);
 
-            return response()->json([
+            return $response =[
                 'status' => 'success',
                 'message' => 'Attendance Monthly Report fetched successfully',
                 'data' => $attendanceResponseArray,
-            ], 200);
+            ];
         } catch (\Throwable $e) {
 
             return response()->json([
@@ -3191,14 +3186,15 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'success',
                 'message' => 'Error while getting latest attendance status',
-                'data'   => $e->getmessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
 
 
 
-    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long, $checkin_full_address)
     {
 
         $validator = Validator::make(
@@ -3210,6 +3206,7 @@ class VmtAttendanceService
                 "work_mode" => $work_mode,
                 "attendance_mode_checkin" => $attendance_mode_checkin,
                 "checkin_lat_long" => $checkin_lat_long,
+                "checkin_full_address" => $checkin_full_address,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
@@ -3219,6 +3216,7 @@ class VmtAttendanceService
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkin" => "required", //mobile, web
                 "checkin_lat_long" => "nullable", //stores in lat , long
+                "checkin_full_address" => "nullable",
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -3277,7 +3275,8 @@ class VmtAttendanceService
             $attendanceCheckin->checkin_comments = "";
             $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
             $attendanceCheckin->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id; //TODO : Need to fetch from 'vmt_employee_workshifts'
-            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? '';
+            $attendanceCheckin->checkin_full_address = $checkin_full_address ?? '';
             $attendanceCheckin->save();
             // processing and storing base64 files in public/selfies folder
             if (!empty($selfie_checkin)) {
@@ -3365,7 +3364,7 @@ class VmtAttendanceService
         }
     }
 
-    public function performAttendanceCheckOut($user_code, $existing_check_in_date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
+    public function performAttendanceCheckOut($user_code, $existing_check_in_date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long, $checkout_full_address)
     {
 
         $validator = Validator::make(
@@ -3377,6 +3376,7 @@ class VmtAttendanceService
                 "work_mode" => $work_mode,
                 "attendance_mode_checkout" => $attendance_mode_checkout,
                 "checkout_lat_long" => $checkout_lat_long,
+                "checkout_full_address" => $checkout_full_address,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
@@ -3386,6 +3386,8 @@ class VmtAttendanceService
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkout" => "required", //mobile, web
                 "checkout_lat_long" => "nullable", //stores in lat , long
+                "checkout_full_address" => "nullable",
+
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -3444,6 +3446,7 @@ class VmtAttendanceService
                 $existing_att_details->checkout_comments = "";
                 $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
                 $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
+                $existing_att_details->checkout_full_address = $checkout_full_address ?? '';
                 $existing_att_details->save();
                 // processing and storing base64 files in public/selfies folder
                 if (!empty($selfie_checkout)) {
@@ -3478,6 +3481,7 @@ class VmtAttendanceService
                     $existing_att_details->attendance_mode_checkout = $attendance_mode_checkout;
                     $existing_att_details->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
                     $existing_att_details->checkout_lat_long = $checkout_lat_long ?? '';
+                    $existing_att_details->checkout_full_address = $checkout_full_address ?? '';
                     $existing_att_details->save();
 
                     // processing and storing base64 files in public/selfies folder
@@ -3619,7 +3623,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getEmployeeWorkShiftTimings() ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3679,7 +3684,8 @@ class VmtAttendanceService
             return response()->json([
                 "status" => "failure",
                 "message" => "",
-                "data" =>  ''
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3759,7 +3765,11 @@ class VmtAttendanceService
             for ($i = 0; $i < count($query_employees_leaves); $i++) {
 
                 $reviewer_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
-                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id', $query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
+                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id', $query_employees_leaves[$i]["reviewer_user_id"])->first();
+                if(!empty($reviewer_designation))
+                    $reviewer_designation =$reviewer_designation->designation;
+                else
+                    $reviewer_designation = "";
                 $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
                 $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
@@ -3787,8 +3797,9 @@ class VmtAttendanceService
             // dd($e);
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ getEmployeeLeaveDetails() ] ",
-                'data' => $e
+                'message' => "Error[ getEmployeeLeaveDetails() ] " . $e->getMessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3890,8 +3901,9 @@ class VmtAttendanceService
             // dd($e);
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ getTeamEmployeesLeaveDetails() ] ",
-                'data' => $e
+                'message' => "Error[ getTeamEmployeesLeaveDetails() ] " . $e->getMessage(),
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -3900,12 +3912,15 @@ class VmtAttendanceService
     {
 
         $client_id =null;
-
+ if(!empty(session('client_id'))){
         if(session('client_id') == 1){
          $client_id =VmtClientMaster::pluck('id');
         }else{
             $client_id =[session('client_id')];
         }
+    }else{
+        $client_id =[auth()->user()->client_id];
+    }
 
         $validator = Validator::make(
             $data = [
@@ -3948,7 +3963,7 @@ class VmtAttendanceService
 
 
             $query_employees_leaves = VmtEmployeeLeaves::join('users', 'users.id', '=', 'vmt_employee_leaves.user_id')
-                ->join('vmt_leaves', 'vmt_leaves.id', '=', 'vmt_employee_leaves.leave_type_id')
+                ->leftjoin('vmt_leaves', 'vmt_leaves.id', '=', 'vmt_employee_leaves.leave_type_id')
                 ->whereYear('leaverequest_date', $filter_year)
                 ->whereMonth('leaverequest_date', $filter_month)
                 ->whereIn('status', $filter_leave_status)
@@ -3990,7 +4005,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getAllEmployeesLeaveDetails() ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4414,7 +4430,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getCountForAttRegularization ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4456,7 +4473,8 @@ class VmtAttendanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getCountForAttRegularization ] ",
-                'data' => $e
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
@@ -4511,20 +4529,13 @@ class VmtAttendanceService
         $employees_data = User::join('vmt_employee_office_details as off', 'off.user_id', '=', 'users.id')
             ->leftJoin('vmt_department as dep', 'dep.id', '=', 'off.department_id')
             ->leftJoin('vmt_employee_details as det', 'det.userid', '=', 'users.id')
-            ->where('users.is_ssa', '0')->where('users.active', '1');
-           // ->whereIn('users.client_id', $client_id);
-
-     if(!empty($department_id)){
-        $employees_data = $employees_data->where('off.department_id', $department_id)
-            ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
-     }else{
-        $employees_data= $employees_data
-            ->get(['users.id as id', 'users.user_code as Employee Code', 'users.name as Employee Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
-     }
+            ->where('users.is_ssa', '0')->where('users.active', '1')
+            ->whereIn('users.client_id', $client_id)
+            ->get(['users.id as id', 'users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location']);
 
         foreach ($employees_data as $key => $single_user_data) {
 
-            $user_code = $single_user_data->user_code;
+            $user_code = $single_user_data->Employee_Code;
 
             $absent_present_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
 
@@ -4664,6 +4675,7 @@ class VmtAttendanceService
         $attendanceOverview['mip_count'] = $mip_count;
         $attendanceOverview['mip_emps'] = $mip_emps;
 
+        $total_active_employees = User::where('is_ssa',0)->where('active',1)->count();
 
         $shifts = $this->getWorkShiftDetails();
         $on_duty_count = VmtEmployeeLeaves::where('start_date', '>', Carbon::now())
@@ -4673,6 +4685,7 @@ class VmtAttendanceService
             ->whereNotIn('leave_type_id', [VmtLeaves::where('leave_type', 'On Duty')->first()])->count();
         $upcomings['On duty'] =  $on_duty_count;
         $upcomings['Leave'] = $leave_count;
+        $response = ["attendance_overview" => $attendanceOverview, "work_shift" => $shifts, 'upcomings' => $upcomings,"CheckInMode" => $this->getAllEmployeesCheckInCheckOutMode(),"total_Employees"=>$total_active_employees];
 
 
         $totalActiveEmployees = User::where('is_ssa',0)->where('active',1)->count();
@@ -5114,47 +5127,50 @@ class VmtAttendanceService
             return $reponse = ([
                 'status' => 'failure',
                 'message' => 'Error While Fetch Employees Data',
-                'data' => ' ',
+                "error" => $e->getMessage().' | Line : '.$e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
             ]);
         }
     }
 
+
     public function checkEmployeeLcPermission($month, $year, $user_id)
-    {
-        $validator = Validator::make(
-            $data = [
-                'manager_user_code' => $user_id,
-                'month' => $month,
-                'year' => $year,
-            ],
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-                'month' => 'required',
-                'year' => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-                'in' => 'Field :attribute is invalid',
-            ]
-        );
-        try {
-            $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
-            $Employees_lateComing = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)
-                ->whereYear('attendance_date', $year)
-                ->whereMonth('attendance_date', $month)
-                ->where('regularization_type', 'LC')
-                ->where('reason_type', 'Permission')
-                ->whereIn('status', ['Approved', 'Pending'])
-                ->get();
-            // dd($Employees_lateComing);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => "failure",
-                "message" => "Error while fetching Attendance Regularization LC data",
-                "data" => $e,
-            ]);
-        }
+{
+    $validator = Validator::make(
+        $data = [
+            'manager_user_code' => $user_id,
+            'month' => $month,
+            'year' => $year,
+        ],
+        $rules = [
+            'user_code' => 'required|exists:users,user_code',
+            'month' => 'required',
+            'year' => 'required',
+        ],
+        $messages = [
+            'required' => 'Field :attribute is missing',
+            'exists' => 'Field :attribute is invalid',
+            'integer' => 'Field :attribute should be integer',
+            'in' => 'Field :attribute is invalid',
+        ]
+    );
+    try {
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+                $Employees_lateComing = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)
+                    ->whereYear('attendance_date', $year)
+                    ->whereMonth('attendance_date', $month)
+                    ->where('regularization_type','LC')
+                    ->where('reason_type','Permission')
+                    ->whereIn('status',['Approved','Pending'])
+                    ->get();
+                    // dd($Employees_lateComing);
+    } catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error while fetching Attendance Regularization LC data",
+            "error" => $e->getMessage().' | Line : '.$e->getLine(),
+            "error_verbose" => $e->getTraceAsString(),
+        ]);
     }
+}
 }

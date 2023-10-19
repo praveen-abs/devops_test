@@ -17,6 +17,11 @@ class VmtPMSMail_NotifyManager extends Mailable
      * @return void
      */
     protected $empName;
+    protected $recipientName;
+    protected $empDesignation; //fetched from vmt_employee_office_details table
+    protected $appraisal_period;
+    protected $loginLink ;
+    protected $emp_gender;
     public function __construct($empName, $empDesignation, $recipientName, $appraisal_period, $loginLink , $emp_gender)
     {
         //

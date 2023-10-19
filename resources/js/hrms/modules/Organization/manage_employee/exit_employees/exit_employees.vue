@@ -130,7 +130,7 @@ const profilePageStore = profilePagesStore();
 // const loading = ref(true);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    employee_name: {
+    emp_name: {
         value: null,
         matchMode: FilterMatchMode.STARTS_WITH,
         matchMode: FilterMatchMode.EQUALS,

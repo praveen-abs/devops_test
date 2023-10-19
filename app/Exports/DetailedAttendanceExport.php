@@ -20,8 +20,10 @@ use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStrictNullComparison, WithStyles
+class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStrictNullComparison, WithStyles,WithDrawings
 {
 
     /**
@@ -36,8 +38,15 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
     private $heading_dates_2;
     private $last_row;
     private $is_lc;
+    private $public_client_logo_path;
+    private $client_name;
+    private $start_date;
+    private $end_date;
 
-    public function __construct($data, $is_lc)
+
+
+
+    public function __construct($data, $is_lc,$client_name,$public_client_logo_path,$start_date, $end_date)
     {
         $this->heading_dates = $data['heading_dates'];
         $this->header_2 = $data['header_2'];
@@ -46,6 +55,10 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
         $this->heading_dates_2 = $data['heading_dates_2'];
         $this->last_row = count($this->reportresponse) + 8;
         $this->is_lc = $is_lc;
+        $this->client_name = $client_name;
+        $this->public_client_logo_path = $public_client_logo_path;
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
     }
 
     public function headings(): array
@@ -58,24 +71,34 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
     public function startCell(): string
     {
-        return 'A5';
+        return 'A6';
     }
 
 
     public function styles(Worksheet $sheet)
     {
 
+        $sheet->mergeCells('C1:E1')->setCellValue('C1', "Legal Entity : " .$this->client_name);
+        $sheet->getStyle('C1:E1')->getFont()->setBold(true);
+
+        $sheet->mergeCells('C2:E2')->setCellValue('C2', "Report Type : " .' Attedance Detailed Report');
+        $sheet->getStyle('C2:E2')->getFont()->setBold(true);
+
+        $sheet->mergeCells('C3:E3')->setCellValue('C3', "Period : ".Carbon::parse($this->start_date)->format('d-M-Y') .' to '. Carbon::parse($this->end_date)->format('d-M-Y'));
+        $sheet->getStyle('C3:E3')->getFont()->setBold(true);
+
+
         // For First Four Column Headers
         for ($i = 0; $i < 4; $i++) {
-            $sheet->mergeCells(num2alpha($i) . '5:' . num2alpha($i) . '6');
-            $sheet->getStyle(num2alpha($i) . '5:' . num2alpha($i) . '6')->getFill()
+            $sheet->mergeCells(num2alpha($i) . '6:' . num2alpha($i) . '7');
+            $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i) . '7')->getFill()
                 ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('002164');
-            $sheet->getStyle(num2alpha($i) . '5')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
+            $sheet->getStyle(num2alpha($i) . '6')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
 
             // $sheet->getStyle(num2alpha($i).'2:'.num2alpha($i).'3')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
         }
-        //$sheet->getStyle('A1:EI54')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
+        //$sheet->getStyle('A1:EI64')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
 
         // Date Headings
         $i = 4;
@@ -88,25 +111,25 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
         foreach ($this->heading_dates_2 as $single_date) {
 
-            $sheet->mergeCells(num2alpha($i) . '5:' . num2alpha($i + $k) . '5')->setCellValue(num2alpha($i) . '5', $single_date);
-            $sheet->getStyle(num2alpha($i) . '5:' . num2alpha($i + $k) . '5')->getFill()
+            $sheet->mergeCells(num2alpha($i) . '6:' . num2alpha($i + $k) . '6')->setCellValue(num2alpha($i) . '6', $single_date);
+            $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + $k) . '6')->getFill()
                 ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('002164');
 
-            $sheet->getStyle(num2alpha($i) . '5:' . num2alpha($i + $k) . '5')
+            $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + $k) . '6')
                 ->getFont()->setBold(true)->getColor()->setRGB('ffffff');
 
             if ($j % 2 == 0) {
-                $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + $k) . '6')->getFill()
+                $sheet->getStyle(num2alpha($i) . '7:' . num2alpha($i + $k) . '7')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('808080');
             } else {
-                $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + $k) . '6' )->getFill()
+                $sheet->getStyle(num2alpha($i) . '7:' . num2alpha($i + $k) . '7' )->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()->setRGB('808080');
+                    ->getStartColor()->setRGB('BFBFBF');
             }
 
-            $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + $k) . '6')
+            $sheet->getStyle(num2alpha($i) . '7:' . num2alpha($i + $k) . '7')
                     ->getFont()->setBold(true)->getColor()->setRGB('ffffff');
 
 
@@ -118,25 +141,26 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
             $j = $j + 1;
         }
 
-        $sheet->mergeCells(num2alpha($i+1) . '5:' . num2alpha($i + 11) . '5')->setCellValue(num2alpha($i) . '5', end($this->heading_dates));
-        $sheet->getStyle(num2alpha($i) . '5:' . num2alpha($i + 12) . '5')->getFill()
+        $sheet->mergeCells(num2alpha($i+1) . '6:' . num2alpha($i + 11) . '6')->setCellValue(num2alpha($i) . '6', end($this->heading_dates));
+        $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + 12) . '6')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002164');
 
-        $sheet->getStyle(num2alpha($i) . '5:' . num2alpha($i + 12) . '5')
+        $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + 12) . '6')
                     ->getFont()->setBold(true)->getColor()->setRGB('ffffff');
 
-        $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + 12) . '6' )->getFill()
+        $sheet->getStyle(num2alpha($i) . '7:' . num2alpha($i + 12) . '7' )->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('808080');
 
-        $sheet->getStyle(num2alpha($i) . '6:' . num2alpha($i + 12) . '6')
+        $sheet->getStyle(num2alpha($i) . '7:' . num2alpha($i + 12) . '7')
                     ->getFont()->setBold(true)->getColor()->setRGB('ffffff');
 
         $sheet->mergeCells('A' . ($this->last_row) . ':D' . ($this->last_row))->setCellValue('A' . ($this->last_row), " This report is generated by ABShrms Payroll Software : " . Carbon::now()->format('d-M-Y'));
         $sheet->getStyle('A' . ($this->last_row))->getFont()->setBold(true);
 
         $sheet->setShowGridlines(false);
+
     }
 
 
@@ -151,4 +175,15 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
 
         return  $single_employee;
     }
+
+    public function drawings()
+    {
+        $drawing = new Drawing();
+        $drawing->setPath($this->public_client_logo_path);
+        $drawing->setHeight(1200);
+        $drawing->setWidth(224);
+        $drawing->setCoordinates('A1');
+        return $drawing;
+    }
+
 }

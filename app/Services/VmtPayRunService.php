@@ -63,10 +63,10 @@ class VmtPayRunService
                 ->where('active',  "1")
                 ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date));
 
-            if (!empty($department_id)) {
+            if (!empty($client_id)) {
                 $users =  $users->whereIn('client_id', $client_id);
             }
-            if (!empty($client_id)) {
+            if (!empty($department_id)) {
                 $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
             }
             $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);

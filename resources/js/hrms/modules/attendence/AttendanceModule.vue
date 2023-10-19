@@ -17,21 +17,21 @@
 
                                     <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed justify-center"
                                         id="pills-tab" role="tablist">
-                                        <li class="mx-4 nav-item ember-view" role="presentation">
+                                        <li class="mx-4 nav-item ember-view" role="presentation" @click="useTimesheet.currentlySelectedTimesheet = 1">
                                             <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#timesheet" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
                                                 Timesheet</a>
                                         </li>
-                                        <li class=" nav-item ember-view" role="presentation"
-                                            v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3 || service.current_user_role == 4">
+                                        <li class=" nav-item ember-view" role="presentation" @click="useTimesheet.currentlySelectedTimesheet = 2"
+                                            v-if="service.current_user_role == 2 || service.current_user_role == 4">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#team" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
                                                 Team Timesheet</a>
                                         </li>
-                                        <li class=" nav-item ember-view" role="presentation"
-                                            v-if="service.current_user_role == 1 ||service.current_user_role == 2 || service.current_user_role == 3">
+                                        <li class=" nav-item ember-view" role="presentation" @click="useTimesheet.currentlySelectedTimesheet = 3"
+                                            v-if="service.current_user_role == 2">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#org" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
@@ -247,6 +247,8 @@ const teamListLength = ref(0);
 const orgListLength = ref(0);
 
 onMounted(async() => {
+    Service()
+
     await useTimesheet.getTeamList(service.current_user_code).then(res => {
         teamList.value = Object.values(res.data)
         teamListLength.value = res.data.length
@@ -308,11 +310,5 @@ const emp = ref([
 .page-content
 {
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
-}
-
-.p-sidebar-right .p-sidebar
-{
-    width: 28rem;
-    height: 100%;
 }
 </style>
