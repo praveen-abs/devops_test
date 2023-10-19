@@ -26,9 +26,9 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
     function getURLParams_UID() {
 
-        console.log('route.params.id',route.params.user_code);
-        if(route.params.user_code){
-            return route.params.user_code
+        console.log('route.params.id',route.params.user_id);
+        if(route.params.user_id){
+            return route.params.user_id
         }else{
             return service.current_user_id
         }
