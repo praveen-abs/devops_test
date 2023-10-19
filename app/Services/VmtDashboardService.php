@@ -1329,7 +1329,7 @@ class VmtDashboardService
             $user_client_code = VmtClientMaster::find($user_data->client_id??"1");
             $user_client_code = $user_client_code->client_code;
 
-                if (
+              if (
                     $user_client_code == "ABS" || $user_client_code == "DMC" ||
                     $user_client_code == "DM" ||  $user_client_code == "VASA" || $user_client_code == "PSC" || $user_client_code == "IMA"  || $user_client_code == "LAL"
                     || $user_client_code == "PLIPL"
@@ -1367,7 +1367,32 @@ class VmtDashboardService
 
                 }
 
+                $user_data =User::where('user_code',$user_code)->first();
 
+
+
+                if ($bio_attendanceCheckIn->check_in_time  ==  $bio_attendanceCheckOut->check_out_time && ($bio_attendanceCheckIn->check_in_time != null && $bio_attendanceCheckOut->check_out_time != null)) {
+
+                    $checkintime =carbon::parse($bio_attendanceCheckIn->check_in_time)->format('h:i:s');
+                    $checkouttime =carbon::parse($bio_attendanceCheckOut->check_out_time )->format('h:i:s');
+                    $query_workShifts = VmtWorkShifts::all()->keyBy('id');
+                    $shift_time = $this->getShiftTimeForEmployee($user_data->id, $checkintime, $checkouttime);
+
+                    $shiftStartTime  = Carbon::parse($query_workShifts[$shift_time->id]->shift_start_time);
+                    $shiftEndTime  = Carbon::parse($query_workShifts[$shift_time->id]->shift_end_time);
+
+                    $employee_checkIn_CheckOut = $this->findMIPOrMOP($bio_attendanceCheckIn->check_in_time , $shiftStartTime, $shiftEndTime);
+
+                 if(!empty($employee_checkIn_CheckOut["checkin_time"])){
+                    $bio_attendanceCheckIn->check_in_time  = $bio_attendanceCheckIn->check_in_time;
+                    $bio_attendanceCheckOut->check_out_time = null;
+                 }else{
+                    $bio_attendanceCheckIn->check_in_time  = null;
+                    $bio_attendanceCheckOut->check_out_time = $bio_attendanceCheckOut->check_out_time;
+                 }
+
+
+                }
             //dd($bio_attendanceCheckIn,$bio_attendanceCheckOut);
             //dd($query_web_mobile_response->attendance_mode_checkin == 'biometric' &&  empty($query_web_mobile_response->checkin_time));
             //check wheather employee mode of check-in and check-out is present or not
@@ -1468,7 +1493,7 @@ class VmtDashboardService
                         $query_biometric_response->checkout_time = date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
                         $query_biometric_response->checkout_date = date("Y-m-d", strtotime($bio_attendanceCheckOut->check_out_time));
                         $query_biometric_response->attendance_mode_checkout = 'biometric';
-                        dd($query_biometric_response);
+
                     } else if (empty($bio_attendanceCheckOut->check_out_time)) {
 
                         $query_biometric_response->date = $recent_attedance_data;
@@ -1598,16 +1623,6 @@ class VmtDashboardService
 
     //     $employee_count['emp_leave_count'] = count($leave_employee_count);
     // }
-
-
-
-
-
-
-
-
-
-
     public function getEmployeesCountDetails($client_id)
     {
         try {
@@ -1955,4 +1970,52 @@ class VmtDashboardService
             ]);
         }
     }
+    public function findMIPOrMOP($time, $shiftStartTime, $shiftEndTime)
+    {
+        $response = array();
+        $shift_start_time = $shiftStartTime->subHours(1)->format('Y-m-d H:i:0');
+        $first_half_end_time =  $shiftStartTime->addHours(5);
+
+        if (Carbon::parse($time)->between(Carbon::parse($shift_start_time), $first_half_end_time, true)) {
+            $response['checkin_time'] = $time;
+            $response['checkout_time'] = null;
+        } else {
+            $response['checkin_time'] = null;
+            $response['checkout_time'] = $time;
+        }
+        return $response;
+    }
+    public function getShiftTimeForEmployee($user_id, $checkin_time, $checkout_time)
+    {
+
+        $emp_work_shift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->get();
+
+        if (count($emp_work_shift) == 1) {
+            $regularTime  = VmtWorkShifts::where('id', $emp_work_shift->first()->work_shift_id)->first();
+            return  $regularTime;
+        } else if (count($emp_work_shift) > 1) {
+            //dd($emp_work_shift);
+            for ($i = 0; $i < count($emp_work_shift); $i++) {
+                $regularTime  = VmtWorkShifts::where('id', $emp_work_shift[$i]->work_shift_id)->first();
+                $shift_start_time = Carbon::parse($regularTime->shift_start_time)->addMinutes($regularTime->grace_time);
+                $shift_end_time = Carbon::parse($regularTime->shift_end_time);
+
+                $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time['date'] ?? $checkin_time), false);
+                $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time['date'] ?? $checkout_time), false);
+                // if ($user_id == '192' && $checkin_time == "13:56:01");
+                // dd($diffInMinutesInCheckinTime);
+                if ($checkin_time == null && $checkout_time == null) {
+                    return  $regularTime;
+                } else  if ($diffInMinutesInCheckinTime > -65 &&    $diffInMinutesInCheckinTime < 275) {
+                    return  $regularTime;
+                } else if ($diffInMinutesInCheckOutTime > -65 &&  $diffInMinutesInCheckOutTime < 65) {
+                    return  $regularTime;
+                }
+                if ($i == count($emp_work_shift) - 1) {
+                    return  $regularTime;
+                }
+            }
+        }
+    }
+
 }
