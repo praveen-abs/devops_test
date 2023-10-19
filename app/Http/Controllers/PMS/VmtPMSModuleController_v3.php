@@ -103,7 +103,29 @@ class VmtPMSModuleController_v3 extends Controller
     private function createReviewerFlowDetails($emp_code, $flowCheck)
     {
 
-        // $emp_code = 'PSC0020';
+        $validator = Validator::make(
+            $data = [
+               "user_code" => $emp_code,
+               "flowCheck" => $flowCheck,
+            ],
+            $rules = [
+                "user_code" => "required|exists:users,user_code",
+                "flowcheck" => "required|in:1,2,3",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "array" => "Field :attribute datatype is mismatch",
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
 
         $pms_config = VmtConfigPmsV3::first();
 
@@ -201,7 +223,7 @@ class VmtPMSModuleController_v3 extends Controller
         $kpiTable = new VmtPmsKpiFormV3;
         $kpiTable->available_columns = $config->selected_columns;
         $kpiTable->author_id = Auth::user()->id;
-        $kpiTable->form_name = $request->name;
+        $kpiTable->form_name = $request->form_name;
         $kpiTable->save();
 
         foreach($request->form_details as $single_form){
@@ -485,10 +507,119 @@ class VmtPMSModuleController_v3 extends Controller
 
     }
 
-    public function assigneReviews()
+    public function selfDashBoardDetails()
     {
 
-    }
+        $current_user_id = auth()->user()->id;
 
+        $getallrecord = VmtPmsKpiFormReviewsV3::join('vmt_pms_kpiform_assigned_v3', 'vmt_pms_kpiform_assigned_v3.id', '=', 'vmt_pms_kpiform_reviews_v3.vmt_kpiform_assigned_v3_id')
+        ->where('vmt_pms_kpiform_assigned_v3.assignee_id', $current_user_id)->get()->toarray();
 
-}
+        // dd($getallrecord);
+
+        if(empty($getallrecord)){
+            return response()->json([
+                "status" => "success",
+                "data" => "No records",
+            ]);
+        }
+
+        $temp = [];
+        $self_array = [];
+        foreach($getallrecord as $key => $single_record){
+
+                    if($single_record['is_assignee_accepted'] == 1 && $single_record['is_reviewer_accepted'] == ''){
+
+                    $temp[$key]['assignee_id'] = $single_record['assignee_id'];
+                    $temp[$key]['assignee_name'] = user::where('id', $single_record['assignee_id'])->first()->name;
+                    $temp[$key]['is_assignee_accepted'] = $single_record['is_assignee_accepted'];
+                    $temp[$key]['is_assignee_submitted'] = $single_record['is_assignee_submitted'];
+                    $temp[$key]['is_reviewer_accepted'] = $single_record['is_reviewer_accepted'];
+                    $temp[$key]['is_reviewer_submitted'] = $single_record['is_reviewer_submitted'];
+                    $temp[$key]['reviewer_kpi_review'] = $single_record['reviewer_kpi_review'];
+                    $temp[$key]['reviewer_kpi_percentage'] = $single_record['reviewer_kpi_percentage'];
+                    $temp[$key]['reviewer_kpi_comments'] = $single_record['reviewer_kpi_comments'];
+
+                    $form_header = VmtPmsKpiFormV3::where('id', $single_record['vmt_pms_kpiform_v3_id'])->first()->available_headers;
+                    $temp[$key]['form_header'] = explode(',', $form_header);
+
+                    $form_details = VmtPmsKpiFormDetailsV3::where('vmt_pms_kpiform_v3_id', $single_record['vmt_pms_kpiform_v3_id'])
+                        ->join('vmt_pms_kpiform_v3', 'vmt_pms_kpiform_v3.id', '=', 'vmt_pms_kpiform_details_v3.vmt_pms_kpiform_v3_id')
+                        ->get(['vmt_pms_kpiform_details_v3.id','objective_value'])->toarray();
+
+                    $temp_arr = [];
+                        foreach($form_details as $key1 => $single_record){
+                            $temp_arr[$key1] = json_decode($single_record['objective_value'],true);
+                            $temp_arr[$key1]['id'] = $single_record['id'];
+                        }
+                    $temp[$key]['kpi_form_details'] = $temp_arr;
+                    array_push($self_array,$temp);
+                }
+            }
+
+        $temp1 = [];
+        foreach($getallrecord as $key => $single_record){
+
+                    if($single_record['is_reviewer_accepted'] == 1 && $single_record['is_assignee_accepted'] == ''){
+
+                    $temp1[$key]['assignee_id'] = $single_record['assignee_id'];
+                    $temp1[$key]['assignee_name'] = user::where('id', $single_record['assignee_id'])->first()->name;
+                    $temp1[$key]['is_assignee_accepted'] = $single_record['is_assignee_accepted'];
+                    $temp1[$key]['is_assignee_submitted'] = $single_record['is_assignee_submitted'];
+                    $temp1[$key]['is_reviewer_accepted'] = $single_record['is_reviewer_accepted'];
+                    $temp1[$key]['is_reviewer_submitted'] = $single_record['is_reviewer_submitted'];
+                    $temp1[$key]['reviewer_kpi_review'] = $single_record['reviewer_kpi_review'];
+                    $temp1[$key]['reviewer_kpi_percentage'] = $single_record['reviewer_kpi_percentage'];
+                    $temp1[$key]['reviewer_kpi_comments'] = $single_record['reviewer_kpi_comments'];
+
+                    $form_header = VmtPmsKpiFormV3::where('id', $single_record['vmt_pms_kpiform_v3_id'])->first()->available_headers;
+                    $temp1[$key]['form_header'] = explode(',', $form_header);
+
+                    $form_details = VmtPmsKpiFormDetailsV3::where('vmt_pms_kpiform_v3_id', $single_record['vmt_pms_kpiform_v3_id'])
+                        ->join('vmt_pms_kpiform_v3', 'vmt_pms_kpiform_v3.id', '=', 'vmt_pms_kpiform_details_v3.vmt_pms_kpiform_v3_id')
+                        ->get(['vmt_pms_kpiform_details_v3.id','objective_value'])->toarray();
+
+                    $temp1_arr = [];
+                        foreach($form_details as $key1 => $single_record){
+                            $temp1_arr[$key1] = json_decode($single_record['objective_value'],true);
+                            $temp1_arr[$key1]['id'] = $single_record['id'];
+                        }
+                    $temp1[$key]['kpi_form_details'] = $temp1_arr;
+                    array_push($self_array,$temp1);
+                }
+            }
+
+        $temp2 = [];
+        foreach($getallrecord as $key => $single_record){
+
+                    if($single_record['is_reviewer_accepted'] == 1 && $single_record['is_assignee_accepted'] == '1'){
+
+                    $temp2[$key]['assignee_id'] = $single_record['assignee_id'];
+                    $temp2[$key]['assignee_name'] = user::where('id', $single_record['assignee_id'])->first()->name;
+                    $temp2[$key]['is_assignee_accepted'] = $single_record['is_assignee_accepted'];
+                    $temp2[$key]['is_assignee_submitted'] = $single_record['is_assignee_submitted'];
+                    $temp2[$key]['is_reviewer_accepted'] = $single_record['is_reviewer_accepted'];
+                    $temp2[$key]['is_reviewer_submitted'] = $single_record['is_reviewer_submitted'];
+                    $temp2[$key]['reviewer_kpi_review'] = $single_record['reviewer_kpi_review'];
+                    $temp2[$key]['reviewer_kpi_percentage'] = $single_record['reviewer_kpi_percentage'];
+                    $temp2[$key]['reviewer_kpi_comments'] = $single_record['reviewer_kpi_comments'];
+
+                    $form_header = VmtPmsKpiFormV3::where('id', $single_record['vmt_pms_kpiform_v3_id'])->first()->available_headers;
+                    $temp2[$key]['form_header'] = explode(',', $form_header);
+
+                    $form_details = VmtPmsKpiFormDetailsV3::where('vmt_pms_kpiform_v3_id', $single_record['vmt_pms_kpiform_v3_id'])
+                        ->join('vmt_pms_kpiform_v3', 'vmt_pms_kpiform_v3.id', '=', 'vmt_pms_kpiform_details_v3.vmt_pms_kpiform_v3_id')
+                        ->get(['vmt_pms_kpiform_details_v3.id','objective_value'])->toarray();
+
+                    $temp2_arr = [];
+                        foreach($form_details as $key1 => $single_record){
+                            $temp2_arr[$key1] = json_decode($single_record['objective_value'],true);
+                            $temp2_arr[$key1]['id'] = $single_record['id'];
+                        }
+                    $temp2[$key]['kpi_form_details'] = $temp2_arr;
+                    array_push($self_array,$temp2);
+                }
+            }
+                return $self_array;
+            }
+        }

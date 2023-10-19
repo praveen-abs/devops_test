@@ -818,6 +818,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/Approverflow', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'Approverflow']);
     Route::get('/ApproveOrReject', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'ApproveOrReject']);
     Route::get('/assigneReviews', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'assigneReviews']);
+    Route::get('/selfDashBoardDetails', [App\Http\Controllers\PMS\VmtPMSModuleController_v3::class, 'selfDashBoardDetails']);
 
 
 
