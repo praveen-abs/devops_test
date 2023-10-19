@@ -167,7 +167,7 @@
                     class="p-2 transition duration-700 ease-in-out transform bg-gray-100 rounded-full hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
                     <img src="./assests/icons/exit.svg" alt="" class="w-6 h-6">
                 </button>
-                <RouterLink :to="`/profile-page`">
+                <RouterLink :to="`/profile-page`" @click="_profilePagesStore.fetchEmployeeDetails(service.current_user_id)">
                     <div class="relative mx-3">
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">

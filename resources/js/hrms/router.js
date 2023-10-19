@@ -34,7 +34,7 @@ const routes = [
 
             },
             {
-                path: '/attendance-dashboard',
+                path: 'Attendance/attendance-dashboard',
                 name: 'attendance-dashboard',
                 component: () => import('../hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue'),
             },
@@ -77,6 +77,11 @@ const routes = [
                 path: '/Organization/import',
                 name: 'import-onboarding',
                 component: () => import('../hrms/modules/Organization/QuickOnboarding/ImportQuickOnboarding.vue'),
+            },
+            {
+                path: '/Organization/employee-hierarchy',
+                name: 'employee-hierarchy',
+                component: () => import('../hrms/components/PageNotFound.vue'),
             },
             {
                 path: '/Organization/manage-welcome-mails',
@@ -144,7 +149,7 @@ const routes = [
                 component: () => import('../hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue'),
             },
 
-            // Performance 
+            // Performance
             {
                 path: '/Performance',
                 name: 'Performance',

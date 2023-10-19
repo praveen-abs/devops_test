@@ -101,16 +101,16 @@ let _instance_profilePagesStore = profilePagesStore();
 
 onMounted(async () => {
     if (route.params.user_code) {
-        _instance_profilePagesStore.user_code = route.params.user_code
-        console.log( _instance_profilePagesStore.user_code );
+        _instance_profilePagesStore.user_id = route.params.user_code
+        console.log( _instance_profilePagesStore.user_id );
         _instance_profilePagesStore.loading_screen = true
         await _instance_profilePagesStore.fetchEmployeeDetails().finally(() => {
             _instance_profilePagesStore.loading_screen = false
         })
 
     } else {
-        _instance_profilePagesStore.user_code = service.current_user_id
-        console.log( _instance_profilePagesStore.user_code );
+        _instance_profilePagesStore.user_id = service.current_user_id
+        console.log( _instance_profilePagesStore.user_id );
         await _instance_profilePagesStore.fetchEmployeeDetails()
     }
 })

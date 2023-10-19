@@ -93,7 +93,10 @@
     <!-- add experience details -->
 
     <Sidebar v-model:visible="dialog_ExperienceInfovisible" position="right" class=" !w-[500px]">
-        <h1 class=" absolute top-6 font-semibold ">Experience Information</h1>
+        <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+            <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">Experience Information</h1>
+        </div>
+
         <div class=" my-2">
             <h1 class=" text-[14px] font-semibold mb-1">Company Name <span class="text-danger">*</span></h1>
             <InputText type="text" v-model="ExperienceInfo.company_name" name="ExperienceDetails_company_name[]" required

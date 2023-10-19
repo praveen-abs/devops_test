@@ -119,9 +119,20 @@ class VmtEmployeeAttendanceController extends Controller
         $temp_ar = array();
         $response = array();
         foreach ($data['heading_dates'] as $single_heading) {
-            $temp_ar['header'] = $single_heading;
-            $temp_ar['row_sapn'] = 2;
-            $temp_ar['col_span'] = 1;
+            if ($single_heading == 'Emp Code' || $single_heading == 'Name' || $single_heading == 'DOJ' || $single_heading == 'Designation') {
+                $temp_ar['header'] = $single_heading;
+                $temp_ar['row_sapn'] = 2;
+                $temp_ar['col_span'] = 1;
+            }else if($single_heading=='Total Calculation'){
+                $temp_ar['header'] = $single_heading;
+                $temp_ar['row_sapn'] = 1;
+                $temp_ar['col_span'] = 5;
+            }else {
+                $temp_ar['header'] = $single_heading;
+                $temp_ar['row_sapn'] = 1;
+                $temp_ar['col_span'] = 5;
+            }
+
             array_push($response, $temp_ar);
             unset($temp_ar);
         }

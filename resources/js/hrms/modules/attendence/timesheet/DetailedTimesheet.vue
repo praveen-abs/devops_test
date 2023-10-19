@@ -59,7 +59,8 @@
                                 <div class="bg-green-100 p-3 rounded-lg"
                                     v-if="singleAttendanceDay.absent_status.includes('Approved')">
                                     <p class="font-semibold fs-6 text-green-900 text-center">
-                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved'
+                                            : singleAttendanceDay.leave_type }}
                                     </p>
                                     <p class="text-center">Approved
                                         <i class='fa fa-check-circle text-success mx-2' v-tooltip="'Approved'"
@@ -69,14 +70,16 @@
                                 <div class="bg-red-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Rejected')">
                                     <p class="font-semibold fs-6 text-red-900 text-center">
-                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
-                                         </p>
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved'
+                                            : singleAttendanceDay.leave_type }}
+                                    </p>
                                     <p class="text-center">Rejected <i class="fa fa-times-circle mx-2 text-danger"></i></p>
                                 </div>
                                 <div class="bg-yellow-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Pending')">
                                     <p class="font-semibold fs-6 text-yellow-600 text-center">
-                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved'
+                                            : singleAttendanceDay.leave_type }}
                                     </p>
                                     <p class="text-center">Pending<i class="fa fa-question-circle fs-15 text-secondary mx-2"
                                             v-tooltip="'Pending'"></i></p>
@@ -84,9 +87,15 @@
                                 <div class="bg-slate-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Revoked')">
                                     <p class="font-semibold fs-6 text-slate-600 text-center">
-                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved'
+                                            : singleAttendanceDay.leave_type }}
                                     </p>
                                     <p class="text-center">Revoked</p>
+                                </div>
+                                <div class="bg-green-100 p-3 rounded-lg" v-else-if="singleAttendanceDay.is_holiday">
+                                    <p class="font-semibold fs-6 text-green-900 text-center">
+                                        {{ singleAttendanceDay.holiday_name }}
+                                    </p>
                                 </div>
                                 <div class="bg-red-100 p-3 rounded-lg" v-else-if="!isWeekEndDays(day)">
                                     <p class="font-semibold fs-6 text-red-900 text-center">Absent <i
@@ -246,8 +255,7 @@
             <div class="rounded-lg md:hidden col-span-7 flex justify-between items-center p-2 ">
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5cursor-pointer  transition-all"
+                        stroke="currentColor" class="w-5 h-5cursor-pointer  transition-all"
                         @click="calendarStore.decrementMonth(1)">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
@@ -255,8 +263,7 @@
                 </div>
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5 cursor-pointer  transition-all"
+                        stroke="currentColor" class="w-5 h-5 cursor-pointer  transition-all"
                         @click="calendarStore.incrementMonth(1)">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
@@ -483,17 +490,20 @@ onUpdated(() => {
 
 <style scoped>
 .modal-enter-active,
-.modal-leave-active {
+.modal-leave-active
+{
     transition: translate 0.5s ease;
 }
 
 .modal-enter-from,
-.modal-leave-to {
+.modal-leave-to
+{
     /** opacity: 0; **/
     translate: 0px 100%;
 }
 
-.regualarization_button {
+.regualarization_button
+{
     padding: 1px !important;
     height: 14px;
     width: auto;

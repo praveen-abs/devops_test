@@ -28,12 +28,21 @@ export const profilePagesStore = defineStore("employeeService", () => {
 
     const user_id = ref();
 
-    const service = Service()
+    const service = Service();
+    
+    function getURLParams_UID() {
+
+        if(route.params.user_id){
+            return route.params.user_id
+        }else{
+            return service.current_user_id
+        }
+    }
 
     const getProfilePhoto = () => {
         axios
             .post("/profile-pages/getProfilePicture", {
-                user_code: service.current_user_code
+                user_id: user_id.value
             })
             .then((res) => {
                 console.log("profile :?", res.data.data);
@@ -46,14 +55,18 @@ export const profilePagesStore = defineStore("employeeService", () => {
             });
     };
 
-    async function fetchEmployeeDetails() {
+    async function fetchEmployeeDetails(userId) {
         
-        let User_code = user_code.value;
-
-        if(User_code){
-            User_code = user_code.value;
+        let User_code = user_id.value;
+        if(userId){
+            User_code = userId;
+            user_id.value = userId;
+        }
+        else if(User_code){
+            User_code = user_id.value;
         }else{
             User_code = service.current_user_id;
+            user_id.value = service.current_user_id;
         }
 
         console.log(" user code : : " , user_code.value ,User_code );
@@ -82,7 +95,8 @@ export const profilePagesStore = defineStore("employeeService", () => {
         getProfilePhoto,
         profile,
         profile_img,
-        user_id
+        user_id,
+        getURLParams_UID
 
     };
 });
