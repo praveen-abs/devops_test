@@ -91,6 +91,7 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { profilePagesStore } from '../../../profile_pages/stores/ProfilePagesStore';
 import { useManageEmployeesStore } from '../manage_service'
 import { Service } from '../../../Service/Service';
+import { useRouter, useRoute } from "vue-router";
 // import loadingSpinner from '../../components/LoadingSpinner.vue';
 import LoadingSpinner from '../../../../components/LoadingSpinner.vue';
 
@@ -142,12 +143,8 @@ onMounted(async () => {
 
 async function openProfilePage(uid) {
     console.log(uid);
-
-    console.log("user code ::",uid.emp_code);
+    console.log("user code ::",uid.user_id);
     enc_user_id.value = uid.data;
-    profilePageStore.user_code = uid.emp_code;
-    
-
     // profilePageStore.emp_user_code = ;
     // window.location.href = "/pages-profile-new?uid=" + uid.enc_user_id;
 }
