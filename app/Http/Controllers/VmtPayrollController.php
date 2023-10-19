@@ -31,8 +31,7 @@ class VmtPayrollController extends Controller
 
 
     public function getCurrentPayrollMonth(Request $request , VmtPayrollService $serviceVmtPayrollService ){
-            dd($request->all());
-        return $serviceVmtPayrollService->getCurrentPayrollMonth;
+        return $serviceVmtPayrollService->getCurrentPayrollMonth();
     }
 
 
@@ -76,4 +75,8 @@ class VmtPayrollController extends Controller
         return $serviceVmtPayrollService->getPayrollOutcomes($request->client_code, $request->payroll_month);
     }
 
+    public function getOrgPayrollMonths(Request $request, VmtPayrollService $serviceVmtPayrollService){
+        return $serviceVmtPayrollService->getOrgPayrollMonths($request->client_code);
+
+    }
 }

@@ -136,7 +136,7 @@ class VmtPayrollService
             $client_id = VmtClientMaster::where('client_code', $client_code)->first()->id;
             $total_employee_count = User::where('client_id', $client_id)
                                         ->where('is_ssa', '0')
-                                        ->get()->count();                                 
+                                        ->get()->count();
             //Get all the employees earnings details
             $query_employees_payroll_details = VmtPayroll::leftjoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
                 ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
@@ -249,7 +249,7 @@ class VmtPayrollService
             $response_data["payroll_stats"]["employee_deposit"] = $emp_overall_deposit;
             $response_data["payroll_stats"]["total_deductions"] =$response_data["payroll_stats"]["total_payroll_cost"]-
                                                                  $response_data["payroll_stats"]["employee_deposit"] ;
-                                                                 
+
             $response_data["payroll_stats"]["total_contributions"]= $response_data["payroll_outcome"]["EPF"]["total"] +
                                                                     $response_data["payroll_outcome"]["ESIC"]["total"] +
                                                                     $response_data["payroll_outcome"]["income_tax"]["total"]+
@@ -413,5 +413,57 @@ class VmtPayrollService
         }
         return $overall_deposit;
     }
-    
+
+    public function getOrgPayrollMonths($client_code){
+
+        $validator = Validator::make(
+            $data = [
+                'client_code' => $client_code
+            ],
+            $rules = [
+                'client_code' => 'required|exists:vmt_client_master,client_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+            $client_id = VmtClientMaster::where('client_code', $client_code)->first()->id;
+            $org_payroll_months = VmtPayroll::where('client_id', $client_id)->get();
+
+            $response = array();
+
+            foreach ($org_payroll_months as $single_month_data) {
+                $data = array();
+                $data["month"] = date('m', strtotime($single_month_data->payroll_start_date));
+                $data["start_date"] = $single_month_data->payroll_start_date;
+                $data["end_date"] = $single_month_data->payroll_end_date;
+                array_push($response, $data);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Payroll Months fetched successfully",
+                "data" => $response
+            ],200);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch Payroll Months details",
+                "error" => $e->getMessage() . ' | Line : ' . $e->getLine(),
+                "error_verbose" => $e->getTraceAsString(),
+            ], 400);
+        }
+    }
+
 }

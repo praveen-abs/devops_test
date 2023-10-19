@@ -127,7 +127,7 @@ class VmtAttendanceService
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                     $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-                    
+
                     //If reviewer_id = 0, then its not yet reviewed
                     if ($singleItem->reviewer_id != 0) {
                         $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
