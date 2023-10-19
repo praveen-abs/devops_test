@@ -1742,9 +1742,11 @@ class VmtAttendanceService
 
                         //  $attendanceResponseArray[$key]["checkin_time"] = ""
                     }
+
                 }
             } //for each
 
+            // if()
             if( $user_client_code == "BA" ){
 
                 $employee_Lc_expire_status = $this->processOutdatedPendingAttRegAsVoid($attendanceResponseArray);
@@ -5203,14 +5205,19 @@ class VmtAttendanceService
                 $employees_data = $employees_data->where('off.department_id', $department_id);
             }
 
-            $absent_employee_data = $employees_data->clone()->where('status','LIKE',"A%")
+             $absent_employee_data = $employees_data->clone()->where('status','LIKE',"A%")
                          ->get(['users.id as id', 'users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location','checkin_time','checkout_time']);
 
             $attendance_response['absent_count']=$absent_employee_data->count();
             $attendance_response['absent_emps']=$absent_employee_data->toarray();
 
-            $present_employee_data = $employees_data->clone()->where('status','LIKE',"P%")
-                        ->get(['users.id as id', 'users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location','checkin_time','checkout_time']);
+            $attendance_type =array("%P%");
+             $present_employee_data = $employees_data->clone()->where('status','LIKE',"P%")->get(['users.id as id', 'users.user_code as Employee_Code', 'users.name as Employee_Name', 'dep.name as Department', 'off.process as Process', 'det.location as Location','checkin_time','checkout_time']);
+            //->where(function ($present_employee_data) use ($attendance_type) {
+            //     foreach ($attendance_type as $keyword) {
+            //         $present_employee_data->orWhere('status', 'like', '%' . $keyword . '%');
+            //     }
+            // })
             $attendance_response['present_count']=$present_employee_data->count();
             $attendance_response['present_emps']=$present_employee_data->toarray();
 
@@ -5322,7 +5329,13 @@ class VmtAttendanceService
 
                 $employee_attendance = VmtEmpAttIntrTable::whereIn('user_id', $employees_data )->where('date',$current_date);
 
-                $present_data=$employee_attendance->clone()->where('status','LIKE',"P%");
+                $attendance_type =array("%P%");
+                $present_data=$employee_attendance->clone()->where(function ($present_data) use ($attendance_type) {
+                    foreach ($attendance_type as $keyword) {
+
+                        $present_data->orWhere('status', 'like', '%' . $keyword . '%');
+                    };
+               });
 
                 $biometric_checkin_count =$present_data->clone()->where("attendance_mode_checkin","biometric")->get()->count();
 

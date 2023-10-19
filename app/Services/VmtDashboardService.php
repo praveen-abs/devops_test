@@ -1761,11 +1761,9 @@ class VmtDashboardService
 
             foreach ($employees_data as $key => $single_user_data) {
 
-
-
                 $user_data = User::where('id', $single_user_data['id'])->first();
 
-                $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Approved")->get()->toarray();
+                $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Pending")->get()->toarray();
 
 
                 if (!empty($emp_leave_data)) {
@@ -1793,23 +1791,23 @@ class VmtDashboardService
             $pending_request_count['Leave Requests'] = count($leave_employee_count);
            // $pending_request_count['Leave Employees'] =  $leave_employee_count;
 
-            foreach ($employees_data as $key => $single_user_data) {
+            // foreach ($employees_data as $key => $single_user_data) {
 
-                $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
+            //     $absent_employee_data  = VmtEmployeeAttendance::Where('user_id', $single_user_data['id'])->whereDate('date', $current_date)->first();
 
-                if (empty($absent_employee_data)) {
+            //     if (empty($absent_employee_data)) {
 
-                    $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
+            //         $absent_employee_count[$key]['absentEmployeeCount'] = $absent_employee_data;
 
-                    $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
+            //         $emp_user_code = user::where('id', $single_user_data['id'])->first('user_code');
 
-                    $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
+            //         $emp_bio_attendance = $this->getBioMetricAttendanceData($emp_user_code, $current_date);
 
-                    if (empty($emp_bio_attendance)) {
-                        $absent_count++;
-                    }
-                }
-            }
+            //         if (empty($emp_bio_attendance)) {
+            //             $absent_count++;
+            //         }
+            //     }
+            // }
 
             // $pending_request_count['employee_absent_count'] =  $absent_count;
 
@@ -1828,13 +1826,13 @@ class VmtDashboardService
             }
             $pending_request_count['Document Approvals'] = $doc_count;
             $pending_request_count['Attendance Regularization'] = $reg_count;
-            $mob_login_count = $this->getMobLoginCount();
+            // $mob_login_count = $this->getMobLoginCount();
 
-            $graph_chart_count['app-checkin-ins'] = $mob_login_count['app_checkin_count'];
+            // $graph_chart_count['app-checkin-ins'] = $mob_login_count['app_checkin_count'];
 
-            $graph_chart_count['active_apps'] =  $mob_login_count['app_active_count'];
+            // $graph_chart_count['active_apps'] =  $mob_login_count['app_active_count'];
 
-            $graph_chart_count['inactive_apps'] = $mob_login_count['app_inactive_count'];
+            // $graph_chart_count['inactive_apps'] = $mob_login_count['app_inactive_count'];
 
             $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count];
             return ($response);
@@ -1944,7 +1942,8 @@ class VmtDashboardService
             ->where('attendance_mode_checkin', 'mobile')->get()->unique('user_id')->count();
 
             $user_data = User::get()->count();
-            $inactive_count = $user_data- $active_count;
+            $inactive_count = $user_data - $active_count;
+
         $response = ["app_checkin_count"=>$app_checkin_count, "app_active_count"=>$active_count,"app_inactive_count"=>$inactive_count];
         return $response;
         }

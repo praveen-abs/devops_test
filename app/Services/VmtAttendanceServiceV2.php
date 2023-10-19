@@ -325,10 +325,11 @@ class VmtAttendanceServiceV2
                                 $is_holiday = true;
                             }
                         }
-
+                      $current_att_date =carbon::now()->format('Y-m-d');
+                      $current_time = carbon::now()->format('H:i:s');
                         //Code For Check LC And MOP
                         if ($checking_time != null) {
-                            if ($checkout_time == null) {
+                            if ($checkout_time == null && $current_att_date != $current_date  ? $current_time < $shiftEndTime :$current_time >= $shiftEndTime ) {
 
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'MOP');
                                 $mop_id = $regularization_status['id'];

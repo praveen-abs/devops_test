@@ -2,7 +2,7 @@
     <LoadingSpinner v-if="useDashboard.canShowLoading" class="absolute z-50 bg-white" />
     <div class="w-full">
         <p class="mb-2 text-2xl font-semibold text-black">
-            Attendance dashboard
+            Attendance Dashboard
         </p>
         <div class="flex justify-between items-center p-2 bg-white border rounded-lg">
             <div class="mx-2">
