@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Models\VmtClientMaster;
 use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
+use App\Models\VmtEmployeePaySlipV2;
 use App\Models\VmtPayroll;
 
 use Illuminate\Support\Facades\Auth;
@@ -132,12 +133,10 @@ class VmtPayrollService
             ];
 
             //Get total employees count for the given client
-            $client_id = VmtClientMaster::where('client_code',$client_code)->first()->id;
+            $client_id = VmtClientMaster::where('client_code', $client_code)->first()->id;
             $total_employee_count = User::where('client_id', $client_id)
-                                    ->where('is_ssa','0')
-                                    ->get()->count();
-
-            
+                                        ->where('is_ssa', '0')
+                                        ->get()->count();                                 
             //Get all the employees earnings details
             $query_employees_payroll_details = VmtPayroll::leftjoin('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
                 ->leftJoin('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
@@ -222,13 +221,17 @@ class VmtPayrollService
                 ->get([
                     "vmt_employee_payslip_v2.income_tax",
                 ]);
+            $emp_overall_deposite = $query_employees_payroll_details
+            ->get([
 
+                "vmt_employee_payslip_v2.net_take_home",
+            ]);
             $response_data["payroll_outcome"]["employee_payables"]["total"] = $this->calculateOverallNetSalaryPayables($array_overall_earnings, $array_overall_contributions, $array_overall_taxdeduction);
             $response_data["payroll_outcome"]["EPF"] =  $this->getOverall_EPF($array_overall_epf);
             $response_data["payroll_outcome"]["ESIC"] = $this->getOverall_ESIC($array_overall_esic);
             $response_data["payroll_outcome"]["professional_tax"] = $this->getOverall_PT($array_overall_PT);
 
-            $t_overall_it =  $this->getOverall_IT($array_overall_IT, $total_employee_count);
+        $t_overall_it =  $this->getOverall_IT($array_overall_IT, $total_employee_count);
                 $response_data["payroll_outcome"]["income_tax"]["tds_payable"] = $t_overall_it["tds_payable"];
                 $response_data["payroll_outcome"]["income_tax"]["no_of_employees"] = $t_overall_it["no_of_employees"];
                 $response_data["payroll_outcome"]["income_tax"]["total"] = $t_overall_it["total"];
@@ -236,16 +239,21 @@ class VmtPayrollService
             $response_data["payroll_stats"]["total_employees"] = $total_employee_count;
             $response_data["payroll_stats"]["calendar_days"] = 0;
             $response_data["payroll_stats"]["payroll_processed"] = count($array_overall_earnings) . " Employees";
-
             $response_data["payroll_stats"]["total_payroll_cost"] = $response_data["payroll_outcome"]["EPF"]["total"] +
-                $response_data["payroll_outcome"]["ESIC"]["total"] +
-                $response_data["payroll_outcome"]["income_tax"]["total"] +
-                $response_data["payroll_outcome"]["professional_tax"]["total"];
+                                                                    $response_data["payroll_outcome"]["ESIC"]["total"] +
+                                                                    $response_data["payroll_outcome"]["income_tax"]["total"] +
+                                                                    $response_data["payroll_outcome"]["professional_tax"]["total"]+
+                                                                    $response_data["payroll_outcome"]["employee_payables"]["total"];
 
-            $response_data["payroll_stats"]["employee_deposit"] = 0;
-            $response_data["payroll_stats"]["total_deductions"] = 0;
-            $response_data["payroll_stats"]["total_contributions"] = 0;
-
+        $emp_overall_deposit =  $this->empOverallDeposit($emp_overall_deposite);
+            $response_data["payroll_stats"]["employee_deposit"] = $emp_overall_deposit;
+            $response_data["payroll_stats"]["total_deductions"] =$response_data["payroll_stats"]["total_payroll_cost"]-
+                                                                 $response_data["payroll_stats"]["employee_deposit"] ;
+                                                                 
+            $response_data["payroll_stats"]["total_contributions"]= $response_data["payroll_outcome"]["EPF"]["total"] +
+                                                                    $response_data["payroll_outcome"]["ESIC"]["total"] +
+                                                                    $response_data["payroll_outcome"]["income_tax"]["total"]+
+                                                                    $response_data["payroll_outcome"]["professional_tax"]["total"];
             return response()->json([
                 "status" => "success",
                 "message" => "Payroll outcomes fetched successfully",
@@ -369,9 +377,9 @@ class VmtPayrollService
         $overall_PT = 0;
         $emp_overall_PT = 0;
         foreach ($array_overall_PT as $single_employee_tax) {
-            if($single_employee_tax->prof_tax >=0){
-            $overall_PT += (int)$single_employee_tax->prof_tax;
-            $emp_overall_PT++;
+            if ($single_employee_tax->prof_tax >= 0) {
+                $overall_PT += (int)$single_employee_tax->prof_tax;
+                $emp_overall_PT++;
             }
         }
         $professional_tax["tds_payable"] = $overall_PT;
@@ -386,15 +394,24 @@ class VmtPayrollService
         $emp_overall_IT = 0;
 
         foreach ($array_overall_IT as $single_employee_tax) {
-            if ($single_employee_tax->income_tax >=0){
+            if ($single_employee_tax->income_tax >= 0) {
                 $overall_IT += (int)$single_employee_tax->income_tax;
                 $emp_overall_IT++;
             }
         }
-
         $income_tax["tds_payable"] = $overall_IT;
         $income_tax["no_of_employees"] = $total_employee_count - $emp_overall_IT;
         $income_tax["total"] = $overall_IT;
         return $income_tax;
     }
+    private function empOverallDeposit($emp_overall_deposite)
+    {
+        $overall_deposit =0;
+            foreach($emp_overall_deposite as $single_employee_deposite)
+        {
+           $overall_deposit += (int)$single_employee_deposite->net_take_home;
+        }
+        return $overall_deposit;
+    }
+    
 }

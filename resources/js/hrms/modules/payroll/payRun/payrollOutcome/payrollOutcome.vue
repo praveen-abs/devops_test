@@ -11,6 +11,23 @@
                     <p>v</p>
                 </div>
             </div>
+
+
         </div>
     </div>
+    {{ useStore.payrollSource }}
 </template>
+
+<script setup>
+
+import { onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { payrunMainStore } from "../stores/payrunMainStore";
+
+const useStore = payrunMainStore()
+
+onMounted(()=>{
+    useStore.getPayrunOutcomeDetails()
+})
+
+</script>

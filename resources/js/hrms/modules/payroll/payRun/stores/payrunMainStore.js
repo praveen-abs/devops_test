@@ -20,6 +20,7 @@ export const payrunMainStore = defineStore("payrunMainStore", () => {
     // Leave, Attendance & Wages Calculation
 
     const leaveSource = ref()
+    const payrollSource = ref()
 
    const  getLeaveDetails = async()=>{
     let url = '/fetch-leaverequests-based-on-currentrole'
@@ -29,6 +30,19 @@ export const payrunMainStore = defineStore("payrunMainStore", () => {
     }
 
 
+    // Payrun Outcome
+
+    const  getPayrunOutcomeDetails = async()=>{
+        let url = 'api/payroll/getPayrollOutcomes'
+            await axios.post(window.location.origin+'/'+url,{
+                payroll_month:new Date().getMonth()  + 1,
+                client_code:'BA'
+            }).then(res=>{
+                payrollSource.value = res.data.data
+            })
+        }
+    
+
 
     return {
         currentActiveScreen,
@@ -37,6 +51,9 @@ export const payrunMainStore = defineStore("payrunMainStore", () => {
 
         //  Leave
         leaveSource,getLeaveDetails,
+
+        // Payrun Outcome
+        payrollSource,getPayrunOutcomeDetails,
     }
 
 })
