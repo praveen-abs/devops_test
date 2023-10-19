@@ -70,8 +70,8 @@
         <div class="" v-if="Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
             <DataTable scrollable scrollHeight="450px"
                 :value="useDashboard.currentlySelectedShiftDetails ? useDashboard.currentlySelectedShiftDetails : []">
-                <Column field="user_code" header="User code"></Column>
-                <Column field="name" header="Name"></Column>
+                <Column field="Employee_Code" header="User code"></Column>
+                <Column field="Employee_Name" header="Name"></Column>
                 <Column field="shift_start_time" header="Shift start time"></Column>
                 <Column field="shift_end_time" header="Shift end time"></Column>
                 <Column field="grace_time" header="Grace time"></Column>

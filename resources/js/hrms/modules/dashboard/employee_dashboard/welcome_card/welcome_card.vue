@@ -48,7 +48,7 @@
                         :class="findAttendanceMode(item.attendance_mode_checkout)"></i>
                 </p>
                 <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out:
-                    --:--:--` }}
+                    Yet to checkout` }}
                 </p>
 
             </div>

@@ -1326,7 +1326,7 @@ class VmtDashboardService
             }
 
             $user_data = User::where('user_code',$user_code)->first();
-            $user_client_code = VmtClientMaster::find($user_data->client_id);
+            $user_client_code = VmtClientMaster::find($user_data->client_id??"1");
             $user_client_code = $user_client_code->client_code;
 
                 if (
