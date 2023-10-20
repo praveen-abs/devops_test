@@ -87,8 +87,7 @@ class VmtPayrollService
                         "cash" => 0.0,
                     ],
                     "income_tax" => [
-                        "title" => "Income Tax (TDS - 192 B)",
-                        "tds_payable" => 0.0,
+                        "TDS_payable" => 0.0,
                         "no_of_employees" => 0.0,
                         "total" => 0.0
                     ],
@@ -232,7 +231,7 @@ class VmtPayrollService
             $response_data["payroll_outcome"]["professional_tax"] = $this->getOverall_PT($array_overall_PT);
 
         $t_overall_it =  $this->getOverall_IT($array_overall_IT, $total_employee_count);
-                $response_data["payroll_outcome"]["income_tax"]["tds_payable"] = $t_overall_it["tds_payable"];
+                $response_data["payroll_outcome"]["income_tax"]["tds_payable"] = $t_overall_it["TDS_payable"];
                 $response_data["payroll_outcome"]["income_tax"]["no_of_employees"] = $t_overall_it["no_of_employees"];
                 $response_data["payroll_outcome"]["income_tax"]["total"] = $t_overall_it["total"];
 
@@ -348,7 +347,7 @@ class VmtPayrollService
             $epf_total = $overall_employee_epf + $overall_vpf_share + $overall_employer_epf + $other_charges;
         }
         $EPF["employee_share"] = $overall_employee_epf;
-        $EPF["vpf_share"] = $overall_vpf_share;
+        $EPF["VPF_share"] = $overall_vpf_share;
         $EPF["employer_share"] = $overall_employer_epf;
         $EPF["other_charges"] = $other_charges;
         $EPF['total'] = $epf_total;
@@ -382,7 +381,7 @@ class VmtPayrollService
                 $emp_overall_PT++;
             }
         }
-        $professional_tax["tds_payable"] = $overall_PT;
+        $professional_tax["TDS_payable"] = $overall_PT;
         $professional_tax["no_of_employee"] = $emp_overall_PT;
         $professional_tax["total"] = $overall_PT;
         return $professional_tax;
@@ -399,7 +398,7 @@ class VmtPayrollService
                 $emp_overall_IT++;
             }
         }
-        $income_tax["tds_payable"] = $overall_IT;
+        $income_tax["TDS_payable"] = $overall_IT;
         $income_tax["no_of_employees"] = $total_employee_count - $emp_overall_IT;
         $income_tax["total"] = $overall_IT;
         return $income_tax;
