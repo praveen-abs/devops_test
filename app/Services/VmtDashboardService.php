@@ -21,6 +21,7 @@ use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 use App\Models\VmtOrgRoles;
 use App\Models\VmtStaffAttendanceDevice;
+use App\Models\VmtEmpAttIntrTable;
 use App\Models\VmtNotifications;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -1694,13 +1695,6 @@ class VmtDashboardService
 
                 $graph_chart_count['others_count'] = VmtEmployee::join("users", "users.id", "=", "vmt_employee_details.userid")->whereIn('users.client_id', $client_id)->where('vmt_employee_details.gender', 'others')->where('users.active', '1')->whereIn('users.id', $employees_data)->get()->count();
 
-                $graph_chart_count['app-checkin-ins'] = 0;
-
-                $graph_chart_count['active_apps'] =  0;
-
-                $graph_chart_count['inactive_apps'] = 0;
-
-
 
                 // $pending_request_count['get_leave_request_data'] = VmtEmployeeLeaves::whereDate('leaverequest_date', $current_date)->count();
             } else if ($user_data['org_role'] == "4") {
@@ -1766,44 +1760,29 @@ class VmtDashboardService
 
             }
 
-            $get_document_update_data = array();
+                $emp_leave_data = VmtEmployeeLeaves::WhereIn('user_id', $employees_data)->whereMonth('start_date', $Current_month)->where('status', "Pending")->get()->toarray();
 
-            $doc_count = 0;
-            $reg_count = 0;
-            $absent_count = 0;
-            $leave_employee_count = array();
-            $i = 0;
+                $pending_request_count['Leave Requests'] = count($emp_leave_data);
+                // if (!empty($emp_leave_data)) {
 
-            foreach ($employees_data as $key => $single_user_data) {
+                //     $start_Date = Carbon::parse($emp_leave_data['0']['start_date'])->format('Y-m-d');
+                //     $end_Date = Carbon::parse($emp_leave_data['0']['end_date'])->format('Y-m-d');
 
-                $user_data = User::where('id', $single_user_data['id'])->first();
+                //     $dateRange = CarbonPeriod::create($start_Date, $end_Date);
 
-                $emp_leave_data = VmtEmployeeLeaves::Where('user_id', $single_user_data['id'])->whereMonth('start_date', $Current_month)->where('status', "Pending")->get()->toarray();
+                //     foreach ($dateRange as $single_date) {
 
+                //         $leave_date = $single_date->format('Y-m-d');
 
-                if (!empty($emp_leave_data)) {
-
-                    $start_Date = Carbon::parse($emp_leave_data['0']['start_date'])->format('Y-m-d');
-                    $end_Date = Carbon::parse($emp_leave_data['0']['end_date'])->format('Y-m-d');
-
-                    $dateRange = CarbonPeriod::create($start_Date, $end_Date);
-
-                    foreach ($dateRange as $single_date) {
-
-                        $leave_date = $single_date->format('Y-m-d');
-
-                        if ($leave_date == $current_date) {
-                            $leave_employee_count[$i]['id'] =  $single_user_data['id'];
-                            $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
-                            $leave_employee_count[$i]['user_name'] =  $user_data->name;
-                            $leave_employee_count[$i]['leave_date'] = $leave_date;
-                            $i++;
-                        }
-                    }
-                }
-            }
-
-            $pending_request_count['Leave Requests'] = count($leave_employee_count);
+                //         if ($leave_date == $current_date) {
+                //             $leave_employee_count[$i]['id'] =  $single_user_data['id'];
+                //             $leave_employee_count[$i]['user_code'] =  $user_data->user_code;
+                //             $leave_employee_count[$i]['user_name'] =  $user_data->name;
+                //             $leave_employee_count[$i]['leave_date'] = $leave_date;
+                //             $i++;
+                //         }
+                //     }
+                // }
            // $pending_request_count['Leave Employees'] =  $leave_employee_count;
 
             // foreach ($employees_data as $key => $single_user_data) {
@@ -1826,28 +1805,18 @@ class VmtDashboardService
 
             // $pending_request_count['employee_absent_count'] =  $absent_count;
 
+            $get_document_update_data = VmtEmployeeDocuments::whereIn('user_id', $employees_data)->where('status', 'Pending')->get()->toarray();
+            $get_attendance_regularization_data = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_data)->where('status', 'pending')->get()->toarray();
+            $pending_request_count['Document Approvals'] = count($get_document_update_data);
+            $pending_request_count['Attendance Regularization'] = count($get_attendance_regularization_data);
 
-            foreach ($employees_data as $key => $single_user_data) {
+            $mob_login_count = $this->getMobLoginCount();
 
-                $get_document_update_data = VmtEmployeeDocuments::where('user_id', $single_user_data['id'])->where('status', 'Pending')->get()->toarray();
-                if (!empty($get_document_update_data)) {
-                    $doc_count++;
-                }
+            $graph_chart_count['app-checkin-ins'] = $mob_login_count['app_checkin_count'];
 
-                $get_attendance_regularization_data = VmtEmployeeAttendanceRegularization::where('user_id', $single_user_data['id'])->where('status', 'pending')->get()->toarray();
-                if (!empty($get_attendance_regularization_data)) {
-                    $reg_count++;
-                }
-            }
-            $pending_request_count['Document Approvals'] = $doc_count;
-            $pending_request_count['Attendance Regularization'] = $reg_count;
-            // $mob_login_count = $this->getMobLoginCount();
+            $graph_chart_count['active_apps'] =  $mob_login_count['app_active_count'];
 
-            // $graph_chart_count['app-checkin-ins'] = $mob_login_count['app_checkin_count'];
-
-            // $graph_chart_count['active_apps'] =  $mob_login_count['app_active_count'];
-
-            // $graph_chart_count['inactive_apps'] = $mob_login_count['app_inactive_count'];
+            $graph_chart_count['inactive_apps'] = $mob_login_count['app_inactive_count'];
 
             $response = ['employee_details_count' => $emp_details_count, 'pending_request_count' => $pending_request_count, 'graph_chart_count' => $graph_chart_count];
             return ($response);
@@ -1950,14 +1919,15 @@ class VmtDashboardService
     {
         try{
         $current_date = carbon::now()->format('Y-m-d');
-        $app_checkin_count = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
-            ->where('attendance_mode_checkin', 'mobile')
-            ->whereDate('date', $current_date)->get()->count();
-        $active_count = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
-            ->where('attendance_mode_checkin', 'mobile')->get()->unique('user_id')->count();
+        $app_checkin_count = VmtEmpAttIntrTable::join('users','vmt_emp_att_intrtable.user_id','=','users.id')
+                                                ->where('active',"1")->where('is_ssa',"0")->where('attendance_mode_checkin', 'mobile')
+                                                ->whereDate('date', $current_date)->get()->count();
 
-            $user_data = User::get()->count();
-            $inactive_count = $user_data - $active_count;
+        $active_count = VmtEmpAttIntrTable::join('users','vmt_emp_att_intrtable.user_id','=','users.id')->where('attendance_mode_checkin', 'mobile')
+                                                ->where('active',"1")->where('is_ssa',"0")->get()->unique('user_id')->count();
+
+        $user_data = User::where('active',"1")->where('is_ssa',"0")->get()->count();
+        $inactive_count = $user_data - $active_count;
 
         $response = ["app_checkin_count"=>$app_checkin_count, "app_active_count"=>$active_count,"app_inactive_count"=>$inactive_count];
         return $response;
