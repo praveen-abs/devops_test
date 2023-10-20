@@ -11,7 +11,7 @@
             </div> -->
                 <div class="profile-pic">
                     <img v-if="_instance_profilePagesStore.profile" class="forRounded"
-                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" id="output"
+                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile ?_instance_profilePagesStore.profile.employee_profile:''}`" srcset="" alt="" id="output"
                         width="200" />
                     <p v-else
                         class="font-semibold text-5xl text-center flex items-center justify-center text-white forRounded"
@@ -142,7 +142,7 @@
                 <div class="mx-2">
                     <button class="p-0 m-0 bg-transparent border-0 outline-none btn">
 
-                        <!-- <button class=" border-[1px] border-[#000] p-2 rounded-md mx-2" @click="visibleRight= true" > view</button> -->
+                        <i  class="pi pi-pencil rounded-md mx-4 " @click="visibleRight= true" ></i> 
                         <i class="pi pi-id-card text-success fs-4" aria-hidden="true" @click="dialogIdCard = true"></i>
                     </button>
                 </div>
@@ -150,20 +150,23 @@
         </div>
     </div>
 
-    <Dialog header="Status" v-model:visible="canShowCompletionScreen" modal
+    <Dialog header="Status" v-model:visible="canShowCompletionScreen"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }">
         <div class="confirmation-content">
             <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
             <span>{{ status_text_CompletionDialog }}</span>
         </div>
     </Dialog>
-    <Dialog v-model:visible="dailogDepartment" modal header="Edit Department" :style="{ width: '30vw' }">
+    <Dialog v-model:visible="dailogDepartment"  header="Edit Department" :style="{ width: '30vw' }">
         <!-- {{ employee_card.department  }} -->
         <Dropdown :options="departmentOption" optionLabel="name" v-model="employee_card.department"
             placeholder="Select Department" class="w-full form-selects" optionValue="id" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" @click="editDepartment">
+                <button type="button" class="btn btn-outline-orange" @click="dailogDepartment= false">
+                    cancel
+                </button>
+                <button type="button" class="btn btn-orange" @click="editDepartment">
                     Save
                 </button>
             </div>
@@ -174,7 +177,10 @@
             optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" @click="editReportingManager">
+                <button type="button" class="btn btn-outline-orange" @click="dailogReporting= false">
+                    cancel
+                </button>
+                <button type="button" class="btn btn-orange" @click="editReportingManager">
                     Save
                 </button>
             </div>
@@ -182,7 +188,7 @@
     </Dialog>
 
 
-    <Sidebar position="right" v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw' }"
+    <Sidebar position="right" v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw !important' }"
         style=" @media (min-width:1024px){background-image:particular_ad_small.png;} ">
 
         <template #header>
@@ -333,17 +339,6 @@
 
 
 
-    <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" modal>
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
-
     <Dialog v-model:visible="dialog_emp_name_visible" modal header=" " :style="{ width: '50vw' }">
         <template #header>
             <div>
@@ -421,7 +416,10 @@
                 </div>
                 <div class="col-12">
                     <div class="text-right">
-                        <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                        <button type="button" class="btn btn-outline-orange" @click="dialog_emp_name_visible= false">
+                            cancel
+                        </button>
+                        <button id="btn btn-orange mx-2" class="btn btn-orange submit-btn"
                             @click="submitForm">Submit</button>
                     </div>
                 </div>
@@ -429,50 +427,68 @@
         </div>
     </Dialog>
 
-    <Sidebar v-model:visible="visibleRight" position="right" class="!w-[400px]">
-        <h1 class="bg-cyan-800 p-4 text-white text-xl " >Profile</h1>
-        <div class="py-4">
-            <h4 class="font-semibold text-2xl ">Personal Information</h4>
-            <div class="leading-8">
-                <h6 class="py-2 font-semibold text-xl">Name</h6>
-                <InputText v-model="value" class="bg-gray-200" disabled placeholder="Name" />
-                <h6 class="py-2 font-semibold text-xl">Designation</h6>
-                <InputText v-model="value"  class="bg-gray-200" disabled placeholder="Designation" />
-                <h6 class="py-2 font-semibold text-xl">Location</h6>
-                <InputText v-model="value" class="bg-gray-200" disabled placeholder="Location" />
+    <Sidebar v-model:visible="visibleRight" position="right" class="!w-[500px] !h-[650px] " :style="{ width: '40vw !important' }">
+        <template #header>
+            <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+                <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">Profile Details</h1>
             </div>
-            <div class="py-2 leading-8 font-semibold text-2xl">General Information
+        </template>
+        <div class="py-3">
+            <h4 class="font-semibold text-[15px] ">Personal Information</h4>
+            <div class="leading-8">
+                <h6 class="py-2 font-semibold text-[12px]">Name<span class="text-danger">*</span></h6>
+                <InputText v-model="value" class="bg-gray-200 h-10"  placeholder="Name" />
+                <h6 class="py-2 font-semibold text-[12px]">Designation<span class="text-danger">*</span></h6>
+                <InputText v-model="value"  class="bg-gray-200 h-10"  placeholder="Designation" />
+                <h6 class="py-2 font-semibold text-[12px]">Location<span class="text-danger">*</span></h6>
+                <InputText v-model="value" class="bg-gray-200 h-10"  placeholder="Location" />
+            </div>
+            <div class="py-2 leading-8 font-semibold text-[15px]">General Information
                 <div class="flex ">
                     <div class="">
-                        <div class="w-80  font-semibold  text-xl leading-10 ">DOB
-                            <InputText v-model="value" class="bg-gray-200 h-12" disabled placeholder="DOB" />
-                        </div>
-                        <div class="w-80 font-semibold text-xl leading-10 ">Gender
+                         <div class=" w-72 font-semibold   text-[12px] leading-10 ">DOB<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200 h-9"  placeholder="DOB" />
+                        </div> 
+                        <!-- <div class="W-64 font-semibold text-xl leading-10 ">Gender<span class="text-danger">*</span>
                             <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Gender" />
-                        </div>
-                        <div class="w-80 font-semibold text-xl leading-10 ">Blood Group
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Blood Group" />
+                        </div> -->
+                        <div class=" w-72 font-semibold  text-[12px] leading-10 ">Gender<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200 h-10"  placeholder="  Gender" />
+                            
+                        </div> 
+                        <div class="w-72 font-semibold text-[12px] leading-10 ">Blood Group<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10"  placeholder="Blood Group" />
                         </div>
                     </div>
-                    <div class="ml-20 ">
-                        <div class="w-80  font-semibold leading-10  text-xl">DOJ
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="DOJ" />
+                    <div class="ml-10 ">
+                        <div class="w-72  font-semibold leading-10  text-[12px] ">DOJ<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10"  placeholder="DOJ" />
                         </div>
-                        <div class="w-80  font-semibold leading-10  text-xl">Martial Status
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Martial Status" />
+                        <div class="w-72  font-semibold leading-10  text-[12px]">Martial Status<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10"  placeholder="Martial Status" />
                         </div>
-                        <div class="w-80  font-semibold leading-10  text-xl">Physically Challenged
-                            <InputText v-model="value" class="bg-gray-200  h-12" disabled placeholder="Physically Challenged" />
+                        <div class="w-72  font-semibold leading-10  text-[12px]">Physically Challenged<span class="text-danger">*</span>
+                            <InputText v-model="value" class="bg-gray-200  h-10" placeholder="Physically Challenged" />
                         </div>
-                
+
                     </div>
-                    
-                    
-    
+
+
+
 
                 </div>
             </div>
         </div>
+        <div class="">
+            <div class="bg-[#FFE2E2] mt-24 py-3 rounded-lg ml-1 font-['poppins] font-bold">Note
+                <p class="font-['poppins] ml-1">Changing Personal Information will be verified and approved by the Manager after you submit this form</p>
+            </div>
+            <div class="justify-center font-['poppins'] py-4 ml-52 items-center ">
+                 <button class=" border-2 py-1 px-3  rounded-lg border-black">Cancel</button>
+                <button class=" border-2 py-1 px-3 ml-10 rounded-lg bg-black text-white border-black">Submit</button>
+            </div>
+        </div>
+  
     </Sidebar>
 </template>
 
@@ -491,7 +507,8 @@ const visibleRight = ref(false);
 
 const canShowLoading = ref(false);
 
-const dialogIdCard = ref(false)
+const dialogIdCard = ref(false);
+const value = ref();
 
 const employee_card = reactive({
     department: "",
@@ -527,7 +544,7 @@ const updateProfilePhoto = (e) => {
     }
 
     let form = new FormData();
-    form.append("user_code", service.current_user_code);
+    form.append("user_id",_instance_profilePagesStore.user_id);
     form.append("file_object", _instance_profilePagesStore.profile);
 
     let url = "/profile-pages/updateProfilePicture";

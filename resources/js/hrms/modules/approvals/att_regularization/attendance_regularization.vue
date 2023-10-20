@@ -16,7 +16,15 @@
             </template>
         </Dialog>
 
-        <div>
+        <div class=" relative">
+
+            <div class=" absolute top-[-80px] right-0 ">
+                <!-- @date-select="" -->
+                <Calendar view="month" dateFormat="mm/yy" class="mx-4  " v-model="selectedDate"
+                                style=" border-radius: 7px; height: 30px;" @date-select="ajax_GetAttRegularizationData(selectedDate.getMonth() + 1, selectedDate.getFullYear())" 
+                                 />
+            </div>
+
             <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" sortField="attendance_date" :sortOrder="-1"
@@ -159,6 +167,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import moment from "moment";
 import { Service } from "../../Service/Service";
+import dayjs from 'dayjs';
 import LoadingSpinner from '../../../components/LoadingSpinner.vue';
 import { UseAttendanceStore } from "./AttendanceStore";
 
@@ -173,6 +182,7 @@ const reject = ref('');
 const reviewer_comment = ref();
 const service = Service();
 const swal = inject("$swal");
+const selectedDate = ref();
 
 
 
@@ -198,16 +208,19 @@ let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
 onMounted(async () => {
-    await ajax_GetAttRegularizationData();
+    await ajax_GetAttRegularizationData(dayjs().month() + 1, dayjs().year());
 });
 
-async function ajax_GetAttRegularizationData() {
+async function ajax_GetAttRegularizationData(Month,Year) {
     UseAttendance.canShowLoadingScreen = true
     let url = window.location.origin + "/fetch-att-regularization-data";
     // console.log("AJAX URL : " + url);
-    await axios.get(url).then((response) => {
+    await axios.post(url,{
+        month:Month,
+        year:Year
+    }).then((response) => {
         // console.log("Axios : " + response.data);
-        att_regularization.value = Object.values(response.data);
+        att_regularization.value =response.data.data;
     }).finally(() => {
         UseAttendance.canShowLoadingScreen = false
     });

@@ -44,12 +44,12 @@ class VmtProfilePagesController extends Controller
 
     public function updateProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService)
     {
-        return $serviceProfilePagesService->updateProfilePicture($request->user_code, $request->file_object);
+        return $serviceProfilePagesService->updateProfilePicture($request->user_id, $request->file_object);
     }
 
     public function getProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService)
     {
-        return $serviceProfilePagesService->getProfilePicture($request->user_code);
+        return $serviceProfilePagesService->getEmployeeProfilePicture($request->user_id,$request->admin_user_id);
     }
 
 
@@ -774,6 +774,7 @@ class VmtProfilePagesController extends Controller
         //     //dd("Enc User details from request : ".$user);
         // }
 
+
         return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
 
@@ -781,7 +782,7 @@ class VmtProfilePagesController extends Controller
     {
 
 
-        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_code, $request->document_name, $request->emp_doc_record_id);
+        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_id, $request->document_name, $request->emp_doc_record_id);
         return $response;
     }
     public function getEmpProfileProofPrivateDoc(Request $request, VmtProfilePagesService $profilepagesservice)

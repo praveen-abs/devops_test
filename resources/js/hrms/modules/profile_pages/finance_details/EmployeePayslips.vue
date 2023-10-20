@@ -33,7 +33,7 @@
                                     @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)">Download</button> -->
                                     <!-- bg-blue-500 -->
                                     <button class=" border-[2px] border-[#000] py-2 px-3 rounded-md"
-                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('', slotProps.data.PAYROLL_MONTH)">View</button>
+                                    @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.user_code, slotProps.data.PAYROLL_MONTH)">View</button>
                 </template>
 
             </column>
@@ -46,7 +46,7 @@
     <!-- dialog for show details -->
 
     <Sidebar position="right" v-model:visible="employeePayslipStore.canShowPayslipView" v-if="employeePayslipStore.canShowPayslipView" modal header="Payslip"
-        :style="{ width: '70vw' }">
+    :style="{ width: '60vw !important' }">
         <button class=" flex items-center p-2 absolute top-5 border-[1px] mx-2 text-[#000]  rounded-md h-[33px] "
                                     @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', employeePayslipStore.Payroll_month)"> <i class="pi pi-download"></i></button>
         <div class=" flex justify-center w-[100%] my-3 rounded-lg">
@@ -285,9 +285,9 @@
 
             </div>
 
-           
+
         </div>
-        
+
 
 </Sidebar>
 </template>
@@ -309,7 +309,7 @@ const viewpayslip = ref(true);
 const op = ref();
 
 onMounted( () => {
-    console.log("EmployeePayslips,vue loaded"); 
+    console.log("EmployeePayslips,vue loaded");
     employeePayslipStore.getEmployeeAllPayslipList();
 
 });
@@ -345,6 +345,12 @@ const rowClass = (data) => {
     padding: 0;
     z-index: 0 !important;
 }
+
+.p-sidebar-right .p-sidebar {
+    width:50% ;
+    height: 100%;
+}
+
 </style>
 
 

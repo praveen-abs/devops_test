@@ -401,6 +401,10 @@ form
     padding: 0.5rem;
 }
 
+.p-button.p-component.p-button-icon-only.p-datepicker-trigger {
+    height: 0.9rem;
+    height: 32px !important;
+  }
 
 .p-calendar-w-btn .p-datepicker-trigger
 {

@@ -48,8 +48,7 @@ class VmtStaffAttendanceController extends Controller
             ];
         }
         catch(\Exception $e){
-            $client_list =  empty($current_client_list) ? 'NULL' : json_encode($current_client_list);
-            $temp = [
+            return [
                 "status" => "failure",
                 "message" => "Error [ syncStaffAttendanceFromDeviceDatabase() ] : Error while fetching biometric attendance data for client list :: ".$client_list,
                 "data" => $array_result,
@@ -58,7 +57,6 @@ class VmtStaffAttendanceController extends Controller
 
             ];
 
-            return $temp;
         }
     }
 
@@ -79,7 +77,6 @@ class VmtStaffAttendanceController extends Controller
             $attendanceData  = \DB::connection($client_db_connection_name)->table('staff_attenndance')->get();
         }
 
-        $response =
         $data_count = 0;
 
         // dd($attendanceData);
@@ -132,32 +129,20 @@ class VmtStaffAttendanceController extends Controller
 
     // inserting device data in to vmt_staff_attenndance_device table
     protected function insertDataFromExternalAttendanceTable($data){
-
-        try
-        {
-            $staffAttendace     = new  VmtStaffAttendanceDevice;
-            $staffAttendace->id = $data->id;
-            $staffAttendace->att_server = $data->att_server;
-            $staffAttendace->location   = $data->location;
-            $staffAttendace->table_name = $data->table_name;
-            $staffAttendace->device_log_Id = $data->device_log_Id;
-            $staffAttendace->device_Id     = $data->device_Id;
-            $staffAttendace->user_Id       = $data->user_Id;
-            $staffAttendace->direction     = $data->direction;
-            $staffAttendace->verification_mode  = $data->verification_mode;
-            $staffAttendace->date = $data->date;
-            $staffAttendace->timezone  = $data->timezone;
-            $staffAttendace->created_on  = $data->created_on;
-            $staffAttendace->save();
-        }
-        catch(\Exception $e){
-            return [
-                "status" => "failure",
-                "message" => "Error while saving data",
-                "error" => $e->getMessage().' | Line : '.$e->getLine(),
-                "error_verbose" => app()->hasDebugModeEnabled() ? $e->getTrace() : '** Debug Mode is disabled **',
-            ];
-        }
+        $staffAttendace     = new  VmtStaffAttendanceDevice;
+        $staffAttendace->id = $data->id;
+        $staffAttendace->att_server = $data->att_server;
+        $staffAttendace->location   = $data->location;
+        $staffAttendace->table_name = $data->table_name;
+        $staffAttendace->device_log_Id = $data->device_log_Id;
+        $staffAttendace->device_Id     = $data->device_Id;
+        $staffAttendace->user_Id       = $data->user_Id;
+        $staffAttendace->direction     = $data->direction;
+        $staffAttendace->verification_mode  = $data->verification_mode;
+        $staffAttendace->date = $data->date;
+        $staffAttendace->timezone  = $data->timezone;
+        $staffAttendace->created_on  = $data->created_on;
+        $staffAttendace->save();
     }
 
 

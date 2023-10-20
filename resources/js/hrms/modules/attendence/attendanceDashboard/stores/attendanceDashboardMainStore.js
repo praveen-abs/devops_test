@@ -48,7 +48,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     function send_selectedDepartment(val){
 
         axios.post('/get-attendance-dashboard',{
-            id:val
+            department_id:val
         }).then((res)=>{
         }).finally(()=>{
 
@@ -59,7 +59,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
     const getAttendanceDashboardMainSource = async () => {
         canShowLoading.value = true
         let url = '/get-attendance-dashboard'
-        await axios.get(url).then(res => {
+        await axios.post(url).then(res => {
             attendanceOverview.value = res.data.attendance_overview
 
             totalEmployeeInOrganization.value = res.data.total_Employees
@@ -67,7 +67,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
             chartDetails.value[0].count = parseInt(attendanceOverview.value['absent_count'])
             chartDetails.value[1].count = parseInt(attendanceOverview.value['present_count'])
             chartDetails.value[2].count = parseInt(attendanceOverview.value['leave_emp_count'])
-            chartDetails.value[3].count = parseInt(attendanceOverview.value['lg_count'])
+            chartDetails.value[3].count = parseInt(attendanceOverview.value['lc_count'])
             chartDetails.value[4].count = parseInt(attendanceOverview.value['eg_count'])
             chartDetails.value[5].count = parseInt(attendanceOverview.value['mop_count'])
             chartDetails.value[6].count = parseInt(attendanceOverview.value['mip_count'])
@@ -91,7 +91,7 @@ export const useAttendanceDashboardMainStore = defineStore("useAttendanceDashboa
             })
             overallEmployeeCountForExceptionAnalytics.value = graph
 
-            let desiredHeaders = ["absent_count", "present_count", "leave_emp_count", "lg_count", "eg_count", "mop_count", "mip_count"]
+            let desiredHeaders = ["absent_count", "present_count", "leave_emp_count", "lc_count", "eg_count", "mop_count", "mip_count"]
 
             overallEmployeeCountForExceptionAnalytics.value.forEach(async element => {
                 if (overallEmployeeCountForExceptionAnalyticsForGraph.value.length < 7) {

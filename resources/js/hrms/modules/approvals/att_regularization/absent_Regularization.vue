@@ -1,5 +1,11 @@
 <template>
-    <div>
+    <div  class=" relative">
+        <div class=" absolute top-[-80px] right-0  ">
+            <!-- @date-select="" -->
+            <Calendar view="month" dateFormat="mm/yy" class="mx-4  " v-model="selectedDate"
+                            style=" border-radius: 7px; height: 30px;" @date-select="getAbsentRegularization(selectedDate.getMonth() + 1, selectedDate.getFullYear())" 
+                             />
+        </div>
         <DataTable :value="arrayAbsentRegularization" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]" sortField="attendance_date" :sortOrder="-1"
@@ -140,6 +146,7 @@ const reviewer_comment = ref();
 
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
+const selectedDate = ref();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -152,19 +159,25 @@ const filters = ref({
 
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
+const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 onUpdated(() => {
     canShowConfirmation ? reviewer_comment.value = null : ''
 })
 
 onMounted(async() => {
-    await getAbsentRegularization();
+    await getAbsentRegularization(dayjs().month() + 1, dayjs().year());
 })
 
-async function getAbsentRegularization() {
-    UseAttendance.canShowLoadingScreen  = true
-    await axios.get('/fetch-absent-regularization-data').then((res) => {
-        arrayAbsentRegularization.value = res.data;
+async function getAbsentRegularization(Month,Year) {
+    UseAttendance.canShowLoadingScreen  = true;
+    let url = window.location.origin + "/fetch-absent-regularization-data";
+    // console.log("AJAX URL : " + url);
+    await axios.post(url,{
+        month:Month,
+        year:Year
+    }).then((res) => {
+        arrayAbsentRegularization.value = res.data.data;
     }).finally(() => {
         UseAttendance.canShowLoadingScreen  = false
     })
@@ -187,10 +200,10 @@ const getSeverity = (status) => {
 };
 
 function showConfirmDialog(selectedRowData, status) {
-    UseAttendance.canShowLoadingScreen  = true;
     currentlySelectedStatus = status;
     reject.value = status;
     currentlySelectedRowData = selectedRowData;
+    canShowConfirmation.value = true
     // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 

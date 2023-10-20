@@ -70,7 +70,8 @@
             "app/Services/VmtAppPermissionsService.php",
             "app/Services/VmtAttendanceServiceV2.php",
             "app/Services/VmtReportsService.php",
-            "app/Services/Testing/VmtTestingService.php"
+            "app/Services/Testing/VmtTestingService.php",
+            "app/Services/PMS/VmtPMSModuleService_v3.php"
 
         ]
     },

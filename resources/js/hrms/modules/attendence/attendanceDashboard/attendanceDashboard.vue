@@ -2,9 +2,8 @@
     <LoadingSpinner v-if="useDashboard.canShowLoading" class="absolute z-50 bg-white" />
     <div class="w-full">
         <p class="mb-2 text-2xl font-semibold text-black">
-            Attendance dashboard
+            Attendance Dashboard
         </p>
-
         <div class="flex justify-between items-center p-2 bg-white border rounded-lg">
             <div class="mx-2">
                 <p class=" font-[14px] font-['Poppins']  text-gray-500 ">
@@ -13,8 +12,19 @@
                 </p>
             </div>
             <div class="flex items-center justify-end gap-3 mx-4 ">
+<<<<<<< HEAD
                 <div><Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id" v-model="department"  optionLabel="name" :options="useDashboard.departments" placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" /></div>
                 <div><Dropdown  optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" /></div>
+=======
+                <div>
+                    <Dropdown @change="useDashboard.send_selectedDepartment(department)" optionValue="id"
+                        v-model="department" optionLabel="name" :options="useDashboard.departments"
+                        placeholder="Select a Department" class="w-full md:w-18rem h-[36px]" />
+                </div>
+                <div>
+                    <Dropdown optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem h-[36px]" />
+                </div>
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
                 <div><i class=" pi pi-calendar text-[#000] text-[16px]"></i></div>
             </div>
         </div>
@@ -40,7 +50,11 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <Sidebar v-model:visible="useDashboard.canShowShiftDetails" position="right" :style="{ width: '60vw !important' }">
+=======
+    <Sidebar v-model:visible="useDashboard.canShowShiftDetails" position="right" :style="{ width: '70vw !important' }">
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">{{ useDashboard.currentlySelectedShiftDetails ?
                 useDashboard.currentlySelectedShiftDetails[0].shift_name : null }} Reports</p>
@@ -62,11 +76,11 @@
                 </button>
             </div>
         </template>
-        <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
+        <div class="" v-if="Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
             <DataTable scrollable scrollHeight="450px"
                 :value="useDashboard.currentlySelectedShiftDetails ? useDashboard.currentlySelectedShiftDetails : []">
-                <Column field="user_code" header="User code"></Column>
-                <Column field="name" header="Name"></Column>
+                <Column field="Employee_Code" header="User code"></Column>
+                <Column field="Employee_Name" header="Name"></Column>
                 <Column field="shift_start_time" header="Shift start time"></Column>
                 <Column field="shift_end_time" header="Shift end time"></Column>
                 <Column field="grace_time" header="Grace time"></Column>
@@ -76,7 +90,12 @@
             <img class="h-[450px]" src="../../../assests/images/no-data.svg" alt="" srcset="">
         </div>
     </Sidebar>
+<<<<<<< HEAD
     <Sidebar v-model:visible="useDashboard.canShowAttendanceOverview" position="right"  :style="{ width: '60vw !important' }">
+=======
+    <Sidebar v-model:visible="useDashboard.canShowAttendanceOverview" position="right"
+        :style="{ width: '70vw !important' }">
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">
                 {{ useDashboard.selectedAttendanceOverviewReport }} Reports</p>
@@ -96,10 +115,13 @@
                     </div>
                 </button>
             </div>
+<<<<<<< HEAD
             <!-- {{ useDashboard.currentlySelectedShiftDetails }} -->
+=======
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
         </template>
-        <div class="" v-if=" Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
-            <DataTable scrollable scrollHeight="450px"
+        <div class="" v-if="Object.values(useDashboard.currentlySelectedShiftDetails).length >= 1">
+            <DataTable scrollable scrollHeight="500px"
                 :value="useDashboard.currentlySelectedShiftDetails ? useDashboard.currentlySelectedShiftDetails : []">
                 <Column field="Employee_Code" header="Employee_Code" style="white-space: nowrap;"></Column>
                 <Column field="Employee_Name" header="Employee_Name" style="white-space: nowrap;"></Column>
@@ -141,6 +163,12 @@ onMounted(async () => {
 });
 
 const department = ref();
+onMounted(async () => {
+
+    await useDashboard.getAttendanceDashboardMainSource()
+    useDashboard.GetDepartment();
+});
+
 
 const downloadExcelFile = async () => {
     const workbook = new ExcelJS.Workbook();
@@ -187,6 +215,7 @@ const downloadExcelFile = async () => {
     worksheet.mergeCells(authorRow.number, 1, authorRow.number, 3); // Merge three cells
     authorRow.getCell(1).alignment = { wrapText: true };
     authorRow.getCell(1).font = { italic: true };
+
 
     // Create a Blob from the workbook
     const blob = await workbook.xlsx.writeBuffer();
@@ -279,6 +308,7 @@ const toggleClass = ref('downloaded');
 </script>
 
 
+<<<<<<< HEAD
 <style scoped>
 .p-sidebar-right .p-sidebar
 {
@@ -286,6 +316,8 @@ const toggleClass = ref('downloaded');
     height: 100%;
 }
 </style>
+=======
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
 
 
 <style lang="sass" scoped>

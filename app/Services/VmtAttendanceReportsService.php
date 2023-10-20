@@ -282,7 +282,7 @@ class VmtAttendanceReportsService
                         //   dd($temp_ar);
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
-                        if ($sts_ar[0] == 'P') {
+                        if ($sts_ar[0] == 'P' || $sts_ar[0] == 'A') {
                             if (count($sts_ar) != 1) {
                                 if (in_array('LC', $sts_ar)) {
                                     $total_LC =   $total_LC + 1;
@@ -295,7 +295,11 @@ class VmtAttendanceReportsService
                                 // if (in_array('MIP', $sts_ar)) {
                                 // }
                             }
-                            $total_present = $total_present + 1;
+                            if ($sts_ar[0] == 'P') {
+                                $total_present = $total_present + 1;
+                            } else {
+                                $total_absent = $total_absent + 1;
+                            }
                         } elseif (
                             $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
                             $status == 'OD' || $status == 'PI' || $status == 'CO' || $status == 'CL' || $status == 'SL' || $status == 'FO L'
@@ -887,11 +891,12 @@ class VmtAttendanceReportsService
             if (Carbon::parse($end_date)->gt(Carbon::today())) {
                 $end_date = Carbon::today()->format('Y-m-d');
             }
-            //  dd($start_date,$end_date);
+            //dd($start_date,$end_date,Carbon::parse($end_date));
             $users = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
                 ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                ->where('vmt_employee_details.doj', '<', Carbon::parse($end_date))
+                ->where('vmt_employee_details.doj', '<=', Carbon::parse($end_date))
                 ->where('is_ssa', '0');
+
             if (!empty($client_id)) {
                 $users =  $users->whereIn('client_id', $client_id);
             }
@@ -908,6 +913,22 @@ class VmtAttendanceReportsService
                 'vmt_employee_details.doj as doj',
                 'vmt_employee_details.dol as dol'
             ]);
+
+            $users_data = array();
+            foreach ($users as $key => $single_user) {
+
+                if ($single_user->dol != null) {
+
+                    if ($single_user->dol > $start_date) {
+
+                        $users_data[$key] = $single_user;
+                    }
+                } else {
+
+                    $users_data[$key] = $single_user;
+                }
+            }
+
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $header_2 = array('', '', '', '');
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
@@ -925,8 +946,9 @@ class VmtAttendanceReportsService
                     array_push($header_2, 'Status');
                 }
             }
-            //dd(count($users));
-            foreach ($users as $single_user) {
+            //dd(count($users_data));
+            foreach ($users_data as $single_user) {
+
                 $current_date = Carbon::parse($start_date);
                 $temp_ar = array();
                 array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
@@ -946,37 +968,25 @@ class VmtAttendanceReportsService
                 while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
 
                     if ($single_user->dol == null && Carbon::parse($single_user->doj)->lte($current_date) || $current_date->between($single_user->doj, Carbon::parse($single_user->dol))) {
+                        $checkin_time = '-';
+                        $checkout_time = '-';
+                        $current_ot = '-';
+                        $lc_mins = '-';
                         if (!VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->exists()) {
-                            dd($single_user);
+                            if ($attendance_setting_details['lc_status'] == 1) {
+                                array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, '-');
+                            } else {
+                                array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, '-');
+                            }
+                            continue;
                         }
                         $att_detail = VmtEmpAttIntrTable::where('user_id', $single_user->id)->whereDate('date', $current_date)->first();
-                        if ($att_detail->regularized_checkin_time != null) {
-                            $checkin_time = $att_detail->regularized_checkin_time;
-                        } else {
-                            $checkin_time = $att_detail->checkin_time;
-                        }
-                        if ($att_detail->regularized_checkout_time != null) {
-                            $checkout_time = $att_detail->regularized_checkout_time;
-                        } else {
-                            $checkout_time = $att_detail->checkout_time;
-                        }
-
-                        $ot_ar = CarbonInterval::minutes($att_detail->overtime)->cascade();
-                        $ot_hrs = (int) $ot_ar->totalHours;
-                        $ot_mins = $ot_ar->toArray()['minutes'];
-                        $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-
-                        $total_ot = $total_ot + $att_detail->overtime;
-
-                        $lc_mins = $att_detail->lc_minutes;
                         $status = $att_detail->status;
                         $sts_ar =  explode("/", $status);
-                        if ($sts_ar[0] == 'P') {
-                            if (count($sts_ar) == 1) {
-                                $total_present = $total_present + 1;
-                            } else {
+                        if ($sts_ar[0] == 'P' || $sts_ar[0] == 'A') {
+                            if (count($sts_ar) != 1) {
                                 if (in_array('LC', $sts_ar)) {
-                                    $total_LC = $total_LC + 1;
+                                    $total_LC =   $total_LC + 1;
                                 }
                                 if (in_array('EG', $sts_ar)) {
                                     $total_EG = $total_EG + 1;
@@ -985,6 +995,11 @@ class VmtAttendanceReportsService
                                 // }
                                 // if (in_array('MIP', $sts_ar)) {
                                 // }
+                            }
+                            if ($sts_ar[0] == 'P') {
+                                $total_present = $total_present + 1;
+                            } else {
+                                $total_absent = $total_absent + 1;
                             }
                         } elseif (
                             $status == 'SL/CL' ||  $status == 'CL/SL' ||  $status == 'LOP LE' ||  $status == 'EL' ||  $status == 'ML' || $status == 'PTL' ||
@@ -1004,13 +1019,30 @@ class VmtAttendanceReportsService
                             $total_holiday = $total_holiday + 1;
                         } else if ($att_detail->status == 'WO') {
                             $total_weekoff = $total_weekoff + 1;
-                        } else {
-                            $checkin_time = '-';
-                            $checkout_time = '-';
-                            $ot = '-';
-                            //  if ($lc_eg_setting['lc_status'])
-                            $lc_minutes = '-';
                         }
+                        if ($att_detail->regularized_checkin_time != null) {
+                            $checkin_time = $att_detail->regularized_checkin_time;
+                        } else if ($att_detail->checkin_time != null) {
+                            $checkin_time = $att_detail->checkin_time;
+                        }
+
+                        if ($att_detail->regularized_checkout_time != null) {
+                            $checkout_time = $att_detail->regularized_checkout_time;
+                        } else if ($att_detail->checkout_time != null) {
+                            $checkout_time = $att_detail->checkout_time;
+                        }
+                        if ($att_detail->lc_minutes != 0) {
+                            $lc_mins = $att_detail->lc_minutes;
+                        }
+
+
+                        // For Calculating ot
+
+                        $ot_ar = CarbonInterval::minutes($att_detail->overtime)->cascade();
+                        $ot_hrs = (int) $ot_ar->totalHours;
+                        $ot_mins = $ot_ar->toArray()['minutes'];
+                        $current_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
+                        $total_ot = $total_ot + $att_detail->overtime;
 
                         if ($attendance_setting_details['lc_status'] == 1) {
                             array_push($temp_ar, $checkin_time, $checkout_time, $current_ot, $lc_mins, $att_detail->status);
@@ -2185,7 +2217,7 @@ class VmtAttendanceReportsService
     public function fetchConsolidateReportData($start_date, $end_date, $department_id, $client_id)
     {
         // $start_date = '2023-04-26';  // For testing
-        // $end_date = '2023-05-25';    // For testing 
+        // $end_date = '2023-05-25';    // For testing
 
         ini_set('max_execution_time', 3000);
         $validator = Validator::make(
@@ -2233,7 +2265,7 @@ class VmtAttendanceReportsService
                 $users =  $users->whereIn('vmt_employee_office_details.department_id', $department_id);
             }
             $users =   $users->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_office_details.designation', 'vmt_employee_details.doj']);
-            $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
+            $heading_dates = array("Employee Code", "Employee Name", "Designation", "DOJ");
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
             $reportresponse['rows'] = array();
             array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
@@ -2244,11 +2276,14 @@ class VmtAttendanceReportsService
                 array_push($heading_dates, 'Total EG');
             }
             array_push($heading_dates, "Total Payable Days");
-            $reportresponse['headings'] = $heading_dates;
+            $reportresponse['headers'] = $heading_dates;
             foreach ($users as $single_user) {
                 $current_date = Carbon::parse($start_date);
                 $temp_ar = array();
-                array_push($temp_ar, $single_user->user_code, $single_user->name, $single_user->designation, $single_user->doj);
+                $temp_ar['Employee Code'] = $single_user->user_code;
+                $temp_ar['Employee Name'] = $single_user->name;
+                $temp_ar['Designation'] = $single_user->designation;
+                $temp_ar['DOJ'] = $single_user->doj;
                 $total_weekoff = 0;
                 $total_holiday = 0;
                 $total_present = 0;
@@ -2284,26 +2319,33 @@ class VmtAttendanceReportsService
                     ->count();
                 $total_half_day = VmtEmpAttIntrTable::where('user_id', $single_user->id)
                     ->whereBetween('date', [$start_date, $end_date])->Where('status', 'like', '%HD%')->count();
-                  //  dd($total_half_day);
+                //  dd($total_half_day);
                 $total_on_duty = VmtEmpAttIntrTable::where('user_id', $single_user->id)
                     ->whereBetween('date', [$start_date, $end_date])->Where('status', 'like', '%OD%')->count();
-                array_push($temp_ar, $total_weekoff, $total_holiday,   $total_present, $total_absent, $total_late_lop,  $total_leave, $total_half_day, $total_on_duty);
+                $temp_ar['Total Weekoff'] = $total_weekoff;
+                $temp_ar['Total Holiday'] = $total_holiday;
+                $temp_ar['Total Present'] =  $total_present;
+                $temp_ar['Total Absent'] = $total_absent;
+                $temp_ar['Total Late LOP'] = $total_late_lop;
+                $temp_ar['Total Leave'] =  $total_leave;
+                $temp_ar['Total Halfday'] = $total_half_day;
+                $temp_ar['Total On Duty'] = $total_on_duty;
                 if ($attendance_setting_details['lc_status'] == 1) {
                     $total_LC  = VmtEmpAttIntrTable::where('user_id', $single_user->id)
                         ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', '%LC%')->count();
-                    array_push($temp_ar, $total_LC);
+                    $temp_ar['Total LC'] = $total_LC;
                 }
                 if ($attendance_setting_details['eg_status'] == 1) {
                     $total_EG = VmtEmpAttIntrTable::where('user_id', $single_user->id)
                         ->whereBetween('date', [$start_date, $end_date])->where('status', 'like', '%EG%')->count();
-                    array_push($temp_ar, $total_EG);
+                    $temp_ar['Total EG'] = $total_EG;
                 }
                 $total_payable_days = ($total_weekoff + $total_holiday + $total_present + $total_leave + $total_half_day + $total_on_duty) - $total_late_lop;
-                array_push($temp_ar, $total_payable_days);
+                $temp_ar['Total Payable Days'] = $total_payable_days;
                 array_push($reportresponse['rows'], $temp_ar);
                 unset($temp_ar);
             }
-          return $reportresponse;
+            return $reportresponse;
         } catch (\Exception $e) {
             $response = [
                 'status' => 'failure',

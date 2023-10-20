@@ -49,8 +49,8 @@
                 <template #body="slotProps">
                     <div v-if="slotProps.data.doc_id">
                     <div v-if="slotProps.data.status =='Rejected'">
-                     <input type="file" name="" id="file" hidden @change="uploadDocument($event)">
-                        <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="file"
+                     <input type="file" name="" id="files" hidden @change="uploadDocuments($event)">
+                        <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="files"
                                 class="cursor-pointer"><i class="pi pi-upload"></i> Upload
                                 file</label></button>
 
@@ -63,8 +63,8 @@
                     </div>
 
                     <div v-else>
-                        <input type="file" name="" id="file" hidden @change="uploadDocument($event)">
-                        <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="file"
+                        <input type="file" name="" id="files" hidden @change="uploadDocuments($event)">
+                        <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="files"
                                 class="cursor-pointer"><i class="pi pi-upload"></i> Upload
                                 file</label></button>
                     </div>
@@ -119,7 +119,7 @@ import { useToast } from "primevue/usetoast";
 import { UseEmployeeDocumentManagerService } from '../EmployeeDocumentsManagerService';
 import { profilePagesStore } from "../stores/ProfilePagesStore";
 
-const EmployeeDoc = ref([]) ;
+const EmployeeDoc = ref([]);
 
 onMounted(() => {
     EmployeeDocumentManagerService.fetch_EmployeeDocument();
@@ -158,8 +158,9 @@ const showDocument = (document) => {
     visible.value = true
     EmployeeDocumentManagerService.loading = true;
     axios.post('/view-profile-private-file', {
-        user_code: usedata.user_code,
-        document_name: document.document_name
+        user_id: usedata.getURLParams_UID(),
+        document_name: document.document_name,
+        record_id:document.id
     }).then(res => {
         documentPath.value = res.data.data
         console.log("data sent", documentPath.value);
@@ -190,7 +191,7 @@ const getFileName = (filename) => {
     fileName.value = filename
 }
 
-const uploadDocument = (e) => {
+const uploadDocuments = (e) => {
     console.log(fileName);
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
@@ -204,14 +205,13 @@ const uploadDocument = (e) => {
         console.log(formdata);
         // console.log("testing", fileName.value);
 
-        let val = Object.keys(formdata)[0]
+        let val = Object.keys(formdata)[0];
+        // submitEmployeeDocsUpload();
 
         // console.log();
     }
-};
 
-async function submitEmployeeDocsUpload() {
-
+    
     if ( errorstatus.value == "Failure" ) {
         Swal.fire({
                     title: errorstatus.value = "Failure",
@@ -263,6 +263,10 @@ async function submitEmployeeDocsUpload() {
                 EmployeeDocumentManagerService.loading = false ;
             });
     }
+};
+
+async function submitEmployeeDocsUpload() {
+
 }
 
 
@@ -273,7 +277,7 @@ async function submitEmployeeDocsUpload() {
 <style>
 .p-sidebar-right .p-sidebar
 {
-    width: 50% !important;
+    width: 50%;
     height: 100%;
 }
 </style>

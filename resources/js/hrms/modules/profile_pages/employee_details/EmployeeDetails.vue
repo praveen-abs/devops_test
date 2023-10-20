@@ -15,7 +15,7 @@
 
             <div class="grid grid-cols-12 gap-2 h-full py-2">
                 <div class="col-span-2">
-                    <p class="font-semibold text-xs text-gray-500">Birthday</p>
+                    <p class="font-semibold text-xs text-gray-500">Date of Birth</p>
                     <p class="font-semibold text-sm">
                         {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY')
                         }}
@@ -282,39 +282,41 @@
 
     <Sidebar v-model:visible="visible_dialog" position="right" class=" w-[500px]">
         <div class="" v-if="InformationType == 'General Information'">
-            <h1 class=" font-semibold absolute top-6">General Information</h1>
+            <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+                <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">General Information</h1>
+            </div>
 
             <div class=" p-2 ">
                 <div class="my-2">
-                    <label class=" mb-1">Birth Date<span class="text-danger">*</span>
+                    <label class=" mb-1  text-[12px]">Birth Date<span class="text-danger">*</span>
                     </label>
                     <Calendar class=" relative right-2 w-[100%] h-10 " v-model="dialog_general_information.dob"
                         placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                 </div>
-                <div class="my-2">
-                    <label>Gender<span class="text-danger">*</span></label>
+                <div class="my-2 ">
+                    <label class=" text-[12px]">Gender<span class="text-danger">*</span></label>
                     <Dropdown v-model="dialog_general_information.gender" :options="options_gender" optionLabel="name"
                         optionValue="value" placeholder="Choose Gender" class=" h-10  w-[100%]" />
                 </div>
                 <div class="my-2">
-                    <label>Marital status <span class="text-danger">*</span></label>
+                    <label class=" text-[12px]">Marital status <span class="text-danger">*</span></label>
                     <Dropdown v-model="dialog_general_information.marital_status_id" :options="option_maritals_status"
                         optionLabel="name" optionValue="id" placeholder="Select Marital Status" class="h-10 w-[100%]" />
                 </div>
                 <div class="my-2">
-                    <label>Blood Group<span class="text-danger">*</span></label>
+                    <label class=" text-[12px]">Blood Group<span class="text-danger">*</span></label>
                     <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
                         optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class=" w-[100%] h-10" />
 
                 </div>
                 <div class="my-2">
-                    <label class="my-1">Physically Handicapped</label>
+                    <label class="my-1  text-[12px]">Physically Handicapped</label>
                     <Dropdown v-model="dialog_general_information.physically_challenged" :options="options_phy_challenged"
                         optionLabel="name" optionValue="value" placeholder="Select" class="w-[100%] h-10" />
                 </div>
 
                 <div class=" flex justify-center ">
-                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[100px]"
+                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[180px]"
                         @click="saveGeneralInformationDetails()">Save</button>
 
                 </div>
@@ -324,33 +326,35 @@
         </div>
 
         <div v-if="InformationType == 'Contact Information'">
-            <h1 class="font-semibold absolute top-6">Contact Information</h1>
+            <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+                <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">Contact Information</h1>
+            </div>
 
             <div class="p-2">
                 <div class="my-2 ">
-                    <label class=" mb-1">Personal Email</label>
+                    <label class=" mb-1  text-[12px]">Personal Email</label>
                     <input type="email" name="present_email" class="form-control" v-model="dailog_contactinfo.email">
                 </div>
 
                 <div class="my-2">
-                    <label class="mb-1">Office Email</label>
+                    <label class="mb-1  text-[12px]">Office Email</label>
                     <input type="email" class="h-10 form-control" name="officical_mail"
                         v-model="dailog_contactinfo.official_email">
                 </div>
 
                 <div class="my-1">
-                    <label class=" mb-2">Mobile Number</label>
+                    <label class=" mb-2  text-[12px]">Mobile Number</label>
                     <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.mobile_number"
                         mask="9999999999" placeholder="999999999" />
                 </div>
                 <div class="my-2">
-                    <label class="mb-1">Official Mobile Number</label>
+                    <label class="mb-1  text-[12px]">Official Mobile Number</label>
                     <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.official_mobile_number"
                         mask="9999999999" placeholder="999999999" />
                 </div>
 
                 <div class=" flex justify-center ">
-                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[100px]"
+                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[200px]"
                         @click="save_contactinfoDetails">Save</button>
                 </div>
 
@@ -359,16 +363,18 @@
         </div>
 
         <div class="" v-if="InformationType == 'Address Information'">
-            <h1 class="font-semibold absolute top-6">Address</h1>
+            <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+                <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">Address</h1>
+            </div>
 
             <div class="col-md-12">
                 <div class="mb-3 form-group">
-                    <label>Current Address</label>
+                    <label class=" text-[12px]">Current Address</label>
                     <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
                         class="form-control" v-model="diolog_Addressinfo.current_address"></textarea>
                 </div>
                 <div class="mb-3 form-group">
-                    <label>Permanent Address </label>
+                    <label class=" text-[12px]">Permanent Address </label>
                     <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
                         class="form-control" v-model="diolog_Addressinfo.Permanent_Address"></textarea>
                 </div>
@@ -381,7 +387,7 @@
                 </div>
 
                 <div class=" flex justify-center ">
-                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[100px]"
+                    <button class=" bg-[#000] text-[#ffff] px-4 p-2 rounded-md mt-[200px]"
                     @click="saveAddressinfoDetails">Save</button>
                 </div>
 

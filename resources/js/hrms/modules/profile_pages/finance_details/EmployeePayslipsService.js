@@ -25,10 +25,12 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
     const loading = ref(false);
 
     function getURLParams_UID() {
-        if(route.params.user_code){
-            return route.params.user_code
+
+        console.log('route.params.id',route.params.user_id);
+        if(route.params.user_id){
+            return route.params.user_id
         }else{
-            return service.current_user_code
+            return service.current_user_id
         }
     }
 
@@ -38,7 +40,7 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
         loading.value = true;
 
         axios.post('/payroll/paycheck/getEmployeeAllPayslipList', {
-            user_code: getURLParams_UID()
+            uid: getURLParams_UID()
         }).then((response) => {
             //console.log("Response [getEmployeeAllPayslipList] : " + JSON.stringify(response.data.data));
 
@@ -51,6 +53,8 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
     async function getEmployeePayslipDetailsAsHTML(user_code, payroll_month) {
         loading.value = true;
+        console.log(user_code,"user_code ::");
+        console.log('getURLParams_UID()',getURLParams_UID());
 
         //split the payroll_month into month and year
         Payroll_month.value = payroll_month;
@@ -59,7 +63,7 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
         // /payroll/paycheck/getEmployeePayslipDetailsAsHTML
         await axios.post('/empViewPayslipdetails', {
             uid: getURLParams_UID(),
-            user_code: user_code,
+            user_code:user_code,
             month: month,
             year: year,
         }).then((response) => {

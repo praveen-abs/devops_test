@@ -150,9 +150,10 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
     //Attendance
     Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
-    Route::get('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData'])->name('getAttendanceDashboardData');
+    Route::post('/get-attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceDashboardData_v2'])->name('getAttendanceDashboardData');
     Route::get('/attendance-leave', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePage'])->name('attendance-leave');
     // Route::get('/upcoming-employee-leaves', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeUpcomingAppliedRequested'])->name('getEmployeeUpcomingAppliedRequested');
+    
 
     Route::get('/attendance-leavesettings', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveSettings'])->name('attendance-leavesettings');
     Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
@@ -257,8 +258,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     //Att Regularize
     Route::get('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showRegularizationApprovalPage'])->name('attendance-regularization-approvals');
     Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAttendanceRegularization'])->name('process-attendance-regularization-approvals');
-    Route::get('/fetch-att-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAttendanceRegularizationData'])->name('fetch-regularization-approvals');
-    Route::get('/fetch-absent-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAbsentRegularizationData'])->name('fetch-absent-regularization-approvals');
+    Route::post('/fetch-att-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAttendanceRegularizationData'])->name('fetch-regularization-approvals');
+    Route::post('/fetch-absent-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAbsentRegularizationData'])->name('fetch-absent-regularization-approvals');
     Route::get('/fetch-onboarded-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsAsGroups'])->name('fetch-onboarded-doc');
 
     //Update User Details
@@ -300,8 +301,6 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     //save profile page documents
     Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
     //save profile page documents
-    Route::post('/profile-page/saveEmployeeDocument', [App\Http\Controllers\VmtProfilePagesController::class, 'saveEmployeeDocument'])->name('saveEmployeeDocument');
-
 
 
     Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('pages-profile');
@@ -829,7 +828,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     ///for current year
 
     Route::get('get-department', [App\Http\Controllers\VmtReportsController::class, 'department'])->name('department');
-    Route::get('/reports', [App\Http\Controllers\VmtReportsController::class, 'showReportsPage'])->name('showReportsPage');
+    // Route::get('/reports', [App\Http\Controllers\VmtReportsController::class, 'showReportsPage'])->name('showReportsPage');
 
     Route::post('/get-filter-months-for-reports', [App\Http\Controllers\VmtReportsController::class, 'getCurrentFinancialYear'])->name('getCurrentFinancialYear');
     //filter client
@@ -863,7 +862,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/reports-half-dayabsent-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showHalfdayAbsentReport'])->name('showHalfdayAbsentReport');
 
     Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
-    Route::post('/fetch-detailed-attendance-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchDetailedAttendancedata'])->name('fetchDetailedAttendancedata');
+    Route::get('/fetch-detailed-attendance-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchDetailedAttendancedata'])->name('fetchDetailedAttendancedata');
     Route::post('/fetch-overtime-report-data', [\App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchOvertimeReportData']);
     Route::post('/fetch-EG-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchEGReportData']);
     Route::post('/fetch-absent-report-data', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAbsentReportData']);
@@ -1001,8 +1000,8 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
 
 
     //Profile Pages v3
-    Route::get('/profile-page', [App\Http\Controllers\VmtProfilePagesController::class, 'showProfilePage_v3'])->name('profile-page-v3');
-    Route::get('/profile-pages-getEmpDetails', [App\Http\Controllers\VmtProfilePagesController::class, 'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
+    // Route::get('/profile-page', [App\Http\Controllers\VmtProfilePagesController::class, 'showProfilePage_v3'])->name('profile-page-v3');
+    Route::get('/profile-pages-getEmpDetails/{user_id}', [App\Http\Controllers\VmtProfilePagesController::class, 'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
 
 
     //Investments
@@ -1109,7 +1108,7 @@ Route::middleware(['auth', 'EnsureDefaultPasswordUpdated'])->group(function () {
     Route::get('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
     Route::get('/get-hrmaindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getHrMainDashboardData']);
     Route::get('/get-employees_count-detail', [App\Http\Controllers\VmtMainDashboardController::class, 'getEmployeesCountDetails']);
-    Route::get('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
+    Route::post('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
     Route::post('/readNotification', [App\Http\Controllers\VmtMainDashboardController::class, 'readNotification']);
     Route::post('/performAttendanceCheckIn', [App\Http\Controllers\VmtMainDashboardController::class, 'performAttendanceCheckIn']);
     Route::get('/fetchEmpLastAttendanceStatus', [App\Http\Controllers\VmtMainDashboardController::class, 'fetchEmpLastAttendanceStatus']);

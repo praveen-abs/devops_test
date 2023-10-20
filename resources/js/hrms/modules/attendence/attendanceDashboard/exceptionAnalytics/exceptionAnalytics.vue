@@ -40,7 +40,11 @@ onMounted(() => {
         console.log(useDashboard.overallEmployeeCountForExceptionAnalyticsForGraph);
         chartData.value.datasets[0].data = useDashboard.overallEmployeeCountForExceptionAnalyticsForGraph
         // updateChartLabels()
+<<<<<<< HEAD
     }, 10000);
+=======
+    }, 15000);
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
 
 });
 

@@ -1091,11 +1091,11 @@ class VmtAttendanceController extends Controller
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
             //  dd(auth()->user()->user_code);
-            $response = $attendanceService->fetchAttendanceRegularizationData(null, null, auth()->user()->user_code);
+            $response = $attendanceService->fetchAttendanceRegularizationData($request->month,$request->year , auth()->user()->user_code);
         } else {
 
             //Fetch all data
-            $response = $attendanceService->fetchAttendanceRegularizationData(null, null, null);
+            $response = $attendanceService->fetchAttendanceRegularizationData($request->month,$request->year, null);
         }
 
         return $response;
@@ -1115,11 +1115,11 @@ class VmtAttendanceController extends Controller
 
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //fetch team level data
-            $response = $attendanceService->fetchAbsentRegularizationData(null, null, auth()->user()->user_code);
+            $response = $attendanceService->fetchAbsentRegularizationData($request->month,$request->year , auth()->user()->user_code);
         } else {
 
             //Fetch all data
-            $response = $attendanceService->fetchAbsentRegularizationData(null, null, null);
+            $response = $attendanceService->fetchAbsentRegularizationData($request->month,$request->year , null);
         }
 
         return $response;
@@ -1218,6 +1218,8 @@ class VmtAttendanceController extends Controller
                         user_type: "Admin",
                         serviceVmtNotificationsService: $serviceVmtNotificationsService
                     );
+                }else{
+                    return $response;
                 }
             }
 
@@ -1256,6 +1258,8 @@ class VmtAttendanceController extends Controller
 
             if (!empty($is_admin)) {
 
+
+
                 $response = $serviceVmtAttendanceService->applyRequestAbsentRegularization(
                     user_code: $request->user_code,
                     attendance_date: $request->attendance_date,
@@ -1281,6 +1285,8 @@ class VmtAttendanceController extends Controller
                         status_text: "---",
                         user_type: "Admin",
                     );
+                }else{
+                    return $response;
                 }
             }
 
@@ -1589,14 +1595,19 @@ class VmtAttendanceController extends Controller
         return $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
     }
 
-    public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    // public function getAttendanceDashboardData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    // {
+
+    //     return  $serviceVmtAttendanceService->getAttendanceDashboardData($request->department_id);
+    // }
+    public function getAttendanceDashboardData_v2(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        return  $serviceVmtAttendanceService->getAttendanceDashboardData($department_id=null);
+        return  $serviceVmtAttendanceService->getAttendanceDashboardData_v2($request->department_id);
     }
-    // public function getEmployeeAnalyticsExceptionData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    // public function getWorkShiftDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     // {
-    //     return  $serviceVmtAttendanceService->getEmployeeAnalyticsExceptionData();
+    //     return  $serviceVmtAttendanceService->getWorkShiftDetails();
     // }
 
     public function checkEmployeeLcPermission(Request $request,VmtAttendanceService $serviceVmtAttendanceService)

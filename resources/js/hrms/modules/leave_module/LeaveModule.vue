@@ -4,7 +4,7 @@
     <div>
         <div v-if="service.current_user_role == 5">
             <p class="font-semibold text-2xl text-[#000] font-['Poppins]">Leave</p>
-            <p class="font-semibold text-sm">Here you can apply Leave,<a ><span class="underline cursor-pointer hover:text-indigo-500"> Company's Leave Policy</span></a>.</p>
+            <!-- <p class="font-semibold text-sm">Here you can apply Leave,<a ><span class="underline cursor-pointer hover:text-indigo-500"> Company's Leave Policy</span></a>.</p> -->
         </div>
         <div class="flex justify-between" v-else>
             <ul class=" divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
@@ -42,12 +42,12 @@
                     </div> -->
 
                 </div>
-                <a href="/attendance-leave-policydocument" id=""
+                <!-- <a href="/attendance-leave-policydocument" id=""
                     class="text-[14px] text-blue-500 !underline font-semibold"
                     role="button" aria-expanded="false">
                     Leave
                     Policy Explanation
-                </a>
+                </a> -->
             </div>
 
         </div>

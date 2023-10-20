@@ -145,7 +145,9 @@
     </div>
 
     <Sidebar v-model:visible="DialogFamilyinfovisible" position="right" class=" relative w-[500px] ">
-        <h5 class=" absolute top-6 font-semibold">Family Information</h5>
+        <div class=" bg-[#759CB2] !w-[100%] h-[60px] absolute top-0 left-0 ">
+            <h1 class=" m-4  text-[#ffff] font-['poppins] font-semibold ">Family Information</h1>
+        </div>
         <div class=" p-2 ">
             <div class="my-2">
                 <span>Name <span class="text-danger">*</span></span>

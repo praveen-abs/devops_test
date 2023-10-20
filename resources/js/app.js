@@ -108,10 +108,8 @@ import router from "./hrms/modules/Organization/router/router";
 import Chart from 'primevue/chart';
 
 
-
-import second from './testings/second.vue'
-import QUickOnboarding from './hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
-const app = createApp(second);
+import Home from './hrms/modules/Home/Home.vue'
+const app = createApp(Home);
 const pinia=createPinia()
 
 

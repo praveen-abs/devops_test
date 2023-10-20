@@ -105,9 +105,9 @@
             <span>Are you sure you want to send Mail ?</span>
         </div>
 
-        <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
+        <div class="float-right my-3">
 
-            <Button class="py-2 mr-3 btn-primary" label="Yes" icon="pi pi-check" @click="sendMail(selectedUserCode)"
+            <Button class="py-2 btn-primary" label="Yes" icon="pi pi-check" @click="sendMail(selectedUserCode)"
                 autofocus />
 
             <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="py-2 p-button-text"
@@ -451,7 +451,7 @@ function saveusercode(selected_user_code){
 
 
 function showdownloadPayslipConfirmationDialog() {
- 
+
     show_downloadPayslip_dialogconfirmation.value = true;
 }
 

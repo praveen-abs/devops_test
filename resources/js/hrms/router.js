@@ -34,7 +34,7 @@ const routes = [
 
             },
             {
-                path: '/attendance-dashboard',
+                path: 'Attendance/attendance-dashboard',
                 name: 'attendance-dashboard',
                 component: () => import('../hrms/modules/attendence/attendanceDashboard/attendanceDashboard.vue'),
             },
@@ -72,6 +72,16 @@ const routes = [
                 path: '/Organization/quick-onboarding',
                 name: 'quick-onboarding',
                 component: () => import('../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'),
+            },
+            {
+                path: '/Organization/import',
+                name: 'import-onboarding',
+                component: () => import('../hrms/modules/Organization/QuickOnboarding/ImportQuickOnboarding.vue'),
+            },
+            {
+                path: '/Organization/employee-hierarchy',
+                name: 'employee-hierarchy',
+                component: () => import('../hrms/components/PageNotFound.vue'),
             },
             {
                 path: '/Organization/manage-welcome-mails',
@@ -119,6 +129,11 @@ const routes = [
                 component: () => import('../hrms/modules/paycheck/salary_details/salary_details.vue'),
             },
             {
+                path: '/Paycheck/form16_details',
+                name: 'Paycheck-form16_details',
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+            {
                 path: '/Paycheck/Investments',
                 name: 'Paycheck-Investments',
                 component: () => import('../hrms/modules/paycheck/investments/investment.vue'),
@@ -134,6 +149,13 @@ const routes = [
                 component: () => import('../hrms/modules/salary_loan_setting/salary_advance_excel_import/salary_advance_excel_import.vue'),
             },
 
+            // Performance
+            {
+                path: '/Performance',
+                name: 'Performance',
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+
             // payroll
             {
                 path: '/Payroll/Manage-Payslips',
@@ -141,9 +163,24 @@ const routes = [
                 component: () => import('../hrms/modules/manage_payslips/ManagePayslips.vue'),
             },
             {
+                path: '/Payroll/payroll-analytics',
+                name: 'payroll-analytics',
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+            {
                 path: '/Payroll/PayRun',
                 name: 'Payroll-Pay-Run',
-                component: () => import('../hrms/modules/payroll/payRun/payRun.vue'),
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+            {
+                path: '/Payroll/payroll-claims',
+                name: 'Payroll-claims',
+                component: () => import('../hrms/components/PageNotFound.vue'),
+            },
+            {
+                path: 'Payroll/reports-payroll',
+                name: 'Payroll-reports-payroll',
+                component: () => import('../hrms/components/PageNotFound.vue'),
             },
 
             // Reports
@@ -199,10 +236,12 @@ const routes = [
 
 
 
+
+
             {
                 path: '/testing',
                 name: 'testing',
-                component: () => import('../testings/api.vue'),
+                component: () => import('../hrms/modules/manage_payslips/managePayslipv2/managePayslipV2.vue'),
             },
             // Other routes go here
         ],

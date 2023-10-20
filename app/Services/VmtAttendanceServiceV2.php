@@ -140,10 +140,9 @@ class VmtAttendanceServiceV2
 
     public function attendanceJobs($start_date, $end_date)
     {
+        $a='9';
+        $a=(int)$a;
         ini_set('max_execution_time', 3000);
-        $user = user::get();
-        // $start_date = '2023-07-26';
-        // $end_date = '2023-08-26';
         $current_date = Carbon::parse($start_date);
         try {
             while ($current_date->between(Carbon::parse($start_date), Carbon::parse($end_date))) {
@@ -237,30 +236,37 @@ class VmtAttendanceServiceV2
 
 
                         // attendance details from vmt_employee_attenndance table
-                        $web_attendance = VmtEmployeeAttendance::whereDate('date',  $current_date_str)
+                        // $web_attendance = VmtEmployeeAttendance::whereDate('date',  $current_date_str)
+                        //     ->where('user_id', $single_user->id)->first();
+                        $web_attendance_checkin = VmtEmployeeAttendance::whereDate('date',  $current_date_str)
+                            ->where('user_id', $single_user->id)->first();
+                        $web_attendance_checkout = VmtEmployeeAttendance::whereDate('checkout_date',  $current_date_str)
                             ->where('user_id', $single_user->id)->first();
                         $all_att_data = collect();
                         $web_checkin_time = null;
                         $web_checkout_time = null;
-                        if (!empty($web_attendance)) {
-                            if ($web_attendance->checkout_date == null) {
-                                $web_attendance->checkout_date =  $current_date_str;
+                        if (!empty($web_attendance_checkin)) {
+
+                            if ($web_attendance_checkin->checkin_time != null) {
+                                $web_checkin_time =  $web_attendance_checkin->date . ' ' .  $web_attendance_checkin->checkin_time;
                             }
-                            if ($web_attendance->checkin_time != null) {
-                                $web_checkin_time = $web_attendance->date . ' ' . $web_attendance->checkin_time;
+                        }
+                        if (!empty($web_attendance_checkout)) {
+                            if ($web_attendance_checkout->checkout_date == null) {
+                                $web_attendance_checkout->checkout_date =  $current_date_str;
                             }
-                            if ($web_attendance->checkout_time != null) {
-                                $web_checkout_time = $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time;
+                            if ($web_attendance_checkout->checkout_time != null) {
+                                $web_checkout_time = $web_attendance_checkout->checkout_date . ' ' . $web_attendance_checkout->checkout_time;
                             }
                         }
                         // if($single_user->id==266 && $current_date->format('Y-m-d')=='2023-10-13')
                         // dd();
                         if ($web_checkin_time != null) {
-                            $all_att_data->push(['date' => $web_attendance->date . ' ' . $web_attendance->checkin_time, 'attendance_mode' => $web_attendance->attendance_mode_checkin]);
+                            $all_att_data->push(['date' => $web_attendance_checkin->date . ' ' . $web_attendance_checkin->checkin_time, 'attendance_mode' => $web_attendance_checkin->attendance_mode_checkin]);
                         }
 
                         if ($web_checkout_time != null) {
-                            $all_att_data->push(['date' => $web_attendance->checkout_date . ' ' . $web_attendance->checkout_time, 'attendance_mode' => $web_attendance->attendance_mode_checkout]);
+                            $all_att_data->push(['date' => $web_attendance_checkout->checkout_date . ' ' . $web_attendance_checkout->checkout_time, 'attendance_mode' => $web_attendance_checkout->attendance_mode_checkout]);
                         }
 
                         if ($deviceCheckOutTime != null) {
@@ -294,8 +300,10 @@ class VmtAttendanceServiceV2
                             $attendance_mode_checkout =    $checkout_time_ar['attendance_mode'];
                         }
 
+
+
                         $shift_settings =  $this->getShiftTimeForEmployee($single_user->id, $checking_time, $checkout_time);
-                        $shiftStartTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_start_time);
+                        $shiftStartTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_start_time)->addMinutes($shift_settings->grace_time);
                         $shiftEndTime  = Carbon::parse($current_date_str . ' ' . $shift_settings->shift_end_time);
                         if ($checking_time != null &&  $checkout_time != null &&  $checkout_time ==  $checking_time) {
                             $attendance_time = $this->findMIPOrMOP($checking_time, $shiftStartTime, $shiftEndTime);
@@ -303,6 +311,7 @@ class VmtAttendanceServiceV2
                             $checking_time  = $attendance_time['checkin_time'];
                             $checkout_time = $attendance_time['checkout_time'];
                         }
+
                         $week_off =   $shift_settings->week_off_days;
                         $week_off_sts = $this->checkWeekOffStatus($current_date, $week_off, $checking_time, $checkout_time);
 
@@ -316,10 +325,11 @@ class VmtAttendanceServiceV2
                                 $is_holiday = true;
                             }
                         }
-
+                      $current_att_date =carbon::now()->format('Y-m-d');
+                      $current_time = carbon::now()->format('H:i:s');
                         //Code For Check LC And MOP
                         if ($checking_time != null) {
-                            if ($checkout_time == null) {
+                            if ($checkout_time == null && $current_att_date != $current_date  ? $current_time < $shiftEndTime :$current_time >= $shiftEndTime ) {
 
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'MOP');
                                 $mop_id = $regularization_status['id'];
@@ -553,7 +563,6 @@ class VmtAttendanceServiceV2
                         $attendance_table->mip_id = $mip_id;
                         $attendance_table->mop_id = $mop_id;
                         $attendance_table->save();
-
                         // $employee_attendance
                     } else {
                         //employee exit, or they are not in organization

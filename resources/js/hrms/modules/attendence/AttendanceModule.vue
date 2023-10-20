@@ -24,14 +24,22 @@
                                                 Timesheet</a>
                                         </li>
                                         <li class=" nav-item ember-view" role="presentation" @click="useTimesheet.currentlySelectedTimesheet = 2"
+<<<<<<< HEAD
                                             v-if="service.current_user_role == 2 || service.current_user_role == 4">
+=======
+                                            v-if="service.current_user_role == 1 || service.current_user_role == 2 || service.current_user_role == 3 || service.current_user_role == 4">
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#team" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
                                                 Team Timesheet</a>
                                         </li>
                                         <li class=" nav-item ember-view" role="presentation" @click="useTimesheet.currentlySelectedTimesheet = 3"
+<<<<<<< HEAD
                                             v-if="service.current_user_role == 2">
+=======
+                                            v-if="service.current_user_role == 1 ||service.current_user_role == 2 || service.current_user_role == 3">
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#org" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
@@ -311,4 +319,13 @@ const emp = ref([
 {
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
+<<<<<<< HEAD
+=======
+
+.p-sidebar-right .p-sidebar
+{
+    width: 28rem !important;
+    height: 100%;
+}
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
 </style>

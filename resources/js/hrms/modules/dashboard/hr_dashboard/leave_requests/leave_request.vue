@@ -31,13 +31,13 @@ const useDashboard = useMainDashboardStore()
 
 const findRedirectPath = (value) =>{
     if(value == "Leave Requests"){
-         return 'attendance-leave-approvals'
+         return 'Approvals/leave'
     }else
     if(value == "Document Approvals"){
-          return 'approvals-documents'
+          return 'Approvals/Onboarding-documents'
     }else
     if(value == "Attendance Regularization"){
-      return 'attendance-regularization-approvals'
+      return 'Approvals/Attendance-regularization'
     }else{
 
     }

@@ -28,12 +28,42 @@ export const profilePagesStore = defineStore("employeeService", () => {
 
     const user_id = ref();
 
-    const service = Service()
+    const service = Service();
+    
+    function getURLParams_UID() {
+
+        if(route.params.user_code){
+            return route.params.user_code
+        }else{
+            return service.current_user_id
+        }
+    }
 
     const getProfilePhoto = () => {
+        console.log(route.params.user_code);
+        if(route.params.user_code && user_id.value ){
+            console.log(" admin and view user id ::");
+            
         axios
+        .post("/profile-pages/getProfilePicture", {
+            user_id:user_id.value,
+            admin_user_id:service.current_user_id
+        })
+        .then((res) => {
+            console.log("profile :?", res.data.data);
+            profile.value = res.data.data;
+            profile_img.value = res.data.data;
+        })
+        .finally(() => {
+        });
+
+        }
+        else{
+            console.log(" admin ");
+            axios
             .post("/profile-pages/getProfilePicture", {
-                user_code: service.current_user_code
+                user_id:"",
+                admin_user_id:service.current_user_id
             })
             .then((res) => {
                 console.log("profile :?", res.data.data);
@@ -41,19 +71,33 @@ export const profilePagesStore = defineStore("employeeService", () => {
                 profile_img.value = res.data.data;
             })
             .finally(() => {
-                console.log("profile Pic Fetched" ,profile_img.value);
-                // fetchEmployeeDetails();
             });
+
+        }
+
     };
 
+<<<<<<< HEAD
     async function fetchEmployeeDetails() {
 
         let User_code = user_code.value;
 
         if(User_code){
             User_code = user_code.value;
+=======
+    async function fetchEmployeeDetails(userId) {
+        
+        let User_code = user_id.value;
+        if(userId){
+            User_code = userId;
+            user_id.value = userId;
+        }
+        else if(User_code){
+            User_code = user_id.value;
+>>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
         }else{
             User_code = service.current_user_id;
+            user_id.value = service.current_user_id;
         }
 
         console.log(" user code : : " , user_code.value ,User_code );
@@ -82,7 +126,8 @@ export const profilePagesStore = defineStore("employeeService", () => {
         getProfilePhoto,
         profile,
         profile_img,
-        user_id
+        user_id,
+        getURLParams_UID
 
     };
 });

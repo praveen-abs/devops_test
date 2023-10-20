@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Services\VmtAppPermissionsService;
 use App\Services\VmtEmployeeService;
 use App\Services\VmtCoreService;
+use App\Services\VmtHolidayService;
 
 class HRMSBaseAPIController extends Controller
 {
@@ -208,6 +209,10 @@ class HRMSBaseAPIController extends Controller
 
     public function getOrgTimePeriod(Request $request, VmtCoreService $serviceVmtCoreService){
         return $serviceVmtCoreService->getOrgTimePeriod();
+    }
+
+    public function getAllHolidays(Request $request, VmtHolidayService $serviceVmtHolidayService){
+        return $serviceVmtHolidayService->getAllHolidays();
     }
 
 }

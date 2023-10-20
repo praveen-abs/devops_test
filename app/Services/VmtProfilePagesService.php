@@ -39,7 +39,7 @@ class VmtProfilePagesService
         Store employee profile pic in 'storage\employees\PLIPL068\profile_pic'
         Add entry in Users table
     */
-    public function updateProfilePicture($user_code, $file_object)
+    public function updateProfilePicture($user_id, $file_object)
     {
 
         // dd($user_code,$file_object);
@@ -47,11 +47,11 @@ class VmtProfilePagesService
         //Validate
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_code,
+                'user_id' => $user_id,
                 'file_object' => $file_object
             ],
             $rules = [
-                'user_code' => 'required|exists:users,user_code',
+                'user_id' => 'required|exists:users,id',
                 'file_object' => 'required'
             ],
             $messages = [
@@ -71,7 +71,7 @@ class VmtProfilePagesService
 
 
         try {
-
+            $user_code =User::where('id',$user_id)->first()->user_code;
             //Create file name
             $date = date('d-m-Y_H-i-s');
             $file_name =  'pic_' . $user_code . '_' . $date . '.' . $file_object->extension();
@@ -97,20 +97,20 @@ class VmtProfilePagesService
             return response()->json([
                 "status" => "failure",
                 "message" => "Failed to save profile picture",
-                "data" => $e,
+                "data" => $e->getmessage(),
             ]);
         }
     }
 
-    public function getProfilePicture($user_code)
+    public function getProfilePicture($user_id)
     {
         //Validate
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_code,
+                'user_id' => $user_id,
             ],
             $rules = [
-                'user_code' => 'required|exists:users,user_code',
+                'user_id' => 'required|exists:users,id',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -128,8 +128,10 @@ class VmtProfilePagesService
 
         try {
 
+           
+            $user_code =User::where('id',$user_id)->first()->user_code;
             //Get the user record and update avatar column
-            $avatar_filename = User::where('user_code', $user_code)->first()->avatar;
+            $avatar_filename = User::where('id', $user_id)->first()->avatar;
 
             //Get the image from PRIVATE disk and send as BASE64
             $response = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar_filename);
@@ -157,7 +159,86 @@ class VmtProfilePagesService
             return response()->json([
                 "status" => "failure",
                 "message" => "Unable to fetch profile picture",
-                "data" => $e,
+                "data" =>$e->getmessage(),
+            ]);
+        }
+    }
+    public function getEmployeeProfilePicture($user_id,$admin_user_id)
+    {
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_id' => $user_id,
+                'admin_user_id' => $admin_user_id,
+            ],
+            $rules = [
+                'user_id' => 'required|exists:users,id',
+                'admin_user_id' => 'required|exists:users,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+            $response =array();
+            if(!empty($admin_user_id)){
+                $user_code =User::where('id',$admin_user_id)->first()->user_code;
+                //Get the user record and update avatar column
+                $avatar_filename = User::where('id', $user_id)->first()->avatar;
+    
+                //Get the image from PRIVATE disk and send as BASE64
+                $admin_profile = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar_filename);
+    
+    
+                if ($admin_profile) {
+                    $response['admin_profile'] = base64_encode($admin_profile);
+                }
+
+            }else{
+                $response['admin_profile'] = "";
+
+            }
+            $user_code =User::where('id',$user_id)->first()->user_code;
+            //Get the user record and update avatar column
+            $avatar_filename = User::where('id', $user_id)->first()->avatar;
+
+            //Get the image from PRIVATE disk and send as BASE64
+            $employee_profile = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar_filename);
+
+
+            if ($employee_profile) {
+                $response['employee_profile'] = base64_encode($employee_profile);
+            } else // If no file found, then send this
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => "Profile picture doesnt exist for the given user"
+                ]);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Profile picture fetched successfully",
+                "data" => $response,
+            ]);
+        } catch (\Exception $e) {
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch profile picture",
+                "data" =>$e->getmessage(),
             ]);
         }
     }
@@ -348,15 +429,16 @@ class VmtProfilePagesService
 
             return $response;
     }
-    public function getEmployeePrivateDocumentFile($user_code, $doc_name, $emp_doc_record_id = null)
+    public function getEmployeePrivateDocumentFile($user_id, $doc_name, $emp_doc_record_id = null)
     {
         // dd($user_code);
 
         try {
-
+            $user_id =$user_id;
+            $user_code="";
             if (empty($emp_doc_record_id)) {
-                $user_id = User::where('user_code', $user_code)->first()->id;
-
+                $user_data = User::where('id', $user_id)->first();
+                    $user_code=$user_data->user_code; 
                 $doc_id = VmtDocuments::where('document_name', $doc_name)->first()->id;
 
                 $doc_filename = VmtEmployeeDocuments::where('user_id', $user_id)->where('doc_id', $doc_id)->first()->doc_url;
@@ -392,7 +474,7 @@ class VmtProfilePagesService
             return response()->json([
                 "status" => "failure",
                 "message" => "Unable to fetch profile picture",
-                "data" => $e,
+                "data" => $e->getmessage(),
             ]);
         }
         return response()->file(storage_path('employees/' . $private_file));

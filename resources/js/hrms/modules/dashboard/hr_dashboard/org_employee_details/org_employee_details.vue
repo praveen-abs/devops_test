@@ -7,41 +7,41 @@
         </p>
         <div class="grid grid-cols-4 gap-3 my-2">
             <div class=" bg-[#F6F6F6] rounded-lg p-2 transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100 cursor-pointer" @click="useDashboard.canShowSidebar = true,useDashboard.ShowEmployeeStatuswise = {...useDashboard.orgEmployeeDetailCount.total_employees},useDashboard.reportName = `total_employee_reports_${new Date()}`">
-                <div class="px-auto flex justify-center">
-                    <span class=" text-3xl font-semibold text-center">
+                <div class="flex justify-center px-auto">
+                    <span class="text-3xl font-semibold text-center ">
                         {{ useDashboard.orgEmployeeDetailCount.total_employee_count ? useDashboard.orgEmployeeDetailCount.total_employee_count : 0 }}
                     </span>
                 </div>
-                <p class=" text-lg font-semibold text-center text-gray-500">Active Employees</p>
+                <p class="text-lg font-semibold text-center text-gray-500 ">Active Employees</p>
             </div>
             <div class=" bg-[#F6F6F6] rounded-lg p-2 transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100 cursor-pointer "  @click="useDashboard.canShowSidebar = true,useDashboard.ShowEmployeeStatuswise = {...useDashboard.orgEmployeeDetailCount.new_employees},useDashboard.reportName = `new_employee_reports_${new Date()}`">
-                <div class="px-auto flex justify-center">
-                    <span class=" text-3xl font-semibold text-center">
+                <div class="flex justify-center px-auto">
+                    <span class="text-3xl font-semibold text-center ">
                         {{ useDashboard.orgEmployeeDetailCount.new_employee_count ? useDashboard.orgEmployeeDetailCount.new_employee_count : 0 }}
                     </span>
                 </div>
-                <p class=" text-lg font-semibold text-center text-gray-500">New Employees</p>
+                <p class="text-lg font-semibold text-center text-gray-500 ">New Employees</p>
             </div>
             <div class=" bg-[#F6F6F6] rounded-lg p-2 transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100 cursor-pointer"  @click="useDashboard.canShowSidebar = true,useDashboard.ShowEmployeeStatuswise = {...useDashboard.orgEmployeeDetailCount.exit_employees},useDashboard.reportName =`active_employee_reports_${new Date()}`">
-                <div class="px-auto flex justify-center">
-                    <span class=" text-3xl font-semibold text-center">
+                <div class="flex justify-center px-auto">
+                    <span class="text-3xl font-semibold text-center ">
                         {{ useDashboard.orgEmployeeDetailCount.exit_employee_count ? useDashboard.orgEmployeeDetailCount.exit_employee_count : 0 }}
                     </span>
                 </div>
-                <p class=" text-lg font-semibold text-center text-gray-500">Exit Employees</p>
+                <p class="text-lg font-semibold text-center text-gray-500 ">Exit Employees</p>
             </div>
             <div class=" bg-[#F6F6F6] rounded-lg p-2 transition duration-700 ease-in-out hover:-translate-y-1 hover:scale-100 cursor-pointer"  @click="useDashboard.canShowSidebar = true,useDashboard.ShowEmployeeStatuswise = {...useDashboard.orgEmployeeDetailCount.yet_to_active_employees},useDashboard.reportName = `yet_to_active_employee_reports_${new Date()}`">
-                <div class="px-auto flex justify-center">
-                    <span class=" text-3xl font-semibold text-center">
+                <div class="flex justify-center px-auto">
+                    <span class="text-3xl font-semibold text-center ">
                         {{ useDashboard.orgEmployeeDetailCount.yet_to_active_employee_count ? useDashboard.orgEmployeeDetailCount.yet_to_active_employee_count : 0 }}
                     </span>
                 </div>
-                <p class=" text-lg font-semibold text-center text-gray-500">Yet to Active Employees </p>
+                <p class="text-lg font-semibold text-center text-gray-500 ">Yet to Active Employees </p>
             </div>
         </div>
     </div>
 
-    <Sidebar v-model:visible="useDashboard.canShowSidebar" position="right" class="w-full">
+    <Sidebar v-model:visible="useDashboard.canShowSidebar" position="right"  :style="{ width: '70vw !important' }">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 "> Reports</p>
             <div class="relative right-0 mx-4 font-semibold fs-5 ">
@@ -64,10 +64,10 @@
         </template>
         <!-- {{ useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : [] }} -->
         <div class="" v-if="Object.values(useDashboard.ShowEmployeeStatuswise).length >= 1">
-            <DataTable scrollable scrollHeight="450px"
+            <DataTable scrollable scrollHeight="h-[500px]"
                 :value="useDashboard.ShowEmployeeStatuswise ? useDashboard.ShowEmployeeStatuswise : []">
-                <Column field="Employee Code" header="Employee Code"></Column>
-                <Column field="Employee Name" header="Employee Name"
+                <Column field="Employee_Code" header="Employee Code"></Column>
+                <Column field="Employee_Name" header="Employee Name"
                     style="text-align: left !important;white-space: no !important;"></Column>
                 <Column field="Department" header="Department"
                     style="text-align: left !important;white-space: no !important;"></Column>
@@ -177,13 +177,7 @@ const toggleClass = ref('downloaded');
 
 </script>
 
-<style>
-.p-sidebar-right .p-sidebar
-{
-    width: 70% !important;
-    height: 100%;
-}
-</style>
+
 
 <style lang="sass" scoped>
 #btn-download

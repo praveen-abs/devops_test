@@ -58,7 +58,7 @@
                                     <Column field="opening_balance" header="Opening Balance">
 
                                     </Column>
-                                    <Column field="availed" header="availed">
+                                    <Column field="availed" header="Availed">
 
                                     </Column>
 
