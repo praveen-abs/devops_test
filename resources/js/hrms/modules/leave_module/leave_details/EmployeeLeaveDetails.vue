@@ -210,7 +210,7 @@
 
     <Sidebar v-model:visible="leaveModuleStore.canShowLeaveDetails" position="right" :style="{ width: '30vw !important' }">
         <template #header>
-            <div class=" bg-[#F9BE00] w-[500px] h-[60px] absolute top-0 left-0 ">
+            <div class=" bg-[#F9BE00] w-[100%] h-[60px] absolute top-0 left-0 ">
                 <h1 class=" m-4 text-[#ffff] font-['poppins] font-semibold">Leave Request Details</h1>
             </div>
         </template>

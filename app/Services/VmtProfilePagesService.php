@@ -127,6 +127,8 @@ class VmtProfilePagesService
         }
 
         try {
+
+           
             $user_code =User::where('id',$user_id)->first()->user_code;
             //Get the user record and update avatar column
             $avatar_filename = User::where('id', $user_id)->first()->avatar;
@@ -137,6 +139,85 @@ class VmtProfilePagesService
 
             if ($response) {
                 $response = base64_encode($response);
+            } else // If no file found, then send this
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => "Profile picture doesnt exist for the given user"
+                ]);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Profile picture fetched successfully",
+                "data" => $response,
+            ]);
+        } catch (\Exception $e) {
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch profile picture",
+                "data" =>$e->getmessage(),
+            ]);
+        }
+    }
+    public function getEmployeeProfilePicture($user_id,$admin_user_id)
+    {
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_id' => $user_id,
+                'admin_user_id' => $admin_user_id,
+            ],
+            $rules = [
+                'user_id' => 'required|exists:users,id',
+                'admin_user_id' => 'required|exists:users,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+            $response =array();
+            if(!empty($admin_user_id)){
+                $user_code =User::where('id',$admin_user_id)->first()->user_code;
+                //Get the user record and update avatar column
+                $avatar_filename = User::where('id', $user_id)->first()->avatar;
+    
+                //Get the image from PRIVATE disk and send as BASE64
+                $admin_profile = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar_filename);
+    
+    
+                if ($admin_profile) {
+                    $response['admin_profile'] = base64_encode($admin_profile);
+                }
+
+            }else{
+                $response['admin_profile'] = "";
+
+            }
+            $user_code =User::where('id',$user_id)->first()->user_code;
+            //Get the user record and update avatar column
+            $avatar_filename = User::where('id', $user_id)->first()->avatar;
+
+            //Get the image from PRIVATE disk and send as BASE64
+            $employee_profile = Storage::disk('private')->get($user_code . "/profile_pics/" . $avatar_filename);
+
+
+            if ($employee_profile) {
+                $response['employee_profile'] = base64_encode($employee_profile);
             } else // If no file found, then send this
             {
                 return response()->json([
