@@ -140,8 +140,7 @@ class VmtAttendanceServiceV2
 
     public function attendanceJobs($start_date, $end_date)
     {
-        $a='9';
-        $a=(int)$a;
+        //dd($start_date,$end_date);
         ini_set('max_execution_time', 3000);
         $current_date = Carbon::parse($start_date);
         try {
@@ -197,7 +196,7 @@ class VmtAttendanceServiceV2
                         $client_code = VmtClientMaster::where('id', $single_user->client_id)->first()->client_code;
                         if (
                             $client_code == "DM" ||  $client_code == 'VASA' || $client_code == 'LAL'
-                            ||  $client_code == 'PSC' || $client_code ==  'IMA' ||  $client_code ==  'PA' ||  $client_code ==  'DMC'
+                            ||  $client_code == 'PSC' || $client_code ==  'IMA' ||  $client_code ==  'PA' ||  $client_code ==  'DMC' ||  $client_code ==  'ABS'
                         ) {
                             $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                                 ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -234,7 +233,8 @@ class VmtAttendanceServiceV2
                         //dd($current_date.'----------------'.$deviceCheckOutTime.'-----------'.$deviceCheckInTime);
                         //dd($current_date);
 
-
+                        // if($single_user->id==140)
+                        // dd( $deviceCheckOutTime, $deviceCheckInTime  ,$current_date );
                         // attendance details from vmt_employee_attenndance table
                         // $web_attendance = VmtEmployeeAttendance::whereDate('date',  $current_date_str)
                         //     ->where('user_id', $single_user->id)->first();
@@ -284,8 +284,7 @@ class VmtAttendanceServiceV2
                         $sortedCollection   =   $all_att_data->sortBy([
                             ['date', 'asc'],
                         ]);
-                        //    if($single_user->id==298)
-                        //    dd( $sortedCollection );
+
                         $checking_time_ar = $sortedCollection->first();
                         $checkout_time_ar =  $sortedCollection->last();
 
@@ -325,11 +324,10 @@ class VmtAttendanceServiceV2
                                 $is_holiday = true;
                             }
                         }
-                      $current_att_date =carbon::now()->format('Y-m-d');
-                      $current_time = carbon::now()->format('H:i:s');
+
                         //Code For Check LC And MOP
                         if ($checking_time != null) {
-                            if ($checkout_time == null && $current_att_date != $current_date  ? $current_time < $shiftEndTime :$current_time >= $shiftEndTime ) {
+                            if ($checkout_time == null) {
 
                                 $regularization_status = $this->isRegularizationRequestApplied($single_user->id, $current_date, 'MOP');
                                 $mop_id = $regularization_status['id'];
@@ -413,7 +411,11 @@ class VmtAttendanceServiceV2
                             }
                             if ($checkout_time_ot != null &&  $checkin_time_ot != null) {
                                 if ($shift_settings->ot_calculation_type == 'shift_time') {
-                                    $gross_hours = $shiftStartTime->diffInMinutes($checkout_time_ot);
+                                    if ($is_lc) {
+                                        $gross_hours = Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot);
+                                    } else {
+                                        $gross_hours = $shiftStartTime->diffInMinutes($checkout_time_ot);
+                                    }
                                 } else if ($shift_settings->ot_calculation_type == 'actual_time') {
                                     $gross_hours = Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot);
                                 }
