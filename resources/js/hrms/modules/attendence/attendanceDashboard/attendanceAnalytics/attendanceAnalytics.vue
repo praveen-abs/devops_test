@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg p-2 border" v-if="useDashboard.AttendanceAnalytics">
+    <div class="bg-white rounded-lg p-2 h-[100%] " v-if="useDashboard.AttendanceAnalytics">
         <p class="font-semibold text-[14px] text-[#000] font-['Poppins] text-center">Check-In & Out Analytics </p>
         <div class=" grid grid-cols-2 gap-4 my-2.5">
             <div class="h-full ">
