@@ -284,7 +284,7 @@ class VmtAttendanceServiceV2
                         $sortedCollection   =   $all_att_data->sortBy([
                             ['date', 'asc'],
                         ]);
-                       
+
                         $checking_time_ar = $sortedCollection->first();
                         $checkout_time_ar =  $sortedCollection->last();
 
@@ -411,7 +411,11 @@ class VmtAttendanceServiceV2
                             }
                             if ($checkout_time_ot != null &&  $checkin_time_ot != null) {
                                 if ($shift_settings->ot_calculation_type == 'shift_time') {
-                                    $gross_hours = $shiftStartTime->diffInMinutes($checkout_time_ot);
+                                    if ($is_lc) {
+                                        $gross_hours = Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot);
+                                    } else {
+                                        $gross_hours = $shiftStartTime->diffInMinutes($checkout_time_ot);
+                                    }
                                 } else if ($shift_settings->ot_calculation_type == 'actual_time') {
                                     $gross_hours = Carbon::parse($checkin_time_ot)->diffInMinutes($checkout_time_ot);
                                 }
