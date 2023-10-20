@@ -1,7 +1,7 @@
-import "primevue/resources/themes/lara-light-blue/theme.css";
-import "primevue/resources/primevue.min.css";
+import "primevue/resources/themes/lara-light-teal/theme.css";
+import "primevue/resources/primevue.min.css"; /* Deprecated */
 import "primeicons/primeicons.css";
-import './hrms/assests/tailwind.css'
+import './hrms/assests/tailwind.css';
 
 
 
@@ -106,6 +106,8 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 import router from "./hrms/modules/Organization/router/router";
 import Chart from 'primevue/chart';
+import OrganizationChart from 'primevue/organizationchart';
+
 
 
 import Home from './hrms/modules/Home/Home.vue'
@@ -215,6 +217,7 @@ app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
 app.component('Chart', Chart);
+app.component('OrganizationChart' ,OrganizationChart)
 
 //globally registering component
 //app.component('Counter',mycounter );
