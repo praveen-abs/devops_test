@@ -171,14 +171,8 @@
                     <div class="relative mx-3">
                     <button
                         class="flex px-3 py-2 text-white transition duration-700 ease-in-out transform focus:outline-none hover:bg-gray-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
-<<<<<<< HEAD
-
-                        <img  v-if="service.current_user_code != 'SA_ABS' && _profilePagesStore.profile_img" class=" forRounded w-[30px] h-[30px] rounded-full"
-                        :src="`data:image/png;base64,${_profilePagesStore.profile}`" srcset="" alt="" id="output"
-=======
                         <img  v-if="_profilePagesStore.profile_img " class=" forRounded w-[30px] h-[30px] rounded-full"
                         :src="`data:image/png;base64,${_profilePagesStore.profile_img?_profilePagesStore.profile.admin_profile :'gsaj' }`" srcset="" alt="" id="output"
->>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
                      />
 
 
@@ -188,11 +182,7 @@
                     </h1> -->
 
 
-<<<<<<< HEAD
-                        <p v-else class="rounded-lg bg-blue-50  text-black font-semibold p-1.5 text-sm">
-=======
                         <p v-else class="rounded-full bg-blue-50  text-black font-semibold p-1.5 text-sm">
->>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
                             {{ _profilePagesStore.employeeDetails.current_user_short_name }}</p>
 
                         <p class="px-2 mx-2 my-auto text-sm font-semibold text-black whitespace-nowrap"
@@ -212,16 +202,16 @@
                         <div v-if="useDashboard.canShowCurrentEmployee"
                             class="absolute top-0 right-0 z-30 w-48 bg-white rounded shadow-lg mt-14"> -->
                             <!-- Dropdown content goes here -->
-                       
+
                             <!-- <a @click="canShowLogout = true"
                                 class="block w-full p-2 transition transform rounded-lg cursor-pointer hover:bg-gray-100 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">Log
                                 out</a> -->
                         <!-- </div>
                     </transition> -->
                 </div>
-                
+
                 </RouterLink>
-              
+
             </div>
 
         </div>

@@ -170,7 +170,7 @@ const routes = [
             {
                 path: '/Payroll/PayRun',
                 name: 'Payroll-Pay-Run',
-                component: () => import('../hrms/components/PageNotFound.vue'),
+                component: () => import('../hrms/modules/payroll/payRun/payRun.vue'),
             },
             {
                 path: '/Payroll/payroll-claims',

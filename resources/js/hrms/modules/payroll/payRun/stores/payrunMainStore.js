@@ -1,4 +1,5 @@
 import axios from "axios";
+import dayjs from "dayjs";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -35,13 +36,13 @@ export const payrunMainStore = defineStore("payrunMainStore", () => {
     const  getPayrunOutcomeDetails = async()=>{
         let url = 'api/payroll/getPayrollOutcomes'
             await axios.post(window.location.origin+'/'+url,{
-                payroll_month:new Date().getMonth()  + 1,
-                client_code:'BA'
+                client_code:'DM',
+                payroll_month:dayjs(new Date()).format('YYYY-MM-DD'),
             }).then(res=>{
                 payrollSource.value = res.data.data
             })
         }
-    
+
 
 
     return {

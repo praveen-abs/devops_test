@@ -1,8 +1,4 @@
 <template>
-<<<<<<< HEAD
-=======
-     <!-- v-if="route.params.module == 'null'" -->
->>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
     <div class="w-full">
         <!--Current  Financial Year  calculation -->
         <div class="">

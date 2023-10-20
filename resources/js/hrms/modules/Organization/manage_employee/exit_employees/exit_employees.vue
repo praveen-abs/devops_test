@@ -92,11 +92,7 @@
                      <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
                 <Column field="enc_user_id" header="View Profile">
                     <template #body="slotProps">
-<<<<<<< HEAD
-                        <RouterLink :to="`/profile-page/${slotProps.data.user_id}`" @click="openProfilePage(slotProps.data)" class="px-2 py-1  "><i class="h-6 py-1 mx-2 pi pi-eye text-[#000]"></i></RouterLink>
-=======
                         <RouterLink :to="`/profile-page/${slotProps.data.user_id}`" @click="openProfilePage(slotProps.data)" class="px-2 py-1 "><i class="h-6 py-1 mx-2 pi pi-eye text-[#000]"></i></RouterLink>
->>>>>>> d4dad5dd6e299f8d530eef67ec09f64e7032b293
                     </template>
                 </Column>
             </DataTable>

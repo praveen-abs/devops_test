@@ -164,11 +164,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Onboarding
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
 
-    //Payroll
-    Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth']);
-    Route::post('/payroll/getPayrollOutcomes', [App\Http\Controllers\VmtPayrollController::class, 'getPayrollOutcomes']);
-    Route::post('/payroll/getOrgPayrollMonths', [App\Http\Controllers\VmtPayrollController::class, 'getOrgPayrollMonths']);
-
     //payroll statutory PT settings
     Route::post('fetchProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'fetchProfessionalTaxSettings'])->name('fetchProfessionalTaxSettings');
     Route::post('saveProfessionalTaxSettings', [App\Http\Controllers\VmtPayrollSettingsController::class, 'saveProfessionalTaxSettings'])->name('saveProfessionalTaxSettings');
@@ -188,4 +183,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('applyLeaveRequest_AdminRole', [App\Http\Controllers\VmtAttendanceController::class, 'applyLeaveRequest_AdminRole'])->name('applyLeaveRequest_AdminRole');
 
 });
+
+
+    //Payroll
+    Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth']);
+    Route::post('/payroll/getPayrollOutcomes', [App\Http\Controllers\VmtPayrollController::class, 'getPayrollOutcomes']);
+    Route::post('/payroll/getOrgPayrollMonths', [App\Http\Controllers\VmtPayrollController::class, 'getOrgPayrollMonths']);
 
